@@ -1,272 +1,637 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>TON MINING PRO | Elite Mining Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TON MINING PRO ⛏️</title>
     
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-    
-    <!-- Telegram Web App -->
+    <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
-    <!-- CSS -->
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loading-screen" class="loading-screen">
-        <div class="loader-3d">
-            <div class="cube">
-                <div class="face front"></div>
-                <div class="face back"></div>
-                <div class="face right"></div>
-                <div class="face left"></div>
-                <div class="face top"></div>
-                <div class="face bottom"></div>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <div class="miner-3d">
+                <i class="fas fa-microchip"></i>
+                <div class="pulse-ring"></div>
             </div>
+            <h1>TON MINING PRO</h1>
+            <div class="progress-bar">
+                <div class="progress-fill" id="splash-progress"></div>
+            </div>
+            <p id="splash-text">Initializing mining system...</p>
         </div>
-        <div class="loading-text">TON MINING PRO</div>
-        <div class="loading-sub">Loading platform...</div>
     </div>
 
-    <!-- App Container -->
-    <div id="app-container" style="display: none;">
-        <!-- Header -->
+    <!-- Main Application -->
+    <div id="main-app" class="main-app hidden">
+        <!-- Premium Header -->
         <header class="glass-header">
-            <div class="header-content">
-                <div class="user-badge">
-                    <span class="user-avatar">👤</span>
-                    <span id="user-name" class="user-name">@username</span>
+            <div class="header-left">
+                <button id="menu-btn" class="icon-btn" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo" data-aos="fade-right">
+                    <i class="fas fa-bolt" style="color: #6ab5ff;"></i>
+                    <span>TON MINING</span>
                 </div>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <div class="balance-badge">
-                        <span class="ton-icon-small"></span>
-                        <span id="total-balance">0.0000</span>
-                    </div>
-                    <button class="lang-toggle" onclick="UI?.toggleLanguage()">🇸🇦</button>
+            </div>
+            <div class="header-right">
+                <button id="notifications-btn" class="icon-btn" onclick="showNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge hidden">3</span>
+                </button>
+                <div class="user-profile" onclick="toggleUserMenu()">
+                    <img src="https://ui-avatars.com/api/?name=User&background=0D8FDB&color=fff&size=128" alt="User">
                 </div>
             </div>
         </header>
 
-        <!-- Main Content -->
-        <main id="main-content">
-            <!-- Mining Tab -->
-            <section id="mining-tab" class="tab-content active">
-                <div class="mining-3d-container">
-                    <div class="mining-3d" id="mining-3d">
-                        <div class="miner-base"></div>
-                        <div class="miner-core" id="miner-core"></div>
-                        <div class="miner-fan" id="miner-fan"></div>
-                        <div class="energy-rings">
-                            <div class="ring"></div>
-                            <div class="ring"></div>
-                            <div class="ring"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="mining-stats-glass">
-                        <div class="stat-item">
-                            <span class="stat-label">Hash Rate</span>
-                            <span class="stat-value" id="current-rate">0.01 TON/4h</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Active Rig</span>
-                            <span class="stat-value" id="active-machine">Free Miner</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="progress-glow-container">
-                    <div class="progress-header">
-                        <span>Mining in progress</span>
-                        <span id="timer-display" class="timer-pulse">00:00:00</span>
-                    </div>
-                    <div class="progress-wrapper">
-                        <div class="progress-glow-bar" id="mining-progress"></div>
-                    </div>
-                </div>
-
-                <button id="claim-btn" class="claim-btn-glow" onclick="Mining?.claim()" disabled>
-                    <span>CLAIM REWARD</span>
-                    <span class="btn-glow"></span>
+        <!-- Balance Card -->
+        <section class="balance-section glass-card premium-card" data-aos="fade-down">
+            <div class="balance-header">
+                <span class="balance-label">Total Balance</span>
+                <button id="connect-wallet-btn" class="wallet-btn" onclick="connectWallet()">
+                    <i class="fas fa-wallet"></i>
+                    <span>Connect Wallet</span>
                 </button>
+            </div>
+            <div class="balance-amount" id="balance-amount">
+                <span class="ton-icon">💰</span>
+                <span class="amount" id="user-balance">0.00</span>
+                <span class="currency">TON</span>
+            </div>
+            <div class="wallet-address" id="wallet-address">
+                <i class="fas fa-link"></i>
+                <span>Not connected</span>
+            </div>
+            <div class="balance-actions">
+                <button class="action-btn" onclick="showDeposit()">
+                    <i class="fas fa-arrow-down"></i>
+                    <span>Deposit</span>
+                </button>
+                <button class="action-btn primary" onclick="showWithdraw()">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Withdraw</span>
+                </button>
+            </div>
+        </section>
 
-                <div class="machines-section">
-                    <h3 class="section-title">
-                        <span class="title-icon">⚡</span>
-                        <span>Mining Rigs</span>
-                    </h3>
-                    <div id="machines-container" class="machines-grid"></div>
+        <!-- Mining Machines Grid -->
+        <section class="machines-section">
+            <div class="section-header">
+                <h2><i class="fas fa-microchip"></i> Mining Machines</h2>
+                <div class="mining-stats">
+                    <span><i class="fas fa-bolt"></i> Total Hash: <span id="total-hash">156.8</span> MH/s</span>
                 </div>
-            </section>
-
-            <!-- Referral Tab -->
-            <section id="referral-tab" class="tab-content">
-                <div class="referral-tree-card">
-                    <h2 class="glitch-text">REFERRAL NETWORK</h2>
-                    
-                    <div class="referral-stats-glass">
-                        <div class="stat-block">
-                            <span class="stat-number" id="ref-count">0</span>
-                            <span class="stat-desc">Friends</span>
+            </div>
+            
+            <div class="machines-grid" id="machines-grid">
+                <!-- Machine 1 - Free Miner -->
+                <div class="machine-card glass-card" data-aos="flip-left" data-aos-delay="100">
+                    <div class="machine-header">
+                        <div class="machine-icon free">
+                            <i class="fas fa-cog"></i>
                         </div>
-                        <div class="stat-block">
-                            <span class="stat-number" id="ref-earnings">0.0000</span>
-                            <span class="stat-desc">Earned</span>
+                        <div class="machine-level">
+                            <span class="level-badge">FREE</span>
                         </div>
                     </div>
-
-                    <div class="ref-link-box">
-                        <input type="text" id="ref-link" readonly value="Loading..." class="ref-input">
-                        <button class="copy-btn" onclick="Referral?.copyLink()">COPY</button>
+                    <h3>Free Miner</h3>
+                    <div class="machine-specs">
+                        <div class="spec">
+                            <i class="fas fa-bolt"></i>
+                            <span>2.5 MH/s</span>
+                        </div>
+                        <div class="spec">
+                            <i class="fas fa-clock"></i>
+                            <span>4 hours</span>
+                        </div>
+                        <div class="spec">
+                            <i class="fas fa-coins"></i>
+                            <span>0.5 TON</span>
+                        </div>
                     </div>
-
-                    <div class="referral-tree" id="referral-tree">
-                        <div class="tree-root">👑 YOU</div>
-                        <div class="tree-branches" id="tree-branches"></div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progress-free">
+                            <div class="progress-fill" style="width: 75%"></div>
+                        </div>
+                        <span class="time-remaining">3h 15m left</span>
                     </div>
-                </div>
-            </section>
-
-            <!-- Wallet Tab -->
-            <section id="wallet-tab" class="tab-content">
-                <div class="wallet-3d-card">
-                    <div class="wallet-balance-3d">
-                        <span class="ton-icon-large"></span>
-                        <span id="wallet-balance">0.0000 TON</span>
-                    </div>
-
-                    <div class="achievements-section">
-                        <h4 class="achievements-title">
-                            <span>🏆</span>
-                            <span>ACHIEVEMENTS</span>
-                        </h4>
-                        <div id="achievements-container" class="achievements-grid"></div>
-                    </div>
-
-                    <button class="withdraw-btn-3d" onclick="Withdraw?.openModal()">
-                        <span>WITHDRAW</span>
-                        <span class="btn-glow"></span>
+                    <button class="mine-btn free" onclick="startMining('free')">
+                        <i class="fas fa-play"></i> Start Mining
                     </button>
+                </div>
 
-                    <div class="withdraw-note">
-                        ⚡ Min 1 TON • 1-5 min confirmation
+                <!-- Machine 2 - Turbo v2 -->
+                <div class="machine-card glass-card" data-aos="flip-left" data-aos-delay="200">
+                    <div class="machine-header">
+                        <div class="machine-icon turbo">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="machine-level">
+                            <span class="level-badge">TURBO</span>
+                        </div>
+                    </div>
+                    <h3>Turbo v2</h3>
+                    <div class="machine-specs">
+                        <div class="spec">
+                            <i class="fas fa-bolt"></i>
+                            <span>5.2 MH/s</span>
+                        </div>
+                        <div class="spec">
+                            <i class="fas fa-clock"></i>
+                            <span>2.5 hours</span>
+                        </div>
+                        <div class="spec">
+                            <i class="fas fa-coins"></i>
+                            <span>1.2 TON</span>
+                        </div>
+                    </div>
+                    <div class="price-tag">1 TON</div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%"></div>
+                        </div>
+                        <span class="time-remaining">1h 52m left</span>
+                    </div>
+                    <button class="mine-btn turbo" onclick="rentMachine('turbo-v2')">
+                        <i class="fas fa-cart-plus"></i> Rent for 1 TON
+                    </button>
+                </div>
+
+                <!-- Machine 3 - Turbo v3 -->
+                <div class="machine-card glass-card" data-aos="flip-left" data-aos-delay="300">
+                    <div class="machine-header">
+                        <div class="machine-icon turbo-plus">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="machine-level">
+                            <span class="level-badge">TURBO+</span>
+                        </div>
+                    </div>
+                    <h3>Turbo v3</h3>
+                    <div class="machine-specs">
+                        <div class="spec">
+                            <i class="fas fa-bolt"></i>
+                            <span>8.7 MH/s</span>
+                        </div>
+                        <div class="spec">
+                            <i class="fas fa-clock"></i>
+                            <span>2 hours</span>
+                        </div>
+                        <div class="spec">
+                            <i class="fas fa-coins"></i>
+                            <span>2.8 TON</span>
+                        </div>
+                    </div>
+                    <div class="price-tag">2 TON</div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%"></div>
+                        </div>
+                        <span class="time-remaining">1h 24m left</span>
+                    </div>
+                    <button class="mine-btn turbo-plus" onclick="rentMachine('turbo-v3')">
+                        <i class="fas fa-cart-plus"></i> Rent for 2 TON
+                    </button>
+                </div>
+
+                <!-- Machine 4 - ASIC Pro -->
+                <div class="machine-card glass-card" data-aos="flip-left" data-aos-delay="400">
+                    <div class="machine-header">
+                        <div class="machine-icon asic">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <div class="machine-level">
+                            <span class="level-badge">ASIC</span>
+                        </div>
+                    </div>
+                    <h3>ASIC Pro</h3>
+                    <div class="machine-specs">
+                        <div class="spec">
+                            <i class="fas fa-bolt"></i>
+                            <span>15.3 MH/s</span>
+                        </div>
+                        <div class="spec">
+                            <i class="fas fa-clock"></i>
+                            <span>1 hour</span>
+                        </div>
+                        <div class="spec">
+                            <i class="fas fa-coins"></i>
+                            <span>4.5 TON</span>
+                        </div>
+                    </div>
+                    <div class="price-tag">4 TON</div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%"></div>
+                        </div>
+                        <span class="time-remaining">36m left</span>
+                    </div>
+                    <button class="mine-btn asic" onclick="rentMachine('asic-pro')">
+                        <i class="fas fa-cart-plus"></i> Rent for 4 TON
+                    </button>
+                </div>
+
+                <!-- Machine 5 - Quantum RIG -->
+                <div class="machine-card glass-card" data-aos="flip-left" data-aos-delay="500">
+                    <div class="machine-header">
+                        <div class="machine-icon quantum">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="machine-level">
+                            <span class="level-badge">QUANTUM</span>
+                        </div>
+                    </div>
+                    <h3>Quantum RIG</h3>
+                    <div class="machine-specs">
+                        <div class="spec">
+                            <i class="fas fa-bolt"></i>
+                            <span>25.8 MH/s</span>
+                        </div>
+                        <div class="spec">
+                            <i class="fas fa-clock"></i>
+                            <span>45 min</span>
+                        </div>
+                        <div class="spec">
+                            <i class="fas fa-coins"></i>
+                            <span>7.2 TON</span>
+                        </div>
+                    </div>
+                    <div class="price-tag">6 TON</div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 15%"></div>
+                        </div>
+                        <span class="time-remaining">38m left</span>
+                    </div>
+                    <button class="mine-btn quantum" onclick="rentMachine('quantum-rig')">
+                        <i class="fas fa-cart-plus"></i> Rent for 6 TON
+                    </button>
+                </div>
+
+                <!-- Machine 6 - Legendary -->
+                <div class="machine-card glass-card legendary" data-aos="flip-left" data-aos-delay="600">
+                    <div class="machine-header">
+                        <div class="machine-icon legendary">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="machine-level">
+                            <span class="level-badge">LEGEND</span>
+                        </div>
+                    </div>
+                    <h3>Legendary</h3>
+                    <div class="machine-specs">
+                        <div class="spec">
+                            <i class="fas fa-bolt"></i>
+                            <span>50.0 MH/s</span>
+                        </div>
+                        <div class="spec">
+                            <i class="fas fa-clock"></i>
+                            <span>30 min</span>
+                        </div>
+                        <div class="spec">
+                            <i class="fas fa-coins"></i>
+                            <span>12.0 TON</span>
+                        </div>
+                    </div>
+                    <div class="price-tag">8 TON</div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 90%"></div>
+                        </div>
+                        <span class="time-remaining">3m left</span>
+                    </div>
+                    <button class="mine-btn legendary" onclick="rentMachine('legendary')">
+                        <i class="fas fa-cart-plus"></i> Rent for 8 TON
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Cards -->
+        <section class="stats-section">
+            <div class="stat-card glass-card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-users stat-icon"></i>
+                <div class="stat-info">
+                    <span class="stat-label">Referrals</span>
+                    <span class="stat-value" id="referral-count">12</span>
+                </div>
+            </div>
+            <div class="stat-card glass-card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-trophy stat-icon"></i>
+                <div class="stat-info">
+                    <span class="stat-label">Achievements</span>
+                    <span class="stat-value" id="achievement-count">8/15</span>
+                </div>
+            </div>
+            <div class="stat-card glass-card" data-aos="fade-up" data-aos-delay="300">
+                <i class="fas fa-calendar stat-icon"></i>
+                <div class="stat-info">
+                    <span class="stat-label">Daily Streak</span>
+                    <span class="stat-value" id="daily-streak">7 🔥</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Referral Section -->
+        <section class="referral-section glass-card" data-aos="zoom-in">
+            <div class="referral-header">
+                <i class="fas fa-gift"></i>
+                <h3>Refer & Earn 20%</h3>
+            </div>
+            <p>Invite friends and earn 20% of their mining rewards forever!</p>
+            <div class="referral-link-container">
+                <input type="text" id="referral-link" value="https://t.me/tonmining_bot?start=ref123" readonly>
+                <button onclick="copyReferralLink()">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+            <div class="referral-stats">
+                <div class="ref-stat">
+                    <span>Friends</span>
+                    <strong id="friends-count">12</strong>
+                </div>
+                <div class="ref-stat">
+                    <span>Earned</span>
+                    <strong id="referral-earnings">2.5 TON</strong>
+                </div>
+                <div class="ref-stat">
+                    <span>Bonus</span>
+                    <strong id="referral-bonus">+1.2 TON</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievements Slider -->
+        <section class="achievements-section">
+            <div class="section-header">
+                <h2><i class="fas fa-trophy"></i> Achievements</h2>
+                <button onclick="viewAllAchievements()">View All</button>
+            </div>
+            <div class="achievements-slider" id="achievements-slider">
+                <div class="achievement-card glass-card" data-aos="fade-right">
+                    <div class="achievement-icon gold">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="achievement-info">
+                        <h4>First Blood</h4>
+                        <p>Complete first mining</p>
+                    </div>
+                    <div class="achievement-reward">
+                        <span>0.1 TON</span>
+                    </div>
+                    <div class="achievement-progress">
+                        <div class="progress-circle" data-progress="100">
+                            <span>✅</span>
+                        </div>
                     </div>
                 </div>
-            </section>
-        </main>
+
+                <div class="achievement-card glass-card">
+                    <div class="achievement-icon silver">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="achievement-info">
+                        <h4>10 Days Streak</h4>
+                        <p>Mine for 10 days</p>
+                    </div>
+                    <div class="achievement-reward">
+                        <span>1 TON</span>
+                    </div>
+                    <div class="achievement-progress">
+                        <div class="progress-circle" data-progress="70">
+                            <span>7/10</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="achievement-card glass-card">
+                    <div class="achievement-icon bronze">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="achievement-info">
+                        <h4>Social Star</h4>
+                        <p>Invite 5 friends</p>
+                    </div>
+                    <div class="achievement-reward">
+                        <span>0.5 TON</span>
+                    </div>
+                    <div class="achievement-progress">
+                        <div class="progress-circle" data-progress="100">
+                            <span>✅</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="achievement-card glass-card">
+                    <div class="achievement-icon platinum">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="achievement-info">
+                        <h4>Crypto Whale</h4>
+                        <p>Earn 10 TON total</p>
+                    </div>
+                    <div class="achievement-reward">
+                        <span>3 TON</span>
+                    </div>
+                    <div class="achievement-progress">
+                        <div class="progress-circle" data-progress="45">
+                            <span>4.5/10</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- Bottom Navigation -->
-        <nav class="bottom-nav-3d">
-            <button class="nav-item-3d active" data-tab="mining-tab">
-                <span class="nav-icon">⚒️</span>
-                <span class="nav-label">MINE</span>
+        <nav class="bottom-nav glass-header">
+            <button class="nav-item active" onclick="navigateTo('home')">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
             </button>
-            <button class="nav-item-3d" data-tab="referral-tab">
-                <span class="nav-icon">👥</span>
-                <span class="nav-label">TEAM</span>
+            <button class="nav-item" onclick="navigateTo('mining')">
+                <i class="fas fa-microchip"></i>
+                <span>Mining</span>
             </button>
-            <button class="nav-item-3d" data-tab="wallet-tab">
-                <span class="nav-icon">💼</span>
-                <span class="nav-label">WALLET</span>
+            <button class="nav-item" onclick="navigateTo('referrals')">
+                <i class="fas fa-users"></i>
+                <span>Friends</span>
+            </button>
+            <button class="nav-item" onclick="navigateTo('achievements')">
+                <i class="fas fa-trophy"></i>
+                <span>Achievements</span>
+            </button>
+            <button class="nav-item" onclick="navigateTo('profile')">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
             </button>
         </nav>
-
-        <!-- Rent Modal -->
-        <div id="rent-modal" class="modal-overlay-3d" style="display: none;">
-            <div class="modal-content-glass">
-                <button class="modal-close" onclick="UI?.closeModal('rent-modal')">✕</button>
-                <h3>Rent Mining Rig</h3>
-                
-                <div class="machine-details-3d">
-                    <span id="rent-machine-icon" class="machine-icon">⚡</span>
-                    <span id="rent-machine-name" class="machine-name">Turbo v2</span>
-                </div>
-
-                <div class="rent-info-grid">
-                    <div class="rent-info-item">
-                        <span>Price</span>
-                        <strong id="rent-price" class="ton-price">1 TON</strong>
-                    </div>
-                    <div class="rent-info-item">
-                        <span>Duration</span>
-                        <strong id="rent-duration">3 days</strong>
-                    </div>
-                </div>
-
-                <div class="wallet-address-box">
-                    <span class="box-label">Send TON to:</span>
-                    <div class="address-with-copy">
-                        <span id="mining-wallet-address">UQD9...Y0eH</span>
-                        <button class="mini-copy" onclick="Payment?.copyAddress()">📋</button>
-                    </div>
-                    <div style="font-size: 10px; margin-top: 5px; word-break: break-all;" id="full-address"></div>
-                </div>
-
-                <button class="confirm-rent-btn" onclick="Payment?.startMonitoring()">
-                    I'VE SENT PAYMENT
-                </button>
-
-                <p class="note-text">Waiting for blockchain confirmation...</p>
-            </div>
-        </div>
-
-        <!-- Withdraw Modal -->
-        <div id="withdraw-modal" class="modal-overlay-3d" style="display: none;">
-            <div class="modal-content-glass">
-                <button class="modal-close" onclick="UI?.closeModal('withdraw-modal')">✕</button>
-                <h3>Withdraw TON</h3>
-
-                <div class="withdraw-form">
-                    <label>Amount (min 1 TON)</label>
-                    <input type="number" id="withdraw-amount" min="1" step="0.1" class="glass-input" placeholder="1.0">
-
-                    <label>TON Address</label>
-                    <input type="text" id="withdraw-address" class="glass-input" placeholder="UQ...">
-
-                    <button class="withdraw-submit-btn" onclick="Withdraw?.request()">
-                        REQUEST WITHDRAWAL
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Admin Modal -->
-        <div id="admin-modal" class="modal-overlay-3d" style="display: none;">
-            <div class="modal-content-glass admin-panel">
-                <button class="modal-close" onclick="UI?.closeModal('admin-modal')">✕</button>
-                <h3>👑 ADMIN PANEL</h3>
-                <div id="withdraw-requests-list" class="requests-list"></div>
-            </div>
-        </div>
-
-        <!-- Notification -->
-        <div id="notification" class="notification-toast" style="display: none;"></div>
     </div>
 
-    <!-- JavaScript -->
-    <script src="app.js"></script>
+    <!-- Modals -->
     
-    <script>
-        // Navigation
-        document.querySelectorAll('.nav-item-3d').forEach(item => {
-            item.addEventListener('click', () => {
-                const tabId = item.dataset.tab;
-                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-                document.querySelectorAll('.nav-item-3d').forEach(nav => nav.classList.remove('active'));
-                document.getElementById(tabId).classList.add('active');
-                item.classList.add('active');
-            });
-        });
-    </script>
+    <!-- Rent Confirmation Modal -->
+    <div id="rent-modal" class="modal hidden">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3>Rent Mining Machine</h3>
+                <button onclick="closeModal('rent-modal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="machine-preview" id="rent-machine-preview">
+                    <i class="fas fa-rocket"></i>
+                    <h4 id="rent-machine-name">Turbo v2</h4>
+                </div>
+                <div class="rent-details">
+                    <div class="detail-row">
+                        <span>Rental Period:</span>
+                        <select id="rental-period">
+                            <option value="3">3 days</option>
+                            <option value="7">7 days</option>
+                            <option value="14">14 days</option>
+                            <option value="30">30 days</option>
+                            <option value="45">45 days</option>
+                        </select>
+                    </div>
+                    <div class="detail-row">
+                        <span>Price:</span>
+                        <span class="price" id="rent-price">1 TON</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Daily Profit:</span>
+                        <span class="profit" id="daily-profit">0.15 TON</span>
+                    </div>
+                </div>
+                <div class="wallet-address-display">
+                    <p>Send exactly <strong id="exact-amount">1 TON</strong> to:</p>
+                    <div class="address-box">
+                        <code>UQD9mkiazYKara0KxRbRBIlCMnqtLmjS3aMlj2iSCrnIY0eH</code>
+                        <button onclick="copyAddress()"><i class="fas fa-copy"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeModal('rent-modal')">Cancel</button>
+                <button class="confirm-btn" onclick="confirmRent()">I've Sent Payment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Withdraw Modal -->
+    <div id="withdraw-modal" class="modal hidden">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3>Withdraw TON</h3>
+                <button onclick="closeModal('withdraw-modal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="balance-info">
+                    <span>Available Balance:</span>
+                    <strong id="available-balance">12.5 TON</strong>
+                </div>
+                <div class="input-group">
+                    <label>Amount (min 1 TON)</label>
+                    <input type="number" id="withdraw-amount" min="1" step="0.1" placeholder="Enter amount">
+                </div>
+                <div class="input-group">
+                    <label>TON Wallet Address</label>
+                    <input type="text" id="withdraw-address" placeholder="UQ...">
+                </div>
+                <div class="info-text">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Processing time: 1-5 minutes (blockchain confirmations)</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeModal('withdraw-modal')">Cancel</button>
+                <button class="confirm-btn" onclick="requestWithdraw()">Request Withdrawal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deposit Modal -->
+    <div id="deposit-modal" class="modal hidden">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3>Deposit TON</h3>
+                <button onclick="closeModal('deposit-modal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="qr-code" id="deposit-qr">
+                    <!-- QR will be generated here -->
+                    <i class="fas fa-qrcode"></i>
+                </div>
+                <p>Send TON to this address:</p>
+                <div class="address-box">
+                    <code>UQD9mkiazYKara0KxRbRBIlCMnqtLmjS3aMlj2iSCrnIY0eH</code>
+                    <button onclick="copyAddress()"><i class="fas fa-copy"></i></button>
+                </div>
+                <div class="info-text">
+                    <i class="fas fa-clock"></i>
+                    <span>Deposit will be credited after 3 confirmations</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel (Hidden by default, accessible with 5 taps on logo) -->
+    <div id="admin-panel" class="admin-panel hidden">
+        <div class="admin-header glass-card">
+            <h3><i class="fas fa-shield-alt"></i> Admin Panel</h3>
+            <button onclick="closeAdminPanel()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="admin-content">
+            <div class="admin-stats">
+                <div class="admin-stat">
+                    <span>Total Users</span>
+                    <strong>1,247</strong>
+                </div>
+                <div class="admin-stat">
+                    <span>Pending Withdrawals</span>
+                    <strong id="pending-withdrawals">8</strong>
+                </div>
+                <div class="admin-stat">
+                    <span>Total Volume</span>
+                    <strong>45,678 TON</strong>
+                </div>
+            </div>
+            <div class="withdrawal-requests" id="withdrawal-requests">
+                <!-- Withdrawal requests will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notification-toast" class="notification-toast hidden">
+        <div class="notification-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="notification-content">
+            <h4 id="notification-title">Success</h4>
+            <p id="notification-message">Action completed successfully</p>
+        </div>
+    </div>
+
+    <!-- Fireworks Canvas -->
+    <canvas id="fireworks-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;"></canvas>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
