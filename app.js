@@ -1,14 +1,3 @@
-// ============================================
-// TON MINING PRO - ULTIMATE COMPLETE EDITION v8.0
-// ============================================
-// DEVELOPER: الخنفشاري الأكبر
-// LINES: ~6,500 سطر من العظمة والاحترافية
-// ALL FEATURES: Mining, TON Connect, Withdrawals, Deposits, Admin Panel,
-//               Referrals, Achievements, Rental Plans, Premium UI/UX,
-//               Real-time Updates, Floating Notifications
-// ============================================
-
-// ============================================
 // [SECTION 01] - GLOBAL CONFIGURATION
 // ============================================
 
@@ -18,7 +7,7 @@ const CONFIG = {
         API_KEY: "e53929324c8cabe222c3005cd3518fe1f3c7861aa6b02442d05fb630ab31fa78",
         CENTER_API: "https://toncenter.com/api/v2/",
         EXPLORER: "https://tonviewer.com/",
-        ADMIN_ID: "1653918641",
+        ADMIN_ID: "1653918641", // معرف المشرف الخاص بك
         MIN_WITHDRAW: 1.0,
         MIN_DEPOSIT: 1.0,
         TX_CHECK_INTERVAL: 15000,
@@ -55,18 +44,18 @@ const MACHINES = [
         id: 'm1',
         name: 'Free Miner',
         nameAr: 'منجم مجاني',
-        description: 'Perfect for beginners. Start your mining journey!',
-        descriptionAr: 'مثالي للمبتدئين. ابدأ رحلة التعدين!',
+        description: 'Start mining for free! Perfect for beginners.',
+        descriptionAr: 'ابدأ التعدين مجاناً! مثالي للمبتدئين.',
         icon: 'fa-gem',
         color: '#808080',
-        filter: 'basic',
+        filter: 'free',
         yield: 0.01,
         interval: 4 * 3600000,
         hashrate: '10 MH/s',
         plans: [
-            { duration: 3, durationText: '3 days', price: 2.5, returnPercent: 40, returnAmount: 1.0, total: 3.5 },
-            { duration: 7, durationText: '7 days', price: 5.0, returnPercent: 80, returnAmount: 4.0, total: 9.0 },
-            { duration: 15, durationText: '15 days', price: 7.5, returnPercent: 170, returnAmount: 12.75, total: 20.25 }
+            { duration: 3, durationText: '3 days', price: 0, returnPercent: 0, returnAmount: 0, total: 0 },
+            { duration: 7, durationText: '7 days', price: 0, returnPercent: 0, returnAmount: 0, total: 0 },
+            { duration: 15, durationText: '15 days', price: 0, returnPercent: 0, returnAmount: 0, total: 0 }
         ]
     },
     {
@@ -261,6 +250,7 @@ const UserState = {
     lastSaveTime: Date.now(),
     createdAt: Date.now(),
     isAdmin: false,
+    adminAccessGranted: false, // للتأكد من صلاحية المشرف
     tonWallet: null,
     
     initFromCache() {
@@ -318,7 +308,6 @@ const UserState = {
 // ============================================
 
 const Utils = {
-    // Time
     formatTime(ms) {
         if (ms <= 0) return '00:00:00';
         const s = Math.floor(ms / 1000);
@@ -336,12 +325,6 @@ const Utils = {
         return `${Math.floor(diff/86400000)} days ago`;
     },
     
-    formatDateTime(ts) {
-        const d = new Date(ts);
-        return d.toLocaleDateString() + ' ' + d.toLocaleTimeString();
-    },
-    
-    // Numbers
     formatTON(amount) {
         return amount.toFixed(4);
     },
@@ -351,7 +334,6 @@ const Utils = {
         return isNaN(n) ? 0 : n;
     },
     
-    // Address
     formatAddress(addr) {
         if (!addr) return '';
         return addr.slice(0,6) + '...' + addr.slice(-4);
@@ -361,7 +343,6 @@ const Utils = {
         return CONFIG.TON.WALLET_REGEX.test(addr);
     },
     
-    // Machine
     getActiveMachine() {
         return MACHINES.find(m => m.id === UserState.activeMachine) || MACHINES[0];
     },
@@ -378,7 +359,6 @@ const Utils = {
         return Math.min((elapsed / m.interval) * 100, 100);
     },
     
-    // Streak
     updateStreak() {
         const today = new Date().toDateString();
         if (UserState.lastClaimDate === today) return UserState.streak;
@@ -403,7 +383,6 @@ const Utils = {
         return 1.0;
     },
     
-    // Referral
     generateReferralCode(uid) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         const random = Array.from({length:6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
@@ -414,17 +393,10 @@ const Utils = {
         return UserState.uid ? `https://t.me/TONMininginstantbot/Ton?startapp=${UserState.uid}` : '';
     },
     
-    // Calculations
     tonToUsd(ton) {
         return ton * 1.32;
     },
     
-    // Validation
-    isValidAmount(amount, min, max) {
-        return amount >= min && amount <= max;
-    },
-    
-    // Random
     randomId() {
         return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
     }
@@ -459,15 +431,7 @@ const Notify = {
     success(msg) { this.show(msg, 'success'); },
     error(msg) { this.show(msg, 'error'); },
     warning(msg) { this.show(msg, 'warning'); },
-    info(msg) { this.show(msg, 'info'); },
-    
-    confirm(title, msg, onConfirm, onCancel) {
-        if (confirm(`${title}\n\n${msg}`)) {
-            if (onConfirm) onConfirm();
-        } else {
-            if (onCancel) onCancel();
-        }
-    }
+    info(msg) { this.show(msg, 'info'); }
 };
 
 // ============================================
@@ -499,16 +463,6 @@ const Effects = {
         if (!el) return;
         el.classList.add('shake-effect');
         setTimeout(() => el.classList.remove('shake-effect'), 500);
-    },
-    
-    pulse(el, count = 1) {
-        if (!el) return;
-        for (let i = 0; i < count; i++) {
-            setTimeout(() => {
-                el.classList.add('pulse');
-                setTimeout(() => el.classList.remove('pulse'), 500);
-            }, i * 600);
-        }
     }
 };
 
@@ -585,23 +539,6 @@ const TonManager = {
     async connect() {
         if (!tonConnectUI) await this.init();
         if (tonConnectUI) await tonConnectUI.openModal();
-    },
-    
-    async disconnect() {
-        if (tonConnectUI) await tonConnectUI.disconnect();
-    },
-    
-    async getBalance() {
-        if (!tonWallet) return null;
-        try {
-            const res = await fetch(
-                `${CONFIG.TON.CENTER_API}getAddressBalance?address=${tonWallet.account.address}&api_key=${CONFIG.TON.API_KEY}`
-            );
-            const data = await res.json();
-            return data.ok ? data.result / 1e9 : null;
-        } catch {
-            return null;
-        }
     },
     
     async pay(amount) {
@@ -708,23 +645,20 @@ const MiningManager = {
         
         const plan = machine.plans[planIndex];
         
-        UserState.activeMachine = machineId;
-        UserState.activePlan = plan;
-        UserState.machineExpiry = Date.now() + (plan.duration * 24 * 3600000);
-        UserState.lastClaim = Date.now();
+        // إذا كان السعر 0 (Free Miner)، فعّله مباشرة
+        if (plan.price === 0) {
+            UserState.activeMachine = machineId;
+            UserState.activePlan = plan;
+            UserState.machineExpiry = Infinity;
+            UserState.lastClaim = Date.now();
+            UserState.saveToCache();
+            Notify.success(`${machine.name} activated!`);
+            UI.updateAll();
+            return true;
+        }
         
-        if (machineId !== 'm1') UserState.upgrades++;
-        
-        this.addTransaction('rental', -plan.price, { 
-            machine: machine.name, 
-            plan: plan.durationText,
-            returnAmount: plan.returnAmount 
-        });
-        
-        UserState.saveToCache();
-        Notify.success(`${machine.name} activated for ${plan.durationText}!`);
-        UI.updateAll();
-        Achievements.check();
+        // للآلات المدفوعة، نفتح نافذة الدفع
+        PaymentManager.openModal(machine, planIndex);
         return true;
     },
     
@@ -959,24 +893,6 @@ const WithdrawManager = {
         });
         
         return total;
-    },
-    
-    async cancelRequest(id) {
-        const index = UserState.pendingWithdrawals.findIndex(w => w.id === id);
-        if (index === -1) return;
-        
-        const req = UserState.pendingWithdrawals[index];
-        UserState.pendingWithdrawals.splice(index, 1);
-        UserState.balance += req.amount;
-        UserState.totalWithdrawn -= req.amount;
-        UserState.saveToCache();
-        
-        if (db) {
-            await db.collection('withdrawals').doc(id).update({ status: 'cancelled' });
-        }
-        
-        Notify.success('Withdrawal cancelled');
-        UI.updateAll();
     }
 };
 
@@ -1025,11 +941,10 @@ const ReferralManager = {
                     if (!UserState.referrals) UserState.referrals = [];
                     UserState.referrals.push(referrer.id);
                     
-                    Cache.saveUser();
+                    UserState.saveToCache();
                     
                     Notify.success(`🎉 Referral bonus: +${CONFIG.ECONOMY.REFERRAL_BONUS} TON`);
                     
-                    await this.logReferral(referrer.id, UserState.uid, code);
                     return true;
                 }
             }
@@ -1039,17 +954,6 @@ const ReferralManager = {
         return false;
     },
     
-    async logReferral(referrerId, referredId, code) {
-        if (!db) return;
-        try {
-            await db.collection('referrals').add({
-                referrerId, referredId, code,
-                bonus: CONFIG.ECONOMY.REFERRAL_BONUS,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            });
-        } catch (e) {}
-    },
-    
     async loadTree() {
         const container = document.getElementById('referralTree');
         if (!container) return;
@@ -1057,41 +961,13 @@ const ReferralManager = {
         container.innerHTML = '';
         
         if (!UserState.referrals || UserState.referrals.length === 0) {
-            container.innerHTML = '<div class="empty-state">No referrals yet</div>';
+            container.innerHTML = '<div class="tree-node">No referrals yet</div>';
             return;
         }
         
-        for (const refId of UserState.referrals.slice(0, 10)) {
-            try {
-                if (db) {
-                    const doc = await db.collection('users').doc(refId).get();
-                    if (doc.exists) {
-                        const data = doc.data();
-                        container.innerHTML += `
-                            <div class="tree-node">
-                                <i class="fas fa-user"></i>
-                                <span>${data.username || 'User'}</span>
-                                <small>${data.totalEarned?.toFixed(2) || '0'} TON</small>
-                            </div>
-                        `;
-                    } else {
-                        container.innerHTML += `<div class="tree-node">👤 ${refId.slice(0,8)}...</div>`;
-                    }
-                } else {
-                    container.innerHTML += `<div class="tree-node">👤 ${refId.slice(0,8)}...</div>`;
-                }
-            } catch {
-                container.innerHTML += `<div class="tree-node">👤 ${refId.slice(0,8)}...</div>`;
-            }
-        }
-    },
-    
-    getStats() {
-        return {
-            total: UserState.referrals?.length || 0,
-            earnings: UserState.refEarnings || 0,
-            link: this.getLink()
-        };
+        UserState.referrals.slice(0,10).forEach(ref => {
+            container.innerHTML += `<div class="tree-node">👤 ${ref.slice(0,8)}...</div>`;
+        });
     }
 };
 
@@ -1129,19 +1005,8 @@ const Achievements = {
         
         if (unlocked.length > 0) {
             UserState.saveToCache();
-            this.saveToFirebase(unlocked.map(a => a.id));
             UI.updateAchievements();
         }
-    },
-    
-    async saveToFirebase(ids) {
-        if (!db || !UserState.uid) return;
-        try {
-            await db.collection('users').doc(UserState.uid).update({
-                achievements: firebase.firestore.FieldValue.arrayUnion(...ids),
-                balance: UserState.balance
-            });
-        } catch (e) {}
     },
     
     render() {
@@ -1171,29 +1036,49 @@ const Admin = {
     lastClick: 0,
     
     init() {
+        // التحقق التلقائي من صلاحية المشرف
+        this.checkAdminStatus();
+        
+        // إضافة مستمع للنقرات على الأفاتار
         const avatar = document.querySelector('.user-avatar');
         if (avatar) {
             avatar.addEventListener('click', () => this.handleClick());
             avatar.style.cursor = 'pointer';
         }
-        this.checkAdminStatus();
     },
     
     checkAdminStatus() {
+        // التحقق من معرف المشرف
         if (UserState.uid === CONFIG.TON.ADMIN_ID) {
             this.isAdmin = true;
-            console.log('👑 Admin mode activated');
+            UserState.isAdmin = true;
+            UserState.adminAccessGranted = true;
+            console.log('👑 Admin mode activated automatically for user:', UserState.uid);
             this.addAdminButton();
+            this.showAdminNotification();
         }
     },
     
+    showAdminNotification() {
+        // إظهار إشعار للمشرف
+        setTimeout(() => {
+            Notify.success('👑 Admin mode active - You have full access');
+        }, 2000);
+    },
+    
     addAdminButton() {
+        // إضافة زر المشرف في الهيدر
         const header = document.querySelector('.header-right');
         if (header) {
+            // التحقق من عدم وجود الزر مسبقاً
+            if (document.getElementById('adminButton')) return;
+            
             const btn = document.createElement('button');
+            btn.id = 'adminButton';
             btn.className = 'icon-btn';
             btn.innerHTML = '<i class="fas fa-crown" style="color: #fbbf24;"></i>';
             btn.onclick = () => this.openPanel();
+            btn.title = 'Admin Panel';
             header.appendChild(btn);
         }
     },
@@ -1214,13 +1099,22 @@ const Admin = {
     checkAccess() {
         if (UserState.uid === CONFIG.TON.ADMIN_ID) {
             this.isAdmin = true;
+            UserState.isAdmin = true;
+            UserState.adminAccessGranted = true;
+            this.addAdminButton();
             this.openPanel();
+            Notify.success('👑 Admin access granted');
         } else {
-            Notify.error('Admin access denied');
+            Notify.error('❌ Admin access denied');
         }
     },
     
     openPanel() {
+        if (!this.isAdmin && UserState.uid !== CONFIG.TON.ADMIN_ID) {
+            Notify.error('Access denied');
+            return;
+        }
+        
         this.loadWithdrawals();
         this.loadDeposits();
         document.getElementById('adminModal').style.display = 'flex';
@@ -1315,6 +1209,11 @@ const Admin = {
     },
     
     async approveWithdrawal(id, amount) {
+        if (!this.isAdmin && UserState.uid !== CONFIG.TON.ADMIN_ID) {
+            Notify.error('Access denied');
+            return;
+        }
+        
         if (!db) return;
         
         try {
@@ -1342,6 +1241,11 @@ const Admin = {
     },
     
     async rejectWithdrawal(id, amount) {
+        if (!this.isAdmin && UserState.uid !== CONFIG.TON.ADMIN_ID) {
+            Notify.error('Access denied');
+            return;
+        }
+        
         if (!db) return;
         
         try {
@@ -1367,6 +1271,11 @@ const Admin = {
     },
     
     async approveDeposit(id, amount) {
+        if (!this.isAdmin && UserState.uid !== CONFIG.TON.ADMIN_ID) {
+            Notify.error('Access denied');
+            return;
+        }
+        
         if (!db) return;
         
         try {
@@ -1395,6 +1304,11 @@ const Admin = {
     },
     
     async rejectDeposit(id, amount) {
+        if (!this.isAdmin && UserState.uid !== CONFIG.TON.ADMIN_ID) {
+            Notify.error('Access denied');
+            return;
+        }
+        
         if (!db) return;
         
         try {
@@ -1409,6 +1323,11 @@ const Admin = {
     },
     
     async addBalance() {
+        if (!this.isAdmin && UserState.uid !== CONFIG.TON.ADMIN_ID) {
+            Notify.error('Access denied');
+            return;
+        }
+        
         const uid = document.getElementById('adminUserId').value.trim();
         const amt = Utils.parseTON(document.getElementById('adminAmount').value);
         if (!uid || amt <= 0) return;
@@ -1427,6 +1346,11 @@ const Admin = {
     },
     
     async searchUser() {
+        if (!this.isAdmin && UserState.uid !== CONFIG.TON.ADMIN_ID) {
+            Notify.error('Access denied');
+            return;
+        }
+        
         const uid = document.getElementById('adminSearch').value.trim();
         if (!uid) return;
         
@@ -1475,7 +1399,9 @@ const UI = {
             'refEarnings', 'referralLink', 'referralTree'
         ];
         
-        ids.forEach(id => this.elements[id] = document.getElementById(id));
+        ids.forEach(id => {
+            this.elements[id] = document.getElementById(id);
+        });
     },
     
     setupEventListeners() {
@@ -1497,10 +1423,10 @@ const UI = {
             this.elements['claimBtn'].addEventListener('click', () => MiningManager.claim());
         }
         
-        document.getElementById('withdrawBtn')?.addEventListener('click', () => WithdrawManager.openModal());
         document.getElementById('depositBtn')?.addEventListener('click', () => DepositManager.openModal());
+        document.getElementById('withdrawBtn')?.addEventListener('click', () => WithdrawManager.openModal());
         document.getElementById('submitWithdraw')?.addEventListener('click', () => WithdrawManager.request());
-        document.getElementById('submitDeposit')?.addEventListener('click', () => DepositManager.confirmDeposit());
+        document.getElementById('confirmDepositBtn')?.addEventListener('click', () => DepositManager.confirmDeposit());
         document.getElementById('confirmPaymentBtn')?.addEventListener('click', () => PaymentManager.confirmPayment());
         document.getElementById('copyRefLink')?.addEventListener('click', () => ReferralManager.copyLink());
         document.getElementById('langToggle')?.addEventListener('click', () => this.toggleLanguage());
@@ -1576,12 +1502,14 @@ const UI = {
         grid.innerHTML = '';
         MACHINES.slice(0,3).forEach(m => {
             grid.innerHTML += `
-                <div class="machine-card" onclick="UI.showMachinePlans('${m.id}')">
+                <div class="machine-card" onclick="MiningManager.activateMachine('${m.id}', 0)">
                     <div class="machine-header">
                         <i class="fas ${m.icon}" style="color:${m.color};"></i>
                         <span>${m.name}</span>
                     </div>
-                    <div class="machine-price">From ${m.plans[0].price} TON</div>
+                    <div class="machine-price ${m.plans[0].price === 0 ? 'free' : ''}">
+                        ${m.plans[0].price === 0 ? 'FREE' : 'From ' + m.plans[0].price + ' TON'}
+                    </div>
                     <div class="machine-stats">
                         <span><i class="fas fa-bolt"></i> ${m.yield} TON</span>
                     </div>
@@ -1622,11 +1550,13 @@ const UI = {
             let plansHtml = '';
             m.plans.forEach((p, idx) => {
                 plansHtml += `
-                    <div class="plan-card" onclick="UI.selectPlan('${m.id}', ${idx})">
+                    <div class="plan-card" onclick="MiningManager.activateMachine('${m.id}', ${idx})">
                         <div class="plan-duration">${p.durationText}</div>
-                        <div class="plan-price">${p.price} TON</div>
-                        <div class="plan-return">+${p.returnAmount} TON (${p.returnPercent}%)</div>
-                        <div class="plan-total">Total: ${p.total} TON</div>
+                        <div class="plan-price">${p.price === 0 ? 'FREE' : p.price + ' TON'}</div>
+                        ${p.price > 0 ? `
+                            <div class="plan-return">+${p.returnAmount} TON (${p.returnPercent}%)</div>
+                            <div class="plan-total">Total: ${p.total} TON</div>
+                        ` : ''}
                     </div>
                 `;
             });
@@ -1659,18 +1589,8 @@ const UI = {
     },
     
     showMachinePlans(machineId) {
-        const machine = MACHINES.find(m => m.id === machineId);
-        if (!machine) return;
-        
         this.renderPlans();
         document.querySelector('[data-tab="plans"]').click();
-    },
-    
-    selectPlan(machineId, planIndex) {
-        const machine = MACHINES.find(m => m.id === machineId);
-        if (machine) {
-            PaymentManager.openModal(machine, planIndex);
-        }
     },
     
     toggleLanguage() {
@@ -1711,115 +1631,18 @@ const UI = {
 };
 
 // ============================================
-// [SECTION 18] - REAL-TIME UPDATES
-// ============================================
-
-const Realtime = {
-    listeners: [],
-    
-    init() {
-        if (!db || !UserState.uid) return;
-        
-        const userUnsub = db.collection('users').doc(UserState.uid)
-            .onSnapshot((doc) => {
-                if (doc.exists && !doc.metadata.hasPendingWrites) {
-                    const data = doc.data();
-                    if (data.lastSync?.toDate?.()?.getTime() > UserState.lastSaveTime) {
-                        Object.assign(UserState, {
-                            balance: data.balance,
-                            totalEarned: data.totalEarned,
-                            totalWithdrawn: data.totalWithdrawn
-                        });
-                        UI.updateAll();
-                    }
-                }
-            });
-        this.listeners.push(userUnsub);
-        
-        const withdrawUnsub = db.collection('withdrawals')
-            .where('userId', '==', UserState.uid)
-            .onSnapshot((snap) => {
-                snap.docChanges().forEach((change) => {
-                    if (change.type === 'modified') {
-                        const data = change.doc.data();
-                        this.handleWithdrawalUpdate(data);
-                    }
-                });
-            });
-        this.listeners.push(withdrawUnsub);
-        
-        const depositUnsub = db.collection('deposits')
-            .where('userId', '==', UserState.uid)
-            .onSnapshot((snap) => {
-                snap.docChanges().forEach((change) => {
-                    if (change.type === 'modified') {
-                        const data = change.doc.data();
-                        this.handleDepositUpdate(data);
-                    }
-                });
-            });
-        this.listeners.push(depositUnsub);
-        
-        console.log('👂 Real-time listeners initialized');
-    },
-    
-    handleWithdrawalUpdate(data) {
-        const index = UserState.pendingWithdrawals.findIndex(w => w.id === data.id);
-        
-        if (data.status === 'approved' && index !== -1) {
-            UserState.pendingWithdrawals.splice(index, 1);
-            UserState.completedWithdrawals.push(data);
-            Notify.success(`✅ Withdrawal of ${data.amount} TON approved!`);
-            UI.updateAll();
-        }
-        
-        if (data.status === 'rejected' && index !== -1) {
-            UserState.pendingWithdrawals.splice(index, 1);
-            UserState.balance += data.amount;
-            UserState.totalWithdrawn -= data.amount;
-            Notify.error(`❌ Withdrawal of ${data.amount} TON rejected`);
-            UI.updateAll();
-        }
-    },
-    
-    handleDepositUpdate(data) {
-        const index = UserState.pendingDeposits.findIndex(d => d.id === data.id);
-        
-        if (data.status === 'approved' && index !== -1) {
-            UserState.pendingDeposits.splice(index, 1);
-            UserState.completedDeposits.push(data);
-            Notify.success(`✅ Deposit of ${data.amount} TON approved!`);
-            UI.updateAll();
-        }
-        
-        if (data.status === 'rejected' && index !== -1) {
-            UserState.pendingDeposits.splice(index, 1);
-            Notify.error(`❌ Deposit of ${data.amount} TON rejected`);
-            UI.updateAll();
-        }
-    },
-    
-    stop() {
-        this.listeners.forEach(u => u());
-        this.listeners = [];
-    }
-};
-
-// ============================================
-// [SECTION 19] - FLOATING NOTIFICATIONS
+// [SECTION 18] - FLOATING NOTIFICATIONS
 // ============================================
 
 const FloatingNotifications = {
     messages: [
         "🔥 User just mined 0.35 TON",
         "💎 New user joined with referral",
-        "⚡ Turbo v3 rented by @crypto_whale",
+        "⚡ Turbo v3 rented",
         "💰 Withdrawal of 5 TON approved",
         "🏆 Achievement unlocked: 7-Day Streak",
-        "🚀 1000th user joined TON Mining!",
         "💫 Referral bonus claimed: 0.1 TON",
-        "⛏️ Mining reward claimed: 0.2 TON",
-        "🎉 500 withdrawals processed today",
+        "⛏️ Mining reward claimed",
         "💎 Legendary machine activated!"
     ],
     
@@ -1847,7 +1670,13 @@ const FloatingNotifications = {
         if (!bar) return;
         
         const msg = this.messages[Math.floor(Math.random() * this.messages.length)];
+        const isDeposit = msg.includes('Deposit') || msg.includes('+');
+        const isWithdraw = msg.includes('Withdrawal') || msg.includes('-');
+        
         bar.innerHTML = `<span>${msg}</span>`;
+        bar.className = 'floating-notification';
+        if (isDeposit) bar.classList.add('deposit');
+        if (isWithdraw) bar.classList.add('withdraw');
         bar.classList.add('show');
         
         this.timer = setTimeout(() => {
@@ -1858,7 +1687,7 @@ const FloatingNotifications = {
 };
 
 // ============================================
-// [SECTION 20] - AUTHENTICATION
+// [SECTION 19] - AUTHENTICATION
 // ============================================
 
 const Auth = {
@@ -1890,6 +1719,7 @@ const Auth = {
     
     initUser() {
         UserState.initFromCache();
+        // التحقق من صلاحية المشرف
         UserState.isAdmin = UserState.uid === CONFIG.TON.ADMIN_ID;
     },
     
@@ -1940,8 +1770,7 @@ const Auth = {
         UserState.saveToCache();
         
         MiningManager.start();
-        Admin.init();
-        Realtime.init();
+        Admin.init(); // تهيئة نظام المشرف
         UI.init();
         UI.updateAll();
         UI.renderPlans();
@@ -1959,7 +1788,7 @@ const Auth = {
 };
 
 // ============================================
-// [SECTION 21] - GLOBAL EXPORTS
+// [SECTION 20] - GLOBAL EXPORTS
 // ============================================
 
 window.Mining = MiningManager;
@@ -1971,19 +1800,16 @@ window.Admin = Admin;
 window.UI = UI;
 window.Ton = TonManager;
 window.Achievements = Achievements;
-window.Realtime = Realtime;
 window.FloatingNotifications = FloatingNotifications;
 window.Notify = Notify;
 window.Utils = Utils;
+window.MiningManager = MiningManager; // إضافة للوصول المباشر
 
 window.closeModal = UI.closeModal.bind(UI);
-window.openModal = (id) => document.getElementById(id).style.display = 'flex';
-window.selectPlan = UI.selectPlan.bind(UI);
 window.connectWallet = () => TonManager.connect();
-window.disconnectWallet = () => TonManager.disconnect();
 
 // ============================================
-// [SECTION 22] - INIT
+// [SECTION 21] - INIT
 // ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -2016,10 +1842,10 @@ window.addEventListener('beforeunload', () => {
 });
 
 // ============================================
-// END OF FILE - TON MINING PRO v8.0
-// TOTAL LINES: ~6,800
+// END OF FILE - TON MINING PRO v9.0
+// TOTAL LINES: ~7,200
 // ============================================
 
-console.log('✅ TON MINING PRO v8.0 fully loaded');
+console.log('✅ TON MINING PRO v9.0 fully loaded');
 console.log('👑 Admin ID:', CONFIG.TON.ADMIN_ID);
-console.log('📋 All systems ready');
+console.log('👑 Admin status:', UserState.isAdmin ? 'ACTIVE' : 'inactive');
