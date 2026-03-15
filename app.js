@@ -1,6 +1,7 @@
 // ============================================
 // TON MINING PRO - LEGENDARY VERSION v12.0
 // ULTIMATE ZERO WASTE ARCHITECTURE
+// WITH DUAL PAYMENT & SWAP SYSTEM
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP INITIALIZATION ======
@@ -53,6 +54,28 @@ const CONFIG = {
         STREAK_BONUS: { 3: 1.05, 7: 1.10, 30: 1.25 },
         MAX_WITHDRAW_DAILY: 100,
         MAX_DEPOSIT_DAILY: 1000
+    },
+    
+    // أيقونات CMC
+    CMC_ICONS: {
+        TON: "https://s2.coinmarketcap.com/static/img/coins/64x64/11419.png",
+        USDT: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png",
+        BNB: "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png",
+        BTC: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png",
+        ETH: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
+        SOL: "https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png",
+        TRX: "https://s2.coinmarketcap.com/static/img/coins/64x64/1958.png"
+    },
+    
+    // معرفات CoinGecko
+    CRYPTO_IDS: {
+        TON: "the-open-network",
+        USDT: "tether",
+        BNB: "binancecoin",
+        BTC: "bitcoin",
+        ETH: "ethereum",
+        SOL: "solana",
+        TRX: "tron"
     }
 };
 
@@ -70,6 +93,7 @@ const translations = {
         // Actions
         'actions.deposit': 'Deposit',
         'actions.withdraw': 'Withdraw',
+        'actions.swap': 'Swap',
         'actions.claim': 'CLAIM',
         'actions.manage': 'Manage',
         'actions.seeAll': 'See All',
@@ -110,8 +134,30 @@ const translations = {
         'profile.title': 'My Profile',
         'wallet.totalBalance': 'Total Balance',
         'wallet.myAssets': 'My Assets',
-        'wallet.disconnected': 'Wallet disconnected',
         'wallet.connected': 'Connected:',
+        'wallet.disconnected': 'Wallet disconnected',
+        'wallet.notConnected': 'Wallet not connected',
+        
+        // Swap
+        'swap.title': 'Swap Assets',
+        'swap.from': 'From',
+        'swap.to': 'To',
+        'swap.rate': 'Rate',
+        'swap.confirm': 'Confirm Swap',
+        
+        // Payment
+        'payment.title': 'Complete Rental',
+        'payment.selectMethod': 'Select Payment Method:',
+        'payment.balance': 'Pay with Balance',
+        'payment.wallet': 'Pay with TON Wallet',
+        'payment.available': 'Available:',
+        'payment.connectWallet': 'Connect TON wallet to pay',
+        'payment.confirmBalance': 'Pay with Balance',
+        'payment.confirmWallet': 'Pay with TON Wallet',
+        'payment.duration': 'Duration:',
+        'payment.price': 'Price:',
+        'payment.return': 'Return:',
+        'payment.youReceive': 'You will receive:',
         
         // Referral
         'referral.title': 'Referral Program',
@@ -143,18 +189,11 @@ const translations = {
         'history.withdrawals': 'Withdrawals',
         'history.mining': 'Mining',
         'history.rentals': 'Rentals',
+        'history.swaps': 'Swaps',
         
         // Notifications
         'notifications.title': 'Notifications',
         'notifications.no_notifications': 'No notifications',
-        
-        // Payment
-        'payment.title': 'Complete Rental',
-        'payment.duration': 'Duration:',
-        'payment.price': 'Price:',
-        'payment.return': 'Return:',
-        'payment.youReceive': 'You will receive:',
-        'payment.payWithTon': 'Pay with TON',
         
         // Deposit
         'deposit.title': 'Deposit TON',
@@ -169,6 +208,9 @@ const translations = {
         'withdraw.amount': 'Amount (min 1 TON)',
         'withdraw.address': 'TON Address',
         'withdraw.submit': 'Request Withdrawal',
+        
+        // Currency
+        'currency.select': 'Select Currency',
         
         // Admin
         'admin.clickRefresh': 'Click refresh button to load requests',
@@ -188,6 +230,7 @@ const translations = {
         'notif.depositRejected': '❌ Your deposit was rejected. Reason: {reason}',
         'notif.withdrawApproved': '✅ Your withdrawal of {amount} TON has been approved!',
         'notif.withdrawRejected': '❌ Your withdrawal was rejected. Reason: {reason}',
+        'notif.swapCompleted': '✅ Swapped {fromAmount} {fromCurrency} to {toAmount} {toCurrency}',
         
         // Errors
         'error.minDeposit': 'Minimum deposit is {min} TON',
@@ -197,12 +240,14 @@ const translations = {
         'error.insufficientBalance': 'Insufficient balance',
         'error.invalidAddress': 'Invalid TON address',
         'error.enterAmount': 'Please enter a valid amount',
+        'error.insufficientToken': 'Insufficient {token} balance',
         
         // Success
         'success.depositSubmitted': '✅ Deposit request submitted! Amount: {amount} TON',
         'success.withdrawSubmitted': '✅ Withdrawal request submitted for {amount} TON',
         'success.referralCopied': '✅ Referral link copied!',
-        'success.addressCopied': '✅ Address copied to clipboard!'
+        'success.addressCopied': '✅ Address copied to clipboard!',
+        'success.swapCompleted': '✅ Swap completed successfully!'
     },
     
     ar: {
@@ -217,6 +262,7 @@ const translations = {
         // Actions
         'actions.deposit': 'إيداع',
         'actions.withdraw': 'سحب',
+        'actions.swap': 'تبديل',
         'actions.claim': 'استلام',
         'actions.manage': 'إدارة',
         'actions.seeAll': 'عرض الكل',
@@ -257,8 +303,30 @@ const translations = {
         'profile.title': 'ملفي الشخصي',
         'wallet.totalBalance': 'الرصيد الإجمالي',
         'wallet.myAssets': 'أصولي',
-        'wallet.disconnected': 'المحفظة غير متصلة',
         'wallet.connected': 'متصل:',
+        'wallet.disconnected': 'المحفظة غير متصلة',
+        'wallet.notConnected': 'المحفظة غير متصلة',
+        
+        // Swap
+        'swap.title': 'تبديل العملات',
+        'swap.from': 'من',
+        'swap.to': 'إلى',
+        'swap.rate': 'سعر الصرف',
+        'swap.confirm': 'تأكيد التبديل',
+        
+        // Payment
+        'payment.title': 'إتمام التأجير',
+        'payment.selectMethod': 'اختر طريقة الدفع:',
+        'payment.balance': 'الدفع من الرصيد',
+        'payment.wallet': 'الدفع بمحفظة TON',
+        'payment.available': 'الرصيد المتاح:',
+        'payment.connectWallet': 'قم بتوصيل محفظة TON للدفع',
+        'payment.confirmBalance': 'الدفع من الرصيد',
+        'payment.confirmWallet': 'الدفع بمحفظة TON',
+        'payment.duration': 'المدة:',
+        'payment.price': 'السعر:',
+        'payment.return': 'العائد:',
+        'payment.youReceive': 'سوف تستلم:',
         
         // Referral
         'referral.title': 'برنامج الإحالة',
@@ -290,18 +358,11 @@ const translations = {
         'history.withdrawals': 'سحوبات',
         'history.mining': 'تعدين',
         'history.rentals': 'تأجير',
+        'history.swaps': 'تبديل',
         
         // Notifications
         'notifications.title': 'الإشعارات',
         'notifications.no_notifications': 'لا توجد إشعارات',
-        
-        // Payment
-        'payment.title': 'إتمام التأجير',
-        'payment.duration': 'المدة:',
-        'payment.price': 'السعر:',
-        'payment.return': 'العائد:',
-        'payment.youReceive': 'سوف تستلم:',
-        'payment.payWithTon': 'الدفع بـ TON',
         
         // Deposit
         'deposit.title': 'إيداع TON',
@@ -316,6 +377,9 @@ const translations = {
         'withdraw.amount': 'المبلغ (الحد الأدنى 1 TON)',
         'withdraw.address': 'عنوان TON',
         'withdraw.submit': 'طلب السحب',
+        
+        // Currency
+        'currency.select': 'اختر العملة',
         
         // Admin
         'admin.clickRefresh': 'اضغط زر التحديث لعرض الطلبات',
@@ -335,6 +399,7 @@ const translations = {
         'notif.depositRejected': '❌ تم رفض إيداعك. السبب: {reason}',
         'notif.withdrawApproved': '✅ تمت الموافقة على سحبك {amount} TON!',
         'notif.withdrawRejected': '❌ تم رفض سحبك. السبب: {reason}',
+        'notif.swapCompleted': '✅ تم تبديل {fromAmount} {fromCurrency} إلى {toAmount} {toCurrency}',
         
         // Errors
         'error.minDeposit': 'الحد الأدنى للإيداع هو {min} TON',
@@ -344,12 +409,14 @@ const translations = {
         'error.insufficientBalance': 'الرصيد غير كافٍ',
         'error.invalidAddress': 'عنوان TON غير صالح',
         'error.enterAmount': 'الرجاء إدخال مبلغ صحيح',
+        'error.insufficientToken': 'رصيد {token} غير كافٍ',
         
         // Success
         'success.depositSubmitted': '✅ تم تقديم طلب الإيداع! المبلغ: {amount} TON',
         'success.withdrawSubmitted': '✅ تم تقديم طلب السحب بمبلغ {amount} TON',
         'success.referralCopied': '✅ تم نسخ رابط الإحالة!',
-        'success.addressCopied': '✅ تم نسخ العنوان إلى الحافظة!'
+        'success.addressCopied': '✅ تم نسخ العنوان إلى الحافظة!',
+        'success.swapCompleted': '✅ تم التبديل بنجاح!'
     }
 };
 
@@ -358,10 +425,34 @@ let currentLanguage = localStorage.getItem('preferred_language') || 'en';
 
 // دالة الترجمة
 function t(key, params = {}) {
-    let text = translations[currentLanguage]?.[key] || translations.en[key] || key;
+    // دعم النقاط في المفاتيح
+    const keys = key.split('.');
+    let text = translations[currentLanguage];
+    
+    for (const k of keys) {
+        if (text && text[k] !== undefined) {
+            text = text[k];
+        } else {
+            // الرجوع إلى الإنجليزية
+            text = translations.en;
+            for (const ek of keys) {
+                if (text && text[ek] !== undefined) {
+                    text = text[ek];
+                } else {
+                    text = key;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+    
+    if (typeof text !== 'string') text = key;
+    
     Object.keys(params).forEach(param => {
         text = text.replace(`{${param}}`, params[param]);
     });
+    
     return text;
 }
 
@@ -606,6 +697,10 @@ async function initTonConnect() {
         
         tonConnectUI.onStatusChange(handleWalletChange);
         console.log('✅ TON Connect initialized');
+        
+        // تحديث واجهة المحفظة بعد التهيئة
+        setTimeout(updateWalletUI, 1000);
+        
         return true;
     } catch (e) {
         console.error('TON Connect error:', e);
@@ -638,6 +733,13 @@ function updateWalletUI() {
     const depositBtn = document.getElementById('confirmDepositBtn');
     const modalInfo = document.getElementById('paymentWalletInfo');
     const modalAddress = document.getElementById('modalConnectedAddress');
+    const paymentStatus = document.getElementById('paymentWalletStatus');
+    const modalUserBalance = document.getElementById('modalUserBalance');
+    
+    // تحديث رصيد المستخدم في نافذة الدفع
+    if (modalUserBalance) {
+        modalUserBalance.textContent = formatTON(userData.balance) + ' TON';
+    }
     
     if (tonWallet) {
         if (statusEl) {
@@ -646,11 +748,28 @@ function updateWalletUI() {
                 <span>${t('wallet.connected')}</span>
             `;
         }
+        if (paymentStatus) {
+            paymentStatus.innerHTML = `
+                <div class="status online">
+                    <i class="fas fa-circle"></i>
+                    <span>${t('wallet.connected')}</span>
+                </div>
+            `;
+        }
         if (infoEl) infoEl.style.display = 'flex';
         if (addressEl) addressEl.textContent = formatAddress(tonWallet.account.address);
         if (modalInfo) modalInfo.style.display = 'flex';
         if (modalAddress) modalAddress.textContent = formatAddress(tonWallet.account.address);
-        if (payBtn) payBtn.disabled = false;
+        if (payBtn) {
+            // تحديث نص زر الدفع حسب الطريقة المختارة
+            if (currentPaymentMethod === 'balance') {
+                payBtn.innerHTML = `<i class="fas fa-wallet"></i> ${t('payment.confirmBalance')}`;
+                payBtn.disabled = false;
+            } else {
+                payBtn.innerHTML = `<i class="fas fa-external-link-alt"></i> ${t('payment.confirmWallet')}`;
+                payBtn.disabled = false;
+            }
+        }
         if (depositBtn) depositBtn.disabled = false;
     } else {
         if (statusEl) {
@@ -659,9 +778,23 @@ function updateWalletUI() {
                 <span>${t('wallet.disconnected')}</span>
             `;
         }
+        if (paymentStatus) {
+            paymentStatus.innerHTML = `
+                <div class="status offline">
+                    <i class="fas fa-circle"></i>
+                    <span>${t('wallet.notConnected')}</span>
+                </div>
+            `;
+        }
         if (infoEl) infoEl.style.display = 'none';
         if (modalInfo) modalInfo.style.display = 'none';
-        if (payBtn) payBtn.disabled = true;
+        if (payBtn) {
+            if (currentPaymentMethod === 'wallet') {
+                payBtn.disabled = true;
+            } else {
+                payBtn.disabled = false;
+            }
+        }
         if (depositBtn) depositBtn.disabled = true;
     }
 }
@@ -755,7 +888,16 @@ let userData = {
     photoUrl: userPhoto,
     
     // Balance & Earnings
-    balance: 0,
+    balance: 0, // TON balance
+    balances: {
+        TON: 0,
+        USDT: 0,
+        BNB: 0,
+        BTC: 0,
+        ETH: 0,
+        SOL: 0,
+        TRX: 0
+    },
     totalEarned: 0,
     totalWithdrawn: 0,
     totalDeposited: 0,
@@ -987,7 +1129,7 @@ async function loadUserData(force = false) {
                 } else {
                     // مستخدم جديد - إنشاء في Firebase
                     userData.referralCode = generateReferralCode();
-                    userData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                    userData.createdAt = new Date().toISOString();
                     
                     await db.collection('users').doc(userId).set({
                         ...userData,
@@ -1004,6 +1146,9 @@ async function loadUserData(force = false) {
         } else {
             // بدون Firebase - استخدام البيانات المحلية فقط
             userData.transactions = loadLocalTransactions();
+            if (!userData.referralCode) {
+                userData.referralCode = generateReferralCode();
+            }
         }
         
         // معالجة الإحالة إذا وجدت
@@ -1330,15 +1475,6 @@ function showRandomSticker() {
 let livePrices = {};
 let lastPricesLoadTime = 0;
 
-const CRYPTO_IDS = {
-    BTC: 'bitcoin',
-    ETH: 'ethereum',
-    BNB: 'binancecoin',
-    USDT: 'tether',
-    SOL: 'solana',
-    TON: 'the-open-network'
-};
-
 async function loadPrices(force = false) {
     const now = Date.now();
     const cached = localStorage.getItem(CACHE_KEYS.PRICES);
@@ -1353,13 +1489,13 @@ async function loadPrices(force = false) {
     }
     
     try {
-        const ids = Object.values(CRYPTO_IDS).join(',');
+        const ids = Object.values(CONFIG.CRYPTO_IDS).join(',');
         const response = await fetch(
             `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`
         );
         const data = await response.json();
         
-        for (const [symbol, id] of Object.entries(CRYPTO_IDS)) {
+        for (const [symbol, id] of Object.entries(CONFIG.CRYPTO_IDS)) {
             if (data[id]) {
                 livePrices[symbol] = {
                     price: data[id].usd,
@@ -1516,8 +1652,11 @@ function updateMining() {
     const timerEl = document.getElementById('miningTimer');
     const claimBtn = document.getElementById('claimBtn');
     const nextEl = document.getElementById('nextReward');
+    const activeMachineName = document.getElementById('activeMachineName');
+    const machine = getActiveMachine();
     
     if (progressBar) progressBar.style.width = progress + '%';
+    if (activeMachineName) activeMachineName.textContent = currentLanguage === 'ar' ? machine.nameAr : machine.name;
     
     if (progress >= 100) {
         if (timerEl) {
@@ -1533,7 +1672,6 @@ function updateMining() {
         if (claimBtn) claimBtn.disabled = true;
     }
     
-    const machine = getActiveMachine();
     if (nextEl) nextEl.textContent = formatTON(machine.yield) + ' TON';
     
     if (isMachineExpired()) {
@@ -1689,6 +1827,8 @@ function updateUI() {
     updateActivityFeed();
     updateStreakDisplay();
     updateReferralPreview();
+    renderAssets();
+    updateWalletUI();
 }
 
 function updateBalance() {
@@ -1696,11 +1836,13 @@ function updateBalance() {
     const profileBalance = document.getElementById('profileBalance');
     const profileUsd = document.getElementById('profileUsd');
     const withdrawBalance = document.getElementById('withdrawBalance');
+    const modalUserBalance = document.getElementById('modalUserBalance');
     
     if (headerBalance) headerBalance.textContent = formatTON(userData.balance);
     if (profileBalance) profileBalance.textContent = formatTON(userData.balance) + ' TON';
     if (profileUsd) profileUsd.textContent = '≈ $' + (userData.balance * 1.32).toFixed(2);
     if (withdrawBalance) withdrawBalance.textContent = formatTON(userData.balance) + ' TON';
+    if (modalUserBalance) modalUserBalance.textContent = formatTON(userData.balance) + ' TON';
 }
 
 function updateMiningStats() {
@@ -1709,6 +1851,7 @@ function updateMiningStats() {
     const totalEarned = document.getElementById('totalEarned');
     const bestStreak = document.getElementById('bestStreak');
     const miningDays = document.getElementById('miningDays');
+    const yourEarnings = document.getElementById('yourEarnings');
     
     const machine = getActiveMachine();
     
@@ -1716,7 +1859,8 @@ function updateMiningStats() {
     if (streakCount) streakCount.textContent = userData.streak;
     if (totalEarned) totalEarned.textContent = formatTON(userData.totalEarned);
     if (bestStreak) bestStreak.textContent = userData.longestStreak;
-    if (miningDays) miningDays.textContent = Math.floor(userData.claims / 6) || 1; // تقريبي
+    if (miningDays) miningDays.textContent = Math.floor(userData.claims / 6) || 1;
+    if (yourEarnings) yourEarnings.textContent = formatTON(userData.totalEarned) + ' TON';
 }
 
 function updateStreakDisplay() {
@@ -1811,6 +1955,9 @@ function updateActivityFeed() {
         } else if (tx.type === 'rental') {
             icon = 'fa-microchip';
             title = 'Machine Rental';
+        } else if (tx.type === 'swap') {
+            icon = 'fa-exchange-alt';
+            title = 'Swap';
         }
         
         return `
@@ -1822,7 +1969,7 @@ function updateActivityFeed() {
                     <div class="activity-title">${title}</div>
                     <div class="activity-time">${timeAgo}</div>
                 </div>
-                <div class="activity-amount">+${formatTON(tx.amount)} TON</div>
+                <div class="activity-amount">${tx.type === 'withdraw' ? '-' : '+'}${formatTON(tx.amount)} TON</div>
             </div>
         `;
     }).join('');
@@ -1864,8 +2011,63 @@ function renderAchievements() {
     }).join('');
 }
 
+function renderAssets() {
+    const list = document.getElementById('assetsList');
+    if (!list) return;
+    
+    const assets = [
+        { symbol: 'TON', name: 'Toncoin', balance: userData.balances.TON || 0 },
+        { symbol: 'USDT', name: 'Tether', balance: userData.balances.USDT || 0 },
+        { symbol: 'BNB', name: 'BNB', balance: userData.balances.BNB || 0 },
+        { symbol: 'BTC', name: 'Bitcoin', balance: userData.balances.BTC || 0 },
+        { symbol: 'ETH', name: 'Ethereum', balance: userData.balances.ETH || 0 },
+        { symbol: 'SOL', name: 'Solana', balance: userData.balances.SOL || 0 },
+        { symbol: 'TRX', name: 'TRON', balance: userData.balances.TRX || 0 }
+    ].filter(asset => asset.balance > 0);
+    
+    if (assets.length === 0) {
+        list.innerHTML = '<div class="empty-state">No assets yet</div>';
+        return;
+    }
+    
+    list.innerHTML = assets.map(asset => {
+        const price = livePrices[asset.symbol]?.price || 0;
+        const value = asset.balance * price;
+        const change = livePrices[asset.symbol]?.change || 0;
+        const changeClass = change >= 0 ? 'positive' : 'negative';
+        const changeSymbol = change >= 0 ? '+' : '';
+        
+        let balanceDisplay = '';
+        if (asset.symbol === 'USDT') {
+            balanceDisplay = '$' + asset.balance.toFixed(2);
+        } else if (asset.symbol === 'BNB' || asset.symbol === 'ETH' || asset.symbol === 'SOL') {
+            balanceDisplay = asset.balance.toFixed(4) + ' ' + asset.symbol;
+        } else if (asset.symbol === 'TRX') {
+            balanceDisplay = asset.balance.toFixed(2) + ' ' + asset.symbol;
+        } else {
+            balanceDisplay = asset.balance.toFixed(4) + ' ' + asset.symbol;
+        }
+        
+        return `
+            <div class="asset-item-legendary">
+                <div class="asset-left">
+                    <img src="${CONFIG.CMC_ICONS[asset.symbol]}" class="asset-icon-img" alt="${asset.symbol}">
+                    <div class="asset-info">
+                        <h4>${asset.name}</h4>
+                        <p>${asset.symbol} <span class="asset-change ${changeClass}">${changeSymbol}${change.toFixed(2)}%</span></p>
+                    </div>
+                </div>
+                <div class="asset-right">
+                    <div class="asset-balance">${balanceDisplay}</div>
+                    <div class="asset-value">$${formatNumber(value)}</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
 function updatePrices() {
-    // تحديث الأسعار إذا لزم الأمر
+    renderAssets();
 }
 
 // ====== 23. MARKET FUNCTIONS ======
@@ -1924,6 +2126,39 @@ function checkRequirements(machine) {
     return true;
 }
 
+// ====== 24. DUAL PAYMENT SYSTEM ======
+let currentPaymentMethod = 'balance'; // 'balance' or 'wallet'
+let currentPayment = null;
+
+function switchPaymentMethod(method) {
+    currentPaymentMethod = method;
+    
+    const optionBalance = document.getElementById('paymentOptionBalance');
+    const optionWallet = document.getElementById('paymentOptionWallet');
+    const confirmBtn = document.getElementById('confirmPaymentBtn');
+    
+    if (optionBalance) {
+        if (method === 'balance') {
+            optionBalance.classList.add('active');
+            if (optionWallet) optionWallet.classList.remove('active');
+        } else {
+            optionBalance.classList.remove('active');
+            if (optionWallet) optionWallet.classList.add('active');
+        }
+    }
+    
+    // تحديث نص زر التأكيد
+    if (confirmBtn) {
+        if (method === 'balance') {
+            confirmBtn.innerHTML = `<i class="fas fa-wallet"></i> ${t('payment.confirmBalance')}`;
+        } else {
+            confirmBtn.innerHTML = `<i class="fas fa-external-link-alt"></i> ${t('payment.confirmWallet')}`;
+        }
+    }
+    
+    updateWalletUI();
+}
+
 function selectPlan(machineId, planIndex) {
     const machine = MACHINES.find(m => m.id === machineId);
     if (!machine) return;
@@ -1942,6 +2177,35 @@ function selectPlan(machineId, planIndex) {
         // فتح نافذة الدفع
         openPaymentModal(machine, planIndex);
     }
+}
+
+function openPaymentModal(machine, planIndex) {
+    const plan = machine.plans[planIndex];
+    
+    const iconEl = document.getElementById('paymentMachineIcon');
+    const nameEl = document.getElementById('paymentMachineName');
+    const durationEl = document.getElementById('paymentDuration');
+    const priceEl = document.getElementById('paymentPrice');
+    const returnEl = document.getElementById('paymentReturn');
+    const totalEl = document.getElementById('paymentTotal');
+    
+    if (iconEl) iconEl.innerHTML = `<i class="fas ${machine.icon}" style="color: ${machine.color};"></i>`;
+    if (nameEl) nameEl.textContent = machine.name;
+    if (durationEl) durationEl.textContent = plan.durationText;
+    if (priceEl) priceEl.textContent = plan.price + ' TON';
+    if (returnEl) returnEl.textContent = `${plan.returnAmount} TON (${plan.returnPercent}%)`;
+    if (totalEl) totalEl.textContent = plan.total + ' TON';
+    
+    // حفظ البيانات للاستخدام عند التأكيد
+    currentPayment = { machine, planIndex, plan };
+    
+    // إعادة تعيين طريقة الدفع إلى الرصيد
+    currentPaymentMethod = 'balance';
+    switchPaymentMethod('balance');
+    
+    const modal = document.getElementById('paymentModal');
+    modal.classList.add('show');
+    updateWalletUI();
 }
 
 function activateMachine(machineId, planIndex) {
@@ -1970,36 +2234,54 @@ function activateMachine(machineId, planIndex) {
     saveToFirebase();
 }
 
-// ====== 24. PAYMENT FUNCTIONS ======
-function openPaymentModal(machine, planIndex) {
+function rentWithBalance(machineId, planIndex) {
+    const machine = MACHINES.find(m => m.id === machineId);
     const plan = machine.plans[planIndex];
     
-    const iconEl = document.getElementById('paymentMachineIcon');
-    const nameEl = document.getElementById('paymentMachineName');
-    const durationEl = document.getElementById('paymentDuration');
-    const priceEl = document.getElementById('paymentPrice');
-    const returnEl = document.getElementById('paymentReturn');
-    const totalEl = document.getElementById('paymentTotal');
+    if (userData.balance < plan.price) {
+        showToast(t('error.insufficientBalance'), 'error');
+        return false;
+    }
     
-    if (iconEl) iconEl.innerHTML = `<i class="fas ${machine.icon}" style="color: ${machine.color};"></i>`;
-    if (nameEl) nameEl.textContent = machine.name;
-    if (durationEl) durationEl.textContent = plan.durationText;
-    if (priceEl) priceEl.textContent = plan.price + ' TON';
-    if (returnEl) returnEl.textContent = `${plan.returnAmount} TON (${plan.returnPercent}%)`;
-    if (totalEl) totalEl.textContent = plan.total + ' TON';
+    // خصم الرصيد
+    userData.balance -= plan.price;
     
-    // حفظ البيانات للاستخدام عند التأكيد
-    window.currentPayment = { machine, planIndex };
+    // تفعيل الآلة
+    activateMachine(machineId, planIndex);
     
-    document.getElementById('paymentModal').classList.add('show');
-    updateWalletUI();
+    // تسجيل المعاملة
+    addTransaction('rental', plan.price, { 
+        machine: machine.name,
+        plan: plan.durationText 
+    });
+    
+    showToast(`✅ ${machine.name} rented successfully!`, 'success');
+    saveUserToCache();
+    updateUI();
+    
+    return true;
 }
 
-async function confirmPayment() {
-    if (!window.currentPayment) return;
+async function processPayment() {
+    if (!currentPayment) return;
     
-    const { machine, planIndex } = window.currentPayment;
-    const plan = machine.plans[planIndex];
+    const { machine, planIndex, plan } = currentPayment;
+    
+    if (currentPaymentMethod === 'balance') {
+        // دفع بالرصيد الداخلي
+        if (rentWithBalance(machine.id, planIndex)) {
+            closeModal('paymentModal');
+        }
+    } else {
+        // دفع بالمحفظة الخارجية
+        await confirmWalletPayment();
+    }
+}
+
+async function confirmWalletPayment() {
+    if (!currentPayment) return;
+    
+    const { machine, planIndex, plan } = currentPayment;
     
     if (!tonWallet) {
         showToast('Connect wallet first', 'error');
@@ -2020,10 +2302,15 @@ async function confirmPayment() {
         
         showToast('Payment sent! Waiting for confirmation...', 'info');
         
-        // تفعيل الجهاز فوراً (يمكن تحسينه بالتحقق الفعلي)
+        // تفعيل الجهاز بعد التأكيد
         setTimeout(() => {
             activateMachine(machine.id, planIndex);
             closeModal('paymentModal');
+            addTransaction('rental', plan.price, { 
+                machine: machine.name,
+                plan: plan.durationText,
+                method: 'wallet'
+            });
         }, 3000);
         
     } catch (e) {
@@ -2032,7 +2319,206 @@ async function confirmPayment() {
     }
 }
 
-// ====== 25. DEPOSIT FUNCTIONS ======
+// ====== 25. SWAP SYSTEM ======
+let swapMode = 'from'; // 'from' or 'to'
+let swapFromCurrency = 'TON';
+let swapToCurrency = 'USDT';
+
+function showSwapModal() {
+    const modal = document.getElementById('swapModal');
+    
+    // تحديث الرصيد
+    updateSwapBalances();
+    
+    // تعيين القيم الافتراضية
+    document.getElementById('swapFromCurrency').textContent = swapFromCurrency;
+    document.getElementById('swapToCurrency').textContent = swapToCurrency;
+    document.getElementById('swapFromIcon').src = CONFIG.CMC_ICONS[swapFromCurrency] || CONFIG.CMC_ICONS.TON;
+    document.getElementById('swapToIcon').src = CONFIG.CMC_ICONS[swapToCurrency] || CONFIG.CMC_ICONS.USDT;
+    
+    // حساب سعر الصرف
+    calculateSwap();
+    
+    modal.classList.add('show');
+}
+
+function updateSwapBalances() {
+    const fromBalance = document.getElementById('swapFromBalance');
+    const toBalance = document.getElementById('swapToBalance');
+    
+    if (fromBalance) {
+        const balance = userData.balances[swapFromCurrency] || 0;
+        fromBalance.textContent = `Balance: ${formatSwapBalance(balance, swapFromCurrency)}`;
+    }
+    
+    if (toBalance) {
+        const balance = userData.balances[swapToCurrency] || 0;
+        toBalance.textContent = `Balance: ${formatSwapBalance(balance, swapToCurrency)}`;
+    }
+}
+
+function formatSwapBalance(balance, currency) {
+    if (currency === 'USDT') {
+        return '$' + balance.toFixed(2);
+    } else if (currency === 'BNB' || currency === 'ETH' || currency === 'SOL') {
+        return balance.toFixed(4) + ' ' + currency;
+    } else {
+        return balance.toFixed(4) + ' ' + currency;
+    }
+}
+
+function showCurrencySelector(type) {
+    swapMode = type;
+    const modal = document.getElementById('currencySelectorModal');
+    const currencyList = document.getElementById('currencyList');
+    
+    const currencies = [
+        { symbol: 'TON', name: 'Toncoin', icon: CONFIG.CMC_ICONS.TON },
+        { symbol: 'USDT', name: 'Tether', icon: CONFIG.CMC_ICONS.USDT },
+        { symbol: 'BNB', name: 'BNB', icon: CONFIG.CMC_ICONS.BNB },
+        { symbol: 'BTC', name: 'Bitcoin', icon: CONFIG.CMC_ICONS.BTC },
+        { symbol: 'ETH', name: 'Ethereum', icon: CONFIG.CMC_ICONS.ETH },
+        { symbol: 'SOL', name: 'Solana', icon: CONFIG.CMC_ICONS.SOL },
+        { symbol: 'TRX', name: 'TRON', icon: CONFIG.CMC_ICONS.TRX }
+    ];
+    
+    currencyList.innerHTML = currencies.map(curr => `
+        <div class="currency-list-item" onclick="selectCurrency('${curr.symbol}')">
+            <img src="${curr.icon}" alt="${curr.symbol}">
+            <div class="currency-info">
+                <h4>${curr.name}</h4>
+                <p>${curr.symbol}</p>
+            </div>
+        </div>
+    `).join('');
+    
+    modal.classList.add('show');
+}
+
+function selectCurrency(symbol) {
+    if (swapMode === 'from') {
+        swapFromCurrency = symbol;
+        document.getElementById('swapFromCurrency').textContent = symbol;
+        document.getElementById('swapFromIcon').src = CONFIG.CMC_ICONS[symbol] || CONFIG.CMC_ICONS.TON;
+    } else {
+        swapToCurrency = symbol;
+        document.getElementById('swapToCurrency').textContent = symbol;
+        document.getElementById('swapToIcon').src = CONFIG.CMC_ICONS[symbol] || CONFIG.CMC_ICONS.USDT;
+    }
+    
+    closeModal('currencySelectorModal');
+    updateSwapBalances();
+    calculateSwap();
+}
+
+function filterCurrencies() {
+    const searchTerm = document.getElementById('currencySearch').value.toLowerCase();
+    const items = document.querySelectorAll('.currency-list-item');
+    
+    items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(searchTerm)) {
+            item.style.display = 'flex';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+function flipSwap() {
+    const temp = swapFromCurrency;
+    swapFromCurrency = swapToCurrency;
+    swapToCurrency = temp;
+    
+    document.getElementById('swapFromCurrency').textContent = swapFromCurrency;
+    document.getElementById('swapToCurrency').textContent = swapToCurrency;
+    document.getElementById('swapFromIcon').src = CONFIG.CMC_ICONS[swapFromCurrency] || CONFIG.CMC_ICONS.TON;
+    document.getElementById('swapToIcon').src = CONFIG.CMC_ICONS[swapToCurrency] || CONFIG.CMC_ICONS.USDT;
+    
+    updateSwapBalances();
+    calculateSwap();
+    animateElement('.swap-arrow i', 'pop');
+}
+
+function calculateSwap() {
+    const fromAmount = parseFloat(document.getElementById('swapFromAmount').value) || 0;
+    const toAmountEl = document.getElementById('swapToAmount');
+    const rateEl = document.getElementById('swapRate');
+    
+    let rate = 1;
+    
+    if (swapFromCurrency === 'TON' && swapToCurrency === 'USDT') {
+        rate = livePrices.TON?.price || 1.32;
+    } else if (swapFromCurrency === 'USDT' && swapToCurrency === 'TON') {
+        rate = 1 / (livePrices.TON?.price || 1.32);
+    } else if (swapFromCurrency === 'TON' && swapToCurrency === 'BNB') {
+        const tonPrice = livePrices.TON?.price || 1.32;
+        const bnbPrice = livePrices.BNB?.price || 300;
+        rate = tonPrice / bnbPrice;
+    } else if (swapFromCurrency === 'BNB' && swapToCurrency === 'TON') {
+        const bnbPrice = livePrices.BNB?.price || 300;
+        const tonPrice = livePrices.TON?.price || 1.32;
+        rate = bnbPrice / tonPrice;
+    } else {
+        const fromPrice = livePrices[swapFromCurrency]?.price || 1;
+        const toPrice = livePrices[swapToCurrency]?.price || 1;
+        rate = fromPrice / toPrice;
+    }
+    
+    const toAmount = fromAmount * rate;
+    
+    if (swapToCurrency === 'USDT') {
+        toAmountEl.value = toAmount.toFixed(2);
+    } else {
+        toAmountEl.value = toAmount.toFixed(6);
+    }
+    
+    rateEl.textContent = `1 ${swapFromCurrency} = ${rate.toFixed(6)} ${swapToCurrency}`;
+}
+
+function confirmSwap() {
+    const fromAmount = parseFloat(document.getElementById('swapFromAmount').value);
+    const fromBalance = userData.balances[swapFromCurrency] || 0;
+    
+    if (!fromAmount || fromAmount <= 0) {
+        showToast(t('error.enterAmount'), 'error');
+        return;
+    }
+    
+    if (fromAmount > fromBalance) {
+        showToast(t('error.insufficientToken', { token: swapFromCurrency }), 'error');
+        return;
+    }
+    
+    let toAmount = parseFloat(document.getElementById('swapToAmount').value);
+    
+    // تنفيذ التبديل
+    userData.balances[swapFromCurrency] -= fromAmount;
+    userData.balances[swapToCurrency] += toAmount;
+    
+    // تسجيل المعاملة
+    addTransaction('swap', fromAmount, {
+        fromCurrency: swapFromCurrency,
+        toCurrency: swapToCurrency,
+        toAmount: toAmount,
+        rate: toAmount / fromAmount
+    });
+    
+    saveUserToCache();
+    
+    showToast(t('notif.swapCompleted', {
+        fromAmount: formatSwapBalance(fromAmount, swapFromCurrency),
+        fromCurrency: swapFromCurrency,
+        toAmount: formatSwapBalance(toAmount, swapToCurrency),
+        toCurrency: swapToCurrency
+    }), 'success');
+    
+    closeModal('swapModal');
+    updateUI();
+    renderAssets();
+}
+
+// ====== 26. DEPOSIT FUNCTIONS ======
 function showDepositModal() {
     document.getElementById('depositAddress').textContent = CONFIG.TON.WALLET;
     document.getElementById('depositModal').classList.add('show');
@@ -2087,6 +2573,8 @@ async function submitDeposit() {
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
             
+            deposit.firebaseId = docRef.id;
+            
             // مستمع 30 ثانية
             startOnDemandListener('deposits', docRef.id, (data) => {
                 if (data.status === 'approved') {
@@ -2115,7 +2603,7 @@ async function submitDeposit() {
     document.getElementById('depositTxHash').value = '';
 }
 
-// ====== 26. WITHDRAW FUNCTIONS ======
+// ====== 27. WITHDRAW FUNCTIONS ======
 function showWithdrawModal() {
     document.getElementById('withdrawModal').classList.add('show');
 }
@@ -2162,6 +2650,8 @@ async function submitWithdraw() {
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
             
+            withdraw.firebaseId = docRef.id;
+            
             startOnDemandListener('withdrawals', docRef.id, (data) => {
                 if (data.status === 'approved') {
                     userData.pendingWithdrawals = userData.pendingWithdrawals.filter(w => w.id !== withdraw.id);
@@ -2190,7 +2680,7 @@ async function submitWithdraw() {
     document.getElementById('withdrawAddress').value = '';
 }
 
-// ====== 27. HISTORY FUNCTIONS ======
+// ====== 28. HISTORY FUNCTIONS ======
 let currentHistoryFilter = 'all';
 
 function showHistory() {
@@ -2249,6 +2739,10 @@ function renderHistory(filter = 'all') {
             icon = 'fa-microchip';
             typeClass = 'rental';
             typeText = 'Rental';
+        } else if (tx.type === 'swap') {
+            icon = 'fa-exchange-alt';
+            typeClass = 'swap';
+            typeText = 'Swap';
         }
         
         return `
@@ -2261,8 +2755,9 @@ function renderHistory(filter = 'all') {
                     <span class="history-date">${formattedDate}</span>
                 </div>
                 <div class="history-details">
-                    <span class="history-amount">${tx.amount} TON</span>
+                    <span class="history-amount">${tx.type === 'withdraw' ? '-' : '+'}${tx.amount} TON</span>
                 </div>
+                ${tx.fromCurrency ? `<div style="font-size: 11px; color: var(--text-secondary);">${tx.fromCurrency} → ${tx.toCurrency}</div>` : ''}
             </div>
         `;
     }).join('');
@@ -2310,7 +2805,7 @@ function refreshHistory() {
     });
 }
 
-// ====== 28. REFERRAL FUNCTIONS ======
+// ====== 29. REFERRAL FUNCTIONS ======
 function showReferralDetails() {
     const modal = document.getElementById('referralModal');
     
@@ -2383,7 +2878,7 @@ function copyReferralLink() {
     animateElement('.copy-btn-legendary', 'pop');
 }
 
-// ====== 29. ADMIN FUNCTIONS ======
+// ====== 30. ADMIN FUNCTIONS ======
 let currentAdminTab = 'withdrawals';
 
 function showAdminPanel() {
@@ -2616,7 +3111,7 @@ function copyToClipboard(text) {
     showToast('Copied to clipboard!', 'success');
 }
 
-// ====== 30. PAGE NAVIGATION ======
+// ====== 31. PAGE NAVIGATION ======
 let currentPage = 'mining';
 
 function showPage(page) {
@@ -2669,49 +3164,14 @@ function updateChart() {
     }).join('');
 }
 
-function renderAssets() {
-    const list = document.getElementById('assetsList');
-    if (!list || !userData) return;
-    
-    const assets = [
-        { symbol: 'TON', name: 'Toncoin', balance: userData.balance },
-        { symbol: 'USDT', name: 'Tether', balance: 0 },
-        { symbol: 'BTC', name: 'Bitcoin', balance: 0 },
-        { symbol: 'ETH', name: 'Ethereum', balance: 0 }
-    ];
-    
-    list.innerHTML = assets.map(asset => {
-        const price = livePrices[asset.symbol]?.price || 0;
-        const value = asset.balance * price;
-        const change = livePrices[asset.symbol]?.change || 0;
-        const changeClass = change >= 0 ? 'positive' : 'negative';
-        const changeSymbol = change >= 0 ? '+' : '';
-        
-        return `
-            <div class="asset-item-legendary">
-                <div class="asset-left">
-                    <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/${asset.symbol === 'TON' ? '11419' : asset.symbol === 'USDT' ? '825' : asset.symbol === 'BTC' ? '1' : '1027'}.png" class="asset-icon-img">
-                    <div class="asset-info">
-                        <h4>${asset.name}</h4>
-                        <p>${asset.symbol} <span class="asset-change ${changeClass}">${changeSymbol}${change.toFixed(2)}%</span></p>
-                    </div>
-                </div>
-                <div class="asset-right">
-                    <div class="asset-balance">${asset.balance.toFixed(4)}</div>
-                    <div class="asset-value">$${formatNumber(value)}</div>
-                </div>
-            </div>
-        `;
-    }).join('');
-}
-
-// ====== 31. SAVE TO FIREBASE (غير متكرر) ======
+// ====== 32. SAVE TO FIREBASE (غير متكرر) ======
 async function saveToFirebase() {
     if (!db) return;
     
     try {
         await db.collection('users').doc(userId).set({
             balance: userData.balance,
+            balances: userData.balances,
             totalEarned: userData.totalEarned,
             totalWithdrawn: userData.totalWithdrawn,
             totalDeposited: userData.totalDeposited,
@@ -2734,16 +3194,55 @@ async function saveToFirebase() {
     }
 }
 
-// ====== 32. MODAL FUNCTIONS ======
+// ====== 33. MODAL FUNCTIONS (محدثة للإغلاق الصحيح) ======
 function closeModal(modalId) {
-    document.getElementById(modalId).classList.remove('show');
-    
-    if (modalId === 'paymentModal') {
-        window.currentPayment = null;
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('show');
+        
+        // إعادة تعيين القيم عند الإغلاق
+        if (modalId === 'paymentModal') {
+            currentPayment = null;
+        }
+        if (modalId === 'swapModal') {
+            document.getElementById('swapFromAmount').value = '1';
+        }
+        if (modalId === 'depositModal') {
+            document.getElementById('depositAmount').value = '';
+            document.getElementById('depositTxHash').value = '';
+        }
+        if (modalId === 'withdrawModal') {
+            document.getElementById('withdrawAmount').value = '';
+            document.getElementById('withdrawAddress').value = '';
+        }
     }
 }
 
-// ====== 33. FILTER MARKET ======
+// إخفاء جميع النوافذ المنبثقة عند التحميل
+function hideAllModals() {
+    const modals = [
+        'paymentModal',
+        'depositModal',
+        'withdrawModal',
+        'historyModal',
+        'notificationsModal',
+        'adminModal',
+        'referralModal',
+        'swapModal',
+        'currencySelectorModal'
+    ];
+    
+    modals.forEach(modalId => {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('show');
+        }
+    });
+    
+    console.log("✅ All modals hidden on startup");
+}
+
+// ====== 34. FILTER MARKET ======
 function filterMarket(filter) {
     document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
     event.target.classList.add('active');
@@ -2764,9 +3263,12 @@ function filterMarket(filter) {
     });
 }
 
-// ====== 34. INITIALIZATION ======
+// ====== 35. INITIALIZATION ======
 document.addEventListener('DOMContentLoaded', async () => {
     console.log("🚀 TON MINING PRO v12.0 starting...");
+    
+    // إخفاء جميع النوافذ المنبثقة فوراً
+    hideAllModals();
     
     // إعداد اللغة
     if (currentLanguage === 'ar') {
@@ -2815,6 +3317,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log("✅ App initialized with ZERO WASTE architecture");
     console.log("✅ Listeners: 30 seconds only");
     console.log("✅ Cache: User 5min, Prices 3h, History 10min");
+    console.log("✅ All modals hidden by default");
     console.log("✅ Ready for 50,000+ users with minimal cost");
 });
 
@@ -2867,7 +3370,7 @@ document.addEventListener('visibilitychange', () => {
     }
 });
 
-// ====== 35. EXPORT FUNCTIONS ======
+// ====== 36. EXPORT FUNCTIONS ======
 window.showPage = showPage;
 window.showMarket = showMarket;
 window.showWallet = showWallet;
@@ -2875,6 +3378,7 @@ window.showHistory = showHistory;
 window.showNotifications = showNotifications;
 window.showDepositModal = showDepositModal;
 window.showWithdrawModal = showWithdrawModal;
+window.showSwapModal = showSwapModal;
 window.showReferralDetails = showReferralDetails;
 window.showAdminPanel = showAdminPanel;
 window.closeModal = closeModal;
@@ -2883,9 +3387,15 @@ window.copyReferralLink = copyReferralLink;
 window.copyDepositAddress = copyDepositAddress;
 window.connectWallet = connectWallet;
 window.disconnectWallet = disconnectWallet;
-window.confirmPayment = confirmPayment;
-window.submitDeposit = submitDeposit;
-window.submitWithdraw = submitWithdraw;
+window.switchPaymentMethod = switchPaymentMethod;
+window.processPayment = processPayment;
+window.selectPlan = selectPlan;
+window.showCurrencySelector = showCurrencySelector;
+window.selectCurrency = selectCurrency;
+window.filterCurrencies = filterCurrencies;
+window.flipSwap = flipSwap;
+window.calculateSwap = calculateSwap;
+window.confirmSwap = confirmSwap;
 window.filterMarket = filterMarket;
 window.filterHistory = filterHistory;
 window.refreshHistory = refreshHistory;
@@ -2898,6 +3408,5 @@ window.refreshAdminPanel = refreshAdminPanel;
 window.approveRequest = approveRequest;
 window.rejectRequest = rejectRequest;
 window.copyToClipboard = copyToClipboard;
-window.selectPlan = selectPlan;
 
 console.log("✅ All systems ready. Legendary status achieved!");
