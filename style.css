@@ -1,5 +1,6 @@
 /* ============================================
    TON MINING PRO - LEGENDARY DESIGN SYSTEM v12.0
+   WITH DUAL PAYMENT & SWAP SYSTEM
    ============================================ */
 
 /* CSS Variables */
@@ -102,6 +103,17 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes slideDownModal {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(50px);
     }
 }
 
@@ -1831,6 +1843,10 @@ h2 i {
     color: #ef4444;
 }
 
+.wallet-action-btn.swap i {
+    color: var(--ton-cyan);
+}
+
 /* TON Connect Card */
 .ton-connect-card-legendary {
     background: var(--bg-card);
@@ -2132,7 +2148,24 @@ input:checked + .toggle-slider:before {
     background: white;
 }
 
-/* Modals */
+/* ===== MODALS - FIXED: مخفية افتراضياً وتظهر فقط عند الحاجة ===== */
+.modal {
+    display: none !important;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
+    z-index: var(--z-index-modal);
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+}
+
+.modal.show {
+    display: flex !important;
+    animation: fadeIn 0.3s ease;
+}
+
 .legendary-modal .modal-content {
     max-width: 450px;
     width: 90%;
@@ -2142,6 +2175,8 @@ input:checked + .toggle-slider:before {
     overflow: hidden;
     animation: slideUpModal 0.4s ease;
     box-shadow: var(--shadow-legendary);
+    max-height: 85vh;
+    overflow-y: auto;
 }
 
 .modal-header {
@@ -2150,6 +2185,10 @@ input:checked + .toggle-slider:before {
     justify-content: space-between;
     padding: 20px;
     border-bottom: 1px solid var(--glass-border-strong);
+    position: sticky;
+    top: 0;
+    background: var(--bg-secondary);
+    z-index: 10;
 }
 
 .modal-header h3 {
@@ -2195,6 +2234,9 @@ input:checked + .toggle-slider:before {
     color: var(--text-secondary);
     cursor: pointer;
     transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .close-btn:hover {
@@ -2205,8 +2247,283 @@ input:checked + .toggle-slider:before {
 
 .modal-body {
     padding: 20px;
-    max-height: 70vh;
+    max-height: calc(85vh - 80px);
     overflow-y: auto;
+}
+
+/* ===== DUAL PAYMENT OPTIONS ===== */
+.payment-options-legendary {
+    margin: 20px 0;
+}
+
+.payment-option-title {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--glass-border-strong);
+    border-radius: var(--radius-lg);
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.payment-option:hover {
+    border-color: var(--ton-cyan);
+    background: rgba(0,242,255,0.05);
+}
+
+.payment-option.active {
+    border-color: var(--ton-cyan);
+    background: rgba(0,242,255,0.1);
+    box-shadow: var(--shadow-glow);
+}
+
+.payment-option-radio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--text-secondary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+}
+
+.payment-option.active .payment-option-radio {
+    border-color: var(--ton-cyan);
+}
+
+.payment-option.active .radio-inner {
+    width: 10px;
+    height: 10px;
+    background: var(--ton-cyan);
+    border-radius: 50%;
+}
+
+.payment-option-content {
+    flex: 1;
+}
+
+.payment-option-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+
+.payment-option-header i {
+    color: var(--ton-cyan);
+    font-size: 1.1rem;
+}
+
+.payment-option-header span {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.payment-option-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.payment-option-desc .balance-amount {
+    color: var(--text-gold);
+    font-weight: 700;
+}
+
+/* ===== SWAP MODAL ===== */
+.swap-section {
+    margin-bottom: 15px;
+}
+
+.swap-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.swap-balance {
+    font-size: 0.8rem;
+    color: var(--text-accent);
+}
+
+.swap-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--glass-border-strong);
+    border-radius: var(--radius-lg);
+    padding: 5px;
+}
+
+.swap-currency-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    background: rgba(255,255,255,0.05);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    min-width: 120px;
+}
+
+.swap-currency-selector:hover {
+    background: rgba(0,242,255,0.1);
+}
+
+.swap-currency-selector img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.swap-currency-selector span {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.swap-currency-selector i {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    margin-left: auto;
+}
+
+.swap-input-group input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: right;
+    padding: 0 10px;
+}
+
+.swap-input-group input:focus {
+    outline: none;
+}
+
+.swap-input-group input::placeholder {
+    color: var(--text-secondary);
+}
+
+.swap-arrow {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.swap-arrow i {
+    width: 40px;
+    height: 40px;
+    background: rgba(0,242,255,0.1);
+    border: 1px solid var(--glass-border-strong);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ton-cyan);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.swap-arrow i:hover {
+    transform: rotate(180deg);
+    background: rgba(0,242,255,0.2);
+}
+
+.swap-rate-info {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--glass-border-strong);
+    border-radius: var(--radius-lg);
+    padding: 15px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-secondary);
+}
+
+.swap-rate-info span:last-child {
+    color: var(--text-accent);
+    font-weight: 700;
+}
+
+/* Currency Selector Modal */
+.currency-search {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.currency-search i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+}
+
+.currency-search input {
+    width: 100%;
+    padding: 15px 15px 15px 45px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--glass-border-strong);
+    border-radius: var(--radius-lg);
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.currency-search input:focus {
+    outline: none;
+    border-color: var(--ton-cyan);
+}
+
+.currency-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.currency-list-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    border-bottom: 1px solid var(--glass-border);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.currency-list-item:hover {
+    background: rgba(0,242,255,0.05);
+}
+
+.currency-list-item img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+.currency-list-item .currency-info h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.currency-list-item .currency-info p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
 }
 
 /* Machine Preview */
@@ -2546,6 +2863,16 @@ input:checked + .toggle-slider:before {
 .history-type.mining {
     background: rgba(0,242,255,0.1);
     color: var(--ton-cyan);
+}
+
+.history-type.swap {
+    background: rgba(251,191,36,0.1);
+    color: #fbbf24;
+}
+
+.history-type.rental {
+    background: rgba(136,85,255,0.1);
+    color: #8855ff;
 }
 
 .history-status {
@@ -3199,6 +3526,24 @@ input:checked + .toggle-slider:before {
     padding-right: 12px;
 }
 
+[dir="rtl"] .swap-input-group input {
+    text-align: left;
+}
+
+[dir="rtl"] .swap-currency-selector i {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+[dir="rtl"] .currency-search i {
+    left: auto;
+    right: 15px;
+}
+
+[dir="rtl"] .currency-search input {
+    padding: 15px 45px 15px 15px;
+}
+
 /* Responsive */
 @media (max-width: 400px) {
     .mining-stats-legendary {
@@ -3244,6 +3589,10 @@ input:checked + .toggle-slider:before {
         font-size: 2.2rem;
     }
     
+    .wallet-actions {
+        flex-wrap: wrap;
+    }
+    
     .history-filters {
         flex-wrap: wrap;
     }
@@ -3251,6 +3600,14 @@ input:checked + .toggle-slider:before {
     .history-filter {
         flex: 1;
         text-align: center;
+    }
+    
+    .swap-input-group {
+        flex-direction: column;
+    }
+    
+    .swap-currency-selector {
+        width: 100%;
     }
 }
 
