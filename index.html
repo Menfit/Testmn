@@ -37,7 +37,7 @@
         <!-- Floating Notification Bar -->
         <div class="floating-notification" id="floatingNotification"></div>
 
-        <!-- Header -->
+        <!-- Header Premium -->
         <header class="glass-header">
             <div class="header-left">
                 <div class="user-avatar" id="userAvatar">
@@ -45,7 +45,8 @@
                 </div>
                 <div class="user-info">
                     <span class="welcome-text">Welcome back,</span>
-                    <span class="username" id="username">Crypto Miner</span>
+                    <span class="username" id="username">Test Load</span>
+                    <span class="user-id" id="userId">ID: 12345678</span>
                 </div>
             </div>
             
@@ -57,34 +58,10 @@
                 </div>
                 
                 <button class="icon-btn" id="langToggle">
-                    <i class="fas fa-globe"></i>
+                    🇬🇧
                 </button>
             </div>
         </header>
-
-        <!-- Main Navigation -->
-        <div class="nav-tabs">
-            <button class="nav-tab active" data-tab="mining">
-                <i class="fas fa-microchip"></i>
-                <span>Mining</span>
-            </button>
-            <button class="nav-tab" data-tab="market">
-                <i class="fas fa-store"></i>
-                <span>Market</span>
-            </button>
-            <button class="nav-tab" data-tab="plans">
-                <i class="fas fa-chart-line"></i>
-                <span>Plans</span>
-            </button>
-            <button class="nav-tab" data-tab="wallet">
-                <i class="fas fa-wallet"></i>
-                <span>Wallet</span>
-            </button>
-            <button class="nav-tab" data-tab="referrals">
-                <i class="fas fa-users"></i>
-                <span>Team</span>
-            </button>
-        </div>
 
         <!-- Main Content -->
         <main class="main-content" id="mainContent">
@@ -110,7 +87,7 @@
                             <i class="fas fa-microchip"></i>
                         </div>
                         <div class="stat-info">
-                            <span class="stat-label">Active Miner</span>
+                            <span class="stat-label">ACTIVE MINER</span>
                             <span class="stat-value" id="activeMiner">Free Miner</span>
                         </div>
                     </div>
@@ -120,7 +97,7 @@
                             <i class="fas fa-bolt"></i>
                         </div>
                         <div class="stat-info">
-                            <span class="stat-label">Hash Rate</span>
+                            <span class="stat-label">HASH RATE</span>
                             <span class="stat-value" id="hashRate">10 MH/s</span>
                         </div>
                     </div>
@@ -130,13 +107,13 @@
                 <div class="mining-progress">
                     <div class="progress-header">
                         <span>Mining in progress</span>
-                        <span class="timer" id="miningTimer">04:00:00</span>
+                        <span class="timer" id="miningTimer">03:59:46</span>
                     </div>
                     <div class="progress-bar">
                         <div class="progress-fill" id="miningProgress"></div>
                     </div>
                     <div class="progress-footer">
-                        <span>Next reward: <span id="nextReward">0.01 TON</span></span>
+                        <span>Next reward: <span id="nextReward">0.0100 TON</span></span>
                         <button class="claim-btn" id="claimBtn" disabled>
                             <i class="fas fa-bolt"></i>
                             Claim
@@ -144,10 +121,30 @@
                     </div>
                 </div>
 
-                <!-- Active Machines -->
+                <!-- Your Mining Rigs -->
                 <div class="section">
                     <h3>Your Mining Rigs</h3>
                     <div class="machines-grid" id="machinesGrid"></div>
+                </div>
+
+                <!-- Detailed Plans Table -->
+                <div class="section">
+                    <h3>Mining Plans & Returns</h3>
+                    <div class="plans-table-container">
+                        <table class="plans-detailed-table" id="plansDetailedTable">
+                            <thead>
+                                <tr>
+                                    <th>Machine</th>
+                                    <th>3 Days</th>
+                                    <th>7 Days</th>
+                                    <th>15 Days</th>
+                                </tr>
+                            </thead>
+                            <tbody id="plansTableBody">
+                                <!-- يتم تعبئتها عبر JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -253,6 +250,30 @@
             </div>
         </main>
 
+        <!-- Bottom Navigation (مثبت في الأسفل) -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-tab="mining">
+                <i class="fas fa-microchip"></i>
+                <span>Mining</span>
+            </button>
+            <button class="nav-item" data-tab="market">
+                <i class="fas fa-store"></i>
+                <span>Market</span>
+            </button>
+            <button class="nav-item" data-tab="plans">
+                <i class="fas fa-chart-line"></i>
+                <span>Plans</span>
+            </button>
+            <button class="nav-item" data-tab="wallet">
+                <i class="fas fa-wallet"></i>
+                <span>Wallet</span>
+            </button>
+            <button class="nav-item" data-tab="referrals">
+                <i class="fas fa-users"></i>
+                <span>Team</span>
+            </button>
+        </nav>
+
         <!-- Payment Modal -->
         <div class="modal" id="paymentModal">
             <div class="modal-content">
@@ -264,12 +285,12 @@
                 </div>
                 
                 <div class="modal-body">
-                    <div class="machine-preview" id="paymentMachinePreview">
+                    <div class="machine-preview">
                         <i class="fas fa-microchip" id="paymentMachineIcon"></i>
                         <h4 id="paymentMachineName">Turbo v2</h4>
                     </div>
                     
-                    <div class="plan-details" id="paymentPlanDetails">
+                    <div class="plan-details">
                         <div class="detail-row">
                             <span>Duration:</span>
                             <span id="paymentDuration">3 days</span>
@@ -323,7 +344,7 @@
                         <h4>Send TON to this address:</h4>
                         <div class="address-box">
                             <span class="address" id="depositAddress"></span>
-                            <button class="copy-btn-small" onclick="navigator.clipboard.writeText(CONFIG.TON.WALLET); Notify.success('Address copied!')">
+                            <button class="copy-btn-small" onclick="copyAddress()">
                                 <i class="fas fa-copy"></i>
                             </button>
                         </div>
