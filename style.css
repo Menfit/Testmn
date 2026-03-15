@@ -1,50 +1,35 @@
 /* ============================================
-   TON MINING PRO - PREMIUM DESIGN SYSTEM 8.0
+   TON MINING PRO - PREMIUM DESIGN SYSTEM
    ============================================ */
 
-/* --------------------------------------------
-   1. CSS VARIABLES & RESET
-   -------------------------------------------- */
+/* CSS Variables */
 :root {
-    /* TON Brand Colors */
     --ton-blue: #0088cc;
     --ton-cyan: #00f2ff;
     --ton-purple: #8855ff;
     --ton-glow: rgba(0, 136, 204, 0.3);
     
-    /* Gradients */
     --gradient-primary: linear-gradient(135deg, #0088cc, #00f2ff);
     --gradient-secondary: linear-gradient(135deg, #8855ff, #bc13fe);
     --gradient-gold: linear-gradient(135deg, #fbbf24, #f59e0b);
-    --gradient-silver: linear-gradient(135deg, #94a3b8, #64748b);
     --gradient-success: linear-gradient(135deg, #22c55e, #10b981);
     --gradient-error: linear-gradient(135deg, #ef4444, #dc2626);
     
-    /* Backgrounds */
     --bg-primary: #0a0b0f;
     --bg-secondary: #111318;
     --bg-card: rgba(20, 25, 35, 0.8);
     --bg-card-hover: rgba(30, 35, 45, 0.95);
     
-    /* Glass Effects */
     --glass-bg: rgba(255, 255, 255, 0.03);
     --glass-border: rgba(255, 255, 255, 0.06);
     --glass-border-strong: rgba(255, 255, 255, 0.1);
-    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     
-    /* Text Colors */
     --text-primary: #ffffff;
     --text-secondary: #94a3b8;
-    --text-tertiary: #64748b;
     --text-accent: #00f2ff;
     
-    /* Shadows */
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
     --shadow-glow: 0 0 30px var(--ton-glow);
     
-    /* Spacing */
     --spacing-xs: 4px;
     --spacing-sm: 8px;
     --spacing-md: 16px;
@@ -52,7 +37,6 @@
     --spacing-xl: 32px;
     --spacing-2xl: 48px;
     
-    /* Border Radius */
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
@@ -60,24 +44,14 @@
     --radius-2xl: 32px;
     --radius-full: 9999px;
     
-    /* Transitions */
-    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
 }
 
-/* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-html {
-    font-size: 16px;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -86,34 +60,9 @@ body {
     color: var(--text-primary);
     min-height: 100vh;
     overflow: hidden;
-    position: relative;
 }
 
-/* Animated Background */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        radial-gradient(circle at 20% 30%, rgba(0, 136, 204, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(136, 85, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(0, 242, 255, 0.05) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: -1;
-    animation: backgroundPulse 10s infinite alternate;
-}
-
-@keyframes backgroundPulse {
-    0% { opacity: 0.5; }
-    100% { opacity: 1; }
-}
-
-/* --------------------------------------------
-   2. LOADING SCREEN
-   -------------------------------------------- */
+/* Loading Screen */
 .loading-overlay {
     position: fixed;
     inset: 0;
@@ -182,9 +131,7 @@ body::before {
     100% { transform: rotate(360deg); }
 }
 
-/* --------------------------------------------
-   3. MAIN APP CONTAINER
-   -------------------------------------------- */
+/* App Container */
 .app {
     height: 100vh;
     display: flex;
@@ -196,9 +143,47 @@ body::before {
     backdrop-filter: blur(20px);
 }
 
-/* --------------------------------------------
-   4. GLASS HEADER
-   -------------------------------------------- */
+/* Floating Notification - محسنة */
+.floating-notification {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(20, 25, 35, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 242, 255, 0.3);
+    padding: var(--spacing-sm) var(--spacing-xl);
+    border-radius: var(--radius-full);
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    white-space: nowrap;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+    max-width: 90%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.floating-notification.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(5px);
+}
+
+.floating-notification.deposit {
+    border-color: #22c55e;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+}
+
+.floating-notification.withdraw {
+    border-color: #ef4444;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+/* Header */
 .glass-header {
     padding: var(--spacing-md) var(--spacing-lg);
     background: rgba(20, 25, 35, 0.8);
@@ -229,7 +214,7 @@ body::before {
     font-size: 1.5rem;
     color: white;
     box-shadow: var(--shadow-glow);
-    transition: var(--transition-normal);
+    transition: var(--transition-fast);
     cursor: pointer;
 }
 
@@ -302,9 +287,7 @@ body::before {
     transform: rotate(180deg);
 }
 
-/* --------------------------------------------
-   5. NAVIGATION TABS
-   -------------------------------------------- */
+/* Navigation */
 .nav-tabs {
     display: flex;
     padding: var(--spacing-sm) var(--spacing-lg);
@@ -358,9 +341,7 @@ body::before {
     box-shadow: 0 0 10px var(--ton-cyan);
 }
 
-/* --------------------------------------------
-   6. MAIN CONTENT
-   -------------------------------------------- */
+/* Main Content */
 .main-content {
     flex: 1;
     overflow-y: auto;
@@ -408,9 +389,7 @@ h2 {
     margin-bottom: var(--spacing-xl);
 }
 
-/* --------------------------------------------
-   7. 3D MINER
-   -------------------------------------------- */
+/* 3D Miner */
 .miner-3d {
     position: relative;
     width: 200px;
@@ -457,7 +436,7 @@ h2 {
     animation: fanSpin 3s infinite linear;
 }
 
-.miner-fan:nth-child(2) {
+.miner-fan.blade1 {
     transform: translate(-50%, -50%) rotate(0deg) translateX(30px);
 }
 
@@ -479,18 +458,14 @@ h2 {
     animation: pulse 3s infinite;
 }
 
-.energy-pulse::before,
-.energy-pulse::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border: 2px solid rgba(136, 85, 255, 0.3);
-    border-radius: 50%;
-    animation: pulse 3s infinite 1s;
+.energy-pulse.delay-1 {
+    animation-delay: 1s;
+    border-color: rgba(136, 85, 255, 0.3);
 }
 
-.energy-pulse::after {
-    animation: pulse 3s infinite 2s;
+.energy-pulse.delay-2 {
+    animation-delay: 2s;
+    border-color: rgba(0, 136, 204, 0.3);
 }
 
 @keyframes float {
@@ -514,9 +489,7 @@ h2 {
     100% { transform: scale(1.2); opacity: 0; }
 }
 
-/* --------------------------------------------
-   8. STATS CARDS
-   -------------------------------------------- */
+/* Stats Cards */
 .stats-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -572,9 +545,7 @@ h2 {
     color: var(--text-accent);
 }
 
-/* --------------------------------------------
-   9. MINING PROGRESS
-   -------------------------------------------- */
+/* Mining Progress */
 .mining-progress {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -623,7 +594,7 @@ h2 {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
     animation: shimmer 2s infinite;
 }
 
@@ -681,9 +652,7 @@ h2 {
     50% { transform: scale(1.05); }
 }
 
-/* --------------------------------------------
-   10. MACHINES GRID
-   -------------------------------------------- */
+/* Section */
 .section {
     margin-top: var(--spacing-xl);
 }
@@ -694,6 +663,7 @@ h2 {
     color: var(--text-secondary);
 }
 
+/* Machines Grid */
 .machines-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -751,7 +721,6 @@ h2 {
 
 .machine-header i {
     font-size: 1.8rem;
-    color: var(--machine-color);
     transition: var(--transition-fast);
 }
 
@@ -786,9 +755,7 @@ h2 {
     color: var(--ton-cyan);
 }
 
-/* --------------------------------------------
-   11. MARKET FILTERS
-   -------------------------------------------- */
+/* Market Filters */
 .market-filters {
     display: flex;
     gap: var(--spacing-sm);
@@ -820,9 +787,7 @@ h2 {
     border-color: transparent;
 }
 
-/* --------------------------------------------
-   12. MACHINES SHOWCASE
-   -------------------------------------------- */
+/* Machines Showcase */
 .machines-showcase {
     display: flex;
     flex-direction: column;
@@ -866,19 +831,6 @@ h2 {
     margin-bottom: var(--spacing-md);
 }
 
-.showcase-specs {
-    display: flex;
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-}
-
-.showcase-specs i {
-    color: var(--ton-cyan);
-    margin-right: 4px;
-}
-
 .showcase-footer {
     display: flex;
     align-items: center;
@@ -910,9 +862,7 @@ h2 {
     box-shadow: var(--shadow-glow);
 }
 
-/* --------------------------------------------
-   13. PLANS PAGE (جداول خطط التأجير)
-   -------------------------------------------- */
+/* Plans Page */
 .plans-container {
     display: flex;
     flex-direction: column;
@@ -935,7 +885,6 @@ h2 {
 
 .machine-plans-header i {
     font-size: 2rem;
-    color: var(--machine-color);
 }
 
 .machine-plans-header h3 {
@@ -955,6 +904,7 @@ h2 {
     border-radius: var(--radius-lg);
     padding: var(--spacing-md);
     text-align: center;
+    cursor: pointer;
     transition: var(--transition-fast);
 }
 
@@ -986,13 +936,11 @@ h2 {
     font-size: 1.1rem;
     font-weight: 600;
     padding: var(--spacing-xs);
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255,255,255,0.05);
     border-radius: var(--radius-sm);
 }
 
-/* --------------------------------------------
-   14. WALLET PAGE
-   -------------------------------------------- */
+/* Wallet Page */
 .balance-card {
     background: var(--gradient-primary);
     border-radius: var(--radius-xl);
@@ -1079,6 +1027,39 @@ h2 {
     box-shadow: 0 0 10px #ef4444;
 }
 
+.quick-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.action-btn {
+    padding: var(--spacing-lg);
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border-strong);
+    border-radius: var(--radius-lg);
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.action-btn:hover {
+    border-color: var(--ton-cyan);
+    transform: translateY(-2px);
+}
+
+.action-btn i {
+    color: var(--ton-cyan);
+}
+
+/* Achievements */
 .achievements-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1115,31 +1096,7 @@ h2 {
     color: #fbbf24;
 }
 
-.withdraw-btn {
-    width: 100%;
-    padding: var(--spacing-lg);
-    background: var(--gradient-gold);
-    border: none;
-    border-radius: var(--radius-xl);
-    color: white;
-    font-weight: 700;
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-md);
-    cursor: pointer;
-    transition: var(--transition-fast);
-}
-
-.withdraw-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
-}
-
-/* --------------------------------------------
-   15. REFERRAL PAGE
-   -------------------------------------------- */
+/* Referral Page */
 .referral-stats {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1253,9 +1210,7 @@ h2 {
     }
 }
 
-/* --------------------------------------------
-   16. MODALS
-   -------------------------------------------- */
+/* Modals */
 .modal {
     position: fixed;
     inset: 0;
@@ -1323,6 +1278,7 @@ h2 {
     padding: var(--spacing-lg);
 }
 
+/* Payment Modal */
 .machine-preview {
     text-align: center;
     margin-bottom: var(--spacing-lg);
@@ -1330,7 +1286,6 @@ h2 {
 
 .machine-preview i {
     font-size: 3rem;
-    color: var(--ton-blue);
     margin-bottom: var(--spacing-sm);
 }
 
@@ -1445,6 +1400,48 @@ h2 {
     box-shadow: var(--shadow-glow);
 }
 
+/* Deposit Modal */
+.deposit-address-card {
+    background: rgba(0,0,0,0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.deposit-address-card h4 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-secondary);
+}
+
+.address-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md);
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border-strong);
+    border-radius: var(--radius-lg);
+}
+
+.address-box .address {
+    font-family: monospace;
+    word-break: break-all;
+    font-size: 0.9rem;
+}
+
+.copy-btn-small {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: var(--transition-fast);
+}
+
+.copy-btn-small:hover {
+    color: var(--text-accent);
+}
+
 /* Withdraw Modal */
 .balance-info {
     display: flex;
@@ -1489,24 +1486,6 @@ h2 {
     box-shadow: var(--shadow-glow);
 }
 
-.submit-btn {
-    width: 100%;
-    padding: var(--spacing-lg);
-    background: var(--gradient-gold);
-    border: none;
-    border-radius: var(--radius-lg);
-    color: white;
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: var(--transition-fast);
-}
-
-.submit-btn:hover {
-    transform: scale(1.02);
-    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
-}
-
 /* Admin Modal */
 .admin-modal {
     max-width: 500px;
@@ -1528,6 +1507,18 @@ h2 {
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition-fast);
+    position: relative;
+}
+
+.admin-tab .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ef4444;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: var(--radius-full);
 }
 
 .admin-tab.active {
@@ -1557,6 +1548,11 @@ h2 {
     margin-bottom: var(--spacing-sm);
 }
 
+.request-user {
+    font-weight: 600;
+    color: var(--text-accent);
+}
+
 .request-amount {
     font-size: 1.2rem;
     font-weight: 700;
@@ -1569,21 +1565,28 @@ h2 {
     color: var(--text-secondary);
     font-family: monospace;
     margin-bottom: var(--spacing-sm);
+    word-break: break-all;
+}
+
+.request-actions {
+    display: flex;
+    gap: var(--spacing-sm);
 }
 
 .approve-btn {
-    padding: var(--spacing-sm) var(--spacing-md);
+    flex: 1;
+    padding: var(--spacing-sm);
     background: linear-gradient(135deg, #22c55e, #10b981);
     border: none;
     border-radius: var(--radius-sm);
     color: white;
     font-weight: 600;
     cursor: pointer;
-    margin-right: var(--spacing-sm);
 }
 
 .reject-btn {
-    padding: var(--spacing-sm) var(--spacing-md);
+    flex: 1;
+    padding: var(--spacing-sm);
     background: linear-gradient(135deg, #ef4444, #dc2626);
     border: none;
     border-radius: var(--radius-sm);
@@ -1592,9 +1595,72 @@ h2 {
     cursor: pointer;
 }
 
-/* --------------------------------------------
-   17. NOTIFICATION TOAST
-   -------------------------------------------- */
+.user-management {
+    background: rgba(0,0,0,0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.user-management input {
+    width: 100%;
+    padding: var(--spacing-md);
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border-strong);
+    border-radius: var(--radius-lg);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.admin-action-btn {
+    width: 100%;
+    padding: var(--spacing-md);
+    background: var(--gradient-primary);
+    border: none;
+    border-radius: var(--radius-lg);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.user-search {
+    background: rgba(0,0,0,0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.search-box {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.search-box input {
+    flex: 1;
+    padding: var(--spacing-md);
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border-strong);
+    border-radius: var(--radius-lg);
+    color: var(--text-primary);
+}
+
+.search-btn {
+    width: 50px;
+    background: var(--gradient-primary);
+    border: none;
+    border-radius: var(--radius-lg);
+    color: white;
+    cursor: pointer;
+}
+
+.user-info {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: rgba(0,0,0,0.3);
+    border-radius: var(--radius-lg);
+}
+
+/* Notification */
 .notification {
     position: fixed;
     bottom: 100px;
@@ -1624,9 +1690,7 @@ h2 {
     }
 }
 
-/* --------------------------------------------
-   18. FIREWORK EFFECT
-   -------------------------------------------- */
+/* Firework Effect */
 .firework {
     position: absolute;
     width: 10px;
@@ -1647,9 +1711,7 @@ h2 {
     }
 }
 
-/* --------------------------------------------
-   19. SHAKE EFFECT
-   -------------------------------------------- */
+/* Shake Effect */
 .shake-effect {
     animation: shake 0.5s ease-in-out;
 }
@@ -1660,9 +1722,7 @@ h2 {
     20%, 40%, 60%, 80% { transform: translateX(2px); }
 }
 
-/* --------------------------------------------
-   20. RESPONSIVE DESIGN
-   -------------------------------------------- */
+/* Responsive */
 @media (max-width: 400px) {
     .machines-grid {
         grid-template-columns: 1fr;
@@ -1685,9 +1745,7 @@ h2 {
     }
 }
 
-/* --------------------------------------------
-   21. RTL SUPPORT
-   -------------------------------------------- */
+/* RTL Support */
 [dir="rtl"] .machine-header {
     flex-direction: row-reverse;
 }
@@ -1700,25 +1758,10 @@ h2 {
     transform: rotate(-90deg);
 }
 
-/* --------------------------------------------
-   22. UTILITY CLASSES
-   -------------------------------------------- */
-.hidden {
-    display: none !important;
+[dir="rtl"] .header-left {
+    flex-direction: row-reverse;
 }
 
-.text-accent {
-    color: var(--text-accent);
-}
-
-.text-success {
-    color: #22c55e;
-}
-
-.text-error {
-    color: #ef4444;
-}
-
-.text-warning {
-    color: #f59e0b;
+[dir="rtl"] .quick-actions {
+    direction: ltr;
 }
