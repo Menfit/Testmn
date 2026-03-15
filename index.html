@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>TON MINING PRO | Next-Gen Crypto Mining</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TON MINING PRO | Next-Gen Mining Platform</title>
     
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- TON Connect -->
@@ -17,484 +17,433 @@
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-    
-    <!-- Telegram Web App -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Premium Loading Screen -->
-    <div class="loading-screen" id="loading-screen">
-        <div class="loader-container">
-            <div class="ton-logo-loader">
-                <div class="cube-loader"></div>
-                <div class="cube-loader delay-1"></div>
-                <div class="cube-loader delay-2"></div>
-            </div>
-            <div class="loading-text-premium">
-                <span>T</span><span>O</span><span>N</span>
-                <span class="space"> </span>
-                <span>M</span><span>I</span><span>N</span><span>I</span><span>N</span><span>G</span>
-            </div>
-            <div class="loading-progress">
-                <div class="progress-bar-premium" id="loading-progress-bar"></div>
-            </div>
+    <!-- Loading Screen -->
+    <div class="loading-overlay" id="loading">
+        <div class="ton-loader">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-text">TON MINING PRO</div>
         </div>
     </div>
 
     <!-- Main App -->
-    <div class="app" id="app" style="display: none;">
-        <!-- Premium Header -->
-        <header class="header-premium">
-            <div class="header-content">
-                <div class="user-profile">
-                    <div class="user-avatar" id="user-avatar">
-                        <i class="fas fa-user-astronaut"></i>
-                    </div>
-                    <div class="user-info">
-                        <span class="user-greeting">Welcome back,</span>
-                        <span class="user-name" id="user-name">Crypto Miner</span>
-                    </div>
+    <div class="app" id="app">
+        <!-- Floating Notification Bar -->
+        <div class="floating-notification" id="floatingNotification"></div>
+
+        <!-- Header -->
+        <header class="glass-header">
+            <div class="header-left">
+                <div class="user-avatar" id="userAvatar">
+                    <i class="fas fa-user-astronaut"></i>
+                </div>
+                <div class="user-info">
+                    <span class="welcome-text">Welcome back,</span>
+                    <span class="username" id="username">Crypto Miner</span>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <div class="balance-chip" id="balanceChip">
+                    <i class="fas fa-coins" style="color: #fbbf24;"></i>
+                    <span id="headerBalance">0.0000</span>
+                    <span class="currency">TON</span>
                 </div>
                 
-                <div class="header-actions">
-                    <div class="balance-card-mini">
-                        <i class="fas fa-coins" style="color: #fbbf24;"></i>
-                        <span class="balance-value" id="header-balance">0.0000</span>
-                        <span class="balance-currency">TON</span>
-                    </div>
-                    
-                    <button class="icon-button" id="language-toggle">
-                        <i class="fas fa-globe"></i>
-                    </button>
-                </div>
+                <button class="icon-btn" id="langToggle">
+                    <i class="fas fa-globe"></i>
+                </button>
             </div>
         </header>
 
-        <!-- Main Content with Pages -->
-        <main class="main-content" id="main-content">
+        <!-- Main Navigation -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-tab="mining">
+                <i class="fas fa-microchip"></i>
+                <span>Mining</span>
+            </button>
+            <button class="nav-tab" data-tab="market">
+                <i class="fas fa-store"></i>
+                <span>Market</span>
+            </button>
+            <button class="nav-tab" data-tab="plans">
+                <i class="fas fa-chart-line"></i>
+                <span>Plans</span>
+            </button>
+            <button class="nav-tab" data-tab="wallet">
+                <i class="fas fa-wallet"></i>
+                <span>Wallet</span>
+            </button>
+            <button class="nav-tab" data-tab="referrals">
+                <i class="fas fa-users"></i>
+                <span>Team</span>
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
             <!-- Mining Page -->
-            <div class="page active" id="mining-page">
-                <!-- Hero Section with 3D Miner -->
-                <div class="mining-hero">
-                    <div class="miner-3d-container">
-                        <div class="miner-3d" id="miner-3d">
-                            <div class="miner-body"></div>
-                            <div class="miner-fan" id="miner-fan">
-                                <div class="fan-blade"></div>
-                                <div class="fan-blade"></div>
-                                <div class="fan-blade"></div>
-                            </div>
-                            <div class="miner-core" id="miner-core"></div>
-                            <div class="energy-rings">
-                                <div class="ring"></div>
-                                <div class="ring delay-1"></div>
-                                <div class="ring delay-2"></div>
-                            </div>
+            <div class="page active" id="miningPage">
+                <!-- 3D Miner -->
+                <div class="miner-3d">
+                    <div class="miner-body">
+                        <div class="miner-core"></div>
+                        <div class="miner-fan blade1"></div>
+                        <div class="miner-fan blade2"></div>
+                        <div class="miner-fan blade3"></div>
+                    </div>
+                    <div class="energy-pulse"></div>
+                    <div class="energy-pulse delay-1"></div>
+                    <div class="energy-pulse delay-2"></div>
+                </div>
+
+                <!-- Mining Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Active Miner</span>
+                            <span class="stat-value" id="activeMiner">Free Miner</span>
                         </div>
                     </div>
                     
-                    <div class="mining-stats-premium">
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-microchip"></i>
-                            </div>
-                            <div class="stat-content">
-                                <span class="stat-label">Active Miner</span>
-                                <span class="stat-value" id="active-miner">Free Miner</span>
-                            </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-bolt"></i>
                         </div>
-                        
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <div class="stat-content">
-                                <span class="stat-label">Hash Rate</span>
-                                <span class="stat-value" id="hash-rate">10 MH/s</span>
-                            </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Hash Rate</span>
+                            <span class="stat-value" id="hashRate">10 MH/s</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Mining Progress Section -->
-                <div class="mining-progress-premium">
+                <!-- Mining Progress -->
+                <div class="mining-progress">
                     <div class="progress-header">
-                        <div class="progress-title">
-                            <i class="fas fa-circle" style="color: #22c55e; font-size: 8px;"></i>
-                            <span>Mining in Progress</span>
-                        </div>
-                        <div class="progress-time" id="mining-timer">04:00:00</div>
+                        <span>Mining in progress</span>
+                        <span class="timer" id="miningTimer">04:00:00</span>
                     </div>
-                    
-                    <div class="progress-bar-container">
-                        <div class="progress-bar-premium" id="mining-progress" style="width: 0%;"></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="miningProgress"></div>
                     </div>
-                    
                     <div class="progress-footer">
-                        <span class="next-reward">Next reward: <span id="next-reward">0.01 TON</span></span>
-                        <button class="claim-button" id="claim-btn" disabled>
+                        <span>Next reward: <span id="nextReward">0.01 TON</span></span>
+                        <button class="claim-btn" id="claimBtn" disabled>
                             <i class="fas fa-bolt"></i>
-                            <span>CLAIM REWARD</span>
+                            Claim
                         </button>
                     </div>
                 </div>
 
-                <!-- Mining Machines Section -->
-                <div class="machines-section">
-                    <div class="section-header">
-                        <h2 class="section-title">
-                            <i class="fas fa-cubes"></i>
-                            Mining Rigs
-                        </h2>
-                        <a href="#" class="view-all" onclick="switchPage('market-page')">
-                            View All <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                    
-                    <div class="machines-grid" id="machines-grid"></div>
+                <!-- Active Machines -->
+                <div class="section">
+                    <h3>Your Mining Rigs</h3>
+                    <div class="machines-grid" id="machinesGrid"></div>
                 </div>
             </div>
 
             <!-- Market Page -->
-            <div class="page" id="market-page">
-                <div class="page-header">
-                    <h1 class="page-title">
-                        <i class="fas fa-store"></i>
-                        Hardware Market
-                    </h1>
-                    <p class="page-subtitle">Choose your mining rig and start earning</p>
-                </div>
+            <div class="page" id="marketPage">
+                <h2>Mining Hardware</h2>
+                <p class="page-subtitle">Choose your mining rig and start earning</p>
                 
                 <div class="market-filters">
                     <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="free">Free</button>
-                    <button class="filter-btn" data-filter="asic">ASIC</button>
+                    <button class="filter-btn" data-filter="basic">Basic</button>
+                    <button class="filter-btn" data-filter="pro">Professional</button>
                     <button class="filter-btn" data-filter="quantum">Quantum</button>
                 </div>
                 
-                <div class="machines-showcase" id="machines-showcase"></div>
+                <div class="machines-showcase" id="machinesShowcase"></div>
+            </div>
+
+            <!-- Plans Page -->
+            <div class="page" id="plansPage">
+                <h2>Rental Plans</h2>
+                <p class="page-subtitle">Compare returns and choose your investment</p>
+                
+                <div class="plans-container" id="plansContainer"></div>
             </div>
 
             <!-- Wallet Page -->
-            <div class="page" id="wallet-page">
-                <div class="page-header">
-                    <h1 class="page-title">
-                        <i class="fas fa-wallet"></i>
-                        Wallet
-                    </h1>
-                    <p class="page-subtitle">Manage your funds and withdrawals</p>
-                </div>
-                
-                <!-- Wallet Connection Card -->
-                <div class="wallet-connection-card">
-                    <div class="wallet-status-large" id="wallet-status-large">
-                        <div class="wallet-icon">
-                            <i class="fas fa-plug"></i>
-                        </div>
-                        <div class="wallet-status-text">
-                            <h3>Connect Your TON Wallet</h3>
-                            <p>Connect to pay for rentals and withdraw earnings</p>
-                        </div>
-                    </div>
-                    
-                    <div id="ton-connect-button" class="ton-connect-btn-large"></div>
-                </div>
+            <div class="page" id="walletPage">
+                <h2>Wallet</h2>
                 
                 <!-- Balance Card -->
-                <div class="balance-card-large">
+                <div class="balance-card">
                     <div class="balance-header">
                         <i class="fas fa-coins"></i>
                         <span>Total Balance</span>
                     </div>
-                    <div class="balance-amount" id="wallet-balance">0.0000 TON</div>
-                    <div class="balance-usd" id="wallet-balance-usd">≈ $0.00</div>
+                    <div class="balance-amount" id="walletBalance">0.0000 TON</div>
+                    <div class="balance-usd" id="walletUsd">≈ $0.00</div>
                 </div>
-                
-                <!-- Achievements Section -->
-                <div class="achievements-section">
-                    <h3 class="achievements-title">
-                        <i class="fas fa-trophy"></i>
-                        Achievements
-                    </h3>
-                    
-                    <div class="achievements-grid" id="achievements-grid"></div>
+
+                <!-- TON Connect -->
+                <div class="ton-connect-card">
+                    <div id="tonConnectButton"></div>
+                    <div class="wallet-status" id="walletStatus">
+                        <div class="status-indicator offline"></div>
+                        <span>Wallet disconnected</span>
+                    </div>
                 </div>
-                
-                <!-- Withdraw Button -->
-                <button class="withdraw-button" id="withdraw-btn">
-                    <i class="fas fa-arrow-up"></i>
-                    Withdraw TON
-                </button>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <button class="action-btn" id="depositBtn">
+                        <i class="fas fa-arrow-down"></i>
+                        Deposit
+                    </button>
+                    <button class="action-btn" id="withdrawBtn">
+                        <i class="fas fa-arrow-up"></i>
+                        Withdraw
+                    </button>
+                </div>
+
+                <!-- Achievements -->
+                <div class="section">
+                    <h3>Achievements</h3>
+                    <div class="achievements-grid" id="achievementsGrid"></div>
+                </div>
             </div>
 
-            <!-- Referral Page -->
-            <div class="page" id="referral-page">
-                <div class="page-header">
-                    <h1 class="page-title">
-                        <i class="fas fa-users"></i>
-                        Referral Program
-                    </h1>
-                    <p class="page-subtitle">Invite friends and earn 20% commission</p>
-                </div>
+            <!-- Referrals Page -->
+            <div class="page" id="referralsPage">
+                <h2>Referral Program</h2>
+                <p class="page-subtitle">Invite friends and earn 20% commission</p>
                 
                 <!-- Referral Stats -->
-                <div class="referral-stats-grid">
-                    <div class="referral-stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-user-friends"></i>
-                        </div>
-                        <div class="stat-content">
-                            <span class="stat-value" id="referral-count">0</span>
-                            <span class="stat-label">Friends</span>
-                        </div>
+                <div class="referral-stats">
+                    <div class="stat-box">
+                        <span class="stat-value" id="refCount">0</span>
+                        <span class="stat-label">Friends</span>
                     </div>
-                    
-                    <div class="referral-stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-coins"></i>
-                        </div>
-                        <div class="stat-content">
-                            <span class="stat-value" id="referral-earnings">0.0000</span>
-                            <span class="stat-label">Earned</span>
-                        </div>
+                    <div class="stat-box">
+                        <span class="stat-value" id="refEarnings">0.0000</span>
+                        <span class="stat-label">Earned</span>
                     </div>
                 </div>
-                
-                <!-- Referral Link Card -->
+
+                <!-- Referral Link -->
                 <div class="referral-link-card">
-                    <h4>Your Referral Link</h4>
+                    <h4>Your referral link</h4>
                     <div class="link-box">
-                        <input type="text" id="referral-link" readonly value="https://t.me/tonmining_bot?start=">
-                        <button class="copy-button" id="copy-ref-link">
+                        <input type="text" id="referralLink" readonly>
+                        <button class="copy-btn" id="copyRefLink">
                             <i class="fas fa-copy"></i>
                         </button>
                     </div>
-                    <p class="link-note">Share this link with friends. You both get 0.1 TON bonus!</p>
+                    <p class="link-note">You both get 0.1 TON bonus!</p>
                 </div>
-                
+
                 <!-- Referral Tree -->
-                <div class="referral-tree-card">
-                    <h4>Your Network</h4>
-                    <div class="tree-container" id="referral-tree">
-                        <div class="tree-root">
-                            <i class="fas fa-user-circle"></i>
-                            <span>You</span>
-                        </div>
-                        <div class="tree-branches" id="tree-branches"></div>
-                    </div>
+                <div class="referral-tree">
+                    <h4>Your network</h4>
+                    <div class="tree-container" id="referralTree"></div>
                 </div>
             </div>
         </main>
 
-        <!-- Premium Bottom Navigation -->
-        <nav class="bottom-nav-premium">
-            <button class="nav-item active" data-page="mining-page">
-                <div class="nav-icon">
-                    <i class="fas fa-microchip"></i>
-                </div>
-                <span class="nav-label">Mine</span>
-            </button>
-            
-            <button class="nav-item" data-page="market-page">
-                <div class="nav-icon">
-                    <i class="fas fa-store"></i>
-                </div>
-                <span class="nav-label">Market</span>
-            </button>
-            
-            <button class="nav-item" data-page="wallet-page">
-                <div class="nav-icon">
-                    <i class="fas fa-wallet"></i>
-                </div>
-                <span class="nav-label">Wallet</span>
-            </button>
-            
-            <button class="nav-item" data-page="referral-page">
-                <div class="nav-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <span class="nav-label">Team</span>
-            </button>
-        </nav>
-
-        <!-- Payment Modal (Premium) -->
-        <div class="modal-overlay" id="payment-modal" style="display: none;">
-            <div class="modal-content payment-modal">
+        <!-- Payment Modal -->
+        <div class="modal" id="paymentModal">
+            <div class="modal-content">
                 <div class="modal-header">
-                    <div class="modal-title">
-                        <i class="fas fa-bolt" style="color: #00f2ff;"></i>
-                        <h2>Complete Rental</h2>
-                    </div>
-                    <button class="modal-close" onclick="closeModal()">
+                    <h3>Complete Rental</h3>
+                    <button class="close-btn" onclick="closeModal('paymentModal')">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
-
-                <div class="machine-info-premium" id="payment-machine-info">
-                    <img src="" alt="" class="machine-image" id="payment-machine-image">
-                    <div class="machine-details">
-                        <h3 id="payment-machine-name">Turbo v2</h3>
-                        <div class="machine-specs">
-                            <span><i class="fas fa-bolt"></i> <span id="payment-machine-yield">0.2 TON</span>/cycle</span>
-                            <span><i class="fas fa-clock"></i> <span id="payment-machine-duration">3 days</span></span>
+                
+                <div class="modal-body">
+                    <div class="machine-preview" id="paymentMachinePreview">
+                        <i class="fas fa-microchip" id="paymentMachineIcon"></i>
+                        <h4 id="paymentMachineName">Turbo v2</h4>
+                    </div>
+                    
+                    <div class="plan-details" id="paymentPlanDetails">
+                        <div class="detail-row">
+                            <span>Duration:</span>
+                            <span id="paymentDuration">3 days</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Price:</span>
+                            <span class="price" id="paymentPrice">5 TON</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Return:</span>
+                            <span class="return" id="paymentReturn">2 TON (40%)</span>
+                        </div>
+                        <div class="detail-row total">
+                            <span>You will receive:</span>
+                            <span class="total-amount" id="paymentTotal">7 TON</span>
                         </div>
                     </div>
-                </div>
 
-                <!-- Wallet Connection Status -->
-                <div class="wallet-connection-status" id="wallet-connection-status">
-                    <div class="status-indicator disconnected">
-                        <i class="fas fa-circle"></i>
+                    <div class="wallet-connection" id="paymentWalletStatus">
+                        <div class="status offline">
+                            <i class="fas fa-circle"></i>
+                            <span>Wallet not connected</span>
+                        </div>
                     </div>
-                    <div class="status-message">
-                        <span class="status-title">Wallet not connected</span>
-                        <span class="status-sub">Connect to pay with TON</span>
-                    </div>
-                </div>
 
-                <!-- Connected Wallet Info (hidden initially) -->
-                <div class="connected-wallet-info" id="connected-wallet-info" style="display: none;">
-                    <div class="wallet-address">
-                        <i class="fas fa-check-circle" style="color: #22c55e;"></i>
-                        <span id="connected-wallet-address">UQ...abcd</span>
+                    <div class="wallet-address-box" id="paymentWalletInfo" style="display: none;">
+                        <span>Connected:</span>
+                        <span class="address" id="connectedAddress"></span>
                     </div>
-                    <div class="wallet-balance-mini">
-                        <span>Balance: <span id="connected-wallet-balance">0</span> TON</span>
-                    </div>
-                </div>
 
-                <div class="payment-details">
-                    <div class="detail-row">
-                        <span>Rental Price</span>
-                        <span class="price-amount" id="payment-price">1 TON</span>
-                    </div>
-                    <div class="detail-row total">
-                        <span>Total to Pay</span>
-                        <span class="total-amount" id="payment-total">1 TON</span>
-                    </div>
-                </div>
-
-                <div class="payment-actions">
-                    <button class="btn-secondary" onclick="closeModal()">Cancel</button>
-                    <button class="btn-primary" id="confirm-payment-btn" disabled>
+                    <button class="confirm-btn" id="confirmPaymentBtn" disabled>
                         <i class="fas fa-bolt"></i>
-                        Pay with Wallet
+                        Pay with TON
                     </button>
                 </div>
+            </div>
+        </div>
 
-                <div class="payment-note">
-                    <i class="fas fa-info-circle"></i>
-                    <span>Transaction will be signed by your wallet. Blockchain confirmation in 1-5 minutes.</span>
+        <!-- Deposit Modal -->
+        <div class="modal" id="depositModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Deposit TON</h3>
+                    <button class="close-btn" onclick="closeModal('depositModal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="deposit-address-card">
+                        <h4>Send TON to this address:</h4>
+                        <div class="address-box">
+                            <span class="address" id="depositAddress"></span>
+                            <button class="copy-btn-small" onclick="navigator.clipboard.writeText(CONFIG.TON.WALLET); Notify.success('Address copied!')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Amount (min 1 TON)</label>
+                        <input type="number" id="depositAmount" placeholder="1.0" min="1" step="0.1">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Transaction Hash (TxID)</label>
+                        <input type="text" id="depositTxHash" placeholder="0x...">
+                    </div>
+                    
+                    <div class="wallet-connection" id="depositWalletStatus">
+                        <div class="status offline">
+                            <i class="fas fa-circle"></i>
+                            <span>Wallet not connected</span>
+                        </div>
+                    </div>
+
+                    <button class="confirm-btn" id="confirmDepositBtn" disabled>
+                        <i class="fas fa-arrow-down"></i>
+                        Submit Deposit
+                    </button>
                 </div>
             </div>
         </div>
 
         <!-- Withdraw Modal -->
-        <div class="modal-overlay" id="withdraw-modal" style="display: none;">
-            <div class="modal-content withdraw-modal">
+        <div class="modal" id="withdrawModal">
+            <div class="modal-content">
                 <div class="modal-header">
-                    <div class="modal-title">
-                        <i class="fas fa-arrow-up" style="color: #f59e0b;"></i>
-                        <h2>Withdraw TON</h2>
-                    </div>
-                    <button class="modal-close" onclick="closeModal()">
+                    <h3>Withdraw TON</h3>
+                    <button class="close-btn" onclick="closeModal('withdrawModal')">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
-
-                <div class="withdraw-balance">
-                    <span>Available Balance</span>
-                    <span class="balance-amount" id="withdraw-available">0.0000 TON</span>
-                </div>
-
-                <div class="form-group">
-                    <label>Amount (min 1 TON)</label>
-                    <input type="number" id="withdraw-amount" class="form-input" min="1" step="0.1" placeholder="1.0">
-                </div>
-
-                <div class="form-group">
-                    <label>TON Address</label>
-                    <input type="text" id="withdraw-address" class="form-input" placeholder="UQ... or EQ...">
-                </div>
-
-                <div class="withdraw-note">
-                    <i class="fas fa-clock"></i>
-                    <span>Withdrawals are processed manually within 1-5 minutes after admin approval.</span>
-                </div>
-
-                <div class="modal-actions">
-                    <button class="btn-secondary" onclick="closeModal()">Cancel</button>
-                    <button class="btn-primary" id="submit-withdraw-btn">Request Withdrawal</button>
+                
+                <div class="modal-body">
+                    <div class="balance-info">
+                        <span>Available:</span>
+                        <span class="amount" id="withdrawBalance">0.0000 TON</span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Amount (min 1 TON)</label>
+                        <input type="number" id="withdrawAmount" placeholder="1.0" min="1" step="0.1">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>TON Address</label>
+                        <input type="text" id="withdrawAddress" placeholder="UQ... or EQ...">
+                    </div>
+                    
+                    <button class="confirm-btn" id="submitWithdraw">
+                        <i class="fas fa-arrow-up"></i>
+                        Request Withdrawal
+                    </button>
                 </div>
             </div>
         </div>
 
         <!-- Admin Modal -->
-        <div class="modal-overlay" id="admin-modal" style="display: none;">
+        <div class="modal" id="adminModal">
             <div class="modal-content admin-modal">
                 <div class="modal-header">
-                    <div class="modal-title">
-                        <i class="fas fa-crown" style="color: #fbbf24;"></i>
-                        <h2>Admin Panel</h2>
-                    </div>
-                    <button class="modal-close" onclick="closeModal()">
+                    <h3><i class="fas fa-crown" style="color: #fbbf24;"></i> Admin Panel</h3>
+                    <button class="close-btn" onclick="closeModal('adminModal')">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
-
-                <div class="admin-tabs">
-                    <button class="admin-tab active" data-admin-tab="withdrawals">
-                        <i class="fas fa-clock"></i>
-                        Pending Withdrawals
-                        <span class="badge" id="pending-withdrawals-count">0</span>
-                    </button>
-                    <button class="admin-tab" data-admin-tab="users">
-                        <i class="fas fa-users"></i>
-                        User Management
-                    </button>
-                </div>
-
-                <div class="admin-tab-content active" id="admin-withdrawals-tab">
-                    <div class="requests-list" id="withdraw-requests-list">
-                        <div class="empty-state">
-                            <i class="fas fa-inbox"></i>
-                            <p>No pending withdrawal requests</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="admin-tab-content" id="admin-users-tab">
-                    <div class="user-management">
-                        <h4>Add Balance to User</h4>
-                        <div class="form-group">
-                            <input type="text" id="admin-user-id" class="form-input" placeholder="User ID">
-                        </div>
-                        <div class="form-group">
-                            <input type="number" id="admin-amount" class="form-input" placeholder="Amount (TON)" min="0.01" step="0.01">
-                        </div>
-                        <button class="btn-primary" id="admin-add-balance">Add Balance</button>
+                
+                <div class="modal-body">
+                    <div class="admin-tabs">
+                        <button class="admin-tab active" data-tab="withdrawals">
+                            Withdrawals
+                            <span class="badge" id="pendingWithdrawalsCount">0</span>
+                        </button>
+                        <button class="admin-tab" data-tab="deposits">
+                            Deposits
+                            <span class="badge" id="pendingDepositsCount">0</span>
+                        </button>
+                        <button class="admin-tab" data-tab="users">Users</button>
                     </div>
                     
-                    <div class="user-search">
-                        <h4>Search User</h4>
-                        <div class="search-box">
-                            <input type="text" id="admin-search" class="form-input" placeholder="Enter User ID">
-                            <button class="search-btn" id="admin-search-btn">
-                                <i class="fas fa-search"></i>
-                            </button>
+                    <div class="admin-content active" id="withdrawalsTab">
+                        <div class="requests-list" id="withdrawalsList"></div>
+                    </div>
+                    
+                    <div class="admin-content" id="depositsTab">
+                        <div class="requests-list" id="depositsList"></div>
+                    </div>
+                    
+                    <div class="admin-content" id="usersTab">
+                        <div class="user-management">
+                            <h4>Add Balance</h4>
+                            <input type="text" id="adminUserId" placeholder="User ID">
+                            <input type="number" id="adminAmount" placeholder="Amount TON">
+                            <button class="admin-action-btn" id="adminAddBalance">Add</button>
                         </div>
-                        <div class="user-info" id="admin-user-info" style="display: none;"></div>
+                        
+                        <div class="user-search">
+                            <h4>Search User</h4>
+                            <div class="search-box">
+                                <input type="text" id="adminSearch" placeholder="User ID">
+                                <button class="search-btn" id="adminSearchBtn">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="user-info" id="adminUserInfo"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Notification Toast -->
-        <div class="notification-toast" id="notification"></div>
+        <!-- Notification -->
+        <div class="notification" id="notification"></div>
     </div>
 
     <!-- JavaScript -->
