@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TON MINING PRO | Next-Gen Mining Platform</title>
+    <title>TON MINING PRO | Legendary Mining Platform</title>
     
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,31 +34,40 @@
 
     <!-- Main App -->
     <div class="app" id="app">
-        <!-- Floating Notification Bar -->
+        <!-- Floating Notifications -->
         <div class="floating-notification" id="floatingNotification"></div>
+        
+        <!-- Welcome Sticker -->
+        <div class="welcome-sticker" id="welcomeSticker"></div>
 
         <!-- Header Premium -->
         <header class="glass-header">
             <div class="header-left">
                 <div class="user-avatar" id="userAvatar">
-                    <i class="fas fa-user-astronaut"></i>
+                    <img id="avatarImage" src="" alt="" style="display: none;">
+                    <i class="fas fa-user-astronaut" id="avatarIcon"></i>
                 </div>
                 <div class="user-info">
-                    <span class="welcome-text">Welcome back,</span>
-                    <span class="username" id="username">Test Load</span>
+                    <span class="welcome-text" data-i18n="welcome.title">Welcome back,</span>
+                    <span class="username" id="username">Crypto Miner</span>
                     <span class="user-id" id="userId">ID: 12345678</span>
                 </div>
             </div>
             
             <div class="header-right">
-                <div class="balance-chip" id="balanceChip">
+                <div class="balance-chip" id="balanceChip" onclick="showWallet()">
                     <i class="fas fa-coins" style="color: #fbbf24;"></i>
                     <span id="headerBalance">0.0000</span>
                     <span class="currency">TON</span>
                 </div>
                 
-                <button class="icon-btn" id="langToggle">
-                    🇬🇧
+                <button class="icon-btn notification-btn" id="notificationBtn" onclick="showNotifications()">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="badge" id="notificationBadge">0</span>
+                </button>
+                
+                <button class="icon-btn lang-btn" id="langToggle" onclick="toggleLanguage()">
+                    <span id="currentLanguageFlag">🇬🇧</span>
                 </button>
             </div>
         </header>
@@ -67,77 +76,133 @@
         <main class="main-content" id="mainContent">
             <!-- Mining Page -->
             <div class="page active" id="miningPage">
-                <!-- 3D Miner -->
-                <div class="miner-3d">
-                    <div class="miner-body">
-                        <div class="miner-core"></div>
-                        <div class="miner-fan blade1"></div>
-                        <div class="miner-fan blade2"></div>
-                        <div class="miner-fan blade3"></div>
-                    </div>
-                    <div class="energy-pulse"></div>
-                    <div class="energy-pulse delay-1"></div>
-                    <div class="energy-pulse delay-2"></div>
-                </div>
-
-                <!-- Mining Stats -->
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-microchip"></i>
+                <!-- 3D Legendary Miner -->
+                <div class="legendary-miner">
+                    <div class="miner-3d-container">
+                        <div class="miner-3d">
+                            <div class="miner-body">
+                                <div class="miner-core"></div>
+                                <div class="miner-fan blade1"></div>
+                                <div class="miner-fan blade2"></div>
+                                <div class="miner-fan blade3"></div>
+                                <div class="miner-glow"></div>
+                                <div class="miner-particles" id="minerParticles"></div>
+                            </div>
+                            <div class="energy-pulse"></div>
+                            <div class="energy-pulse delay-1"></div>
+                            <div class="energy-pulse delay-2"></div>
                         </div>
-                        <div class="stat-info">
-                            <span class="stat-label">ACTIVE MINER</span>
-                            <span class="stat-value" id="activeMiner">Free Miner</span>
+                        
+                        <!-- Machine Status Badge -->
+                        <div class="machine-status-badge" id="machineStatusBadge">
+                            <span class="status-text" id="activeMachineName">Free Miner</span>
+                            <span class="status-icon"><i class="fas fa-check-circle"></i></span>
                         </div>
                     </div>
                     
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-bolt"></i>
+                    <!-- Mining Stats Cards -->
+                    <div class="mining-stats-legendary">
+                        <div class="stat-orb" id="hashrateOrb">
+                            <div class="orb-glow"></div>
+                            <div class="orb-content">
+                                <i class="fas fa-microchip"></i>
+                                <span class="orb-value" id="hashRate">10</span>
+                                <span class="orb-label">MH/s</span>
+                            </div>
                         </div>
-                        <div class="stat-info">
-                            <span class="stat-label">HASH RATE</span>
-                            <span class="stat-value" id="hashRate">10 MH/s</span>
+                        
+                        <div class="stat-orb" id="streakOrb">
+                            <div class="orb-glow"></div>
+                            <div class="orb-content">
+                                <i class="fas fa-fire"></i>
+                                <span class="orb-value" id="streakCount">0</span>
+                                <span class="orb-label">Streak</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-orb" id="earningsOrb">
+                            <div class="orb-glow"></div>
+                            <div class="orb-content">
+                                <i class="fas fa-coins"></i>
+                                <span class="orb-value" id="totalEarned">0</span>
+                                <span class="orb-label">Earned</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Mining Progress -->
-                <div class="mining-progress">
+                <!-- Legendary Mining Progress -->
+                <div class="legendary-progress">
                     <div class="progress-header">
-                        <span>Mining in progress</span>
-                        <span class="timer" id="miningTimer">03:59:46</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="miningProgress"></div>
-                    </div>
-                    <div class="progress-footer">
-                        <span>Next reward: <span id="nextReward">0.0100 TON</span></span>
-                        <button class="claim-btn" id="claimBtn" disabled>
+                        <div class="progress-title">
                             <i class="fas fa-bolt"></i>
-                            Claim
+                            <span data-i18n="mining.currentCycle">Current Mining Cycle</span>
+                        </div>
+                        <div class="progress-timer" id="miningTimer">03:59:46</div>
+                    </div>
+                    
+                    <div class="progress-bar-legendary">
+                        <div class="progress-track">
+                            <div class="progress-fill-legendary" id="miningProgress" style="width: 0%;">
+                                <div class="progress-glow"></div>
+                            </div>
+                        </div>
+                        <div class="progress-markers">
+                            <span class="marker start">0%</span>
+                            <span class="marker quarter">25%</span>
+                            <span class="marker half">50%</span>
+                            <span class="marker threequarter">75%</span>
+                            <span class="marker full">100%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-footer">
+                        <div class="next-reward">
+                            <span class="label" data-i18n="mining.nextReward">Next Reward</span>
+                            <span class="value" id="nextReward">0.0100 TON</span>
+                        </div>
+                        
+                        <button class="claim-btn-legendary" id="claimBtn" disabled>
+                            <i class="fas fa-bolt"></i>
+                            <span data-i18n="mining.claim">CLAIM</span>
+                            <div class="btn-particles"></div>
                         </button>
                     </div>
                 </div>
 
-                <!-- Your Mining Rigs -->
-                <div class="section">
-                    <h3>Your Mining Rigs</h3>
-                    <div class="machines-grid" id="machinesGrid"></div>
+                <!-- Active Machines Section -->
+                <div class="section legendary-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-microchip"></i> <span data-i18n="mining.activeRigs">Active Mining Rigs</span></h3>
+                        <button class="section-action" onclick="showMarket()">
+                            <span data-i18n="actions.manage">Manage</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="active-machines-grid" id="activeMachinesGrid">
+                        <!-- يتم تعبئتها عبر JavaScript -->
+                    </div>
                 </div>
 
-                <!-- Detailed Plans Table -->
-                <div class="section">
-                    <h3>Mining Plans & Returns</h3>
-                    <div class="plans-table-container">
-                        <table class="plans-detailed-table" id="plansDetailedTable">
+                <!-- Mining Plans Table -->
+                <div class="section legendary-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-chart-line"></i> <span data-i18n="mining.plansReturns">Mining Plans & Returns</span></h3>
+                        <button class="section-action" onclick="showMarket()">
+                            <span data-i18n="actions.viewAll">View All</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="plans-table-legendary">
+                        <table class="legendary-table" id="plansTable">
                             <thead>
                                 <tr>
-                                    <th>Machine</th>
-                                    <th>3 Days</th>
-                                    <th>7 Days</th>
-                                    <th>15 Days</th>
+                                    <th data-i18n="table.machine">Machine</th>
+                                    <th data-i18n="table.3days">3 Days</th>
+                                    <th data-i18n="table.7days">7 Days</th>
+                                    <th data-i18n="table.15days">15 Days</th>
                                 </tr>
                             </thead>
                             <tbody id="plansTableBody">
@@ -146,274 +211,536 @@
                         </table>
                     </div>
                 </div>
+
+                <!-- Recent Activities -->
+                <div class="section legendary-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-history"></i> <span data-i18n="mining.recentActivity">Recent Activity</span></h3>
+                        <button class="section-action" onclick="showHistory()">
+                            <span data-i18n="actions.seeAll">See All</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="activity-feed" id="activityFeed">
+                        <!-- يتم تعبئتها عبر JavaScript -->
+                    </div>
+                </div>
             </div>
 
-            <!-- Market Page -->
+            <!-- Market Page (Machines + Plans) -->
             <div class="page" id="marketPage">
-                <h2>Mining Hardware</h2>
-                <p class="page-subtitle">Choose your mining rig and start earning</p>
+                <h2><i class="fas fa-store"></i> <span data-i18n="market.title">Mining Hardware</span></h2>
+                <p class="page-subtitle" data-i18n="market.subtitle">Choose your mining rig and start earning</p>
                 
-                <div class="market-filters">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="basic">Basic</button>
-                    <button class="filter-btn" data-filter="pro">Professional</button>
-                    <button class="filter-btn" data-filter="quantum">Quantum</button>
+                <!-- Market Filters -->
+                <div class="market-filters-legendary">
+                    <button class="filter-btn active" data-filter="all" onclick="filterMarket('all')">
+                        <span data-i18n="filters.all">All</span>
+                    </button>
+                    <button class="filter-btn" data-filter="free" onclick="filterMarket('free')">
+                        <i class="fas fa-gift"></i>
+                        <span data-i18n="filters.free">Free</span>
+                    </button>
+                    <button class="filter-btn" data-filter="basic" onclick="filterMarket('basic')">
+                        <span data-i18n="filters.basic">Basic</span>
+                    </button>
+                    <button class="filter-btn" data-filter="pro" onclick="filterMarket('pro')">
+                        <span data-i18n="filters.pro">Pro</span>
+                    </button>
+                    <button class="filter-btn" data-filter="quantum" onclick="filterMarket('quantum')">
+                        <span data-i18n="filters.quantum">Quantum</span>
+                    </button>
                 </div>
                 
-                <div class="machines-showcase" id="machinesShowcase"></div>
+                <!-- Machines Showcase with Plans -->
+                <div class="machines-showcase-legendary" id="machinesShowcase">
+                    <!-- يتم تعبئتها عبر JavaScript -->
+                </div>
             </div>
 
-            <!-- Plans Page -->
-            <div class="page" id="plansPage">
-                <h2>Rental Plans</h2>
-                <p class="page-subtitle">Compare returns and choose your investment</p>
+            <!-- Stats Page -->
+            <div class="page" id="statsPage">
+                <h2><i class="fas fa-chart-pie"></i> <span data-i18n="stats.title">Mining Statistics</span></h2>
+                <p class="page-subtitle" data-i18n="stats.subtitle">Your mining performance and achievements</p>
                 
-                <div class="plans-container" id="plansContainer"></div>
-            </div>
-
-            <!-- Wallet Page -->
-            <div class="page" id="walletPage">
-                <h2>Wallet</h2>
-                
-                <!-- Balance Card -->
-                <div class="balance-card">
-                    <div class="balance-header">
-                        <i class="fas fa-coins"></i>
-                        <span>Total Balance</span>
+                <!-- Stats Overview -->
+                <div class="stats-overview-legendary">
+                    <div class="stat-card-huge">
+                        <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="stat-content">
+                            <span class="stat-label" data-i18n="stats.miningDays">Mining Days</span>
+                            <span class="stat-value" id="miningDays">47</span>
+                        </div>
                     </div>
-                    <div class="balance-amount" id="walletBalance">0.0000 TON</div>
-                    <div class="balance-usd" id="walletUsd">≈ $0.00</div>
+                    
+                    <div class="stat-card-huge">
+                        <div class="stat-icon"><i class="fas fa-fire"></i></div>
+                        <div class="stat-content">
+                            <span class="stat-label" data-i18n="stats.bestStreak">Best Streak</span>
+                            <span class="stat-value" id="bestStreak">12</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card-huge">
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <div class="stat-content">
+                            <span class="stat-label" data-i18n="stats.totalReferrals">Total Referrals</span>
+                            <span class="stat-value" id="totalReferralsStats">8</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card-huge">
+                        <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                        <div class="stat-content">
+                            <span class="stat-label" data-i18n="stats.achievements">Achievements</span>
+                            <span class="stat-value" id="achievementsCount">15/30</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings Chart -->
+                <div class="section legendary-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-chart-line"></i> <span data-i18n="stats.earningsHistory">Earnings History</span></h3>
+                    </div>
+                    
+                    <div class="chart-container" id="earningsChart">
+                        <!-- Simple Chart Representation -->
+                        <div class="chart-bars" id="chartBars"></div>
+                    </div>
+                </div>
+
+                <!-- Leaderboard -->
+                <div class="section legendary-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-crown"></i> <span data-i18n="stats.leaderboard">Mining Leaderboard</span></h3>
+                    </div>
+                    
+                    <div class="leaderboard" id="leaderboard">
+                        <div class="leaderboard-item gold">
+                            <span class="rank">🥇</span>
+                            <span class="name">CryptoKing</span>
+                            <span class="earnings">12,450 TON</span>
+                        </div>
+                        <div class="leaderboard-item silver">
+                            <span class="rank">🥈</span>
+                            <span class="name">TonWhale</span>
+                            <span class="earnings">8,230 TON</span>
+                        </div>
+                        <div class="leaderboard-item bronze">
+                            <span class="rank">🥉</span>
+                            <span class="name">MinerPro</span>
+                            <span class="earnings">5,670 TON</span>
+                        </div>
+                        <div class="leaderboard-item">
+                            <span class="rank">4</span>
+                            <span class="name">QuantumMiner</span>
+                            <span class="earnings">3,890 TON</span>
+                        </div>
+                        <div class="leaderboard-item">
+                            <span class="rank">5</span>
+                            <span class="name">ASICMaster</span>
+                            <span class="earnings">2,450 TON</span>
+                        </div>
+                        <div class="leaderboard-item you">
+                            <span class="rank">24</span>
+                            <span class="name" id="leaderboardYou">You</span>
+                            <span class="earnings" id="yourEarnings">1,247 TON</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Achievements Grid -->
+                <div class="section legendary-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-medal"></i> <span data-i18n="stats.achievements">Achievements</span></h3>
+                    </div>
+                    
+                    <div class="achievements-grid-legendary" id="achievementsGrid">
+                        <!-- يتم تعبئتها عبر JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Page -->
+            <div class="page" id="profilePage">
+                <h2><i class="fas fa-user"></i> <span data-i18n="profile.title">My Profile</span></h2>
+                
+                <!-- Wallet Card -->
+                <div class="wallet-card-legendary">
+                    <div class="wallet-header">
+                        <i class="fas fa-wallet"></i>
+                        <span data-i18n="wallet.totalBalance">Total Balance</span>
+                    </div>
+                    <div class="wallet-balance-large" id="profileBalance">0.0000 TON</div>
+                    <div class="wallet-usd" id="profileUsd">≈ $0.00</div>
+                    
+                    <div class="wallet-actions">
+                        <button class="wallet-action-btn deposit" onclick="showDepositModal()">
+                            <i class="fas fa-arrow-down"></i>
+                            <span data-i18n="actions.deposit">Deposit</span>
+                        </button>
+                        <button class="wallet-action-btn withdraw" onclick="showWithdrawModal()">
+                            <i class="fas fa-arrow-up"></i>
+                            <span data-i18n="actions.withdraw">Withdraw</span>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- TON Connect -->
-                <div class="ton-connect-card">
+                <div class="ton-connect-card-legendary">
                     <div id="tonConnectButton"></div>
-                    <div class="wallet-status" id="walletStatus">
+                    <div class="wallet-status" id="profileWalletStatus">
                         <div class="status-indicator offline"></div>
-                        <span>Wallet disconnected</span>
+                        <span data-i18n="wallet.disconnected">Wallet disconnected</span>
+                    </div>
+                    <div class="connected-wallet-info" id="connectedWalletInfo" style="display: none;">
+                        <span class="label" data-i18n="wallet.connected">Connected:</span>
+                        <span class="address" id="profileConnectedAddress"></span>
+                        <span class="balance" id="connectedWalletBalance">0 TON</span>
                     </div>
                 </div>
 
-                <!-- Quick Actions -->
-                <div class="quick-actions">
-                    <button class="action-btn" id="depositBtn">
-                        <i class="fas fa-arrow-down"></i>
-                        Deposit
-                    </button>
-                    <button class="action-btn" id="withdrawBtn">
-                        <i class="fas fa-arrow-up"></i>
-                        Withdraw
-                    </button>
-                </div>
-
-                <!-- Achievements -->
-                <div class="section">
-                    <h3>Achievements</h3>
-                    <div class="achievements-grid" id="achievementsGrid"></div>
-                </div>
-            </div>
-
-            <!-- Referrals Page -->
-            <div class="page" id="referralsPage">
-                <h2>Referral Program</h2>
-                <p class="page-subtitle">Invite friends and earn 20% commission</p>
-                
-                <!-- Referral Stats -->
-                <div class="referral-stats">
-                    <div class="stat-box">
-                        <span class="stat-value" id="refCount">0</span>
-                        <span class="stat-label">Friends</span>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-value" id="refEarnings">0.0000</span>
-                        <span class="stat-label">Earned</span>
-                    </div>
-                </div>
-
-                <!-- Referral Link -->
-                <div class="referral-link-card">
-                    <h4>Your referral link</h4>
-                    <div class="link-box">
-                        <input type="text" id="referralLink" readonly>
-                        <button class="copy-btn" id="copyRefLink">
-                            <i class="fas fa-copy"></i>
+                <!-- Assets List -->
+                <div class="section legendary-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-coins"></i> <span data-i18n="wallet.myAssets">My Assets</span></h3>
+                        <button class="section-action" onclick="showAllAssets()">
+                            <span data-i18n="actions.seeAll">See All</span>
+                            <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
-                    <p class="link-note">You both get 0.1 TON bonus!</p>
+                    
+                    <div class="assets-list-legendary" id="assetsList">
+                        <!-- يتم تعبئتها عبر JavaScript -->
+                    </div>
                 </div>
 
-                <!-- Referral Tree -->
-                <div class="referral-tree">
-                    <h4>Your network</h4>
-                    <div class="tree-container" id="referralTree"></div>
+                <!-- Referral Section -->
+                <div class="section legendary-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-users"></i> <span data-i18n="referral.title">Referral Program</span></h3>
+                        <button class="section-action" onclick="showReferralDetails()">
+                            <span data-i18n="actions.manage">Manage</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="referral-preview">
+                        <div class="referral-stats-mini">
+                            <div class="mini-stat">
+                                <span class="value" id="previewRefCount">0</span>
+                                <span class="label" data-i18n="referral.friends">Friends</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="value" id="previewRefEarnings">0.0000</span>
+                                <span class="label" data-i18n="referral.earned">Earned</span>
+                            </div>
+                        </div>
+                        
+                        <div class="referral-link-mini">
+                            <input type="text" id="previewReferralLink" readonly value="https://t.me/bot?start=CODE">
+                            <button class="copy-btn-mini" onclick="copyReferralLink()">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings -->
+                <div class="section legendary-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-cog"></i> <span data-i18n="settings.title">Settings</span></h3>
+                    </div>
+                    
+                    <div class="settings-list">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <i class="fas fa-bell"></i>
+                                <span data-i18n="settings.notifications">Notifications</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="notificationsToggle" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <i class="fas fa-moon"></i>
+                                <span data-i18n="settings.darkMode">Dark Mode</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="darkModeToggle" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <i class="fas fa-language"></i>
+                                <span data-i18n="settings.language">Language</span>
+                            </div>
+                            <button class="setting-action" onclick="toggleLanguage()">
+                                <span id="settingsLanguage">English</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <i class="fas fa-headset"></i>
+                                <span data-i18n="settings.support">Support</span>
+                            </div>
+                            <button class="setting-action" onclick="openSupport()">
+                                <i class="fas fa-external-link-alt"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="setting-item" id="adminSettingItem" style="display: none;">
+                            <div class="setting-info">
+                                <i class="fas fa-crown" style="color: gold;"></i>
+                                <span>Admin Panel</span>
+                            </div>
+                            <button class="setting-action" onclick="showAdminPanel()">
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
 
-        <!-- Bottom Navigation (مثبت في الأسفل) -->
-        <nav class="bottom-nav">
-            <button class="nav-item active" data-tab="mining">
-                <i class="fas fa-microchip"></i>
-                <span>Mining</span>
+        <!-- Bottom Navigation (4 Buttons) -->
+        <nav class="bottom-nav-legendary">
+            <button class="nav-item active" onclick="showPage('mining')" data-page="mining">
+                <div class="nav-icon"><i class="fas fa-microchip"></i></div>
+                <span class="nav-label" data-i18n="nav.mining">Mining</span>
+                <div class="nav-glow"></div>
             </button>
-            <button class="nav-item" data-tab="market">
-                <i class="fas fa-store"></i>
-                <span>Market</span>
+            
+            <button class="nav-item" onclick="showPage('market')" data-page="market">
+                <div class="nav-icon"><i class="fas fa-store"></i></div>
+                <span class="nav-label" data-i18n="nav.market">Market</span>
+                <div class="nav-glow"></div>
             </button>
-            <button class="nav-item" data-tab="plans">
-                <i class="fas fa-chart-line"></i>
-                <span>Plans</span>
+            
+            <button class="nav-item" onclick="showPage('stats')" data-page="stats">
+                <div class="nav-icon"><i class="fas fa-chart-pie"></i></div>
+                <span class="nav-label" data-i18n="nav.stats">Stats</span>
+                <div class="nav-glow"></div>
             </button>
-            <button class="nav-item" data-tab="wallet">
-                <i class="fas fa-wallet"></i>
-                <span>Wallet</span>
-            </button>
-            <button class="nav-item" data-tab="referrals">
-                <i class="fas fa-users"></i>
-                <span>Team</span>
+            
+            <button class="nav-item" onclick="showPage('profile')" data-page="profile">
+                <div class="nav-icon"><i class="fas fa-user"></i></div>
+                <span class="nav-label" data-i18n="nav.profile">Profile</span>
+                <div class="nav-glow"></div>
             </button>
         </nav>
 
         <!-- Payment Modal -->
-        <div class="modal" id="paymentModal">
+        <div class="modal legendary-modal" id="paymentModal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3>Complete Rental</h3>
+                    <h3><i class="fas fa-bolt"></i> <span data-i18n="payment.title">Complete Rental</span></h3>
                     <button class="close-btn" onclick="closeModal('paymentModal')">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
                 
                 <div class="modal-body">
-                    <div class="machine-preview">
-                        <i class="fas fa-microchip" id="paymentMachineIcon"></i>
+                    <div class="machine-preview-legendary">
+                        <div class="machine-icon-large" id="paymentMachineIcon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
                         <h4 id="paymentMachineName">Turbo v2</h4>
                     </div>
                     
-                    <div class="plan-details">
+                    <div class="plan-details-legendary">
                         <div class="detail-row">
-                            <span>Duration:</span>
-                            <span id="paymentDuration">3 days</span>
+                            <span data-i18n="payment.duration">Duration:</span>
+                            <span class="detail-value" id="paymentDuration">3 days</span>
                         </div>
                         <div class="detail-row">
-                            <span>Price:</span>
-                            <span class="price" id="paymentPrice">5 TON</span>
+                            <span data-i18n="payment.price">Price:</span>
+                            <span class="detail-value price" id="paymentPrice">5 TON</span>
                         </div>
                         <div class="detail-row">
-                            <span>Return:</span>
-                            <span class="return" id="paymentReturn">2 TON (40%)</span>
+                            <span data-i18n="payment.return">Return:</span>
+                            <span class="detail-value return" id="paymentReturn">2 TON (40%)</span>
                         </div>
                         <div class="detail-row total">
-                            <span>You will receive:</span>
-                            <span class="total-amount" id="paymentTotal">7 TON</span>
+                            <span data-i18n="payment.youReceive">You will receive:</span>
+                            <span class="detail-value total-amount" id="paymentTotal">7 TON</span>
                         </div>
                     </div>
 
-                    <div class="wallet-connection" id="paymentWalletStatus">
+                    <div class="wallet-connection-legendary" id="paymentWalletStatus">
                         <div class="status offline">
                             <i class="fas fa-circle"></i>
-                            <span>Wallet not connected</span>
+                            <span data-i18n="wallet.notConnected">Wallet not connected</span>
                         </div>
                     </div>
 
-                    <div class="wallet-address-box" id="paymentWalletInfo" style="display: none;">
-                        <span>Connected:</span>
-                        <span class="address" id="connectedAddress"></span>
+                    <div class="wallet-info-legendary" id="paymentWalletInfo" style="display: none;">
+                        <span class="label" data-i18n="wallet.connected">Connected:</span>
+                        <span class="address" id="modalConnectedAddress"></span>
                     </div>
 
-                    <button class="confirm-btn" id="confirmPaymentBtn" disabled>
+                    <button class="confirm-btn-legendary" id="confirmPaymentBtn" disabled>
                         <i class="fas fa-bolt"></i>
-                        Pay with TON
+                        <span data-i18n="payment.payWithTon">Pay with TON</span>
+                        <div class="btn-particles"></div>
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- Deposit Modal -->
-        <div class="modal" id="depositModal">
+        <div class="modal legendary-modal" id="depositModal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3>Deposit TON</h3>
+                    <h3><i class="fas fa-arrow-down"></i> <span data-i18n="deposit.title">Deposit TON</span></h3>
                     <button class="close-btn" onclick="closeModal('depositModal')">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
                 
                 <div class="modal-body">
-                    <div class="deposit-address-card">
-                        <h4>Send TON to this address:</h4>
-                        <div class="address-box">
-                            <span class="address" id="depositAddress"></span>
-                            <button class="copy-btn-small" onclick="copyAddress()">
+                    <div class="deposit-address-card-legendary">
+                        <h4 data-i18n="deposit.sendTo">Send TON to this address:</h4>
+                        <div class="address-box-legendary">
+                            <code class="address" id="depositAddress"></code>
+                            <button class="copy-btn-legendary" onclick="copyDepositAddress()">
                                 <i class="fas fa-copy"></i>
                             </button>
                         </div>
                     </div>
 
-                    <div class="input-group">
-                        <label>Amount (min 1 TON)</label>
+                    <div class="input-group-legendary">
+                        <label data-i18n="deposit.amount">Amount (min 1 TON)</label>
                         <input type="number" id="depositAmount" placeholder="1.0" min="1" step="0.1">
                     </div>
                     
-                    <div class="input-group">
-                        <label>Transaction Hash (TxID)</label>
+                    <div class="input-group-legendary">
+                        <label data-i18n="deposit.transactionId">Transaction Hash (TxID)</label>
                         <input type="text" id="depositTxHash" placeholder="0x...">
+                        <div class="validation-hint" id="depositHashHint"></div>
                     </div>
                     
-                    <div class="wallet-connection" id="depositWalletStatus">
+                    <div class="wallet-connection-legendary" id="depositWalletStatus">
                         <div class="status offline">
                             <i class="fas fa-circle"></i>
-                            <span>Wallet not connected</span>
+                            <span data-i18n="wallet.notConnected">Wallet not connected</span>
                         </div>
                     </div>
 
-                    <button class="confirm-btn" id="confirmDepositBtn" disabled>
+                    <button class="confirm-btn-legendary" id="confirmDepositBtn" disabled>
                         <i class="fas fa-arrow-down"></i>
-                        Submit Deposit
+                        <span data-i18n="deposit.submit">Submit Deposit</span>
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- Withdraw Modal -->
-        <div class="modal" id="withdrawModal">
+        <div class="modal legendary-modal" id="withdrawModal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3>Withdraw TON</h3>
+                    <h3><i class="fas fa-arrow-up"></i> <span data-i18n="withdraw.title">Withdraw TON</span></h3>
                     <button class="close-btn" onclick="closeModal('withdrawModal')">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
                 
                 <div class="modal-body">
-                    <div class="balance-info">
-                        <span>Available:</span>
+                    <div class="balance-info-legendary">
+                        <span data-i18n="withdraw.available">Available:</span>
                         <span class="amount" id="withdrawBalance">0.0000 TON</span>
                     </div>
                     
-                    <div class="input-group">
-                        <label>Amount (min 1 TON)</label>
+                    <div class="input-group-legendary">
+                        <label data-i18n="withdraw.amount">Amount (min 1 TON)</label>
                         <input type="number" id="withdrawAmount" placeholder="1.0" min="1" step="0.1">
                     </div>
                     
-                    <div class="input-group">
-                        <label>TON Address</label>
+                    <div class="input-group-legendary">
+                        <label data-i18n="withdraw.address">TON Address</label>
                         <input type="text" id="withdrawAddress" placeholder="UQ... or EQ...">
+                        <div class="validation-hint" id="withdrawAddressHint"></div>
                     </div>
                     
-                    <button class="confirm-btn" id="submitWithdraw">
+                    <button class="confirm-btn-legendary" id="submitWithdraw">
                         <i class="fas fa-arrow-up"></i>
-                        Request Withdrawal
+                        <span data-i18n="withdraw.submit">Request Withdrawal</span>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Admin Modal -->
-        <div class="modal" id="adminModal">
-            <div class="modal-content admin-modal">
+        <!-- History Modal -->
+        <div class="modal legendary-modal" id="historyModal">
+            <div class="modal-content">
                 <div class="modal-header">
-                    <h3><i class="fas fa-crown" style="color: #fbbf24;"></i> Admin Panel</h3>
+                    <h3><i class="fas fa-history"></i> <span data-i18n="history.title">Transaction History</span></h3>
+                    <div class="header-actions">
+                        <button class="refresh-btn" onclick="refreshHistory()">
+                            <i class="fas fa-rotate-right"></i>
+                        </button>
+                        <button class="close-btn" onclick="closeModal('historyModal')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="history-filters">
+                        <button class="history-filter active" onclick="filterHistory('all')" data-i18n="history.all">All</button>
+                        <button class="history-filter" onclick="filterHistory('deposit')" data-i18n="history.deposits">Deposits</button>
+                        <button class="history-filter" onclick="filterHistory('withdraw')" data-i18n="history.withdrawals">Withdrawals</button>
+                        <button class="history-filter" onclick="filterHistory('mining')" data-i18n="history.mining">Mining</button>
+                        <button class="history-filter" onclick="filterHistory('rental')" data-i18n="history.rentals">Rentals</button>
+                    </div>
+                    
+                    <div class="history-list" id="historyList">
+                        <!-- يتم تعبئتها عبر JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications Modal -->
+        <div class="modal legendary-modal" id="notificationsModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-bell"></i> <span data-i18n="notifications.title">Notifications</span></h3>
+                    <div class="header-actions">
+                        <button class="clear-btn" onclick="clearReadNotifications()" title="Clear read">
+                            <i class="fas fa-check-double"></i>
+                        </button>
+                        <button class="clear-btn" onclick="clearAllNotifications()" title="Clear all">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button class="close-btn" onclick="closeModal('notificationsModal')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="notifications-list" id="notificationsList">
+                        <!-- يتم تعبئتها عبر JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Modal -->
+        <div class="modal legendary-modal" id="adminModal">
+            <div class="modal-content admin-modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-crown" style="color: gold;"></i> Admin Panel</h3>
                     <button class="close-btn" onclick="closeModal('adminModal')">
                         <i class="fas fa-times"></i>
                     </button>
@@ -421,50 +748,99 @@
                 
                 <div class="modal-body">
                     <div class="admin-tabs">
-                        <button class="admin-tab active" data-tab="withdrawals">
+                        <button class="admin-tab active" onclick="switchAdminTab('withdrawals')">
+                            <i class="fas fa-arrow-up"></i>
                             Withdrawals
                             <span class="badge" id="pendingWithdrawalsCount">0</span>
                         </button>
-                        <button class="admin-tab" data-tab="deposits">
+                        <button class="admin-tab" onclick="switchAdminTab('deposits')">
+                            <i class="fas fa-arrow-down"></i>
                             Deposits
                             <span class="badge" id="pendingDepositsCount">0</span>
                         </button>
-                        <button class="admin-tab" data-tab="users">Users</button>
+                        <button class="admin-tab" onclick="switchAdminTab('users')">
+                            <i class="fas fa-users"></i>
+                            Users
+                        </button>
                     </div>
                     
-                    <div class="admin-content active" id="withdrawalsTab">
-                        <div class="requests-list" id="withdrawalsList"></div>
-                    </div>
-                    
-                    <div class="admin-content" id="depositsTab">
-                        <div class="requests-list" id="depositsList"></div>
-                    </div>
-                    
-                    <div class="admin-content" id="usersTab">
-                        <div class="user-management">
-                            <h4>Add Balance</h4>
-                            <input type="text" id="adminUserId" placeholder="User ID">
-                            <input type="number" id="adminAmount" placeholder="Amount TON">
-                            <button class="admin-action-btn" id="adminAddBalance">Add</button>
-                        </div>
-                        
-                        <div class="user-search">
-                            <h4>Search User</h4>
-                            <div class="search-box">
-                                <input type="text" id="adminSearch" placeholder="User ID">
-                                <button class="search-btn" id="adminSearchBtn">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                            <div class="user-info" id="adminUserInfo"></div>
+                    <div class="admin-content" id="adminContent">
+                        <!-- Manual Refresh Required -->
+                        <div class="admin-refresh-message">
+                            <i class="fas fa-hand-pointer"></i>
+                            <p data-i18n="admin.clickRefresh">Click refresh button to load requests</p>
+                            <button class="admin-refresh-btn" onclick="refreshAdminPanel()">
+                                <i class="fas fa-rotate-right"></i>
+                                <span data-i18n="admin.refresh">Refresh</span>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Notification -->
-        <div class="notification" id="notification"></div>
+        <!-- Referral Details Modal -->
+        <div class="modal legendary-modal" id="referralModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-users"></i> <span data-i18n="referral.title">Referral Program</span></h3>
+                    <button class="close-btn" onclick="closeModal('referralModal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <!-- Referral Stats -->
+                    <div class="referral-stats-legendary">
+                        <div class="stat-box">
+                            <span class="value" id="modalRefCount">0</span>
+                            <span class="label" data-i18n="referral.totalReferrals">Total Referrals</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="value" id="modalRefEarnings">0.0000</span>
+                            <span class="label" data-i18n="referral.earned">Earned (TON)</span>
+                        </div>
+                    </div>
+
+                    <!-- Referral Link -->
+                    <div class="referral-link-card-legendary">
+                        <h4 data-i18n="referral.yourLink">Your Referral Link</h4>
+                        <div class="link-box-legendary">
+                            <input type="text" id="modalReferralLink" readonly>
+                            <button class="copy-btn-legendary" onclick="copyReferralLink()">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <p class="link-note" data-i18n="referral.bonusNote">You get 0.1 TON for each friend!</p>
+                    </div>
+
+                    <!-- Referral Milestones -->
+                    <div class="section">
+                        <h4 data-i18n="referral.milestones">Referral Milestones</h4>
+                        <div class="milestones-list" id="milestonesList">
+                            <!-- يتم تعبئتها عبر JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Referral Tree -->
+                    <div class="section">
+                        <h4 data-i18n="referral.yourNetwork">Your Network</h4>
+                        <div class="referral-tree" id="referralTree"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div class="toast-notification" id="toast">
+            <i class="fa-regular fa-circle-check"></i>
+            <span id="toastMessage"></span>
+        </div>
+
+        <!-- Scroll to Top Button -->
+        <button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()">
+            <i class="fas fa-arrow-up"></i>
+        </button>
     </div>
 
     <!-- JavaScript -->
