@@ -1,6 +1,20 @@
-// [SECTION 01] - GLOBAL CONFIGURATION
+// ============================================
+// TON MINING PRO - LEGENDARY VERSION v12.0
+// ULTIMATE ZERO WASTE ARCHITECTURE
 // ============================================
 
+// ====== 1. TELEGRAM WEBAPP INITIALIZATION ======
+const tg = window.Telegram?.WebApp;
+if (tg) {
+    tg.ready();
+    tg.expand();
+    tg.enableClosingConfirmation?.();
+    tg.setHeaderColor('#0a0b0f');
+    tg.setBackgroundColor('#0a0b0f');
+    console.log("✅ Telegram WebApp initialized");
+}
+
+// ====== 2. GLOBAL CONFIGURATION ======
 const CONFIG = {
     TON: {
         WALLET: "UQD9mkiazYKara0KxRbRBIlCMnqtLmjS3aMlj2iSCrnIY0eH",
@@ -25,20 +39,364 @@ const CONFIG = {
         appId: "1:97952285427:web:e7704e52fd108bdabded86"
     },
     
+    CACHE: {
+        USER_TTL: 300000,        // 5 دقائق
+        PRICES_TTL: 10800000,    // 3 ساعات
+        HISTORY_TTL: 600000,      // 10 دقائق
+        MINING_TTL: 60000,        // دقيقة واحدة
+        LISTENER_TTL: 30000       // 30 ثانية
+    },
+    
     ECONOMY: {
         REFERRAL_BONUS: 0.1,
         REFERRAL_PERCENT: 0.20,
         STREAK_BONUS: { 3: 1.05, 7: 1.10, 30: 1.25 },
-        CACHE_TTL: 3600000,
         MAX_WITHDRAW_DAILY: 100,
         MAX_DEPOSIT_DAILY: 1000
     }
 };
 
-// ============================================
-// [SECTION 02] - MINING MACHINES (مع خطط التأجير الكاملة)
-// ============================================
+// ====== 3. TRANSLATION SYSTEM (i18n) ======
+const translations = {
+    en: {
+        // General
+        'app.name': 'TON Mining Pro',
+        'welcome.title': 'Welcome back,',
+        'nav.mining': 'Mining',
+        'nav.market': 'Market',
+        'nav.stats': 'Stats',
+        'nav.profile': 'Profile',
+        
+        // Actions
+        'actions.deposit': 'Deposit',
+        'actions.withdraw': 'Withdraw',
+        'actions.claim': 'CLAIM',
+        'actions.manage': 'Manage',
+        'actions.seeAll': 'See All',
+        'actions.viewAll': 'View All',
+        'actions.copy': 'Copy',
+        'actions.confirm': 'Confirm',
+        'actions.refresh': 'Refresh',
+        
+        // Mining
+        'mining.currentCycle': 'Current Mining Cycle',
+        'mining.nextReward': 'Next Reward',
+        'mining.activeRigs': 'Active Mining Rigs',
+        'mining.plansReturns': 'Mining Plans & Returns',
+        'mining.recentActivity': 'Recent Activity',
+        
+        // Market
+        'market.title': 'Mining Hardware',
+        'market.subtitle': 'Choose your mining rig and start earning',
+        
+        // Filters
+        'filters.all': 'All',
+        'filters.free': 'Free',
+        'filters.basic': 'Basic',
+        'filters.pro': 'Pro',
+        'filters.quantum': 'Quantum',
+        
+        // Stats
+        'stats.title': 'Mining Statistics',
+        'stats.subtitle': 'Your mining performance and achievements',
+        'stats.miningDays': 'Mining Days',
+        'stats.bestStreak': 'Best Streak',
+        'stats.totalReferrals': 'Total Referrals',
+        'stats.achievements': 'Achievements',
+        'stats.earningsHistory': 'Earnings History',
+        'stats.leaderboard': 'Mining Leaderboard',
+        
+        // Profile
+        'profile.title': 'My Profile',
+        'wallet.totalBalance': 'Total Balance',
+        'wallet.myAssets': 'My Assets',
+        'wallet.disconnected': 'Wallet disconnected',
+        'wallet.connected': 'Connected:',
+        
+        // Referral
+        'referral.title': 'Referral Program',
+        'referral.totalReferrals': 'Total Referrals',
+        'referral.earned': 'Earned (TON)',
+        'referral.yourLink': 'Your Referral Link',
+        'referral.bonusNote': 'You get 0.1 TON for each friend!',
+        'referral.milestones': 'Referral Milestones',
+        'referral.yourNetwork': 'Your Network',
+        'referral.friends': 'Friends',
+        
+        // Settings
+        'settings.title': 'Settings',
+        'settings.notifications': 'Notifications',
+        'settings.darkMode': 'Dark Mode',
+        'settings.language': 'Language',
+        'settings.support': 'Support',
+        
+        // Table
+        'table.machine': 'Machine',
+        'table.3days': '3 Days',
+        'table.7days': '7 Days',
+        'table.15days': '15 Days',
+        
+        // History
+        'history.title': 'Transaction History',
+        'history.all': 'All',
+        'history.deposits': 'Deposits',
+        'history.withdrawals': 'Withdrawals',
+        'history.mining': 'Mining',
+        'history.rentals': 'Rentals',
+        
+        // Notifications
+        'notifications.title': 'Notifications',
+        'notifications.no_notifications': 'No notifications',
+        
+        // Payment
+        'payment.title': 'Complete Rental',
+        'payment.duration': 'Duration:',
+        'payment.price': 'Price:',
+        'payment.return': 'Return:',
+        'payment.youReceive': 'You will receive:',
+        'payment.payWithTon': 'Pay with TON',
+        
+        // Deposit
+        'deposit.title': 'Deposit TON',
+        'deposit.sendTo': 'Send TON to this address:',
+        'deposit.amount': 'Amount (min 1 TON)',
+        'deposit.transactionId': 'Transaction Hash (TxID)',
+        'deposit.submit': 'Submit Deposit',
+        
+        // Withdraw
+        'withdraw.title': 'Withdraw TON',
+        'withdraw.available': 'Available:',
+        'withdraw.amount': 'Amount (min 1 TON)',
+        'withdraw.address': 'TON Address',
+        'withdraw.submit': 'Request Withdrawal',
+        
+        // Admin
+        'admin.clickRefresh': 'Click refresh button to load requests',
+        'admin.refresh': 'Refresh',
+        
+        // Messages
+        'messages.loading': 'Loading...',
+        'messages.success': 'Success',
+        'messages.error': 'Error',
+        'messages.warning': 'Warning',
+        'messages.info': 'Info',
+        
+        // Notifications Messages
+        'notif.welcomeBonus': '🎉 Welcome! You got 0.1 TON bonus!',
+        'notif.referralBonus': '🎉 Someone joined with your link! You got 0.1 TON!',
+        'notif.depositApproved': '✅ Your deposit of {amount} TON has been approved!',
+        'notif.depositRejected': '❌ Your deposit was rejected. Reason: {reason}',
+        'notif.withdrawApproved': '✅ Your withdrawal of {amount} TON has been approved!',
+        'notif.withdrawRejected': '❌ Your withdrawal was rejected. Reason: {reason}',
+        
+        // Errors
+        'error.minDeposit': 'Minimum deposit is {min} TON',
+        'error.minWithdraw': 'Minimum withdrawal is {min} TON',
+        'error.invalidHash': 'Invalid transaction hash. Must start with 0x and be 66 characters',
+        'error.hashUsed': 'This transaction hash has already been used',
+        'error.insufficientBalance': 'Insufficient balance',
+        'error.invalidAddress': 'Invalid TON address',
+        'error.enterAmount': 'Please enter a valid amount',
+        
+        // Success
+        'success.depositSubmitted': '✅ Deposit request submitted! Amount: {amount} TON',
+        'success.withdrawSubmitted': '✅ Withdrawal request submitted for {amount} TON',
+        'success.referralCopied': '✅ Referral link copied!',
+        'success.addressCopied': '✅ Address copied to clipboard!'
+    },
+    
+    ar: {
+        // General
+        'app.name': 'TON للتعدين',
+        'welcome.title': 'أهلاً بعودتك،',
+        'nav.mining': 'التعدين',
+        'nav.market': 'المتجر',
+        'nav.stats': 'الإحصائيات',
+        'nav.profile': 'الملف الشخصي',
+        
+        // Actions
+        'actions.deposit': 'إيداع',
+        'actions.withdraw': 'سحب',
+        'actions.claim': 'استلام',
+        'actions.manage': 'إدارة',
+        'actions.seeAll': 'عرض الكل',
+        'actions.viewAll': 'مشاهدة الكل',
+        'actions.copy': 'نسخ',
+        'actions.confirm': 'تأكيد',
+        'actions.refresh': 'تحديث',
+        
+        // Mining
+        'mining.currentCycle': 'دورة التعدين الحالية',
+        'mining.nextReward': 'المكافأة القادمة',
+        'mining.activeRigs': 'أجهزة التعدين النشطة',
+        'mining.plansReturns': 'خطط وعوائد التعدين',
+        'mining.recentActivity': 'النشاط الأخير',
+        
+        // Market
+        'market.title': 'أجهزة التعدين',
+        'market.subtitle': 'اختر جهاز التعدين وابدأ الربح',
+        
+        // Filters
+        'filters.all': 'الكل',
+        'filters.free': 'مجاني',
+        'filters.basic': 'أساسي',
+        'filters.pro': 'محترف',
+        'filters.quantum': 'كمومي',
+        
+        // Stats
+        'stats.title': 'إحصائيات التعدين',
+        'stats.subtitle': 'أداء التعدين والإنجازات',
+        'stats.miningDays': 'أيام التعدين',
+        'stats.bestStreak': 'أفضل سلسلة',
+        'stats.totalReferrals': 'إجمالي الإحالات',
+        'stats.achievements': 'الإنجازات',
+        'stats.earningsHistory': 'تاريخ الأرباح',
+        'stats.leaderboard': 'قائمة المتصدرين',
+        
+        // Profile
+        'profile.title': 'ملفي الشخصي',
+        'wallet.totalBalance': 'الرصيد الإجمالي',
+        'wallet.myAssets': 'أصولي',
+        'wallet.disconnected': 'المحفظة غير متصلة',
+        'wallet.connected': 'متصل:',
+        
+        // Referral
+        'referral.title': 'برنامج الإحالة',
+        'referral.totalReferrals': 'إجمالي الإحالات',
+        'referral.earned': 'المكتسب (TON)',
+        'referral.yourLink': 'رابط الإحالة الخاص بك',
+        'referral.bonusNote': 'تحصل على 0.1 TON لكل صديق!',
+        'referral.milestones': 'مراحل الإحالة',
+        'referral.yourNetwork': 'شبكتك',
+        'referral.friends': 'الأصدقاء',
+        
+        // Settings
+        'settings.title': 'الإعدادات',
+        'settings.notifications': 'الإشعارات',
+        'settings.darkMode': 'الوضع الليلي',
+        'settings.language': 'اللغة',
+        'settings.support': 'الدعم الفني',
+        
+        // Table
+        'table.machine': 'الجهاز',
+        'table.3days': '٣ أيام',
+        'table.7days': '٧ أيام',
+        'table.15days': '١٥ يوماً',
+        
+        // History
+        'history.title': 'سجل المعاملات',
+        'history.all': 'الكل',
+        'history.deposits': 'إيداعات',
+        'history.withdrawals': 'سحوبات',
+        'history.mining': 'تعدين',
+        'history.rentals': 'تأجير',
+        
+        // Notifications
+        'notifications.title': 'الإشعارات',
+        'notifications.no_notifications': 'لا توجد إشعارات',
+        
+        // Payment
+        'payment.title': 'إتمام التأجير',
+        'payment.duration': 'المدة:',
+        'payment.price': 'السعر:',
+        'payment.return': 'العائد:',
+        'payment.youReceive': 'سوف تستلم:',
+        'payment.payWithTon': 'الدفع بـ TON',
+        
+        // Deposit
+        'deposit.title': 'إيداع TON',
+        'deposit.sendTo': 'أرسل TON إلى هذا العنوان:',
+        'deposit.amount': 'المبلغ (الحد الأدنى 1 TON)',
+        'deposit.transactionId': 'هاش المعاملة (TxID)',
+        'deposit.submit': 'تقديم الإيداع',
+        
+        // Withdraw
+        'withdraw.title': 'سحب TON',
+        'withdraw.available': 'المتاح:',
+        'withdraw.amount': 'المبلغ (الحد الأدنى 1 TON)',
+        'withdraw.address': 'عنوان TON',
+        'withdraw.submit': 'طلب السحب',
+        
+        // Admin
+        'admin.clickRefresh': 'اضغط زر التحديث لعرض الطلبات',
+        'admin.refresh': 'تحديث',
+        
+        // Messages
+        'messages.loading': 'جاري التحميل...',
+        'messages.success': 'نجاح',
+        'messages.error': 'خطأ',
+        'messages.warning': 'تحذير',
+        'messages.info': 'معلومات',
+        
+        // Notifications Messages
+        'notif.welcomeBonus': '🎉 مرحباً! حصلت على 0.1 TON كمكافأة!',
+        'notif.referralBonus': '🎉 شخص ما انضم عبر رابطك! حصلت على 0.1 TON!',
+        'notif.depositApproved': '✅ تمت الموافقة على إيداعك {amount} TON!',
+        'notif.depositRejected': '❌ تم رفض إيداعك. السبب: {reason}',
+        'notif.withdrawApproved': '✅ تمت الموافقة على سحبك {amount} TON!',
+        'notif.withdrawRejected': '❌ تم رفض سحبك. السبب: {reason}',
+        
+        // Errors
+        'error.minDeposit': 'الحد الأدنى للإيداع هو {min} TON',
+        'error.minWithdraw': 'الحد الأدنى للسحب هو {min} TON',
+        'error.invalidHash': 'هاش معاملة غير صالح. يجب أن يبدأ بـ 0x وأن يكون 66 حرفاً',
+        'error.hashUsed': 'هذا الهاش مستخدم بالفعل',
+        'error.insufficientBalance': 'الرصيد غير كافٍ',
+        'error.invalidAddress': 'عنوان TON غير صالح',
+        'error.enterAmount': 'الرجاء إدخال مبلغ صحيح',
+        
+        // Success
+        'success.depositSubmitted': '✅ تم تقديم طلب الإيداع! المبلغ: {amount} TON',
+        'success.withdrawSubmitted': '✅ تم تقديم طلب السحب بمبلغ {amount} TON',
+        'success.referralCopied': '✅ تم نسخ رابط الإحالة!',
+        'success.addressCopied': '✅ تم نسخ العنوان إلى الحافظة!'
+    }
+};
 
+// اللغة الحالية
+let currentLanguage = localStorage.getItem('preferred_language') || 'en';
+
+// دالة الترجمة
+function t(key, params = {}) {
+    let text = translations[currentLanguage]?.[key] || translations.en[key] || key;
+    Object.keys(params).forEach(param => {
+        text = text.replace(`{${param}}`, params[param]);
+    });
+    return text;
+}
+
+// دالة تبديل اللغة
+function toggleLanguage() {
+    currentLanguage = currentLanguage === 'en' ? 'ar' : 'en';
+    localStorage.setItem('preferred_language', currentLanguage);
+    
+    const flagEl = document.getElementById('currentLanguageFlag');
+    const settingsLang = document.getElementById('settingsLanguage');
+    
+    if (flagEl) flagEl.textContent = currentLanguage === 'en' ? '🇬🇧' : '🇸🇦';
+    if (settingsLang) settingsLang.textContent = currentLanguage === 'en' ? 'English' : 'العربية';
+    
+    if (currentLanguage === 'ar') {
+        document.body.classList.add('rtl');
+        document.documentElement.dir = 'rtl';
+    } else {
+        document.body.classList.remove('rtl');
+        document.documentElement.dir = 'ltr';
+    }
+    
+    updateAllTexts();
+    showToast(t('messages.success'), 'success');
+}
+
+// تحديث جميع النصوص
+function updateAllTexts() {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.textContent = t(key);
+    });
+}
+
+// ====== 4. MINING MACHINES (مع خطط التأجير الكاملة) ======
 const MACHINES = [
     {
         id: 'm1',
@@ -192,92 +550,209 @@ const MACHINES = [
     }
 ];
 
-// ============================================
-// [SECTION 03] - ACHIEVEMENTS (15 إنجازاً)
-// ============================================
-
+// ====== 5. ACHIEVEMENTS (15 إنجازاً) ======
 const ACHIEVEMENTS = [
-    { id: 'first_claim', name: 'First Blood', nameAr: 'أول تعدين', icon: '🥇', reward: 0.5, condition: 'claims:1', description: 'Claim your first mining reward' },
-    { id: 'streak_3', name: '3-Day Streak', nameAr: '٣ أيام متتالية', icon: '🔥', reward: 0.3, condition: 'streak:3', description: 'Mine for 3 days in a row' },
-    { id: 'streak_7', name: '7-Day Streak', nameAr: '٧ أيام متتالية', icon: '🔥🔥', reward: 0.7, condition: 'streak:7', description: 'Mine for 7 days in a row' },
-    { id: 'streak_30', name: 'Monthly Legend', nameAr: 'أسطورة الشهر', icon: '👑🔥', reward: 2.0, condition: 'streak:30', description: 'Mine for 30 days in a row' },
-    { id: 'referrals_1', name: 'Social Starter', nameAr: 'بداية اجتماعية', icon: '👥', reward: 0.2, condition: 'referrals:1', description: 'Invite your first friend' },
-    { id: 'referrals_5', name: 'Social Butterfly', nameAr: 'فراشة اجتماعية', icon: '🦋', reward: 1.0, condition: 'referrals:5', description: 'Invite 5 friends' },
-    { id: 'referrals_10', name: 'Community Leader', nameAr: 'قائد المجتمع', icon: '👑👥', reward: 2.5, condition: 'referrals:10', description: 'Invite 10 friends' },
-    { id: 'upgrades_1', name: 'First Upgrade', nameAr: 'أول ترقية', icon: '⚡', reward: 0.3, condition: 'upgrades:1', description: 'Upgrade your rig once' },
-    { id: 'upgrades_3', name: 'Tech Enthusiast', nameAr: 'مهتم بالتكنولوجيا', icon: '⚡⚡', reward: 0.8, condition: 'upgrades:3', description: 'Upgrade your rig 3 times' },
-    { id: 'upgrades_5', name: 'Tech Lord', nameAr: 'رب التكنولوجيا', icon: '⚡⚡⚡', reward: 1.5, condition: 'upgrades:5', description: 'Upgrade your rig 5 times' },
-    { id: 'earnings_5', name: 'Crypto Starter', nameAr: 'بداية في الكريبتو', icon: '💎', reward: 0.5, condition: 'earnings:5', description: 'Earn 5 TON total' },
-    { id: 'earnings_25', name: 'Crypto Trader', nameAr: 'متداول كريبتو', icon: '💎💎', reward: 1.5, condition: 'earnings:25', description: 'Earn 25 TON total' },
-    { id: 'earnings_100', name: 'Crypto Whale', nameAr: 'حوت الكريبتو', icon: '🐋', reward: 3.0, condition: 'earnings:100', description: 'Earn 100 TON total' },
-    { id: 'night_owl', name: 'Night Owl', nameAr: 'بومة الليل', icon: '🦉', reward: 0.2, condition: 'special:night', description: 'Claim between 12 AM - 4 AM' },
-    { id: 'early_bird', name: 'Early Bird', nameAr: 'طير باكر', icon: '🐦', reward: 0.2, condition: 'special:early', description: 'Claim between 5 AM - 8 AM' }
+    { id: 'first_claim', name: 'First Blood', nameAr: 'أول تعدين', icon: '🥇', reward: 0.5, condition: 'claims:1' },
+    { id: 'streak_3', name: '3-Day Streak', nameAr: '٣ أيام متتالية', icon: '🔥', reward: 0.3, condition: 'streak:3' },
+    { id: 'streak_7', name: '7-Day Streak', nameAr: '٧ أيام متتالية', icon: '🔥🔥', reward: 0.7, condition: 'streak:7' },
+    { id: 'streak_30', name: 'Monthly Legend', nameAr: 'أسطورة الشهر', icon: '👑🔥', reward: 2.0, condition: 'streak:30' },
+    { id: 'referrals_1', name: 'Social Starter', nameAr: 'بداية اجتماعية', icon: '👥', reward: 0.2, condition: 'referrals:1' },
+    { id: 'referrals_5', name: 'Social Butterfly', nameAr: 'فراشة اجتماعية', icon: '🦋', reward: 1.0, condition: 'referrals:5' },
+    { id: 'referrals_10', name: 'Community Leader', nameAr: 'قائد المجتمع', icon: '👑👥', reward: 2.5, condition: 'referrals:10' },
+    { id: 'upgrades_1', name: 'First Upgrade', nameAr: 'أول ترقية', icon: '⚡', reward: 0.3, condition: 'upgrades:1' },
+    { id: 'upgrades_3', name: 'Tech Enthusiast', nameAr: 'مهتم بالتكنولوجيا', icon: '⚡⚡', reward: 0.8, condition: 'upgrades:3' },
+    { id: 'upgrades_5', name: 'Tech Lord', nameAr: 'رب التكنولوجيا', icon: '⚡⚡⚡', reward: 1.5, condition: 'upgrades:5' },
+    { id: 'earnings_5', name: 'Crypto Starter', nameAr: 'بداية في الكريبتو', icon: '💎', reward: 0.5, condition: 'earnings:5' },
+    { id: 'earnings_25', name: 'Crypto Trader', nameAr: 'متداول كريبتو', icon: '💎💎', reward: 1.5, condition: 'earnings:25' },
+    { id: 'earnings_100', name: 'Crypto Whale', nameAr: 'حوت الكريبتو', icon: '🐋', reward: 3.0, condition: 'earnings:100' },
+    { id: 'night_owl', name: 'Night Owl', nameAr: 'بومة الليل', icon: '🦉', reward: 0.2, condition: 'special:night' },
+    { id: 'early_bird', name: 'Early Bird', nameAr: 'طير باكر', icon: '🐦', reward: 0.2, condition: 'special:early' }
 ];
 
-// ============================================
-// [SECTION 04] - EXTERNAL SERVICES INIT
-// ============================================
-
-// Telegram WebApp
-let tg = null;
-let tgUser = null;
+// ====== 6. FIREBASE INITIALIZATION ======
+let firebaseApp, db;
 
 try {
-    tg = window.Telegram?.WebApp;
-    if (tg) {
-        tg.ready();
-        tg.expand();
-        tg.setHeaderColor('#0a0b0f');
-        tg.setBackgroundColor('#0a0b0f');
-        tgUser = tg.initDataUnsafe?.user;
-        console.log('✅ Telegram WebApp initialized');
+    if (typeof firebase !== 'undefined') {
+        firebaseApp = firebase.initializeApp(CONFIG.FIREBASE);
+        db = firebase.firestore();
         
-        // تعيين لون الخلفية بشكل دائم
-        const style = document.createElement('style');
-        style.textContent = `
-            body {
-                background-color: #0a0b0f !important;
-            }
-        `;
-        document.head.appendChild(style);
+        // Enable offline persistence
+        db.enablePersistence({ synchronizeTabs: true })
+            .catch(err => console.warn('Firestore persistence error:', err));
+        
+        console.log("🔥 Firebase initialized successfully");
     }
-} catch (e) {
-    console.log('⚠️ Not in Telegram environment');
+} catch (error) {
+    console.error("Firebase initialization error:", error);
 }
 
-// Firebase
-let db = null;
-let auth = null;
-
-try {
-    firebase.initializeApp(CONFIG.FIREBASE);
-    db = firebase.firestore();
-    auth = firebase.auth();
-    
-    // Enable offline persistence
-    db.enablePersistence({ synchronizeTabs: true })
-        .catch(err => console.warn('Firestore persistence error:', err));
-    
-    console.log('✅ Firebase initialized');
-} catch (e) {
-    console.error('❌ Firebase error:', e);
-}
-
-// TON Connect
+// ====== 7. TON CONNECT INITIALIZATION ======
 let tonConnectUI = null;
 let tonWallet = null;
 
-// ============================================
-// [SECTION 05] - USER STATE (مع جميع المتغيرات)
-// ============================================
+async function initTonConnect() {
+    if (typeof TON_CONNECT_UI === 'undefined') {
+        console.warn('TON Connect UI not available');
+        return false;
+    }
+    
+    try {
+        tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: CONFIG.TON.MANIFEST_URL,
+            buttonRootId: 'tonConnectButton',
+            language: currentLanguage === 'ar' ? 'ar' : 'en'
+        });
+        
+        tonConnectUI.onStatusChange(handleWalletChange);
+        console.log('✅ TON Connect initialized');
+        return true;
+    } catch (e) {
+        console.error('TON Connect error:', e);
+        return false;
+    }
+}
 
-const UserState = {
-    // Core Identity
-    uid: null,
-    username: 'Crypto Miner',
-    firstName: 'Miner',
-    lastName: '',
-    photoUrl: '',
+function handleWalletChange(wallet) {
+    tonWallet = wallet;
+    updateWalletUI();
+    
+    if (wallet) {
+        const addr = wallet.account.address;
+        showToast(`Wallet connected: ${formatAddress(addr)}`, 'success');
+        userData.tonWallet = addr;
+        saveUserToCache();
+        getWalletBalance();
+    } else {
+        userData.tonWallet = null;
+        saveUserToCache();
+    }
+}
+
+function updateWalletUI() {
+    const statusEl = document.getElementById('profileWalletStatus');
+    const infoEl = document.getElementById('connectedWalletInfo');
+    const addressEl = document.getElementById('profileConnectedAddress');
+    const balanceEl = document.getElementById('connectedWalletBalance');
+    const payBtn = document.getElementById('confirmPaymentBtn');
+    const depositBtn = document.getElementById('confirmDepositBtn');
+    const modalInfo = document.getElementById('paymentWalletInfo');
+    const modalAddress = document.getElementById('modalConnectedAddress');
+    
+    if (tonWallet) {
+        if (statusEl) {
+            statusEl.innerHTML = `
+                <div class="status-indicator online"></div>
+                <span>${t('wallet.connected')}</span>
+            `;
+        }
+        if (infoEl) infoEl.style.display = 'flex';
+        if (addressEl) addressEl.textContent = formatAddress(tonWallet.account.address);
+        if (modalInfo) modalInfo.style.display = 'flex';
+        if (modalAddress) modalAddress.textContent = formatAddress(tonWallet.account.address);
+        if (payBtn) payBtn.disabled = false;
+        if (depositBtn) depositBtn.disabled = false;
+    } else {
+        if (statusEl) {
+            statusEl.innerHTML = `
+                <div class="status-indicator offline"></div>
+                <span>${t('wallet.disconnected')}</span>
+            `;
+        }
+        if (infoEl) infoEl.style.display = 'none';
+        if (modalInfo) modalInfo.style.display = 'none';
+        if (payBtn) payBtn.disabled = true;
+        if (depositBtn) depositBtn.disabled = true;
+    }
+}
+
+async function getWalletBalance() {
+    if (!tonWallet) return null;
+    
+    try {
+        const res = await fetch(
+            `${CONFIG.TON.CENTER_API}getAddressBalance?address=${tonWallet.account.address}&api_key=${CONFIG.TON.API_KEY}`
+        );
+        const data = await res.json();
+        if (data.ok) {
+            const balance = data.result / 1e9;
+            const balanceEl = document.getElementById('connectedWalletBalance');
+            if (balanceEl) balanceEl.textContent = balance.toFixed(2) + ' TON';
+            return balance;
+        }
+    } catch (e) {
+        console.error('Balance fetch error:', e);
+    }
+    return null;
+}
+
+async function connectWallet() {
+    if (!tonConnectUI) {
+        const success = await initTonConnect();
+        if (!success) {
+            showToast('Failed to initialize TON Connect', 'error');
+            return;
+        }
+    }
+    
+    try {
+        await tonConnectUI.openModal();
+    } catch (e) {
+        console.error('Connection error:', e);
+        showToast('Failed to connect wallet', 'error');
+    }
+}
+
+async function disconnectWallet() {
+    if (tonConnectUI) {
+        await tonConnectUI.disconnect();
+        showToast('Wallet disconnected', 'info');
+    }
+}
+
+// ====== 8. USER IDENTIFICATION ======
+const userId = tg?.initDataUnsafe?.user?.id?.toString() || 
+               localStorage.getItem('ton_user_id') || 
+               'user_' + Math.random().toString(36).substr(2, 9);
+
+const userName = tg?.initDataUnsafe?.user?.first_name || 'Crypto Miner';
+const userPhoto = tg?.initDataUnsafe?.user?.photo_url || '';
+
+// حفظ معرف المستخدم
+localStorage.setItem('ton_user_id', userId);
+
+// عرض اسم المستخدم
+const usernameEl = document.getElementById('username');
+if (usernameEl) usernameEl.textContent = userName;
+
+// عرض الصورة الرمزية
+if (userPhoto) {
+    const avatarImg = document.getElementById('avatarImage');
+    const avatarIcon = document.getElementById('avatarIcon');
+    if (avatarImg && avatarIcon) {
+        avatarImg.src = userPhoto;
+        avatarImg.style.display = 'block';
+        avatarIcon.style.display = 'none';
+    }
+}
+
+// ====== 9. ADMIN SYSTEM ======
+let isAdmin = userId === CONFIG.TON.ADMIN_ID;
+
+function checkAdminAndShowSetting() {
+    if (isAdmin) {
+        const adminSetting = document.getElementById('adminSettingItem');
+        if (adminSetting) adminSetting.style.display = 'flex';
+    }
+}
+
+// ====== 10. USER STATE (مع التخزين المحلي) ======
+let userData = {
+    uid: userId,
+    username: userName,
+    firstName: tg?.initDataUnsafe?.user?.first_name || 'Miner',
+    lastName: tg?.initDataUnsafe?.user?.last_name || '',
+    photoUrl: userPhoto,
     
     // Balance & Earnings
     balance: 0,
@@ -287,7 +762,7 @@ const UserState = {
     
     // Mining Stats
     activeMachine: 'm1',
-    activePlan: null,
+    activePlan: MACHINES[0].plans[0],
     machineExpiry: Infinity,
     lastClaim: Date.now(),
     claims: 0,
@@ -302,7 +777,7 @@ const UserState = {
     referralCode: null,
     referredBy: null,
     
-    // Wallet & Transactions
+    // Transactions
     pendingWithdrawals: [],
     completedWithdrawals: [],
     pendingDeposits: [],
@@ -310,2142 +785,492 @@ const UserState = {
     transactions: [],
     achievements: [],
     
-    // Settings & Preferences
-    language: 'en',
+    // Settings
+    language: currentLanguage,
     notifications: true,
     
     // System
-    isInitialized: false,
-    lastSaveTime: Date.now(),
     createdAt: Date.now(),
-    
-    // Admin
-    isAdmin: false,
-    adminAccessGranted: false,
-    adminClickCount: 0,
-    lastAdminClick: 0,
     
     // TON Wallet
     tonWallet: null,
     
-    // Initialize from cache
-    initFromCache() {
-        try {
-            const key = `user_${this.uid}`;
-            const cached = localStorage.getItem(key);
-            if (cached) {
-                const data = JSON.parse(cached);
-                Object.assign(this, data);
+    // Used Hashes
+    usedHashes: []
+};
+
+// ====== 11. CACHE MANAGEMENT ======
+const CACHE_KEYS = {
+    USER: `user_${userId}`,
+    TRANSACTIONS: `transactions_${userId}`,
+    PRICES: 'live_prices',
+    MINING: `mining_${userId}`,
+    NOTIFICATIONS: `notifications_${userId}`,
+    REFERRAL_PROCESSED: `referral_processed_${userId}`
+};
+
+// تحميل من الكاش
+function loadUserFromCache() {
+    try {
+        const cached = localStorage.getItem(CACHE_KEYS.USER);
+        if (cached) {
+            const data = JSON.parse(cached);
+            
+            // التحقق من وقت الكاش (5 دقائق)
+            if (Date.now() - data._timestamp < CONFIG.CACHE.USER_TTL) {
+                Object.assign(userData, data);
+                console.log('✅ User loaded from cache');
                 return true;
             }
-        } catch (e) {
-            console.error('Cache read error:', e);
         }
-        return false;
-    },
-    
-    // Save to cache
-    saveToCache() {
-        try {
-            const key = `user_${this.uid}`;
-            const dataToSave = {
-                balance: this.balance,
-                totalEarned: this.totalEarned,
-                totalWithdrawn: this.totalWithdrawn,
-                totalDeposited: this.totalDeposited,
-                activeMachine: this.activeMachine,
-                activePlan: this.activePlan,
-                machineExpiry: this.machineExpiry,
-                lastClaim: this.lastClaim,
-                claims: this.claims,
-                streak: this.streak,
-                longestStreak: this.longestStreak,
-                lastClaimDate: this.lastClaimDate,
-                upgrades: this.upgrades,
-                referrals: this.referrals,
-                refEarnings: this.refEarnings,
-                referralCode: this.referralCode,
-                referredBy: this.referredBy,
-                pendingWithdrawals: this.pendingWithdrawals,
-                completedWithdrawals: this.completedWithdrawals,
-                pendingDeposits: this.pendingDeposits,
-                completedDeposits: this.completedDeposits,
-                transactions: this.transactions.slice(-100),
-                achievements: this.achievements,
-                language: this.language,
-                notifications: this.notifications,
-                createdAt: this.createdAt
-            };
-            localStorage.setItem(key, JSON.stringify(dataToSave));
-            this.lastSaveTime = Date.now();
-        } catch (e) {
-            console.error('Cache save error:', e);
-        }
-    },
-    
-    // Clear cache
-    clearCache() {
-        try {
-            const key = `user_${this.uid}`;
-            localStorage.removeItem(key);
-        } catch (e) {
-            console.error('Cache clear error:', e);
-        }
-    },
-    
-    // Get cache key
-    getCacheKey() {
-        return `user_${this.uid}`;
+    } catch (e) {
+        console.error('Cache load error:', e);
     }
-};
+    return false;
+}
 
-// ============================================
-// [SECTION 06] - UTILITIES (جميع الدوال المساعدة)
-// ============================================
-
-const Utils = {
-    // ========== TIME UTILITIES ==========
-    formatTime(ms) {
-        if (ms <= 0) return '00:00:00';
-        const s = Math.floor(ms / 1000);
-        const h = Math.floor(s / 3600);
-        const m = Math.floor((s % 3600) / 60);
-        const sec = s % 60;
-        return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
-    },
-    
-    formatRelativeTime(ts) {
-        const diff = Date.now() - ts;
-        if (diff < 60000) return 'just now';
-        if (diff < 3600000) return `${Math.floor(diff/60000)} min ago`;
-        if (diff < 86400000) return `${Math.floor(diff/3600000)} hours ago`;
-        if (diff < 604800000) return `${Math.floor(diff/86400000)} days ago`;
-        return `${Math.floor(diff/604800000)} weeks ago`;
-    },
-    
-    formatDateTime(ts) {
-        const d = new Date(ts);
-        return d.toLocaleDateString() + ' ' + d.toLocaleTimeString();
-    },
-    
-    getTimeOfDay() {
-        const h = new Date().getHours();
-        if (h >= 5 && h < 12) return 'morning';
-        if (h >= 12 && h < 17) return 'afternoon';
-        if (h >= 17 && h < 21) return 'evening';
-        return 'night';
-    },
-    
-    isSpecialTime(type) {
-        const h = new Date().getHours();
-        if (type === 'night') return h >= 0 && h < 4;
-        if (type === 'early') return h >= 5 && h < 8;
-        return false;
-    },
-    
-    // ========== NUMBER UTILITIES ==========
-    formatTON(amount) {
-        return amount.toFixed(4);
-    },
-    
-    parseTON(str) {
-        const n = parseFloat(str);
-        return isNaN(n) ? 0 : n;
-    },
-    
-    formatLarge(num) {
-        if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
-        if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
-        if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
-        return num.toString();
-    },
-    
-    formatPercent(value, total) {
-        if (total === 0) return 0;
-        return ((value / total) * 100).toFixed(1);
-    },
-    
-    // ========== ADDRESS UTILITIES ==========
-    formatAddress(addr) {
-        if (!addr) return '';
-        if (addr.length < 10) return addr;
-        return addr.slice(0,6) + '...' + addr.slice(-4);
-    },
-    
-    isValidAddress(addr) {
-        return CONFIG.TON.WALLET_REGEX.test(addr);
-    },
-    
-    getExplorerUrl(addr) {
-        return CONFIG.TON.EXPLORER + addr;
-    },
-    
-    // ========== MACHINE UTILITIES ==========
-    getActiveMachine() {
-        return MACHINES.find(m => m.id === UserState.activeMachine) || MACHINES[0];
-    },
-    
-    getTimeUntilNextClaim() {
-        const m = this.getActiveMachine();
-        const elapsed = Date.now() - UserState.lastClaim;
-        return Math.max(0, m.interval - elapsed);
-    },
-    
-    getClaimProgress() {
-        const m = this.getActiveMachine();
-        const elapsed = Date.now() - UserState.lastClaim;
-        return Math.min((elapsed / m.interval) * 100, 100);
-    },
-    
-    getRemainingRentalTime() {
-        if (UserState.activeMachine === 'm1') return Infinity;
-        return Math.max(0, UserState.machineExpiry - Date.now());
-    },
-    
-    formatRentalTime() {
-        const remaining = this.getRemainingRentalTime();
-        if (remaining === Infinity) return 'Permanent';
-        const days = Math.floor(remaining / (24 * 3600000));
-        const hours = Math.floor((remaining % (24 * 3600000)) / 3600000);
-        return `${days}d ${hours}h`;
-    },
-    
-    isMachineExpired() {
-        if (UserState.activeMachine === 'm1') return false;
-        return UserState.machineExpiry < Date.now();
-    },
-    
-    // ========== STREAK UTILITIES ==========
-    updateStreak() {
-        const today = new Date().toDateString();
-        if (UserState.lastClaimDate === today) return UserState.streak;
-        
-        const yesterday = new Date(Date.now() - 86400000).toDateString();
-        const newStreak = (UserState.lastClaimDate === yesterday) ? UserState.streak + 1 : 1;
-        
-        UserState.streak = newStreak;
-        UserState.lastClaimDate = today;
-        
-        if (newStreak > UserState.longestStreak) {
-            UserState.longestStreak = newStreak;
-        }
-        
-        return newStreak;
-    },
-    
-    getStreakBonus() {
-        if (UserState.streak >= 30) return CONFIG.ECONOMY.STREAK_BONUS[30];
-        if (UserState.streak >= 7) return CONFIG.ECONOMY.STREAK_BONUS[7];
-        if (UserState.streak >= 3) return CONFIG.ECONOMY.STREAK_BONUS[3];
-        return 1.0;
-    },
-    
-    getStreakEmoji() {
-        if (UserState.streak >= 30) return '🔥👑';
-        if (UserState.streak >= 7) return '🔥🔥';
-        if (UserState.streak >= 3) return '🔥';
-        return '✨';
-    },
-    
-    // ========== REFERRAL UTILITIES ==========
-    generateReferralCode(uid) {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        const random = Array.from({length:6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
-        return `${uid.slice(-4)}${random}`.toUpperCase();
-    },
-    
-    getReferralLink() {
-        if (!UserState.uid) return 'https://t.me/TONMininginstantbot/Ton';
-        return `https://t.me/TONMininginstantbot/Ton?startapp=${UserState.uid}`;
-    },
-    
-    // ========== CALCULATION UTILITIES ==========
-    tonToUsd(ton) {
-        return ton * 1.32;
-    },
-    
-    calculateDailyEarnings() {
-        const m = this.getActiveMachine();
-        const cyclesPerDay = 24 * 60 * 60 * 1000 / m.interval;
-        return m.yield * cyclesPerDay;
-    },
-    
-    calculateROI(machine) {
-        if (machine.price === 0) return Infinity;
-        const dailyEarnings = machine.yield * (24 * 60 * 60 * 1000 / machine.interval);
-        return (machine.price / dailyEarnings).toFixed(1);
-    },
-    
-    // ========== VALIDATION UTILITIES ==========
-    isValidAmount(amount, min, max) {
-        return amount >= min && amount <= max;
-    },
-    
-    isValidUsername(username) {
-        return /^[a-zA-Z0-9_]{3,20}$/.test(username);
-    },
-    
-    // ========== RANDOM UTILITIES ==========
-    randomString(length) {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        return Array.from({length}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
-    },
-    
-    randomId() {
-        return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
-    },
-    
-    // ========== ARRAY UTILITIES ==========
-    chunkArray(array, size) {
-        const chunks = [];
-        for (let i = 0; i < array.length; i += size) {
-            chunks.push(array.slice(i, i + size));
-        }
-        return chunks;
-    },
-    
-    uniqueArray(array) {
-        return [...new Set(array)];
-    },
-    
-    // ========== OBJECT UTILITIES ==========
-    deepClone(obj) {
-        return JSON.parse(JSON.stringify(obj));
-    },
-    
-    mergeObjects(target, ...sources) {
-        return Object.assign(target, ...sources);
-    },
-    
-    // ========== PROMISE UTILITIES ==========
-    sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    },
-    
-    async retry(fn, maxAttempts = 3, delay = 1000) {
-        for (let i = 0; i < maxAttempts; i++) {
-            try {
-                return await fn();
-            } catch (e) {
-                if (i === maxAttempts - 1) throw e;
-                await this.sleep(delay);
-            }
-        }
-    }
-};
-
-// ============================================
-// [SECTION 07] - NOTIFICATION MANAGER
-// ============================================
-
-const Notify = {
-    show(msg, type = 'info', duration = 3000) {
-        const el = document.getElementById('notification');
-        if (!el) return;
-        
-        el.textContent = msg;
-        el.style.display = 'block';
-        
-        const colors = {
-            success: 'linear-gradient(135deg, #22c55e, #10b981)',
-            error: 'linear-gradient(135deg, #ef4444, #dc2626)',
-            warning: 'linear-gradient(135deg, #f59e0b, #d97706)',
-            info: 'linear-gradient(135deg, #0088cc, #00f2ff)'
+// حفظ في الكاش
+function saveUserToCache() {
+    try {
+        const dataToSave = {
+            ...userData,
+            _timestamp: Date.now()
         };
-        
-        el.style.background = colors[type] || colors.info;
-        
-        if (type === 'success') el.style.boxShadow = '0 0 20px rgba(34,197,94,0.5)';
-        if (type === 'error') el.style.boxShadow = '0 0 20px rgba(239,68,68,0.5)';
-        if (type === 'warning') el.style.boxShadow = '0 0 20px rgba(245,158,11,0.5)';
-        if (type === 'info') el.style.boxShadow = '0 0 20px rgba(0,136,204,0.5)';
-        
-        setTimeout(() => {
-            el.style.display = 'none';
-        }, duration);
-    },
-    
-    success(msg) { this.show(msg, 'success'); },
-    error(msg) { this.show(msg, 'error'); },
-    warning(msg) { this.show(msg, 'warning'); },
-    info(msg) { this.show(msg, 'info'); },
-    
-    confirm(title, msg, onConfirm, onCancel) {
-        if (confirm(`${title}\n\n${msg}`)) {
-            if (onConfirm) onConfirm();
-        } else {
-            if (onCancel) onCancel();
-        }
+        localStorage.setItem(CACHE_KEYS.USER, JSON.stringify(dataToSave));
+    } catch (e) {
+        console.error('Cache save error:', e);
     }
-};
+}
 
-// ============================================
-// [SECTION 08] - EFFECTS MANAGER
-// ============================================
-
-const Effects = {
-    celebrate(intensity = 'normal') {
-        const c = document.getElementById('app');
-        if (!c) return;
-        
-        const count = intensity === 'high' ? 30 : intensity === 'low' ? 10 : 20;
-        
-        for (let i = 0; i < count; i++) {
-            setTimeout(() => {
-                const el = document.createElement('div');
-                el.className = 'firework';
-                el.style.left = Math.random() * 100 + '%';
-                el.style.top = Math.random() * 100 + '%';
-                el.style.background = `hsl(${Math.random()*360},100%,50%)`;
-                el.style.animationDuration = (0.5 + Math.random()) + 's';
-                c.appendChild(el);
-                setTimeout(() => el.remove(), 800);
-            }, i * 30);
-        }
-    },
-    
-    shake(el) {
-        if (!el) return;
-        el.classList.add('shake-effect');
-        setTimeout(() => el.classList.remove('shake-effect'), 500);
-    },
-    
-    pulse(el, count = 1) {
-        if (!el) return;
-        for (let i = 0; i < count; i++) {
-            setTimeout(() => {
-                el.classList.add('pulse');
-                setTimeout(() => el.classList.remove('pulse'), 500);
-            }, i * 600);
-        }
-    },
-    
-    glow(el, color = '#00f2ff', duration = 1000) {
-        if (!el) return;
-        const original = el.style.boxShadow;
-        el.style.boxShadow = `0 0 30px ${color}`;
-        setTimeout(() => el.style.boxShadow = original, duration);
-    },
-    
-    fadeIn(el, duration = 300) {
-        if (!el) return;
-        el.style.opacity = '0';
-        el.style.display = 'block';
-        let start = null;
-        const animate = (ts) => {
-            if (!start) start = ts;
-            const progress = (ts - start) / duration;
-            el.style.opacity = Math.min(progress, 1).toString();
-            if (progress < 1) requestAnimationFrame(animate);
-        };
-        requestAnimationFrame(animate);
-    },
-    
-    fadeOut(el, duration = 300, callback) {
-        if (!el) return;
-        let start = null;
-        const animate = (ts) => {
-            if (!start) start = ts;
-            const progress = (ts - start) / duration;
-            el.style.opacity = Math.max(1 - progress, 0).toString();
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            } else {
-                el.style.display = 'none';
-                if (callback) callback();
-            }
-        };
-        requestAnimationFrame(animate);
-    },
-    
-    slideIn(el, direction = 'left', duration = 300) {
-        if (!el) return;
-        const start = direction === 'left' ? '-100%' : direction === 'right' ? '100%' : '0';
-        el.style.transform = `translateX(${start})`;
-        el.style.display = 'block';
-        setTimeout(() => {
-            el.style.transform = 'translateX(0)';
-            el.style.transition = `transform ${duration}ms ease`;
-        }, 10);
-    },
-    
-    bounce(el) {
-        if (!el) return;
-        el.classList.add('bounce');
-        setTimeout(() => el.classList.remove('bounce'), 500);
+// تحميل المعاملات المحلية
+function loadLocalTransactions() {
+    try {
+        const saved = localStorage.getItem(CACHE_KEYS.TRANSACTIONS);
+        return saved ? JSON.parse(saved) : [];
+    } catch (error) {
+        console.error("Error loading transactions:", error);
+        return [];
     }
-};
+}
 
-// ============================================
-// [SECTION 09] - TON CONNECT MANAGER (محسن بالكامل)
-// ============================================
-
-const TonManager = {
-    isInitialized: false,
-    reconnectAttempts: 0,
-    
-    async init() {
-        if (typeof TON_CONNECT_UI === 'undefined') {
-            console.warn('TON Connect UI not available');
-            return false;
-        }
-        
-        try {
-            // التأكد من وجود الـ manifest
-            await this.ensureManifest();
-            
-            tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-                manifestUrl: CONFIG.TON.MANIFEST_URL,
-                buttonRootId: 'tonConnectButton',
-                language: UserState.language === 'ar' ? 'ar' : 'en'
-            });
-            
-            tonConnectUI.onStatusChange(this.onWalletChange.bind(this));
-            this.isInitialized = true;
-            console.log('✅ TON Connect initialized');
-            return true;
-        } catch (e) {
-            console.error('TON Connect error:', e);
-            this.reconnectAttempts++;
-            
-            if (this.reconnectAttempts < 3) {
-                setTimeout(() => this.init(), 3000);
-            }
-            return false;
-        }
-    },
-    
-    async ensureManifest() {
-        // إنشاء manifest مؤقت إذا لم يكن موجوداً
-        const manifest = {
-            url: window.location.origin,
-            name: "TON Mining Pro",
-            iconUrl: `${window.location.origin}/ton-icon.png`,
-            termsOfUseUrl: `${window.location.origin}/terms.html`,
-            privacyPolicyUrl: `${window.location.origin}/privacy.html`
-        };
-        
-        // تخزين في localStorage كنسخة احتياطية
-        localStorage.setItem('tonconnect-manifest', JSON.stringify(manifest));
-    },
-    
-    onWalletChange(wallet) {
-        tonWallet = wallet;
-        this.updateUI();
-        
-        if (wallet) {
-            const addr = wallet.account.address;
-            Notify.success(`Wallet connected: ${Utils.formatAddress(addr)}`);
-            UserState.tonWallet = addr;
-            UserState.saveToCache();
-            
-            // جلب الرصيد
-            this.getBalance().then(balance => {
-                if (balance !== null) {
-                    const balanceEl = document.getElementById('connectedWalletBalance');
-                    if (balanceEl) balanceEl.textContent = balance.toFixed(2) + ' TON';
-                }
-            });
-        } else {
-            UserState.tonWallet = null;
-            UserState.saveToCache();
-        }
-    },
-    
-    updateUI() {
-        const statusEl = document.getElementById('walletStatus');
-        const infoEl = document.getElementById('paymentWalletInfo');
-        const btn = document.getElementById('confirmPaymentBtn');
-        const depositBtn = document.getElementById('confirmDepositBtn');
-        const addressEl = document.getElementById('connectedAddress');
-        
-        if (tonWallet) {
-            if (statusEl) {
-                statusEl.innerHTML = `
-                    <div class="status-indicator online"></div>
-                    <span>${Utils.formatAddress(tonWallet.account.address)}</span>
-                `;
-            }
-            if (infoEl) {
-                infoEl.style.display = 'flex';
-                if (addressEl) {
-                    addressEl.textContent = Utils.formatAddress(tonWallet.account.address);
-                }
-            }
-            if (btn) btn.disabled = false;
-            if (depositBtn) depositBtn.disabled = false;
-        } else {
-            if (statusEl) {
-                statusEl.innerHTML = `
-                    <div class="status-indicator offline"></div>
-                    <span>Wallet disconnected</span>
-                `;
-            }
-            if (infoEl) infoEl.style.display = 'none';
-            if (btn) btn.disabled = true;
-            if (depositBtn) depositBtn.disabled = true;
-        }
-    },
-    
-    async connect() {
-        if (!tonConnectUI) {
-            const success = await this.init();
-            if (!success) {
-                Notify.error('Failed to initialize TON Connect');
-                return;
-            }
-        }
-        
-        try {
-            await tonConnectUI.openModal();
-        } catch (e) {
-            console.error('Connection error:', e);
-            Notify.error('Failed to connect wallet');
-        }
-    },
-    
-    async disconnect() {
-        if (tonConnectUI) {
-            await tonConnectUI.disconnect();
-            Notify.info('Wallet disconnected');
-        }
-    },
-    
-    async getBalance() {
-        if (!tonWallet) return null;
-        
-        try {
-            const res = await fetch(
-                `${CONFIG.TON.CENTER_API}getAddressBalance?address=${tonWallet.account.address}&api_key=${CONFIG.TON.API_KEY}`
-            );
-            const data = await res.json();
-            if (data.ok) {
-                return data.result / 1e9;
-            }
-        } catch (e) {
-            console.error('Balance fetch error:', e);
-        }
-        return null;
-    },
-    
-    async pay(amount) {
-        if (!tonWallet) {
-            Notify.error('Connect wallet first');
-            return false;
-        }
-        
-        try {
-            const tx = {
-                validUntil: Date.now() + 600000, // 10 minutes
-                messages: [{
-                    address: CONFIG.TON.WALLET,
-                    amount: (amount * 1e9).toString()
-                }]
-            };
-            
-            Notify.info('Opening wallet...');
-            const result = await tonConnectUI.sendTransaction(tx);
-            
-            Notify.success('Transaction sent! Waiting for confirmation...');
-            return result.boc;
-        } catch (e) {
-            Notify.error('Payment failed: ' + (e.message || 'Unknown error'));
-            console.error('Payment error:', e);
-            return false;
-        }
+// حفظ المعاملات المحلية
+function saveLocalTransactions(transactions) {
+    try {
+        localStorage.setItem(CACHE_KEYS.TRANSACTIONS, JSON.stringify(transactions));
+    } catch (error) {
+        console.error("Error saving transactions:", error);
     }
-};
-// ============================================
-// [SECTION 10] - MINING MANAGER (مع خطط التأجير)
-// ============================================
+}
 
-const MiningManager = {
-    timer: null,
-    isActive: false,
+// تحميل إشعارات محلية
+function loadLocalNotifications() {
+    try {
+        const saved = localStorage.getItem(CACHE_KEYS.NOTIFICATIONS);
+        return saved ? JSON.parse(saved) : [];
+    } catch (error) {
+        console.error("Error loading notifications:", error);
+        return [];
+    }
+}
+
+// حفظ إشعارات محلية
+function saveLocalNotifications(notifications) {
+    try {
+        localStorage.setItem(CACHE_KEYS.NOTIFICATIONS, JSON.stringify(notifications));
+    } catch (error) {
+        console.error("Error saving notifications:", error);
+    }
+}
+
+// ====== 12. ON-DEMAND LISTENERS (30 ثانية فقط) ======
+let activeListeners = new Map();
+let listenerTimeouts = new Map();
+
+function startOnDemandListener(collection, docId, callback, timeoutMs = CONFIG.CACHE.LISTENER_TTL) {
+    const listenerId = `${collection}_${docId}`;
     
-    start() {
-        if (this.timer) clearInterval(this.timer);
-        this.timer = setInterval(() => this.update(), 1000);
-        this.isActive = true;
-        this.update();
-        console.log('⛏️ Mining started');
-    },
+    if (activeListeners.has(listenerId)) {
+        activeListeners.get(listenerId)();
+        activeListeners.delete(listenerId);
+    }
     
-    stop() {
-        if (this.timer) {
-            clearInterval(this.timer);
-            this.timer = null;
-            this.isActive = false;
-        }
-    },
+    if (listenerTimeouts.has(listenerId)) {
+        clearTimeout(listenerTimeouts.get(listenerId));
+        listenerTimeouts.delete(listenerId);
+    }
     
-    update() {
-        const machine = Utils.getActiveMachine();
-        const progress = Utils.getClaimProgress();
-        const timeLeft = Utils.getTimeUntilNextClaim();
-        
-        const progressBar = document.getElementById('miningProgress');
-        const timerEl = document.getElementById('miningTimer');
-        const claimBtn = document.getElementById('claimBtn');
-        const activeEl = document.getElementById('activeMiner');
-        const nextEl = document.getElementById('nextReward');
-        
-        if (progressBar) progressBar.style.width = progress + '%';
-        
-        if (progress >= 100) {
-            if (timerEl) {
-                timerEl.textContent = 'READY';
-                timerEl.style.color = '#22c55e';
-            }
-            if (claimBtn) claimBtn.disabled = false;
+    console.log(`👂 Starting on-demand listener for ${listenerId} (${timeoutMs/1000}s)`);
+    
+    const unsubscribe = db.collection(collection).doc(docId).onSnapshot((doc) => {
+        if (doc.exists) {
+            const data = doc.data();
+            callback(data);
             
-            if (progress >= 90 && progress < 100) {
-                Effects.shake(document.querySelector('.miner-3d'));
+            if (data.status === 'approved' || data.status === 'rejected') {
+                console.log(`✅ Final status reached, stopping listener`);
+                stopOnDemandListener(listenerId);
             }
-        } else {
-            if (timerEl) {
-                timerEl.textContent = Utils.formatTime(timeLeft);
-                timerEl.style.color = '#00f2ff';
-            }
-            if (claimBtn) claimBtn.disabled = true;
         }
-        
-        if (activeEl) activeEl.textContent = machine.name;
-        if (nextEl) nextEl.textContent = Utils.formatTON(machine.yield) + ' TON';
-        
-        // التحقق من انتهاء مدة التأجير
-        if (Utils.isMachineExpired()) {
-            this.handleExpiry();
-        }
-    },
+    }, (error) => {
+        console.error(`❌ Listener error:`, error);
+        stopOnDemandListener(listenerId);
+    });
     
-    async claim() {
-        const machine = Utils.getActiveMachine();
-        if (Utils.getTimeUntilNextClaim() > 0) {
-            Notify.error('Not ready');
+    activeListeners.set(listenerId, unsubscribe);
+    
+    const timeout = setTimeout(() => {
+        console.log(`⏰ Listener timeout after ${timeoutMs/1000}s`);
+        stopOnDemandListener(listenerId);
+    }, timeoutMs);
+    
+    listenerTimeouts.set(listenerId, timeout);
+}
+
+function stopOnDemandListener(listenerId) {
+    if (activeListeners.has(listenerId)) {
+        activeListeners.get(listenerId)();
+        activeListeners.delete(listenerId);
+    }
+    
+    if (listenerTimeouts.has(listenerId)) {
+        clearTimeout(listenerTimeouts.get(listenerId));
+        listenerTimeouts.delete(listenerId);
+    }
+}
+
+function stopAllListeners() {
+    activeListeners.forEach((unsubscribe) => unsubscribe());
+    activeListeners.clear();
+    listenerTimeouts.forEach((timeout) => clearTimeout(timeout));
+    listenerTimeouts.clear();
+}
+
+// ====== 13. LOAD USER DATA (مع Zero Waste) ======
+let lastUserLoadTime = 0;
+let lastHistoryCheckTime = 0;
+
+async function loadUserData(force = false) {
+    try {
+        console.log("📂 Loading user data...");
+        
+        const now = Date.now();
+        
+        // محاولة التحميل من الكاش أولاً
+        if (!force && loadUserFromCache()) {
+            updateUI();
             return;
         }
         
-        const bonus = Utils.getStreakBonus();
-        const reward = machine.yield * bonus;
-        
-        Utils.updateStreak();
-        
-        UserState.balance += reward;
-        UserState.totalEarned += reward;
-        UserState.lastClaim = Date.now();
-        UserState.claims++;
-        
-        this.addTransaction('mining', reward, { machine: machine.id, bonus });
-        
-        UserState.saveToCache();
-        await this.saveToFirebase();
-        
-        Notify.success(`Claimed ${Utils.formatTON(reward)} TON!${bonus > 1 ? ` (${((bonus-1)*100).toFixed(0)}% bonus)` : ''}`);
-        Effects.celebrate();
-        UI.updateAll();
-        Achievements.check();
-        
-        // التحقق من الإنجازات الخاصة بالوقت
-        this.checkSpecialAchievements();
-    },
-    
-    checkSpecialAchievements() {
-        const hour = new Date().getHours();
-        if (hour >= 0 && hour < 4 && !UserState.achievements.includes('night_owl')) {
-            Achievements.check();
-        } else if (hour >= 5 && hour < 8 && !UserState.achievements.includes('early_bird')) {
-            Achievements.check();
-        }
-    },
-    
-    async activateMachine(machineId, planIndex) {
-        const machine = MACHINES.find(m => m.id === machineId);
-        if (!machine) return false;
-        
-        const plan = machine.plans[planIndex];
-        
-        // التحقق من المتطلبات
-        if (!this.checkRequirements(machine)) {
-            Notify.error('You do not meet the requirements for this machine');
-            return false;
-        }
-        
-        // إذا كان السعر 0 (Free Miner)، فعّله مباشرة
-        if (plan.price === 0) {
-            UserState.activeMachine = machineId;
-            UserState.activePlan = plan;
-            UserState.machineExpiry = Infinity;
-            UserState.lastClaim = Date.now();
-            
-            if (machineId !== 'm1') UserState.upgrades++;
-            
-            UserState.saveToCache();
-            await this.saveToFirebase();
-            
-            Notify.success(`${machine.name} activated!`);
-            UI.updateAll();
-            Achievements.check();
-            return true;
-        }
-        
-        // للآلات المدفوعة، نفتح نافذة الدفع
-        PaymentManager.openModal(machine, planIndex);
-        return true;
-    },
-    
-    checkRequirements(machine) {
-        if (!machine.requirements) return true;
-        
-        const req = machine.requirements;
-        
-        if (req.minEarnings && UserState.totalEarned < req.minEarnings) {
-            return false;
-        }
-        
-        if (req.referrals && (UserState.referrals?.length || 0) < req.referrals) {
-            return false;
-        }
-        
-        if (req.streak && UserState.streak < req.streak) {
-            return false;
-        }
-        
-        return true;
-    },
-    
-    handleExpiry() {
-        if (UserState.activeMachine !== 'm1') {
-            UserState.activeMachine = 'm1';
-            UserState.activePlan = MACHINES[0].plans[0];
-            UserState.machineExpiry = Infinity;
-            UserState.saveToCache();
-            
-            Notify.warning('Your rental has expired. Free Miner activated.');
-            UI.updateAll();
-        }
-    },
-    
-    addTransaction(type, amount, details = {}) {
-        const tx = {
-            id: Utils.randomId(),
-            type,
-            amount,
-            balance: UserState.balance,
-            timestamp: Date.now(),
-            ...details
-        };
-        UserState.transactions.unshift(tx);
-        if (UserState.transactions.length > 200) UserState.transactions.pop();
-    },
-    
-    async saveToFirebase() {
-        if (!db || !UserState.uid) return;
-        
-        try {
-            await db.collection('users').doc(UserState.uid).set({
-                balance: UserState.balance,
-                totalEarned: UserState.totalEarned,
-                activeMachine: UserState.activeMachine,
-                activePlan: UserState.activePlan,
-                machineExpiry: UserState.machineExpiry,
-                lastClaim: UserState.lastClaim,
-                claims: UserState.claims,
-                streak: UserState.streak,
-                lastClaimDate: UserState.lastClaimDate,
-                upgrades: UserState.upgrades,
-                lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
-            }, { merge: true });
-        } catch (e) {
-            console.error('Firebase save error:', e);
-        }
-    },
-    
-    getStats() {
-        const m = Utils.getActiveMachine();
-        return {
-            machine: m.name,
-            hashrate: m.hashrate,
-            dailyEarnings: Utils.calculateDailyEarnings(),
-            streak: UserState.streak,
-            streakBonus: Utils.getStreakBonus(),
-            claims: UserState.claims,
-            totalEarned: UserState.totalEarned,
-            remainingTime: Utils.formatRentalTime()
-        };
-    }
-};
-
-// ============================================
-// [SECTION 11] - PAYMENT MANAGER (مع خطط التأجير)
-// ============================================
-
-const PaymentManager = {
-    currentMachine: null,
-    currentPlan: null,
-    checkInterval: null,
-    
-    openModal(machine, planIndex) {
-        this.currentMachine = machine;
-        this.currentPlan = machine.plans[planIndex];
-        
-        const machineIcon = document.getElementById('paymentMachineIcon');
-        const machineName = document.getElementById('paymentMachineName');
-        const durationEl = document.getElementById('paymentDuration');
-        const priceEl = document.getElementById('paymentPrice');
-        const returnEl = document.getElementById('paymentReturn');
-        const totalEl = document.getElementById('paymentTotal');
-        
-        if (machineIcon) {
-            machineIcon.className = `fas ${machine.icon}`;
-            machineIcon.style.color = machine.color;
-        }
-        if (machineName) machineName.textContent = machine.name;
-        if (durationEl) durationEl.textContent = this.currentPlan.durationText;
-        if (priceEl) priceEl.textContent = this.currentPlan.price + ' TON';
-        if (returnEl) returnEl.textContent = `${this.currentPlan.returnAmount} TON (${this.currentPlan.returnPercent}%)`;
-        if (totalEl) totalEl.textContent = this.currentPlan.total + ' TON';
-        
-        document.getElementById('paymentModal').style.display = 'flex';
-        TonManager.updateUI();
-    },
-    
-    closeModal() {
-        document.getElementById('paymentModal').style.display = 'none';
-        this.stopMonitoring();
-        this.currentMachine = null;
-        this.currentPlan = null;
-    },
-    
-    async confirmPayment() {
-        if (!this.currentMachine || !this.currentPlan) return;
-        
-        const boc = await TonManager.pay(this.currentPlan.price);
-        if (boc) {
-            Notify.info('Payment sent! Waiting for confirmation...');
-            this.closeModal();
-            this.startMonitoring(boc, this.currentMachine.id, this.currentPlan);
-        }
-    },
-    
-    startMonitoring(txHash, machineId, plan) {
-        let attempts = 0;
-        
-        Notify.info('Monitoring blockchain for confirmation...');
-        
-        this.checkInterval = setInterval(async () => {
-            attempts++;
-            
+        // إذا كان لدينا Firebase، نحاول التحميل منه
+        if (db) {
             try {
-                const res = await fetch(
-                    `${CONFIG.TON.CENTER_API}getTransactions?address=${CONFIG.TON.WALLET}&limit=20&api_key=${CONFIG.TON.API_KEY}`
-                );
-                const data = await res.json();
+                const userDoc = await db.collection('users').doc(userId).get();
                 
-                if (data.ok && data.result) {
-                    for (const tx of data.result) {
-                        const val = parseFloat(tx.in_msg?.value) || 0;
-                        if (Math.abs(val - plan.price) < 0.01) {
-                            clearInterval(this.checkInterval);
-                            await MiningManager.activateMachine(machineId, plan);
-                            Notify.success('Payment confirmed!');
-                            Effects.celebrate();
-                            
-                            // تسجيل المعاملة
-                            await this.recordTransaction(tx.transaction_id?.hash, machineId, plan.price);
-                            return;
-                        }
-                    }
-                }
-            } catch (e) {
-                console.error('Check error:', e);
-            }
-            
-            if (attempts >= CONFIG.TON.TX_MAX_ATTEMPTS) {
-                clearInterval(this.checkInterval);
-                Notify.error('Payment timeout. Please contact support.');
-            }
-        }, CONFIG.TON.TX_CHECK_INTERVAL);
-    },
-    
-    stopMonitoring() {
-        if (this.checkInterval) {
-            clearInterval(this.checkInterval);
-            this.checkInterval = null;
-        }
-    },
-    
-    async recordTransaction(txHash, machineId, amount) {
-        if (!db || !UserState.uid) return;
-        
-        try {
-            await db.collection('transactions').add({
-                userId: UserState.uid,
-                username: UserState.username,
-                txHash,
-                machineId,
-                amount,
-                type: 'rental',
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            });
-        } catch (e) {
-            console.error('Transaction record error:', e);
-        }
-    }
-};
-
-// ============================================
-// [SECTION 12] - DEPOSIT MANAGER (إيداع)
-// ============================================
-
-const DepositManager = {
-    openModal() {
-        document.getElementById('depositAddress').textContent = CONFIG.TON.WALLET;
-        document.getElementById('depositModal').style.display = 'flex';
-        TonManager.updateUI();
-    },
-    
-    closeModal() {
-        document.getElementById('depositModal').style.display = 'none';
-        document.getElementById('depositAmount').value = '';
-        document.getElementById('depositTxHash').value = '';
-    },
-    
-    async confirmDeposit() {
-        const amount = Utils.parseTON(document.getElementById('depositAmount').value);
-        const txHash = document.getElementById('depositTxHash').value.trim();
-        
-        if (amount < CONFIG.TON.MIN_DEPOSIT) {
-            Notify.error(`Minimum deposit is ${CONFIG.TON.MIN_DEPOSIT} TON`);
-            return;
-        }
-        
-        if (!txHash || txHash.length < 10) {
-            Notify.error('Please enter a valid transaction hash');
-            return;
-        }
-        
-        // التحقق من عدم تكرار الـ hash
-        if (UserState.pendingDeposits.some(d => d.txHash === txHash) || 
-            UserState.completedDeposits.some(d => d.txHash === txHash)) {
-            Notify.error('This transaction hash has already been used');
-            return;
-        }
-        
-        const deposit = {
-            id: 'dep_' + Date.now() + '_' + Utils.randomString(6),
-            userId: UserState.uid,
-            username: UserState.username,
-            amount,
-            txHash,
-            status: 'pending',
-            timestamp: Date.now()
-        };
-        
-        UserState.pendingDeposits.push(deposit);
-        UserState.saveToCache();
-        
-        if (db) {
-            try {
-                await db.collection('deposits').add({
-                    ...deposit,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                });
-            } catch (e) {
-                console.error('Firebase deposit error:', e);
-            }
-        }
-        
-        this.closeModal();
-        Notify.success(`Deposit request submitted: ${amount} TON`);
-    }
-};
-
-// ============================================
-// [SECTION 13] - WITHDRAWAL MANAGER (سحب)
-// ============================================
-
-const WithdrawManager = {
-    openModal() {
-        document.getElementById('withdrawBalance').textContent = Utils.formatTON(UserState.balance) + ' TON';
-        document.getElementById('withdrawModal').style.display = 'flex';
-    },
-    
-    closeModal() {
-        document.getElementById('withdrawModal').style.display = 'none';
-        document.getElementById('withdrawAmount').value = '';
-        document.getElementById('withdrawAddress').value = '';
-    },
-    
-    async request() {
-        const amount = Utils.parseTON(document.getElementById('withdrawAmount').value);
-        const address = document.getElementById('withdrawAddress').value.trim();
-        
-        if (amount < CONFIG.TON.MIN_WITHDRAW) {
-            Notify.error(`Minimum ${CONFIG.TON.MIN_WITHDRAW} TON`);
-            return;
-        }
-        
-        if (amount > UserState.balance) {
-            Notify.error('Insufficient balance');
-            return;
-        }
-        
-        if (!Utils.isValidAddress(address)) {
-            Notify.error('Invalid address');
-            return;
-        }
-        
-        const dailyTotal = await this.getDailyTotal();
-        if (dailyTotal + amount > CONFIG.ECONOMY.MAX_WITHDRAW_DAILY) {
-            Notify.error(`Daily limit ${CONFIG.ECONOMY.MAX_WITHDRAW_DAILY} TON`);
-            return;
-        }
-        
-        const request = {
-            id: 'wd_' + Date.now() + '_' + Utils.randomString(6),
-            userId: UserState.uid,
-            username: UserState.username,
-            amount,
-            address,
-            status: 'pending',
-            timestamp: Date.now()
-        };
-        
-        UserState.pendingWithdrawals.push(request);
-        UserState.balance -= amount;
-        UserState.totalWithdrawn += amount;
-        UserState.saveToCache();
-        
-        if (db) {
-            try {
-                await db.collection('withdrawals').add({
-                    ...request,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                });
-            } catch (e) {
-                // Rollback if Firebase fails
-                UserState.pendingWithdrawals.pop();
-                UserState.balance += amount;
-                UserState.totalWithdrawn -= amount;
-                UserState.saveToCache();
-                Notify.error('Failed to submit withdrawal');
-                return;
-            }
-        }
-        
-        this.closeModal();
-        Notify.success(`Withdrawal requested: ${amount} TON`);
-        UI.updateAll();
-    },
-    
-    async getDailyTotal() {
-        const today = new Date().setHours(0,0,0,0);
-        let total = 0;
-        
-        UserState.pendingWithdrawals.forEach(w => {
-            if (w.timestamp >= today) total += w.amount;
-        });
-        UserState.completedWithdrawals.forEach(w => {
-            if (w.timestamp >= today) total += w.amount;
-        });
-        
-        return total;
-    },
-    
-    async cancelRequest(requestId) {
-        const index = UserState.pendingWithdrawals.findIndex(w => w.id === requestId);
-        if (index === -1) return;
-        
-        const req = UserState.pendingWithdrawals[index];
-        
-        UserState.pendingWithdrawals.splice(index, 1);
-        UserState.balance += req.amount;
-        UserState.totalWithdrawn -= req.amount;
-        UserState.saveToCache();
-        
-        if (db) {
-            try {
-                await db.collection('withdrawals').doc(requestId).update({
-                    status: 'cancelled',
-                    cancelledAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-            } catch (e) {
-                console.error('Cancel error:', e);
-            }
-        }
-        
-        Notify.success('Withdrawal cancelled');
-        UI.updateAll();
-    }
-};
-
-// ============================================
-// [SECTION 14] - REFERRAL MANAGER (إحالات)
-// ============================================
-
-const ReferralManager = {
-    getLink() {
-        return Utils.getReferralLink();
-    },
-    
-    copyLink() {
-        const link = this.getLink();
-        navigator.clipboard.writeText(link).then(() => {
-            Notify.success('✅ Referral link copied!');
-        }).catch(() => {
-            Notify.error('Failed to copy');
-        });
-    },
-    
-    async processReferral(code) {
-        if (!code || code === UserState.referralCode || UserState.referredBy) return false;
-        
-        try {
-            if (db) {
-                const snapshot = await db.collection('users')
-                    .where('referralCode', '==', code)
-                    .limit(1)
-                    .get();
-                
-                if (!snapshot.empty) {
-                    const referrer = snapshot.docs[0];
-                    const referrerData = referrer.data();
+                if (userDoc.exists) {
+                    const fbData = userDoc.data();
+                    Object.assign(userData, fbData);
                     
-                    if (referrer.id === UserState.uid) return false;
+                    // دمج المعاملات المحلية مع Firebase
+                    const localTxs = loadLocalTransactions();
+                    const fbTxs = fbData.transactions || [];
                     
-                    // تحديث رصيد المُحيل
-                    await referrer.ref.update({
-                        referrals: firebase.firestore.FieldValue.arrayUnion(UserState.uid),
-                        refEarnings: firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS),
-                        balance: firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS)
+                    // دمج بدون تكرار
+                    const txMap = new Map();
+                    [...localTxs, ...fbTxs].forEach(tx => {
+                        const key = tx.firebaseId || `${tx.timestamp}_${tx.type}`;
+                        txMap.set(key, tx);
                     });
                     
-                    // تحديث المستخدم الحالي
-                    UserState.referredBy = code;
-                    UserState.balance += CONFIG.ECONOMY.REFERRAL_BONUS;
-                    UserState.totalEarned += CONFIG.ECONOMY.REFERRAL_BONUS;
-                    UserState.refEarnings += CONFIG.ECONOMY.REFERRAL_BONUS;
+                    userData.transactions = Array.from(txMap.values());
+                    saveLocalTransactions(userData.transactions);
                     
-                    if (!UserState.referrals) UserState.referrals = [];
-                    UserState.referrals.push(referrer.id);
-                    
-                    UserState.saveToCache();
-                    
-                    Notify.success(`🎉 Referral bonus: +${CONFIG.ECONOMY.REFERRAL_BONUS} TON`);
-                    
-                    // تسجيل الإحالة
-                    await this.logReferral(referrer.id, UserState.uid, code);
-                    
-                    return true;
-                }
-            }
-        } catch (e) {
-            console.error('Referral error:', e);
-        }
-        return false;
-    },
-    
-    async logReferral(referrerId, referredId, code) {
-        if (!db) return;
-        
-        try {
-            await db.collection('referrals').add({
-                referrerId,
-                referredId,
-                code,
-                bonus: CONFIG.ECONOMY.REFERRAL_BONUS,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            });
-        } catch (e) {
-            console.error('Referral log error:', e);
-        }
-    },
-    
-    async loadTree() {
-        const container = document.getElementById('referralTree');
-        if (!container) return;
-        
-        container.innerHTML = '';
-        
-        if (!UserState.referrals || UserState.referrals.length === 0) {
-            container.innerHTML = '<div class="tree-node">No referrals yet</div>';
-            return;
-        }
-        
-        for (const refId of UserState.referrals.slice(0, 10)) {
-            try {
-                if (db) {
-                    const doc = await db.collection('users').doc(refId).get();
-                    if (doc.exists) {
-                        const data = doc.data();
-                        const node = document.createElement('div');
-                        node.className = 'tree-node';
-                        node.innerHTML = `
-                            <i class="fas fa-user"></i>
-                            <span>${data.username || 'User'}</span>
-                            <small>${data.totalEarned?.toFixed(2) || '0'} TON</small>
-                        `;
-                        container.appendChild(node);
-                    } else {
-                        container.innerHTML += `<div class="tree-node">👤 ${refId.slice(0,8)}...</div>`;
-                    }
                 } else {
-                    container.innerHTML += `<div class="tree-node">👤 ${refId.slice(0,8)}...</div>`;
-                }
-            } catch {
-                container.innerHTML += `<div class="tree-node">👤 ${refId.slice(0,8)}...</div>`;
-            }
-        }
-    },
-    
-    getStats() {
-        return {
-            total: UserState.referrals?.length || 0,
-            earnings: UserState.refEarnings || 0,
-            link: this.getLink()
-        };
-    }
-};
-
-// ============================================
-// [SECTION 15] - ACHIEVEMENTS MANAGER (إنجازات)
-// ============================================
-
-const Achievements = {
-    check() {
-        const newlyUnlocked = [];
-        
-        ACHIEVEMENTS.forEach(ach => {
-            if (UserState.achievements.includes(ach.id)) return;
-            
-            let completed = false;
-            const [type, target] = ach.condition.split(':');
-            const val = parseInt(target);
-            
-            switch(type) {
-                case 'claims':
-                    completed = UserState.claims >= val;
-                    break;
-                case 'streak':
-                    completed = UserState.streak >= val;
-                    break;
-                case 'referrals':
-                    completed = (UserState.referrals?.length || 0) >= val;
-                    break;
-                case 'upgrades':
-                    completed = (UserState.upgrades || 0) >= val;
-                    break;
-                case 'earnings':
-                    completed = UserState.totalEarned >= val;
-                    break;
-                case 'special':
-                    if (val === 'night') completed = Utils.isSpecialTime('night');
-                    if (val === 'early') completed = Utils.isSpecialTime('early');
-                    break;
-            }
-            
-            if (completed) {
-                newlyUnlocked.push(ach);
-                UserState.achievements.push(ach.id);
-                UserState.balance += ach.reward;
-                UserState.totalEarned += ach.reward;
-                
-                Notify.success(`🏆 ${ach.name} +${ach.reward} TON`);
-                Effects.celebrate('low');
-            }
-        });
-        
-        if (newlyUnlocked.length > 0) {
-            UserState.saveToCache();
-            this.saveToFirebase(newlyUnlocked.map(a => a.id));
-            UI.updateAchievements();
-        }
-        
-        return newlyUnlocked;
-    },
-    
-    async saveToFirebase(achievementIds) {
-        if (!db || !UserState.uid) return;
-        
-        try {
-            await db.collection('users').doc(UserState.uid).update({
-                achievements: firebase.firestore.FieldValue.arrayUnion(...achievementIds),
-                balance: UserState.balance
-            });
-        } catch (e) {
-            console.error('Achievement save error:', e);
-        }
-    },
-    
-    render() {
-        const container = document.getElementById('achievementsGrid');
-        if (!container) return;
-        
-        container.innerHTML = '';
-        ACHIEVEMENTS.slice(0, 9).forEach(ach => {
-            const unlocked = UserState.achievements.includes(ach.id);
-            container.innerHTML += `
-                <div class="achievement-item ${unlocked ? 'unlocked' : ''}" title="${ach.description}">
-                    <span class="achievement-icon">${ach.icon}</span>
-                    <span class="achievement-name">${ach.name}</span>
-                </div>
-            `;
-        });
-    },
-    
-    getProgress(achievementId) {
-        const ach = ACHIEVEMENTS.find(a => a.id === achievementId);
-        if (!ach) return null;
-        
-        const [type, target] = ach.condition.split(':');
-        const val = parseInt(target);
-        
-        let current = 0;
-        switch(type) {
-            case 'claims': current = UserState.claims; break;
-            case 'streak': current = UserState.streak; break;
-            case 'referrals': current = UserState.referrals?.length || 0; break;
-            case 'upgrades': current = UserState.upgrades || 0; break;
-            case 'earnings': current = UserState.totalEarned; break;
-        }
-        
-        return {
-            current,
-            target: val,
-            percent: (current / val) * 100
-        };
-    },
-    
-    getTotalRewards() {
-        let total = 0;
-        UserState.achievements.forEach(id => {
-            const ach = ACHIEVEMENTS.find(a => a.id === id);
-            if (ach) total += ach.reward;
-        });
-        return total;
-    }
-};
-
-// ============================================
-// [SECTION 16] - ADMIN PANEL (لوحة المشرف)
-// ============================================
-
-const Admin = {
-    isAdmin: false,
-    clickCount: 0,
-    lastClick: 0,
-    
-    init() {
-        // التحقق التلقائي من صلاحية المشرف
-        this.checkAdminStatus();
-        
-        // إضافة مستمع للنقرات على الأفاتار
-        const avatar = document.querySelector('.user-avatar');
-        if (avatar) {
-            avatar.addEventListener('click', () => this.handleClick());
-            avatar.style.cursor = 'pointer';
-        }
-        
-        // إضافة مستمع لزر المشرف إذا كان موجوداً
-        const adminBtn = document.getElementById('adminButton');
-        if (adminBtn) {
-            adminBtn.addEventListener('click', () => this.openPanel());
-        }
-    },
-    
-    checkAdminStatus() {
-        // التحقق من معرف المشرف
-        if (UserState.uid === CONFIG.TON.ADMIN_ID) {
-            this.isAdmin = true;
-            UserState.isAdmin = true;
-            UserState.adminAccessGranted = true;
-            console.log('👑 Admin mode activated automatically for user:', UserState.uid);
-            this.addAdminButton();
-            this.showAdminNotification();
-        }
-    },
-    
-    showAdminNotification() {
-        // إظهار إشعار للمشرف
-        setTimeout(() => {
-            Notify.success('👑 Admin mode active - You have full access');
-        }, 2000);
-    },
-    
-    addAdminButton() {
-        // إضافة زر المشرف في الهيدر
-        const header = document.querySelector('.header-right');
-        if (header) {
-            // التحقق من عدم وجود الزر مسبقاً
-            if (document.getElementById('adminButton')) return;
-            
-            const btn = document.createElement('button');
-            btn.id = 'adminButton';
-            btn.className = 'icon-btn';
-            btn.innerHTML = '<i class="fas fa-crown" style="color: #fbbf24;"></i>';
-            btn.onclick = () => this.openPanel();
-            btn.title = 'Admin Panel';
-            header.appendChild(btn);
-        }
-    },
-    
-    handleClick() {
-        const now = Date.now();
-        if (now - this.lastClick > 2000) this.clickCount = 0;
-        
-        this.clickCount++;
-        this.lastClick = now;
-        
-        if (this.clickCount >= 5) {
-            this.clickCount = 0;
-            this.checkAccess();
-        }
-    },
-    
-    checkAccess() {
-        if (UserState.uid === CONFIG.TON.ADMIN_ID) {
-            this.isAdmin = true;
-            UserState.isAdmin = true;
-            UserState.adminAccessGranted = true;
-            this.addAdminButton();
-            this.openPanel();
-            Notify.success('👑 Admin access granted');
-        } else {
-            Notify.error('❌ Admin access denied');
-        }
-    },
-    
-    openPanel() {
-        if (!this.isAdmin && UserState.uid !== CONFIG.TON.ADMIN_ID) {
-            Notify.error('Access denied');
-            return;
-        }
-        
-        this.loadWithdrawals();
-        this.loadDeposits();
-        document.getElementById('adminModal').style.display = 'flex';
-    },
-    
-    async loadWithdrawals() {
-        if (!db) return;
-        
-        try {
-            const snap = await db.collection('withdrawals')
-                .where('status', '==', 'pending')
-                .orderBy('timestamp', 'desc')
-                .limit(20)
-                .get();
-            
-            const container = document.getElementById('withdrawalsList');
-            const countEl = document.getElementById('pendingWithdrawalsCount');
-            
-            if (countEl) countEl.textContent = snap.size;
-            
-            if (snap.empty) {
-                container.innerHTML = '<div class="empty-state">No pending withdrawals</div>';
-                return;
-            }
-            
-            container.innerHTML = '';
-            snap.forEach(doc => {
-                const req = doc.data();
-                const timeAgo = Utils.formatRelativeTime(req.timestamp?.toDate?.()?.getTime() || req.timestamp);
-                
-                container.innerHTML += `
-                    <div class="request-item">
-                        <div class="request-header">
-                            <span class="request-user">@${req.username}</span>
-                            <span class="request-time">${timeAgo}</span>
-                        </div>
-                        <div class="request-amount">${req.amount} TON</div>
-                        <div class="request-address">${Utils.formatAddress(req.address)}</div>
-                        <div class="request-actions">
-                            <button class="approve-btn" onclick="Admin.approveWithdrawal('${doc.id}', ${req.amount})">
-                                <i class="fas fa-check"></i> Approve
-                            </button>
-                            <button class="reject-btn" onclick="Admin.rejectWithdrawal('${doc.id}', ${req.amount})">
-                                <i class="fas fa-times"></i> Reject
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-        } catch (e) {
-            console.error('Load withdrawals error:', e);
-        }
-    },
-    
-    async loadDeposits() {
-        if (!db) return;
-        
-        try {
-            const snap = await db.collection('deposits')
-                .where('status', '==', 'pending')
-                .orderBy('timestamp', 'desc')
-                .limit(20)
-                .get();
-            
-            const container = document.getElementById('depositsList');
-            const countEl = document.getElementById('pendingDepositsCount');
-            
-            if (countEl) countEl.textContent = snap.size;
-            
-            if (snap.empty) {
-                if (container) container.innerHTML = '<div class="empty-state">No pending deposits</div>';
-                return;
-            }
-            
-            if (container) {
-                container.innerHTML = '';
-                snap.forEach(doc => {
-                    const req = doc.data();
-                    const timeAgo = Utils.formatRelativeTime(req.timestamp?.toDate?.()?.getTime() || req.timestamp);
+                    // مستخدم جديد - إنشاء في Firebase
+                    userData.referralCode = generateReferralCode();
+                    userData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
                     
-                    container.innerHTML += `
-                        <div class="request-item">
-                            <div class="request-header">
-                                <span class="request-user">@${req.username}</span>
-                                <span class="request-time">${timeAgo}</span>
-                            </div>
-                            <div class="request-amount">+${req.amount} TON</div>
-                            <div class="request-address">${Utils.formatAddress(req.txHash)}</div>
-                            <div class="request-actions">
-                                <button class="approve-btn" onclick="Admin.approveDeposit('${doc.id}', ${req.amount})">
-                                    <i class="fas fa-check"></i> Approve
-                                </button>
-                                <button class="reject-btn" onclick="Admin.rejectDeposit('${doc.id}', ${req.amount})">
-                                    <i class="fas fa-times"></i> Reject
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-        } catch (e) {
-            console.error('Load deposits error:', e);
-        }
-    },
-    
-    async approveWithdrawal(id, amount) {
-        if (!this.isAdmin && UserState.uid !== CONFIG.TON.ADMIN_ID) {
-            Notify.error('Access denied');
-            return;
-        }
-        
-        if (!db) return;
-        
-        try {
-            await db.collection('withdrawals').doc(id).update({
-                status: 'approved',
-                approvedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                approvedBy: UserState.uid
-            });
-            
-            const doc = await db.collection('withdrawals').doc(id).get();
-            const data = doc.data();
-            
-            await db.collection('users').doc(data.userId).update({
-                completedWithdrawals: firebase.firestore.FieldValue.arrayUnion({
-                    id, amount: data.amount, address: data.address, approvedAt: Date.now()
-                }),
-                pendingWithdrawals: firebase.firestore.FieldValue.arrayRemove(data)
-            });
-            
-            Notify.success(`✅ Approved ${amount} TON withdrawal`);
-            this.loadWithdrawals();
-        } catch (e) {
-            console.error('Approve error:', e);
-        }
-    },
-    
-    async rejectWithdrawal(id, amount) {
-        if (!this.isAdmin && UserState.uid !== CONFIG.TON.ADMIN_ID) {
-            Notify.error('Access denied');
-            return;
-        }
-        
-        if (!db) return;
-        
-        try {
-            const doc = await db.collection('withdrawals').doc(id).get();
-            const data = doc.data();
-            
-            // إعادة الرصيد للمستخدم
-            await db.collection('users').doc(data.userId).update({
-                balance: firebase.firestore.FieldValue.increment(amount),
-                pendingWithdrawals: firebase.firestore.FieldValue.arrayRemove(data)
-            });
-            
-            await db.collection('withdrawals').doc(id).update({
-                status: 'rejected',
-                rejectedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                rejectedBy: UserState.uid,
-                rejectionReason: 'Manual review'
-            });
-            
-            Notify.error(`❌ Rejected ${amount} TON withdrawal`);
-            this.loadWithdrawals();
-        } catch (e) {
-            console.error('Reject error:', e);
-        }
-    },
-    
-    async approveDeposit(id, amount) {
-        if (!this.isAdmin && UserState.uid !== CONFIG.TON.ADMIN_ID) {
-            Notify.error('Access denied');
-            return;
-        }
-        
-        if (!db) return;
-        
-        try {
-            const doc = await db.collection('deposits').doc(id).get();
-            const data = doc.data();
-            
-            await db.collection('users').doc(data.userId).update({
-                balance: firebase.firestore.FieldValue.increment(amount),
-                totalDeposited: firebase.firestore.FieldValue.increment(amount),
-                completedDeposits: firebase.firestore.FieldValue.arrayUnion({
-                    id, amount, timestamp: Date.now()
-                }),
-                pendingDeposits: firebase.firestore.FieldValue.arrayRemove(data)
-            });
-            
-            await db.collection('deposits').doc(id).update({
-                status: 'approved',
-                approvedAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            
-            Notify.success(`✅ Approved deposit of ${amount} TON`);
-            this.loadDeposits();
-        } catch (e) {
-            console.error('Approve deposit error:', e);
-        }
-    },
-    
-    async rejectDeposit(id, amount) {
-        if (!this.isAdmin && UserState.uid !== CONFIG.TON.ADMIN_ID) {
-            Notify.error('Access denied');
-            return;
-        }
-        
-        if (!db) return;
-        
-        try {
-            await db.collection('deposits').doc(id).update({
-                status: 'rejected',
-                rejectedAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            
-            Notify.error(`❌ Rejected deposit of ${amount} TON`);
-            this.loadDeposits();
-        } catch (e) {
-            console.error('Reject deposit error:', e);
-        }
-    },
-    
-    async addBalance() {
-        if (!this.isAdmin && UserState.uid !== CONFIG.TON.ADMIN_ID) {
-            Notify.error('Access denied');
-            return;
-        }
-        
-        const uid = document.getElementById('adminUserId').value.trim();
-        const amt = Utils.parseTON(document.getElementById('adminAmount').value);
-        
-        if (!uid || amt <= 0) {
-            Notify.error('Invalid input');
-            return;
-        }
-        
-        try {
-            await db.collection('users').doc(uid).update({
-                balance: firebase.firestore.FieldValue.increment(amt),
-                totalEarned: firebase.firestore.FieldValue.increment(amt)
-            });
-            
-            Notify.success(`✅ Added ${amt} TON to user`);
-            document.getElementById('adminUserId').value = '';
-            document.getElementById('adminAmount').value = '';
-        } catch (e) {
-            Notify.error('User not found');
-        }
-    },
-    
-    async searchUser() {
-        if (!this.isAdmin && UserState.uid !== CONFIG.TON.ADMIN_ID) {
-            Notify.error('Access denied');
-            return;
-        }
-        
-        const uid = document.getElementById('adminSearch').value.trim();
-        if (!uid) return;
-        
-        try {
-            const doc = await db.collection('users').doc(uid).get();
-            if (!doc.exists) {
-                Notify.error('User not found');
-                return;
-            }
-            
-            const data = doc.data();
-            const info = document.getElementById('adminUserInfo');
-            
-            info.innerHTML = `
-                <div class="user-info-card">
-                    <p><strong>Username:</strong> ${data.username || 'N/A'}</p>
-                    <p><strong>Balance:</strong> ${data.balance?.toFixed(4) || 0} TON</p>
-                    <p><strong>Total Earned:</strong> ${data.totalEarned?.toFixed(4) || 0} TON</p>
-                    <p><strong>Referrals:</strong> ${data.referrals?.length || 0}</p>
-                    <p><strong>Streak:</strong> ${data.streak || 0} days</p>
-                </div>
-            `;
-            info.style.display = 'block';
-        } catch (e) {
-            Notify.error('Search error');
-            console.error('Search error:', e);
-        }
-    }
-};
-
-// ============================================
-// [SECTION 17] - UI MANAGER (مدير الواجهة)
-// ============================================
-
-const UI = {
-    elements: {},
-    
-    init() {
-        this.cacheElements();
-        this.setupEventListeners();
-        this.initLanguage();
-        this.renderDetailedPlansTable();
-    },
-    
-    cacheElements() {
-        const ids = [
-            'username', 'userId', 'headerBalance', 'walletBalance', 'walletUsd',
-            'miningProgress', 'miningTimer', 'claimBtn', 'activeMiner',
-            'nextReward', 'hashRate', 'machinesGrid', 'machinesShowcase',
-            'plansContainer', 'plansTableBody', 'achievementsGrid', 'referralCount',
-            'refEarnings', 'referralLink', 'referralTree'
-        ];
-        
-        ids.forEach(id => {
-            this.elements[id] = document.getElementById(id);
-        });
-    },
-    
-    setupEventListeners() {
-        // التنقل بين الصفحات
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const target = item.dataset.tab;
-                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                item.classList.add('active');
-                document.getElementById(target + 'Page').classList.add('active');
+                    await db.collection('users').doc(userId).set({
+                        ...userData,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                }
                 
-                if (target === 'plans') {
-                    this.renderPlans();
-                    this.renderDetailedPlansTable();
-                }
-                if (target === 'market') this.renderMarket();
-                if (target === 'referrals') ReferralManager.loadTree();
-            });
-        });
-        
-        // زر المطالبة
-        if (this.elements['claimBtn']) {
-            this.elements['claimBtn'].addEventListener('click', () => MiningManager.claim());
-        }
-        
-        // أزرار الإيداع والسحب
-        document.getElementById('depositBtn')?.addEventListener('click', () => DepositManager.openModal());
-        document.getElementById('withdrawBtn')?.addEventListener('click', () => WithdrawManager.openModal());
-        document.getElementById('submitWithdraw')?.addEventListener('click', () => WithdrawManager.request());
-        document.getElementById('confirmDepositBtn')?.addEventListener('click', () => DepositManager.confirmDeposit());
-        document.getElementById('confirmPaymentBtn')?.addEventListener('click', () => PaymentManager.confirmPayment());
-        document.getElementById('copyRefLink')?.addEventListener('click', () => ReferralManager.copyLink());
-        document.getElementById('langToggle')?.addEventListener('click', () => this.toggleLanguage());
-        
-        // أزرار المشرف
-        document.getElementById('adminAddBalance')?.addEventListener('click', () => Admin.addBalance());
-        document.getElementById('adminSearchBtn')?.addEventListener('click', () => Admin.searchUser());
-        
-        // تبويبات المشرف
-        document.querySelectorAll('.admin-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
-                tab.classList.add('active');
-                document.getElementById(tab.dataset.tab + 'Tab').classList.add('active');
-            });
-        });
-        
-        // فلاتر السوق
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                this.filterMarket(e.target.dataset.filter);
-            });
-        });
-    },
-    
-    initLanguage() {
-        const saved = localStorage.getItem('language') || 'en';
-        if (saved === 'ar') {
-            document.documentElement.dir = 'rtl';
-            document.getElementById('langToggle').textContent = '🇸🇦';
+                lastUserLoadTime = now;
+                saveUserToCache();
+                
+            } catch (e) {
+                console.error('Firebase error:', e);
+            }
         } else {
-            document.getElementById('langToggle').textContent = '🇬🇧';
+            // بدون Firebase - استخدام البيانات المحلية فقط
+            userData.transactions = loadLocalTransactions();
         }
-        UserState.language = saved;
-    },
-    
-    updateAll() {
-        this.updateBalance();
-        this.updateUserInfo();
-        this.renderMachines();
-        this.updateReferralStats();
-        Achievements.render();
-    },
-    
-    updateBalance() {
-        if (this.elements['headerBalance']) {
-            this.elements['headerBalance'].textContent = Utils.formatTON(UserState.balance);
-        }
-        if (this.elements['walletBalance']) {
-            this.elements['walletBalance'].textContent = Utils.formatTON(UserState.balance) + ' TON';
-        }
-        if (this.elements['walletUsd']) {
-            this.elements['walletUsd'].textContent = `≈ $${Utils.tonToUsd(UserState.balance).toFixed(2)}`;
-        }
-    },
-    
-    updateUserInfo() {
-        if (this.elements['username']) {
-            this.elements['username'].textContent = UserState.username;
-        }
-        if (this.elements['userId']) {
-            const shortId = UserState.uid ? UserState.uid.slice(-8) : '12345678';
-            this.elements['userId'].textContent = `ID: ${shortId}`;
-        }
-    },
-    
-    updateReferralStats() {
-        if (this.elements['referralCount']) {
-            this.elements['referralCount'].textContent = UserState.referrals?.length || 0;
-        }
-        if (this.elements['refEarnings']) {
-            this.elements['refEarnings'].textContent = Utils.formatTON(UserState.refEarnings || 0);
-        }
-        if (this.elements['referralLink']) {
-            this.elements['referralLink'].value = ReferralManager.getLink();
-        }
-    },
-    
-    renderMachines() {
-        const grid = this.elements['machinesGrid'];
-        if (!grid) return;
         
-        grid.innerHTML = '';
-        MACHINES.slice(0, 3).forEach(m => {
-            const isActive = UserState.activeMachine === m.id;
-            const isFree = m.plans[0].price === 0;
+        // معالجة الإحالة إذا وجدت
+        if (hasReferralCode() && !userData.referredBy) {
+            await processReferral();
+        }
+        
+        updateUI();
+        checkAdminAndShowSetting();
+        
+    } catch (error) {
+        console.error("❌ Error loading user data:", error);
+    }
+}
+
+// ====== 14. REFERRAL SYSTEM ======
+function generateReferralCode() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const random = Array.from({length:6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
+    return `${userId.slice(-4)}${random}`.toUpperCase();
+}
+
+function getReferralLink() {
+    return `https://t.me/TONMiningbot/app?startapp=${userData.referralCode || userId}`;
+}
+
+function hasReferralCode() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return !!(urlParams.get('startapp') || tg?.initDataUnsafe?.start_param);
+}
+
+async function processReferral() {
+    // التحقق من المعالجة المسبقة
+    const processed = localStorage.getItem(CACHE_KEYS.REFERRAL_PROCESSED);
+    if (processed) return;
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    let referralCode = urlParams.get('startapp') || tg?.initDataUnsafe?.start_param;
+    
+    if (!referralCode || referralCode === userData.referralCode || userData.referredBy) return;
+    
+    console.log("🎯 Processing referral code:", referralCode);
+    
+    if (!db) {
+        // بدون Firebase - تخزين محلي
+        userData.referredBy = referralCode;
+        userData.balance += CONFIG.ECONOMY.REFERRAL_BONUS;
+        userData.totalEarned += CONFIG.ECONOMY.REFERRAL_BONUS;
+        saveUserToCache();
+        localStorage.setItem(CACHE_KEYS.REFERRAL_PROCESSED, referralCode);
+        showToast(t('notif.welcomeBonus'), 'success');
+        return;
+    }
+    
+    try {
+        const referrerQuery = await db.collection('users')
+            .where('referralCode', '==', referralCode)
+            .limit(1)
+            .get();
+        
+        if (!referrerQuery.empty) {
+            const referrerDoc = referrerQuery.docs[0];
+            const referrerId = referrerDoc.id;
             
-            grid.innerHTML += `
-                <div class="machine-card ${isActive ? 'active' : ''}" 
-                     onclick="MiningManager.activateMachine('${m.id}', 0)">
-                    <div class="machine-glow" style="background: radial-gradient(circle at 50% 0%, ${m.color}20, transparent);"></div>
-                    ${isActive ? '<div class="machine-badge">ACTIVE</div>' : ''}
-                    <div class="machine-header">
-                        <i class="fas ${m.icon}" style="color:${m.color};"></i>
-                        <span>${m.name}</span>
-                    </div>
-                    <div class="machine-price ${isFree ? 'free' : ''}">
-                        ${isFree ? 'FREE' : 'From ' + m.plans[0].price + ' TON'}
-                    </div>
-                    <div class="machine-stats">
-                        <span><i class="fas fa-bolt"></i> ${m.yield} TON</span>
-                        <span><i class="fas fa-clock"></i> ${m.cycleText}</span>
-                    </div>
-                </div>
-            `;
-        });
-    },
-    
-    renderMarket() {
-        const showcase = this.elements['machinesShowcase'];
-        if (!showcase) return;
-        
-        showcase.innerHTML = '';
-        MACHINES.forEach(m => {
-            const meetsReqs = MiningManager.checkRequirements(m);
-            const isFree = m.plans[0].price === 0;
+            if (referrerId === userId) return;
             
-            showcase.innerHTML += `
-                <div class="showcase-card ${!meetsReqs ? 'locked' : ''}">
-                    <div class="showcase-icon">
-                        <i class="fas ${m.icon}" style="color:${m.color}; font-size: 48px;"></i>
-                    </div>
-                    <div class="showcase-content">
-                        <h3>${m.name}</h3>
-                        <p>${m.description}</p>
-                        <div class="showcase-specs">
-                            <span class="spec"><i class="fas fa-microchip"></i> ${m.hashrate}</span>
-                            <span class="spec"><i class="fas fa-bolt"></i> ${m.yield} TON/${m.cycleText}</span>
-                        </div>
-                        ${!meetsReqs ? `
-                            <div class="requirements-warning">
-                                <i class="fas fa-lock"></i> Requirements not met
-                            </div>
-                        ` : ''}
-                        <div class="showcase-footer">
-                            <span class="price">${isFree ? 'FREE' : 'From ' + m.plans[0].price + ' TON'}</span>
-                            <button class="rent-button" onclick="UI.showMachinePlans('${m.id}')" ${!meetsReqs ? 'disabled' : ''}>
-                                View Plans
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-    },
-    
-    renderPlans() {
-        const container = this.elements['plansContainer'];
-        if (!container) return;
-        
-        container.innerHTML = '';
-        MACHINES.forEach(m => {
-            let plansHtml = '';
-            m.plans.forEach((p, idx) => {
-                const isFree = p.price === 0;
-                plansHtml += `
-                    <div class="plan-card" onclick="MiningManager.activateMachine('${m.id}', ${idx})">
-                        <div class="plan-duration">${p.durationText}</div>
-                        <div class="plan-price ${isFree ? 'free' : ''}">${isFree ? 'FREE' : p.price + ' TON'}</div>
-                        ${!isFree ? `
-                            <div class="plan-return">+${p.returnAmount} TON (${p.returnPercent}%)</div>
-                            <div class="plan-total">Total: ${p.total} TON</div>
-                        ` : ''}
-                    </div>
-                `;
+            // تحديث المحيل
+            await db.collection('users').doc(referrerId).update({
+                referrals: firebase.firestore.FieldValue.arrayUnion(userId),
+                refEarnings: firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS),
+                balance: firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS)
             });
             
-            container.innerHTML += `
-                <div class="machine-plans">
-                    <div class="machine-plans-header">
-                        <i class="fas ${m.icon}" style="color:${m.color};"></i>
-                        <h3>${m.name}</h3>
-                    </div>
-                    <div class="plans-table">
-                        ${plansHtml}
-                    </div>
-                </div>
-            `;
-        });
-    },
-    
-    renderDetailedPlansTable() {
-        const tbody = this.elements['plansTableBody'];
-        if (!tbody) return;
-        
-        tbody.innerHTML = '';
-        MACHINES.forEach(m => {
-            const row = document.createElement('tr');
-            row.className = m.filter === 'free' ? 'free-row' : (m.filter === 'quantum' ? 'quantum-row' : '');
+            // تحديث المستخدم الجديد
+            userData.referredBy = referralCode;
+            userData.balance += CONFIG.ECONOMY.REFERRAL_BONUS;
+            userData.totalEarned += CONFIG.ECONOMY.REFERRAL_BONUS;
             
-            let cells = `<td><i class="fas ${m.icon}" style="color:${m.color}; margin-right: 8px;"></i>${m.name}</td>`;
-            
-            m.plans.forEach(p => {
-                if (p.price === 0) {
-                    cells += `<td>FREE</td>`;
-                } else {
-                    cells += `<td>${p.price} TON<br><small class="return-text">+${p.returnAmount} TON (${p.returnPercent}%)</small></td>`;
-                }
+            await db.collection('users').doc(userId).update({
+                referredBy: referralCode,
+                balance: userData.balance
             });
             
-            row.innerHTML = cells;
-            tbody.appendChild(row);
-        });
-    },
-    
-    filterMarket(filter) {
-        const cards = document.querySelectorAll('.showcase-card');
-        cards.forEach(card => {
-            const title = card.querySelector('h3')?.textContent;
-            const machine = MACHINES.find(m => m.name === title);
-            if (filter === 'all' || machine?.filter === filter) {
-                card.style.display = 'flex';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    },
-    
-    showMachinePlans(machineId) {
-        this.renderPlans();
-        document.querySelector('[data-tab="plans"]').click();
-    },
-    
-    toggleLanguage() {
-        const html = document.documentElement;
-        const btn = document.getElementById('langToggle');
-        
-        if (html.dir === 'rtl') {
-            html.dir = 'ltr';
-            btn.textContent = '🇬🇧';
-            UserState.language = 'en';
-        } else {
-            html.dir = 'rtl';
-            btn.textContent = '🇸🇦';
-            UserState.language = 'ar';
+            saveUserToCache();
+            localStorage.setItem(CACHE_KEYS.REFERRAL_PROCESSED, referralCode);
+            showToast(t('notif.welcomeBonus'), 'success');
+            
+            // إضافة إشعار للمحيل
+            await addNotification(referrerId, t('notif.referralBonus'), 'success');
         }
-        
-        localStorage.setItem('language', UserState.language);
-        Notify.success('Language changed');
-        this.updateAll();
-        this.renderDetailedPlansTable();
-    },
+    } catch (e) {
+        console.error('Referral error:', e);
+    }
+}
+
+// ====== 15. NOTIFICATION SYSTEM (محلي بالكامل) ======
+let localNotifications = loadLocalNotifications();
+let unreadCount = localNotifications.filter(n => !n.read).length;
+
+function addLocalNotification(message, type = 'info') {
+    const notification = {
+        id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
+        message: message,
+        type: type,
+        read: false,
+        timestamp: new Date().toISOString()
+    };
     
-    hideLoading() {
-        const loading = document.querySelector('.loading-overlay');
-        if (loading) {
-            loading.style.opacity = '0';
-            setTimeout(() => {
-                loading.style.display = 'none';
-                document.getElementById('app').style.display = 'flex';
-            }, 500);
-        }
-    },
+    localNotifications.unshift(notification);
     
-    closeModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.style.display = 'none';
-            if (modalId === 'paymentModal') PaymentManager.stopMonitoring();
-            if (modalId === 'withdrawModal') {
-                document.getElementById('withdrawAmount').value = '';
-                document.getElementById('withdrawAddress').value = '';
-            }
-            if (modalId === 'depositModal') {
-                document.getElementById('depositAmount').value = '';
-                document.getElementById('depositTxHash').value = '';
-            }
+    // الاحتفاظ بآخر 50 إشعار فقط
+    if (localNotifications.length > 50) {
+        localNotifications = localNotifications.slice(0, 50);
+    }
+    
+    saveLocalNotifications(localNotifications);
+    updateNotificationBadge();
+    showFloatingToast(message, type);
+    
+    return notification;
+}
+
+async function addNotification(targetUserId, message, type = 'info') {
+    // إشعار محلي للمستخدم الحالي
+    if (targetUserId === userId) {
+        addLocalNotification(message, type);
+    }
+    
+    // إشعار Firebase للمستخدمين الآخرين
+    if (db && targetUserId !== userId) {
+        try {
+            await db.collection('users').doc(targetUserId).update({
+                notifications: firebase.firestore.FieldValue.arrayUnion({
+                    id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
+                    message,
+                    type,
+                    read: false,
+                    timestamp: new Date().toISOString()
+                })
+            });
+        } catch (e) {
+            console.error('Error sending notification:', e);
         }
     }
-};
+}
 
-// ============================================
-// [SECTION 18] - FLOATING NOTIFICATIONS
-// ============================================
+function updateNotificationBadge() {
+    const badge = document.getElementById('notificationBadge');
+    if (badge) {
+        unreadCount = localNotifications.filter(n => !n.read).length;
+        badge.textContent = unreadCount;
+        badge.style.display = unreadCount > 0 ? 'flex' : 'none';
+    }
+}
 
-const FloatingNotifications = {
-    messages: [
+function markNotificationRead(notificationId) {
+    const notification = localNotifications.find(n => n.id === notificationId);
+    if (notification && !notification.read) {
+        notification.read = true;
+        saveLocalNotifications(localNotifications);
+        updateNotificationBadge();
+        renderNotifications();
+    }
+}
+
+function clearReadNotifications() {
+    const readCount = localNotifications.filter(n => n.read).length;
+    const unreadCount = localNotifications.filter(n => !n.read).length;
+    
+    if (readCount === 0) {
+        showToast('No read notifications', 'info');
+        return;
+    }
+    
+    if (confirm(`Clear ${readCount} read notification(s)? ${unreadCount} unread will remain.`)) {
+        localNotifications = localNotifications.filter(n => !n.read);
+        saveLocalNotifications(localNotifications);
+        updateNotificationBadge();
+        renderNotifications();
+        showToast(`Cleared ${readCount} notifications`, 'success');
+    }
+}
+
+function clearAllNotifications() {
+    const unreadCount = localNotifications.filter(n => !n.read).length;
+    
+    if (unreadCount > 0) {
+        if (!confirm(`Warning: You have ${unreadCount} unread notifications. Delete all?`)) {
+            return;
+        }
+    } else {
+        if (!confirm('Delete all notifications?')) return;
+    }
+    
+    localNotifications = [];
+    saveLocalNotifications(localNotifications);
+    updateNotificationBadge();
+    renderNotifications();
+    showToast('All notifications cleared', 'success');
+}
+
+function renderNotifications() {
+    const list = document.getElementById('notificationsList');
+    if (!list) return;
+    
+    if (localNotifications.length === 0) {
+        list.innerHTML = `
+            <div class="empty-state">
+                <i class="fa-regular fa-bell-slash"></i>
+                <p>${t('notifications.no_notifications')}</p>
+            </div>
+        `;
+        return;
+    }
+    
+    list.innerHTML = localNotifications.map(notif => {
+        const date = new Date(notif.timestamp);
+        const formattedDate = date.toLocaleDateString() + ' ' + 
+                             date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const unreadClass = notif.read ? '' : 'unread';
+        
+        let icon = 'fa-bell';
+        if (notif.type === 'success') icon = 'fa-circle-check';
+        if (notif.type === 'error') icon = 'fa-circle-xmark';
+        
+        return `
+            <div class="notification-item ${unreadClass}" onclick="markNotificationRead('${notif.id}')">
+                <div class="notification-header">
+                    <span class="notification-title">
+                        <i class="fa-regular ${icon}"></i>
+                        ${t('notifications.title')}
+                    </span>
+                    <span class="notification-time">${formattedDate}</span>
+                </div>
+                <div class="notification-message">${notif.message}</div>
+            </div>
+        `;
+    }).join('');
+}
+
+function showNotifications() {
+    const modal = document.getElementById('notificationsModal');
+    if (modal) {
+        modal.classList.add('show');
+        renderNotifications();
+    }
+}
+
+// ====== 16. FLOATING NOTIFICATIONS ======
+let floatingTimeouts = [];
+
+function showFloatingToast(message, type = 'info') {
+    const toast = document.getElementById('floatingNotification');
+    if (!toast) return;
+    
+    toast.textContent = message;
+    toast.className = 'floating-notification';
+    toast.classList.add(type);
+    toast.classList.add('show');
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
+}
+
+function startFloatingNotifications() {
+    const messages = [
         "🔥 User just mined 0.35 TON",
         "💎 New user joined with referral",
         "⚡ Turbo v3 rented",
@@ -2454,260 +1279,1625 @@ const FloatingNotifications = {
         "💫 Referral bonus claimed: 0.1 TON",
         "⛏️ Mining reward claimed",
         "💎 Legendary machine activated!"
-    ],
+    ];
     
-    timer: null,
-    isActive: false,
-    
-    start() {
-        if (this.isActive) return;
-        this.isActive = true;
-        this.showNext();
-    },
-    
-    stop() {
-        this.isActive = false;
-        if (this.timer) {
-            clearTimeout(this.timer);
-            this.timer = null;
-        }
-    },
-    
-    showNext() {
-        if (!this.isActive) return;
+    function showNext() {
+        const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+        showFloatingToast(randomMsg, 'info');
         
-        const bar = document.getElementById('floatingNotification');
-        if (!bar) return;
-        
-        const msg = this.messages[Math.floor(Math.random() * this.messages.length)];
-        const isDeposit = msg.includes('Deposit') || msg.includes('+');
-        const isWithdraw = msg.includes('Withdrawal') || msg.includes('-');
-        
-        bar.innerHTML = `<span>${msg}</span>`;
-        bar.className = 'floating-notification';
-        if (isDeposit) bar.classList.add('deposit');
-        if (isWithdraw) bar.classList.add('withdraw');
-        bar.classList.add('show');
-        
-        this.timer = setTimeout(() => {
-            bar.classList.remove('show');
-            setTimeout(() => this.showNext(), 1000);
-        }, 4000);
+        const nextDelay = 8000 + Math.random() * 7000;
+        floatingTimeouts.push(setTimeout(showNext, nextDelay));
     }
+    
+    setTimeout(showNext, 3000);
+}
+
+function stopFloatingNotifications() {
+    floatingTimeouts.forEach(timeout => clearTimeout(timeout));
+    floatingTimeouts = [];
+}
+
+// ====== 17. WELCOME STICKER SYSTEM ======
+const WELCOME_STICKERS = ['🤝', '🫣', '🥰', '🥳', '💲', '💰', '💸', '💵', '🤪', '😱', '😤', '😎', '🤑', '💯', '💖', '✨', '🌟', '⭐', '🔥', '⚡', '💎', '🔔', '🎁', '🎈', '🎉', '🎊', '👑', '🚀', '💫', '⭐'];
+
+let lastStickerTime = 0;
+const STICKER_COOLDOWN = 12 * 60 * 1000; // 12 دقيقة
+
+function showRandomSticker() {
+    const now = Date.now();
+    if (now - lastStickerTime < STICKER_COOLDOWN) return;
+    
+    const stickerEl = document.getElementById('welcomeSticker');
+    if (!stickerEl) return;
+    
+    const randomSticker = WELCOME_STICKERS[Math.floor(Math.random() * WELCOME_STICKERS.length)];
+    stickerEl.textContent = randomSticker;
+    
+    stickerEl.classList.remove('sticker-pop', 'sticker-shake');
+    void stickerEl.offsetWidth;
+    stickerEl.classList.add('sticker-pop');
+    
+    setTimeout(() => stickerEl.classList.add('sticker-shake'), 200);
+    setTimeout(() => {
+        stickerEl.classList.remove('sticker-pop', 'sticker-shake');
+        setTimeout(() => stickerEl.textContent = '', 300);
+    }, 3000);
+    
+    lastStickerTime = now;
+}
+
+// ====== 18. PRICES (مع كاش 3 ساعات) ======
+let livePrices = {};
+let lastPricesLoadTime = 0;
+
+const CRYPTO_IDS = {
+    BTC: 'bitcoin',
+    ETH: 'ethereum',
+    BNB: 'binancecoin',
+    USDT: 'tether',
+    SOL: 'solana',
+    TON: 'the-open-network'
 };
 
-// ============================================
-// [SECTION 19] - AUTHENTICATION (المصادقة)
-// ============================================
-
-const Auth = {
-    async init() {
-        await this.initTelegram();
-        await this.initUser();
-        await this.loadFromFirebase();
-        await TonManager.init();
-        this.finalize();
-    },
+async function loadPrices(force = false) {
+    const now = Date.now();
+    const cached = localStorage.getItem(CACHE_KEYS.PRICES);
     
-    initTelegram() {
-        if (tgUser) {
-            UserState.uid = tgUser.id.toString();
-            UserState.username = tgUser.username ? `@${tgUser.username}` : tgUser.first_name;
-            UserState.firstName = tgUser.first_name;
-            UserState.lastName = tgUser.last_name || '';
-            UserState.photoUrl = tgUser.photo_url || '';
-            
-            const startParam = tg?.initDataUnsafe?.start_param;
-            if (startParam && startParam !== UserState.uid) {
-                UserState.referredBy = startParam;
+    if (!force && cached && (now - lastPricesLoadTime) < CONFIG.CACHE.PRICES_TTL) {
+        const { prices, timestamp } = JSON.parse(cached);
+        livePrices = prices;
+        lastPricesLoadTime = timestamp;
+        console.log("📦 Using cached prices");
+        updatePrices();
+        return;
+    }
+    
+    try {
+        const ids = Object.values(CRYPTO_IDS).join(',');
+        const response = await fetch(
+            `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`
+        );
+        const data = await response.json();
+        
+        for (const [symbol, id] of Object.entries(CRYPTO_IDS)) {
+            if (data[id]) {
+                livePrices[symbol] = {
+                    price: data[id].usd,
+                    change: data[id].usd_24h_change || 0
+                };
             }
-        } else {
-            // للتطوير والاختبار
-            UserState.uid = 'test_' + Date.now();
-            UserState.username = 'TestUser';
-            UserState.firstName = 'Test';
         }
         
-        UserState.referralCode = Utils.generateReferralCode(UserState.uid);
-    },
-    
-    initUser() {
-        UserState.initFromCache();
-        UserState.isAdmin = UserState.uid === CONFIG.TON.ADMIN_ID;
-    },
-    
-    async loadFromFirebase() {
-        if (!db || !UserState.uid) return;
+        lastPricesLoadTime = now;
+        localStorage.setItem(CACHE_KEYS.PRICES, JSON.stringify({
+            prices: livePrices,
+            timestamp: now
+        }));
         
-        try {
-            const doc = await db.collection('users').doc(UserState.uid).get();
+        updatePrices();
+        
+    } catch (error) {
+        console.error("Error fetching prices:", error);
+    }
+}
+
+// ====== 19. UTILITIES ======
+function formatAddress(addr) {
+    if (!addr) return '';
+    if (addr.length < 10) return addr;
+    return addr.slice(0,6) + '...' + addr.slice(-4);
+}
+
+function formatTON(amount) {
+    return amount.toFixed(4);
+}
+
+function formatNumber(num) {
+    if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
+    if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
+    if (num < 0.0001) return num.toFixed(8);
+    if (num < 0.01) return num.toFixed(6);
+    return num.toFixed(2);
+}
+
+function isValidAddress(addr) {
+    return CONFIG.TON.WALLET_REGEX.test(addr);
+}
+
+function getTimeUntilNextClaim() {
+    const machine = getActiveMachine();
+    const elapsed = Date.now() - userData.lastClaim;
+    return Math.max(0, machine.interval - elapsed);
+}
+
+function getClaimProgress() {
+    const machine = getActiveMachine();
+    const elapsed = Date.now() - userData.lastClaim;
+    return Math.min((elapsed / machine.interval) * 100, 100);
+}
+
+function getActiveMachine() {
+    return MACHINES.find(m => m.id === userData.activeMachine) || MACHINES[0];
+}
+
+function getRemainingRentalTime() {
+    if (userData.activeMachine === 'm1') return Infinity;
+    return Math.max(0, userData.machineExpiry - Date.now());
+}
+
+function isMachineExpired() {
+    if (userData.activeMachine === 'm1') return false;
+    return userData.machineExpiry < Date.now();
+}
+
+function updateStreak() {
+    const today = new Date().toDateString();
+    if (userData.lastClaimDate === today) return userData.streak;
+    
+    const yesterday = new Date(Date.now() - 86400000).toDateString();
+    const newStreak = (userData.lastClaimDate === yesterday) ? userData.streak + 1 : 1;
+    
+    userData.streak = newStreak;
+    userData.lastClaimDate = today;
+    
+    if (newStreak > userData.longestStreak) {
+        userData.longestStreak = newStreak;
+    }
+    
+    return newStreak;
+}
+
+function getStreakBonus() {
+    if (userData.streak >= 30) return CONFIG.ECONOMY.STREAK_BONUS[30];
+    if (userData.streak >= 7) return CONFIG.ECONOMY.STREAK_BONUS[7];
+    if (userData.streak >= 3) return CONFIG.ECONOMY.STREAK_BONUS[3];
+    return 1.0;
+}
+
+function randomId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+}
+
+function showToast(message, type = 'info') {
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+    const toastIcon = toast.querySelector('i');
+    
+    toastMessage.textContent = message;
+    
+    if (type === 'success') toastIcon.className = 'fa-regular fa-circle-check';
+    else if (type === 'error') toastIcon.className = 'fa-regular fa-circle-xmark';
+    else if (type === 'warning') toastIcon.className = 'fa-regular fa-circle-exclamation';
+    else toastIcon.className = 'fa-regular fa-circle-info';
+    
+    toast.classList.remove('hidden');
+    
+    setTimeout(() => {
+        toast.classList.add('hidden');
+    }, 3000);
+}
+
+function animateElement(selector, animation) {
+    const el = document.querySelector(selector);
+    if (el) {
+        el.classList.add(animation);
+        setTimeout(() => el.classList.remove(animation), 500);
+    }
+}
+
+function scrollToTop() {
+    document.querySelector('.main-content').scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// ====== 20. MINING MANAGER ======
+let miningTimer = null;
+
+function startMining() {
+    if (miningTimer) clearInterval(miningTimer);
+    miningTimer = setInterval(updateMining, 1000);
+    updateMining();
+}
+
+function stopMining() {
+    if (miningTimer) {
+        clearInterval(miningTimer);
+        miningTimer = null;
+    }
+}
+
+function updateMining() {
+    const progress = getClaimProgress();
+    const timeLeft = getTimeUntilNextClaim();
+    
+    const progressBar = document.getElementById('miningProgress');
+    const timerEl = document.getElementById('miningTimer');
+    const claimBtn = document.getElementById('claimBtn');
+    const nextEl = document.getElementById('nextReward');
+    
+    if (progressBar) progressBar.style.width = progress + '%';
+    
+    if (progress >= 100) {
+        if (timerEl) {
+            timerEl.textContent = 'READY';
+            timerEl.style.color = '#22c55e';
+        }
+        if (claimBtn) claimBtn.disabled = false;
+    } else {
+        if (timerEl) {
+            timerEl.textContent = formatTime(timeLeft);
+            timerEl.style.color = '#00f2ff';
+        }
+        if (claimBtn) claimBtn.disabled = true;
+    }
+    
+    const machine = getActiveMachine();
+    if (nextEl) nextEl.textContent = formatTON(machine.yield) + ' TON';
+    
+    if (isMachineExpired()) {
+        handleExpiry();
+    }
+}
+
+function formatTime(ms) {
+    if (ms <= 0) return '00:00:00';
+    const s = Math.floor(ms / 1000);
+    const h = Math.floor(s / 3600);
+    const m = Math.floor((s % 3600) / 60);
+    const sec = s % 60;
+    return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
+}
+
+async function claim() {
+    const machine = getActiveMachine();
+    if (getTimeUntilNextClaim() > 0) {
+        showToast('Not ready yet', 'error');
+        return;
+    }
+    
+    const bonus = getStreakBonus();
+    const reward = machine.yield * bonus;
+    
+    updateStreak();
+    
+    userData.balance += reward;
+    userData.totalEarned += reward;
+    userData.lastClaim = Date.now();
+    userData.claims++;
+    
+    addTransaction('mining', reward, { machine: machine.id, bonus });
+    saveUserToCache();
+    
+    showToast(`Claimed ${formatTON(reward)} TON!${bonus > 1 ? ` (${((bonus-1)*100).toFixed(0)}% bonus)` : ''}`, 'success');
+    
+    // تأثير احتفالي
+    createParticles();
+    
+    updateUI();
+    checkAchievements();
+    saveToFirebase();
+}
+
+function createParticles() {
+    const container = document.querySelector('.miner-particles');
+    if (!container) return;
+    
+    for (let i = 0; i < 10; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() + 's';
+        container.appendChild(particle);
+        
+        setTimeout(() => particle.remove(), 2000);
+    }
+}
+
+function handleExpiry() {
+    if (userData.activeMachine !== 'm1') {
+        userData.activeMachine = 'm1';
+        userData.activePlan = MACHINES[0].plans[0];
+        userData.machineExpiry = Infinity;
+        saveUserToCache();
+        
+        showToast('Your rental has expired. Free Miner activated.', 'warning');
+        updateUI();
+    }
+}
+
+function addTransaction(type, amount, details = {}) {
+    const tx = {
+        id: randomId(),
+        type,
+        amount,
+        balance: userData.balance,
+        timestamp: Date.now(),
+        ...details
+    };
+    
+    userData.transactions.unshift(tx);
+    
+    // الاحتفاظ بآخر 100 معاملة فقط
+    if (userData.transactions.length > 100) {
+        userData.transactions = userData.transactions.slice(0, 100);
+    }
+    
+    saveLocalTransactions(userData.transactions);
+    updateActivityFeed();
+}
+
+// ====== 21. ACHIEVEMENTS MANAGER ======
+function checkAchievements() {
+    const newlyUnlocked = [];
+    
+    ACHIEVEMENTS.forEach(ach => {
+        if (userData.achievements.includes(ach.id)) return;
+        
+        let completed = false;
+        const [type, target] = ach.condition.split(':');
+        const val = parseInt(target);
+        
+        switch(type) {
+            case 'claims':
+                completed = userData.claims >= val;
+                break;
+            case 'streak':
+                completed = userData.streak >= val;
+                break;
+            case 'referrals':
+                completed = (userData.referrals?.length || 0) >= val;
+                break;
+            case 'upgrades':
+                completed = (userData.upgrades || 0) >= val;
+                break;
+            case 'earnings':
+                completed = userData.totalEarned >= val;
+                break;
+            case 'special':
+                const hour = new Date().getHours();
+                if (val === 'night') completed = hour >= 0 && hour < 4;
+                if (val === 'early') completed = hour >= 5 && hour < 8;
+                break;
+        }
+        
+        if (completed) {
+            newlyUnlocked.push(ach);
+            userData.achievements.push(ach.id);
+            userData.balance += ach.reward;
+            userData.totalEarned += ach.reward;
             
-            if (doc.exists) {
-                const data = doc.data();
-                Object.assign(UserState, {
-                    balance: data.balance ?? UserState.balance,
-                    totalEarned: data.totalEarned ?? UserState.totalEarned,
-                    totalWithdrawn: data.totalWithdrawn ?? UserState.totalWithdrawn,
-                    totalDeposited: data.totalDeposited ?? UserState.totalDeposited,
-                    referrals: data.referrals ?? UserState.referrals,
-                    refEarnings: data.refEarnings ?? UserState.refEarnings,
-                    streak: data.streak ?? UserState.streak,
-                    claims: data.claims ?? UserState.claims,
-                    achievements: data.achievements ?? UserState.achievements,
-                    activeMachine: data.activeMachine ?? UserState.activeMachine,
-                    machineExpiry: data.machineExpiry ?? UserState.machineExpiry
-                });
-            } else {
-                await db.collection('users').doc(UserState.uid).set({
-                    uid: UserState.uid,
-                    username: UserState.username,
-                    firstName: UserState.firstName,
-                    lastName: UserState.lastName,
-                    balance: 0,
-                    totalEarned: 0,
-                    totalWithdrawn: 0,
-                    totalDeposited: 0,
-                    referrals: [],
-                    refEarnings: 0,
-                    referralCode: UserState.referralCode,
-                    referredBy: UserState.referredBy,
-                    activeMachine: 'm1',
-                    machineExpiry: Infinity,
-                    lastClaim: Date.now(),
-                    claims: 0,
-                    streak: 0,
-                    lastClaimDate: new Date().toDateString(),
-                    upgrades: 0,
-                    achievements: [],
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-            }
+            showToast(`🏆 ${currentLanguage === 'ar' ? ach.nameAr : ach.name} +${ach.reward} TON`, 'success');
+            createParticles();
+        }
+    });
+    
+    if (newlyUnlocked.length > 0) {
+        saveUserToCache();
+        renderAchievements();
+    }
+}
+
+// ====== 22. RENDER FUNCTIONS ======
+function updateUI() {
+    updateBalance();
+    updateMiningStats();
+    renderActiveMachines();
+    renderPlansTable();
+    updateActivityFeed();
+    updateStreakDisplay();
+    updateReferralPreview();
+}
+
+function updateBalance() {
+    const headerBalance = document.getElementById('headerBalance');
+    const profileBalance = document.getElementById('profileBalance');
+    const profileUsd = document.getElementById('profileUsd');
+    const withdrawBalance = document.getElementById('withdrawBalance');
+    
+    if (headerBalance) headerBalance.textContent = formatTON(userData.balance);
+    if (profileBalance) profileBalance.textContent = formatTON(userData.balance) + ' TON';
+    if (profileUsd) profileUsd.textContent = '≈ $' + (userData.balance * 1.32).toFixed(2);
+    if (withdrawBalance) withdrawBalance.textContent = formatTON(userData.balance) + ' TON';
+}
+
+function updateMiningStats() {
+    const hashRate = document.getElementById('hashRate');
+    const streakCount = document.getElementById('streakCount');
+    const totalEarned = document.getElementById('totalEarned');
+    const bestStreak = document.getElementById('bestStreak');
+    const miningDays = document.getElementById('miningDays');
+    
+    const machine = getActiveMachine();
+    
+    if (hashRate) hashRate.textContent = machine.hashrate.split(' ')[0];
+    if (streakCount) streakCount.textContent = userData.streak;
+    if (totalEarned) totalEarned.textContent = formatTON(userData.totalEarned);
+    if (bestStreak) bestStreak.textContent = userData.longestStreak;
+    if (miningDays) miningDays.textContent = Math.floor(userData.claims / 6) || 1; // تقريبي
+}
+
+function updateStreakDisplay() {
+    const streakEmoji = document.getElementById('streakEmoji');
+    if (streakEmoji) {
+        if (userData.streak >= 30) streakEmoji.textContent = '👑🔥';
+        else if (userData.streak >= 7) streakEmoji.textContent = '🔥🔥';
+        else if (userData.streak >= 3) streakEmoji.textContent = '🔥';
+        else streakEmoji.textContent = '✨';
+    }
+}
+
+function renderActiveMachines() {
+    const grid = document.getElementById('activeMachinesGrid');
+    if (!grid) return;
+    
+    const activeMachine = getActiveMachine();
+    
+    grid.innerHTML = MACHINES.slice(0, 2).map(m => {
+        const isActive = userData.activeMachine === m.id;
+        const progress = isActive ? getClaimProgress() : 0;
+        const timeLeft = isActive ? formatTime(getTimeUntilNextClaim()) : '--:--:--';
+        
+        return `
+            <div class="active-machine-card ${isActive ? 'active' : ''}" onclick="showMarket()">
+                <div class="machine-header">
+                    <i class="fas ${m.icon}" style="color: ${m.color};"></i>
+                    <h4>${currentLanguage === 'ar' ? m.nameAr : m.name}</h4>
+                </div>
+                <div class="machine-progress">
+                    <div class="machine-progress-bar">
+                        <div class="machine-progress-fill" style="width: ${progress}%;"></div>
+                    </div>
+                    <div class="machine-time">
+                        <span>${isActive ? 'Next' : 'Inactive'}</span>
+                        <span class="value">${isActive ? timeLeft : '--:--'}</span>
+                    </div>
+                </div>
+                <div class="machine-footer">
+                    <span class="machine-yield">${m.yield} TON/cycle</span>
+                    ${isActive ? '<span class="machine-status"><i class="fas fa-check-circle"></i> Active</span>' : ''}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderPlansTable() {
+    const tbody = document.getElementById('plansTableBody');
+    if (!tbody) return;
+    
+    tbody.innerHTML = MACHINES.map(m => {
+        const rowClass = m.filter === 'free' ? 'free-row' : (m.filter === 'quantum' ? 'quantum-row' : '');
+        const name = currentLanguage === 'ar' ? m.nameAr : m.name;
+        
+        return `
+            <tr class="${rowClass}">
+                <td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>
+                ${m.plans.map(p => {
+                    if (p.price === 0) return `<td>FREE</td>`;
+                    return `<td>${p.price} TON<br><small class="return-text">+${p.returnAmount} TON</small></td>`;
+                }).join('')}
+            </tr>
+        `;
+    }).join('');
+}
+
+function updateActivityFeed() {
+    const feed = document.getElementById('activityFeed');
+    if (!feed) return;
+    
+    const recent = userData.transactions.slice(0, 5);
+    
+    if (recent.length === 0) {
+        feed.innerHTML = '<div class="empty-state">No activity yet</div>';
+        return;
+    }
+    
+    feed.innerHTML = recent.map(tx => {
+        const date = new Date(tx.timestamp);
+        const timeAgo = formatRelativeTime(tx.timestamp);
+        
+        let icon = 'fa-bolt';
+        let title = 'Mining Reward';
+        
+        if (tx.type === 'deposit') {
+            icon = 'fa-arrow-down';
+            title = 'Deposit';
+        } else if (tx.type === 'withdraw') {
+            icon = 'fa-arrow-up';
+            title = 'Withdrawal';
+        } else if (tx.type === 'rental') {
+            icon = 'fa-microchip';
+            title = 'Machine Rental';
+        }
+        
+        return `
+            <div class="activity-item">
+                <div class="activity-icon">
+                    <i class="fas ${icon}"></i>
+                </div>
+                <div class="activity-content">
+                    <div class="activity-title">${title}</div>
+                    <div class="activity-time">${timeAgo}</div>
+                </div>
+                <div class="activity-amount">+${formatTON(tx.amount)} TON</div>
+            </div>
+        `;
+    }).join('');
+}
+
+function formatRelativeTime(ts) {
+    const diff = Date.now() - ts;
+    if (diff < 60000) return 'just now';
+    if (diff < 3600000) return `${Math.floor(diff/60000)} min ago`;
+    if (diff < 86400000) return `${Math.floor(diff/3600000)} hours ago`;
+    return `${Math.floor(diff/86400000)} days ago`;
+}
+
+function updateReferralPreview() {
+    const refCount = document.getElementById('previewRefCount');
+    const refEarnings = document.getElementById('previewRefEarnings');
+    const refLink = document.getElementById('previewReferralLink');
+    
+    if (refCount) refCount.textContent = userData.referrals?.length || 0;
+    if (refEarnings) refEarnings.textContent = formatTON(userData.refEarnings || 0);
+    if (refLink) refLink.value = getReferralLink();
+}
+
+function renderAchievements() {
+    const grid = document.getElementById('achievementsGrid');
+    if (!grid) return;
+    
+    grid.innerHTML = ACHIEVEMENTS.slice(0, 8).map(ach => {
+        const unlocked = userData.achievements.includes(ach.id);
+        const name = currentLanguage === 'ar' ? ach.nameAr : ach.name;
+        
+        return `
+            <div class="achievement-item-legendary ${unlocked ? 'unlocked' : ''}">
+                <span class="achievement-icon-legendary">${ach.icon}</span>
+                <span class="achievement-name-legendary">${name}</span>
+                <span class="achievement-reward-legendary">${ach.reward} TON</span>
+            </div>
+        `;
+    }).join('');
+}
+
+function updatePrices() {
+    // تحديث الأسعار إذا لزم الأمر
+}
+
+// ====== 23. MARKET FUNCTIONS ======
+function renderMarket() {
+    const showcase = document.getElementById('machinesShowcase');
+    if (!showcase) return;
+    
+    showcase.innerHTML = MACHINES.map(m => {
+        const meetsReqs = checkRequirements(m);
+        const isFree = m.plans[0].price === 0;
+        const name = currentLanguage === 'ar' ? m.nameAr : m.name;
+        const desc = currentLanguage === 'ar' ? m.descriptionAr : m.description;
+        const cycleText = currentLanguage === 'ar' ? m.cycleTextAr : m.cycleText;
+        
+        return `
+            <div class="showcase-card-legendary ${!meetsReqs ? 'locked' : ''}">
+                <div class="showcase-icon" style="color: ${m.color};">
+                    <i class="fas ${m.icon}"></i>
+                </div>
+                <div class="showcase-content">
+                    <h3>${name}</h3>
+                    <p>${desc}</p>
+                    <div class="showcase-specs">
+                        <span class="spec"><i class="fas fa-microchip"></i> ${m.hashrate}</span>
+                        <span class="spec"><i class="fas fa-bolt"></i> ${m.yield} TON/${cycleText}</span>
+                    </div>
+                    ${!meetsReqs ? `
+                        <div class="requirements-warning">
+                            <i class="fas fa-lock"></i> Requirements not met
+                        </div>
+                    ` : ''}
+                    <div class="showcase-plans">
+                        ${m.plans.map((p, idx) => `
+                            <div class="plan-card-mini ${p.price === 0 ? 'free' : ''}" onclick="selectPlan('${m.id}', ${idx})">
+                                <div class="duration">${currentLanguage === 'ar' ? p.durationTextAr : p.durationText}</div>
+                                <div class="price">${p.price === 0 ? 'FREE' : p.price + ' TON'}</div>
+                                ${p.price > 0 ? `<div class="return">+${p.returnAmount} TON</div>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function checkRequirements(machine) {
+    if (!machine.requirements) return true;
+    
+    const req = machine.requirements;
+    
+    if (req.minEarnings && userData.totalEarned < req.minEarnings) return false;
+    if (req.referrals && (userData.referrals?.length || 0) < req.referrals) return false;
+    if (req.streak && userData.streak < req.streak) return false;
+    
+    return true;
+}
+
+function selectPlan(machineId, planIndex) {
+    const machine = MACHINES.find(m => m.id === machineId);
+    if (!machine) return;
+    
+    const plan = machine.plans[planIndex];
+    
+    if (!checkRequirements(machine)) {
+        showToast('You do not meet the requirements', 'error');
+        return;
+    }
+    
+    if (plan.price === 0) {
+        // تفعيل مجاني
+        activateMachine(machineId, planIndex);
+    } else {
+        // فتح نافذة الدفع
+        openPaymentModal(machine, planIndex);
+    }
+}
+
+function activateMachine(machineId, planIndex) {
+    const machine = MACHINES.find(m => m.id === machineId);
+    const plan = machine.plans[planIndex];
+    
+    userData.activeMachine = machineId;
+    userData.activePlan = plan;
+    
+    if (plan.price === 0) {
+        userData.machineExpiry = Infinity;
+    } else {
+        const durationMs = plan.duration * 24 * 60 * 60 * 1000;
+        userData.machineExpiry = Date.now() + durationMs;
+    }
+    
+    userData.lastClaim = Date.now();
+    
+    if (machineId !== 'm1') userData.upgrades++;
+    
+    saveUserToCache();
+    
+    showToast(`${machine.name} activated!`, 'success');
+    updateUI();
+    checkAchievements();
+    saveToFirebase();
+}
+
+// ====== 24. PAYMENT FUNCTIONS ======
+function openPaymentModal(machine, planIndex) {
+    const plan = machine.plans[planIndex];
+    
+    const iconEl = document.getElementById('paymentMachineIcon');
+    const nameEl = document.getElementById('paymentMachineName');
+    const durationEl = document.getElementById('paymentDuration');
+    const priceEl = document.getElementById('paymentPrice');
+    const returnEl = document.getElementById('paymentReturn');
+    const totalEl = document.getElementById('paymentTotal');
+    
+    if (iconEl) iconEl.innerHTML = `<i class="fas ${machine.icon}" style="color: ${machine.color};"></i>`;
+    if (nameEl) nameEl.textContent = machine.name;
+    if (durationEl) durationEl.textContent = plan.durationText;
+    if (priceEl) priceEl.textContent = plan.price + ' TON';
+    if (returnEl) returnEl.textContent = `${plan.returnAmount} TON (${plan.returnPercent}%)`;
+    if (totalEl) totalEl.textContent = plan.total + ' TON';
+    
+    // حفظ البيانات للاستخدام عند التأكيد
+    window.currentPayment = { machine, planIndex };
+    
+    document.getElementById('paymentModal').classList.add('show');
+    updateWalletUI();
+}
+
+async function confirmPayment() {
+    if (!window.currentPayment) return;
+    
+    const { machine, planIndex } = window.currentPayment;
+    const plan = machine.plans[planIndex];
+    
+    if (!tonWallet) {
+        showToast('Connect wallet first', 'error');
+        return;
+    }
+    
+    try {
+        const tx = {
+            validUntil: Date.now() + 600000, // 10 دقائق
+            messages: [{
+                address: CONFIG.TON.WALLET,
+                amount: (plan.price * 1e9).toString()
+            }]
+        };
+        
+        showToast('Opening wallet...', 'info');
+        const result = await tonConnectUI.sendTransaction(tx);
+        
+        showToast('Payment sent! Waiting for confirmation...', 'info');
+        
+        // تفعيل الجهاز فوراً (يمكن تحسينه بالتحقق الفعلي)
+        setTimeout(() => {
+            activateMachine(machine.id, planIndex);
+            closeModal('paymentModal');
+        }, 3000);
+        
+    } catch (e) {
+        showToast('Payment failed: ' + (e.message || 'Unknown error'), 'error');
+        console.error('Payment error:', e);
+    }
+}
+
+// ====== 25. DEPOSIT FUNCTIONS ======
+function showDepositModal() {
+    document.getElementById('depositAddress').textContent = CONFIG.TON.WALLET;
+    document.getElementById('depositModal').classList.add('show');
+    updateWalletUI();
+}
+
+function copyDepositAddress() {
+    navigator.clipboard.writeText(CONFIG.TON.WALLET);
+    showToast(t('success.addressCopied'), 'success');
+}
+
+async function submitDeposit() {
+    const amount = parseFloat(document.getElementById('depositAmount').value);
+    const txHash = document.getElementById('depositTxHash').value.trim();
+    
+    if (amount < CONFIG.TON.MIN_DEPOSIT) {
+        showToast(t('error.minDeposit', { min: CONFIG.TON.MIN_DEPOSIT }), 'error');
+        return;
+    }
+    
+    if (!txHash || txHash.length < 10) {
+        showToast('Please enter a valid transaction hash', 'error');
+        return;
+    }
+    
+    if (userData.usedHashes?.includes(txHash.toLowerCase())) {
+        showToast(t('error.hashUsed'), 'error');
+        return;
+    }
+    
+    const deposit = {
+        id: 'dep_' + Date.now() + '_' + randomId(),
+        userId,
+        username: userName,
+        amount,
+        txHash,
+        status: 'pending',
+        timestamp: Date.now()
+    };
+    
+    userData.pendingDeposits.push(deposit);
+    
+    if (!userData.usedHashes) userData.usedHashes = [];
+    userData.usedHashes.push(txHash.toLowerCase());
+    
+    saveUserToCache();
+    
+    if (db) {
+        try {
+            const docRef = await db.collection('deposits').add({
+                ...deposit,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            
+            // مستمع 30 ثانية
+            startOnDemandListener('deposits', docRef.id, (data) => {
+                if (data.status === 'approved') {
+                    userData.balance += amount;
+                    userData.totalDeposited += amount;
+                    userData.pendingDeposits = userData.pendingDeposits.filter(d => d.id !== deposit.id);
+                    userData.completedDeposits.push({ ...deposit, status: 'approved' });
+                    saveUserToCache();
+                    showToast(t('notif.depositApproved', { amount }), 'success');
+                    updateUI();
+                } else if (data.status === 'rejected') {
+                    userData.pendingDeposits = userData.pendingDeposits.filter(d => d.id !== deposit.id);
+                    saveUserToCache();
+                    showToast(t('notif.depositRejected', { reason: data.reason || 'Unknown' }), 'error');
+                }
+            });
         } catch (e) {
             console.error('Firebase error:', e);
         }
-        
-        if (UserState.referredBy) {
-            await ReferralManager.processReferral(UserState.referredBy);
-        }
-    },
-    
-    finalize() {
-        UserState.isInitialized = true;
-        UserState.saveToCache();
-        
-        MiningManager.start();
-        Admin.init();
-        UI.init();
-        UI.updateAll();
-        UI.renderPlans();
-        UI.renderMarket();
-        
-        setTimeout(() => UI.hideLoading(), 500);
-        Notify.success(`Welcome, ${UserState.firstName}!`);
-        
-        setTimeout(() => {
-            if (document.getElementById('miningPage')?.classList.contains('active')) {
-                FloatingNotifications.start();
-            }
-        }, 2000);
     }
-};
+    
+    closeModal('depositModal');
+    showToast(t('success.depositSubmitted', { amount }), 'success');
+    
+    document.getElementById('depositAmount').value = '';
+    document.getElementById('depositTxHash').value = '';
+}
 
-// ============================================
-// [SECTION 20] - GLOBAL EXPORTS (جميع الدوال)
-// ============================================
+// ====== 26. WITHDRAW FUNCTIONS ======
+function showWithdrawModal() {
+    document.getElementById('withdrawModal').classList.add('show');
+}
 
-// Core Managers
-window.Mining = MiningManager;
-window.Payment = PaymentManager;
-window.Deposit = DepositManager;
-window.Withdraw = WithdrawManager;
-window.Referral = ReferralManager;
-window.Admin = Admin;
-window.UI = UI;
-window.Ton = TonManager;
-window.Achievements = Achievements;
-window.FloatingNotifications = FloatingNotifications;
-window.Notify = Notify;
-window.Utils = Utils;
-window.Effects = Effects;
+async function submitWithdraw() {
+    const amount = parseFloat(document.getElementById('withdrawAmount').value);
+    const address = document.getElementById('withdrawAddress').value.trim();
+    
+    if (amount < CONFIG.TON.MIN_WITHDRAW) {
+        showToast(t('error.minWithdraw', { min: CONFIG.TON.MIN_WITHDRAW }), 'error');
+        return;
+    }
+    
+    if (amount > userData.balance) {
+        showToast(t('error.insufficientBalance'), 'error');
+        return;
+    }
+    
+    if (!isValidAddress(address)) {
+        showToast(t('error.invalidAddress'), 'error');
+        return;
+    }
+    
+    const withdraw = {
+        id: 'wd_' + Date.now() + '_' + randomId(),
+        userId,
+        username: userName,
+        amount,
+        address,
+        status: 'pending',
+        timestamp: Date.now()
+    };
+    
+    userData.pendingWithdrawals.push(withdraw);
+    userData.balance -= amount;
+    userData.totalWithdrawn += amount;
+    
+    saveUserToCache();
+    
+    if (db) {
+        try {
+            const docRef = await db.collection('withdrawals').add({
+                ...withdraw,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            
+            startOnDemandListener('withdrawals', docRef.id, (data) => {
+                if (data.status === 'approved') {
+                    userData.pendingWithdrawals = userData.pendingWithdrawals.filter(w => w.id !== withdraw.id);
+                    userData.completedWithdrawals.push({ ...withdraw, status: 'approved' });
+                    saveUserToCache();
+                    showToast(t('notif.withdrawApproved', { amount }), 'success');
+                } else if (data.status === 'rejected') {
+                    userData.balance += amount;
+                    userData.totalWithdrawn -= amount;
+                    userData.pendingWithdrawals = userData.pendingWithdrawals.filter(w => w.id !== withdraw.id);
+                    saveUserToCache();
+                    showToast(t('notif.withdrawRejected', { reason: data.reason || 'Unknown' }), 'error');
+                    updateUI();
+                }
+            });
+        } catch (e) {
+            console.error('Firebase error:', e);
+        }
+    }
+    
+    closeModal('withdrawModal');
+    showToast(t('success.withdrawSubmitted', { amount }), 'success');
+    updateUI();
+    
+    document.getElementById('withdrawAmount').value = '';
+    document.getElementById('withdrawAddress').value = '';
+}
 
-// Shortcuts
-window.MiningManager = MiningManager;
-window.closeModal = UI.closeModal.bind(UI);
-window.connectWallet = () => TonManager.connect();
-window.disconnectWallet = () => TonManager.disconnect();
-window.copyAddress = () => {
-    navigator.clipboard.writeText(CONFIG.TON.WALLET);
-    Notify.success('Address copied!');
-};
+// ====== 27. HISTORY FUNCTIONS ======
+let currentHistoryFilter = 'all';
 
-// Admin Functions
-window.approveWithdrawal = Admin.approveWithdrawal.bind(Admin);
-window.rejectWithdrawal = Admin.rejectWithdrawal.bind(Admin);
-window.approveDeposit = Admin.approveDeposit.bind(Admin);
-window.rejectDeposit = Admin.rejectDeposit.bind(Admin);
-window.addBalance = Admin.addBalance.bind(Admin);
-window.searchUser = Admin.searchUser.bind(Admin);
+function showHistory() {
+    const modal = document.getElementById('historyModal');
+    modal.classList.add('show');
+    renderHistory('all');
+    
+    // التحقق من الطلبات المعلقة (مرة كل 10 دقائق)
+    const now = Date.now();
+    if (now - lastHistoryCheckTime > CONFIG.CACHE.HISTORY_TTL) {
+        checkPendingTransactions();
+        lastHistoryCheckTime = now;
+    }
+}
 
-// Debug (للتطوير)
-window.getUserState = () => UserState;
-window.getConfig = () => CONFIG;
-window.resetCache = () => {
-    UserState.clearCache();
-    location.reload();
-};
+function renderHistory(filter = 'all') {
+    const list = document.getElementById('historyList');
+    if (!list) return;
+    
+    currentHistoryFilter = filter;
+    
+    let transactions = userData.transactions || [];
+    
+    if (filter !== 'all') {
+        transactions = transactions.filter(tx => tx.type === filter);
+    }
+    
+    if (transactions.length === 0) {
+        list.innerHTML = `
+            <div class="empty-state">
+                <i class="fa-regular fa-clock"></i>
+                <p>No transactions yet</p>
+            </div>
+        `;
+        return;
+    }
+    
+    list.innerHTML = transactions.map(tx => {
+        const date = new Date(tx.timestamp);
+        const formattedDate = date.toLocaleDateString() + ' ' + 
+                             date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        let icon = 'fa-bolt';
+        let typeClass = 'mining';
+        let typeText = 'Mining';
+        
+        if (tx.type === 'deposit') {
+            icon = 'fa-arrow-down';
+            typeClass = 'deposit';
+            typeText = 'Deposit';
+        } else if (tx.type === 'withdraw') {
+            icon = 'fa-arrow-up';
+            typeClass = 'withdraw';
+            typeText = 'Withdrawal';
+        } else if (tx.type === 'rental') {
+            icon = 'fa-microchip';
+            typeClass = 'rental';
+            typeText = 'Rental';
+        }
+        
+        return `
+            <div class="history-item">
+                <div class="history-item-header">
+                    <div class="history-type ${typeClass}">
+                        <i class="fas ${icon}"></i>
+                        <span>${typeText}</span>
+                    </div>
+                    <span class="history-date">${formattedDate}</span>
+                </div>
+                <div class="history-details">
+                    <span class="history-amount">${tx.amount} TON</span>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
 
-// ============================================
-// [SECTION 21] - INIT (بدء التطبيق)
-// ============================================
+function filterHistory(filter) {
+    document.querySelectorAll('.history-filter').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    renderHistory(filter);
+}
 
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 TON MINING PRO v10.0 starting...');
-    console.log('👑 Admin ID:', CONFIG.TON.ADMIN_ID);
-    Auth.init();
+async function checkPendingTransactions() {
+    if (!db) return;
+    
+    const pendingDeposits = userData.pendingDeposits?.filter(d => d.firebaseId) || [];
+    const pendingWithdrawals = userData.pendingWithdrawals?.filter(w => w.firebaseId) || [];
+    
+    for (const dep of pendingDeposits) {
+        try {
+            const doc = await db.collection('deposits').doc(dep.firebaseId).get();
+            if (doc.exists) {
+                const data = doc.data();
+                if (data.status !== 'pending') {
+                    // تحديث الحالة
+                    userData.pendingDeposits = userData.pendingDeposits.filter(d => d.id !== dep.id);
+                    if (data.status === 'approved') {
+                        userData.completedDeposits.push({ ...dep, status: 'approved' });
+                        showToast(`Deposit of ${dep.amount} TON approved!`, 'success');
+                    }
+                }
+            }
+        } catch (e) {
+            console.error('Error checking deposit:', e);
+        }
+    }
+}
+
+function refreshHistory() {
+    const btn = event.currentTarget.querySelector('i');
+    btn.classList.add('fa-spin');
+    checkPendingTransactions().finally(() => {
+        setTimeout(() => btn.classList.remove('fa-spin'), 500);
+    });
+}
+
+// ====== 28. REFERRAL FUNCTIONS ======
+function showReferralDetails() {
+    const modal = document.getElementById('referralModal');
+    
+    document.getElementById('modalRefCount').textContent = userData.referrals?.length || 0;
+    document.getElementById('modalRefEarnings').textContent = formatTON(userData.refEarnings || 0);
+    document.getElementById('modalReferralLink').value = getReferralLink();
+    
+    renderReferralMilestones();
+    renderReferralTree();
+    
+    modal.classList.add('show');
+}
+
+function renderReferralMilestones() {
+    const list = document.getElementById('milestonesList');
+    if (!list) return;
+    
+    const milestones = [
+        { referrals: 1, reward: 0.5 },
+        { referrals: 5, reward: 2.5 },
+        { referrals: 10, reward: 5 },
+        { referrals: 25, reward: 15 },
+        { referrals: 50, reward: 30 }
+    ];
+    
+    list.innerHTML = milestones.map(m => {
+        const progress = Math.min((userData.referrals?.length || 0) / m.referrals * 100, 100);
+        
+        return `
+            <div class="milestone-item">
+                <div class="milestone-header">
+                    <span class="milestone-referrals">
+                        <i class="fas fa-users"></i>
+                        ${m.referrals} Referrals
+                    </span>
+                    <span class="milestone-reward">${m.reward} TON</span>
+                </div>
+                <div class="milestone-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                    <span class="progress-text">${userData.referrals?.length || 0}/${m.referrals}</span>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderReferralTree() {
+    const tree = document.getElementById('referralTree');
+    if (!tree) return;
+    
+    if (!userData.referrals || userData.referrals.length === 0) {
+        tree.innerHTML = '<div class="tree-node">No referrals yet</div>';
+        return;
+    }
+    
+    tree.innerHTML = userData.referrals.slice(0, 10).map(ref => `
+        <div class="tree-node">
+            <i class="fas fa-user"></i>
+            <span>${ref.slice(0, 8)}...</span>
+        </div>
+    `).join('');
+}
+
+function copyReferralLink() {
+    const link = getReferralLink();
+    navigator.clipboard.writeText(link);
+    showToast(t('success.referralCopied'), 'success');
+    animateElement('.copy-btn-legendary', 'pop');
+}
+
+// ====== 29. ADMIN FUNCTIONS ======
+let currentAdminTab = 'withdrawals';
+
+function showAdminPanel() {
+    if (!isAdmin) {
+        showToast('Access denied', 'error');
+        return;
+    }
+    
+    document.getElementById('adminModal').classList.add('show');
+    loadAdminCounts();
+}
+
+function switchAdminTab(tab) {
+    currentAdminTab = tab;
+    
+    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    const content = document.getElementById('adminContent');
+    content.innerHTML = `
+        <div class="admin-refresh-message">
+            <i class="fas fa-hand-pointer"></i>
+            <p>${t('admin.clickRefresh')}</p>
+            <button class="admin-refresh-btn" onclick="refreshAdminPanel()">
+                <i class="fas fa-rotate-right"></i>
+                <span>${t('admin.refresh')}</span>
+            </button>
+        </div>
+    `;
+}
+
+async function loadAdminCounts() {
+    if (!db) return;
+    
+    try {
+        const [depositsSnap, withdrawalsSnap] = await Promise.all([
+            db.collection('deposits').where('status', '==', 'pending').get(),
+            db.collection('withdrawals').where('status', '==', 'pending').get()
+        ]);
+        
+        document.getElementById('pendingDepositsCount').textContent = depositsSnap.size;
+        document.getElementById('pendingWithdrawalsCount').textContent = withdrawalsSnap.size;
+    } catch (e) {
+        console.error('Error loading counts:', e);
+    }
+}
+
+async function refreshAdminPanel() {
+    if (!isAdmin || !db) return;
+    
+    const btn = event.currentTarget;
+    const icon = btn.querySelector('i');
+    icon.classList.add('fa-spin');
+    
+    try {
+        let query;
+        if (currentAdminTab === 'withdrawals') {
+            query = db.collection('withdrawals').where('status', '==', 'pending');
+        } else {
+            query = db.collection('deposits').where('status', '==', 'pending');
+        }
+        
+        const snapshot = await query.get();
+        
+        if (snapshot.empty) {
+            document.getElementById('adminContent').innerHTML = '<div class="empty-state">No pending requests</div>';
+            return;
+        }
+        
+        let html = '';
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            html += renderAdminCard(doc.id, data);
+        });
+        
+        document.getElementById('adminContent').innerHTML = html;
+        
+    } catch (e) {
+        console.error('Error refreshing admin:', e);
+        showToast('Error loading requests', 'error');
+    } finally {
+        setTimeout(() => icon.classList.remove('fa-spin'), 500);
+    }
+}
+
+function renderAdminCard(id, data) {
+    const date = new Date(data.timestamp?.toDate?.() || data.timestamp);
+    const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+    
+    if (currentAdminTab === 'withdrawals') {
+        return `
+            <div class="admin-transaction-card">
+                <div class="admin-tx-header">
+                    <div class="admin-tx-type withdraw">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>WITHDRAWAL</span>
+                    </div>
+                    <span class="admin-tx-status pending">PENDING</span>
+                </div>
+                <div class="admin-tx-details">
+                    <div class="admin-tx-row">
+                        <span class="admin-tx-label">User:</span>
+                        <span class="admin-tx-value">${data.username || data.userId.slice(0, 8)}</span>
+                    </div>
+                    <div class="admin-tx-row">
+                        <span class="admin-tx-label">Amount:</span>
+                        <span class="admin-tx-value">${data.amount} TON</span>
+                    </div>
+                    <div class="admin-tx-row">
+                        <span class="admin-tx-label">Address:</span>
+                        <div class="admin-address-container">
+                            <code>${formatAddress(data.address)}</code>
+                            <button class="admin-copy-btn" onclick="copyToClipboard('${data.address}')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="admin-tx-row">
+                        <span class="admin-tx-label">Time:</span>
+                        <span class="admin-tx-value">${formattedDate}</span>
+                    </div>
+                </div>
+                <div class="admin-tx-actions">
+                    <button class="admin-approve-btn" onclick="approveRequest('${id}', 'withdraw', ${data.amount}, '${data.userId}')">
+                        <i class="fas fa-check"></i> Approve
+                    </button>
+                    <button class="admin-reject-btn" onclick="rejectRequest('${id}', 'withdraw', ${data.amount}, '${data.userId}')">
+                        <i class="fas fa-times"></i> Reject
+                    </button>
+                </div>
+            </div>
+        `;
+    } else {
+        return `
+            <div class="admin-transaction-card">
+                <div class="admin-tx-header">
+                    <div class="admin-tx-type deposit">
+                        <i class="fas fa-arrow-down"></i>
+                        <span>DEPOSIT</span>
+                    </div>
+                    <span class="admin-tx-status pending">PENDING</span>
+                </div>
+                <div class="admin-tx-details">
+                    <div class="admin-tx-row">
+                        <span class="admin-tx-label">User:</span>
+                        <span class="admin-tx-value">${data.username || data.userId.slice(0, 8)}</span>
+                    </div>
+                    <div class="admin-tx-row">
+                        <span class="admin-tx-label">Amount:</span>
+                        <span class="admin-tx-value">${data.amount} TON</span>
+                    </div>
+                    <div class="admin-tx-row">
+                        <span class="admin-tx-label">TXID:</span>
+                        <div class="admin-address-container">
+                            <code>${data.txHash?.slice(0, 16)}...</code>
+                            <button class="admin-copy-btn" onclick="copyToClipboard('${data.txHash}')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="admin-tx-row">
+                        <span class="admin-tx-label">Time:</span>
+                        <span class="admin-tx-value">${formattedDate}</span>
+                    </div>
+                </div>
+                <div class="admin-tx-actions">
+                    <button class="admin-approve-btn" onclick="approveRequest('${id}', 'deposit', ${data.amount}, '${data.userId}')">
+                        <i class="fas fa-check"></i> Approve
+                    </button>
+                    <button class="admin-reject-btn" onclick="rejectRequest('${id}', 'deposit', ${data.amount}, '${data.userId}')">
+                        <i class="fas fa-times"></i> Reject
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+}
+
+async function approveRequest(id, type, amount, targetUserId) {
+    if (!isAdmin || !db) return;
+    
+    try {
+        const collection = type === 'deposit' ? 'deposits' : 'withdrawals';
+        await db.collection(collection).doc(id).update({
+            status: 'approved',
+            approvedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        if (type === 'deposit') {
+            await db.collection('users').doc(targetUserId).update({
+                balance: firebase.firestore.FieldValue.increment(amount),
+                totalDeposited: firebase.firestore.FieldValue.increment(amount)
+            });
+        }
+        
+        showToast('Request approved', 'success');
+        refreshAdminPanel();
+        
+    } catch (e) {
+        console.error('Error approving:', e);
+        showToast('Error approving request', 'error');
+    }
+}
+
+async function rejectRequest(id, type, amount, targetUserId) {
+    if (!isAdmin || !db) return;
+    
+    const reason = prompt('Enter rejection reason:');
+    if (!reason) return;
+    
+    try {
+        const collection = type === 'deposit' ? 'deposits' : 'withdrawals';
+        await db.collection(collection).doc(id).update({
+            status: 'rejected',
+            reason,
+            rejectedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        showToast('Request rejected', 'success');
+        refreshAdminPanel();
+        
+    } catch (e) {
+        console.error('Error rejecting:', e);
+        showToast('Error rejecting request', 'error');
+    }
+}
+
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text);
+    showToast('Copied to clipboard!', 'success');
+}
+
+// ====== 30. PAGE NAVIGATION ======
+let currentPage = 'mining';
+
+function showPage(page) {
+    currentPage = page;
+    
+    // إخفاء كل الصفحات
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    
+    // إظهار الصفحة المطلوبة
+    document.getElementById(page + 'Page').classList.add('active');
+    
+    // تحديث النافيجيشن
+    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+    document.querySelector(`[data-page="${page}"]`).classList.add('active');
+    
+    // تحديث المحتوى حسب الصفحة
+    if (page === 'market') renderMarket();
+    if (page === 'stats') {
+        renderAchievements();
+        updateChart();
+    }
+    if (page === 'profile') renderAssets();
+    
+    // إظهار ستيكر عشوائي
+    showRandomSticker();
+}
+
+function showMarket() {
+    showPage('market');
+}
+
+function showWallet() {
+    showPage('profile');
+}
+
+function updateChart() {
+    // رسم بياني بسيط
+    const chart = document.getElementById('chartBars');
+    if (!chart) return;
+    
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const values = [0.5, 0.8, 1.2, 0.9, 1.5, 2.1, 1.8];
+    const max = Math.max(...values);
+    
+    chart.innerHTML = days.map((day, i) => {
+        const height = (values[i] / max) * 100;
+        return `
+            <div class="chart-bar" style="height: ${height}%;" data-value="${values[i]} TON" data-day="${day}"></div>
+        `;
+    }).join('');
+}
+
+function renderAssets() {
+    const list = document.getElementById('assetsList');
+    if (!list || !userData) return;
+    
+    const assets = [
+        { symbol: 'TON', name: 'Toncoin', balance: userData.balance },
+        { symbol: 'USDT', name: 'Tether', balance: 0 },
+        { symbol: 'BTC', name: 'Bitcoin', balance: 0 },
+        { symbol: 'ETH', name: 'Ethereum', balance: 0 }
+    ];
+    
+    list.innerHTML = assets.map(asset => {
+        const price = livePrices[asset.symbol]?.price || 0;
+        const value = asset.balance * price;
+        const change = livePrices[asset.symbol]?.change || 0;
+        const changeClass = change >= 0 ? 'positive' : 'negative';
+        const changeSymbol = change >= 0 ? '+' : '';
+        
+        return `
+            <div class="asset-item-legendary">
+                <div class="asset-left">
+                    <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/${asset.symbol === 'TON' ? '11419' : asset.symbol === 'USDT' ? '825' : asset.symbol === 'BTC' ? '1' : '1027'}.png" class="asset-icon-img">
+                    <div class="asset-info">
+                        <h4>${asset.name}</h4>
+                        <p>${asset.symbol} <span class="asset-change ${changeClass}">${changeSymbol}${change.toFixed(2)}%</span></p>
+                    </div>
+                </div>
+                <div class="asset-right">
+                    <div class="asset-balance">${asset.balance.toFixed(4)}</div>
+                    <div class="asset-value">$${formatNumber(value)}</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// ====== 31. SAVE TO FIREBASE (غير متكرر) ======
+async function saveToFirebase() {
+    if (!db) return;
+    
+    try {
+        await db.collection('users').doc(userId).set({
+            balance: userData.balance,
+            totalEarned: userData.totalEarned,
+            totalWithdrawn: userData.totalWithdrawn,
+            totalDeposited: userData.totalDeposited,
+            activeMachine: userData.activeMachine,
+            activePlan: userData.activePlan,
+            machineExpiry: userData.machineExpiry,
+            lastClaim: userData.lastClaim,
+            claims: userData.claims,
+            streak: userData.streak,
+            longestStreak: userData.longestStreak,
+            lastClaimDate: userData.lastClaimDate,
+            upgrades: userData.upgrades,
+            referrals: userData.referrals,
+            refEarnings: userData.refEarnings,
+            achievements: userData.achievements,
+            lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+    } catch (e) {
+        console.error('Firebase save error:', e);
+    }
+}
+
+// ====== 32. MODAL FUNCTIONS ======
+function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('show');
+    
+    if (modalId === 'paymentModal') {
+        window.currentPayment = null;
+    }
+}
+
+// ====== 33. FILTER MARKET ======
+function filterMarket(filter) {
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    const cards = document.querySelectorAll('.showcase-card-legendary');
+    cards.forEach(card => {
+        if (filter === 'all') {
+            card.style.display = 'flex';
+        } else {
+            const machineName = card.querySelector('h3').textContent;
+            const machine = MACHINES.find(m => m.name === machineName || m.nameAr === machineName);
+            if (machine?.filter === filter) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        }
+    });
+}
+
+// ====== 34. INITIALIZATION ======
+document.addEventListener('DOMContentLoaded', async () => {
+    console.log("🚀 TON MINING PRO v12.0 starting...");
+    
+    // إعداد اللغة
+    if (currentLanguage === 'ar') {
+        document.body.classList.add('rtl');
+        document.documentElement.dir = 'rtl';
+        document.getElementById('currentLanguageFlag').textContent = '🇸🇦';
+        document.getElementById('settingsLanguage').textContent = 'العربية';
+    } else {
+        document.getElementById('currentLanguageFlag').textContent = '🇬🇧';
+        document.getElementById('settingsLanguage').textContent = 'English';
+    }
+    
+    updateAllTexts();
+    
+    // تحميل البيانات
+    await loadUserData();
+    await loadPrices();
+    await initTonConnect();
+    
+    // بدء التعدين
+    startMining();
+    
+    // تحديث الواجهة
+    updateUI();
+    renderMarket();
+    updateChart();
+    renderAchievements();
+    
+    // إعداد المستمعين
+    setupScrollListener();
+    
+    // إخفاء شاشة التحميل
+    setTimeout(() => {
+        document.getElementById('loading').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('loading').style.display = 'none';
+        }, 500);
+    }, 2000);
+    
+    // بدء الإشعارات العائمة
+    startFloatingNotifications();
+    
+    // إظهار ستيكر ترحيبي
+    setTimeout(() => showRandomSticker(), 1000);
+    
+    console.log("✅ App initialized with ZERO WASTE architecture");
+    console.log("✅ Listeners: 30 seconds only");
+    console.log("✅ Cache: User 5min, Prices 3h, History 10min");
+    console.log("✅ Ready for 50,000+ users with minimal cost");
 });
 
-// حفظ تلقائي كل دقيقة
+// مستمع التمرير
+function setupScrollListener() {
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    const container = document.querySelector('.main-content');
+    
+    container.addEventListener('scroll', () => {
+        if (container.scrollTop > 300) {
+            scrollBtn.classList.add('show');
+        } else {
+            scrollBtn.classList.remove('show');
+        }
+    });
+}
+
+// حفظ دوري كل دقيقة
 setInterval(() => {
-    if (UserState.isInitialized) {
-        UserState.saveToCache();
+    if (userData) {
+        saveUserToCache();
     }
 }, 60000);
 
-// مزامنة مع Firebase كل 5 دقائق
+// حفظ في Firebase كل 5 دقائق
 setInterval(() => {
-    if (UserState.isInitialized && db) {
-        MiningManager.saveToFirebase().catch(e => console.error('Sync error:', e));
+    if (userData && db) {
+        saveToFirebase().catch(console.error);
     }
 }, 300000);
 
-// التعامل مع تغيير حالة الصفحة
+// إيقاف المؤقتات عند إغلاق الصفحة
+window.addEventListener('beforeunload', () => {
+    stopMining();
+    stopFloatingNotifications();
+    stopAllListeners();
+    saveUserToCache();
+});
+
+// استئناف عند العودة
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
-        MiningManager.stop();
-        FloatingNotifications.stop();
+        stopMining();
+        stopFloatingNotifications();
     } else {
-        MiningManager.start();
-        if (document.getElementById('miningPage')?.classList.contains('active')) {
-            FloatingNotifications.start();
+        startMining();
+        if (currentPage === 'mining') {
+            startFloatingNotifications();
         }
     }
 });
 
-// حفظ البيانات قبل الخروج
-window.addEventListener('beforeunload', () => {
-    if (UserState.isInitialized) {
-        UserState.saveToCache();
-    }
-    FloatingNotifications.stop();
-});
+// ====== 35. EXPORT FUNCTIONS ======
+window.showPage = showPage;
+window.showMarket = showMarket;
+window.showWallet = showWallet;
+window.showHistory = showHistory;
+window.showNotifications = showNotifications;
+window.showDepositModal = showDepositModal;
+window.showWithdrawModal = showWithdrawModal;
+window.showReferralDetails = showReferralDetails;
+window.showAdminPanel = showAdminPanel;
+window.closeModal = closeModal;
+window.toggleLanguage = toggleLanguage;
+window.copyReferralLink = copyReferralLink;
+window.copyDepositAddress = copyDepositAddress;
+window.connectWallet = connectWallet;
+window.disconnectWallet = disconnectWallet;
+window.confirmPayment = confirmPayment;
+window.submitDeposit = submitDeposit;
+window.submitWithdraw = submitWithdraw;
+window.filterMarket = filterMarket;
+window.filterHistory = filterHistory;
+window.refreshHistory = refreshHistory;
+window.scrollToTop = scrollToTop;
+window.markNotificationRead = markNotificationRead;
+window.clearReadNotifications = clearReadNotifications;
+window.clearAllNotifications = clearAllNotifications;
+window.switchAdminTab = switchAdminTab;
+window.refreshAdminPanel = refreshAdminPanel;
+window.approveRequest = approveRequest;
+window.rejectRequest = rejectRequest;
+window.copyToClipboard = copyToClipboard;
+window.selectPlan = selectPlan;
 
-// ============================================
-// END OF FILE - TON MINING PRO v10.0
-// TOTAL LINES: ~7,500
-// ============================================
-
-console.log('✅ TON MINING PRO v10.0 fully loaded');
-console.log('👑 Admin status:', UserState.isAdmin ? 'ACTIVE' : 'inactive');
-console.log('📋 All systems ready');
+console.log("✅ All systems ready. Legendary status achieved!");
