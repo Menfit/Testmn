@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>TON MINING PRO | تعدين الأساطير</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- TON Connect -->
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    
+    <!-- Telegram Web App -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- شاشة التحميل الأسطورية -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loader-3d">
+            <div class="cube">
+                <div class="face front"></div>
+                <div class="face back"></div>
+                <div class="face right"></div>
+                <div class="face left"></div>
+                <div class="face top"></div>
+                <div class="face bottom"></div>
+            </div>
+        </div>
+        <div class="loading-text">TON MINING PRO</div>
+        <div class="loading-sub">تجهيز منصة التعدين...</div>
+    </div>
+
+    <!-- التطبيق الرئيسي -->
+    <div id="app-container" style="display: none;">
+        
+        <!-- الهيدر المتحرك -->
+        <header class="glass-header">
+            <div class="header-content">
+                <div class="user-badge">
+                    <span class="user-avatar">👤</span>
+                    <span id="user-name" class="user-name">مستخدم TON</span>
+                </div>
+                <div class="balance-badge" id="balance-badge">
+                    <img src="https://raw.githubusercontent.com/ton-blockchain/token-logos/main/tokens/ton.png" class="ton-icon-small" alt="TON">
+                    <span id="total-balance">0.0000</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- المحتوى الرئيسي -->
+        <main id="main-content">
+            
+            <!-- شاشة التعدين الرئيسية -->
+            <section id="mining-tab" class="tab-content active">
+                <!-- المجسم ثلاثي الأبعاد -->
+                <div class="mining-3d-container">
+                    <div class="mining-3d" id="mining-3d">
+                        <div class="miner-base"></div>
+                        <div class="miner-core" id="miner-core"></div>
+                        <div class="miner-fan" id="miner-fan"></div>
+                        <div class="energy-rings">
+                            <div class="ring"></div>
+                            <div class="ring"></div>
+                            <div class="ring"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- مؤشرات التعدين -->
+                    <div class="mining-stats-glass">
+                        <div class="stat-item">
+                            <span class="stat-label">قوة التعدين</span>
+                            <span class="stat-value" id="current-rate">0.01 TON/4h</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">الجهاز النشط</span>
+                            <span class="stat-value" id="active-machine">Free Miner</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- شريط التقدم المتوهج -->
+                <div class="progress-glow-container">
+                    <div class="progress-header">
+                        <span>التعدين جارٍ</span>
+                        <span id="timer-display" class="timer-pulse">00:00:00</span>
+                    </div>
+                    <div class="progress-wrapper">
+                        <div class="progress-glow-bar" id="mining-progress"></div>
+                    </div>
+                </div>
+
+                <!-- زر المطالبة -->
+                <button id="claim-btn" class="claim-btn-glow" disabled>
+                    <span>مطالبة الأرباح</span>
+                    <span class="btn-glow"></span>
+                </button>
+
+                <!-- آلات التعدين -->
+                <div class="machines-section">
+                    <h3 class="section-title">
+                        <span class="title-icon">⚡</span>
+                        <span>طور أجهزتك</span>
+                    </h3>
+                    <div id="machines-container" class="machines-grid"></div>
+                </div>
+            </section>
+
+            <!-- شاشة الإحالات -->
+            <section id="referral-tab" class="tab-content">
+                <div class="referral-tree-card">
+                    <h2 class="glitch-text" data-text="شبكة النمو">شبكة النمو</h2>
+                    
+                    <!-- شجرة الإحالات التفاعلية -->
+                    <div class="referral-tree" id="referral-tree">
+                        <div class="tree-root">👑 أنت</div>
+                        <div class="tree-branches" id="tree-branches"></div>
+                    </div>
+
+                    <!-- إحصائيات الإحالات -->
+                    <div class="referral-stats-glass">
+                        <div class="stat-block">
+                            <span class="stat-number" id="ref-count">0</span>
+                            <span class="stat-desc">الأصدقاء</span>
+                        </div>
+                        <div class="stat-block">
+                            <span class="stat-number" id="ref-earnings">0.00</span>
+                            <span class="stat-desc">عمولات</span>
+                        </div>
+                    </div>
+
+                    <!-- رابط الإحالة -->
+                    <div class="ref-link-box">
+                        <input type="text" id="ref-link" readonly value="جاري التحميل..." class="ref-input">
+                        <button id="copy-ref-btn" class="copy-btn">نسخ</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- شاشة المحفظة -->
+            <section id="wallet-tab" class="tab-content">
+                <div class="wallet-3d-card">
+                    <!-- TON Connect -->
+                    <div id="ton-connect-button" class="ton-connect-glow"></div>
+
+                    <!-- رصيد المحفظة -->
+                    <div class="wallet-balance-3d">
+                        <img src="https://raw.githubusercontent.com/ton-blockchain/token-logos/main/tokens/ton.png" class="ton-icon-large" alt="TON">
+                        <span id="wallet-balance">0.0000 TON</span>
+                    </div>
+
+                    <!-- الإنجازات -->
+                    <div class="achievements-section">
+                        <h4 class="achievements-title">
+                            <span>🏆</span>
+                            <span>إنجازات التعدين</span>
+                        </h4>
+                        <div class="achievements-grid" id="achievements-container">
+                            <!-- تضاف بالإنجازات من JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- زر السحب -->
+                    <button id="withdraw-btn" class="withdraw-btn-3d">
+                        <span>سحب الأرباح</span>
+                        <span class="btn-glow"></span>
+                    </button>
+
+                    <!-- رسالة تأكيد السحب -->
+                    <div class="withdraw-note">
+                        ⚡ حد أدنى 1 TON • تأكيد خلال 1-5 دقائق
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- القائمة السفلية المتحركة -->
+        <nav class="bottom-nav-3d">
+            <button class="nav-item-3d active" data-tab="mining-tab">
+                <span class="nav-icon">⚒️</span>
+                <span class="nav-label">التعدين</span>
+            </button>
+            <button class="nav-item-3d" data-tab="referral-tab">
+                <span class="nav-icon">👥</span>
+                <span class="nav-label">الشبكة</span>
+            </button>
+            <button class="nav-item-3d" data-tab="wallet-tab">
+                <span class="nav-icon">💼</span>
+                <span class="nav-label">المحفظة</span>
+            </button>
+        </nav>
+
+        <!-- نوافذ منبثقة -->
+        
+        <!-- نافذة تأجير الآلة -->
+        <div id="rent-modal" class="modal-overlay-3d" style="display: none;">
+            <div class="modal-content-glass">
+                <button class="modal-close" id="close-rent-modal">✕</button>
+                <h3 id="rent-modal-title">تأجير الجهاز</h3>
+                
+                <div class="machine-details-3d">
+                    <img src="" id="rent-machine-icon" class="machine-icon">
+                    <span id="rent-machine-name"></span>
+                </div>
+
+                <div class="rent-info-grid">
+                    <div class="rent-info-item">
+                        <span>المدة</span>
+                        <strong id="rent-duration"></strong>
+                    </div>
+                    <div class="rent-info-item">
+                        <span>السعر</span>
+                        <strong id="rent-price" class="ton-price"></strong>
+                    </div>
+                    <div class="rent-info-item">
+                        <span>العائد</span>
+                        <strong id="rent-yield"></strong>
+                    </div>
+                </div>
+
+                <!-- عنوان المحفظة المستلمة (الخاصة بك) -->
+                <div class="wallet-address-box">
+                    <span class="box-label">أرسل إلى:</span>
+                    <div class="address-with-copy">
+                        <span id="mining-wallet-address">UQD9mkia...Y0eH</span>
+                        <button id="copy-wallet-addr" class="mini-copy">📋</button>
+                    </div>
+                </div>
+
+                <div class="wallet-connect-prompt" id="wallet-connect-prompt">
+                    <div id="rent-connect-button" class="mini-connect-btn">ربط المحفظة</div>
+                </div>
+
+                <button id="confirm-rent-btn" class="confirm-rent-btn" disabled>
+                    تأكيد الدفع
+                </button>
+
+                <p class="note-text">سيتم فتح محفظتك للتوقيع على المعاملة</p>
+            </div>
+        </div>
+
+        <!-- نافذة طلب السحب -->
+        <div id="withdraw-modal" class="modal-overlay-3d" style="display: none;">
+            <div class="modal-content-glass">
+                <button class="modal-close" id="close-withdraw-modal">✕</button>
+                <h3>طلب سحب</h3>
+
+                <div class="withdraw-form">
+                    <label>المبلغ (حد أدنى 1 TON)</label>
+                    <input type="number" id="withdraw-amount" min="1" step="0.1" class="glass-input">
+
+                    <label>عنوان المحفظة</label>
+                    <input type="text" id="withdraw-address" placeholder="UQ..." class="glass-input">
+
+                    <button id="submit-withdraw-btn" class="withdraw-submit-btn">
+                        تقديم الطلب
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- نافذة طلبات السحب (للمشرف فقط) -->
+        <div id="admin-modal" class="modal-overlay-3d" style="display: none;">
+            <div class="modal-content-glass admin-panel">
+                <h3>👑 لوحة التحكم - طلبات السحب</h3>
+                <div id="withdraw-requests-list" class="requests-list"></div>
+            </div>
+        </div>
+
+        <!-- نافذة الإشعارات -->
+        <div id="notification" class="notification-toast" style="display: none;"></div>
+    </div>
+
+    <!-- Firebase -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
