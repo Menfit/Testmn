@@ -1,5 +1,5 @@
 /* ============================================
-   TON MINING PRO - PREMIUM DESIGN SYSTEM
+   TON MINING PRO - PREMIUM DESIGN SYSTEM v9.0
    ============================================ */
 
 /* CSS Variables */
@@ -143,7 +143,7 @@ body {
     backdrop-filter: blur(20px);
 }
 
-/* Floating Notification - محسنة */
+/* Floating Notification */
 .floating-notification {
     position: fixed;
     top: 70px;
@@ -183,7 +183,7 @@ body {
     box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
 }
 
-/* Header */
+/* Header Premium */
 .glass-header {
     padding: var(--spacing-md) var(--spacing-lg);
     background: rgba(20, 25, 35, 0.8);
@@ -238,6 +238,11 @@ body {
     color: var(--text-primary);
 }
 
+.user-id {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
 .header-right {
     display: flex;
     align-items: center;
@@ -287,66 +292,12 @@ body {
     transform: rotate(180deg);
 }
 
-/* Navigation */
-.nav-tabs {
-    display: flex;
-    padding: var(--spacing-sm) var(--spacing-lg);
-    gap: var(--spacing-sm);
-    background: rgba(20, 25, 35, 0.6);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--glass-border);
-}
-
-.nav-tab {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    padding: var(--spacing-sm) 0;
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 0.7rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition-fast);
-    position: relative;
-}
-
-.nav-tab i {
-    font-size: 1.2rem;
-    transition: var(--transition-fast);
-}
-
-.nav-tab.active {
-    color: var(--text-accent);
-}
-
-.nav-tab.active i {
-    transform: translateY(-2px);
-    text-shadow: 0 0 10px var(--ton-cyan);
-}
-
-.nav-tab.active::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 4px;
-    height: 4px;
-    background: var(--ton-cyan);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--ton-cyan);
-}
-
 /* Main Content */
 .main-content {
     flex: 1;
     overflow-y: auto;
     padding: var(--spacing-lg);
-    padding-bottom: var(--spacing-2xl);
+    padding-bottom: calc(80px + var(--spacing-lg));
     scrollbar-width: none;
 }
 
@@ -387,6 +338,68 @@ h2 {
     color: var(--text-secondary);
     font-size: 0.9rem;
     margin-bottom: var(--spacing-xl);
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: rgba(20, 25, 35, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--glass-border-strong);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: 10px;
+    z-index: 1000;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    position: relative;
+    padding: 8px 12px;
+}
+
+.nav-item i {
+    font-size: 1.3rem;
+    transition: var(--transition-fast);
+}
+
+.nav-item.active {
+    color: var(--text-accent);
+}
+
+.nav-item.active i {
+    transform: translateY(-2px);
+    text-shadow: 0 0 10px var(--ton-cyan);
+}
+
+.nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background: var(--ton-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--ton-cyan);
 }
 
 /* 3D Miner */
@@ -753,6 +766,52 @@ h2 {
 .machine-stats i {
     margin-right: 4px;
     color: var(--ton-cyan);
+}
+
+/* Detailed Plans Table */
+.plans-table-container {
+    overflow-x: auto;
+    margin-top: var(--spacing-md);
+}
+
+.plans-detailed-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    font-size: 0.9rem;
+}
+
+.plans-detailed-table th {
+    background: var(--gradient-primary);
+    color: white;
+    font-weight: 600;
+    padding: var(--spacing-md);
+    text-align: center;
+}
+
+.plans-detailed-table td {
+    padding: var(--spacing-md);
+    text-align: center;
+    border-bottom: 1px solid var(--glass-border-strong);
+}
+
+.plans-detailed-table tr:last-child td {
+    border-bottom: none;
+}
+
+.plans-detailed-table td:first-child {
+    font-weight: 600;
+    color: var(--text-accent);
+}
+
+.plans-detailed-table .free-row {
+    background: rgba(34, 197, 94, 0.1);
+}
+
+.plans-detailed-table .quantum-row {
+    background: rgba(255, 170, 0, 0.1);
 }
 
 /* Market Filters */
@@ -1216,7 +1275,7 @@ h2 {
     inset: 0;
     background: rgba(0,0,0,0.8);
     backdrop-filter: blur(10px);
-    z-index: 1000;
+    z-index: 2000;
     display: none;
     align-items: center;
     justify-content: center;
@@ -1722,6 +1781,32 @@ h2 {
     20%, 40%, 60%, 80% { transform: translateX(2px); }
 }
 
+/* RTL Support */
+[dir="rtl"] {
+    text-align: right;
+}
+
+[dir="rtl"] .header-left {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .stat-card {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .machine-header {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .quick-actions {
+    direction: ltr;
+}
+
+[dir="rtl"] .plans-detailed-table th,
+[dir="rtl"] .plans-detailed-table td {
+    text-align: center;
+}
+
 /* Responsive */
 @media (max-width: 400px) {
     .machines-grid {
@@ -1743,25 +1828,13 @@ h2 {
     .stats-grid {
         grid-template-columns: 1fr;
     }
-}
-
-/* RTL Support */
-[dir="rtl"] .machine-header {
-    flex-direction: row-reverse;
-}
-
-[dir="rtl"] .stat-card {
-    flex-direction: row-reverse;
-}
-
-[dir="rtl"] .close-btn:hover {
-    transform: rotate(-90deg);
-}
-
-[dir="rtl"] .header-left {
-    flex-direction: row-reverse;
-}
-
-[dir="rtl"] .quick-actions {
-    direction: ltr;
+    
+    .plans-detailed-table {
+        font-size: 0.8rem;
+    }
+    
+    .plans-detailed-table th,
+    .plans-detailed-table td {
+        padding: var(--spacing-sm);
+    }
 }
