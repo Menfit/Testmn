@@ -385,6 +385,10 @@
                             <i class="fas fa-arrow-up"></i>
                             <span data-i18n="actions.withdraw">Withdraw</span>
                         </button>
+                        <button class="wallet-action-btn swap" onclick="showSwapModal()">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span data-i18n="actions.swap">Swap</span>
+                        </button>
                     </div>
                 </div>
 
@@ -402,13 +406,13 @@
                     </div>
                 </div>
 
-                <!-- Assets List -->
+                <!-- Assets List with Live Prices -->
                 <div class="section legendary-section">
                     <div class="section-header">
                         <h3><i class="fas fa-coins"></i> <span data-i18n="wallet.myAssets">My Assets</span></h3>
-                        <button class="section-action" onclick="showAllAssets()">
-                            <span data-i18n="actions.seeAll">See All</span>
-                            <i class="fas fa-arrow-right"></i>
+                        <button class="section-action" onclick="refreshPrices()">
+                            <i class="fas fa-sync-alt"></i>
+                            <span data-i18n="actions.refresh">Refresh</span>
                         </button>
                     </div>
                     
@@ -539,7 +543,7 @@
             </button>
         </nav>
 
-        <!-- Payment Modal -->
+        <!-- Payment Modal with Dual Payment Options -->
         <div class="modal legendary-modal" id="paymentModal">
             <div class="modal-content">
                 <div class="modal-header">
@@ -576,7 +580,43 @@
                         </div>
                     </div>
 
-                    <div class="wallet-connection-legendary" id="paymentWalletStatus">
+                    <!-- Dual Payment Options -->
+                    <div class="payment-options-legendary">
+                        <div class="payment-option-title" data-i18n="payment.selectMethod">Select Payment Method:</div>
+                        
+                        <div class="payment-option active" id="paymentOptionBalance" onclick="switchPaymentMethod('balance')">
+                            <div class="payment-option-radio">
+                                <div class="radio-inner"></div>
+                            </div>
+                            <div class="payment-option-content">
+                                <div class="payment-option-header">
+                                    <i class="fas fa-wallet"></i>
+                                    <span data-i18n="payment.balance">Pay with Balance</span>
+                                </div>
+                                <div class="payment-option-desc">
+                                    <span data-i18n="payment.available">Available:</span>
+                                    <span class="balance-amount" id="modalUserBalance">0.0000 TON</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-option" id="paymentOptionWallet" onclick="switchPaymentMethod('wallet')">
+                            <div class="payment-option-radio">
+                                <div class="radio-inner"></div>
+                            </div>
+                            <div class="payment-option-content">
+                                <div class="payment-option-header">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    <span data-i18n="payment.wallet">Pay with TON Wallet</span>
+                                </div>
+                                <div class="payment-option-desc">
+                                    <span data-i18n="payment.connectWallet">Connect TON wallet to pay</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="wallet-connection-legendary" id="paymentWalletStatus" style="display: none;">
                         <div class="status offline">
                             <i class="fas fa-circle"></i>
                             <span data-i18n="wallet.notConnected">Wallet not connected</span>
@@ -588,11 +628,97 @@
                         <span class="address" id="modalConnectedAddress"></span>
                     </div>
 
-                    <button class="confirm-btn-legendary" id="confirmPaymentBtn" disabled>
-                        <i class="fas fa-bolt"></i>
-                        <span data-i18n="payment.payWithTon">Pay with TON</span>
+                    <button class="confirm-btn-legendary" id="confirmPaymentBtn" onclick="processPayment()">
+                        <i class="fas fa-wallet"></i>
+                        <span data-i18n="payment.confirmBalance">Pay with Balance</span>
                         <div class="btn-particles"></div>
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Swap Modal -->
+        <div class="modal legendary-modal" id="swapModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-exchange-alt"></i> <span data-i18n="swap.title">Swap Assets</span></h3>
+                    <button class="close-btn" onclick="closeModal('swapModal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <!-- From -->
+                    <div class="swap-section">
+                        <div class="swap-label">
+                            <span data-i18n="swap.from">From</span>
+                            <span class="swap-balance" id="swapFromBalance">Balance: 0 TON</span>
+                        </div>
+                        <div class="swap-input-group">
+                            <div class="swap-currency-selector" onclick="showCurrencySelector('from')">
+                                <img id="swapFromIcon" src="https://s2.coinmarketcap.com/static/img/coins/64x64/11419.png" alt="TON">
+                                <span id="swapFromCurrency">TON</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <input type="number" id="swapFromAmount" placeholder="0.00" value="1" oninput="calculateSwap()">
+                        </div>
+                    </div>
+                    
+                    <!-- Swap Arrow -->
+                    <div class="swap-arrow" onclick="flipSwap()">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    
+                    <!-- To -->
+                    <div class="swap-section">
+                        <div class="swap-label">
+                            <span data-i18n="swap.to">To</span>
+                            <span class="swap-balance" id="swapToBalance">Balance: 0 USDT</span>
+                        </div>
+                        <div class="swap-input-group">
+                            <div class="swap-currency-selector" onclick="showCurrencySelector('to')">
+                                <img id="swapToIcon" src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png" alt="USDT">
+                                <span id="swapToCurrency">USDT</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <input type="number" id="swapToAmount" placeholder="0.00" readonly>
+                        </div>
+                    </div>
+                    
+                    <!-- Rate Info -->
+                    <div class="swap-rate-info" id="swapRateInfo">
+                        <span data-i18n="swap.rate">Rate:</span>
+                        <span id="swapRate">1 TON = 2.35 USDT</span>
+                    </div>
+                    
+                    <!-- Action Button -->
+                    <button class="confirm-btn-legendary" id="confirmSwapBtn" onclick="confirmSwap()">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span data-i18n="swap.confirm">Confirm Swap</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Currency Selector Modal -->
+        <div class="modal legendary-modal" id="currencySelectorModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-coins"></i> <span data-i18n="currency.select">Select Currency</span></h3>
+                    <button class="close-btn" onclick="closeModal('currencySelectorModal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="currency-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="currencySearch" placeholder="Search..." oninput="filterCurrencies()">
+                    </div>
+                    
+                    <div class="currency-list" id="currencyList">
+                        <!-- يتم تعبئتها عبر JavaScript -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -636,7 +762,7 @@
                         </div>
                     </div>
 
-                    <button class="confirm-btn-legendary" id="confirmDepositBtn" disabled>
+                    <button class="confirm-btn-legendary" id="confirmDepositBtn" onclick="submitDeposit()" disabled>
                         <i class="fas fa-arrow-down"></i>
                         <span data-i18n="deposit.submit">Submit Deposit</span>
                     </button>
@@ -671,7 +797,7 @@
                         <div class="validation-hint" id="withdrawAddressHint"></div>
                     </div>
                     
-                    <button class="confirm-btn-legendary" id="submitWithdraw">
+                    <button class="confirm-btn-legendary" id="submitWithdraw" onclick="submitWithdraw()">
                         <i class="fas fa-arrow-up"></i>
                         <span data-i18n="withdraw.submit">Request Withdrawal</span>
                     </button>
@@ -701,6 +827,7 @@
                         <button class="history-filter" onclick="filterHistory('withdraw')" data-i18n="history.withdrawals">Withdrawals</button>
                         <button class="history-filter" onclick="filterHistory('mining')" data-i18n="history.mining">Mining</button>
                         <button class="history-filter" onclick="filterHistory('rental')" data-i18n="history.rentals">Rentals</button>
+                        <button class="history-filter" onclick="filterHistory('swap')" data-i18n="history.swaps">Swaps</button>
                     </div>
                     
                     <div class="history-list" id="historyList">
