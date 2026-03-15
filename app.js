@@ -1,15 +1,3 @@
-// ============================================
-// TON MINING PRO - ULTIMATE COMPLETE EDITION v10.0
-// ============================================
-// DEVELOPER: الخنفشاري الأكبر
-// LINES: ~7,500 سطر من العظمة والاحترافية
-// ALL FEATURES: Mining, TON Connect, Withdrawals, Deposits, Admin Panel,
-//               Referrals, Achievements, Rental Plans (3/7/15 days),
-//               Premium UI/UX, Real-time Updates, Floating Notifications
-// ADMIN ID: 1653918641 (تحقق تلقائي + 5 نقرات)
-// ============================================
-
-// ============================================
 // [SECTION 01] - GLOBAL CONFIGURATION
 // ============================================
 
