@@ -1,7 +1,7 @@
 // ============================================
-// TON MINING PRO - LEGENDARY VERSION v15.0
+// TON MINING PRO - LEGENDARY VERSION v17.0
 // ULTIMATE ZERO WASTE ARCHITECTURE
-// WITH REAL STATS & 6 CURRENCIES
+// WITH LUCKY WHEEL, AUTO-CLICKER, REFERRAL SYSTEM
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP INITIALIZATION ======
@@ -23,6 +23,7 @@ const CONFIG = {
         CENTER_API: "https://toncenter.com/api/v2/",
         EXPLORER: "https://tonviewer.com/",
         ADMIN_ID: "1653918641",
+        ADMIN_PASSWORD: "Admin97€",
         MIN_WITHDRAW: 1.0,
         MIN_DEPOSIT: 1.0,
         TX_CHECK_INTERVAL: 15000,
@@ -40,7 +41,6 @@ const CONFIG = {
         appId: "1:97952285427:web:e7704e52fd108bdabded86"
     },
     
-    // 🔥 NEW: Multi-Currency Configuration (6 Currencies)
     DEPOSIT_ADDRESSES: {
         TON: "UQAq2CLybaIP93EGFlGL2n8A9DkGk5RPL2lYWJpoJlp8foJh",
         USDT: "0x7b80739cC565bFd9Cc115C821FE628d7FB11d9e1",
@@ -53,7 +53,7 @@ const CONFIG = {
     DEPOSIT_MINIMUMS: {
         TON: 1.0,
         USDT: 10,
-        BNB: 0.02,
+        BNB: 0.015,
         ETH: 0.005,
         BTC: 0.0005,
         SOL: 0.12
@@ -78,23 +78,27 @@ const CONFIG = {
     },
     
     CACHE: {
-        USER_TTL: 300000,        // 5 دقائق
-        PRICES_TTL: 10800000,    // 3 ساعات
-        HISTORY_TTL: 600000,      // 10 دقائق
-        MINING_TTL: 60000,        // دقيقة واحدة
-        LISTENER_TTL: 30000,      // 30 ثانية
-        LEADERBOARD_TTL: 3600000  // ساعة واحدة
+        USER_TTL: 300000,
+        PRICES_TTL: 10800000,
+        HISTORY_TTL: 600000,
+        MINING_TTL: 60000,
+        LISTENER_TTL: 30000,
+        LEADERBOARD_TTL: 3600000
     },
     
     ECONOMY: {
-        REFERRAL_BONUS: 0.005,    // 🔥 0.005 TON لكل إحالة
-        REFERRAL_PERCENT: 0.20,   // 🔥 20% من أرباح الصديق
+        REFERRAL_BONUS: 0.005,
+        REFERRAL_PERCENT: 0.20,
+        AUTO_CLICKER_PRICE: 0.5,
+        AUTO_CLICKER_DURATION: 24 * 60 * 60 * 1000,
+        WHEEL_SPIN_PRICE: 0.25,
+        WHEEL_FREE_SPIN_INTERVAL: 24 * 60 * 60 * 1000,
+        WHEEL_JACKPOT_EVERY: 12,
         STREAK_BONUS: { 3: 1.05, 7: 1.10, 30: 1.25 },
         MAX_WITHDRAW_DAILY: 100,
         MAX_DEPOSIT_DAILY: 1000
     },
     
-    // 🔥 NEW: CMC Icons for 6 currencies
     CMC_ICONS: {
         TON: "https://s2.coinmarketcap.com/static/img/coins/64x64/11419.png",
         USDT: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png",
@@ -104,7 +108,6 @@ const CONFIG = {
         SOL: "https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png"
     },
     
-    // 🔥 NEW: CoinGecko IDs
     CRYPTO_IDS: {
         TON: "the-open-network",
         USDT: "tether",
@@ -114,7 +117,6 @@ const CONFIG = {
         SOL: "solana"
     },
     
-    // 🔥 NEW: All available assets (6 currencies)
     ALL_ASSETS: [
         { symbol: 'TON', name: 'Toncoin' },
         { symbol: 'USDT', name: 'Tether' },
@@ -125,7 +127,7 @@ const CONFIG = {
     ]
 };
 
-// ====== 3. TRANSLATION SYSTEM (i18n) ======
+// ====== 3. TRANSLATION SYSTEM ======
 const translations = {
     en: {
         // General
@@ -137,8 +139,8 @@ const translations = {
         'nav.profile': 'Profile',
         
         // Actions
-        'actions.deposit': 'Deposit',
-        'actions.withdraw': 'Withdraw',
+        'actions.send': 'Send',
+        'actions.receive': 'Receive',
         'actions.swap': 'Swap',
         'actions.claim': 'CLAIM',
         'actions.manage': 'Manage',
@@ -147,6 +149,7 @@ const translations = {
         'actions.copy': 'Copy',
         'actions.confirm': 'Confirm',
         'actions.refresh': 'Refresh',
+        'actions.buy': 'Buy',
         
         // Mining
         'mining.currentCycle': 'Current Mining Cycle',
@@ -154,6 +157,8 @@ const translations = {
         'mining.activeRigs': 'Active Mining Rigs',
         'mining.plansReturns': 'Mining Plans & Returns',
         'mining.recentActivity': 'Recent Activity',
+        'mining.streak': 'Day Streak',
+        'mining.best': 'Best',
         
         // Market
         'market.title': 'Mining Hardware',
@@ -206,34 +211,57 @@ const translations = {
         'payment.youReceive': 'You will receive:',
         
         // Deposit
-        'deposit.title': 'Deposit Funds',
+        'deposit.title': 'Receive Funds',
         'deposit.selectCurrency': 'Select Currency',
         'deposit.amount': 'Amount',
         'deposit.transactionId': 'Transaction ID',
         'deposit.sendTo': 'Send to this address:',
         'deposit.confirmation': '✓ Blockchain confirmation 1-5 minutes',
-        'deposit.submit': 'Submit Deposit',
+        'deposit.submit': 'Submit Request',
         'deposit.minimum': 'Minimum: {amount} {currency}',
         
         // Withdraw
-        'withdraw.title': 'Withdraw Funds',
+        'withdraw.title': 'Send Funds',
         'withdraw.selectCurrency': 'Select Currency',
         'withdraw.amount': 'Amount',
         'withdraw.address': 'Wallet Address',
         'withdraw.youReceive': 'You will receive:',
         'withdraw.networkFee': 'Network fee:',
-        'withdraw.submit': 'Request Withdrawal',
+        'withdraw.submit': 'Send Request',
         'withdraw.feeNote': '{note}',
         
         // Referral
         'referral.title': 'Referral Program',
         'referral.totalReferrals': 'Total Referrals',
-        'referral.earned': 'Earned (TON)',
+        'referral.earned': 'Earned (USDT)',
         'referral.yourLink': 'Your Referral Link',
-        'referral.bonusNote': 'You get 0.005 TON + 20% of their mining!',
+        'referral.bonusNote': 'Get 0.005 TON + 20% of their mining!',
         'referral.milestones': 'Referral Milestones',
         'referral.yourNetwork': 'Your Network',
         'referral.friends': 'Friends',
+        'referral.referrals': 'Referrals',
+        'referral.reward': 'Reward',
+        'referral.progress': 'Progress',
+        
+        // Lucky Wheel
+        'wheel.title': 'Lucky Wheel',
+        'wheel.spin': 'SPIN',
+        'wheel.free': 'FREE',
+        'wheel.price': '0.25 TON',
+        'wheel.freeDaily': 'Free daily spin',
+        'wheel.jackpot': 'JACKPOT!',
+        'wheel.spinsLeft': '{count} spins until jackpot',
+        'wheel.won': 'You won {prize}!',
+        'wheel.insufficient': 'Insufficient balance. Need 0.25 TON',
+        'wheel.wait': 'Next free spin in {time}',
+        
+        // Auto Clicker
+        'autoclicker.title': 'Auto Miner',
+        'autoclicker.description': 'Mine automatically for 24 hours',
+        'autoclicker.price': '0.5 TON',
+        'autoclicker.buy': 'Buy Auto Miner',
+        'autoclicker.active': 'Active: {time} left',
+        'autoclicker.bought': 'Auto Miner activated for 24h!',
         
         // Settings
         'settings.title': 'Settings',
@@ -267,6 +295,8 @@ const translations = {
         // Admin
         'admin.clickRefresh': 'Click refresh button to load requests',
         'admin.refresh': 'Refresh',
+        'admin.password': 'Enter Admin Password',
+        'admin.wrongPassword': 'Wrong password',
         
         // Messages
         'messages.loading': 'Loading...',
@@ -279,11 +309,14 @@ const translations = {
         'notif.welcomeBonus': '🎉 Welcome! You got 0.005 TON bonus!',
         'notif.referralBonus': '🎉 Someone joined with your link! You got 0.005 TON!',
         'notif.referralMiningBonus': '⚡ Your referral just mined! You got 20% ({amount} TON)',
-        'notif.depositApproved': '✅ Your deposit of {amount} {currency} has been approved!',
+        'notif.depositApproved': '✅ Your {amount} {currency} deposit has been approved!',
         'notif.depositRejected': '❌ Your deposit was rejected. Reason: {reason}',
-        'notif.withdrawApproved': '✅ Your withdrawal of {amount} {currency} has been approved!',
+        'notif.withdrawApproved': '✅ Your {amount} {currency} withdrawal has been approved!',
         'notif.withdrawRejected': '❌ Your withdrawal was rejected. Reason: {reason}',
         'notif.swapCompleted': '✅ Swapped {fromAmount} {fromCurrency} to {toAmount} {toCurrency}',
+        'notif.wheelWin': '🎡 You won {prize}!',
+        'notif.wheelJackpot': '🎡🎡🎡 JACKPOT! You won {prize}!',
+        'notif.autoClickerBought': '🤖 Auto Miner activated for 24 hours!',
         
         // Errors
         'error.minDeposit': 'Minimum deposit is {min} {currency}',
@@ -291,17 +324,10 @@ const translations = {
         'error.invalidHash': 'Invalid transaction hash format',
         'error.hashUsed': 'This transaction hash has already been used',
         'error.insufficientBalance': 'Insufficient {currency} balance',
-        'error.insufficientFeeBalance': 'Insufficient {feeCurrency} balance for fee. Need {fee} {feeCurrency}',
+        'error.insufficientFeeBalance': 'Insufficient {feeCurrency} for fee. Need {fee} {feeCurrency}',
         'error.invalidAddress': 'Invalid {currency} address',
         'error.enterAmount': 'Please enter a valid amount',
         'error.insufficientToken': 'Insufficient {token} balance',
-        
-        // Success
-        'success.depositSubmitted': '✅ Deposit request submitted! Amount: {amount} {currency}',
-        'success.withdrawSubmitted': '✅ Withdrawal request submitted for {amount} {currency}',
-        'success.referralCopied': '✅ Referral link copied!',
-        'success.addressCopied': '✅ Address copied to clipboard!',
-        'success.swapCompleted': '✅ Swap completed successfully!'
     },
     
     ar: {
@@ -314,8 +340,8 @@ const translations = {
         'nav.profile': 'الملف الشخصي',
         
         // Actions
-        'actions.deposit': 'إيداع',
-        'actions.withdraw': 'سحب',
+        'actions.send': 'إرسال',
+        'actions.receive': 'استقبال',
         'actions.swap': 'تبديل',
         'actions.claim': 'استلام',
         'actions.manage': 'إدارة',
@@ -324,6 +350,7 @@ const translations = {
         'actions.copy': 'نسخ',
         'actions.confirm': 'تأكيد',
         'actions.refresh': 'تحديث',
+        'actions.buy': 'شراء',
         
         // Mining
         'mining.currentCycle': 'دورة التعدين الحالية',
@@ -331,6 +358,8 @@ const translations = {
         'mining.activeRigs': 'أجهزة التعدين النشطة',
         'mining.plansReturns': 'خطط وعوائد التعدين',
         'mining.recentActivity': 'النشاط الأخير',
+        'mining.streak': 'يوم متتالي',
+        'mining.best': 'الأفضل',
         
         // Market
         'market.title': 'أجهزة التعدين',
@@ -383,34 +412,57 @@ const translations = {
         'payment.youReceive': 'سوف تستلم:',
         
         // Deposit
-        'deposit.title': 'إيداع الأموال',
+        'deposit.title': 'استقبال الأموال',
         'deposit.selectCurrency': 'اختر العملة',
         'deposit.amount': 'المبلغ',
         'deposit.transactionId': 'رقم المعاملة',
         'deposit.sendTo': 'أرسل إلى هذا العنوان:',
         'deposit.confirmation': '✓ تأكيد البلوكشين 1-5 دقائق',
-        'deposit.submit': 'تقديم الإيداع',
+        'deposit.submit': 'تقديم الطلب',
         'deposit.minimum': 'الحد الأدنى: {amount} {currency}',
         
         // Withdraw
-        'withdraw.title': 'سحب الأموال',
+        'withdraw.title': 'إرسال الأموال',
         'withdraw.selectCurrency': 'اختر العملة',
         'withdraw.amount': 'المبلغ',
         'withdraw.address': 'عنوان المحفظة',
         'withdraw.youReceive': 'سوف تستلم:',
         'withdraw.networkFee': 'رسوم الشبكة:',
-        'withdraw.submit': 'طلب السحب',
+        'withdraw.submit': 'طلب الإرسال',
         'withdraw.feeNote': '{note}',
         
         // Referral
         'referral.title': 'برنامج الإحالة',
         'referral.totalReferrals': 'إجمالي الإحالات',
-        'referral.earned': 'المكتسب (TON)',
+        'referral.earned': 'المكتسب (USDT)',
         'referral.yourLink': 'رابط الإحالة الخاص بك',
-        'referral.bonusNote': 'تحصل على 0.005 TON + 20% من تعدينهم!',
+        'referral.bonusNote': 'احصل على 0.005 TON + 20% من تعدينهم!',
         'referral.milestones': 'مراحل الإحالة',
         'referral.yourNetwork': 'شبكتك',
         'referral.friends': 'الأصدقاء',
+        'referral.referrals': 'إحالات',
+        'referral.reward': 'المكافأة',
+        'referral.progress': 'التقدم',
+        
+        // Lucky Wheel
+        'wheel.title': 'عجلة الحظ',
+        'wheel.spin': 'دوران',
+        'wheel.free': 'مجاني',
+        'wheel.price': '0.25 TON',
+        'wheel.freeDaily': 'دوران مجاني يومي',
+        'wheel.jackpot': 'جاكبوت!',
+        'wheel.spinsLeft': '{count} لفات حتى الجاكبوت',
+        'wheel.won': 'فزت بـ {prize}!',
+        'wheel.insufficient': 'رصيد غير كاف. تحتاج 0.25 TON',
+        'wheel.wait': 'الدوران المجاني بعد {time}',
+        
+        // Auto Clicker
+        'autoclicker.title': 'منجم آلي',
+        'autoclicker.description': 'تعدين تلقائي لمدة 24 ساعة',
+        'autoclicker.price': '0.5 TON',
+        'autoclicker.buy': 'شراء منجم آلي',
+        'autoclicker.active': 'نشط: {time} متبقي',
+        'autoclicker.bought': 'تم تفعيل المنجم الآلي لمدة 24 ساعة!',
         
         // Settings
         'settings.title': 'الإعدادات',
@@ -444,6 +496,8 @@ const translations = {
         // Admin
         'admin.clickRefresh': 'اضغط زر التحديث لعرض الطلبات',
         'admin.refresh': 'تحديث',
+        'admin.password': 'أدخل كلمة سر المشرف',
+        'admin.wrongPassword': 'كلمة سر خاطئة',
         
         // Messages
         'messages.loading': 'جاري التحميل...',
@@ -461,6 +515,9 @@ const translations = {
         'notif.withdrawApproved': '✅ تمت الموافقة على سحبك {amount} {currency}!',
         'notif.withdrawRejected': '❌ تم رفض سحبك. السبب: {reason}',
         'notif.swapCompleted': '✅ تم تبديل {fromAmount} {fromCurrency} إلى {toAmount} {toCurrency}',
+        'notif.wheelWin': '🎡 فزت بـ {prize}!',
+        'notif.wheelJackpot': '🎡🎡🎡 جاكبوت! فزت بـ {prize}!',
+        'notif.autoClickerBought': '🤖 تم تفعيل المنجم الآلي لمدة 24 ساعة!',
         
         // Errors
         'error.minDeposit': 'الحد الأدنى للإيداع هو {min} {currency}',
@@ -472,20 +529,12 @@ const translations = {
         'error.invalidAddress': 'عنوان {currency} غير صالح',
         'error.enterAmount': 'الرجاء إدخال مبلغ صحيح',
         'error.insufficientToken': 'رصيد {token} غير كافٍ',
-        
-        // Success
-        'success.depositSubmitted': '✅ تم تقديم طلب الإيداع! المبلغ: {amount} {currency}',
-        'success.withdrawSubmitted': '✅ تم تقديم طلب السحب بمبلغ {amount} {currency}',
-        'success.referralCopied': '✅ تم نسخ رابط الإحالة!',
-        'success.addressCopied': '✅ تم نسخ العنوان إلى الحافظة!',
-        'success.swapCompleted': '✅ تم التبديل بنجاح!'
     }
 };
 
-// اللغة الحالية
+// ====== 4. LANGUAGE MANAGEMENT ======
 let currentLanguage = localStorage.getItem('preferred_language') || 'en';
 
-// دالة الترجمة
 function t(key, params = {}) {
     const keys = key.split('.');
     let text = translations[currentLanguage];
@@ -516,7 +565,6 @@ function t(key, params = {}) {
     return text;
 }
 
-// دالة تبديل اللغة
 function toggleLanguage() {
     currentLanguage = currentLanguage === 'en' ? 'ar' : 'en';
     localStorage.setItem('preferred_language', currentLanguage);
@@ -539,7 +587,6 @@ function toggleLanguage() {
     showToast(t('messages.success'), 'success');
 }
 
-// تحديث جميع النصوص
 function updateAllTexts() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -547,7 +594,7 @@ function updateAllTexts() {
     });
 }
 
-// ====== 4. MINING MACHINES (مع خطط التأجير الكاملة) ======
+// ====== 5. MINING MACHINES ======
 const MACHINES = [
     {
         id: 'm1',
@@ -555,18 +602,14 @@ const MACHINES = [
         nameAr: 'منجم مجاني',
         description: 'Start mining for free! Perfect for beginners.',
         descriptionAr: 'ابدأ التعدين مجاناً! مثالي للمبتدئين.',
-        longDescription: 'The Free Miner is your entry into TON mining. No investment needed, start earning immediately.',
-        longDescriptionAr: 'المنجم المجاني هو مدخلك إلى تعدين TON. لا حاجة للاستثمار، ابدأ الربح فوراً.',
         icon: 'fa-gem',
         color: '#808080',
-        gradient: 'linear-gradient(135deg, #808080, #a0a0a0)',
         filter: 'free',
         yield: 0.01,
         interval: 4 * 3600000,
         cycleText: '4 hours',
         cycleTextAr: '٤ ساعات',
         hashrate: '10 MH/s',
-        power: '15W',
         requirements: null,
         plans: [
             { duration: 3, durationText: '3 days', durationTextAr: '٣ أيام', price: 0, returnPercent: 0, returnAmount: 0, total: 0 },
@@ -580,18 +623,14 @@ const MACHINES = [
         nameAr: 'تربو v2',
         description: 'High-speed ASIC miner. 3x faster!',
         descriptionAr: 'جهاز عالي السرعة. أسرع بثلاث مرات!',
-        longDescription: 'The Turbo v2 is our entry-level ASIC miner. Perfect for miners ready to scale up.',
-        longDescriptionAr: 'Turbo v2 هو جهاز ASIC للمبتدئين المحترفين. مثالي للمعدنين المستعدين للتوسع.',
         icon: 'fa-bolt',
         color: '#0088cc',
-        gradient: 'linear-gradient(135deg, #0088cc, #00a3ff)',
         filter: 'basic',
         yield: 0.2,
         interval: 2.5 * 3600000,
         cycleText: '2.5 hours',
         cycleTextAr: '٢.٥ ساعة',
         hashrate: '50 MH/s',
-        power: '120W',
         requirements: null,
         plans: [
             { duration: 3, durationText: '3 days', durationTextAr: '٣ أيام', price: 5.0, returnPercent: 40, returnAmount: 2.0, total: 7.0 },
@@ -605,18 +644,14 @@ const MACHINES = [
         nameAr: 'تربو v3',
         description: 'Next-gen cooling system. Maximum efficiency!',
         descriptionAr: 'تبريد متطور. كفاءة قصوى!',
-        longDescription: 'The Turbo v3 features advanced liquid cooling for sustained high performance.',
-        longDescriptionAr: 'يتميز Turbo v3 بنظام التبريد السائل المتطور لأداء عالٍ مستدام.',
         icon: 'fa-rocket',
         color: '#00f2ff',
-        gradient: 'linear-gradient(135deg, #00f2ff, #00c8ff)',
         filter: 'pro',
         yield: 0.35,
         interval: 2 * 3600000,
         cycleText: '2 hours',
         cycleTextAr: 'ساعتان',
         hashrate: '120 MH/s',
-        power: '250W',
         requirements: null,
         plans: [
             { duration: 3, durationText: '3 days', durationTextAr: '٣ أيام', price: 7.5, returnPercent: 40, returnAmount: 3.0, total: 10.5 },
@@ -630,18 +665,14 @@ const MACHINES = [
         nameAr: 'ASIC برو',
         description: 'Professional mining rig. Serious power!',
         descriptionAr: 'جهاز احترافي. قوة هائلة!',
-        longDescription: 'The ASIC Pro is built for serious miners with custom chips and optimized firmware.',
-        longDescriptionAr: 'تم بناء ASIC Pro للمعدنين المحترفين مع رقائق مخصصة وبرامج محسنة.',
         icon: 'fa-gem',
         color: '#bc13fe',
-        gradient: 'linear-gradient(135deg, #bc13fe, #a020f0)',
         filter: 'pro',
         yield: 0.5,
         interval: 3600000,
         cycleText: '1 hour',
         cycleTextAr: 'ساعة',
         hashrate: '300 MH/s',
-        power: '450W',
         requirements: { minEarnings: 5 },
         plans: [
             { duration: 3, durationText: '3 days', durationTextAr: '٣ أيام', price: 10.0, returnPercent: 40, returnAmount: 4.0, total: 14.0 },
@@ -655,18 +686,14 @@ const MACHINES = [
         nameAr: 'كوانتم ريج',
         description: 'Quantum computing technology. The future!',
         descriptionAr: 'تقنية كمومية. مستقبل التعدين!',
-        longDescription: 'The Quantum RIG uses revolutionary quantum principles for unprecedented speeds.',
-        longDescriptionAr: 'يستخدم Quantum RIG مبادئ كمومية ثورية لسرعات غير مسبوقة.',
         icon: 'fa-crown',
         color: '#ffaa00',
-        gradient: 'linear-gradient(135deg, #ffaa00, #ff8c00)',
         filter: 'quantum',
         yield: 0.8,
         interval: 45 * 60 * 1000,
         cycleText: '45 minutes',
         cycleTextAr: '٤٥ دقيقة',
         hashrate: '800 MH/s',
-        power: '650W',
         requirements: { referrals: 3 },
         plans: [
             { duration: 3, durationText: '3 days', durationTextAr: '٣ أيام', price: 50, returnPercent: 80, returnAmount: 40, total: 90 },
@@ -680,18 +707,14 @@ const MACHINES = [
         nameAr: 'أسطوري',
         description: 'The ultimate mining machine. Legendary status!',
         descriptionAr: 'الجهاز الأقوى. مكانة أسطورية!',
-        longDescription: 'The Legendary is our flagship miner. Limited edition, unlimited power.',
-        longDescriptionAr: 'Legendary هو جهازنا الرئيسي. إصدار محدود، قوة غير محدودة.',
         icon: 'fa-star',
         color: '#ff4444',
-        gradient: 'linear-gradient(135deg, #ff4444, #ff0000)',
         filter: 'quantum',
         yield: 1.2,
         interval: 30 * 60 * 1000,
         cycleText: '30 minutes',
         cycleTextAr: '٣٠ دقيقة',
         hashrate: '2 GH/s',
-        power: '1200W',
         requirements: { referrals: 5, minEarnings: 25, streak: 7 },
         plans: [
             { duration: 3, durationText: '3 days', durationTextAr: '٣ أيام', price: 75, returnPercent: 80, returnAmount: 60, total: 135 },
@@ -701,7 +724,7 @@ const MACHINES = [
     }
 ];
 
-// ====== 5. ACHIEVEMENTS (15 إنجازاً) ======
+// ====== 6. ACHIEVEMENTS ======
 const ACHIEVEMENTS = [
     { id: 'first_claim', name: 'First Blood', nameAr: 'أول تعدين', icon: '🥇', reward: 0.5, condition: 'claims:1' },
     { id: 'streak_3', name: '3-Day Streak', nameAr: '٣ أيام متتالية', icon: '🔥', reward: 0.3, condition: 'streak:3' },
@@ -720,7 +743,44 @@ const ACHIEVEMENTS = [
     { id: 'early_bird', name: 'Early Bird', nameAr: 'طير باكر', icon: '🐦', reward: 0.2, condition: 'special:early' }
 ];
 
-// ====== 6. FIREBASE INITIALIZATION ======
+// ====== 7. REFERRAL MILESTONES (NEW) ======
+const REFERRAL_MILESTONES = [
+    { referrals: 3, reward: 1, unit: 'USDT' },
+    { referrals: 10, reward: 5, unit: 'USDT' },
+    { referrals: 50, reward: 50, unit: 'USDT' },
+    { referrals: 100, reward: 150, unit: 'USDT' },
+    { referrals: 250, reward: 300, unit: 'USDT' },
+    { referrals: 500, reward: 550, unit: 'USDT' },
+    { referrals: 1000, reward: 1200, unit: 'USDT' }
+];
+
+// ====== 8. LUCKY WHEEL PRIZES ======
+const WHEEL_PRIZES = [
+    // Small prizes (first 11 spins)
+    { type: 'TON', amount: 0.1, weight: 15 },
+    { type: 'TON', amount: 0.2, weight: 12 },
+    { type: 'TON', amount: 0.5, weight: 10 },
+    { type: 'TON', amount: 1, weight: 8 },
+    { type: 'TON', amount: 2, weight: 6 },
+    { type: 'USDT', amount: 0.25, weight: 12 },
+    { type: 'USDT', amount: 0.5, weight: 10 },
+    { type: 'USDT', amount: 1, weight: 8 },
+    { type: 'USDT', amount: 2, weight: 6 },
+    { type: 'USDT', amount: 5, weight: 4 },
+    { type: 'SOL', amount: 1, weight: 3 },
+    { type: 'BTC', amount: 0.0001, weight: 2 },
+    { type: 'ETH', amount: 0.001, weight: 2 },
+    { type: 'SPIN', amount: 1, weight: 5 }, // Free spin
+    { type: 'NOTHING', amount: 0, weight: 10 }, // Try again
+    
+    // Jackpot (12th spin)
+    { type: 'TON', amount: 50, weight: 40, jackpot: true },
+    { type: 'USDT', amount: 100, weight: 30, jackpot: true },
+    { type: 'SOL', amount: 5, weight: 20, jackpot: true },
+    { type: 'BTC', amount: 0.005, weight: 10, jackpot: true }
+];
+
+// ====== 9. FIREBASE INITIALIZATION ======
 let firebaseApp, db;
 
 try {
@@ -728,7 +788,6 @@ try {
         firebaseApp = firebase.initializeApp(CONFIG.FIREBASE);
         db = firebase.firestore();
         
-        // Enable offline persistence
         db.enablePersistence({ synchronizeTabs: true })
             .catch(err => console.warn('Firestore persistence error:', err));
         
@@ -738,7 +797,7 @@ try {
     console.error("Firebase initialization error:", error);
 }
 
-// ====== 7. TON CONNECT INITIALIZATION ======
+// ====== 10. TON CONNECT INITIALIZATION ======
 let tonConnectUI = null;
 let tonWallet = null;
 
@@ -899,32 +958,23 @@ async function disconnectWallet() {
         showToast('Wallet disconnected', 'info');
     }
 }
-
-// ====== 8. USER IDENTIFICATION ======
+// ====== 11. USER IDENTIFICATION ======
 const userId = tg?.initDataUnsafe?.user?.id?.toString() || 
                localStorage.getItem('ton_user_id') || 
                'user_' + Math.random().toString(36).substr(2, 9);
 
 const userName = tg?.initDataUnsafe?.user?.first_name || 'Crypto Miner';
+const userFirstName = tg?.initDataUnsafe?.user?.first_name || 'Miner';
+const userLastName = tg?.initDataUnsafe?.user?.last_name || '';
+const userUsername = tg?.initDataUnsafe?.user?.username || '';
 const userPhoto = tg?.initDataUnsafe?.user?.photo_url || '';
 
 localStorage.setItem('ton_user_id', userId);
 
-const usernameEl = document.getElementById('username');
-if (usernameEl) usernameEl.textContent = userName;
-
-if (userPhoto) {
-    const avatarImg = document.getElementById('avatarImage');
-    const avatarIcon = document.getElementById('avatarIcon');
-    if (avatarImg && avatarIcon) {
-        avatarImg.src = userPhoto;
-        avatarImg.style.display = 'block';
-        avatarIcon.style.display = 'none';
-    }
-}
-
-// ====== 9. ADMIN SYSTEM ======
+// ====== 12. ADMIN SYSTEM ======
 let isAdmin = userId === CONFIG.TON.ADMIN_ID;
+let adminClickCount = 0;
+let lastAdminClick = 0;
 
 function checkAdminAndShowSetting() {
     if (isAdmin) {
@@ -933,15 +983,53 @@ function checkAdminAndShowSetting() {
     }
 }
 
-// ====== 10. USER STATE (مع التخزين المحلي) ======
+function handleAvatarClick() {
+    const now = Date.now();
+    if (now - lastAdminClick > 2000) {
+        adminClickCount = 0;
+    }
+    
+    adminClickCount++;
+    lastAdminClick = now;
+    
+    if (adminClickCount >= 5) {
+        adminClickCount = 0;
+        showAdminPasswordModal();
+    }
+}
+
+function showAdminPasswordModal() {
+    const password = prompt(t('admin.password'));
+    if (password === CONFIG.TON.ADMIN_PASSWORD) {
+        isAdmin = true;
+        showAdminPanel();
+    } else if (password !== null) {
+        showToast(t('admin.wrongPassword'), 'error');
+    }
+}
+
+// ====== 13. CACHE KEYS ======
+const CACHE_KEYS = {
+    USER: `user_${userId}`,
+    TRANSACTIONS: `transactions_${userId}`,
+    PRICES: 'live_prices',
+    MINING: `mining_${userId}`,
+    NOTIFICATIONS: `notifications_${userId}`,
+    REFERRAL_PROCESSED: `referral_processed_${userId}`,
+    LEADERBOARD: 'leaderboard_cache',
+    WHEEL: `wheel_${userId}`,
+    AUTO_CLICKER: `autoclicker_${userId}`
+};
+
+// ====== 14. USER STATE ======
 let userData = {
     uid: userId,
     username: userName,
-    firstName: tg?.initDataUnsafe?.user?.first_name || 'Miner',
-    lastName: tg?.initDataUnsafe?.user?.last_name || '',
+    firstName: userFirstName,
+    lastName: userLastName,
+    telegramUsername: userUsername,
     photoUrl: userPhoto,
     
-    // Multi-Currency Balances (6 currencies)
     balances: {
         TON: 0,
         USDT: 0,
@@ -950,13 +1038,12 @@ let userData = {
         ETH: 0,
         SOL: 0
     },
-    balance: 0, // Keep for backward compatibility (TON balance)
+    balance: 0,
     
     totalEarned: 0,
     totalWithdrawn: 0,
     totalDeposited: 0,
     
-    // Mining Stats
     activeMachine: 'm1',
     activePlan: MACHINES[0].plans[0],
     machineExpiry: Infinity,
@@ -967,17 +1054,29 @@ let userData = {
     lastClaimDate: new Date().toDateString(),
     upgrades: 0,
     
-    // Referral System - NEW with 20%
-    referrals: [], // Array of user IDs who joined through this user
-    referralEarnings: 0, // Total TON earned from referrals (0.005 + 20%)
+    // Auto Clicker
+    autoClicker: {
+        active: false,
+        expiry: 0,
+        lastAutoClaim: 0
+    },
+    
+    // Lucky Wheel
+    wheel: {
+        spinsToday: 0,
+        lastFreeSpin: 0,
+        totalSpins: 0,
+        jackpotCounter: 0,
+        jackpotWon: 0
+    },
+    
+    referrals: [],
+    referralEarnings: 0,
     referralCount: 0,
     referralCode: null,
     referredBy: null,
+    referralMilestonesClaimed: [],
     
-    // Track referral mining bonuses
-    referralMiningTrack: {}, // { referralId: totalMined }
-    
-    // Transactions
     pendingWithdrawals: [],
     completedWithdrawals: [],
     pendingDeposits: [],
@@ -985,34 +1084,17 @@ let userData = {
     transactions: [],
     achievements: [],
     
-    // Settings
     language: currentLanguage,
     notifications: true,
     
-    // System
     createdAt: Date.now(),
-    
-    // TON Wallet
     tonWallet: null,
-    
-    // Used Hashes
     usedHashes: []
 };
 
-// Sync balance with TON balance for backward compatibility
 userData.balance = userData.balances.TON;
 
-// ====== 11. CACHE MANAGEMENT ======
-const CACHE_KEYS = {
-    USER: `user_${userId}`,
-    TRANSACTIONS: `transactions_${userId}`,
-    PRICES: 'live_prices',
-    MINING: `mining_${userId}`,
-    NOTIFICATIONS: `notifications_${userId}`,
-    REFERRAL_PROCESSED: `referral_processed_${userId}`,
-    LEADERBOARD: 'leaderboard_cache'
-};
-
+// ====== 15. CACHE MANAGEMENT ======
 function loadUserFromCache() {
     try {
         const cached = localStorage.getItem(CACHE_KEYS.USER);
@@ -1020,7 +1102,7 @@ function loadUserFromCache() {
             const data = JSON.parse(cached);
             if (Date.now() - data._timestamp < CONFIG.CACHE.USER_TTL) {
                 Object.assign(userData, data);
-                userData.balance = userData.balances.TON; // Sync
+                userData.balance = userData.balances.TON;
                 console.log('✅ User loaded from cache');
                 return true;
             }
@@ -1079,7 +1161,7 @@ function saveLocalNotifications(notifications) {
     }
 }
 
-// ====== 12. ON-DEMAND LISTENERS (30 ثانية فقط) ======
+// ====== 16. ON-DEMAND LISTENERS ======
 let activeListeners = new Map();
 let listenerTimeouts = new Map();
 
@@ -1142,7 +1224,7 @@ function stopAllListeners() {
     listenerTimeouts.clear();
 }
 
-// ====== 13. LOAD USER DATA (مع Zero Waste) ======
+// ====== 17. LOAD USER DATA ======
 let lastUserLoadTime = 0;
 let lastHistoryCheckTime = 0;
 
@@ -1213,7 +1295,7 @@ async function loadUserData(force = false) {
     }
 }
 
-// ====== 14. REFERRAL SYSTEM - 0.005 TON + 20% ======
+// ====== 18. REFERRAL SYSTEM ======
 function generateReferralCode() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     const random = Array.from({length:6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
@@ -1229,9 +1311,7 @@ function hasReferralCode() {
     return !!(urlParams.get('startapp') || tg?.initDataUnsafe?.start_param);
 }
 
-// Process new referral
 async function processReferral() {
-    // Check if already processed
     const processed = localStorage.getItem(CACHE_KEYS.REFERRAL_PROCESSED);
     if (processed) return;
     
@@ -1242,11 +1322,9 @@ async function processReferral() {
     
     console.log("🎯 Processing referral code:", referralCode);
     
-    // Mark as processed immediately to prevent double processing
     localStorage.setItem(CACHE_KEYS.REFERRAL_PROCESSED, referralCode);
     
     if (!db) {
-        // Without Firebase - local only
         userData.referredBy = referralCode;
         userData.balances.TON += CONFIG.ECONOMY.REFERRAL_BONUS;
         userData.balance = userData.balances.TON;
@@ -1258,7 +1336,6 @@ async function processReferral() {
     }
     
     try {
-        // Find referrer by referral code
         const referrerQuery = await db.collection('users')
             .where('referralCode', '==', referralCode)
             .limit(1)
@@ -1271,10 +1348,8 @@ async function processReferral() {
             
             if (referrerId === userId) return;
             
-            // Check if already referred
             if (referrerData.referrals && referrerData.referrals.includes(userId)) return;
             
-            // Update referrer
             const updatedReferrals = [...(referrerData.referrals || []), userId];
             
             await db.collection('users').doc(referrerId).update({
@@ -1282,10 +1357,9 @@ async function processReferral() {
                 referralCount: (referrerData.referralCount || 0) + 1,
                 'balances.TON': firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS),
                 referralEarnings: firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS),
-                [`referralMiningTrack.${userId}`]: 0 // Track mining for 20%
+                [`referralMiningTrack.${userId}`]: 0
             });
             
-            // Update current user
             userData.referredBy = referralCode;
             userData.balances.TON += CONFIG.ECONOMY.REFERRAL_BONUS;
             userData.balance = userData.balances.TON;
@@ -1299,12 +1373,10 @@ async function processReferral() {
             
             saveUserToCache();
             
-            // Notify both users
             showToast(t('notif.welcomeBonus'), 'success');
             await addNotification(referrerId, t('notif.referralBonus'), 'success');
             
         } else {
-            // Invalid referral code
             console.log("❌ Invalid referral code");
             localStorage.removeItem(CACHE_KEYS.REFERRAL_PROCESSED);
         }
@@ -1314,17 +1386,14 @@ async function processReferral() {
     }
 }
 
-// Process referral mining bonus (20%)
 async function processReferralMiningBonus(referralId, miningAmount) {
     if (!db || !userData.referrals || !userData.referrals.includes(referralId)) return;
     
-    const bonus = miningAmount * CONFIG.ECONOMY.REFERRAL_PERCENT; // 20%
+    const bonus = miningAmount * CONFIG.ECONOMY.REFERRAL_PERCENT;
     
-    // Track total mined by referral
     if (!userData.referralMiningTrack) userData.referralMiningTrack = {};
     userData.referralMiningTrack[referralId] = (userData.referralMiningTrack[referralId] || 0) + miningAmount;
     
-    // Add bonus to referrer
     userData.balances.TON += bonus;
     userData.balance = userData.balances.TON;
     userData.totalEarned += bonus;
@@ -1332,7 +1401,6 @@ async function processReferralMiningBonus(referralId, miningAmount) {
     
     saveUserToCache();
     
-    // Update in Firebase
     try {
         await db.collection('users').doc(userId).update({
             'balances.TON': userData.balances.TON,
@@ -1344,18 +1412,45 @@ async function processReferralMiningBonus(referralId, miningAmount) {
         console.error('Error updating referral mining bonus:', e);
     }
     
-    // Add notification
     addLocalNotification(t('notif.referralMiningBonus', { amount: bonus.toFixed(4) }), 'success');
 }
 
-function copyReferralLink() {
-    const link = getReferralLink();
-    navigator.clipboard.writeText(link);
-    showToast(t('success.referralCopied'), 'success');
-    animateElement('.copy-btn-legendary', 'pop');
+// ====== 19. REFERRAL MILESTONES CHECK ======
+async function checkReferralMilestones() {
+    if (!userData.referralMilestonesClaimed) userData.referralMilestonesClaimed = [];
+    
+    for (const milestone of REFERRAL_MILESTONES) {
+        if (userData.referralMilestonesClaimed.includes(milestone.referrals)) continue;
+        
+        if (userData.referralCount >= milestone.referrals) {
+            userData.balances.USDT += milestone.reward;
+            userData.referralMilestonesClaimed.push(milestone.referrals);
+            
+            addTransaction('referral_bonus', milestone.reward, {
+                currency: 'USDT',
+                details: `${milestone.referrals} referrals milestone`
+            });
+            
+            addLocalNotification(`🏆 You reached ${milestone.referrals} referrals! Earned ${milestone.reward} USDT!`, 'success');
+            
+            if (db) {
+                try {
+                    await db.collection('users').doc(userId).update({
+                        'balances.USDT': userData.balances.USDT,
+                        referralMilestonesClaimed: userData.referralMilestonesClaimed
+                    });
+                } catch (e) {
+                    console.error('Error updating milestone:', e);
+                }
+            }
+        }
+    }
+    
+    saveUserToCache();
+    renderReferralMilestones();
 }
 
-// ====== 15. NOTIFICATION SYSTEM (محلي بالكامل) ======
+// ====== 20. NOTIFICATION SYSTEM ======
 let localNotifications = loadLocalNotifications();
 let unreadCount = localNotifications.filter(n => !n.read).length;
 
@@ -1505,7 +1600,7 @@ function showNotifications() {
     }
 }
 
-// ====== 16. FLOATING NOTIFICATIONS ======
+// ====== 21. FLOATING NOTIFICATIONS ======
 let floatingTimeouts = [];
 
 function showFloatingToast(message, type = 'info') {
@@ -1531,7 +1626,9 @@ function startFloatingNotifications() {
         "🏆 Achievement unlocked: 7-Day Streak",
         "💫 Referral bonus claimed: 0.005 TON",
         "⛏️ Mining reward claimed",
-        "💎 Legendary machine activated!"
+        "💎 Legendary machine activated!",
+        "🎡 Someone won 50 TON on Lucky Wheel!",
+        "🤖 Auto Miner bought"
     ];
     
     function showNext() {
@@ -1550,7 +1647,7 @@ function stopFloatingNotifications() {
     floatingTimeouts = [];
 }
 
-// ====== 17. WELCOME STICKER SYSTEM ======
+// ====== 22. WELCOME STICKER SYSTEM ======
 const WELCOME_STICKERS = ['🤝', '🫣', '🥰', '🥳', '💲', '💰', '💸', '💵', '🤪', '😱', '😤', '😎', '🤑', '💯', '💖', '✨', '🌟', '⭐', '🔥', '⚡', '💎', '🔔', '🎁', '🎈', '🎉', '🎊', '👑', '🚀', '💫', '⭐'];
 
 let lastStickerTime = 0;
@@ -1579,7 +1676,7 @@ function showRandomSticker() {
     lastStickerTime = now;
 }
 
-// ====== 18. PRICES (مع كاش 3 ساعات) ======
+// ====== 23. PRICES ======
 let livePrices = {};
 let lastPricesLoadTime = 0;
 
@@ -1625,7 +1722,7 @@ async function loadPrices(force = false) {
     }
 }
 
-// ====== 19. UTILITIES ======
+// ====== 24. UTILITIES ======
 function formatAddress(addr) {
     if (!addr) return '';
     if (addr.length < 10) return addr;
@@ -1772,19 +1869,28 @@ function scrollToTop() {
     });
 }
 
-// ====== 20. MINING MANAGER ======
+// ====== 25. MINING MANAGER ======
 let miningTimer = null;
+let autoClickerTimer = null;
 
 function startMining() {
     if (miningTimer) clearInterval(miningTimer);
     miningTimer = setInterval(updateMining, 1000);
     updateMining();
+    
+    if (userData.autoClicker && userData.autoClicker.active) {
+        startAutoClicker();
+    }
 }
 
 function stopMining() {
     if (miningTimer) {
         clearInterval(miningTimer);
         miningTimer = null;
+    }
+    if (autoClickerTimer) {
+        clearInterval(autoClickerTimer);
+        autoClickerTimer = null;
     }
 }
 
@@ -1798,9 +1904,15 @@ function updateMining() {
     const nextEl = document.getElementById('nextReward');
     const activeMachineName = document.getElementById('activeMachineName');
     const machine = getActiveMachine();
+    const hashRateEl = document.getElementById('hashRate');
+    const streakCountEl = document.getElementById('streakCount');
+    const totalEarnedEl = document.getElementById('totalEarned');
     
     if (progressBar) progressBar.style.width = progress + '%';
     if (activeMachineName) activeMachineName.textContent = currentLanguage === 'ar' ? machine.nameAr : machine.name;
+    if (hashRateEl) hashRateEl.textContent = machine.hashrate.split(' ')[0];
+    if (streakCountEl) streakCountEl.textContent = userData.streak;
+    if (totalEarnedEl) totalEarnedEl.textContent = formatTON(userData.totalEarned);
     
     if (progress >= 100) {
         if (timerEl) {
@@ -1820,6 +1932,16 @@ function updateMining() {
     
     if (isMachineExpired()) {
         handleExpiry();
+    }
+    
+    // Check auto-clicker expiry
+    if (userData.autoClicker && userData.autoClicker.active) {
+        if (Date.now() > userData.autoClicker.expiry) {
+            userData.autoClicker.active = false;
+            saveUserToCache();
+            stopAutoClicker();
+            showToast('Auto Miner expired', 'info');
+        }
     }
 }
 
@@ -1853,9 +1975,7 @@ async function claim() {
     addTransaction('mining', reward, { machine: machine.id, bonus });
     saveUserToCache();
     
-    // Process referral bonuses (20%) for this mining reward
     if (userData.referredBy) {
-        // Find referrer and add 20%
         try {
             if (db) {
                 const referrerQuery = await db.collection('users')
@@ -1865,8 +1985,6 @@ async function claim() {
                 
                 if (!referrerQuery.empty) {
                     const referrerId = referrerQuery.docs[0].id;
-                    
-                    // Call function to add 20% to referrer
                     await addReferralMiningBonus(referrerId, reward);
                 }
             }
@@ -1884,7 +2002,6 @@ async function claim() {
     saveToFirebase();
 }
 
-// Add 20% mining bonus to referrer
 async function addReferralMiningBonus(referrerId, miningAmount) {
     if (!db) return;
     
@@ -1952,7 +2069,63 @@ function addTransaction(type, amount, details = {}) {
     updateActivityFeed();
 }
 
-// ====== 21. ACHIEVEMENTS MANAGER ======
+// ====== 26. AUTO CLICKER SYSTEM ======
+function startAutoClicker() {
+    if (autoClickerTimer) clearInterval(autoClickerTimer);
+    
+    autoClickerTimer = setInterval(async () => {
+        if (!userData.autoClicker || !userData.autoClicker.active) return;
+        if (Date.now() > userData.autoClicker.expiry) {
+            userData.autoClicker.active = false;
+            saveUserToCache();
+            stopAutoClicker();
+            showToast('Auto Miner expired', 'info');
+            return;
+        }
+        
+        const timeUntilNext = getTimeUntilNextClaim();
+        if (timeUntilNext <= 0) {
+            await claim();
+        }
+    }, 1000);
+}
+
+function stopAutoClicker() {
+    if (autoClickerTimer) {
+        clearInterval(autoClickerTimer);
+        autoClickerTimer = null;
+    }
+}
+
+function buyAutoClicker() {
+    if (userData.balances.TON < CONFIG.ECONOMY.AUTO_CLICKER_PRICE) {
+        showToast(t('error.insufficientBalance', { currency: 'TON' }), 'error');
+        return;
+    }
+    
+    userData.balances.TON -= CONFIG.ECONOMY.AUTO_CLICKER_PRICE;
+    userData.balance = userData.balances.TON;
+    
+    userData.autoClicker = {
+        active: true,
+        expiry: Date.now() + CONFIG.ECONOMY.AUTO_CLICKER_DURATION,
+        lastAutoClaim: Date.now()
+    };
+    
+    saveUserToCache();
+    
+    addTransaction('autoclicker', CONFIG.ECONOMY.AUTO_CLICKER_PRICE, {
+        currency: 'TON',
+        details: 'Auto Miner purchase'
+    });
+    
+    startAutoClicker();
+    
+    showToast(t('autoclicker.bought'), 'success');
+    updateUI();
+}
+
+// ====== 27. ACHIEVEMENTS MANAGER ======
 function checkAchievements() {
     const newlyUnlocked = [];
     
@@ -2004,7 +2177,7 @@ function checkAchievements() {
     }
 }
 
-// ====== 22. RENDER FUNCTIONS (مع إحصائيات حقيقية) ======
+// ====== 28. RENDER FUNCTIONS ======
 function updateUI() {
     updateBalance();
     updateMiningStats();
@@ -2015,7 +2188,9 @@ function updateUI() {
     updateReferralPreview();
     renderAssets();
     updateWalletUI();
-    updateLeaderboard(); // تحديث قائمة المتصدرين
+    updateLeaderboard();
+    updateAutoClickerUI();
+    updateWheelUI();
 }
 
 function updateBalance() {
@@ -2043,7 +2218,6 @@ function calculateTotalUsd() {
     return total;
 }
 
-// إحصائيات حقيقية من userData
 function updateMiningStats() {
     const hashRate = document.getElementById('hashRate');
     const streakCount = document.getElementById('streakCount');
@@ -2056,26 +2230,21 @@ function updateMiningStats() {
     
     const machine = getActiveMachine();
     
-    // بيانات حقيقية
     if (hashRate) hashRate.textContent = machine.hashrate.split(' ')[0];
     if (streakCount) streakCount.textContent = userData.streak;
     if (totalEarned) totalEarned.textContent = formatTON(userData.totalEarned);
     if (bestStreak) bestStreak.textContent = userData.longestStreak;
     
-    // أيام التعدين (تقريباً 6 مطالبات في اليوم)
     const miningDaysValue = Math.floor(userData.claims / 6) || 1;
     if (miningDays) miningDays.textContent = miningDaysValue;
     
-    // إجمالي الإحالات
     if (totalReferralsStats) totalReferralsStats.textContent = userData.referrals?.length || 0;
     
-    // الإنجازات
     if (achievementsCount) {
         const unlockedCount = userData.achievements?.length || 0;
         achievementsCount.textContent = `${unlockedCount}/${ACHIEVEMENTS.length}`;
     }
     
-    // رصيدك في قائمة المتصدرين
     if (yourEarnings) yourEarnings.textContent = formatTON(userData.totalEarned) + ' TON';
 }
 
@@ -2177,6 +2346,12 @@ function updateActivityFeed() {
         } else if (tx.type === 'referral_bonus') {
             icon = 'fa-users';
             title = 'Referral Bonus';
+        } else if (tx.type === 'autoclicker') {
+            icon = 'fa-robot';
+            title = 'Auto Miner';
+        } else if (tx.type === 'wheel') {
+            icon = 'fa-wheelchair';
+            title = 'Lucky Wheel';
         }
         
         const currency = tx.currency || 'TON';
@@ -2209,10 +2384,18 @@ function updateReferralPreview() {
     const refCount = document.getElementById('previewRefCount');
     const refEarnings = document.getElementById('previewRefEarnings');
     const refLink = document.getElementById('previewReferralLink');
+    const usernameEl = document.getElementById('username');
+    const userIdEl = document.getElementById('userId');
     
     if (refCount) refCount.textContent = userData.referrals?.length || 0;
     if (refEarnings) refEarnings.textContent = formatTON(userData.referralEarnings || 0);
     if (refLink) refLink.value = getReferralLink();
+    
+    if (usernameEl) usernameEl.textContent = userData.firstName || userData.username;
+    if (userIdEl) {
+        const displayId = userData.telegramUsername ? `@${userData.telegramUsername}` : `ID: ${userData.uid.slice(-8)}`;
+        userIdEl.textContent = displayId;
+    }
 }
 
 function renderAchievements() {
@@ -2233,7 +2416,6 @@ function renderAchievements() {
     }).join('');
 }
 
-// عرض الأصول (6 عملات فقط)
 function renderAssets() {
     const list = document.getElementById('assetsList');
     if (!list) return;
@@ -2271,114 +2453,169 @@ function renderAssets() {
     }).join('');
 }
 
-// تحديث قائمة المتصدرين (مع كاش ساعة)
-let leaderboardCache = {
-    data: null,
-    timestamp: 0
-};
+function updateAutoClickerUI() {
+    const btn = document.getElementById('autoClickerBtn');
+    if (!btn) return;
+    
+    if (userData.autoClicker && userData.autoClicker.active) {
+        const timeLeft = userData.autoClicker.expiry - Date.now();
+        if (timeLeft > 0) {
+            const hours = Math.floor(timeLeft / 3600000);
+            const minutes = Math.floor((timeLeft % 3600000) / 60000);
+            btn.innerHTML = `<i class="fas fa-robot"></i> ${hours}h ${minutes}m`;
+            btn.classList.add('active');
+        } else {
+            userData.autoClicker.active = false;
+            saveUserToCache();
+            btn.innerHTML = `<i class="fas fa-robot"></i> ${t('autoclicker.buy')}`;
+            btn.classList.remove('active');
+        }
+    } else {
+        btn.innerHTML = `<i class="fas fa-robot"></i> ${t('autoclicker.buy')}`;
+        btn.classList.remove('active');
+    }
+}
 
-async function updateLeaderboard() {
-    const leaderboardEl = document.getElementById('leaderboard');
-    if (!leaderboardEl) return;
+// ====== 29. LUCKY WHEEL SYSTEM ======
+function showWheelModal() {
+    const modal = document.getElementById('wheelModal');
+    if (modal) {
+        updateWheelUI();
+        modal.classList.add('show');
+    }
+}
+
+function updateWheelUI() {
+    const spinsLeftEl = document.getElementById('wheelSpinsLeft');
+    const freeSpinEl = document.getElementById('wheelFreeSpin');
+    const priceEl = document.getElementById('wheelPrice');
     
-    const now = Date.now();
-    
-    // استخدام الكاش إذا كان حديثاً
-    if (leaderboardCache.data && (now - leaderboardCache.timestamp) < CONFIG.CACHE.LEADERBOARD_TTL) {
-        renderLeaderboard(leaderboardCache.data);
-        return;
+    if (spinsLeftEl) {
+        const spinsUntilJackpot = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - (userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY);
+        spinsLeftEl.textContent = t('wheel.spinsLeft', { count: spinsUntilJackpot });
     }
     
-    // إذا كان المستخدم عادي، نعرض بيانات وهمية
-    if (!isAdmin) {
-        const mockData = [
-            { rank: 1, name: 'CryptoKing', earnings: 12450 },
-            { rank: 2, name: 'TonWhale', earnings: 8230 },
-            { rank: 3, name: 'MinerPro', earnings: 5670 },
-            { rank: 4, name: 'QuantumMiner', earnings: 3890 },
-            { rank: 5, name: 'ASICMaster', earnings: 2450 }
-        ];
-        
-        // حساب ترتيب المستخدم (تقديري)
-        const userRank = Math.floor(Math.random() * 20) + 10;
-        
-        leaderboardCache.data = { top: mockData, userRank };
-        leaderboardCache.timestamp = now;
-        
-        renderLeaderboard(leaderboardCache.data);
-        return;
-    }
-    
-    // للمشرف فقط - جلب بيانات حقيقية من Firebase (مرة كل ساعة)
-    if (db) {
-        try {
-            const snapshot = await db.collection('users')
-                .orderBy('totalEarned', 'desc')
-                .limit(10)
-                .get();
-            
-            const topUsers = [];
-            snapshot.forEach((doc, index) => {
-                const data = doc.data();
-                topUsers.push({
-                    rank: index + 1,
-                    name: data.username || 'Miner',
-                    earnings: data.totalEarned || 0
-                });
-            });
-            
-            // ترتيب المستخدم الحالي
-            const userRank = topUsers.findIndex(u => u.name === userName) + 1;
-            
-            leaderboardCache.data = { top: topUsers, userRank: userRank > 0 ? userRank : 24 };
-            leaderboardCache.timestamp = now;
-            
-            renderLeaderboard(leaderboardCache.data);
-            
-        } catch (e) {
-            console.error('Error fetching leaderboard:', e);
+    if (freeSpinEl) {
+        const now = Date.now();
+        const nextFreeSpin = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
+        if (now < nextFreeSpin) {
+            const timeLeft = nextFreeSpin - now;
+            const hours = Math.floor(timeLeft / 3600000);
+            const minutes = Math.floor((timeLeft % 3600000) / 60000);
+            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${hours}h ${minutes}m`;
+            freeSpinEl.classList.add('disabled');
+        } else {
+            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> ${t('wheel.free')}`;
+            freeSpinEl.classList.remove('disabled');
         }
     }
 }
 
-function renderLeaderboard(data) {
-    const leaderboardEl = document.getElementById('leaderboard');
-    if (!leaderboardEl) return;
+async function spinWheel(isFree = false) {
+    if (!isFree && userData.balances.TON < CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
+        showToast(t('wheel.insufficient'), 'error');
+        return;
+    }
     
-    let html = '';
+    if (isFree) {
+        const now = Date.now();
+        if (now < userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL) {
+            showToast(t('wheel.wait', { time: '24h' }), 'warning');
+            return;
+        }
+        userData.wheel.lastFreeSpin = now;
+    } else {
+        userData.balances.TON -= CONFIG.ECONOMY.WHEEL_SPIN_PRICE;
+        userData.balance = userData.balances.TON;
+    }
     
-    data.top.forEach((user, index) => {
-        let medalClass = '';
-        if (index === 0) medalClass = 'gold';
-        else if (index === 1) medalClass = 'silver';
-        else if (index === 2) medalClass = 'bronze';
+    userData.wheel.totalSpins++;
+    userData.wheel.jackpotCounter++;
+    
+    // Determine prize
+    let prize = null;
+    const isJackpotSpin = userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY === 0;
+    
+    if (isJackpotSpin) {
+        // Jackpot spin - bigger prizes
+        const jackpotPrizes = WHEEL_PRIZES.filter(p => p.jackpot);
+        const totalWeight = jackpotPrizes.reduce((sum, p) => sum + p.weight, 0);
+        let random = Math.random() * totalWeight;
         
-        html += `
-            <div class="leaderboard-item ${medalClass}">
-                <span class="rank">${user.rank === 1 ? '🥇' : user.rank === 2 ? '🥈' : user.rank === 3 ? '🥉' : user.rank}</span>
-                <span class="name">${user.name}</span>
-                <span class="earnings">${formatTON(user.earnings)} TON</span>
-            </div>
-        `;
-    });
+        for (const p of jackpotPrizes) {
+            if (random < p.weight) {
+                prize = p;
+                break;
+            }
+            random -= p.weight;
+        }
+        
+        userData.wheel.jackpotWon++;
+    } else {
+        // Normal spin
+        const normalPrizes = WHEEL_PRIZES.filter(p => !p.jackpot);
+        const totalWeight = normalPrizes.reduce((sum, p) => sum + p.weight, 0);
+        let random = Math.random() * totalWeight;
+        
+        for (const p of normalPrizes) {
+            if (random < p.weight) {
+                prize = p;
+                break;
+            }
+            random -= p.weight;
+        }
+    }
     
-    // إضافة المستخدم الحالي
-    html += `
-        <div class="leaderboard-item you">
-            <span class="rank">${data.userRank}</span>
-            <span class="name" id="leaderboardYou">You</span>
-            <span class="earnings" id="yourEarnings">${formatTON(userData.totalEarned)} TON</span>
-        </div>
-    `;
+    // Award prize
+    if (prize.type === 'TON') {
+        userData.balances.TON += prize.amount;
+        userData.balance = userData.balances.TON;
+        userData.totalEarned += prize.amount;
+        addTransaction('wheel', prize.amount, { currency: 'TON' });
+    } else if (prize.type === 'USDT') {
+        userData.balances.USDT += prize.amount;
+        addTransaction('wheel', prize.amount, { currency: 'USDT' });
+    } else if (prize.type === 'SOL') {
+        userData.balances.SOL += prize.amount;
+        addTransaction('wheel', prize.amount, { currency: 'SOL' });
+    } else if (prize.type === 'BTC') {
+        userData.balances.BTC += prize.amount;
+        addTransaction('wheel', prize.amount, { currency: 'BTC' });
+    } else if (prize.type === 'ETH') {
+        userData.balances.ETH += prize.amount;
+        addTransaction('wheel', prize.amount, { currency: 'ETH' });
+    } else if (prize.type === 'SPIN') {
+        // Free spin awarded
+        setTimeout(() => spinWheel(false), 500);
+    }
     
-    leaderboardEl.innerHTML = html;
+    saveUserToCache();
+    
+    // Play sound (simulated)
+    playWheelSound('spin');
+    setTimeout(() => playWheelSound('win'), 1000);
+    
+    if (isJackpotSpin) {
+        showToast(t('wheel.jackpot') + ' ' + t('wheel.won', { prize: `${prize.amount} ${prize.type}` }), 'success');
+        createParticles();
+    } else if (prize.type !== 'NOTHING' && prize.type !== 'SPIN') {
+        showToast(t('wheel.won', { prize: `${prize.amount} ${prize.type}` }), 'success');
+    }
+    
+    updateWheelUI();
+    updateUI();
 }
 
-function updatePrices() {
-    renderAssets();
+function playWheelSound(type) {
+    // This would play actual sounds in production
+    console.log(`🔊 Playing ${type} sound`);
+    // For now, just vibrate if on mobile
+    if (tg && type === 'win') {
+        tg.HapticFeedback?.notificationOccurred('success');
+    }
 }
 
-// ====== 23. MARKET FUNCTIONS ======
+// ====== 30. MARKET FUNCTIONS ======
 function renderMarket() {
     const showcase = document.getElementById('machinesShowcase');
     if (!showcase) return;
@@ -2433,8 +2670,7 @@ function checkRequirements(machine) {
     
     return true;
 }
-
-// ====== 24. DUAL PAYMENT SYSTEM ======
+// ====== 31. DUAL PAYMENT SYSTEM ======
 let currentPaymentMethod = 'balance';
 let currentPayment = null;
 
@@ -2619,7 +2855,7 @@ async function confirmWalletPayment() {
     }
 }
 
-// ====== 25. SWAP SYSTEM (بأسعار حية) ======
+// ====== 32. SWAP SYSTEM ======
 let swapMode = 'from';
 let swapFromCurrency = 'TON';
 let swapToCurrency = 'USDT';
@@ -2774,7 +3010,7 @@ function confirmSwap() {
     renderAssets();
 }
 
-// ====== 26. DEPOSIT FUNCTIONS (6 عملات) ======
+// ====== 33. DEPOSIT FUNCTIONS ======
 let selectedDepositCurrency = 'TON';
 
 function showDepositModal() {
@@ -2973,7 +3209,7 @@ async function submitDeposit() {
     document.getElementById('depositTxHash').value = '';
 }
 
-// ====== 27. WITHDRAW FUNCTIONS (6 عملات) ======
+// ====== 34. WITHDRAW FUNCTIONS ======
 let selectedWithdrawCurrency = 'TON';
 
 function showWithdrawModal() {
@@ -3213,7 +3449,7 @@ async function submitWithdraw() {
     document.getElementById('withdrawAddress').value = '';
 }
 
-// ====== 28. HISTORY FUNCTIONS ======
+// ====== 35. HISTORY FUNCTIONS ======
 let currentHistoryFilter = 'all';
 
 function showHistory() {
@@ -3279,6 +3515,14 @@ function renderHistory(filter = 'all') {
             icon = 'fa-users';
             typeClass = 'referral';
             typeText = 'Referral Bonus';
+        } else if (tx.type === 'autoclicker') {
+            icon = 'fa-robot';
+            typeClass = 'autoclicker';
+            typeText = 'Auto Miner';
+        } else if (tx.type === 'wheel') {
+            icon = 'fa-wheelchair';
+            typeClass = 'wheel';
+            typeText = 'Lucky Wheel';
         }
         
         const currency = tx.currency || 'TON';
@@ -3343,7 +3587,7 @@ function refreshHistory() {
     });
 }
 
-// ====== 29. REFERRAL FUNCTIONS DETAILS ======
+// ====== 36. REFERRAL DETAILS ======
 function showReferralDetails() {
     const modal = document.getElementById('referralModal');
     
@@ -3361,32 +3605,26 @@ function renderReferralMilestones() {
     const list = document.getElementById('milestonesList');
     if (!list) return;
     
-    const milestones = [
-        { referrals: 1, reward: 0.5 },
-        { referrals: 5, reward: 2.5 },
-        { referrals: 10, reward: 5 },
-        { referrals: 25, reward: 15 },
-        { referrals: 50, reward: 30 }
-    ];
-    
-    list.innerHTML = milestones.map(m => {
-        const progress = Math.min((userData.referrals?.length || 0) / m.referrals * 100, 100);
+    list.innerHTML = REFERRAL_MILESTONES.map(milestone => {
+        const progress = Math.min((userData.referrals?.length || 0) / milestone.referrals * 100, 100);
+        const claimed = userData.referralMilestonesClaimed?.includes(milestone.referrals);
         
         return `
             <div class="milestone-item">
                 <div class="milestone-header">
                     <span class="milestone-referrals">
                         <i class="fas fa-users"></i>
-                        ${m.referrals} Referrals
+                        ${milestone.referrals} Referrals
                     </span>
-                    <span class="milestone-reward">${m.reward} TON</span>
+                    <span class="milestone-reward">${milestone.reward} ${milestone.unit}</span>
                 </div>
                 <div class="milestone-progress">
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: ${progress}%"></div>
                     </div>
-                    <span class="progress-text">${userData.referrals?.length || 0}/${m.referrals}</span>
+                    <span class="progress-text">${userData.referrals?.length || 0}/${milestone.referrals}</span>
                 </div>
+                ${claimed ? '<p style="color: var(--success); text-align: center; margin-top: 10px;">✓ Claimed</p>' : ''}
             </div>
         `;
     }).join('');
@@ -3416,7 +3654,108 @@ function copyReferralLink() {
     animateElement('.copy-btn-legendary', 'pop');
 }
 
-// ====== 30. ADMIN FUNCTIONS ======
+// ====== 37. LEADERBOARD ======
+let leaderboardCache = {
+    data: null,
+    timestamp: 0
+};
+
+async function updateLeaderboard() {
+    const leaderboardEl = document.getElementById('leaderboard');
+    if (!leaderboardEl) return;
+    
+    const now = Date.now();
+    
+    if (leaderboardCache.data && (now - leaderboardCache.timestamp) < CONFIG.CACHE.LEADERBOARD_TTL) {
+        renderLeaderboard(leaderboardCache.data);
+        return;
+    }
+    
+    if (!isAdmin) {
+        const mockData = [
+            { rank: 1, name: 'CryptoKing', earnings: 12450 },
+            { rank: 2, name: 'TonWhale', earnings: 8230 },
+            { rank: 3, name: 'MinerPro', earnings: 5670 },
+            { rank: 4, name: 'QuantumMiner', earnings: 3890 },
+            { rank: 5, name: 'ASICMaster', earnings: 2450 }
+        ];
+        
+        const userRank = Math.floor(Math.random() * 20) + 10;
+        
+        leaderboardCache.data = { top: mockData, userRank };
+        leaderboardCache.timestamp = now;
+        
+        renderLeaderboard(leaderboardCache.data);
+        return;
+    }
+    
+    if (db) {
+        try {
+            const snapshot = await db.collection('users')
+                .orderBy('totalEarned', 'desc')
+                .limit(10)
+                .get();
+            
+            const topUsers = [];
+            snapshot.forEach((doc, index) => {
+                const data = doc.data();
+                topUsers.push({
+                    rank: index + 1,
+                    name: data.username || 'Miner',
+                    earnings: data.totalEarned || 0
+                });
+            });
+            
+            const userRank = topUsers.findIndex(u => u.name === userName) + 1;
+            
+            leaderboardCache.data = { top: topUsers, userRank: userRank > 0 ? userRank : 24 };
+            leaderboardCache.timestamp = now;
+            
+            renderLeaderboard(leaderboardCache.data);
+            
+        } catch (e) {
+            console.error('Error fetching leaderboard:', e);
+        }
+    }
+}
+
+function renderLeaderboard(data) {
+    const leaderboardEl = document.getElementById('leaderboard');
+    if (!leaderboardEl) return;
+    
+    let html = '';
+    
+    data.top.forEach((user, index) => {
+        let medalClass = '';
+        if (index === 0) medalClass = 'gold';
+        else if (index === 1) medalClass = 'silver';
+        else if (index === 2) medalClass = 'bronze';
+        
+        html += `
+            <div class="leaderboard-item ${medalClass}">
+                <span class="rank">${user.rank === 1 ? '🥇' : user.rank === 2 ? '🥈' : user.rank === 3 ? '🥉' : user.rank}</span>
+                <span class="name">${user.name}</span>
+                <span class="earnings">${formatTON(user.earnings)} TON</span>
+            </div>
+        `;
+    });
+    
+    html += `
+        <div class="leaderboard-item you">
+            <span class="rank">${data.userRank}</span>
+            <span class="name" id="leaderboardYou">You</span>
+            <span class="earnings" id="yourEarnings">${formatTON(userData.totalEarned)} TON</span>
+        </div>
+    `;
+    
+    leaderboardEl.innerHTML = html;
+}
+
+function updatePrices() {
+    renderAssets();
+}
+
+// ====== 38. ADMIN FUNCTIONS ======
 let currentAdminTab = 'withdrawals';
 
 function showAdminPanel() {
@@ -3654,7 +3993,7 @@ function copyToClipboard(text) {
     showToast('Copied to clipboard!', 'success');
 }
 
-// ====== 31. PAGE NAVIGATION ======
+// ====== 39. PAGE NAVIGATION ======
 let currentPage = 'mining';
 
 function showPage(page) {
@@ -3693,7 +4032,6 @@ function updateChart() {
     const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     const earnings = [];
     
-    // Get last 7 days earnings from transactions
     const today = new Date();
     for (let i = 6; i >= 0; i--) {
         const day = new Date(today);
@@ -3718,7 +4056,7 @@ function updateChart() {
     }).join('');
 }
 
-// ====== 32. SAVE TO FIREBASE (غير متكرر) ======
+// ====== 40. SAVE TO FIREBASE ======
 async function saveToFirebase() {
     if (!db) return;
     
@@ -3740,7 +4078,9 @@ async function saveToFirebase() {
             referrals: userData.referrals,
             referralEarnings: userData.referralEarnings,
             referralCount: userData.referralCount,
-            referralMiningTrack: userData.referralMiningTrack,
+            referralMilestonesClaimed: userData.referralMilestonesClaimed,
+            autoClicker: userData.autoClicker,
+            wheel: userData.wheel,
             achievements: userData.achievements,
             lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
         }, { merge: true });
@@ -3749,7 +4089,7 @@ async function saveToFirebase() {
     }
 }
 
-// ====== 33. MODAL FUNCTIONS ======
+// ====== 41. MODAL FUNCTIONS ======
 function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
@@ -3782,7 +4122,8 @@ function hideAllModals() {
         'adminModal',
         'referralModal',
         'swapModal',
-        'currencySelectorModal'
+        'currencySelectorModal',
+        'wheelModal'
     ];
     
     modals.forEach(modalId => {
@@ -3795,7 +4136,7 @@ function hideAllModals() {
     console.log("✅ All modals hidden on startup");
 }
 
-// ====== 34. FILTER MARKET ======
+// ====== 42. FILTER MARKET ======
 function filterMarket(filter) {
     document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
     event.target.classList.add('active');
@@ -3816,9 +4157,9 @@ function filterMarket(filter) {
     });
 }
 
-// ====== 35. INITIALIZATION ======
+// ====== 43. INITIALIZATION ======
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log("🚀 TON MINING PRO v15.0 starting...");
+    console.log("🚀 TON MINING PRO v17.0 starting...");
     
     hideAllModals();
     
@@ -3847,6 +4188,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     setupScrollListener();
     
+    // Auto-clicker floating button (appears every 5 minutes)
+    setInterval(() => {
+        if (!userData.autoClicker || !userData.autoClicker.active) {
+            showFloatingAutoClicker();
+        }
+    }, 300000); // 5 minutes
+    
     setTimeout(() => {
         document.getElementById('loading').style.opacity = '0';
         setTimeout(() => {
@@ -3859,10 +4207,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     setTimeout(() => showRandomSticker(), 1000);
     
     console.log("✅ App initialized with ZERO WASTE architecture");
-    console.log("✅ 6 currencies supported: TON, USDT, BNB, BTC, ETH, SOL");
-    console.log("✅ Referral system: 0.005 TON + 20% mining bonus");
-    console.log("✅ Real stats from user data");
-    console.log("✅ Ready for 50,000+ users with minimal cost");
+    console.log("✅ 6 currencies supported");
+    console.log("✅ Lucky Wheel with 25+ prizes");
+    console.log("✅ Auto-Clicker system");
+    console.log("✅ Referral system with USDT milestones");
 });
 
 function setupScrollListener() {
@@ -3878,6 +4226,17 @@ function setupScrollListener() {
     });
 }
 
+function showFloatingAutoClicker() {
+    const btn = document.getElementById('autoClickerFloat');
+    if (btn) {
+        btn.classList.add('show');
+        setTimeout(() => {
+            btn.classList.remove('show');
+        }, 10000);
+    }
+}
+
+// ====== 44. PERIODIC SAVES ======
 setInterval(() => {
     if (userData) {
         saveUserToCache();
@@ -3890,6 +4249,7 @@ setInterval(() => {
     }
 }, 300000);
 
+// ====== 45. WINDOW EVENTS ======
 window.addEventListener('beforeunload', () => {
     stopMining();
     stopFloatingNotifications();
@@ -3909,7 +4269,7 @@ document.addEventListener('visibilitychange', () => {
     }
 });
 
-// ====== 36. EXPORT FUNCTIONS ======
+// ====== 46. EXPORT FUNCTIONS ======
 window.showPage = showPage;
 window.showMarket = showMarket;
 window.showWallet = showWallet;
@@ -3918,6 +4278,9 @@ window.showNotifications = showNotifications;
 window.showDepositModal = showDepositModal;
 window.showWithdrawModal = showWithdrawModal;
 window.showSwapModal = showSwapModal;
+window.showWheelModal = showWheelModal;
+window.spinWheel = spinWheel;
+window.buyAutoClicker = buyAutoClicker;
 window.showReferralDetails = showReferralDetails;
 window.showAdminPanel = showAdminPanel;
 window.closeModal = closeModal;
@@ -3954,7 +4317,10 @@ window.refreshAdminPanel = refreshAdminPanel;
 window.approveRequest = approveRequest;
 window.rejectRequest = rejectRequest;
 window.copyToClipboard = copyToClipboard;
+window.handleAvatarClick = handleAvatarClick;
 
 console.log("✅ All systems ready. Legendary status achieved!");
 console.log("✅ Supported currencies:", Object.keys(CONFIG.DEPOSIT_ADDRESSES).join(", "));
-console.log("✅ Referral bonus: 0.005 TON + 20% mining commission");
+console.log("✅ Referral milestones: 3 → 1000 referrals");
+console.log("✅ Lucky Wheel: 25+ prizes, jackpot every 12 spins");
+console.log("✅ Auto-Clicker: 0.5 TON for 24h");
