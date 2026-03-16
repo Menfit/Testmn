@@ -1,6 +1,7 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v50.0
-// ZERO WASTE ARCHITECTURE - 50K+ USERS READY
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v60.0
+// ZERO WASTE ARCHITECTURE - 100K+ USERS READY
+// مع كل الميزات + الإضافات الجديدة
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -35,6 +36,13 @@ const CONFIG = {
         storageBucket: "ton-71a00.firebasestorage.app",
         messagingSenderId: "97952285427",
         appId: "1:97952285427:web:e7704e52fd108bdabded86"
+    },
+    
+    COLLECTIONS: {
+        USERS: 'users',
+        DEPOSITS: 'deposits',
+        WITHDRAWALS: 'withdrawals',
+        TRANSACTIONS: 'transactions'
     },
     
     DEPOSIT_ADDRESSES: {
@@ -91,13 +99,13 @@ const CONFIG = {
         SLOTS_FREE_SPIN_INTERVAL: 12 * 60 * 60 * 1000,
         SLOTS_WIN_RATE: 0.70, // 70% فرصة فوز!
         
-        // باقات السلوت
+        // باقات السلوت (شراء فقط عبر تليجرام)
         SLOTS_PACK_5: { spins: 5, price: 0.75, bonus: 0 },
         SLOTS_PACK_10: { spins: 10, price: 1.5, bonus: 1 },
         SLOTS_PACK_50: { spins: 50, price: 7.5, bonus: 5 },
         SLOTS_PACK_100: { spins: 100, price: 15, bonus: 10 },
         
-        // باقات العجلة
+        // باقات العجلة (شراء فقط عبر تليجرام)
         WHEEL_PACK_5: { spins: 5, price: 1.25, bonus: 0 },
         WHEEL_PACK_10: { spins: 10, price: 2.5, bonus: 1 },
         WHEEL_PACK_50: { spins: 50, price: 12.5, bonus: 5 },
@@ -171,6 +179,8 @@ const translations = {
         'casino.price': 'Price',
         'casino.turbo': 'Turbo Spin',
         'casino.packs': 'Packs',
+        'casino.spinsLeft': 'spins left',
+        'casino.yourSpins': 'Your Spins',
         
         // Slot Machine
         'slots.title': 'Slot Machine',
@@ -179,20 +189,30 @@ const translations = {
         'slots.free': 'FREE',
         'slots.price': '0.15 TON',
         'slots.turboPrice': '0.30 TON',
-        'slots.win': 'You won {amount} {currency}!',
-        'slots.jackpot': '🎰 JACKPOT! You won {amount} {currency}!',
+        'slots.win': '🎰 YOU WON {amount} {currency}!',
+        'slots.bigwin': '🎰🎰 BIG WIN! {amount} {currency}!',
+        'slots.jackpot': '🎰🎰🎰 JACKPOT! {amount} {currency}!',
         'slots.pack5': '5 Spins',
         'slots.pack10': '10 Spins +1',
         'slots.pack50': '50 Spins +5',
         'slots.pack100': '100 Spins +10',
+        'slots.bought': '✅ Purchased {spins} spins!',
         
         // Lucky Wheel
         'wheel.title': 'Lucky Wheel',
         'wheel.spin': 'SPIN',
         'wheel.free': 'FREE',
         'wheel.price': '0.25 TON',
-        'wheel.win': 'You won {prize}!',
-        'wheel.jackpot': '🎡 JACKPOT! You won {amount} TON!',
+        'wheel.win': '🎡 YOU WON {prize}!',
+        'wheel.bigwin': '🎡🎡 BIG WIN! {prize}!',
+        'wheel.jackpot': '🎡🎡🎡 JACKPOT! {amount} TON!',
+        'wheel.pack5': '5 Spins',
+        'wheel.pack10': '10 Spins +1',
+        'wheel.pack50': '50 Spins +5',
+        'wheel.pack100': '100 Spins +10',
+        'wheel.spinsLeft': '{count} spins until jackpot',
+        'wheel.jackpotTimer': '{count}/{total}',
+        'wheel.streak': '{days} DAYS | BEST: {best}',
         
         // Profile
         'profile.title': 'My Profile',
@@ -226,11 +246,41 @@ const translations = {
         'notif.slotsWin': '🎰 You won {amount} {currency}!',
         'notif.slotsJackpot': '🎰🎰🎰 JACKPOT! You won {amount} {currency}!',
         'notif.autoClickerBought': '🤖 Auto Miner activated for 15 days!',
+        'notif.depositSubmitted': '✅ Deposit request submitted!',
+        'notif.withdrawSubmitted': '✅ Withdrawal request submitted!',
+        'notif.depositApproved': '✅ Your deposit of {amount} {currency} has been approved!',
+        'notif.depositRejected': '❌ Your deposit was rejected: {reason}',
+        'notif.withdrawApproved': '✅ Your withdrawal of {amount} {currency} has been approved!',
+        'notif.withdrawRejected': '❌ Your withdrawal was rejected: {reason}',
+        
+        // Admin
+        'admin.clickRefresh': 'Click refresh to load pending requests',
+        'admin.refresh': 'Refresh',
+        'admin.password': 'Enter Admin Password',
+        'admin.wrongPassword': 'Wrong password',
+        'admin.noPending': 'No pending requests',
+        'admin.error': 'Error loading requests',
         
         // Errors
         'error.insufficientBalance': 'Insufficient {currency} balance',
         'error.invalidAddress': 'Invalid {currency} address',
-        'error.paymentFailed': 'Payment failed'
+        'error.paymentFailed': 'Payment failed',
+        'error.minDeposit': 'Minimum deposit is {min} {currency}',
+        'error.invalidHash': 'Invalid transaction hash',
+        'error.hashUsed': 'Transaction hash already used',
+        'error.enterAmount': 'Please enter a valid amount',
+        
+        // Pack Purchase
+        'pack.buy': 'Buy Pack',
+        'pack.confirm': 'Confirm purchase of {spins} spins for {price} TON?',
+        'pack.telegramPay': 'Payment via Telegram Stars',
+        'pack.success': '✅ Successfully purchased {spins} spins!',
+        'pack.insufficient': 'Insufficient balance. Payment via Telegram required.',
+        
+        // Win Popups
+        'win.normal': '🎉 YOU WON!',
+        'win.big': '🌟🌟 BIG WIN! 🌟🌟',
+        'win.jackpot': '🎰🎰🎰 JACKPOT! 🎰🎰🎰'
     },
     ar: {
         'app.name': 'كازينو تعدين TON',
@@ -271,6 +321,8 @@ const translations = {
         'casino.price': 'السعر',
         'casino.turbo': 'سبين سريع',
         'casino.packs': 'باقات',
+        'casino.spinsLeft': 'لفة متبقية',
+        'casino.yourSpins': 'لفاتك',
         
         // Slot Machine
         'slots.title': 'آلة السلوت',
@@ -279,20 +331,30 @@ const translations = {
         'slots.free': 'مجاني',
         'slots.price': '0.15 TON',
         'slots.turboPrice': '0.30 TON',
-        'slots.win': 'فزت بـ {amount} {currency}!',
-        'slots.jackpot': '🎰 جاكبوت! فزت بـ {amount} {currency}!',
+        'slots.win': '🎰 فزت بـ {amount} {currency}!',
+        'slots.bigwin': '🎰🎰 فوز كبير! {amount} {currency}!',
+        'slots.jackpot': '🎰🎰🎰 جاكبوت! {amount} {currency}!',
         'slots.pack5': '5 لفات',
         'slots.pack10': '10 لفات +1',
         'slots.pack50': '50 لفة +5',
         'slots.pack100': '100 لفة +10',
+        'slots.bought': '✅ تم شراء {spins} لفة!',
         
         // Lucky Wheel
         'wheel.title': 'عجلة الحظ',
         'wheel.spin': 'دوران',
         'wheel.free': 'مجاني',
         'wheel.price': '0.25 TON',
-        'wheel.win': 'فزت بـ {prize}!',
-        'wheel.jackpot': '🎡 جاكبوت! فزت بـ {amount} TON!',
+        'wheel.win': '🎡 فزت بـ {prize}!',
+        'wheel.bigwin': '🎡🎡 فوز كبير! {prize}!',
+        'wheel.jackpot': '🎡🎡🎡 جاكبوت! {amount} TON!',
+        'wheel.pack5': '5 لفات',
+        'wheel.pack10': '10 لفات +1',
+        'wheel.pack50': '50 لفة +5',
+        'wheel.pack100': '100 لفة +10',
+        'wheel.spinsLeft': '{count} لفة حتى الجاكبوت',
+        'wheel.jackpotTimer': '{count}/{total}',
+        'wheel.streak': '{days} يوم | الأفضل: {best}',
         
         // Profile
         'profile.title': 'ملفي الشخصي',
@@ -326,11 +388,41 @@ const translations = {
         'notif.slotsWin': '🎰 فزت بـ {amount} {currency}!',
         'notif.slotsJackpot': '🎰🎰🎰 جاكبوت! فزت بـ {amount} {currency}!',
         'notif.autoClickerBought': '🤖 تم تفعيل المنجم الآلي!',
+        'notif.depositSubmitted': '✅ تم تقديم طلب الإيداع!',
+        'notif.withdrawSubmitted': '✅ تم تقديم طلب السحب!',
+        'notif.depositApproved': '✅ تمت الموافقة على إيداع {amount} {currency}!',
+        'notif.depositRejected': '❌ تم رفض الإيداع: {reason}',
+        'notif.withdrawApproved': '✅ تمت الموافقة على سحب {amount} {currency}!',
+        'notif.withdrawRejected': '❌ تم رفض السحب: {reason}',
+        
+        // Admin
+        'admin.clickRefresh': 'اضغط تحديث لتحميل الطلبات',
+        'admin.refresh': 'تحديث',
+        'admin.password': 'أدخل كلمة سر المشرف',
+        'admin.wrongPassword': 'كلمة سر خاطئة',
+        'admin.noPending': 'لا توجد طلبات معلقة',
+        'admin.error': 'خطأ في تحميل الطلبات',
         
         // Errors
         'error.insufficientBalance': 'رصيد {currency} غير كافٍ',
         'error.invalidAddress': 'عنوان {currency} غير صالح',
-        'error.paymentFailed': 'فشل الدفع'
+        'error.paymentFailed': 'فشل الدفع',
+        'error.minDeposit': 'الحد الأدنى للإيداع {min} {currency}',
+        'error.invalidHash': 'هاش معاملة غير صالح',
+        'error.hashUsed': 'هاش المعاملة مستخدم بالفعل',
+        'error.enterAmount': 'الرجاء إدخال مبلغ صحيح',
+        
+        // Pack Purchase
+        'pack.buy': 'شراء الباقة',
+        'pack.confirm': 'تأكيد شراء {spins} لفة بـ {price} TON؟',
+        'pack.telegramPay': 'الدفع عبر نجوم تليجرام',
+        'pack.success': '✅ تم شراء {spins} لفة بنجاح!',
+        'pack.insufficient': 'رصيد غير كاف. الدفع عبر تليجرام مطلوب.',
+        
+        // Win Popups
+        'win.normal': '🎉 فزت!',
+        'win.big': '🌟🌟 فوز كبير! 🌟🌟',
+        'win.jackpot': '🎰🎰🎰 جاكبوت! 🎰🎰🎰'
     }
 };
 
@@ -458,30 +550,24 @@ const REFERRAL_MILESTONES = [
     { referrals: 1000, reward: 1200, unit: 'USDT' }
 ];
 
-// ====== 8. WHEEL PRIZES ======
+// ====== 8. WHEEL PRIZES (16 قطاع مثل الصورة) ======
 const WHEEL_PRIZES = [
-    { id: 1, type: 'TON', amount: 0.25, color: '#0088cc', weight: 10, icon: '💰' },
-    { id: 2, type: 'TON', amount: 0.5, color: '#0088cc', weight: 9, icon: '💰' },
-    { id: 3, type: 'TON', amount: 1, color: '#0088cc', weight: 8, icon: '💰' },
-    { id: 4, type: 'TON', amount: 2, color: '#0088cc', weight: 7, icon: '💰' },
-    { id: 5, type: 'TON', amount: 5, color: '#0088cc', weight: 6, icon: '💰' },
-    { id: 6, type: 'TON', amount: 10, color: '#0088cc', weight: 5, icon: '💰' },
-    { id: 7, type: 'TON', amount: 25, color: '#0088cc', weight: 4, icon: '💰' },
-    { id: 8, type: 'TON', amount: 50, color: '#0088cc', weight: 3, icon: '💰' },
-    { id: 9, type: 'TON', amount: 100, color: '#0088cc', weight: 2, icon: '💰' },
-    { id: 10, type: 'USDT', amount: 0.25, color: '#22c55e', weight: 10, icon: '💵' },
-    { id: 11, type: 'USDT', amount: 0.5, color: '#22c55e', weight: 9, icon: '💵' },
-    { id: 12, type: 'USDT', amount: 1, color: '#22c55e', weight: 8, icon: '💵' },
-    { id: 13, type: 'USDT', amount: 2, color: '#22c55e', weight: 7, icon: '💵' },
-    { id: 14, type: 'USDT', amount: 5, color: '#22c55e', weight: 6, icon: '💵' },
-    { id: 15, type: 'USDT', amount: 10, color: '#22c55e', weight: 5, icon: '💵' },
-    { id: 16, type: 'USDT', amount: 25, color: '#22c55e', weight: 4, icon: '💵' },
-    { id: 17, type: 'USDT', amount: 50, color: '#22c55e', weight: 3, icon: '💵' },
-    { id: 18, type: 'USDT', amount: 100, color: '#22c55e', weight: 2, icon: '💵' },
-    { id: 19, type: 'SPIN', amount: 1, color: '#ff44cc', weight: 5, icon: '🔄' },
-    { id: 20, type: 'NOTHING', amount: 0, color: '#94a3b8', weight: 40, icon: '😢' },
-    { id: 21, type: 'AUTO', amount: 1, color: '#00f2ff', weight: 2, icon: '🤖' },
-    { id: 22, type: 'JACKPOT', amount: 100, color: '#ff4444', weight: 1, icon: '👑', jackpot: true }
+    { id: 1, type: 'TON', amount: 0.25, color: '#0088cc', weight: 10, icon: '💰', label: '0.25' },
+    { id: 2, type: 'TON', amount: 0.5, color: '#0088cc', weight: 9, icon: '💰', label: '0.5' },
+    { id: 3, type: 'TON', amount: 1, color: '#0088cc', weight: 8, icon: '💰', label: '1' },
+    { id: 4, type: 'TON', amount: 2, color: '#0088cc', weight: 7, icon: '💰', label: '2' },
+    { id: 5, type: 'TON', amount: 5, color: '#0088cc', weight: 6, icon: '💰', label: '5' },
+    { id: 6, type: 'TON', amount: 10, color: '#0088cc', weight: 5, icon: '💰', label: '10' },
+    { id: 7, type: 'TON', amount: 25, color: '#0088cc', weight: 4, icon: '💰', label: '25' },
+    { id: 8, type: 'TON', amount: 50, color: '#0088cc', weight: 3, icon: '💰', label: '50' },
+    { id: 9, type: 'TON', amount: 100, color: '#0088cc', weight: 2, icon: '💰', label: '100' },
+    { id: 10, type: 'USDT', amount: 0.25, color: '#22c55e', weight: 10, icon: '💵', label: '0.25' },
+    { id: 11, type: 'USDT', amount: 0.5, color: '#22c55e', weight: 9, icon: '💵', label: '0.5' },
+    { id: 12, type: 'USDT', amount: 1, color: '#22c55e', weight: 8, icon: '💵', label: '1' },
+    { id: 13, type: 'USDT', amount: 2, color: '#22c55e', weight: 7, icon: '💵', label: '2' },
+    { id: 14, type: 'USDT', amount: 5, color: '#22c55e', weight: 6, icon: '💵', label: '5' },
+    { id: 15, type: 'USDT', amount: 10, color: '#22c55e', weight: 5, icon: '💵', label: '10' },
+    { id: 16, type: 'JACKPOT', amount: 100, color: '#ff4444', weight: 1, icon: '👑', label: 'JACKPOT', jackpot: true }
 ];
 
 // ====== 9. SLOTS PRIZES ======
@@ -565,12 +651,12 @@ function handleAvatarClick() {
     adminClickCount++;
     lastAdminClick = now;
     if (adminClickCount >= 5) {
-        const pwd = prompt(t('admin.password') || 'Enter Admin Password');
+        const pwd = prompt(t('admin.password'));
         if (pwd === CONFIG.TON.ADMIN_PASSWORD) {
             isAdmin = true;
             checkAdminAndAddCrown();
             showAdminPanel();
-        } else if (pwd) showToast('Wrong password', 'error');
+        } else if (pwd) showToast(t('admin.wrongPassword'), 'error');
     }
 }
 
@@ -584,7 +670,8 @@ const CACHE_KEYS = {
     LEADERBOARD: 'leaderboard_cache',
     WHEEL: `wheel_${userId}`,
     SLOTS: `slots_${userId}`,
-    AUTO_CLICKER: `autoclicker_${userId}`
+    AUTO_CLICKER: `autoclicker_${userId}`,
+    BACKUPS: 'user_backups'
 };
 
 // ====== 14. USER STATE ======
@@ -609,7 +696,7 @@ let userData = {
     upgrades: 0,
     autoClicker: { active: false, expiry: 0, lastAutoClaim: 0 },
     
-    // Wheel data
+    // Wheel data - مع تتبع اللفات المشتراة
     wheel: { 
         spinsToday: 0, 
         lastFreeSpin: 0, 
@@ -618,16 +705,18 @@ let userData = {
         jackpotWon: 0, 
         lastWin: null, 
         spinHistory: [],
+        purchasedSpins: 0, // اللفات المشتراة (تظهر للمستخدم)
         packs: { p5: 0, p10: 0, p50: 0, p100: 0 }
     },
     
-    // Slots data
+    // Slots data - مع تتبع اللفات المشتراة
     slots: { 
         spinsToday: 0, 
         lastFreeSpin: 0, 
         totalSpins: 0, 
         lastWin: null, 
         spinHistory: [],
+        purchasedSpins: 0, // اللفات المشتراة (تظهر للمستخدم)
         packs: { p5: 0, p10: 0, p50: 0, p100: 0 }
     },
     
@@ -667,12 +756,11 @@ function loadUserFromCache() {
         const cached = localStorage.getItem(CACHE_KEYS.USER);
         if (cached) {
             const data = JSON.parse(cached);
-            if (Date.now() - data._timestamp < CONFIG.CACHE.USER_TTL) {
-                Object.assign(userData, data);
-                userData.balance = userData.balances.TON;
-                console.log("✅ User loaded from cache");
-                return true;
-            }
+            // نستخدم البيانات المحلية فوراً (حتى لو قديمة)
+            Object.assign(userData, data);
+            userData.balance = userData.balances.TON;
+            console.log("✅ User loaded from cache");
+            return true;
         }
     } catch (e) {}
     return false;
@@ -681,6 +769,8 @@ function loadUserFromCache() {
 function saveUserToCache() {
     try {
         localStorage.setItem(CACHE_KEYS.USER, JSON.stringify({ ...userData, _timestamp: Date.now() }));
+        // نعمل نسخة احتياطية أيضاً
+        backupUserData();
     } catch (e) {}
 }
 
@@ -710,6 +800,41 @@ function saveLocalNotifications(notes) {
     try {
         localStorage.setItem(CACHE_KEYS.NOTIFICATIONS, JSON.stringify(notes));
     } catch {}
+}
+
+// نظام النسخ الاحتياطي (آخر 3 نسخ)
+function backupUserData() {
+    try {
+        const backups = JSON.parse(localStorage.getItem(CACHE_KEYS.BACKUPS) || '[]');
+        backups.unshift({
+            data: userData,
+            timestamp: Date.now()
+        });
+        // نحتفظ بآخر 3 نسخ فقط
+        if (backups.length > 3) backups.pop();
+        localStorage.setItem(CACHE_KEYS.BACKUPS, JSON.stringify(backups));
+        console.log("💾 Backup created");
+    } catch (e) {}
+}
+
+function restoreFromBackup() {
+    try {
+        const backups = JSON.parse(localStorage.getItem(CACHE_KEYS.BACKUPS) || '[]');
+        if (backups.length === 0) {
+            showToast("No backups found", "error");
+            return false;
+        }
+        const latest = backups[0];
+        Object.assign(userData, latest.data);
+        userData.balance = userData.balances.TON;
+        saveUserToCache();
+        updateUI();
+        showToast("✅ Data restored from backup!", "success");
+        return true;
+    } catch (e) {
+        showToast("❌ Failed to restore backup", "error");
+        return false;
+    }
 }
 
 // ====== 16. ON-DEMAND LISTENERS (30 ثانية فقط!) ======
@@ -776,66 +901,88 @@ function stopAllListeners() {
     listenerTimeouts.clear();
 }
 
-// ====== 17. LOAD USER DATA (مع الكاش) ======
+// ====== 17. LOAD USER DATA (نسخة REFI - آمنة) ======
 async function loadUserData(force = false) {
-    if (!force && loadUserFromCache()) {
-        updateUI();
-        return;
-    }
-    
-    if (db) {
-        try {
-            const doc = await db.collection('users').doc(userId).get();
-            if (doc.exists) {
-                const fbData = doc.data();
-                Object.assign(userData, fbData);
+    try {
+        console.log("📂 Loading user data for:", userId);
+        
+        // ====== 1️⃣ دائماً نستخدم localStorage فوراً ======
+        const localData = localStorage.getItem(CACHE_KEYS.USER);
+        if (localData) {
+            try {
+                const parsed = JSON.parse(localData);
+                Object.assign(userData, parsed);
                 userData.balance = userData.balances.TON;
-                
-                // دمج المعاملات المحلية مع Firebase
-                const localTxs = loadLocalTransactions();
-                const fbTxs = fbData.transactions || [];
-                const txMap = new Map();
-                [...localTxs, ...fbTxs].forEach(tx => {
-                    const key = tx.firebaseId || `${tx.timestamp}_${tx.type}`;
-                    txMap.set(key, tx);
-                });
-                userData.transactions = Array.from(txMap.values());
-                saveLocalTransactions(userData.transactions);
-                
-                // دمج الإشعارات
-                const localNotes = loadLocalNotifications();
-                const fbNotes = fbData.notifications || [];
-                const noteMap = new Map();
-                [...localNotes, ...fbNotes].forEach(n => noteMap.set(n.id, n));
-                userData.notifications = Array.from(noteMap.values());
-                saveLocalNotifications(userData.notifications);
-                
-            } else {
-                userData.referralCode = generateReferralCode();
-                userData.createdAt = Date.now();
-                await db.collection('users').doc(userId).set({
-                    ...userData,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-            }
-        } catch (e) {
-            console.error('Firebase error:', e);
+                console.log("📦 Using localStorage data immediately");
+                updateUI(); // نحدث الواجهة فوراً
+            } catch (e) {}
         }
-    } else {
-        userData.transactions = loadLocalTransactions();
-        userData.notifications = loadLocalNotifications();
-        if (!userData.referralCode) userData.referralCode = generateReferralCode();
+        
+        // ====== 2️⃣ نحاول التحديث من Firebase في الخلفية ======
+        if (db && !force) {
+            try {
+                const doc = await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).get();
+                
+                if (doc.exists) {
+                    const fbData = doc.data();
+                    
+                    // دمج البيانات (نحتفظ بالتغييرات المحلية)
+                    Object.assign(userData, fbData);
+                    userData.balance = userData.balances.TON;
+                    
+                    // دمج المعاملات
+                    const localTxs = loadLocalTransactions();
+                    const fbTxs = fbData.transactions || [];
+                    const txMap = new Map();
+                    [...localTxs, ...fbTxs].forEach(tx => {
+                        const key = tx.firebaseId || `${tx.timestamp}_${tx.type}`;
+                        txMap.set(key, tx);
+                    });
+                    userData.transactions = Array.from(txMap.values());
+                    saveLocalTransactions(userData.transactions);
+                    
+                    // دمج الإشعارات
+                    const localNotes = loadLocalNotifications();
+                    const fbNotes = fbData.notifications || [];
+                    const noteMap = new Map();
+                    [...localNotes, ...fbNotes].forEach(n => noteMap.set(n.id, n));
+                    userData.notifications = Array.from(noteMap.values());
+                    saveLocalNotifications(userData.notifications);
+                    
+                    // حفظ في localStorage
+                    saveUserToCache();
+                    lastUserLoadTime = Date.now();
+                    
+                    updateUI(); // نحدث مرة أخرى ببيانات Firebase
+                    console.log("✅ Updated from Firebase");
+                } else {
+                    // مستخدم جديد
+                    if (!localData) {
+                        userData.referralCode = generateReferralCode();
+                        userData.createdAt = Date.now();
+                        await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).set({
+                            ...userData,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                        saveUserToCache();
+                    }
+                }
+            } catch (e) {
+                console.error('Firebase error, using cached data only:', e);
+                // حتى لو فشل Firebase، البيانات المحلية موجودة!
+            }
+        }
+        
+        // معالجة الإحالة
+        if (hasReferralCode() && !userData.referredBy) await processReferral();
+        
+        updateNotificationBadge();
+        checkAdminAndAddCrown();
+        checkDailyLogin();
+        
+    } catch (error) {
+        console.error("❌ Error loading user data:", error);
     }
-    
-    lastUserLoadTime = Date.now();
-    saveUserToCache();
-    
-    if (hasReferralCode() && !userData.referredBy) await processReferral();
-    
-    updateUI();
-    updateNotificationBadge();
-    checkAdminAndAddCrown();
-    checkDailyLogin();
 }
 
 // ====== 18. REFERRAL SYSTEM ======
@@ -874,7 +1021,7 @@ async function processReferral() {
     }
     
     try {
-        const referrerQuery = await db.collection('users').where('referralCode', '==', referralCode).limit(1).get();
+        const referrerQuery = await db.collection(CONFIG.COLLECTIONS.USERS).where('referralCode', '==', referralCode).limit(1).get();
         if (!referrerQuery.empty) {
             const referrerDoc = referrerQuery.docs[0];
             const referrerId = referrerDoc.id;
@@ -883,7 +1030,7 @@ async function processReferral() {
             if (referrerId === userId) return;
             if (referrerData.referrals?.includes(userId)) return;
             
-            await db.collection('users').doc(referrerId).update({
+            await db.collection(CONFIG.COLLECTIONS.USERS).doc(referrerId).update({
                 referrals: [...(referrerData.referrals || []), userId],
                 referralCount: (referrerData.referralCount || 0) + 1,
                 'balances.TON': firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS),
@@ -896,7 +1043,7 @@ async function processReferral() {
             userData.totalEarned += CONFIG.ECONOMY.REFERRAL_BONUS;
             userData.referralEarnings += CONFIG.ECONOMY.REFERRAL_BONUS;
             
-            await db.collection('users').doc(userId).update({
+            await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).update({
                 referredBy: referralCode,
                 'balances.TON': userData.balances.TON
             });
@@ -922,7 +1069,7 @@ async function processReferralMiningBonus(referralId, miningAmount) {
     saveUserToCache();
     
     try {
-        await db.collection('users').doc(userId).update({
+        await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).update({
             'balances.TON': userData.balances.TON,
             totalEarned: userData.totalEarned,
             referralEarnings: userData.referralEarnings
@@ -950,7 +1097,7 @@ async function checkReferralMilestones() {
             addLocalNotification(`🏆 You reached ${milestone.referrals} referrals! Earned ${milestone.reward} USDT!`, 'success');
             
             if (db) {
-                await db.collection('users').doc(userId).update({
+                await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).update({
                     'balances.USDT': userData.balances.USDT,
                     referralMilestonesClaimed: userData.referralMilestonesClaimed
                 }).catch(console.error);
@@ -1013,7 +1160,7 @@ async function addNotification(targetUserId, message, type = 'info') {
     
     if (db && targetUserId !== userId) {
         try {
-            await db.collection('users').doc(targetUserId).update({
+            await db.collection(CONFIG.COLLECTIONS.USERS).doc(targetUserId).update({
                 notifications: firebase.firestore.FieldValue.arrayUnion({
                     id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
                     message, type, read: false, timestamp: new Date().toISOString()
@@ -1328,42 +1475,57 @@ function hapticFeedback(type = 'light') {
     }
 }
 
-// ====== 27. WIN POPUP (رسائل فوز) ======
+// ====== 27. WIN POPUP (رسائل فوز احترافية) ======
 function showWinPopup(prize, type = 'normal') {
+    // إزالة أي popup سابق
+    const existing = document.querySelector('.win-popup');
+    if (existing) existing.remove();
+    
     const popup = document.createElement('div');
     popup.className = `win-popup ${type}`;
     
+    let icon = '🎉';
+    let title = t('win.normal');
+    let amount = prize;
+    
+    if (type === 'big') {
+        icon = '🌟🌟';
+        title = t('win.big');
+    } else if (type === 'jackpot') {
+        icon = '🎰🎰🎰';
+        title = t('win.jackpot');
+    }
+    
+    popup.innerHTML = `
+        <div class="win-icon">${icon}</div>
+        <div class="win-title">${title}</div>
+        <div class="win-amount">${amount}</div>
+        <div class="win-confetti"></div>
+    `;
+    
+    document.body.appendChild(popup);
+    
+    // تأكيد أن الـ z-index عالي
+    popup.style.zIndex = '10000';
+    
+    setTimeout(() => popup.classList.add('show'), 10);
+    
+    // إرتجاج حسب نوع الفوز
     if (type === 'jackpot') {
-        popup.innerHTML = `
-            <div class="jackpot-animation">
-                <div class="jackpot-text">🎰🎰🎰 JACKPOT! 🎰🎰🎰</div>
-                <div class="jackpot-amount">${prize}</div>
-            </div>
-        `;
         hapticFeedback('heavy');
+        // إضافة تأثير فلاش للشاشة
+        document.body.style.animation = 'jackpotFlash 0.5s 3';
+        setTimeout(() => document.body.style.animation = '', 1500);
     } else if (type === 'big') {
-        popup.innerHTML = `
-            <div class="big-win-animation">
-                <div class="win-text">🎉 BIG WIN! 🎉</div>
-                <div class="win-amount">${prize}</div>
-            </div>
-        `;
         hapticFeedback('medium');
     } else {
-        popup.innerHTML = `
-            <div class="win-animation">
-                <div class="win-amount">${prize}</div>
-            </div>
-        `;
         hapticFeedback('light');
     }
     
-    document.body.appendChild(popup);
-    setTimeout(() => popup.classList.add('show'), 10);
     setTimeout(() => {
         popup.classList.remove('show');
         setTimeout(() => popup.remove(), 300);
-    }, 2000);
+    }, 2500);
 }
 
 // ====== 28. MINING MANAGER ======
@@ -1450,7 +1612,7 @@ async function claim() {
     if (userData.referredBy) {
         try {
             if (db) {
-                const referrerQuery = await db.collection('users').where('referralCode', '==', userData.referredBy).limit(1).get();
+                const referrerQuery = await db.collection(CONFIG.COLLECTIONS.USERS).where('referralCode', '==', userData.referredBy).limit(1).get();
                 if (!referrerQuery.empty) await addReferralMiningBonus(referrerQuery.docs[0].id, reward);
             }
         } catch (e) {}
@@ -1469,7 +1631,7 @@ async function addReferralMiningBonus(referrerId, miningAmount) {
     if (!db) return;
     const bonus = miningAmount * CONFIG.ECONOMY.REFERRAL_PERCENT;
     try {
-        await db.collection('users').doc(referrerId).update({
+        await db.collection(CONFIG.COLLECTIONS.USERS).doc(referrerId).update({
             'balances.TON': firebase.firestore.FieldValue.increment(bonus),
             totalEarned: firebase.firestore.FieldValue.increment(bonus),
             referralEarnings: firebase.firestore.FieldValue.increment(bonus)
@@ -1887,42 +2049,45 @@ function updateAutoClickerUI() {
     } else if (statusEl) statusEl.style.display = 'none';
 }
 
-// ====== 33. WHEEL SYSTEM ======
+// ====== 33. WHEEL SYSTEM (مثل الصورة بالضبط) ======
 function showWheelModal() {
     const modal = document.getElementById('wheelModal');
-    if (modal) { updateWheelUI(); renderWheelSegments(); modal.classList.add('show'); }
+    if (modal) { 
+        updateWheelUI(); 
+        renderWheelSegments(); 
+        modal.classList.add('show');
+        
+        // تحديث عرض اللفات المشتراة
+        updatePurchasedSpinsDisplay();
+    }
 }
 
 function renderWheelSegments() {
     const wheel = document.getElementById('wheel');
     if (!wheel) return;
     wheel.innerHTML = '';
+    
     const totalSegments = 16;
     const angleStep = 360 / totalSegments;
-    const allPrizes = WHEEL_PRIZES.filter(p => p.type !== 'JACKPOT');
-    const jackpot = WHEEL_PRIZES.find(p => p.type === 'JACKPOT');
     
-    const selected = [jackpot];
-    const others = [...allPrizes];
-    while (selected.length < totalSegments && others.length > 0) {
-        const idx = Math.floor(Math.random() * others.length);
-        selected.push(others[idx]);
-        others.splice(idx, 1);
-    }
-    selected.sort(() => Math.random() - 0.5);
+    // ترتيب الجوائز (نضمن وجود الجاكبوت في قطاع واحد)
+    const allPrizes = WHEEL_PRIZES;
     
-    selected.forEach((p, i) => {
-        const seg = document.createElement('div');
-        seg.className = 'wheel-segment';
-        seg.style.transform = `rotate(${i * angleStep}deg)`;
-        seg.style.backgroundColor = p.color;
-        seg.innerHTML = `
-            <span class="wheel-icon">${p.icon || '🎰'}</span>
-            <span class="wheel-value">${p.type === 'NOTHING' ? '😢' : p.type === 'SPIN' ? '🔄' : p.type === 'AUTO' ? '🤖' : p.type === 'JACKPOT' ? '👑' : p.amount + (p.type === 'TON' ? ' TON' : ' USDT')}</span>
+    allPrizes.forEach((prize, index) => {
+        const segment = document.createElement('div');
+        segment.className = 'wheel-segment';
+        segment.style.transform = `rotate(${index * angleStep}deg)`;
+        segment.style.backgroundColor = prize.color;
+        
+        segment.innerHTML = `
+            <span class="wheel-icon">${prize.icon}</span>
+            <span class="wheel-value">${prize.label}</span>
         `;
-        wheel.appendChild(seg);
+        
+        wheel.appendChild(segment);
     });
     
+    // إضافة خطوط فاصلة
     for (let i = 0; i < totalSegments; i++) {
         const line = document.createElement('div');
         line.className = 'wheel-divider';
@@ -1935,14 +2100,27 @@ function updateWheelUI() {
     const spinsLeftEl = document.getElementById('wheelSpinsLeft');
     const freeSpinEl = document.getElementById('wheelFreeSpin');
     const jackpotCounterEl = document.getElementById('wheelJackpotCounter');
+    const streakDisplay = document.getElementById('wheelStreakDisplay');
     
     if (spinsLeftEl) {
         const left = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - (userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY);
-        spinsLeftEl.textContent = `${left} spins until jackpot`;
+        spinsLeftEl.textContent = t('wheel.spinsLeft', { count: left });
     }
+    
     if (jackpotCounterEl) {
-        jackpotCounterEl.textContent = `${userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY}/${CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY}`;
+        jackpotCounterEl.textContent = t('wheel.jackpotTimer', { 
+            count: userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY,
+            total: CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY
+        });
     }
+    
+    if (streakDisplay) {
+        streakDisplay.textContent = t('wheel.streak', { 
+            days: userData.streak, 
+            best: userData.longestStreak 
+        });
+    }
+    
     if (freeSpinEl) {
         const now = Date.now();
         const next = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
@@ -1953,14 +2131,31 @@ function updateWheelUI() {
             freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${h}h ${m}m`;
             freeSpinEl.classList.add('disabled');
         } else {
-            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> FREE`;
+            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> ${t('wheel.free')}`;
             freeSpinEl.classList.remove('disabled');
         }
     }
+    
+    // تحديث عرض اللفات المشتراة
+    updatePurchasedSpinsDisplay();
 }
 
-// ====== 34. WHEEL PACKS ======
-function buyWheelPack(pack) {
+function updatePurchasedSpinsDisplay() {
+    // عرض اللفات المشتراة في واجهة العجلة
+    const wheelSpinsDisplay = document.getElementById('wheelPurchasedSpins');
+    if (wheelSpinsDisplay) {
+        wheelSpinsDisplay.textContent = `${userData.wheel.purchasedSpins || 0} ${t('casino.spinsLeft')}`;
+    }
+    
+    // عرض اللفات المشتراة في واجهة السلوت
+    const slotsSpinsDisplay = document.getElementById('slotsPurchasedSpins');
+    if (slotsSpinsDisplay) {
+        slotsSpinsDisplay.textContent = `${userData.slots.purchasedSpins || 0} ${t('casino.spinsLeft')}`;
+    }
+}
+
+// ====== 34. WHEEL PACKS (شراء فقط عبر تليجرام) ======
+async function buyWheelPack(pack) {
     let spins, price, bonus;
     switch(pack) {
         case 'p5': spins = 5; price = CONFIG.ECONOMY.WHEEL_PACK_5.price; bonus = 0; break;
@@ -1970,79 +2165,81 @@ function buyWheelPack(pack) {
         default: return;
     }
     
-    if (userData.balances.TON < price) {
-        showToast(t('error.insufficientBalance', { currency: 'TON' }), 'error');
+    const totalSpins = spins + bonus;
+    
+    // تأكيد الشراء
+    if (!confirm(t('pack.confirm', { spins: totalSpins, price }))) {
         return;
     }
     
-    if (tg?.pay) {
-        // دفع عبر تليجرام
-        // سنفترض أن الدفع يتم هنا
+    // الدفع عبر تليجرام فقط (ليس من الرصيد الداخلي)
+    if (!tg?.pay) {
+        showToast(t('pack.telegramPay'), 'error');
+        return;
     }
     
-    userData.balances.TON -= price;
-    userData.balance = userData.balances.TON;
-    
-    if (!userData.wheel.packs) userData.wheel.packs = { p5: 0, p10: 0, p50: 0, p100: 0 };
-    userData.wheel.packs[pack] += spins + bonus;
-    
-    addTransaction('wheel_pack', price, { 
-        currency: 'TON', 
-        details: `Bought ${pack} pack: ${spins} spins + ${bonus} bonus` 
-    });
-    
-    saveUserToCache();
-    showToast(`✅ Purchased ${spins + bonus} wheel spins!`, 'success');
-    updateUI();
+    try {
+        showToast(t('messages.loading'), 'info');
+        
+        // محاولة الدفع عبر تليجرام
+        const result = await tg.pay(price.toString());
+        
+        if (result.success) {
+            // إضافة اللفات المشتراة
+            if (!userData.wheel.purchasedSpins) userData.wheel.purchasedSpins = 0;
+            userData.wheel.purchasedSpins += totalSpins;
+            
+            // تسجيل في الباقات أيضاً
+            if (!userData.wheel.packs) userData.wheel.packs = { p5: 0, p10: 0, p50: 0, p100: 0 };
+            userData.wheel.packs[pack] += totalSpins;
+            
+            addTransaction('wheel_pack', price, { 
+                currency: 'TON', 
+                details: `Bought ${pack} pack: ${spins} spins + ${bonus} bonus` 
+            });
+            
+            saveUserToCache();
+            showToast(t('pack.success', { spins: totalSpins }), 'success');
+            updatePurchasedSpinsDisplay();
+            updateUI();
+        } else {
+            showToast(t('error.paymentFailed'), 'error');
+        }
+    } catch (e) {
+        console.error("Payment error:", e);
+        showToast(t('error.paymentFailed'), 'error');
+    }
 }
 
 async function spinWheel(isFree = false) {
-    // التحقق من وجود لفات في الباقات
-    let spinsAvailable = 0;
-    if (!isFree && userData.wheel.packs) {
-        for (const [pack, count] of Object.entries(userData.wheel.packs)) {
-            spinsAvailable += count;
-        }
-    }
-    
-    if (!isFree && spinsAvailable === 0 && userData.balances.TON < CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
-        showToast(t('wheel.insufficient'), 'error');
-        return;
-    }
+    // التحقق من وجود لفات مشتراة (إذا لم تكن لفة مجانية)
+    let canSpin = false;
     
     if (isFree) {
+        // لفة مجانية: نتحقق من الوقت
         const now = Date.now();
         if (now < userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL) {
             const left = (userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL) - now;
             const h = Math.floor(left / 3600000);
             const m = Math.floor((left % 3600000) / 60000);
-            showToast(`Next free spin in ${h}h ${m}m`, 'warning');
+            showToast(t('wheel.wait', { time: `${h}h ${m}m` }), 'warning');
             return;
         }
+        canSpin = true;
         userData.wheel.lastFreeSpin = now;
     } else {
-        // استخدام لفة من الباقات أولاً
-        if (spinsAvailable > 0) {
-            // استخدام لفة من الباقة
-            for (const [pack, count] of Object.entries(userData.wheel.packs)) {
-                if (count > 0) {
-                    userData.wheel.packs[pack]--;
-                    break;
-                }
-            }
+        // لفة مدفوعة: نستخدم اللفات المشتراة أولاً
+        if (userData.wheel.purchasedSpins > 0) {
+            userData.wheel.purchasedSpins--;
+            canSpin = true;
         } else {
-            // خصم من الرصيد
-            if (tg?.pay) {
-                try {
-                    const res = await tg.pay(CONFIG.ECONOMY.WHEEL_SPIN_PRICE.toString());
-                    if (!res.success) { showToast(t('error.paymentFailed'), 'error'); return; }
-                } catch (e) { showToast(t('error.paymentFailed'), 'error'); return; }
-            } else {
-                userData.balances.TON -= CONFIG.ECONOMY.WHEEL_SPIN_PRICE;
-                userData.balance = userData.balances.TON;
-            }
+            // إذا لم يكن لديه لفات مشتراة، لا يمكنه اللعب
+            showToast(t('pack.insufficient'), 'error');
+            return;
         }
     }
+    
+    if (!canSpin) return;
     
     userData.wheel.totalSpins++;
     userData.wheel.jackpotCounter++;
@@ -2059,7 +2256,7 @@ async function spinWheel(isFree = false) {
     
     setTimeout(() => {
         const prize = getRandomWheelPrize();
-        awardWheelPrize(prize);
+        awardWheelPrize(prize, isFree);
     }, 3000);
     
     saveUserToCache();
@@ -2069,16 +2266,17 @@ async function spinWheel(isFree = false) {
 
 function getRandomWheelPrize() {
     const isJackpot = userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY === 0;
-    let eligible = isJackpot ? WHEEL_PRIZES.filter(p => p.jackpot || p.amount >= 50) : WHEEL_PRIZES.filter(p => !p.jackpot);
+    let eligible = isJackpot ? WHEEL_PRIZES.filter(p => p.jackpot) : WHEEL_PRIZES;
     const total = eligible.reduce((s, p) => s + p.weight, 0);
     let rand = Math.random() * total;
     for (const p of eligible) { if (rand < p.weight) return p; rand -= p.weight; }
     return eligible[0];
 }
 
-function awardWheelPrize(prize) {
+function awardWheelPrize(prize, isFree = false) {
     userData.wheel.lastWin = { prize, timestamp: Date.now() };
     let prizeText = '';
+    let winType = 'normal';
     
     if (prize.type === 'TON') {
         userData.balances.TON += prize.amount;
@@ -2086,42 +2284,39 @@ function awardWheelPrize(prize) {
         userData.totalEarned += prize.amount;
         addTransaction('wheel', prize.amount, { currency: 'TON' });
         prizeText = `${prize.amount} TON`;
+        
+        if (prize.amount >= 50) winType = 'big';
+        if (prize.amount >= 100) winType = 'jackpot';
     } else if (prize.type === 'USDT') {
         userData.balances.USDT += prize.amount;
         addTransaction('wheel', prize.amount, { currency: 'USDT' });
         prizeText = `${prize.amount} USDT`;
-    } else if (prize.type === 'SPIN') {
-        prizeText = 'Free Spin';
-        setTimeout(() => spinWheel(false), 1000);
-    } else if (prize.type === 'AUTO') {
-        userData.autoClicker = { 
-            active: true, 
-            expiry: Date.now() + CONFIG.ECONOMY.AUTO_CLICKER_DURATION, 
-            lastAutoClaim: Date.now() 
-        };
-        prizeText = 'Auto Miner (15 days)';
-        startAutoClicker();
+        
+        if (prize.amount >= 50) winType = 'big';
+        if (prize.amount >= 100) winType = 'jackpot';
     } else if (prize.type === 'JACKPOT') {
         userData.balances.TON += prize.amount;
         userData.balance = userData.balances.TON;
         userData.totalEarned += prize.amount;
         addTransaction('wheel', prize.amount, { currency: 'TON' });
-        prizeText = `JACKPOT! ${prize.amount} TON`;
-        hapticFeedback('heavy');
-        showWinPopup(`${prize.amount} TON`, 'jackpot');
-        createParticles();
+        prizeText = `${prize.amount} TON JACKPOT!`;
+        winType = 'jackpot';
+        userData.wheel.jackpotWon++;
     }
     
     if (prize.type !== 'NOTHING') {
-        if (prize.jackpot) {
-            showToast(`🎡🎡🎡 JACKPOT! ${prize.amount} TON!`, 'success');
+        if (winType === 'jackpot') {
+            showToast(t('notif.wheelJackpot', { amount: prize.amount }), 'success');
+            showWinPopup(prizeText, 'jackpot');
+        } else if (winType === 'big') {
+            showToast(t('wheel.bigwin', { prize: prizeText }), 'success');
+            showWinPopup(prizeText, 'big');
         } else {
-            showToast(`🎡 You won ${prizeText}!`, 'success');
-            hapticFeedback('success');
-            showWinPopup(prizeText, prize.amount >= 10 ? 'big' : 'normal');
+            showToast(t('wheel.win', { prize: prizeText }), 'success');
+            showWinPopup(prizeText, 'normal');
         }
     } else {
-        showToast('Good luck next time!', 'info');
+        showToast(t('wheel.goodLuck'), 'info');
     }
     
     saveUserToCache();
@@ -2131,7 +2326,14 @@ function awardWheelPrize(prize) {
 // ====== 35. SLOTS SYSTEM ======
 function showSlotsModal() {
     const modal = document.getElementById('slotsModal');
-    if (modal) { updateSlotsUI(); renderSlots(); modal.classList.add('show'); }
+    if (modal) { 
+        updateSlotsUI(); 
+        renderSlots(); 
+        modal.classList.add('show');
+        
+        // تحديث عرض اللفات المشتراة
+        updatePurchasedSpinsDisplay();
+    }
 }
 
 function renderSlots() {
@@ -2163,13 +2365,16 @@ function updateSlotsUI() {
         freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${h}h ${m}m`;
         freeSpinEl.classList.add('disabled');
     } else {
-        freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> FREE`;
+        freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> ${t('slots.free')}`;
         freeSpinEl.classList.remove('disabled');
     }
+    
+    // تحديث عرض اللفات المشتراة
+    updatePurchasedSpinsDisplay();
 }
 
-// ====== 36. SLOTS PACKS ======
-function buySlotsPack(pack) {
+// ====== 36. SLOTS PACKS (شراء فقط عبر تليجرام) ======
+async function buySlotsPack(pack) {
     let spins, price, bonus;
     switch(pack) {
         case 'p5': spins = 5; price = CONFIG.ECONOMY.SLOTS_PACK_5.price; bonus = 0; break;
@@ -2179,79 +2384,81 @@ function buySlotsPack(pack) {
         default: return;
     }
     
-    if (userData.balances.TON < price) {
-        showToast(t('error.insufficientBalance', { currency: 'TON' }), 'error');
+    const totalSpins = spins + bonus;
+    
+    // تأكيد الشراء
+    if (!confirm(t('pack.confirm', { spins: totalSpins, price }))) {
         return;
     }
     
-    if (tg?.pay) {
-        // دفع عبر تليجرام
+    // الدفع عبر تليجرام فقط (ليس من الرصيد الداخلي)
+    if (!tg?.pay) {
+        showToast(t('pack.telegramPay'), 'error');
+        return;
     }
     
-    userData.balances.TON -= price;
-    userData.balance = userData.balances.TON;
-    
-    if (!userData.slots.packs) userData.slots.packs = { p5: 0, p10: 0, p50: 0, p100: 0 };
-    userData.slots.packs[pack] += spins + bonus;
-    
-    addTransaction('slots_pack', price, { 
-        currency: 'TON', 
-        details: `Bought ${pack} pack: ${spins} spins + ${bonus} bonus` 
-    });
-    
-    saveUserToCache();
-    showToast(`✅ Purchased ${spins + bonus} slot spins!`, 'success');
-    updateUI();
+    try {
+        showToast(t('messages.loading'), 'info');
+        
+        // محاولة الدفع عبر تليجرام
+        const result = await tg.pay(price.toString());
+        
+        if (result.success) {
+            // إضافة اللفات المشتراة
+            if (!userData.slots.purchasedSpins) userData.slots.purchasedSpins = 0;
+            userData.slots.purchasedSpins += totalSpins;
+            
+            // تسجيل في الباقات أيضاً
+            if (!userData.slots.packs) userData.slots.packs = { p5: 0, p10: 0, p50: 0, p100: 0 };
+            userData.slots.packs[pack] += totalSpins;
+            
+            addTransaction('slots_pack', price, { 
+                currency: 'TON', 
+                details: `Bought ${pack} pack: ${spins} spins + ${bonus} bonus` 
+            });
+            
+            saveUserToCache();
+            showToast(t('pack.success', { spins: totalSpins }), 'success');
+            updatePurchasedSpinsDisplay();
+            updateUI();
+        } else {
+            showToast(t('error.paymentFailed'), 'error');
+        }
+    } catch (e) {
+        console.error("Payment error:", e);
+        showToast(t('error.paymentFailed'), 'error');
+    }
 }
 
 async function spinSlots(isFree = false, isTurbo = false) {
-    const price = isTurbo ? CONFIG.ECONOMY.SLOTS_TURBO_PRICE : CONFIG.ECONOMY.SLOTS_SPIN_PRICE;
-    
-    // التحقق من وجود لفات في الباقات
-    let spinsAvailable = 0;
-    if (!isFree && !isTurbo && userData.slots.packs) {
-        for (const [pack, count] of Object.entries(userData.slots.packs)) {
-            spinsAvailable += count;
-        }
-    }
-    
-    if (!isFree && spinsAvailable === 0 && userData.balances.TON < price) {
-        showToast(isTurbo ? t('slots.insufficientTurbo') : t('slots.insufficient'), 'error');
-        return;
-    }
+    // التحقق من وجود لفات مشتراة (إذا لم تكن لفة مجانية)
+    let canSpin = false;
     
     if (isFree) {
+        // لفة مجانية: نتحقق من الوقت
         const now = Date.now();
         if (now < userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL) {
             const left = (userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL) - now;
             const h = Math.floor(left / 3600000);
             const m = Math.floor((left % 3600000) / 60000);
-            showToast(`Next free spin in ${h}h ${m}m`, 'warning');
+            showToast(t('slots.wait', { time: `${h}h ${m}m` }), 'warning');
             return;
         }
+        canSpin = true;
         userData.slots.lastFreeSpin = now;
     } else {
-        // استخدام لفة من الباقات أولاً (للسبين العادي فقط)
-        if (!isTurbo && spinsAvailable > 0) {
-            for (const [pack, count] of Object.entries(userData.slots.packs)) {
-                if (count > 0) {
-                    userData.slots.packs[pack]--;
-                    break;
-                }
-            }
+        // لفة مدفوعة: نستخدم اللفات المشتراة أولاً
+        if (userData.slots.purchasedSpins > 0) {
+            userData.slots.purchasedSpins--;
+            canSpin = true;
         } else {
-            // خصم من الرصيد
-            if (tg?.pay) {
-                try {
-                    const res = await tg.pay(price.toString());
-                    if (!res.success) { showToast(t('error.paymentFailed'), 'error'); return; }
-                } catch (e) { showToast(t('error.paymentFailed'), 'error'); return; }
-            } else {
-                userData.balances.TON -= price;
-                userData.balance = userData.balances.TON;
-            }
+            // إذا لم يكن لديه لفات مشتراة، لا يمكنه اللعب
+            showToast(t('pack.insufficient'), 'error');
+            return;
         }
     }
+    
+    if (!canSpin) return;
     
     userData.slots.totalSpins++;
     userData.slots.spinHistory.push({ timestamp: Date.now(), isFree, isTurbo });
@@ -2259,6 +2466,7 @@ async function spinSlots(isFree = false, isTurbo = false) {
     const duration = isTurbo ? 1000 : 2000;
     const prize = await animateSlots(duration);
     
+    // 70% فرصة فوز
     if (Math.random() < CONFIG.ECONOMY.SLOTS_WIN_RATE) {
         awardSlotsPrize(prize);
     } else {
@@ -2326,14 +2534,18 @@ function awardSlotsPrize(prize) {
     }
     
     if (prize.jackpot) {
-        showToast(`🎰🎰🎰 JACKPOT! ${prize.amount} ${prize.type}!`, 'success');
+        showToast(t('slots.jackpot', { amount: prize.amount, currency: prize.type }), 'success');
         hapticFeedback('heavy');
         showWinPopup(`${prize.amount} ${prize.type}`, 'jackpot');
         createParticles();
+    } else if (prize.amount >= 10) {
+        showToast(t('slots.bigwin', { amount: prize.amount, currency: prize.type }), 'success');
+        hapticFeedback('medium');
+        showWinPopup(`${prize.amount} ${prize.type}`, 'big');
     } else {
-        showToast(`🎰 You won ${prize.amount} ${prize.type}!`, 'success');
-        hapticFeedback('success');
-        showWinPopup(`${prize.amount} ${prize.type}`, prize.amount >= 10 ? 'big' : 'normal');
+        showToast(t('slots.win', { amount: prize.amount, currency: prize.type }), 'success');
+        hapticFeedback('light');
+        showWinPopup(`${prize.amount} ${prize.type}`, 'normal');
     }
     
     saveUserToCache();
@@ -2608,7 +2820,7 @@ function confirmSwap() {
     renderAssets();
 }
 
-// ====== 40. DEPOSIT FUNCTIONS ======
+// ====== 40. DEPOSIT FUNCTIONS (مع Firebase) ======
 let selectedDepositCurrency = 'TON';
 
 function showDepositModal() {
@@ -2696,7 +2908,7 @@ async function submitDeposit() {
         amount: amt, 
         txHash: hash, 
         status: 'pending', 
-        timestamp: Date.now() 
+        timestamp: new Date().toISOString()
     };
     
     if (!userData.pendingDeposits) userData.pendingDeposits = [];
@@ -2707,13 +2919,23 @@ async function submitDeposit() {
     
     if (db) {
         try {
-            const docRef = await db.collection('deposits').add({ 
+            // حفظ في Firebase Collection
+            const docRef = await db.collection(CONFIG.COLLECTIONS.DEPOSITS).add({ 
                 ...deposit, 
                 timestamp: firebase.firestore.FieldValue.serverTimestamp() 
             });
             deposit.firebaseId = docRef.id;
             
-            startOnDemandListener('deposits', docRef.id, (data) => {
+            // تحديث في localStorage
+            const allTxs = loadLocalTransactions();
+            const txIndex = allTxs.findIndex(t => t.id === deposit.id);
+            if (txIndex !== -1) {
+                allTxs[txIndex].firebaseId = docRef.id;
+                saveLocalTransactions(allTxs);
+            }
+            
+            // بدء مستمع (30 ثانية)
+            startOnDemandListener(CONFIG.COLLECTIONS.DEPOSITS, docRef.id, (data) => {
                 if (data.status === 'approved') {
                     userData.balances[cur] = (userData.balances[cur] || 0) + amt;
                     if (cur === 'TON') userData.balance = userData.balances.TON;
@@ -2722,26 +2944,39 @@ async function submitDeposit() {
                     if (!userData.completedDeposits) userData.completedDeposits = [];
                     userData.completedDeposits.push({ ...deposit, status: 'approved' });
                     saveUserToCache();
-                    showToast(`✅ Deposit of ${amt} ${cur} approved!`, 'success');
+                    showToast(t('notif.depositApproved', { amount: amt, currency: cur }), 'success');
                     updateUI();
+                    
+                    // إضافة إشعار للمستخدم
+                    addLocalNotification(t('notif.depositApproved', { amount: amt, currency: cur }), 'success');
+                    
                 } else if (data.status === 'rejected') {
                     userData.pendingDeposits = userData.pendingDeposits.filter(d => d.id !== deposit.id);
                     saveUserToCache();
-                    showToast(`❌ Deposit rejected: ${data.reason || 'Unknown'}`, 'error');
+                    showToast(t('notif.depositRejected', { reason: data.reason || 'Unknown' }), 'error');
+                    
+                    addLocalNotification(t('notif.depositRejected', { reason: data.reason || 'Unknown' }), 'error');
                 }
             }, CONFIG.CACHE.LISTENER_TTL);
             
-            await addNotification(CONFIG.TON.ADMIN_ID, `💰 New deposit: ${amt} ${cur}`, 'info');
-        } catch (e) {}
+            // إشعار للمشرف
+            await addNotification(CONFIG.TON.ADMIN_ID, `💰 New deposit request: ${amt} ${cur} from ${userName}`, 'info');
+            
+        } catch (e) {
+            console.error("Firebase error:", e);
+        }
     }
     
     closeModal('depositModal');
-    showToast(`Deposit request submitted`, 'success');
+    showToast(t('notif.depositSubmitted'), 'success');
     document.getElementById('depositAmount').value = '';
     document.getElementById('depositTxHash').value = '';
+    
+    // إضافة المعاملة محلياً
+    addTransaction('deposit', amt, { currency: cur, txHash: hash, status: 'pending' });
 }
 
-// ====== 41. WITHDRAW FUNCTIONS ======
+// ====== 41. WITHDRAW FUNCTIONS (مع Firebase) ======
 let selectedWithdrawCurrency = 'TON';
 
 function showWithdrawModal() {
@@ -2840,6 +3075,15 @@ async function submitWithdraw() {
     }
     
     const fee = CONFIG.WITHDRAW_FEES[cur];
+    
+    // خصم الرصيد فوراً
+    userData.balances[cur] -= amt;
+    if (fee && fee.feeCurrency !== cur) {
+        userData.balances[fee.feeCurrency] -= fee.fee;
+    }
+    if (cur === 'TON') userData.balance = userData.balances.TON;
+    userData.totalWithdrawn += amt;
+    
     const withdraw = { 
         id: 'wd_' + Date.now() + '_' + randomId(), 
         userId, 
@@ -2850,53 +3094,66 @@ async function submitWithdraw() {
         fee: fee?.fee || 0, 
         feeCurrency: fee?.feeCurrency || cur, 
         status: 'pending', 
-        timestamp: Date.now() 
+        timestamp: new Date().toISOString()
     };
     
     if (!userData.pendingWithdrawals) userData.pendingWithdrawals = [];
     userData.pendingWithdrawals.push(withdraw);
-    userData.balances[cur] -= amt;
-    if (fee && fee.feeCurrency !== cur) userData.balances[fee.feeCurrency] -= fee.fee;
-    if (cur === 'TON') userData.balance = userData.balances.TON;
-    userData.totalWithdrawn += amt;
     saveUserToCache();
     
     if (db) {
         try {
-            const docRef = await db.collection('withdrawals').add({ 
+            // حفظ في Firebase Collection
+            const docRef = await db.collection(CONFIG.COLLECTIONS.WITHDRAWALS).add({ 
                 ...withdraw, 
                 timestamp: firebase.firestore.FieldValue.serverTimestamp() 
             });
             withdraw.firebaseId = docRef.id;
             
-            startOnDemandListener('withdrawals', docRef.id, (data) => {
+            // بدء مستمع (30 ثانية)
+            startOnDemandListener(CONFIG.COLLECTIONS.WITHDRAWALS, docRef.id, (data) => {
                 if (data.status === 'approved') {
                     userData.pendingWithdrawals = userData.pendingWithdrawals.filter(w => w.id !== withdraw.id);
                     if (!userData.completedWithdrawals) userData.completedWithdrawals = [];
                     userData.completedWithdrawals.push({ ...withdraw, status: 'approved' });
                     saveUserToCache();
-                    showToast(`✅ Withdrawal of ${amt} ${cur} approved!`, 'success');
+                    showToast(t('notif.withdrawApproved', { amount: amt, currency: cur }), 'success');
+                    
+                    addLocalNotification(t('notif.withdrawApproved', { amount: amt, currency: cur }), 'success');
+                    
                 } else if (data.status === 'rejected') {
+                    // إعادة الرصيد في حالة الرفض
                     userData.balances[cur] += amt;
-                    if (fee && fee.feeCurrency !== cur) userData.balances[fee.feeCurrency] += fee.fee;
+                    if (fee && fee.feeCurrency !== cur) {
+                        userData.balances[fee.feeCurrency] += fee.fee;
+                    }
                     if (cur === 'TON') userData.balance = userData.balances.TON;
                     userData.totalWithdrawn -= amt;
                     userData.pendingWithdrawals = userData.pendingWithdrawals.filter(w => w.id !== withdraw.id);
                     saveUserToCache();
-                    showToast(`❌ Withdrawal rejected: ${data.reason || 'Unknown'}`, 'error');
+                    showToast(t('notif.withdrawRejected', { reason: data.reason || 'Unknown' }), 'error');
+                    
+                    addLocalNotification(t('notif.withdrawRejected', { reason: data.reason || 'Unknown' }), 'error');
                     updateUI();
                 }
             }, CONFIG.CACHE.LISTENER_TTL);
             
-            await addNotification(CONFIG.TON.ADMIN_ID, `💸 New withdrawal: ${amt} ${cur}`, 'info');
-        } catch (e) {}
+            // إشعار للمشرف
+            await addNotification(CONFIG.TON.ADMIN_ID, `💸 New withdrawal request: ${amt} ${cur} from ${userName}`, 'info');
+            
+        } catch (e) {
+            console.error("Firebase error:", e);
+        }
     }
     
     closeModal('withdrawModal');
-    showToast(`Withdrawal request submitted`, 'success');
+    showToast(t('notif.withdrawSubmitted'), 'success');
     updateUI();
     document.getElementById('withdrawAmount').value = '';
     document.getElementById('withdrawAddress').value = '';
+    
+    // إضافة المعاملة محلياً
+    addTransaction('withdraw', amt, { currency: cur, address: addr, status: 'pending' });
 }
 
 // ====== 42. HISTORY FUNCTIONS ======
@@ -2938,9 +3195,16 @@ function renderHistory(filter = 'all') {
         else if (tx.type === 'wheel_pack') { icon = 'fa-ticket'; typeClass = 'pack'; typeText = 'Wheel Pack'; }
         else if (tx.type === 'slots_pack') { icon = 'fa-ticket'; typeClass = 'pack'; typeText = 'Slots Pack'; }
         
+        let statusHtml = '';
+        if (tx.status && tx.status !== 'completed') {
+            let statusClass = tx.status === 'pending' ? 'pending' : 'rejected';
+            statusHtml = `<span class="history-status ${statusClass}">${tx.status}</span>`;
+        }
+        
         return `<div class="history-item">
             <div class="history-item-header">
                 <div class="history-type ${typeClass}"><i class="fas ${icon}"></i><span>${typeText}</span></div>
+                ${statusHtml}
                 <span class="history-date">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</span>
             </div>
             <div class="history-details">
@@ -2949,6 +3213,7 @@ function renderHistory(filter = 'all') {
             ${tx.fromCurrency ? `<div style="font-size: 11px;">${tx.fromCurrency} → ${tx.toCurrency}</div>` : ''}
             ${tx.machine ? `<div style="font-size: 11px;">${tx.machine}</div>` : ''}
             ${tx.details ? `<div style="font-size: 11px;">${tx.details}</div>` : ''}
+            ${tx.reason ? `<div style="font-size: 10px; color: var(--ton-red);">Reason: ${tx.reason}</div>` : ''}
         </div>`;
     }).join('');
 }
@@ -2971,36 +3236,70 @@ async function checkPendingTransactions() {
     
     console.log("🔍 Checking pending transactions...");
     
+    // التحقق من الإيداعات المعلقة
     for (const d of userData.pendingDeposits?.filter(d => d.firebaseId) || []) {
         try {
-            const doc = await db.collection('deposits').doc(d.firebaseId).get();
+            const doc = await db.collection(CONFIG.COLLECTIONS.DEPOSITS).doc(d.firebaseId).get();
             if (doc.exists && doc.data().status !== 'pending') {
+                const data = doc.data();
                 userData.pendingDeposits = userData.pendingDeposits.filter(x => x.id !== d.id);
-                if (doc.data().status === 'approved') {
+                if (data.status === 'approved') {
                     if (!userData.completedDeposits) userData.completedDeposits = [];
                     userData.completedDeposits.push({ ...d, status: 'approved' });
                     userData.balances[d.currency] = (userData.balances[d.currency] || 0) + d.amount;
                     if (d.currency === 'TON') userData.balance = userData.balances.TON;
-                    showToast(`✅ Deposit of ${d.amount} ${d.currency} approved!`, 'success');
+                    showToast(t('notif.depositApproved', { amount: d.amount, currency: d.currency }), 'success');
+                    
+                    // تحديث المعاملة المحلية
+                    const allTxs = loadLocalTransactions();
+                    const txIndex = allTxs.findIndex(t => t.id === d.id);
+                    if (txIndex !== -1) {
+                        allTxs[txIndex].status = 'approved';
+                        saveLocalTransactions(allTxs);
+                    }
                 }
             }
         } catch (e) {}
     }
     
+    // التحقق من السحوبات المعلقة
     for (const w of userData.pendingWithdrawals?.filter(w => w.firebaseId) || []) {
         try {
-            const doc = await db.collection('withdrawals').doc(w.firebaseId).get();
+            const doc = await db.collection(CONFIG.COLLECTIONS.WITHDRAWALS).doc(w.firebaseId).get();
             if (doc.exists && doc.data().status !== 'pending') {
+                const data = doc.data();
                 userData.pendingWithdrawals = userData.pendingWithdrawals.filter(x => x.id !== w.id);
-                if (doc.data().status === 'approved') {
+                if (data.status === 'approved') {
                     if (!userData.completedWithdrawals) userData.completedWithdrawals = [];
                     userData.completedWithdrawals.push({ ...w, status: 'approved' });
-                    showToast(`✅ Withdrawal of ${w.amount} ${w.currency} approved!`, 'success');
-                } else if (doc.data().status === 'rejected') {
+                    showToast(t('notif.withdrawApproved', { amount: w.amount, currency: w.currency }), 'success');
+                    
+                    // تحديث المعاملة المحلية
+                    const allTxs = loadLocalTransactions();
+                    const txIndex = allTxs.findIndex(t => t.id === w.id);
+                    if (txIndex !== -1) {
+                        allTxs[txIndex].status = 'approved';
+                        saveLocalTransactions(allTxs);
+                    }
+                    
+                } else if (data.status === 'rejected') {
+                    // إعادة الرصيد في حالة الرفض
                     userData.balances[w.currency] += w.amount;
-                    if (w.fee && w.feeCurrency !== w.currency) userData.balances[w.feeCurrency] += w.fee;
+                    if (w.fee && w.feeCurrency !== w.currency) {
+                        userData.balances[w.feeCurrency] += w.fee;
+                    }
                     if (w.currency === 'TON') userData.balance = userData.balances.TON;
-                    showToast(`❌ Withdrawal rejected: ${doc.data().reason || 'Unknown'}`, 'error');
+                    
+                    showToast(t('notif.withdrawRejected', { reason: data.reason || 'Unknown' }), 'error');
+                    
+                    // تحديث المعاملة المحلية
+                    const allTxs = loadLocalTransactions();
+                    const txIndex = allTxs.findIndex(t => t.id === w.id);
+                    if (txIndex !== -1) {
+                        allTxs[txIndex].status = 'rejected';
+                        allTxs[txIndex].reason = data.reason;
+                        saveLocalTransactions(allTxs);
+                    }
                 }
             }
         } catch (e) {}
@@ -3046,7 +3345,7 @@ async function updateLeaderboard() {
     }
     
     try {
-        const snap = await db.collection('users').orderBy('totalEarned', 'desc').limit(10).get();
+        const snap = await db.collection(CONFIG.COLLECTIONS.USERS).orderBy('totalEarned', 'desc').limit(10).get();
         const top = [];
         snap.forEach((doc, i) => top.push({ 
             rank: i + 1, 
@@ -3169,7 +3468,7 @@ function updateChart() {
 async function saveToFirebase() {
     if (!db) return;
     try {
-        await db.collection('users').doc(userId).set({
+        await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).set({
             balances: userData.balances,
             totalEarned: userData.totalEarned,
             totalWithdrawn: userData.totalWithdrawn,
@@ -3238,7 +3537,7 @@ function filterMarket(filter) {
     });
 }
 
-// ====== 49. ADMIN FUNCTIONS ======
+// ====== 49. ADMIN FUNCTIONS (مع Firebase Collections) ======
 let currentAdminTab = 'withdrawals';
 
 function showAdminPanel() {
@@ -3254,9 +3553,9 @@ function switchAdminTab(tab) {
     document.getElementById('adminContent').innerHTML = `
         <div class="admin-refresh-message">
             <i class="fas fa-hand-pointer"></i>
-            <p>${t('admin.clickRefresh') || 'Click refresh to load requests'}</p>
+            <p>${t('admin.clickRefresh')}</p>
             <button class="admin-refresh-btn" onclick="refreshAdminPanel()">
-                <i class="fas fa-rotate-right"></i> <span>${t('admin.refresh') || 'Refresh'}</span>
+                <i class="fas fa-rotate-right"></i> <span>${t('admin.refresh')}</span>
             </button>
         </div>
     `;
@@ -3266,29 +3565,32 @@ async function loadAdminCounts() {
     if (!db) return;
     try {
         const [d, w] = await Promise.all([
-            db.collection('deposits').where('status', '==', 'pending').get(),
-            db.collection('withdrawals').where('status', '==', 'pending').get()
+            db.collection(CONFIG.COLLECTIONS.DEPOSITS).where('status', '==', 'pending').get(),
+            db.collection(CONFIG.COLLECTIONS.WITHDRAWALS).where('status', '==', 'pending').get()
         ]);
         document.getElementById('pendingDepositsCount').textContent = d.size;
         document.getElementById('pendingWithdrawalsCount').textContent = w.size;
-    } catch (e) {}
+    } catch (e) {
+        console.error("Error loading counts:", e);
+    }
 }
 
 async function refreshAdminPanel() {
     if (!isAdmin || !db) return;
     
-    const icon = event.currentTarget.querySelector('i');
+    const btn = event.currentTarget;
+    const icon = btn.querySelector('i');
     if (icon) icon.classList.add('fa-spin');
     
     const content = document.getElementById('adminContent');
     content.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
     
     try {
-        const col = currentAdminTab === 'withdrawals' ? 'withdrawals' : 'deposits';
+        const col = currentAdminTab === 'withdrawals' ? CONFIG.COLLECTIONS.WITHDRAWALS : CONFIG.COLLECTIONS.DEPOSITS;
         const snap = await db.collection(col).where('status', '==', 'pending').get();
         
         if (snap.empty) { 
-            content.innerHTML = '<div class="empty-state">No pending requests</div>'; 
+            content.innerHTML = `<div class="empty-state">${t('admin.noPending')}</div>`; 
             return; 
         }
         
@@ -3344,7 +3646,8 @@ async function refreshAdminPanel() {
         });
         content.innerHTML = html;
     } catch (e) { 
-        content.innerHTML = '<div class="empty-state">Error loading requests</div>'; 
+        console.error("Error refreshing admin:", e);
+        content.innerHTML = `<div class="empty-state">${t('admin.error')}</div>`; 
     }
     
     if (icon) setTimeout(() => icon.classList.remove('fa-spin'), 500);
@@ -3353,36 +3656,63 @@ async function refreshAdminPanel() {
 async function approveRequest(id, type, amount, targetUserId, currency, fee = 0, feeCurrency = currency) {
     if (!isAdmin || !db) return;
     try {
-        const col = type === 'deposit' ? 'deposits' : 'withdrawals';
+        const col = type === 'deposit' ? CONFIG.COLLECTIONS.DEPOSITS : CONFIG.COLLECTIONS.WITHDRAWALS;
         await db.collection(col).doc(id).update({ 
             status: 'approved', 
-            approvedAt: firebase.firestore.FieldValue.serverTimestamp() 
+            approvedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            approvedBy: userId
         });
+        
         if (type === 'deposit') {
-            await db.collection('users').doc(targetUserId).update({ 
+            await db.collection(CONFIG.COLLECTIONS.USERS).doc(targetUserId).update({ 
                 [`balances.${currency}`]: firebase.firestore.FieldValue.increment(amount),
                 totalDeposited: firebase.firestore.FieldValue.increment(amount)
             });
         }
+        
         showToast('Request approved', 'success');
         refreshAdminPanel();
-    } catch (e) { showToast('Error approving', 'error'); }
+        
+        // إشعار للمستخدم
+        await addNotification(targetUserId, t(type === 'deposit' ? 'notif.depositApproved' : 'notif.withdrawApproved', { amount, currency }), 'success');
+        
+    } catch (e) { 
+        console.error("Error approving:", e);
+        showToast('Error approving', 'error'); 
+    }
 }
 
 async function rejectRequest(id, type, amount, targetUserId, currency) {
     if (!isAdmin || !db) return;
     const reason = prompt('Enter rejection reason:');
     if (!reason) return;
+    
     try {
-        const col = type === 'deposit' ? 'deposits' : 'withdrawals';
+        const col = type === 'deposit' ? CONFIG.COLLECTIONS.DEPOSITS : CONFIG.COLLECTIONS.WITHDRAWALS;
         await db.collection(col).doc(id).update({ 
             status: 'rejected', 
             reason, 
-            rejectedAt: firebase.firestore.FieldValue.serverTimestamp() 
+            rejectedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            rejectedBy: userId
         });
+        
+        if (type === 'withdraw') {
+            // إعادة الرصيد في حالة رفض السحب
+            await db.collection(CONFIG.COLLECTIONS.USERS).doc(targetUserId).update({
+                [`balances.${currency}`]: firebase.firestore.FieldValue.increment(amount)
+            });
+        }
+        
         showToast('Request rejected', 'success');
         refreshAdminPanel();
-    } catch (e) { showToast('Error rejecting', 'error'); }
+        
+        // إشعار للمستخدم
+        await addNotification(targetUserId, t(type === 'deposit' ? 'notif.depositRejected' : 'notif.withdrawRejected', { reason }), 'error');
+        
+    } catch (e) { 
+        console.error("Error rejecting:", e);
+        showToast('Error rejecting', 'error'); 
+    }
 }
 
 function copyToClipboard(text) { 
@@ -3435,14 +3765,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     
-    console.log("✅ TON MINING CASINO - ULTIMATE EDITION v50.0");
-    console.log("✅ ZERO WASTE ARCHITECTURE - 50K+ USERS READY");
+    console.log("✅ TON MINING CASINO - ULTIMATE EDITION v60.0");
+    console.log("✅ ZERO WASTE ARCHITECTURE - 100K+ USERS READY");
     console.log("✅ On-demand listeners: 30 seconds only");
-    console.log("✅ Cache: User 5min, Prices 3h, History 10min");
-    console.log("✅ Admin: Manual refresh only");
-    console.log("✅ Win popups + haptic feedback");
-    console.log("✅ Slot packs: 5,10,50,100 spins");
-    console.log("✅ Wheel packs: 5,10,50,100 spins");
+    console.log("✅ Cache: User localStorage first (like REFI)");
+    console.log("✅ Firebase Collections: users, deposits, withdrawals");
+    console.log("✅ Admin: Manual refresh with Firebase");
+    console.log("✅ Win popups: professional animations");
+    console.log("✅ Slot packs: Telegram payment only");
+    console.log("✅ Wheel packs: Telegram payment only");
+    console.log("✅ Purchased spins counter added");
     console.log("✅ All systems ready! 🚀");
 });
 
@@ -3474,7 +3806,10 @@ document.addEventListener('visibilitychange', () => {
     }
 });
 
-// ====== 51. EXPORT FUNCTIONS ======
+// ====== 51. RESTORE FUNCTION ======
+window.restoreFromBackup = restoreFromBackup;
+
+// ====== 52. EXPORT FUNCTIONS ======
 window.showPage = showPage;
 window.showMarket = ()=>showPage('market');
 window.showWallet = ()=>showPage('profile');
@@ -3528,6 +3863,4 @@ window.rejectRequest = rejectRequest;
 window.copyToClipboard = copyToClipboard;
 window.handleAvatarClick = handleAvatarClick;
 window.refreshPrices = refreshPrices;
-console.log("✅ TON MINING CASINO - ULTIMATE EDITION v40.0 LOADED");
-console.log("✅ Features: Mining, Wheel, Slots, Market, Profile, Referral, Daily Bonus, Auto Clicker");
-console.log("✅ All systems ready! 🚀");
+window.restoreFromBackup = restoreFromBackup;
