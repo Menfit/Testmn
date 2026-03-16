@@ -1,5 +1,6 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE EDITION v40.0
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v50.0
+// ZERO WASTE ARCHITECTURE - 50K+ USERS READY
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -10,6 +11,7 @@ if (tg) {
     tg.enableClosingConfirmation?.();
     tg.setHeaderColor('#0a0b0f');
     tg.setBackgroundColor('#0a0b0f');
+    console.log("✅ Telegram WebApp initialized");
 }
 
 // ====== 2. CONFIGURATION ======
@@ -62,9 +64,14 @@ const CONFIG = {
     },
     
     CACHE: {
-        USER_TTL: 300000, PRICES_TTL: 10800000, HISTORY_TTL: 600000,
-        MINING_TTL: 60000, LISTENER_TTL: 30000, LEADERBOARD_TTL: 3600000,
-        WHEEL_TTL: 86400000, SLOTS_TTL: 86400000
+        USER_TTL: 300000,        // 5 دقائق
+        PRICES_TTL: 10800000,     // 3 ساعات
+        HISTORY_TTL: 600000,      // 10 دقائق
+        MINING_TTL: 60000,        // دقيقة
+        LISTENER_TTL: 30000,      // 30 ثانية فقط!
+        LEADERBOARD_TTL: 3600000, // ساعة
+        WHEEL_TTL: 86400000,      // يوم
+        SLOTS_TTL: 86400000       // يوم
     },
     
     ECONOMY: {
@@ -72,12 +79,30 @@ const CONFIG = {
         REFERRAL_PERCENT: 0.20,
         AUTO_CLICKER_PRICE: 0.5,
         AUTO_CLICKER_DURATION: 15 * 24 * 60 * 60 * 1000,
+        
+        // عجلة الحظ
         WHEEL_SPIN_PRICE: 0.25,
         WHEEL_FREE_SPIN_INTERVAL: 24 * 60 * 60 * 1000,
         WHEEL_JACKPOT_EVERY: 12,
+        
+        // سلوت - سخي جداً!
         SLOTS_SPIN_PRICE: 0.15,
         SLOTS_TURBO_PRICE: 0.30,
         SLOTS_FREE_SPIN_INTERVAL: 12 * 60 * 60 * 1000,
+        SLOTS_WIN_RATE: 0.70, // 70% فرصة فوز!
+        
+        // باقات السلوت
+        SLOTS_PACK_5: { spins: 5, price: 0.75, bonus: 0 },
+        SLOTS_PACK_10: { spins: 10, price: 1.5, bonus: 1 },
+        SLOTS_PACK_50: { spins: 50, price: 7.5, bonus: 5 },
+        SLOTS_PACK_100: { spins: 100, price: 15, bonus: 10 },
+        
+        // باقات العجلة
+        WHEEL_PACK_5: { spins: 5, price: 1.25, bonus: 0 },
+        WHEEL_PACK_10: { spins: 10, price: 2.5, bonus: 1 },
+        WHEEL_PACK_50: { spins: 50, price: 12.5, bonus: 5 },
+        WHEEL_PACK_100: { spins: 100, price: 25, bonus: 10 },
+        
         STREAK_BONUS: { 3: 1.05, 7: 1.10, 30: 1.25 },
         DAILY_LOGIN_BONUS: [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.10],
         MAX_WITHDRAW_DAILY: 100,
@@ -109,16 +134,35 @@ const CONFIG = {
 const translations = {
     en: {
         'app.name': 'TON Mining Casino',
-        'nav.mining': 'Mining', 'nav.market': 'Market', 'nav.casino': 'Casino', 'nav.profile': 'Profile',
-        'send': 'Send', 'receive': 'Receive', 'swap': 'Swap', 'history': 'History', 'claim': 'CLAIM',
-        'copy': 'Copy', 'confirm': 'Confirm', 'refresh': 'Refresh',
+        'nav.mining': 'Mining',
+        'nav.market': 'Market',
+        'nav.casino': 'Casino',
+        'nav.profile': 'Profile',
+        'send': 'Send',
+        'receive': 'Receive',
+        'swap': 'Swap',
+        'history': 'History',
+        'claim': 'CLAIM',
+        'copy': 'Copy',
+        'confirm': 'Confirm',
+        'refresh': 'Refresh',
+        
+        // Mining
         'mining.currentCycle': 'Current Mining Cycle',
         'mining.nextReward': 'Next Reward',
         'mining.activeRigs': 'Active Mining Rigs',
         'mining.hashrate': 'Hashrate',
         'mining.earned': 'Earned',
+        
+        // Market
         'market.title': 'Mining Hardware',
-        'filters.all': 'All', 'filters.basic': 'Basic', 'filters.pro': 'Pro', 'filters.quantum': 'Quantum', 'filters.hot': 'Hot Deals',
+        'filters.all': 'All',
+        'filters.basic': 'Basic',
+        'filters.pro': 'Pro',
+        'filters.quantum': 'Quantum',
+        'filters.hot': 'Hot Deals',
+        
+        // Casino
         'casino.title': 'Casino Games',
         'casino.wheel': 'Lucky Wheel',
         'casino.slots': 'Slot Machine',
@@ -126,84 +170,99 @@ const translations = {
         'casino.free': 'Free',
         'casino.price': 'Price',
         'casino.turbo': 'Turbo Spin',
-        'profile.title': 'My Profile',
-        'wallet.totalBalance': 'Total Balance',
-        'wallet.myAssets': 'My Assets',
-        'wallet.connected': 'Connected:',
-        'wallet.disconnected': 'Wallet disconnected',
-        'swap.title': 'Swap Assets',
-        'swap.from': 'From', 'swap.to': 'To', 'swap.rate': 'Rate', 'swap.confirm': 'Confirm Swap',
-        'payment.title': 'Complete Rental',
-        'payment.selectMethod': 'Select Payment Method:',
-        'payment.balance': 'Pay with Balance',
-        'payment.wallet': 'Pay with TON Wallet',
-        'payment.available': 'Available:',
-        'deposit.title': 'Receive Funds',
-        'deposit.selectCurrency': 'Select Currency',
-        'deposit.amount': 'Amount',
-        'deposit.transactionId': 'Transaction ID',
-        'deposit.sendTo': 'Send to this address:',
-        'deposit.submit': 'Submit Request',
-        'withdraw.title': 'Send Funds',
-        'withdraw.selectCurrency': 'Select Currency',
-        'withdraw.amount': 'Amount',
-        'withdraw.address': 'Wallet Address',
-        'withdraw.youReceive': 'You will receive:',
-        'withdraw.submit': 'Send Request',
-        'referral.title': 'Referral Program',
-        'referral.yourLink': 'Your Referral Link',
-        'referral.bonusNote': 'Get 0.005 TON + 20% of their mining!',
-        'referral.milestones': 'Referral Milestones',
-        'wheel.title': 'Lucky Wheel',
-        'wheel.spin': 'SPIN',
-        'wheel.free': 'FREE',
-        'wheel.price': '0.25 TON',
-        'wheel.freeDaily': 'Free daily spin',
-        'wheel.jackpot': 'JACKPOT!',
-        'wheel.won': 'You won {prize}!',
+        'casino.packs': 'Packs',
+        
+        // Slot Machine
         'slots.title': 'Slot Machine',
         'slots.spin': 'SPIN',
         'slots.turbo': 'TURBO',
         'slots.free': 'FREE',
         'slots.price': '0.15 TON',
         'slots.turboPrice': '0.30 TON',
-        'slots.won': 'You won {prize}!',
-        'autoclicker.title': 'Auto Miner',
-        'autoclicker.price': '0.5 TON',
-        'autoclicker.buy': 'Buy Auto Miner',
-        'autoclicker.active': 'Active: {days}d {hours}h left',
-        'table.machine': 'Machine',
-        'table.3days': '3 Days',
-        'table.7days': '7 Days',
-        'table.15days': '15 Days',
-        'history.title': 'Transaction History',
-        'history.all': 'All',
+        'slots.win': 'You won {amount} {currency}!',
+        'slots.jackpot': '🎰 JACKPOT! You won {amount} {currency}!',
+        'slots.pack5': '5 Spins',
+        'slots.pack10': '10 Spins +1',
+        'slots.pack50': '50 Spins +5',
+        'slots.pack100': '100 Spins +10',
+        
+        // Lucky Wheel
+        'wheel.title': 'Lucky Wheel',
+        'wheel.spin': 'SPIN',
+        'wheel.free': 'FREE',
+        'wheel.price': '0.25 TON',
+        'wheel.win': 'You won {prize}!',
+        'wheel.jackpot': '🎡 JACKPOT! You won {amount} TON!',
+        
+        // Profile
+        'profile.title': 'My Profile',
+        'wallet.totalBalance': 'Total Balance',
+        'wallet.myAssets': 'My Assets',
+        'wallet.connected': 'Connected:',
+        'wallet.disconnected': 'Wallet disconnected',
+        
+        // Referral
+        'referral.title': 'Referral Program',
+        'referral.yourLink': 'Your Referral Link',
+        'referral.bonusNote': 'Get 0.005 TON + 20% of their mining!',
+        'referral.milestones': 'Referral Milestones',
+        
+        // Notifications
         'notifications.title': 'Notifications',
+        'notifications.clear_read': 'Clear Read',
+        'notifications.clear_all': 'Clear All',
+        'notifications.no_notifications': 'No notifications',
+        
+        // Messages
         'messages.success': 'Success',
         'messages.error': 'Error',
-        'notif.welcomeBonus': '🎉 Welcome! You got 0.005 TON bonus!',
+        'messages.loading': 'Loading...',
+        
+        // Notifications Messages
+        'notif.welcomeBonus': '🎉 Welcome! You got 0.005 TON!',
         'notif.referralBonus': '🎉 Someone joined with your link! You got 0.005 TON!',
         'notif.wheelWin': '🎡 You won {prize}!',
-        'notif.wheelJackpot': '🎡🎡🎡 JACKPOT! You won {prize}!',
-        'notif.slotsWin': '🎰 You won {prize}!',
-        'notif.slotsJackpot': '🎰🎰🎰 JACKPOT! You won {prize}!',
+        'notif.wheelJackpot': '🎡🎡🎡 JACKPOT! You won {amount} TON!',
+        'notif.slotsWin': '🎰 You won {amount} {currency}!',
+        'notif.slotsJackpot': '🎰🎰🎰 JACKPOT! You won {amount} {currency}!',
         'notif.autoClickerBought': '🤖 Auto Miner activated for 15 days!',
+        
+        // Errors
         'error.insufficientBalance': 'Insufficient {currency} balance',
         'error.invalidAddress': 'Invalid {currency} address',
         'error.paymentFailed': 'Payment failed'
     },
     ar: {
         'app.name': 'كازينو تعدين TON',
-        'nav.mining': 'التعدين', 'nav.market': 'المتجر', 'nav.casino': 'الكازينو', 'nav.profile': 'الملف',
-        'send': 'إرسال', 'receive': 'استقبال', 'swap': 'تبديل', 'history': 'السجل', 'claim': 'استلام',
-        'copy': 'نسخ', 'confirm': 'تأكيد', 'refresh': 'تحديث',
+        'nav.mining': 'التعدين',
+        'nav.market': 'المتجر',
+        'nav.casino': 'الكازينو',
+        'nav.profile': 'الملف',
+        'send': 'إرسال',
+        'receive': 'استقبال',
+        'swap': 'تبديل',
+        'history': 'السجل',
+        'claim': 'استلام',
+        'copy': 'نسخ',
+        'confirm': 'تأكيد',
+        'refresh': 'تحديث',
+        
+        // Mining
         'mining.currentCycle': 'دورة التعدين الحالية',
         'mining.nextReward': 'المكافأة القادمة',
         'mining.activeRigs': 'الأجهزة النشطة',
         'mining.hashrate': 'السرعة',
         'mining.earned': 'الأرباح',
+        
+        // Market
         'market.title': 'أجهزة التعدين',
-        'filters.all': 'الكل', 'filters.basic': 'أساسي', 'filters.pro': 'محترف', 'filters.quantum': 'كمومي', 'filters.hot': 'عروض ساخنة',
+        'filters.all': 'الكل',
+        'filters.basic': 'أساسي',
+        'filters.pro': 'محترف',
+        'filters.quantum': 'كمومي',
+        'filters.hot': 'عروض ساخنة',
+        
+        // Casino
         'casino.title': 'ألعاب الكازينو',
         'casino.wheel': 'عجلة الحظ',
         'casino.slots': 'آلة السلوت',
@@ -211,68 +270,64 @@ const translations = {
         'casino.free': 'مجاني',
         'casino.price': 'السعر',
         'casino.turbo': 'سبين سريع',
-        'profile.title': 'ملفي الشخصي',
-        'wallet.totalBalance': 'الرصيد الإجمالي',
-        'wallet.myAssets': 'أصولي',
-        'wallet.connected': 'متصل:',
-        'wallet.disconnected': 'المحفظة غير متصلة',
-        'swap.title': 'تبديل العملات',
-        'swap.from': 'من', 'swap.to': 'إلى', 'swap.rate': 'السعر', 'swap.confirm': 'تأكيد',
-        'payment.title': 'إتمام التأجير',
-        'payment.selectMethod': 'اختر طريقة الدفع:',
-        'payment.balance': 'الدفع من الرصيد',
-        'payment.wallet': 'الدفع بالمحفظة',
-        'payment.available': 'المتاح:',
-        'deposit.title': 'استقبال الأموال',
-        'deposit.selectCurrency': 'اختر العملة',
-        'deposit.amount': 'المبلغ',
-        'deposit.transactionId': 'رقم المعاملة',
-        'deposit.sendTo': 'أرسل إلى هذا العنوان:',
-        'deposit.submit': 'تقديم الطلب',
-        'withdraw.title': 'إرسال الأموال',
-        'withdraw.selectCurrency': 'اختر العملة',
-        'withdraw.amount': 'المبلغ',
-        'withdraw.address': 'عنوان المحفظة',
-        'withdraw.youReceive': 'سوف تستلم:',
-        'withdraw.submit': 'طلب الإرسال',
-        'referral.title': 'برنامج الإحالة',
-        'referral.yourLink': 'رابط الإحالة',
-        'referral.bonusNote': 'احصل على 0.005 TON + 20% من تعدينهم!',
-        'referral.milestones': 'مراحل الإحالة',
-        'wheel.title': 'عجلة الحظ',
-        'wheel.spin': 'دوران',
-        'wheel.free': 'مجاني',
-        'wheel.price': '0.25 TON',
-        'wheel.freeDaily': 'دوران مجاني يومي',
-        'wheel.jackpot': 'جاكبوت!',
-        'wheel.won': 'فزت بـ {prize}!',
+        'casino.packs': 'باقات',
+        
+        // Slot Machine
         'slots.title': 'آلة السلوت',
         'slots.spin': 'لفة',
         'slots.turbo': 'سرعة',
         'slots.free': 'مجاني',
         'slots.price': '0.15 TON',
         'slots.turboPrice': '0.30 TON',
-        'slots.won': 'فزت بـ {prize}!',
-        'autoclicker.title': 'منجم آلي',
-        'autoclicker.price': '0.5 TON',
-        'autoclicker.buy': 'شراء منجم آلي',
-        'autoclicker.active': 'نشط: {days} يوم {hours} ساعة',
-        'table.machine': 'الجهاز',
-        'table.3days': '٣ أيام',
-        'table.7days': '٧ أيام',
-        'table.15days': '١٥ يوماً',
-        'history.title': 'سجل المعاملات',
-        'history.all': 'الكل',
+        'slots.win': 'فزت بـ {amount} {currency}!',
+        'slots.jackpot': '🎰 جاكبوت! فزت بـ {amount} {currency}!',
+        'slots.pack5': '5 لفات',
+        'slots.pack10': '10 لفات +1',
+        'slots.pack50': '50 لفة +5',
+        'slots.pack100': '100 لفة +10',
+        
+        // Lucky Wheel
+        'wheel.title': 'عجلة الحظ',
+        'wheel.spin': 'دوران',
+        'wheel.free': 'مجاني',
+        'wheel.price': '0.25 TON',
+        'wheel.win': 'فزت بـ {prize}!',
+        'wheel.jackpot': '🎡 جاكبوت! فزت بـ {amount} TON!',
+        
+        // Profile
+        'profile.title': 'ملفي الشخصي',
+        'wallet.totalBalance': 'الرصيد الإجمالي',
+        'wallet.myAssets': 'أصولي',
+        'wallet.connected': 'متصل:',
+        'wallet.disconnected': 'المحفظة غير متصلة',
+        
+        // Referral
+        'referral.title': 'برنامج الإحالة',
+        'referral.yourLink': 'رابط الإحالة',
+        'referral.bonusNote': 'احصل على 0.005 TON + 20% من تعدينهم!',
+        'referral.milestones': 'مراحل الإحالة',
+        
+        // Notifications
         'notifications.title': 'الإشعارات',
+        'notifications.clear_read': 'حذف المقروء',
+        'notifications.clear_all': 'حذف الكل',
+        'notifications.no_notifications': 'لا توجد إشعارات',
+        
+        // Messages
         'messages.success': 'نجاح',
         'messages.error': 'خطأ',
+        'messages.loading': 'جاري التحميل...',
+        
+        // Notifications Messages
         'notif.welcomeBonus': '🎉 مرحباً! حصلت على 0.005 TON!',
         'notif.referralBonus': '🎉 شخص انضم عبر رابطك! حصلت على 0.005 TON!',
         'notif.wheelWin': '🎡 فزت بـ {prize}!',
-        'notif.wheelJackpot': '🎡🎡🎡 جاكبوت! فزت بـ {prize}!',
-        'notif.slotsWin': '🎰 فزت بـ {prize}!',
-        'notif.slotsJackpot': '🎰🎰🎰 جاكبوت! فزت بـ {prize}!',
+        'notif.wheelJackpot': '🎡🎡🎡 جاكبوت! فزت بـ {amount} TON!',
+        'notif.slotsWin': '🎰 فزت بـ {amount} {currency}!',
+        'notif.slotsJackpot': '🎰🎰🎰 جاكبوت! فزت بـ {amount} {currency}!',
         'notif.autoClickerBought': '🤖 تم تفعيل المنجم الآلي!',
+        
+        // Errors
         'error.insufficientBalance': 'رصيد {currency} غير كافٍ',
         'error.invalidAddress': 'عنوان {currency} غير صالح',
         'error.paymentFailed': 'فشل الدفع'
@@ -380,18 +435,16 @@ const MACHINES = [
 // ====== 6. ACHIEVEMENTS ======
 const ACHIEVEMENTS = [
     { id: 'first_claim', name: 'First Blood', nameAr: 'أول تعدين', icon: '🥇', reward: 0.5, condition: 'claims:1' },
-    { id: 'streak_3', name: '3-Day Streak', nameAr: '٣ أيام متتالية', icon: '🔥', reward: 0.3, condition: 'streak:3' },
-    { id: 'streak_7', name: '7-Day Streak', nameAr: '٧ أيام متتالية', icon: '🔥🔥', reward: 0.7, condition: 'streak:7' },
+    { id: 'streak_3', name: '3-Day Streak', nameAr: '٣ أيام', icon: '🔥', reward: 0.3, condition: 'streak:3' },
+    { id: 'streak_7', name: '7-Day Streak', nameAr: '٧ أيام', icon: '🔥🔥', reward: 0.7, condition: 'streak:7' },
     { id: 'streak_30', name: 'Monthly Legend', nameAr: 'أسطورة الشهر', icon: '👑🔥', reward: 2.0, condition: 'streak:30' },
     { id: 'referrals_1', name: 'Social Starter', nameAr: 'بداية اجتماعية', icon: '👥', reward: 0.2, condition: 'referrals:1' },
     { id: 'referrals_5', name: 'Social Butterfly', nameAr: 'فراشة اجتماعية', icon: '🦋', reward: 1.0, condition: 'referrals:5' },
     { id: 'referrals_10', name: 'Community Leader', nameAr: 'قائد المجتمع', icon: '👑👥', reward: 2.5, condition: 'referrals:10' },
     { id: 'upgrades_1', name: 'First Upgrade', nameAr: 'أول ترقية', icon: '⚡', reward: 0.3, condition: 'upgrades:1' },
-    { id: 'upgrades_3', name: 'Tech Enthusiast', nameAr: 'مهتم بالتكنولوجيا', icon: '⚡⚡', reward: 0.8, condition: 'upgrades:3' },
-    { id: 'upgrades_5', name: 'Tech Lord', nameAr: 'رب التكنولوجيا', icon: '⚡⚡⚡', reward: 1.5, condition: 'upgrades:5' },
-    { id: 'earnings_5', name: 'Crypto Starter', nameAr: 'بداية في الكريبتو', icon: '💎', reward: 0.5, condition: 'earnings:5' },
-    { id: 'earnings_25', name: 'Crypto Trader', nameAr: 'متداول كريبتو', icon: '💎💎', reward: 1.5, condition: 'earnings:25' },
-    { id: 'earnings_100', name: 'Crypto Whale', nameAr: 'حوت الكريبتو', icon: '🐋', reward: 3.0, condition: 'earnings:100' }
+    { id: 'earnings_5', name: 'Crypto Starter', nameAr: 'بداية', icon: '💎', reward: 0.5, condition: 'earnings:5' },
+    { id: 'earnings_25', name: 'Crypto Trader', nameAr: 'متداول', icon: '💎💎', reward: 1.5, condition: 'earnings:25' },
+    { id: 'earnings_100', name: 'Crypto Whale', nameAr: 'حوت', icon: '🐋', reward: 3.0, condition: 'earnings:100' }
 ];
 
 // ====== 7. REFERRAL MILESTONES ======
@@ -425,33 +478,44 @@ const WHEEL_PRIZES = [
     { id: 16, type: 'USDT', amount: 25, color: '#22c55e', weight: 4, icon: '💵' },
     { id: 17, type: 'USDT', amount: 50, color: '#22c55e', weight: 3, icon: '💵' },
     { id: 18, type: 'USDT', amount: 100, color: '#22c55e', weight: 2, icon: '💵' },
-    { id: 19, type: 'USDT', amount: 250, color: '#22c55e', weight: 2, icon: '💵' },
-    { id: 20, type: 'USDT', amount: 500, color: '#22c55e', weight: 1, icon: '💵' },
-    { id: 21, type: 'SPIN', amount: 1, color: '#ff44cc', weight: 5, icon: '🔄' },
-    { id: 22, type: 'NOTHING', amount: 0, color: '#94a3b8', weight: 60, icon: '😢' },
-    { id: 23, type: 'AUTO', amount: 1, color: '#00f2ff', weight: 2, icon: '🤖' },
-    { id: 24, type: 'JACKPOT', amount: 100, color: '#ff4444', weight: 1, icon: '👑', jackpot: true }
+    { id: 19, type: 'SPIN', amount: 1, color: '#ff44cc', weight: 5, icon: '🔄' },
+    { id: 20, type: 'NOTHING', amount: 0, color: '#94a3b8', weight: 40, icon: '😢' },
+    { id: 21, type: 'AUTO', amount: 1, color: '#00f2ff', weight: 2, icon: '🤖' },
+    { id: 22, type: 'JACKPOT', amount: 100, color: '#ff4444', weight: 1, icon: '👑', jackpot: true }
 ];
 
 // ====== 9. SLOTS PRIZES ======
-const SLOTS_PRIZES = [
-    { combination: ['🍒', '🍒', '🍒'], amount: 0.1, type: 'TON', icon: '🍒' },
-    { combination: ['🍒', '🍒', '🍒'], amount: 0.1, type: 'USDT', icon: '🍒' },
-    { combination: ['💎', '💎', '💎'], amount: 0.25, type: 'TON', icon: '💎' },
-    { combination: ['💎', '💎', '💎'], amount: 0.25, type: 'USDT', icon: '💎' },
-    { combination: ['💰', '💰', '💰'], amount: 0.5, type: 'TON', icon: '💰' },
-    { combination: ['💰', '💰', '💰'], amount: 0.5, type: 'USDT', icon: '💰' },
-    { combination: ['⭐', '⭐', '⭐'], amount: 1, type: 'TON', icon: '⭐' },
-    { combination: ['⭐', '⭐', '⭐'], amount: 1, type: 'USDT', icon: '⭐' },
-    { combination: ['👑', '👑', '👑'], amount: 2, type: 'TON', icon: '👑' },
-    { combination: ['👑', '👑', '👑'], amount: 2, type: 'USDT', icon: '👑' },
-    { combination: ['7️⃣', '7️⃣', '7️⃣'], amount: 5, type: 'TON', icon: '7️⃣' },
-    { combination: ['7️⃣', '7️⃣', '7️⃣'], amount: 5, type: 'USDT', icon: '7️⃣' },
-    { combination: ['🎰', '🎰', '🎰'], amount: 10, type: 'TON', icon: '🎰', jackpot: true },
-    { combination: ['🎰', '🎰', '🎰'], amount: 10, type: 'USDT', icon: '🎰', jackpot: true }
-];
-
 const SLOTS_SYMBOLS = ['🍒', '💎', '💰', '⭐', '👑', '7️⃣', '🎰'];
+
+const SLOTS_PRIZES = [
+    // جائزة صغيرة (30%)
+    { symbols: ['🍒', '🍒', '🍒'], amount: 0.25, type: 'TON', icon: '🍒', weight: 30 },
+    { symbols: ['🍒', '🍒', '🍒'], amount: 0.25, type: 'USDT', icon: '🍒', weight: 30 },
+    
+    // جائزة متوسطة (25%)
+    { symbols: ['💎', '💎', '💎'], amount: 0.5, type: 'TON', icon: '💎', weight: 25 },
+    { symbols: ['💎', '💎', '💎'], amount: 0.5, type: 'USDT', icon: '💎', weight: 25 },
+    
+    // جائزة متوسطة كبيرة (20%)
+    { symbols: ['💰', '💰', '💰'], amount: 1.0, type: 'TON', icon: '💰', weight: 20 },
+    { symbols: ['💰', '💰', '💰'], amount: 1.0, type: 'USDT', icon: '💰', weight: 20 },
+    
+    // جائزة كبيرة (15%)
+    { symbols: ['⭐', '⭐', '⭐'], amount: 2.0, type: 'TON', icon: '⭐', weight: 15 },
+    { symbols: ['⭐', '⭐', '⭐'], amount: 2.0, type: 'USDT', icon: '⭐', weight: 15 },
+    
+    // جائزة كبيرة جداً (7%)
+    { symbols: ['👑', '👑', '👑'], amount: 5.0, type: 'TON', icon: '👑', weight: 7 },
+    { symbols: ['👑', '👑', '👑'], amount: 5.0, type: 'USDT', icon: '👑', weight: 7 },
+    
+    // جائزة ضخمة (2.9%)
+    { symbols: ['7️⃣', '7️⃣', '7️⃣'], amount: 10.0, type: 'TON', icon: '7️⃣', weight: 2.9 },
+    { symbols: ['7️⃣', '7️⃣', '7️⃣'], amount: 10.0, type: 'USDT', icon: '7️⃣', weight: 2.9 },
+    
+    // جاكبوت (0.1%)
+    { symbols: ['🎰', '🎰', '🎰'], amount: 100, type: 'TON', icon: '🎰', weight: 0.1, jackpot: true },
+    { symbols: ['🎰', '🎰', '🎰'], amount: 100, type: 'USDT', icon: '🎰', weight: 0.1, jackpot: true }
+];
 
 // ====== 10. FIREBASE ======
 let firebaseApp, db;
@@ -460,6 +524,7 @@ try {
         firebaseApp = firebase.initializeApp(CONFIG.FIREBASE);
         db = firebase.firestore();
         db.enablePersistence({ synchronizeTabs: true }).catch(console.warn);
+        console.log("🔥 Firebase initialized");
     }
 } catch (error) {
     console.error("Firebase error:", error);
@@ -479,11 +544,19 @@ localStorage.setItem('ton_user_id', userId);
 let isAdmin = userId === CONFIG.TON.ADMIN_ID;
 let adminClickCount = 0, lastAdminClick = 0;
 
-function checkAdminAndShowSetting() {
-    if (isAdmin) {
-        const adminSetting = document.getElementById('adminSettingItem');
-        if (adminSetting) adminSetting.style.display = 'flex';
-    }
+function checkAdminAndAddCrown() {
+    if (!isAdmin) return;
+    const headerActions = document.querySelector('.header-actions-bottom');
+    if (!headerActions) return;
+    const existingCrown = document.getElementById('adminCrownBtn');
+    if (existingCrown) existingCrown.remove();
+    const crownBtn = document.createElement('button');
+    crownBtn.id = 'adminCrownBtn';
+    crownBtn.className = 'icon-btn';
+    crownBtn.innerHTML = '<i class="fa-solid fa-crown" style="color: gold;"></i>';
+    crownBtn.onclick = showAdminPanel;
+    crownBtn.title = 'Admin Panel';
+    headerActions.appendChild(crownBtn);
 }
 
 function handleAvatarClick() {
@@ -492,11 +565,12 @@ function handleAvatarClick() {
     adminClickCount++;
     lastAdminClick = now;
     if (adminClickCount >= 5) {
-        const pwd = prompt(t('admin.password'));
+        const pwd = prompt(t('admin.password') || 'Enter Admin Password');
         if (pwd === CONFIG.TON.ADMIN_PASSWORD) {
             isAdmin = true;
+            checkAdminAndAddCrown();
             showAdminPanel();
-        } else if (pwd) showToast(t('admin.wrongPassword'), 'error');
+        } else if (pwd) showToast('Wrong password', 'error');
     }
 }
 
@@ -534,8 +608,29 @@ let userData = {
     lastClaimDate: new Date().toDateString(),
     upgrades: 0,
     autoClicker: { active: false, expiry: 0, lastAutoClaim: 0 },
-    wheel: { spinsToday: 0, lastFreeSpin: 0, totalSpins: 0, jackpotCounter: 0, jackpotWon: 0, lastWin: null, spinHistory: [] },
-    slots: { spinsToday: 0, lastFreeSpin: 0, totalSpins: 0, lastWin: null, spinHistory: [] },
+    
+    // Wheel data
+    wheel: { 
+        spinsToday: 0, 
+        lastFreeSpin: 0, 
+        totalSpins: 0, 
+        jackpotCounter: 0, 
+        jackpotWon: 0, 
+        lastWin: null, 
+        spinHistory: [],
+        packs: { p5: 0, p10: 0, p50: 0, p100: 0 }
+    },
+    
+    // Slots data
+    slots: { 
+        spinsToday: 0, 
+        lastFreeSpin: 0, 
+        totalSpins: 0, 
+        lastWin: null, 
+        spinHistory: [],
+        packs: { p5: 0, p10: 0, p50: 0, p100: 0 }
+    },
+    
     referrals: [],
     referralEarnings: 0,
     referralCount: 0,
@@ -543,23 +638,30 @@ let userData = {
     referredBy: null,
     referralMilestonesClaimed: [],
     referralMiningTrack: {},
+    
     pendingWithdrawals: [],
     completedWithdrawals: [],
     pendingDeposits: [],
     completedDeposits: [],
     transactions: [],
     achievements: [],
+    notifications: [],
+    
     language: currentLanguage,
-    notifications: true,
     createdAt: Date.now(),
     tonWallet: null,
     usedHashes: [],
+    
     dailyLogin: { lastLogin: null, streak: 0 }
 };
 
 userData.balance = userData.balances.TON;
 
 // ====== 15. CACHE MANAGEMENT ======
+let lastUserLoadTime = 0;
+let lastPricesLoadTime = 0;
+let lastHistoryCheckTime = 0;
+
 function loadUserFromCache() {
     try {
         const cached = localStorage.getItem(CACHE_KEYS.USER);
@@ -568,6 +670,7 @@ function loadUserFromCache() {
             if (Date.now() - data._timestamp < CONFIG.CACHE.USER_TTL) {
                 Object.assign(userData, data);
                 userData.balance = userData.balances.TON;
+                console.log("✅ User loaded from cache");
                 return true;
             }
         }
@@ -582,68 +685,159 @@ function saveUserToCache() {
 }
 
 function loadLocalTransactions() {
-    try { return JSON.parse(localStorage.getItem(CACHE_KEYS.TRANSACTIONS)) || []; } catch { return []; }
+    try {
+        return JSON.parse(localStorage.getItem(CACHE_KEYS.TRANSACTIONS)) || [];
+    } catch {
+        return [];
+    }
 }
+
 function saveLocalTransactions(txs) {
-    try { localStorage.setItem(CACHE_KEYS.TRANSACTIONS, JSON.stringify(txs)); } catch {}
+    try {
+        localStorage.setItem(CACHE_KEYS.TRANSACTIONS, JSON.stringify(txs));
+    } catch {}
 }
+
 function loadLocalNotifications() {
-    try { return JSON.parse(localStorage.getItem(CACHE_KEYS.NOTIFICATIONS)) || []; } catch { return []; }
+    try {
+        return JSON.parse(localStorage.getItem(CACHE_KEYS.NOTIFICATIONS)) || [];
+    } catch {
+        return [];
+    }
 }
+
 function saveLocalNotifications(notes) {
-    try { localStorage.setItem(CACHE_KEYS.NOTIFICATIONS, JSON.stringify(notes)); } catch {}
+    try {
+        localStorage.setItem(CACHE_KEYS.NOTIFICATIONS, JSON.stringify(notes));
+    } catch {}
 }
 
-// ====== 16. ON-DEMAND LISTENERS ======
-let activeListeners = new Map(), listenerTimeouts = new Map();
+// ====== 16. ON-DEMAND LISTENERS (30 ثانية فقط!) ======
+let activeListeners = new Map();
+let listenerTimeouts = new Map();
 
-function startOnDemandListener(collection, docId, callback, timeoutMs = 30000) {
+function startOnDemandListener(collection, docId, callback, timeoutMs = CONFIG.CACHE.LISTENER_TTL) {
     const id = `${collection}_${docId}`;
-    if (activeListeners.has(id)) activeListeners.get(id)();
-    if (listenerTimeouts.has(id)) clearTimeout(listenerTimeouts.get(id));
-    const unsubscribe = db.collection(collection).doc(docId).onSnapshot(doc => {
-        if (doc.exists) {
-            callback(doc.data());
-            if (doc.data().status === 'approved' || doc.data().status === 'rejected') stopOnDemandListener(id);
+    
+    if (activeListeners.has(id)) {
+        activeListeners.get(id)();
+        activeListeners.delete(id);
+    }
+    
+    if (listenerTimeouts.has(id)) {
+        clearTimeout(listenerTimeouts.get(id));
+        listenerTimeouts.delete(id);
+    }
+    
+    console.log(`👂 Starting on-demand listener for ${id} (${timeoutMs/1000}s)`);
+    
+    const unsubscribe = db.collection(collection).doc(docId).onSnapshot(
+        (doc) => {
+            if (doc.exists) {
+                const data = doc.data();
+                callback(data);
+                if (data.status === 'approved' || data.status === 'rejected') {
+                    console.log(`✅ Final status reached, stopping listener`);
+                    stopOnDemandListener(id);
+                }
+            }
+        },
+        (error) => {
+            console.error(`❌ Listener error:`, error);
+            stopOnDemandListener(id);
         }
-    }, console.error);
+    );
+    
     activeListeners.set(id, unsubscribe);
-    listenerTimeouts.set(id, setTimeout(() => stopOnDemandListener(id), timeoutMs));
+    
+    const timeout = setTimeout(() => {
+        console.log(`⏰ Listener timeout after ${timeoutMs/1000}s`);
+        stopOnDemandListener(id);
+    }, timeoutMs);
+    
+    listenerTimeouts.set(id, timeout);
 }
 
 function stopOnDemandListener(id) {
-    if (activeListeners.has(id)) { activeListeners.get(id)(); activeListeners.delete(id); }
-    if (listenerTimeouts.has(id)) { clearTimeout(listenerTimeouts.get(id)); listenerTimeouts.delete(id); }
+    if (activeListeners.has(id)) {
+        activeListeners.get(id)();
+        activeListeners.delete(id);
+    }
+    if (listenerTimeouts.has(id)) {
+        clearTimeout(listenerTimeouts.get(id));
+        listenerTimeouts.delete(id);
+    }
 }
 
 function stopAllListeners() {
-    activeListeners.forEach(u => u()); activeListeners.clear();
-    listenerTimeouts.forEach(t => clearTimeout(t)); listenerTimeouts.clear();
+    activeListeners.forEach(u => u());
+    activeListeners.clear();
+    listenerTimeouts.forEach(t => clearTimeout(t));
+    listenerTimeouts.clear();
 }
 
-// ====== 17. LOAD USER DATA ======
+// ====== 17. LOAD USER DATA (مع الكاش) ======
 async function loadUserData(force = false) {
-    if (!force && loadUserFromCache()) { updateUI(); return; }
+    if (!force && loadUserFromCache()) {
+        updateUI();
+        return;
+    }
+    
     if (db) {
         try {
             const doc = await db.collection('users').doc(userId).get();
             if (doc.exists) {
-                Object.assign(userData, doc.data());
+                const fbData = doc.data();
+                Object.assign(userData, fbData);
                 userData.balance = userData.balances.TON;
+                
+                // دمج المعاملات المحلية مع Firebase
+                const localTxs = loadLocalTransactions();
+                const fbTxs = fbData.transactions || [];
+                const txMap = new Map();
+                [...localTxs, ...fbTxs].forEach(tx => {
+                    const key = tx.firebaseId || `${tx.timestamp}_${tx.type}`;
+                    txMap.set(key, tx);
+                });
+                userData.transactions = Array.from(txMap.values());
+                saveLocalTransactions(userData.transactions);
+                
+                // دمج الإشعارات
+                const localNotes = loadLocalNotifications();
+                const fbNotes = fbData.notifications || [];
+                const noteMap = new Map();
+                [...localNotes, ...fbNotes].forEach(n => noteMap.set(n.id, n));
+                userData.notifications = Array.from(noteMap.values());
+                saveLocalNotifications(userData.notifications);
+                
             } else {
                 userData.referralCode = generateReferralCode();
-                await db.collection('users').doc(userId).set({ ...userData, createdAt: new Date() });
+                userData.createdAt = Date.now();
+                await db.collection('users').doc(userId).set({
+                    ...userData,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
             }
-        } catch (e) {}
+        } catch (e) {
+            console.error('Firebase error:', e);
+        }
     } else {
         userData.transactions = loadLocalTransactions();
+        userData.notifications = loadLocalNotifications();
         if (!userData.referralCode) userData.referralCode = generateReferralCode();
     }
+    
+    lastUserLoadTime = Date.now();
+    saveUserToCache();
+    
     if (hasReferralCode() && !userData.referredBy) await processReferral();
+    
     updateUI();
-    checkAdminAndShowSetting();
+    updateNotificationBadge();
+    checkAdminAndAddCrown();
     checkDailyLogin();
 }
+
 // ====== 18. REFERRAL SYSTEM ======
 function generateReferralCode() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -662,9 +856,12 @@ function hasReferralCode() {
 async function processReferral() {
     const processed = localStorage.getItem(CACHE_KEYS.REFERRAL_PROCESSED);
     if (processed) return;
+    
     const referralCode = new URLSearchParams(window.location.search).get('startapp') || tg?.initDataUnsafe?.start_param;
     if (!referralCode || referralCode === userData.referralCode || userData.referredBy) return;
+    
     localStorage.setItem(CACHE_KEYS.REFERRAL_PROCESSED, referralCode);
+    
     if (!db) {
         userData.referredBy = referralCode;
         userData.balances.TON += CONFIG.ECONOMY.REFERRAL_BONUS;
@@ -675,31 +872,42 @@ async function processReferral() {
         showToast(t('notif.welcomeBonus'), 'success');
         return;
     }
+    
     try {
         const referrerQuery = await db.collection('users').where('referralCode', '==', referralCode).limit(1).get();
         if (!referrerQuery.empty) {
             const referrerDoc = referrerQuery.docs[0];
             const referrerId = referrerDoc.id;
             const referrerData = referrerDoc.data();
+            
             if (referrerId === userId) return;
             if (referrerData.referrals?.includes(userId)) return;
+            
             await db.collection('users').doc(referrerId).update({
                 referrals: [...(referrerData.referrals || []), userId],
                 referralCount: (referrerData.referralCount || 0) + 1,
                 'balances.TON': firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS),
                 referralEarnings: firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS)
             });
+            
             userData.referredBy = referralCode;
             userData.balances.TON += CONFIG.ECONOMY.REFERRAL_BONUS;
             userData.balance = userData.balances.TON;
             userData.totalEarned += CONFIG.ECONOMY.REFERRAL_BONUS;
             userData.referralEarnings += CONFIG.ECONOMY.REFERRAL_BONUS;
-            await db.collection('users').doc(userId).update({ referredBy: referralCode, 'balances.TON': userData.balances.TON });
+            
+            await db.collection('users').doc(userId).update({
+                referredBy: referralCode,
+                'balances.TON': userData.balances.TON
+            });
+            
             saveUserToCache();
             showToast(t('notif.welcomeBonus'), 'success');
             await addNotification(referrerId, t('notif.referralBonus'), 'success');
-        } else localStorage.removeItem(CACHE_KEYS.REFERRAL_PROCESSED);
-    } catch (e) { localStorage.removeItem(CACHE_KEYS.REFERRAL_PROCESSED); }
+        }
+    } catch (e) {
+        localStorage.removeItem(CACHE_KEYS.REFERRAL_PROCESSED);
+    }
 }
 
 async function processReferralMiningBonus(referralId, miningAmount) {
@@ -712,6 +920,7 @@ async function processReferralMiningBonus(referralId, miningAmount) {
     userData.totalEarned += bonus;
     userData.referralEarnings += bonus;
     saveUserToCache();
+    
     try {
         await db.collection('users').doc(userId).update({
             'balances.TON': userData.balances.TON,
@@ -719,23 +928,33 @@ async function processReferralMiningBonus(referralId, miningAmount) {
             referralEarnings: userData.referralEarnings
         });
     } catch (e) {}
+    
     addLocalNotification(t('notif.referralMiningBonus', { amount: bonus.toFixed(4) }), 'success');
 }
 
-// ====== 19. REFERRAL MILESTONES CHECK ======
+// ====== 19. REFERRAL MILESTONES ======
 async function checkReferralMilestones() {
     if (!userData.referralMilestonesClaimed) userData.referralMilestonesClaimed = [];
+    
     for (const milestone of REFERRAL_MILESTONES) {
         if (userData.referralMilestonesClaimed.includes(milestone.referrals)) continue;
         if (userData.referralCount >= milestone.referrals) {
             userData.balances.USDT += milestone.reward;
             userData.referralMilestonesClaimed.push(milestone.referrals);
-            addTransaction('referral_bonus', milestone.reward, { currency: 'USDT', details: `${milestone.referrals} referrals milestone` });
+            
+            addTransaction('referral_bonus', milestone.reward, { 
+                currency: 'USDT', 
+                details: `${milestone.referrals} referrals milestone` 
+            });
+            
             addLocalNotification(`🏆 You reached ${milestone.referrals} referrals! Earned ${milestone.reward} USDT!`, 'success');
-            if (db) await db.collection('users').doc(userId).update({
-                'balances.USDT': userData.balances.USDT,
-                referralMilestonesClaimed: userData.referralMilestonesClaimed
-            }).catch(console.error);
+            
+            if (db) {
+                await db.collection('users').doc(userId).update({
+                    'balances.USDT': userData.balances.USDT,
+                    referralMilestonesClaimed: userData.referralMilestonesClaimed
+                }).catch(console.error);
+            }
         }
     }
     saveUserToCache();
@@ -749,13 +968,18 @@ function checkDailyLogin() {
         const yesterday = new Date(Date.now() - 86400000).toDateString();
         if (userData.dailyLogin.lastLogin === yesterday) {
             userData.dailyLogin.streak++;
-        } else userData.dailyLogin.streak = 1;
+        } else {
+            userData.dailyLogin.streak = 1;
+        }
         userData.dailyLogin.lastLogin = today;
+        
         const bonusIndex = Math.min(userData.dailyLogin.streak - 1, CONFIG.ECONOMY.DAILY_LOGIN_BONUS.length - 1);
         const bonus = CONFIG.ECONOMY.DAILY_LOGIN_BONUS[bonusIndex] || 0.1;
+        
         userData.balances.TON += bonus;
         userData.balance = userData.balances.TON;
         userData.totalEarned += bonus;
+        
         addTransaction('daily_bonus', bonus, { currency: 'TON', day: userData.dailyLogin.streak });
         showToast(`🔥 Day ${userData.dailyLogin.streak} bonus: +${bonus} TON!`, 'success');
         saveUserToCache();
@@ -763,17 +987,22 @@ function checkDailyLogin() {
 }
 
 // ====== 21. NOTIFICATION SYSTEM ======
-let localNotifications = loadLocalNotifications();
-let unreadCount = localNotifications.filter(n => !n.read).length;
+let unreadCount = 0;
 
 function addLocalNotification(message, type = 'info') {
     const notification = {
         id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
         message, type, read: false, timestamp: new Date().toISOString()
     };
-    localNotifications.unshift(notification);
-    if (localNotifications.length > 50) localNotifications = localNotifications.slice(0, 50);
-    saveLocalNotifications(localNotifications);
+    
+    if (!userData.notifications) userData.notifications = [];
+    userData.notifications.unshift(notification);
+    
+    if (userData.notifications.length > 50) {
+        userData.notifications = userData.notifications.slice(0, 50);
+    }
+    
+    saveLocalNotifications(userData.notifications);
     updateNotificationBadge();
     showFloatingToast(message, type);
     return notification;
@@ -781,6 +1010,7 @@ function addLocalNotification(message, type = 'info') {
 
 async function addNotification(targetUserId, message, type = 'info') {
     if (targetUserId === userId) addLocalNotification(message, type);
+    
     if (db && targetUserId !== userId) {
         try {
             await db.collection('users').doc(targetUserId).update({
@@ -795,46 +1025,86 @@ async function addNotification(targetUserId, message, type = 'info') {
 
 function updateNotificationBadge() {
     const badge = document.getElementById('notificationBadge');
-    if (badge) {
-        unreadCount = localNotifications.filter(n => !n.read).length;
+    if (badge && userData.notifications) {
+        unreadCount = userData.notifications.filter(n => !n.read).length;
         badge.textContent = unreadCount;
         badge.style.display = unreadCount > 0 ? 'flex' : 'none';
     }
 }
 
 function markNotificationRead(id) {
-    const n = localNotifications.find(n => n.id === id);
-    if (n && !n.read) { n.read = true; saveLocalNotifications(localNotifications); updateNotificationBadge(); renderNotifications(); }
+    const n = userData.notifications?.find(n => n.id === id);
+    if (n && !n.read) {
+        n.read = true;
+        saveLocalNotifications(userData.notifications);
+        updateNotificationBadge();
+        renderNotifications();
+    }
 }
 
 function clearReadNotifications() {
-    if (!confirm(`Clear ${localNotifications.filter(n => n.read).length} read notifications?`)) return;
-    localNotifications = localNotifications.filter(n => !n.read);
-    saveLocalNotifications(localNotifications);
-    updateNotificationBadge();
-    renderNotifications();
+    if (!userData.notifications?.length) {
+        showToast(t('notifications.no_notifications'), 'info');
+        return;
+    }
+    
+    const readCount = userData.notifications.filter(n => n.read).length;
+    const unreadCount = userData.notifications.filter(n => !n.read).length;
+    
+    if (readCount === 0) {
+        showToast('No read notifications', 'info');
+        return;
+    }
+    
+    if (confirm(`Clear ${readCount} read notification(s)? ${unreadCount} unread will remain.`)) {
+        userData.notifications = userData.notifications.filter(n => !n.read);
+        saveLocalNotifications(userData.notifications);
+        updateNotificationBadge();
+        renderNotifications();
+        showToast(`Cleared ${readCount} notifications`, 'success');
+    }
 }
 
 function clearAllNotifications() {
-    if (!confirm('Delete all notifications?')) return;
-    localNotifications = [];
-    saveLocalNotifications(localNotifications);
+    if (!userData.notifications?.length) {
+        showToast(t('notifications.no_notifications'), 'info');
+        return;
+    }
+    
+    const unreadCount = userData.notifications.filter(n => !n.read).length;
+    
+    if (unreadCount > 0) {
+        if (!confirm(`Warning: You have ${unreadCount} unread notifications. Delete all?`)) return;
+    } else {
+        if (!confirm('Delete all notifications?')) return;
+    }
+    
+    userData.notifications = [];
+    saveLocalNotifications([]);
     updateNotificationBadge();
     renderNotifications();
+    showToast('All notifications cleared', 'success');
 }
 
 function renderNotifications() {
     const list = document.getElementById('notificationsList');
     if (!list) return;
-    if (localNotifications.length === 0) {
+    
+    if (!userData.notifications?.length) {
         list.innerHTML = `<div class="empty-state"><i class="fa-regular fa-bell-slash"></i><p>${t('notifications.no_notifications')}</p></div>`;
         return;
     }
-    list.innerHTML = localNotifications.map(n => {
+    
+    list.innerHTML = userData.notifications.map(n => {
         const d = new Date(n.timestamp);
-        return `<div class="notification-item ${n.read ? '' : 'unread'}" onclick="markNotificationRead('${n.id}')">
-            <div class="notification-header"><span class="notification-title"><i class="fa-regular ${n.type === 'success' ? 'fa-circle-check' : 'fa-circle-info'}"></i> ${t('notifications.title')}</span>
-            <span class="notification-time">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</span></div>
+        const unreadClass = n.read ? '' : 'unread';
+        let icon = n.type === 'success' ? 'fa-circle-check' : 'fa-circle-info';
+        
+        return `<div class="notification-item ${unreadClass}" onclick="markNotificationRead('${n.id}')">
+            <div class="notification-header">
+                <span class="notification-title"><i class="fa-regular ${icon}"></i> ${t('notifications.title')}</span>
+                <span class="notification-time">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</span>
+            </div>
             <div class="notification-message">${n.message}</div>
         </div>`;
     }).join('');
@@ -842,11 +1112,15 @@ function renderNotifications() {
 
 function showNotifications() {
     const modal = document.getElementById('notificationsModal');
-    if (modal) { modal.classList.add('show'); renderNotifications(); }
+    if (modal) {
+        modal.classList.add('show');
+        renderNotifications();
+    }
 }
 
 // ====== 22. FLOATING NOTIFICATIONS ======
 let floatingTimeouts = [];
+
 function showFloatingToast(message, type = 'info') {
     const toast = document.getElementById('floatingNotification');
     if (!toast) return;
@@ -862,12 +1136,16 @@ function startFloatingNotifications() {
         "🎰 Someone hit JACKPOT on Slots!",
         "⚡ Turbo v3 rented",
         "💰 Withdrawal of 5 TON approved",
-        "🏆 Achievement unlocked: 7-Day Streak",
         "🎡 Someone won 100 TON on Lucky Wheel!",
-        "🤖 Auto Miner bought"
+        "🤖 Auto Miner bought",
+        "🎰 3️⃣ 7️⃣ 7️⃣ Big win 10 TON!",
+        "🎡 Wheel Jackpot 100 TON!",
+        "💎 New user joined with referral"
     ];
+    
     function showNext() {
-        showFloatingToast(messages[Math.floor(Math.random() * messages.length)], 'info');
+        const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+        showFloatingToast(randomMsg, 'info');
         floatingTimeouts.push(setTimeout(showNext, 8000 + Math.random() * 7000));
     }
     setTimeout(showNext, 3000);
@@ -886,37 +1164,66 @@ const STICKER_COOLDOWN = 12 * 60 * 1000;
 function showRandomSticker() {
     const now = Date.now();
     if (now - lastStickerTime < STICKER_COOLDOWN) return;
+    
     const stickerEl = document.getElementById('welcomeSticker');
     if (!stickerEl) return;
+    
     stickerEl.textContent = WELCOME_STICKERS[Math.floor(Math.random() * WELCOME_STICKERS.length)];
     stickerEl.classList.remove('sticker-pop', 'sticker-shake');
     void stickerEl.offsetWidth;
     stickerEl.classList.add('sticker-pop');
+    
     setTimeout(() => stickerEl.classList.add('sticker-shake'), 200);
-    setTimeout(() => { stickerEl.classList.remove('sticker-pop', 'sticker-shake'); setTimeout(() => stickerEl.textContent = '', 300); }, 3000);
+    setTimeout(() => {
+        stickerEl.classList.remove('sticker-pop', 'sticker-shake');
+        setTimeout(() => stickerEl.textContent = '', 300);
+    }, 3000);
+    
     lastStickerTime = now;
 }
 
-// ====== 24. PRICES ======
-let livePrices = {}, lastPricesLoadTime = 0;
+// ====== 24. PRICES (مع كاش 3 ساعات) ======
+let livePrices = {};
+
 async function loadPrices(force = false) {
     const now = Date.now();
     const cached = localStorage.getItem(CACHE_KEYS.PRICES);
+    
     if (!force && cached && (now - lastPricesLoadTime) < CONFIG.CACHE.PRICES_TTL) {
         const { prices, timestamp } = JSON.parse(cached);
-        livePrices = prices; lastPricesLoadTime = timestamp; updatePrices(); return;
+        livePrices = prices;
+        lastPricesLoadTime = timestamp;
+        updatePrices();
+        return;
     }
+    
     try {
         const ids = Object.values(CONFIG.CRYPTO_IDS).join(',');
         const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`);
         const data = await response.json();
+        
         for (const [symbol, id] of Object.entries(CONFIG.CRYPTO_IDS)) {
-            if (data[id]) livePrices[symbol] = { price: data[id].usd, change: data[id].usd_24h_change || 0 };
+            if (data[id]) {
+                livePrices[symbol] = { price: data[id].usd, change: data[id].usd_24h_change || 0 };
+            }
         }
+        
         lastPricesLoadTime = now;
         localStorage.setItem(CACHE_KEYS.PRICES, JSON.stringify({ prices: livePrices, timestamp: now }));
         updatePrices();
-    } catch (error) { console.error("Price fetch error:", error); }
+    } catch (error) {
+        console.error("Price fetch error:", error);
+    }
+}
+
+function updatePrices() {
+    renderAssets();
+    updateTotalBalance();
+}
+
+function refreshPrices() {
+    animateElement('.refresh-btn', 'pop');
+    loadPrices(true);
 }
 
 // ====== 25. UTILITIES ======
@@ -927,12 +1234,14 @@ function formatNumber(num) {
     if (num >= 1e3) return (num/1e3).toFixed(2)+'K';
     return num.toFixed(2);
 }
+
 function formatBalance(amount, currency) {
     if (currency === 'USDT' || currency === 'TON') return amount.toFixed(2);
     if (currency === 'BNB' || currency === 'ETH' || currency === 'SOL') return amount.toFixed(4);
     if (currency === 'BTC') return amount.toFixed(6);
     return amount.toFixed(4);
 }
+
 function isValidAddress(address, currency) {
     const network = CONFIG.NETWORK_TYPES[currency] || 'bsc';
     if (network === 'bsc' || network === 'erc20') return address.startsWith('0x') && address.length === 42;
@@ -941,20 +1250,24 @@ function isValidAddress(address, currency) {
     if (network === 'ton') return CONFIG.TON.WALLET_REGEX.test(address);
     return address.length > 0;
 }
+
 function validateTransactionHash(txHash, currency) {
     const network = CONFIG.NETWORK_TYPES[currency] || 'bsc';
     if (network === 'bsc' || network === 'erc20') return txHash.startsWith('0x') && txHash.length === 66;
     if (network === 'solana') return txHash.length >= 64 && txHash.length <= 88 && !txHash.startsWith('0x');
     return txHash.length > 10;
 }
+
 function getTimeUntilNextClaim() {
     const machine = getActiveMachine();
     return Math.max(0, machine.interval - (Date.now() - userData.lastClaim));
 }
+
 function getClaimProgress() {
     const machine = getActiveMachine();
     return Math.min((Date.now() - userData.lastClaim) / machine.interval * 100, 100);
 }
+
 function getActiveMachine() { return MACHINES.find(m => m.id === userData.activeMachine) || MACHINES[0]; }
 function getRemainingRentalTime() { return userData.activeMachine === 'm1' ? Infinity : Math.max(0, userData.machineExpiry - Date.now()); }
 function isMachineExpired() { return userData.activeMachine !== 'm1' && userData.machineExpiry < Date.now(); }
@@ -962,8 +1275,10 @@ function isMachineExpired() { return userData.activeMachine !== 'm1' && userData
 function updateStreak() {
     const today = new Date().toDateString();
     if (userData.lastClaimDate === today) return userData.streak;
+    
     const yesterday = new Date(Date.now() - 86400000).toDateString();
     const newStreak = userData.lastClaimDate === yesterday ? userData.streak + 1 : 1;
+    
     userData.streak = newStreak;
     userData.lastClaimDate = today;
     if (newStreak > userData.longestStreak) userData.longestStreak = newStreak;
@@ -984,10 +1299,12 @@ function showToast(message, type = 'info') {
     if (!toast) return;
     const toastMessage = document.getElementById('toastMessage');
     const toastIcon = toast.querySelector('i');
+    
     toastMessage.textContent = message;
     if (type === 'success') toastIcon.className = 'fa-regular fa-circle-check';
     else if (type === 'error') toastIcon.className = 'fa-regular fa-circle-xmark';
     else toastIcon.className = 'fa-regular fa-circle-info';
+    
     toast.classList.remove('hidden');
     setTimeout(() => toast.classList.add('hidden'), 3000);
 }
@@ -996,9 +1313,60 @@ function animateElement(selector, animation) {
     const el = document.querySelector(selector);
     if (el) { el.classList.add(animation); setTimeout(() => el.classList.remove(animation), 500); }
 }
+
 function scrollToTop() { document.querySelector('.main-content')?.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-// ====== 26. MINING MANAGER ======
+// ====== 26. HAPTIC FEEDBACK (إرتجاج) ======
+function hapticFeedback(type = 'light') {
+    if (tg?.HapticFeedback) {
+        if (type === 'light') tg.HapticFeedback.impactOccurred('light');
+        else if (type === 'medium') tg.HapticFeedback.impactOccurred('medium');
+        else if (type === 'heavy') tg.HapticFeedback.impactOccurred('heavy');
+        else if (type === 'success') tg.HapticFeedback.notificationOccurred('success');
+        else if (type === 'error') tg.HapticFeedback.notificationOccurred('error');
+        else if (type === 'warning') tg.HapticFeedback.notificationOccurred('warning');
+    }
+}
+
+// ====== 27. WIN POPUP (رسائل فوز) ======
+function showWinPopup(prize, type = 'normal') {
+    const popup = document.createElement('div');
+    popup.className = `win-popup ${type}`;
+    
+    if (type === 'jackpot') {
+        popup.innerHTML = `
+            <div class="jackpot-animation">
+                <div class="jackpot-text">🎰🎰🎰 JACKPOT! 🎰🎰🎰</div>
+                <div class="jackpot-amount">${prize}</div>
+            </div>
+        `;
+        hapticFeedback('heavy');
+    } else if (type === 'big') {
+        popup.innerHTML = `
+            <div class="big-win-animation">
+                <div class="win-text">🎉 BIG WIN! 🎉</div>
+                <div class="win-amount">${prize}</div>
+            </div>
+        `;
+        hapticFeedback('medium');
+    } else {
+        popup.innerHTML = `
+            <div class="win-animation">
+                <div class="win-amount">${prize}</div>
+            </div>
+        `;
+        hapticFeedback('light');
+    }
+    
+    document.body.appendChild(popup);
+    setTimeout(() => popup.classList.add('show'), 10);
+    setTimeout(() => {
+        popup.classList.remove('show');
+        setTimeout(() => popup.remove(), 300);
+    }, 2000);
+}
+
+// ====== 28. MINING MANAGER ======
 let miningTimer = null, autoClickerTimer = null;
 
 function startMining() {
@@ -1039,9 +1407,11 @@ function updateMining() {
         if (timerEl) { timerEl.textContent = formatTime(timeLeft); timerEl.style.color = '#00f2ff'; }
         if (claimBtn) claimBtn.disabled = true;
     }
+    
     if (nextEl) nextEl.textContent = formatTON(machine.yield * getStreakBonus()) + ' TON';
     
     if (isMachineExpired()) handleExpiry();
+    
     if (userData.autoClicker?.active && Date.now() > userData.autoClicker.expiry) {
         userData.autoClicker.active = false;
         saveUserToCache();
@@ -1062,16 +1432,21 @@ function formatTime(ms) {
 async function claim() {
     const machine = getActiveMachine();
     if (getTimeUntilNextClaim() > 0) { showToast('Not ready yet', 'error'); return; }
+    
     const bonus = getStreakBonus();
     const reward = machine.yield * bonus;
+    
     updateStreak();
+    
     userData.balances.TON += reward;
     userData.balance = userData.balances.TON;
     userData.totalEarned += reward;
     userData.lastClaim = Date.now();
     userData.claims++;
+    
     addTransaction('mining', reward, { machine: machine.id, bonus });
     saveUserToCache();
+    
     if (userData.referredBy) {
         try {
             if (db) {
@@ -1080,7 +1455,10 @@ async function claim() {
             }
         } catch (e) {}
     }
+    
     showToast(`Claimed ${formatTON(reward)} TON!${bonus > 1 ? ` (${((bonus-1)*100).toFixed(0)}% bonus)` : ''}`, 'success');
+    hapticFeedback('success');
+    showWinPopup(`${formatTON(reward)} TON`, 'normal');
     createParticles();
     updateUI();
     checkAchievements();
@@ -1126,14 +1504,26 @@ function handleExpiry() {
 }
 
 function addTransaction(type, amount, details = {}) {
-    const tx = { id: randomId(), type, amount, currency: details.currency || 'TON', balance: userData.balance, timestamp: Date.now(), ...details };
+    const tx = { 
+        id: randomId(), 
+        type, 
+        amount, 
+        currency: details.currency || 'TON', 
+        balance: userData.balance, 
+        timestamp: Date.now(), 
+        ...details 
+    };
+    
+    if (!userData.transactions) userData.transactions = [];
     userData.transactions.unshift(tx);
     if (userData.transactions.length > 100) userData.transactions = userData.transactions.slice(0, 100);
+    
     saveLocalTransactions(userData.transactions);
     updateActivityFeed();
+    return tx;
 }
 
-// ====== 27. AUTO CLICKER SYSTEM ======
+// ====== 29. AUTO CLICKER ======
 function startAutoClicker() {
     if (autoClickerTimer) clearInterval(autoClickerTimer);
     autoClickerTimer = setInterval(async () => {
@@ -1160,22 +1550,32 @@ function buyAutoClicker() {
     }
     userData.balances.TON -= CONFIG.ECONOMY.AUTO_CLICKER_PRICE;
     userData.balance = userData.balances.TON;
-    userData.autoClicker = { active: true, expiry: Date.now() + CONFIG.ECONOMY.AUTO_CLICKER_DURATION, lastAutoClaim: Date.now() };
+    userData.autoClicker = { 
+        active: true, 
+        expiry: Date.now() + CONFIG.ECONOMY.AUTO_CLICKER_DURATION, 
+        lastAutoClaim: Date.now() 
+    };
     saveUserToCache();
-    addTransaction('autoclicker', CONFIG.ECONOMY.AUTO_CLICKER_PRICE, { currency: 'TON', details: 'Auto Miner purchase (15 days)' });
+    addTransaction('autoclicker', CONFIG.ECONOMY.AUTO_CLICKER_PRICE, { 
+        currency: 'TON', 
+        details: 'Auto Miner purchase (15 days)' 
+    });
     startAutoClicker();
     showToast(t('autoclicker.bought'), 'success');
     updateUI();
 }
 
-// ====== 28. ACHIEVEMENTS MANAGER ======
+// ====== 30. ACHIEVEMENTS ======
 function checkAchievements() {
     const newlyUnlocked = [];
+    
     ACHIEVEMENTS.forEach(ach => {
         if (userData.achievements.includes(ach.id)) return;
+        
         let completed = false;
         const [type, target] = ach.condition.split(':');
         const val = parseInt(target);
+        
         switch(type) {
             case 'claims': completed = userData.claims >= val; break;
             case 'streak': completed = userData.streak >= val; break;
@@ -1183,6 +1583,7 @@ function checkAchievements() {
             case 'upgrades': completed = (userData.upgrades || 0) >= val; break;
             case 'earnings': completed = userData.totalEarned >= val; break;
         }
+        
         if (completed) {
             newlyUnlocked.push(ach);
             userData.achievements.push(ach.id);
@@ -1190,14 +1591,20 @@ function checkAchievements() {
             userData.balance = userData.balances.TON;
             userData.totalEarned += ach.reward;
             showToast(`🏆 ${currentLanguage === 'ar' ? ach.nameAr : ach.name} +${ach.reward} TON`, 'success');
+            hapticFeedback('success');
             createParticles();
         }
     });
-    if (newlyUnlocked.length > 0) { saveUserToCache(); renderAchievements(); }
+    
+    if (newlyUnlocked.length > 0) {
+        saveUserToCache();
+        renderAchievements();
+    }
 }
 
-// ====== 29. TON CONNECT ======
+// ====== 31. TON CONNECT ======
 let tonConnectUI = null, tonWallet = null;
+
 async function initTonConnect() {
     if (typeof TON_CONNECT_UI === 'undefined') return false;
     try {
@@ -1219,7 +1626,9 @@ function handleWalletChange(wallet) {
         userData.tonWallet = wallet.account.address;
         saveUserToCache();
         getWalletBalance();
-    } else userData.tonWallet = null;
+    } else {
+        userData.tonWallet = null;
+    }
 }
 
 function updateWalletUI() {
@@ -1233,7 +1642,9 @@ function updateWalletUI() {
     const modalAddress = document.getElementById('modalConnectedAddress');
     const paymentStatus = document.getElementById('paymentWalletStatus');
     const modalUserBalance = document.getElementById('modalUserBalance');
+    
     if (modalUserBalance) modalUserBalance.textContent = formatBalance(userData.balances.TON || 0, 'TON') + ' TON';
+    
     if (tonWallet) {
         if (statusEl) statusEl.innerHTML = `<div class="status-indicator online"></div><span>${t('wallet.connected')}</span>`;
         if (paymentStatus) paymentStatus.innerHTML = `<div class="status online"><i class="fas fa-circle"></i><span>${t('wallet.connected')}</span></div>`;
@@ -1272,9 +1683,10 @@ async function connectWallet() {
     if (!tonConnectUI) { if (!await initTonConnect()) { showToast('Failed to initialize TON Connect', 'error'); return; } }
     try { await tonConnectUI.openModal(); } catch (e) { showToast('Failed to connect wallet', 'error'); }
 }
+
 async function disconnectWallet() { if (tonConnectUI) { await tonConnectUI.disconnect(); showToast('Wallet disconnected', 'info'); } }
 
-// ====== 30. UI UPDATE FUNCTIONS ======
+// ====== 32. UI UPDATE ======
 function updateUI() {
     updateBalance();
     updateMiningStats();
@@ -1296,8 +1708,10 @@ function updateBalance() {
     const profileBalance = document.getElementById('profileBalance');
     const profileUsd = document.getElementById('profileUsd');
     const modalUserBalance = document.getElementById('modalUserBalance');
+    
     if (headerBalance) headerBalance.textContent = formatTON(userData.balances.TON);
     if (profileBalance) profileBalance.textContent = formatTON(userData.balances.TON) + ' TON';
+    
     const totalUsd = calculateTotalUsd();
     if (profileUsd) profileUsd.textContent = '≈ $' + totalUsd.toFixed(2);
     if (modalUserBalance) modalUserBalance.textContent = formatTON(userData.balances.TON) + ' TON';
@@ -1305,7 +1719,10 @@ function updateBalance() {
 
 function calculateTotalUsd() {
     let total = 0;
-    for (const [cur, amt] of Object.entries(userData.balances)) total += amt * (livePrices[cur]?.price || 0);
+    for (const [cur, amt] of Object.entries(userData.balances)) {
+        if (cur === 'USDT') total += amt;
+        else total += amt * (livePrices[cur]?.price || 0);
+    }
     return total;
 }
 
@@ -1319,6 +1736,7 @@ function updateMiningStats() {
     const achievementsCount = document.getElementById('achievementsCount');
     const totalReferralsStats = document.getElementById('totalReferralsStats');
     const machine = getActiveMachine();
+    
     if (hashRate) hashRate.textContent = machine.hashrate.split(' ')[0];
     if (streakCount) streakCount.textContent = userData.streak;
     if (totalEarned) totalEarned.textContent = formatTON(userData.totalEarned);
@@ -1343,6 +1761,7 @@ function renderActiveMachines() {
     const grid = document.getElementById('activeMachinesGrid');
     if (!grid) return;
     const activeMachine = getActiveMachine();
+    
     grid.innerHTML = MACHINES.slice(0, 2).map(m => {
         const isActive = userData.activeMachine === m.id;
         const progress = isActive ? getClaimProgress() : 0;
@@ -1370,23 +1789,25 @@ function renderPlansTable() {
 function updateActivityFeed() {
     const feed = document.getElementById('activityFeed');
     if (!feed) return;
-    const recent = userData.transactions.slice(0, 5);
+    const recent = userData.transactions?.slice(0, 5) || [];
     if (recent.length === 0) { feed.innerHTML = '<div class="empty-state">No activity yet</div>'; return; }
+    
     feed.innerHTML = recent.map(tx => {
-        const date = new Date(tx.timestamp);
         const timeAgo = formatRelativeTime(tx.timestamp);
-        let icon = 'fa-bolt', title = 'Mining Reward';
+        let icon = 'fa-bolt', title = 'Mining';
         if (tx.type === 'deposit') { icon = 'fa-arrow-down'; title = 'Deposit'; }
         else if (tx.type === 'withdraw') { icon = 'fa-arrow-up'; title = 'Withdrawal'; }
-        else if (tx.type === 'rental') { icon = 'fa-microchip'; title = 'Machine Rental'; }
+        else if (tx.type === 'rental') { icon = 'fa-microchip'; title = 'Rental'; }
         else if (tx.type === 'swap') { icon = 'fa-exchange-alt'; title = 'Swap'; }
-        else if (tx.type === 'referral_bonus') { icon = 'fa-users'; title = 'Referral Bonus'; }
+        else if (tx.type === 'referral_bonus') { icon = 'fa-users'; title = 'Referral'; }
         else if (tx.type === 'autoclicker') { icon = 'fa-robot'; title = 'Auto Miner'; }
-        else if (tx.type === 'wheel') { icon = 'fa-wheelchair'; title = 'Lucky Wheel'; }
-        else if (tx.type === 'slots') { icon = 'fa-sliders-h'; title = 'Slot Machine'; }
+        else if (tx.type === 'wheel') { icon = 'fa-wheelchair'; title = 'Wheel'; }
+        else if (tx.type === 'slots') { icon = 'fa-sliders-h'; title = 'Slots'; }
         else if (tx.type === 'daily_bonus') { icon = 'fa-calendar-check'; title = 'Daily Bonus'; }
+        
         const currency = tx.currency || 'TON';
-        return `<div class="activity-item"><div class="activity-icon"><i class="fas ${icon}"></i></div>
+        return `<div class="activity-item">
+            <div class="activity-icon"><i class="fas ${icon}"></i></div>
             <div class="activity-content"><div class="activity-title">${title}</div><div class="activity-time">${timeAgo}</div></div>
             <div class="activity-amount">${tx.type === 'withdraw' ? '-' : '+'}${formatBalance(tx.amount, currency)} ${currency}</div>
         </div>`;
@@ -1407,6 +1828,7 @@ function updateReferralPreview() {
     const refLink = document.getElementById('previewReferralLink');
     const usernameEl = document.getElementById('username');
     const userIdEl = document.getElementById('userId');
+    
     if (refCount) refCount.textContent = userData.referrals?.length || 0;
     if (refEarnings) refEarnings.textContent = formatTON(userData.referralEarnings || 0);
     if (refLink) refLink.value = getReferralLink();
@@ -1418,7 +1840,7 @@ function renderAchievements() {
     const grid = document.getElementById('achievementsGrid');
     if (!grid) return;
     grid.innerHTML = ACHIEVEMENTS.slice(0, 8).map(ach => {
-        const unlocked = userData.achievements.includes(ach.id);
+        const unlocked = userData.achievements?.includes(ach.id);
         return `<div class="achievement-item-legendary ${unlocked ? 'unlocked' : ''}">
             <span class="achievement-icon-legendary">${ach.icon}</span>
             <span class="achievement-name-legendary">${currentLanguage === 'ar' ? ach.nameAr : ach.name}</span>
@@ -1432,13 +1854,18 @@ function renderAssets() {
     if (!list) return;
     const assets = CONFIG.ALL_ASSETS.filter(a => (userData.balances[a.symbol] || 0) > 0);
     if (assets.length === 0) { list.innerHTML = '<div class="empty-state">No assets yet</div>'; return; }
+    
     list.innerHTML = assets.map(a => {
         const balance = userData.balances[a.symbol] || 0;
         const price = livePrices[a.symbol]?.price || 0;
-        const value = balance * price;
+        const value = a.symbol === 'USDT' ? balance : balance * price;
         const change = livePrices[a.symbol]?.change || 0;
-        return `<div class="asset-item-legendary"><div class="asset-left"><img src="${CONFIG.CMC_ICONS[a.symbol]}" class="asset-icon-img"><div class="asset-info"><h4>${a.name}</h4><p>${a.symbol} <span class="asset-change ${change >= 0 ? 'positive' : 'negative'}">${change >= 0 ? '+' : ''}${change.toFixed(2)}%</span></p></div></div>
-            <div class="asset-right"><div class="asset-balance">${formatBalance(balance, a.symbol)} ${a.symbol}</div><div class="asset-value">$${formatNumber(value)}</div></div></div>`;
+        return `<div class="asset-item-legendary">
+            <div class="asset-left"><img src="${CONFIG.CMC_ICONS[a.symbol]}" class="asset-icon-img">
+                <div class="asset-info"><h4>${a.name}</h4><p>${a.symbol} <span class="asset-change ${change >= 0 ? 'positive' : 'negative'}">${change >= 0 ? '+' : ''}${change.toFixed(2)}%</span></p></div>
+            </div>
+            <div class="asset-right"><div class="asset-balance">${formatBalance(balance, a.symbol)}</div><div class="asset-value">$${formatNumber(value)}</div></div>
+        </div>`;
     }).join('');
 }
 
@@ -1460,7 +1887,7 @@ function updateAutoClickerUI() {
     } else if (statusEl) statusEl.style.display = 'none';
 }
 
-// ====== 31. WHEEL SYSTEM ======
+// ====== 33. WHEEL SYSTEM ======
 function showWheelModal() {
     const modal = document.getElementById('wheelModal');
     if (modal) { updateWheelUI(); renderWheelSegments(); modal.classList.add('show'); }
@@ -1474,6 +1901,7 @@ function renderWheelSegments() {
     const angleStep = 360 / totalSegments;
     const allPrizes = WHEEL_PRIZES.filter(p => p.type !== 'JACKPOT');
     const jackpot = WHEEL_PRIZES.find(p => p.type === 'JACKPOT');
+    
     const selected = [jackpot];
     const others = [...allPrizes];
     while (selected.length < totalSegments && others.length > 0) {
@@ -1482,16 +1910,19 @@ function renderWheelSegments() {
         others.splice(idx, 1);
     }
     selected.sort(() => Math.random() - 0.5);
+    
     selected.forEach((p, i) => {
         const seg = document.createElement('div');
         seg.className = 'wheel-segment';
         seg.style.transform = `rotate(${i * angleStep}deg)`;
-        seg.style.background = p.color;
-        seg.innerHTML = `<span class="wheel-icon">${p.icon || '🎰'}</span>
-            <span class="wheel-value">${p.type === 'NOTHING' ? '😢' : p.type === 'SPIN' ? '🔄' : p.type === 'AUTO' ? '🤖' : p.type === 'JACKPOT' ? '👑' : p.amount}</span>
-            <span class="wheel-type">${p.type}</span>`;
+        seg.style.backgroundColor = p.color;
+        seg.innerHTML = `
+            <span class="wheel-icon">${p.icon || '🎰'}</span>
+            <span class="wheel-value">${p.type === 'NOTHING' ? '😢' : p.type === 'SPIN' ? '🔄' : p.type === 'AUTO' ? '🤖' : p.type === 'JACKPOT' ? '👑' : p.amount + (p.type === 'TON' ? ' TON' : ' USDT')}</span>
+        `;
         wheel.appendChild(seg);
     });
+    
     for (let i = 0; i < totalSegments; i++) {
         const line = document.createElement('div');
         line.className = 'wheel-divider';
@@ -1504,11 +1935,14 @@ function updateWheelUI() {
     const spinsLeftEl = document.getElementById('wheelSpinsLeft');
     const freeSpinEl = document.getElementById('wheelFreeSpin');
     const jackpotCounterEl = document.getElementById('wheelJackpotCounter');
+    
     if (spinsLeftEl) {
         const left = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - (userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY);
-        spinsLeftEl.textContent = t('wheel.spinsLeft', { count: left });
+        spinsLeftEl.textContent = `${left} spins until jackpot`;
     }
-    if (jackpotCounterEl) jackpotCounterEl.textContent = `${userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY}/${CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY}`;
+    if (jackpotCounterEl) {
+        jackpotCounterEl.textContent = `${userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY}/${CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY}`;
+    }
     if (freeSpinEl) {
         const now = Date.now();
         const next = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
@@ -1519,58 +1953,118 @@ function updateWheelUI() {
             freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${h}h ${m}m`;
             freeSpinEl.classList.add('disabled');
         } else {
-            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> ${t('wheel.free')}`;
+            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> FREE`;
             freeSpinEl.classList.remove('disabled');
         }
     }
 }
 
-function playWheelSound(type) {
-    if (tg) {
-        if (type === 'win') tg.HapticFeedback?.notificationOccurred('success');
-        else if (type === 'spin') tg.HapticFeedback?.impactOccurred('light');
-        else if (type === 'jackpot') { tg.HapticFeedback?.notificationOccurred('success'); tg.HapticFeedback?.impactOccurred('heavy'); }
+// ====== 34. WHEEL PACKS ======
+function buyWheelPack(pack) {
+    let spins, price, bonus;
+    switch(pack) {
+        case 'p5': spins = 5; price = CONFIG.ECONOMY.WHEEL_PACK_5.price; bonus = 0; break;
+        case 'p10': spins = 10; price = CONFIG.ECONOMY.WHEEL_PACK_10.price; bonus = 1; break;
+        case 'p50': spins = 50; price = CONFIG.ECONOMY.WHEEL_PACK_50.price; bonus = 5; break;
+        case 'p100': spins = 100; price = CONFIG.ECONOMY.WHEEL_PACK_100.price; bonus = 10; break;
+        default: return;
     }
+    
+    if (userData.balances.TON < price) {
+        showToast(t('error.insufficientBalance', { currency: 'TON' }), 'error');
+        return;
+    }
+    
+    if (tg?.pay) {
+        // دفع عبر تليجرام
+        // سنفترض أن الدفع يتم هنا
+    }
+    
+    userData.balances.TON -= price;
+    userData.balance = userData.balances.TON;
+    
+    if (!userData.wheel.packs) userData.wheel.packs = { p5: 0, p10: 0, p50: 0, p100: 0 };
+    userData.wheel.packs[pack] += spins + bonus;
+    
+    addTransaction('wheel_pack', price, { 
+        currency: 'TON', 
+        details: `Bought ${pack} pack: ${spins} spins + ${bonus} bonus` 
+    });
+    
+    saveUserToCache();
+    showToast(`✅ Purchased ${spins + bonus} wheel spins!`, 'success');
+    updateUI();
 }
 
 async function spinWheel(isFree = false) {
-    if (!isFree && userData.balances.TON < CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
-        showToast(t('wheel.insufficient'), 'error'); return;
+    // التحقق من وجود لفات في الباقات
+    let spinsAvailable = 0;
+    if (!isFree && userData.wheel.packs) {
+        for (const [pack, count] of Object.entries(userData.wheel.packs)) {
+            spinsAvailable += count;
+        }
     }
+    
+    if (!isFree && spinsAvailable === 0 && userData.balances.TON < CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
+        showToast(t('wheel.insufficient'), 'error');
+        return;
+    }
+    
     if (isFree) {
         const now = Date.now();
         if (now < userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL) {
             const left = (userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL) - now;
             const h = Math.floor(left / 3600000);
             const m = Math.floor((left % 3600000) / 60000);
-            showToast(t('wheel.wait', { time: `${h}h ${m}m` }), 'warning');
+            showToast(`Next free spin in ${h}h ${m}m`, 'warning');
             return;
         }
         userData.wheel.lastFreeSpin = now;
     } else {
-        if (tg?.pay) {
-            try {
-                const res = await tg.pay(CONFIG.ECONOMY.WHEEL_SPIN_PRICE.toString());
-                if (!res.success) { showToast(t('error.paymentFailed'), 'error'); return; }
-            } catch (e) { showToast(t('error.paymentFailed'), 'error'); return; }
+        // استخدام لفة من الباقات أولاً
+        if (spinsAvailable > 0) {
+            // استخدام لفة من الباقة
+            for (const [pack, count] of Object.entries(userData.wheel.packs)) {
+                if (count > 0) {
+                    userData.wheel.packs[pack]--;
+                    break;
+                }
+            }
         } else {
-            userData.balances.TON -= CONFIG.ECONOMY.WHEEL_SPIN_PRICE;
-            userData.balance = userData.balances.TON;
+            // خصم من الرصيد
+            if (tg?.pay) {
+                try {
+                    const res = await tg.pay(CONFIG.ECONOMY.WHEEL_SPIN_PRICE.toString());
+                    if (!res.success) { showToast(t('error.paymentFailed'), 'error'); return; }
+                } catch (e) { showToast(t('error.paymentFailed'), 'error'); return; }
+            } else {
+                userData.balances.TON -= CONFIG.ECONOMY.WHEEL_SPIN_PRICE;
+                userData.balance = userData.balances.TON;
+            }
         }
     }
+    
     userData.wheel.totalSpins++;
     userData.wheel.jackpotCounter++;
     userData.wheel.spinHistory.push({ timestamp: Date.now(), isFree });
+    
     const wheel = document.getElementById('wheel');
     if (wheel) {
         const spins = 5 + Math.floor(Math.random() * 5);
         wheel.style.transition = 'transform 3s cubic-bezier(0.17, 0.67, 0.83, 0.67)';
         wheel.style.transform = `rotate(${spins * 360 + Math.random() * 360}deg)`;
-        playWheelSound('spin');
+        hapticFeedback('light');
         setTimeout(() => wheel.style.transition = '', 3000);
     }
-    setTimeout(() => { const prize = getRandomWheelPrize(); awardWheelPrize(prize); }, 3000);
-    saveUserToCache(); updateWheelUI(); updateUI();
+    
+    setTimeout(() => {
+        const prize = getRandomWheelPrize();
+        awardWheelPrize(prize);
+    }, 3000);
+    
+    saveUserToCache();
+    updateWheelUI();
+    updateUI();
 }
 
 function getRandomWheelPrize() {
@@ -1584,19 +2078,57 @@ function getRandomWheelPrize() {
 
 function awardWheelPrize(prize) {
     userData.wheel.lastWin = { prize, timestamp: Date.now() };
-    if (prize.type === 'TON') { userData.balances.TON += prize.amount; userData.balance = userData.balances.TON; userData.totalEarned += prize.amount; addTransaction('wheel', prize.amount, { currency: 'TON' }); }
-    else if (prize.type === 'USDT') { userData.balances.USDT += prize.amount; addTransaction('wheel', prize.amount, { currency: 'USDT' }); }
-    else if (prize.type === 'SPIN') { setTimeout(() => spinWheel(false), 1000); }
-    else if (prize.type === 'AUTO') { userData.autoClicker = { active: true, expiry: Date.now() + CONFIG.ECONOMY.AUTO_CLICKER_DURATION, lastAutoClaim: Date.now() }; startAutoClicker(); }
-    else if (prize.type === 'JACKPOT') { userData.balances.TON += prize.amount; userData.balance = userData.balances.TON; userData.totalEarned += prize.amount; addTransaction('wheel', prize.amount, { currency: 'TON' }); playWheelSound('jackpot'); createParticles(); }
+    let prizeText = '';
+    
+    if (prize.type === 'TON') {
+        userData.balances.TON += prize.amount;
+        userData.balance = userData.balances.TON;
+        userData.totalEarned += prize.amount;
+        addTransaction('wheel', prize.amount, { currency: 'TON' });
+        prizeText = `${prize.amount} TON`;
+    } else if (prize.type === 'USDT') {
+        userData.balances.USDT += prize.amount;
+        addTransaction('wheel', prize.amount, { currency: 'USDT' });
+        prizeText = `${prize.amount} USDT`;
+    } else if (prize.type === 'SPIN') {
+        prizeText = 'Free Spin';
+        setTimeout(() => spinWheel(false), 1000);
+    } else if (prize.type === 'AUTO') {
+        userData.autoClicker = { 
+            active: true, 
+            expiry: Date.now() + CONFIG.ECONOMY.AUTO_CLICKER_DURATION, 
+            lastAutoClaim: Date.now() 
+        };
+        prizeText = 'Auto Miner (15 days)';
+        startAutoClicker();
+    } else if (prize.type === 'JACKPOT') {
+        userData.balances.TON += prize.amount;
+        userData.balance = userData.balances.TON;
+        userData.totalEarned += prize.amount;
+        addTransaction('wheel', prize.amount, { currency: 'TON' });
+        prizeText = `JACKPOT! ${prize.amount} TON`;
+        hapticFeedback('heavy');
+        showWinPopup(`${prize.amount} TON`, 'jackpot');
+        createParticles();
+    }
+    
     if (prize.type !== 'NOTHING') {
-        if (prize.jackpot) showToast(`🎡🎡🎡 ${t('wheel.jackpot')} ${prize.amount} TON!`, 'success');
-        else showToast(t('wheel.won', { prize: prize.type === 'TON' ? `${prize.amount} TON` : prize.type === 'USDT' ? `${prize.amount} USDT` : prize.type }), 'success');
-    } else showToast(t('wheel.goodLuck'), 'info');
-    saveUserToCache(); updateUI();
+        if (prize.jackpot) {
+            showToast(`🎡🎡🎡 JACKPOT! ${prize.amount} TON!`, 'success');
+        } else {
+            showToast(`🎡 You won ${prizeText}!`, 'success');
+            hapticFeedback('success');
+            showWinPopup(prizeText, prize.amount >= 10 ? 'big' : 'normal');
+        }
+    } else {
+        showToast('Good luck next time!', 'info');
+    }
+    
+    saveUserToCache();
+    updateUI();
 }
 
-// ====== 32. SLOTS SYSTEM (NEW) ======
+// ====== 35. SLOTS SYSTEM ======
 function showSlotsModal() {
     const modal = document.getElementById('slotsModal');
     if (modal) { updateSlotsUI(); renderSlots(); modal.classList.add('show'); }
@@ -1605,6 +2137,7 @@ function showSlotsModal() {
 function renderSlots() {
     const reels = document.querySelectorAll('.slot-reel');
     if (!reels.length) return;
+    
     reels.forEach(reel => {
         reel.innerHTML = '';
         for (let i = 0; i < 3; i++) {
@@ -1620,6 +2153,7 @@ function renderSlots() {
 function updateSlotsUI() {
     const freeSpinEl = document.getElementById('slotsFreeSpin');
     if (!freeSpinEl) return;
+    
     const now = Date.now();
     const next = userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
     if (now < next) {
@@ -1629,107 +2163,213 @@ function updateSlotsUI() {
         freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${h}h ${m}m`;
         freeSpinEl.classList.add('disabled');
     } else {
-        freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> ${t('slots.free')}`;
+        freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> FREE`;
         freeSpinEl.classList.remove('disabled');
     }
 }
 
+// ====== 36. SLOTS PACKS ======
+function buySlotsPack(pack) {
+    let spins, price, bonus;
+    switch(pack) {
+        case 'p5': spins = 5; price = CONFIG.ECONOMY.SLOTS_PACK_5.price; bonus = 0; break;
+        case 'p10': spins = 10; price = CONFIG.ECONOMY.SLOTS_PACK_10.price; bonus = 1; break;
+        case 'p50': spins = 50; price = CONFIG.ECONOMY.SLOTS_PACK_50.price; bonus = 5; break;
+        case 'p100': spins = 100; price = CONFIG.ECONOMY.SLOTS_PACK_100.price; bonus = 10; break;
+        default: return;
+    }
+    
+    if (userData.balances.TON < price) {
+        showToast(t('error.insufficientBalance', { currency: 'TON' }), 'error');
+        return;
+    }
+    
+    if (tg?.pay) {
+        // دفع عبر تليجرام
+    }
+    
+    userData.balances.TON -= price;
+    userData.balance = userData.balances.TON;
+    
+    if (!userData.slots.packs) userData.slots.packs = { p5: 0, p10: 0, p50: 0, p100: 0 };
+    userData.slots.packs[pack] += spins + bonus;
+    
+    addTransaction('slots_pack', price, { 
+        currency: 'TON', 
+        details: `Bought ${pack} pack: ${spins} spins + ${bonus} bonus` 
+    });
+    
+    saveUserToCache();
+    showToast(`✅ Purchased ${spins + bonus} slot spins!`, 'success');
+    updateUI();
+}
+
 async function spinSlots(isFree = false, isTurbo = false) {
     const price = isTurbo ? CONFIG.ECONOMY.SLOTS_TURBO_PRICE : CONFIG.ECONOMY.SLOTS_SPIN_PRICE;
-    if (!isFree && userData.balances.TON < price) {
+    
+    // التحقق من وجود لفات في الباقات
+    let spinsAvailable = 0;
+    if (!isFree && !isTurbo && userData.slots.packs) {
+        for (const [pack, count] of Object.entries(userData.slots.packs)) {
+            spinsAvailable += count;
+        }
+    }
+    
+    if (!isFree && spinsAvailable === 0 && userData.balances.TON < price) {
         showToast(isTurbo ? t('slots.insufficientTurbo') : t('slots.insufficient'), 'error');
         return;
     }
+    
     if (isFree) {
         const now = Date.now();
         if (now < userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL) {
             const left = (userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL) - now;
             const h = Math.floor(left / 3600000);
             const m = Math.floor((left % 3600000) / 60000);
-            showToast(t('slots.wait', { time: `${h}h ${m}m` }), 'warning');
+            showToast(`Next free spin in ${h}h ${m}m`, 'warning');
             return;
         }
         userData.slots.lastFreeSpin = now;
     } else {
-        if (tg?.pay) {
-            try {
-                const res = await tg.pay(price.toString());
-                if (!res.success) { showToast(t('error.paymentFailed'), 'error'); return; }
-            } catch (e) { showToast(t('error.paymentFailed'), 'error'); return; }
+        // استخدام لفة من الباقات أولاً (للسبين العادي فقط)
+        if (!isTurbo && spinsAvailable > 0) {
+            for (const [pack, count] of Object.entries(userData.slots.packs)) {
+                if (count > 0) {
+                    userData.slots.packs[pack]--;
+                    break;
+                }
+            }
         } else {
-            userData.balances.TON -= price;
-            userData.balance = userData.balances.TON;
+            // خصم من الرصيد
+            if (tg?.pay) {
+                try {
+                    const res = await tg.pay(price.toString());
+                    if (!res.success) { showToast(t('error.paymentFailed'), 'error'); return; }
+                } catch (e) { showToast(t('error.paymentFailed'), 'error'); return; }
+            } else {
+                userData.balances.TON -= price;
+                userData.balance = userData.balances.TON;
+            }
         }
     }
+    
     userData.slots.totalSpins++;
     userData.slots.spinHistory.push({ timestamp: Date.now(), isFree, isTurbo });
+    
     const duration = isTurbo ? 1000 : 2000;
-    await animateSlots(duration);
-    const prize = getRandomSlotsPrize();
-    awardSlotsPrize(prize);
-    saveUserToCache(); updateSlotsUI(); updateUI();
+    const prize = await animateSlots(duration);
+    
+    if (Math.random() < CONFIG.ECONOMY.SLOTS_WIN_RATE) {
+        awardSlotsPrize(prize);
+    } else {
+        // لا فوز
+        showToast('Better luck next time!', 'info');
+        hapticFeedback('light');
+    }
+    
+    saveUserToCache();
+    updateSlotsUI();
+    updateUI();
 }
 
 async function animateSlots(duration) {
     const reels = document.querySelectorAll('.slot-reel');
     const start = Date.now();
+    
     return new Promise(resolve => {
         function animate() {
             const now = Date.now();
             const progress = Math.min((now - start) / duration, 1);
+            
             reels.forEach((reel, idx) => {
                 const speed = 50 + idx * 10;
                 const offset = Math.floor(progress * speed) % SLOTS_SYMBOLS.length;
                 reel.style.transform = `translateY(-${offset * 60}px)`;
             });
-            if (progress < 1) requestAnimationFrame(animate);
-            else {
+            
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
                 reels.forEach(reel => reel.style.transform = 'translateY(0)');
-                resolve();
+                
+                // اختيار جائزة عشوائية
+                const rand = Math.random() * 100;
+                let cumulative = 0;
+                let selectedPrize = SLOTS_PRIZES[0];
+                
+                for (const prize of SLOTS_PRIZES) {
+                    cumulative += prize.weight;
+                    if (rand < cumulative) {
+                        selectedPrize = prize;
+                        break;
+                    }
+                }
+                
+                resolve(selectedPrize);
             }
         }
         requestAnimationFrame(animate);
     });
 }
 
-function getRandomSlotsPrize() {
-    const rand = Math.random();
-    if (rand < 0.001) return SLOTS_PRIZES.find(p => p.jackpot); // 0.1% jackpot
-    if (rand < 0.05) return SLOTS_PRIZES.filter(p => p.amount >= 5)[Math.floor(Math.random() * 3)]; // 5% big win
-    if (rand < 0.25) return SLOTS_PRIZES.filter(p => p.amount >= 1 && p.amount < 5)[Math.floor(Math.random() * 4)]; // 20% medium win
-    return SLOTS_PRIZES.filter(p => p.amount < 1)[Math.floor(Math.random() * 6)]; // 74.9% small win
-}
-
 function awardSlotsPrize(prize) {
     userData.slots.lastWin = { prize, timestamp: Date.now() };
-    if (prize.type === 'TON') { userData.balances.TON += prize.amount; userData.balance = userData.balances.TON; userData.totalEarned += prize.amount; addTransaction('slots', prize.amount, { currency: 'TON' }); }
-    else { userData.balances.USDT += prize.amount; addTransaction('slots', prize.amount, { currency: 'USDT' }); }
-    if (prize.jackpot) { showToast(`🎰🎰🎰 ${t('slots.jackpot')} ${prize.amount} ${prize.type}!`, 'success'); createParticles(); }
-    else showToast(t('slots.won', { prize: `${prize.amount} ${prize.type}` }), 'success');
+    
+    if (prize.type === 'TON') {
+        userData.balances.TON += prize.amount;
+        userData.balance = userData.balances.TON;
+        userData.totalEarned += prize.amount;
+        addTransaction('slots', prize.amount, { currency: 'TON' });
+    } else {
+        userData.balances.USDT += prize.amount;
+        addTransaction('slots', prize.amount, { currency: 'USDT' });
+    }
+    
+    if (prize.jackpot) {
+        showToast(`🎰🎰🎰 JACKPOT! ${prize.amount} ${prize.type}!`, 'success');
+        hapticFeedback('heavy');
+        showWinPopup(`${prize.amount} ${prize.type}`, 'jackpot');
+        createParticles();
+    } else {
+        showToast(`🎰 You won ${prize.amount} ${prize.type}!`, 'success');
+        hapticFeedback('success');
+        showWinPopup(`${prize.amount} ${prize.type}`, prize.amount >= 10 ? 'big' : 'normal');
+    }
+    
     saveUserToCache();
 }
 
-// ====== 33. MARKET FUNCTIONS ======
+// ====== 37. MARKET FUNCTIONS ======
 function renderMarket() {
     const showcase = document.getElementById('machinesShowcase');
     if (!showcase) return;
+    
     showcase.innerHTML = MACHINES.map(m => {
         const meets = checkRequirements(m);
         const name = currentLanguage === 'ar' ? m.nameAr : m.name;
         const desc = currentLanguage === 'ar' ? m.descriptionAr : m.description;
         const cycle = currentLanguage === 'ar' ? m.cycleTextAr : m.cycleText;
+        
         return `<div class="showcase-card-legendary ${!meets ? 'locked' : ''}">
             <div class="showcase-icon" style="color: ${m.color};"><i class="fas ${m.icon}"></i></div>
-            <div class="showcase-content"><h3>${name}</h3><p>${desc}</p>
-            <div class="showcase-specs"><span class="spec"><i class="fas fa-microchip"></i> ${m.hashrate}</span>
-            <span class="spec"><i class="fas fa-bolt"></i> ${m.yield} TON/${cycle}</span></div>
-            ${!meets ? `<div class="requirements-warning"><i class="fas fa-lock"></i> Requirements not met</div>` : ''}
-            <div class="showcase-plans">${m.plans.map((p, idx) => 
-                `<div class="plan-card-mini ${p.price === 0 ? 'free' : ''}" onclick="selectPlan('${m.id}', ${idx})">
-                    <div class="duration">${p.duration} ${currentLanguage === 'ar' ? 'أيام' : 'days'}</div>
-                    <div class="price">${p.price === 0 ? 'FREE' : p.price + ' TON'}</div>
-                    ${p.price > 0 ? `<div class="return">+${p.returnAmount} TON</div>` : ''}
-                </div>`).join('')}</div></div></div>`;
+            <div class="showcase-content">
+                <h3>${name}</h3><p>${desc}</p>
+                <div class="showcase-specs">
+                    <span class="spec"><i class="fas fa-microchip"></i> ${m.hashrate}</span>
+                    <span class="spec"><i class="fas fa-bolt"></i> ${m.yield} TON/${cycle}</span>
+                </div>
+                ${!meets ? `<div class="requirements-warning"><i class="fas fa-lock"></i> Requirements not met</div>` : ''}
+                <div class="showcase-plans">
+                    ${m.plans.map((p, idx) => 
+                        `<div class="plan-card-mini ${p.price === 0 ? 'free' : ''}" onclick="selectPlan('${m.id}', ${idx})">
+                            <div class="duration">${p.duration} ${currentLanguage === 'ar' ? 'أيام' : 'days'}</div>
+                            <div class="price">${p.price === 0 ? 'FREE' : p.price + ' TON'}</div>
+                            ${p.price > 0 ? `<div class="return">+${p.returnAmount} TON</div>` : ''}
+                        </div>`
+                    ).join('')}
+                </div>
+            </div>
+        </div>`;
     }).join('');
 }
 
@@ -1742,7 +2382,7 @@ function checkRequirements(m) {
     return true;
 }
 
-// ====== 34. PAYMENT SYSTEM ======
+// ====== 38. PAYMENT SYSTEM ======
 let currentPaymentMethod = 'balance', currentPayment = null;
 
 function switchPaymentMethod(method) {
@@ -1750,13 +2390,22 @@ function switchPaymentMethod(method) {
     const optBal = document.getElementById('paymentOptionBalance');
     const optWal = document.getElementById('paymentOptionWallet');
     const confirmBtn = document.getElementById('confirmPaymentBtn');
+    
     if (optBal) {
-        if (method === 'balance') { optBal.classList.add('active'); optWal?.classList.remove('active'); }
-        else { optBal.classList.remove('active'); optWal?.classList.add('active'); }
+        if (method === 'balance') {
+            optBal.classList.add('active');
+            optWal?.classList.remove('active');
+        } else {
+            optBal.classList.remove('active');
+            optWal?.classList.add('active');
+        }
     }
-    if (confirmBtn) confirmBtn.innerHTML = method === 'balance' ? 
-        `<i class="fas fa-wallet"></i> ${t('payment.confirmBalance')}` : 
-        `<i class="fas fa-external-link-alt"></i> ${t('payment.confirmWallet')}`;
+    
+    if (confirmBtn) {
+        confirmBtn.innerHTML = method === 'balance' ? 
+            `<i class="fas fa-wallet"></i> ${t('payment.confirmBalance')}` : 
+            `<i class="fas fa-external-link-alt"></i> ${t('payment.confirmWallet')}`;
+    }
     updateWalletUI();
 }
 
@@ -1794,6 +2443,7 @@ function activateMachine(machineId, planIndex) {
     if (machineId !== 'm1') userData.upgrades++;
     saveUserToCache();
     showToast(`${machine.name} activated!`, 'success');
+    hapticFeedback('success');
     updateUI();
     checkAchievements();
     if (db) saveToFirebase();
@@ -1802,39 +2452,53 @@ function activateMachine(machineId, planIndex) {
 function rentWithBalance(machineId, planIndex) {
     const machine = MACHINES.find(m => m.id === machineId);
     const plan = machine.plans[planIndex];
-    if (userData.balances.TON < plan.price) { showToast(t('error.insufficientBalance', { currency: 'TON' }), 'error'); return false; }
+    if (userData.balances.TON < plan.price) { 
+        showToast(t('error.insufficientBalance', { currency: 'TON' }), 'error'); 
+        return false; 
+    }
     userData.balances.TON -= plan.price;
     userData.balance = userData.balances.TON;
     activateMachine(machineId, planIndex);
     addTransaction('rental', plan.price, { machine: machine.name, plan: plan.duration + ' days', currency: 'TON' });
     showToast(`✅ ${machine.name} rented!`, 'success');
-    saveUserToCache(); updateUI(); return true;
+    saveUserToCache(); 
+    updateUI(); 
+    return true;
 }
 
 async function processPayment() {
     if (!currentPayment) return;
     const { machine, planIndex, plan } = currentPayment;
-    if (currentPaymentMethod === 'balance') { if (rentWithBalance(machine.id, planIndex)) closeModal('paymentModal'); }
-    else await confirmWalletPayment();
+    if (currentPaymentMethod === 'balance') { 
+        if (rentWithBalance(machine.id, planIndex)) closeModal('paymentModal'); 
+    } else await confirmWalletPayment();
 }
 
 async function confirmWalletPayment() {
     if (!currentPayment || !tonWallet) { showToast('Connect wallet first', 'error'); return; }
     const { machine, planIndex, plan } = currentPayment;
     try {
-        const tx = { validUntil: Date.now() + 600000, messages: [{ address: CONFIG.TON.WALLET, amount: (plan.price * 1e9).toString() }] };
+        const tx = { 
+            validUntil: Date.now() + 600000, 
+            messages: [{ address: CONFIG.TON.WALLET, amount: (plan.price * 1e9).toString() }] 
+        };
         showToast('Opening wallet...', 'info');
         await tonConnectUI.sendTransaction(tx);
         showToast('Payment sent! Waiting for confirmation...', 'info');
         setTimeout(() => {
             activateMachine(machine.id, planIndex);
             closeModal('paymentModal');
-            addTransaction('rental', plan.price, { machine: machine.name, plan: plan.duration + ' days', method: 'wallet', currency: 'TON' });
+            addTransaction('rental', plan.price, { 
+                machine: machine.name, 
+                plan: plan.duration + ' days', 
+                method: 'wallet', 
+                currency: 'TON' 
+            });
         }, 3000);
     } catch (e) { showToast('Payment failed', 'error'); }
 }
 
-// ====== 35. SWAP SYSTEM ======
+// ====== 39. SWAP SYSTEM ======
 let swapMode = 'from', swapFromCurrency = 'TON', swapToCurrency = 'USDT';
 
 function showSwapModal() {
@@ -1850,8 +2514,8 @@ function showSwapModal() {
 function updateSwapBalances() {
     const fromBal = document.getElementById('swapFromBalance');
     const toBal = document.getElementById('swapToBalance');
-    if (fromBal) fromBal.textContent = `Balance: ${formatBalance(userData.balances[swapFromCurrency] || 0, swapFromCurrency)} ${swapFromCurrency}`;
-    if (toBal) toBal.textContent = `Balance: ${formatBalance(userData.balances[swapToCurrency] || 0, swapToCurrency)} ${swapToCurrency}`;
+    if (fromBal) fromBal.textContent = `Balance: ${formatBalance(userData.balances[swapFromCurrency] || 0, swapFromCurrency)}`;
+    if (toBal) toBal.textContent = `Balance: ${formatBalance(userData.balances[swapToCurrency] || 0, swapToCurrency)}`;
 }
 
 function showCurrencySelector(type) {
@@ -1867,8 +2531,15 @@ function showCurrencySelector(type) {
 }
 
 function selectCurrency(symbol) {
-    if (swapMode === 'from') { swapFromCurrency = symbol; document.getElementById('swapFromCurrency').textContent = symbol; document.getElementById('swapFromIcon').src = CONFIG.CMC_ICONS[symbol]; }
-    else { swapToCurrency = symbol; document.getElementById('swapToCurrency').textContent = symbol; document.getElementById('swapToIcon').src = CONFIG.CMC_ICONS[symbol]; }
+    if (swapMode === 'from') { 
+        swapFromCurrency = symbol; 
+        document.getElementById('swapFromCurrency').textContent = symbol; 
+        document.getElementById('swapFromIcon').src = CONFIG.CMC_ICONS[symbol]; 
+    } else { 
+        swapToCurrency = symbol; 
+        document.getElementById('swapToCurrency').textContent = symbol; 
+        document.getElementById('swapToIcon').src = CONFIG.CMC_ICONS[symbol]; 
+    }
     closeModal('currencySelectorModal');
     updateSwapBalances();
     calculateSwap();
@@ -1876,7 +2547,9 @@ function selectCurrency(symbol) {
 
 function filterCurrencies() {
     const term = document.getElementById('currencySearch').value.toLowerCase();
-    document.querySelectorAll('.currency-list-item').forEach(i => i.style.display = i.textContent.toLowerCase().includes(term) ? 'flex' : 'none');
+    document.querySelectorAll('.currency-list-item').forEach(i => {
+        i.style.display = i.textContent.toLowerCase().includes(term) ? 'flex' : 'none';
+    });
 }
 
 function flipSwap() {
@@ -1894,23 +2567,40 @@ function calculateSwap() {
     const from = parseFloat(document.getElementById('swapFromAmount').value) || 0;
     const toEl = document.getElementById('swapToAmount');
     const rateEl = document.getElementById('swapRate');
-    const fromPrice = livePrices[swapFromCurrency]?.price || 1;
-    const toPrice = livePrices[swapToCurrency]?.price || 1;
-    const rate = fromPrice / toPrice;
-    toEl.value = (from * rate).toFixed(6);
-    rateEl.textContent = `1 ${swapFromCurrency} = ${rate.toFixed(6)} ${swapToCurrency}`;
+    
+    const fromPrice = swapFromCurrency === 'USDT' ? 1 : (livePrices[swapFromCurrency]?.price || 0);
+    const toPrice = swapToCurrency === 'USDT' ? 1 : (livePrices[swapToCurrency]?.price || 0);
+    
+    if (fromPrice > 0 && toPrice > 0) {
+        const rate = fromPrice / toPrice;
+        toEl.value = (from * rate).toFixed(6);
+        rateEl.textContent = `1 ${swapFromCurrency} = ${rate.toFixed(6)} ${swapToCurrency}`;
+    } else {
+        toEl.value = '0';
+        rateEl.textContent = 'Rate unavailable';
+    }
 }
 
 function confirmSwap() {
     const from = parseFloat(document.getElementById('swapFromAmount').value);
     const fromBal = userData.balances[swapFromCurrency] || 0;
+    
     if (!from || from <= 0) { showToast(t('error.enterAmount'), 'error'); return; }
-    if (from > fromBal) { showToast(t('error.insufficientToken', { token: swapFromCurrency }), 'error'); return; }
+    if (from > fromBal) { showToast(t('error.insufficientBalance', { currency: swapFromCurrency }), 'error'); return; }
+    
     const to = parseFloat(document.getElementById('swapToAmount').value);
+    
     userData.balances[swapFromCurrency] -= from;
     userData.balances[swapToCurrency] += to;
     if (swapFromCurrency === 'TON') userData.balance = userData.balances.TON;
-    addTransaction('swap', from, { fromCurrency: swapFromCurrency, toCurrency: swapToCurrency, toAmount: to, rate: to / from });
+    
+    addTransaction('swap', from, { 
+        fromCurrency: swapFromCurrency, 
+        toCurrency: swapToCurrency, 
+        toAmount: to, 
+        rate: to / from 
+    });
+    
     saveUserToCache();
     showToast(`✅ Swapped ${formatBalance(from, swapFromCurrency)} ${swapFromCurrency} to ${formatBalance(to, swapToCurrency)} ${swapToCurrency}`, 'success');
     closeModal('swapModal');
@@ -1918,12 +2608,14 @@ function confirmSwap() {
     renderAssets();
 }
 
-// ====== 36. DEPOSIT FUNCTIONS ======
+// ====== 40. DEPOSIT FUNCTIONS ======
 let selectedDepositCurrency = 'TON';
 
 function showDepositModal() {
     const select = document.getElementById('depositCurrencySelect');
-    select.innerHTML = CONFIG.ALL_ASSETS.map(a => `<option value="${a.symbol}" ${a.symbol === selectedDepositCurrency ? 'selected' : ''}>${a.name} (${a.symbol})</option>`).join('');
+    select.innerHTML = CONFIG.ALL_ASSETS.map(a => 
+        `<option value="${a.symbol}" ${a.symbol === selectedDepositCurrency ? 'selected' : ''}>${a.name} (${a.symbol})</option>`
+    ).join('');
     updateDepositInfo();
     document.getElementById('depositModal').classList.add('show');
     updateWalletUI();
@@ -1935,6 +2627,7 @@ function updateDepositInfo() {
     document.getElementById('depositAddress').textContent = CONFIG.DEPOSIT_ADDRESSES[cur] || 'Address not configured';
     document.getElementById('depositIcon').src = CONFIG.CMC_ICONS[cur];
     document.getElementById('depositMinAmount').textContent = `${CONFIG.DEPOSIT_MINIMUMS[cur] || 1} ${cur}`;
+    
     const net = CONFIG.NETWORK_TYPES[cur] || 'bsc';
     let hint = '';
     if (net === 'bsc' || net === 'erc20') hint = 'BSC/ERC20 - starts with 0x (42 chars)';
@@ -1951,12 +2644,37 @@ function validateDepositInput() {
     const hash = document.getElementById('depositTxHash').value.trim();
     const hint = document.getElementById('depositHashHint');
     const btn = document.getElementById('confirmDepositBtn');
-    if (!amt || amt <= 0 || !hash) { if (hint) { hint.textContent = 'Enter amount and hash'; hint.className = 'validation-hint invalid'; } btn.disabled = true; return; }
+    
+    if (!amt || amt <= 0 || !hash) { 
+        if (hint) { hint.textContent = 'Enter amount and hash'; hint.className = 'validation-hint invalid'; } 
+        btn.disabled = true; 
+        return; 
+    }
+    
     const min = CONFIG.DEPOSIT_MINIMUMS[cur] || 1;
-    if (amt < min) { hint.textContent = `Minimum is ${min} ${cur}`; hint.className = 'validation-hint invalid'; btn.disabled = true; return; }
-    if (!validateTransactionHash(hash, cur)) { hint.textContent = `Invalid ${cur} hash`; hint.className = 'validation-hint invalid'; btn.disabled = true; return; }
-    if (userData.usedHashes?.includes(hash.toLowerCase())) { hint.textContent = 'Hash already used'; hint.className = 'validation-hint invalid'; btn.disabled = true; return; }
-    hint.textContent = '✓ Valid'; hint.className = 'validation-hint valid';
+    if (amt < min) { 
+        hint.textContent = `Minimum is ${min} ${cur}`; 
+        hint.className = 'validation-hint invalid'; 
+        btn.disabled = true; 
+        return; 
+    }
+    
+    if (!validateTransactionHash(hash, cur)) { 
+        hint.textContent = `Invalid ${cur} hash`; 
+        hint.className = 'validation-hint invalid'; 
+        btn.disabled = true; 
+        return; 
+    }
+    
+    if (userData.usedHashes?.includes(hash.toLowerCase())) { 
+        hint.textContent = 'Hash already used'; 
+        hint.className = 'validation-hint invalid'; 
+        btn.disabled = true; 
+        return; 
+    }
+    
+    hint.textContent = '✓ Valid'; 
+    hint.className = 'validation-hint valid';
     btn.disabled = false;
 }
 
@@ -1969,46 +2687,68 @@ async function submitDeposit() {
     const cur = selectedDepositCurrency;
     const amt = parseFloat(document.getElementById('depositAmount').value);
     const hash = document.getElementById('depositTxHash').value.trim();
-    const deposit = { id: 'dep_' + Date.now() + '_' + randomId(), userId, username: userName, currency: cur, amount: amt, txHash: hash, status: 'pending', timestamp: Date.now() };
+    
+    const deposit = { 
+        id: 'dep_' + Date.now() + '_' + randomId(), 
+        userId, 
+        username: userName, 
+        currency: cur, 
+        amount: amt, 
+        txHash: hash, 
+        status: 'pending', 
+        timestamp: Date.now() 
+    };
+    
+    if (!userData.pendingDeposits) userData.pendingDeposits = [];
     userData.pendingDeposits.push(deposit);
     if (!userData.usedHashes) userData.usedHashes = [];
     userData.usedHashes.push(hash.toLowerCase());
     saveUserToCache();
+    
     if (db) {
         try {
-            const docRef = await db.collection('deposits').add({ ...deposit, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+            const docRef = await db.collection('deposits').add({ 
+                ...deposit, 
+                timestamp: firebase.firestore.FieldValue.serverTimestamp() 
+            });
             deposit.firebaseId = docRef.id;
-            startOnDemandListener('deposits', docRef.id, data => {
+            
+            startOnDemandListener('deposits', docRef.id, (data) => {
                 if (data.status === 'approved') {
                     userData.balances[cur] = (userData.balances[cur] || 0) + amt;
                     if (cur === 'TON') userData.balance = userData.balances.TON;
                     userData.totalDeposited += amt;
                     userData.pendingDeposits = userData.pendingDeposits.filter(d => d.id !== deposit.id);
+                    if (!userData.completedDeposits) userData.completedDeposits = [];
                     userData.completedDeposits.push({ ...deposit, status: 'approved' });
                     saveUserToCache();
-                    showToast(t('notif.depositApproved', { amount: amt, currency: cur }), 'success');
+                    showToast(`✅ Deposit of ${amt} ${cur} approved!`, 'success');
                     updateUI();
                 } else if (data.status === 'rejected') {
                     userData.pendingDeposits = userData.pendingDeposits.filter(d => d.id !== deposit.id);
                     saveUserToCache();
-                    showToast(t('notif.depositRejected', { reason: data.reason || 'Unknown' }), 'error');
+                    showToast(`❌ Deposit rejected: ${data.reason || 'Unknown'}`, 'error');
                 }
-            });
+            }, CONFIG.CACHE.LISTENER_TTL);
+            
             await addNotification(CONFIG.TON.ADMIN_ID, `💰 New deposit: ${amt} ${cur}`, 'info');
         } catch (e) {}
     }
+    
     closeModal('depositModal');
     showToast(`Deposit request submitted`, 'success');
     document.getElementById('depositAmount').value = '';
     document.getElementById('depositTxHash').value = '';
 }
 
-// ====== 37. WITHDRAW FUNCTIONS ======
+// ====== 41. WITHDRAW FUNCTIONS ======
 let selectedWithdrawCurrency = 'TON';
 
 function showWithdrawModal() {
     const select = document.getElementById('withdrawCurrencySelect');
-    select.innerHTML = CONFIG.ALL_ASSETS.map(a => `<option value="${a.symbol}" ${a.symbol === selectedWithdrawCurrency ? 'selected' : ''}>${a.name} (${a.symbol})</option>`).join('');
+    select.innerHTML = CONFIG.ALL_ASSETS.map(a => 
+        `<option value="${a.symbol}" ${a.symbol === selectedWithdrawCurrency ? 'selected' : ''}>${a.name} (${a.symbol})</option>`
+    ).join('');
     updateWithdrawInfo();
     document.getElementById('withdrawModal').classList.add('show');
 }
@@ -2017,12 +2757,14 @@ function updateWithdrawInfo() {
     const cur = document.getElementById('withdrawCurrencySelect')?.value || selectedWithdrawCurrency;
     selectedWithdrawCurrency = cur;
     const bal = userData.balances[cur] || 0;
-    document.getElementById('withdrawBalance').textContent = `${formatBalance(bal, cur)} ${cur}`;
+    document.getElementById('withdrawBalance').textContent = `${formatBalance(bal, cur)}`;
     document.getElementById('withdrawIcon').src = CONFIG.CMC_ICONS[cur];
+    
     const fee = CONFIG.WITHDRAW_FEES[cur];
     const feeEl = document.getElementById('withdrawFeeInfo');
     if (fee) feeEl.innerHTML = `${fee.note}<br>Fee: ${fee.fee} ${fee.feeCurrency}`;
     else feeEl.innerHTML = 'Network fee: 0';
+    
     validateWithdrawInput();
 }
 
@@ -2032,16 +2774,41 @@ function validateWithdrawInput() {
     const addr = document.getElementById('withdrawAddress').value.trim();
     const hint = document.getElementById('withdrawAddressHint');
     const btn = document.getElementById('submitWithdraw');
-    if (!amt || amt <= 0 || !addr) { if (hint) { hint.textContent = 'Enter amount and address'; hint.className = 'validation-hint invalid'; } btn.disabled = true; return; }
+    
+    if (!amt || amt <= 0 || !addr) { 
+        if (hint) { hint.textContent = 'Enter amount and address'; hint.className = 'validation-hint invalid'; } 
+        btn.disabled = true; 
+        return; 
+    }
+    
     const bal = userData.balances[cur] || 0;
-    if (amt > bal) { hint.textContent = `Insufficient ${cur}`; hint.className = 'validation-hint invalid'; btn.disabled = true; return; }
-    if (!isValidAddress(addr, cur)) { hint.textContent = `Invalid ${cur} address`; hint.className = 'validation-hint invalid'; btn.disabled = true; return; }
+    if (amt > bal) { 
+        hint.textContent = `Insufficient ${cur}`; 
+        hint.className = 'validation-hint invalid'; 
+        btn.disabled = true; 
+        return; 
+    }
+    
+    if (!isValidAddress(addr, cur)) { 
+        hint.textContent = `Invalid ${cur} address`; 
+        hint.className = 'validation-hint invalid'; 
+        btn.disabled = true; 
+        return; 
+    }
+    
     const fee = CONFIG.WITHDRAW_FEES[cur];
     if (fee && fee.feeCurrency !== cur) {
         const feeBal = userData.balances[fee.feeCurrency] || 0;
-        if (feeBal < fee.fee) { hint.textContent = `Insufficient ${fee.feeCurrency} for fee`; hint.className = 'validation-hint invalid'; btn.disabled = true; return; }
+        if (feeBal < fee.fee) { 
+            hint.textContent = `Insufficient ${fee.feeCurrency} for fee`; 
+            hint.className = 'validation-hint invalid'; 
+            btn.disabled = true; 
+            return; 
+        }
     }
-    hint.textContent = '✓ Valid'; hint.className = 'validation-hint valid';
+    
+    hint.textContent = '✓ Valid'; 
+    hint.className = 'validation-hint valid';
     btn.disabled = false;
 }
 
@@ -2050,9 +2817,10 @@ function updateWithdrawAmount() {
     const cur = selectedWithdrawCurrency;
     const fee = CONFIG.WITHDRAW_FEES[cur];
     const receiveEl = document.getElementById('withdrawReceiveAmount');
+    
     if (receiveEl) {
-        if (fee && fee.feeCurrency === cur) receiveEl.textContent = `${formatBalance(amt - fee.fee, cur)} ${cur}`;
-        else receiveEl.textContent = `${formatBalance(amt, cur)} ${cur}`;
+        if (fee && fee.feeCurrency === cur) receiveEl.textContent = `${formatBalance(amt - fee.fee, cur)}`;
+        else receiveEl.textContent = `${formatBalance(amt, cur)}`;
     }
     validateWithdrawInput();
 }
@@ -2061,26 +2829,53 @@ async function submitWithdraw() {
     const cur = selectedWithdrawCurrency;
     const amt = parseFloat(document.getElementById('withdrawAmount').value);
     const addr = document.getElementById('withdrawAddress').value.trim();
-    if (amt > (userData.balances[cur] || 0)) { showToast(t('error.insufficientBalance', { currency: cur }), 'error'); return; }
-    if (!isValidAddress(addr, cur)) { showToast(t('error.invalidAddress', { currency: cur }), 'error'); return; }
+    
+    if (amt > (userData.balances[cur] || 0)) { 
+        showToast(t('error.insufficientBalance', { currency: cur }), 'error'); 
+        return; 
+    }
+    if (!isValidAddress(addr, cur)) { 
+        showToast(t('error.invalidAddress', { currency: cur }), 'error'); 
+        return; 
+    }
+    
     const fee = CONFIG.WITHDRAW_FEES[cur];
-    const withdraw = { id: 'wd_' + Date.now() + '_' + randomId(), userId, username: userName, currency: cur, amount: amt, address: addr, fee: fee?.fee || 0, feeCurrency: fee?.feeCurrency || cur, status: 'pending', timestamp: Date.now() };
+    const withdraw = { 
+        id: 'wd_' + Date.now() + '_' + randomId(), 
+        userId, 
+        username: userName, 
+        currency: cur, 
+        amount: amt, 
+        address: addr, 
+        fee: fee?.fee || 0, 
+        feeCurrency: fee?.feeCurrency || cur, 
+        status: 'pending', 
+        timestamp: Date.now() 
+    };
+    
+    if (!userData.pendingWithdrawals) userData.pendingWithdrawals = [];
     userData.pendingWithdrawals.push(withdraw);
     userData.balances[cur] -= amt;
     if (fee && fee.feeCurrency !== cur) userData.balances[fee.feeCurrency] -= fee.fee;
     if (cur === 'TON') userData.balance = userData.balances.TON;
     userData.totalWithdrawn += amt;
     saveUserToCache();
+    
     if (db) {
         try {
-            const docRef = await db.collection('withdrawals').add({ ...withdraw, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+            const docRef = await db.collection('withdrawals').add({ 
+                ...withdraw, 
+                timestamp: firebase.firestore.FieldValue.serverTimestamp() 
+            });
             withdraw.firebaseId = docRef.id;
-            startOnDemandListener('withdrawals', docRef.id, data => {
+            
+            startOnDemandListener('withdrawals', docRef.id, (data) => {
                 if (data.status === 'approved') {
                     userData.pendingWithdrawals = userData.pendingWithdrawals.filter(w => w.id !== withdraw.id);
+                    if (!userData.completedWithdrawals) userData.completedWithdrawals = [];
                     userData.completedWithdrawals.push({ ...withdraw, status: 'approved' });
                     saveUserToCache();
-                    showToast(t('notif.withdrawApproved', { amount: amt, currency: cur }), 'success');
+                    showToast(`✅ Withdrawal of ${amt} ${cur} approved!`, 'success');
                 } else if (data.status === 'rejected') {
                     userData.balances[cur] += amt;
                     if (fee && fee.feeCurrency !== cur) userData.balances[fee.feeCurrency] += fee.fee;
@@ -2088,13 +2883,15 @@ async function submitWithdraw() {
                     userData.totalWithdrawn -= amt;
                     userData.pendingWithdrawals = userData.pendingWithdrawals.filter(w => w.id !== withdraw.id);
                     saveUserToCache();
-                    showToast(t('notif.withdrawRejected', { reason: data.reason || 'Unknown' }), 'error');
+                    showToast(`❌ Withdrawal rejected: ${data.reason || 'Unknown'}`, 'error');
                     updateUI();
                 }
-            });
+            }, CONFIG.CACHE.LISTENER_TTL);
+            
             await addNotification(CONFIG.TON.ADMIN_ID, `💸 New withdrawal: ${amt} ${cur}`, 'info');
         } catch (e) {}
     }
+    
     closeModal('withdrawModal');
     showToast(`Withdrawal request submitted`, 'success');
     updateUI();
@@ -2102,24 +2899,33 @@ async function submitWithdraw() {
     document.getElementById('withdrawAddress').value = '';
 }
 
-// ====== 38. HISTORY FUNCTIONS ======
+// ====== 42. HISTORY FUNCTIONS ======
 let currentHistoryFilter = 'all';
 
 function showHistory() {
     document.getElementById('historyModal').classList.add('show');
     renderHistory('all');
+    // التحقق من الطلبات المعلقة عند فتح التاريخ فقط
+    checkPendingTransactions();
 }
 
 function renderHistory(filter = 'all') {
     currentHistoryFilter = filter;
     const list = document.getElementById('historyList');
     if (!list) return;
+    
     let txs = userData.transactions || [];
     if (filter !== 'all') txs = txs.filter(tx => tx.type === filter);
-    if (txs.length === 0) { list.innerHTML = '<div class="empty-state"><i class="fa-regular fa-clock"></i><p>No transactions yet</p></div>'; return; }
+    
+    if (txs.length === 0) { 
+        list.innerHTML = '<div class="empty-state"><i class="fa-regular fa-clock"></i><p>No transactions yet</p></div>'; 
+        return; 
+    }
+    
     list.innerHTML = txs.map(tx => {
         const d = new Date(tx.timestamp);
         let icon = 'fa-bolt', typeClass = 'mining', typeText = 'Mining';
+        
         if (tx.type === 'deposit') { icon = 'fa-arrow-down'; typeClass = 'deposit'; typeText = 'Deposit'; }
         else if (tx.type === 'withdraw') { icon = 'fa-arrow-up'; typeClass = 'withdraw'; typeText = 'Withdrawal'; }
         else if (tx.type === 'rental') { icon = 'fa-microchip'; typeClass = 'rental'; typeText = 'Rental'; }
@@ -2129,10 +2935,21 @@ function renderHistory(filter = 'all') {
         else if (tx.type === 'wheel') { icon = 'fa-wheelchair'; typeClass = 'wheel'; typeText = 'Wheel'; }
         else if (tx.type === 'slots') { icon = 'fa-sliders-h'; typeClass = 'slots'; typeText = 'Slots'; }
         else if (tx.type === 'daily_bonus') { icon = 'fa-calendar-check'; typeClass = 'bonus'; typeText = 'Daily Bonus'; }
-        return `<div class="history-item"><div class="history-item-header"><div class="history-type ${typeClass}"><i class="fas ${icon}"></i><span>${typeText}</span></div><span class="history-date">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</span></div>
-            <div class="history-details"><span class="history-amount">${tx.type === 'withdraw' ? '-' : '+'}${formatBalance(tx.amount, tx.currency || 'TON')} ${tx.currency || 'TON'}</span></div>
+        else if (tx.type === 'wheel_pack') { icon = 'fa-ticket'; typeClass = 'pack'; typeText = 'Wheel Pack'; }
+        else if (tx.type === 'slots_pack') { icon = 'fa-ticket'; typeClass = 'pack'; typeText = 'Slots Pack'; }
+        
+        return `<div class="history-item">
+            <div class="history-item-header">
+                <div class="history-type ${typeClass}"><i class="fas ${icon}"></i><span>${typeText}</span></div>
+                <span class="history-date">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</span>
+            </div>
+            <div class="history-details">
+                <span class="history-amount">${tx.type === 'withdraw' ? '-' : '+'}${formatBalance(tx.amount, tx.currency || 'TON')} ${tx.currency || 'TON'}</span>
+            </div>
             ${tx.fromCurrency ? `<div style="font-size: 11px;">${tx.fromCurrency} → ${tx.toCurrency}</div>` : ''}
-            ${tx.machine ? `<div style="font-size: 11px;">${tx.machine}</div>` : ''}</div>`;
+            ${tx.machine ? `<div style="font-size: 11px;">${tx.machine}</div>` : ''}
+            ${tx.details ? `<div style="font-size: 11px;">${tx.details}</div>` : ''}
+        </div>`;
     }).join('');
 }
 
@@ -2143,53 +2960,99 @@ function filterHistory(filter) {
 }
 
 async function checkPendingTransactions() {
-    if (!db) return;
+    if (!db || !userData) return;
+    
+    const now = Date.now();
+    if (now - lastHistoryCheckTime < CONFIG.CACHE.HISTORY_TTL) {
+        console.log("📦 History cache valid, skipping check");
+        return;
+    }
+    lastHistoryCheckTime = now;
+    
+    console.log("🔍 Checking pending transactions...");
+    
     for (const d of userData.pendingDeposits?.filter(d => d.firebaseId) || []) {
         try {
             const doc = await db.collection('deposits').doc(d.firebaseId).get();
             if (doc.exists && doc.data().status !== 'pending') {
                 userData.pendingDeposits = userData.pendingDeposits.filter(x => x.id !== d.id);
-                if (doc.data().status === 'approved') userData.completedDeposits.push({ ...d, status: 'approved' });
+                if (doc.data().status === 'approved') {
+                    if (!userData.completedDeposits) userData.completedDeposits = [];
+                    userData.completedDeposits.push({ ...d, status: 'approved' });
+                    userData.balances[d.currency] = (userData.balances[d.currency] || 0) + d.amount;
+                    if (d.currency === 'TON') userData.balance = userData.balances.TON;
+                    showToast(`✅ Deposit of ${d.amount} ${d.currency} approved!`, 'success');
+                }
             }
         } catch (e) {}
     }
+    
     for (const w of userData.pendingWithdrawals?.filter(w => w.firebaseId) || []) {
         try {
             const doc = await db.collection('withdrawals').doc(w.firebaseId).get();
             if (doc.exists && doc.data().status !== 'pending') {
                 userData.pendingWithdrawals = userData.pendingWithdrawals.filter(x => x.id !== w.id);
-                if (doc.data().status === 'approved') userData.completedWithdrawals.push({ ...w, status: 'approved' });
+                if (doc.data().status === 'approved') {
+                    if (!userData.completedWithdrawals) userData.completedWithdrawals = [];
+                    userData.completedWithdrawals.push({ ...w, status: 'approved' });
+                    showToast(`✅ Withdrawal of ${w.amount} ${w.currency} approved!`, 'success');
+                } else if (doc.data().status === 'rejected') {
+                    userData.balances[w.currency] += w.amount;
+                    if (w.fee && w.feeCurrency !== w.currency) userData.balances[w.feeCurrency] += w.fee;
+                    if (w.currency === 'TON') userData.balance = userData.balances.TON;
+                    showToast(`❌ Withdrawal rejected: ${doc.data().reason || 'Unknown'}`, 'error');
+                }
             }
         } catch (e) {}
     }
+    
+    saveUserToCache();
+    if (currentHistoryFilter) renderHistory(currentHistoryFilter);
+    updateUI();
 }
 
-function refreshHistory() { checkPendingTransactions().then(() => renderHistory(currentHistoryFilter)); }
+function refreshHistory() { 
+    lastHistoryCheckTime = 0; 
+    checkPendingTransactions().then(() => renderHistory(currentHistoryFilter)); 
+}
 
-// ====== 39. LEADERBOARD ======
+// ====== 43. LEADERBOARD ======
 let leaderboardCache = { data: null, timestamp: 0 };
 
 async function updateLeaderboard() {
     const el = document.getElementById('leaderboard');
     if (!el) return;
+    
     const now = Date.now();
-    if (leaderboardCache.data && now - leaderboardCache.timestamp < CONFIG.CACHE.LEADERBOARD_TTL) { renderLeaderboard(leaderboardCache.data); return; }
+    if (leaderboardCache.data && now - leaderboardCache.timestamp < CONFIG.CACHE.LEADERBOARD_TTL) { 
+        renderLeaderboard(leaderboardCache.data); 
+        return; 
+    }
+    
     if (!db) {
-        const mock = { top: [
-            { rank: 1, name: 'CryptoKing', earnings: 12450 },
-            { rank: 2, name: 'TonWhale', earnings: 8230 },
-            { rank: 3, name: 'MinerPro', earnings: 5670 },
-            { rank: 4, name: 'ASICMaster', earnings: 3890 },
-            { rank: 5, name: 'QuantumMiner', earnings: 2450 }
-        ], userRank: Math.floor(Math.random() * 20) + 10 };
+        const mock = { 
+            top: [
+                { rank: 1, name: 'CryptoKing', earnings: 12450 },
+                { rank: 2, name: 'TonWhale', earnings: 8230 },
+                { rank: 3, name: 'MinerPro', earnings: 5670 },
+                { rank: 4, name: 'ASICMaster', earnings: 3890 },
+                { rank: 5, name: 'QuantumMiner', earnings: 2450 }
+            ], 
+            userRank: Math.floor(Math.random() * 20) + 10 
+        };
         leaderboardCache = { data: mock, timestamp: now };
         renderLeaderboard(mock);
         return;
     }
+    
     try {
         const snap = await db.collection('users').orderBy('totalEarned', 'desc').limit(10).get();
         const top = [];
-        snap.forEach((doc, i) => top.push({ rank: i + 1, name: doc.data().username || 'Miner', earnings: doc.data().totalEarned || 0 }));
+        snap.forEach((doc, i) => top.push({ 
+            rank: i + 1, 
+            name: doc.data().username || 'Miner', 
+            earnings: doc.data().totalEarned || 0 
+        }));
         const userRank = top.findIndex(u => u.name === userName) + 1;
         leaderboardCache = { data: { top, userRank: userRank > 0 ? userRank : 24 }, timestamp: now };
         renderLeaderboard(leaderboardCache.data);
@@ -2199,6 +3062,7 @@ async function updateLeaderboard() {
 function renderLeaderboard(data) {
     const el = document.getElementById('leaderboard');
     if (!el) return;
+    
     let html = '';
     data.top.forEach((u, i) => {
         let medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : u.rank;
@@ -2210,21 +3074,26 @@ function renderLeaderboard(data) {
     el.innerHTML = html;
 }
 
-// ====== 40. REFERRAL DETAILS ======
+// ====== 44. REFERRAL DETAILS ======
 function showReferralDetails() { showPage('profile'); }
+
 function renderReferralMilestones() {
     const container = document.getElementById('referralMilestonesContainer');
     if (!container) return;
+    
     let html = '<div class="referral-milestones-grid">';
     REFERRAL_MILESTONES.forEach(m => {
         const progress = Math.min((userData.referrals?.length || 0) / m.referrals * 100, 100);
         const claimed = userData.referralMilestonesClaimed?.includes(m.referrals);
-        html += `<div class="milestone-card"><div class="milestone-header"><span class="milestone-count">${m.referrals} referrals</span><span class="milestone-reward">${m.reward} ${m.unit}</span></div>
+        html += `<div class="milestone-card">
+            <div class="milestone-header"><span class="milestone-count">${m.referrals} referrals</span><span class="milestone-reward">${m.reward} ${m.unit}</span></div>
             <div class="milestone-progress-bar"><div class="milestone-progress-fill" style="width: ${progress}%"></div></div>
-            <div class="milestone-stats"><span>${userData.referrals?.length || 0}/${m.referrals}</span>${claimed ? '<span class="claimed-badge">✓ Claimed</span>' : ''}</div></div>`;
+            <div class="milestone-stats"><span>${userData.referrals?.length || 0}/${m.referrals}</span>${claimed ? '<span class="claimed-badge">✓ Claimed</span>' : ''}</div>
+        </div>`;
     });
     html += '</div>';
     container.innerHTML = html;
+    
     const link = document.getElementById('statsReferralLink');
     if (link) link.value = getReferralLink();
 }
@@ -2232,8 +3101,13 @@ function renderReferralMilestones() {
 function renderReferralTree() {
     const tree = document.getElementById('referralTree');
     if (!tree) return;
-    if (!userData.referrals?.length) { tree.innerHTML = '<div class="tree-node">No referrals yet</div>'; return; }
-    tree.innerHTML = userData.referrals.slice(0, 10).map(r => `<div class="tree-node"><i class="fas fa-user"></i><span>${r.slice(0, 8)}...</span></div>`).join('');
+    if (!userData.referrals?.length) { 
+        tree.innerHTML = '<div class="tree-node">No referrals yet</div>'; 
+        return; 
+    }
+    tree.innerHTML = userData.referrals.slice(0, 10).map(r => 
+        `<div class="tree-node"><i class="fas fa-user"></i><span>${r.slice(0, 8)}...</span></div>`
+    ).join('');
 }
 
 function copyReferralLink() {
@@ -2241,65 +3115,108 @@ function copyReferralLink() {
     showToast('Referral link copied', 'success');
 }
 
-// ====== 41. PAGE NAVIGATION ======
+// ====== 45. PAGE NAVIGATION ======
 let currentPage = 'mining';
+
 function showPage(page) {
     currentPage = page;
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(page + 'Page').classList.add('active');
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
     document.querySelector(`[data-page="${page}"]`).classList.add('active');
+    
     if (page === 'market') renderMarket();
-    if (page === 'profile') { renderAchievements(); updateLeaderboard(); renderReferralMilestones(); renderReferralTree(); updateChart(); }
-    if (page === 'casino') { updateWheelUI(); updateSlotsUI(); }
+    if (page === 'profile') { 
+        renderAchievements(); 
+        updateLeaderboard(); 
+        renderReferralMilestones(); 
+        renderReferralTree(); 
+        updateChart(); 
+    }
+    if (page === 'casino') { 
+        updateWheelUI(); 
+        updateSlotsUI(); 
+    }
+    
     showRandomSticker();
 }
 
 function updateChart() {
     const chart = document.getElementById('chartBars');
     if (!chart) return;
+    
     const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
     const today = new Date();
     const earnings = [];
+    
     for (let i = 6; i >= 0; i--) {
         const day = new Date(today);
         day.setDate(day.getDate() - i);
         const dayStr = day.toDateString();
-        const amt = userData.transactions.filter(tx => tx.type === 'mining' && new Date(tx.timestamp).toDateString() === dayStr).reduce((s, tx) => s + tx.amount, 0);
+        const amt = (userData.transactions || [])
+            .filter(tx => tx.type === 'mining' && new Date(tx.timestamp).toDateString() === dayStr)
+            .reduce((s, tx) => s + tx.amount, 0);
         earnings.push(amt);
     }
+    
     const max = Math.max(...earnings, 0.1);
-    chart.innerHTML = days.map((d, i) => `<div class="chart-bar" style="height: ${earnings[i] / max * 100}%;" data-value="${earnings[i].toFixed(2)} TON" data-day="${d}"></div>`).join('');
+    chart.innerHTML = days.map((d, i) => 
+        `<div class="chart-bar" style="height: ${earnings[i] / max * 100}%;" data-value="${earnings[i].toFixed(2)} TON" data-day="${d}"></div>`
+    ).join('');
 }
 
-// ====== 42. SAVE TO FIREBASE ======
+// ====== 46. SAVE TO FIREBASE ======
 async function saveToFirebase() {
     if (!db) return;
     try {
         await db.collection('users').doc(userId).set({
-            balances: userData.balances, totalEarned: userData.totalEarned, totalWithdrawn: userData.totalWithdrawn,
-            totalDeposited: userData.totalDeposited, activeMachine: userData.activeMachine, activePlan: userData.activePlan,
-            machineExpiry: userData.machineExpiry, lastClaim: userData.lastClaim, claims: userData.claims,
-            streak: userData.streak, longestStreak: userData.longestStreak, lastClaimDate: userData.lastClaimDate,
-            upgrades: userData.upgrades, referrals: userData.referrals, referralEarnings: userData.referralEarnings,
-            referralCount: userData.referralCount, referralMilestonesClaimed: userData.referralMilestonesClaimed,
-            autoClicker: userData.autoClicker, wheel: userData.wheel, slots: userData.slots,
-            achievements: userData.achievements, dailyLogin: userData.dailyLogin,
+            balances: userData.balances,
+            totalEarned: userData.totalEarned,
+            totalWithdrawn: userData.totalWithdrawn,
+            totalDeposited: userData.totalDeposited,
+            activeMachine: userData.activeMachine,
+            activePlan: userData.activePlan,
+            machineExpiry: userData.machineExpiry,
+            lastClaim: userData.lastClaim,
+            claims: userData.claims,
+            streak: userData.streak,
+            longestStreak: userData.longestStreak,
+            lastClaimDate: userData.lastClaimDate,
+            upgrades: userData.upgrades,
+            referrals: userData.referrals,
+            referralEarnings: userData.referralEarnings,
+            referralCount: userData.referralCount,
+            referralMilestonesClaimed: userData.referralMilestonesClaimed,
+            autoClicker: userData.autoClicker,
+            wheel: userData.wheel,
+            slots: userData.slots,
+            achievements: userData.achievements,
+            dailyLogin: userData.dailyLogin,
             lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
         }, { merge: true });
     } catch (e) {}
 }
 
-// ====== 43. MODAL FUNCTIONS ======
+// ====== 47. MODAL FUNCTIONS ======
 function closeModal(id) {
     const modal = document.getElementById(id);
     if (!modal) return;
     modal.classList.remove('show');
+    
     if (id === 'paymentModal') currentPayment = null;
     if (id === 'swapModal') document.getElementById('swapFromAmount').value = '1';
-    if (id === 'depositModal') { document.getElementById('depositAmount').value = ''; document.getElementById('depositTxHash').value = ''; }
-    if (id === 'withdrawModal') { document.getElementById('withdrawAmount').value = ''; document.getElementById('withdrawAddress').value = ''; }
-    if (id === 'wheelModal') { const w = document.getElementById('wheel'); if (w) { w.style.transition = ''; w.style.transform = 'rotate(0deg)'; } }
+    if (id === 'depositModal') { 
+        document.getElementById('depositAmount').value = ''; 
+        document.getElementById('depositTxHash').value = ''; 
+    }
+    if (id === 'withdrawModal') { 
+        document.getElementById('withdrawAmount').value = ''; 
+        document.getElementById('withdrawAddress').value = ''; 
+    }
+    if (id === 'wheelModal') { 
+        const w = document.getElementById('wheel'); 
+        if (w) { w.style.transition = ''; w.style.transform = 'rotate(0deg)'; } 
+    }
     if (id === 'slotsModal') { renderSlots(); }
 }
 
@@ -2310,7 +3227,7 @@ function hideAllModals() {
     });
 }
 
-// ====== 44. FILTER MARKET ======
+// ====== 48. FILTER MARKET ======
 function filterMarket(filter) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     event.target.classList.add('active');
@@ -2321,19 +3238,30 @@ function filterMarket(filter) {
     });
 }
 
-// ====== 45. ADMIN FUNCTIONS ======
+// ====== 49. ADMIN FUNCTIONS ======
 let currentAdminTab = 'withdrawals';
+
 function showAdminPanel() {
     if (!isAdmin) { showToast('Access denied', 'error'); return; }
     document.getElementById('adminModal').classList.add('show');
     loadAdminCounts();
 }
+
 function switchAdminTab(tab) {
     currentAdminTab = tab;
     document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
     event.target.classList.add('active');
-    document.getElementById('adminContent').innerHTML = `<div class="admin-refresh-message"><i class="fas fa-hand-pointer"></i><p>${t('admin.clickRefresh')}</p><button class="admin-refresh-btn" onclick="refreshAdminPanel()"><i class="fas fa-rotate-right"></i><span>${t('admin.refresh')}</span></button></div>`;
+    document.getElementById('adminContent').innerHTML = `
+        <div class="admin-refresh-message">
+            <i class="fas fa-hand-pointer"></i>
+            <p>${t('admin.clickRefresh') || 'Click refresh to load requests'}</p>
+            <button class="admin-refresh-btn" onclick="refreshAdminPanel()">
+                <i class="fas fa-rotate-right"></i> <span>${t('admin.refresh') || 'Refresh'}</span>
+            </button>
+        </div>
+    `;
 }
+
 async function loadAdminCounts() {
     if (!db) return;
     try {
@@ -2345,74 +3273,140 @@ async function loadAdminCounts() {
         document.getElementById('pendingWithdrawalsCount').textContent = w.size;
     } catch (e) {}
 }
+
 async function refreshAdminPanel() {
     if (!isAdmin || !db) return;
+    
     const icon = event.currentTarget.querySelector('i');
-    icon.classList.add('fa-spin');
+    if (icon) icon.classList.add('fa-spin');
+    
     const content = document.getElementById('adminContent');
     content.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+    
     try {
         const col = currentAdminTab === 'withdrawals' ? 'withdrawals' : 'deposits';
         const snap = await db.collection(col).where('status', '==', 'pending').get();
-        if (snap.empty) { content.innerHTML = '<div class="empty-state">No pending requests</div>'; return; }
+        
+        if (snap.empty) { 
+            content.innerHTML = '<div class="empty-state">No pending requests</div>'; 
+            return; 
+        }
+        
         let html = '';
         snap.forEach(doc => {
             const data = doc.data();
             const d = new Date(data.timestamp?.toDate?.() || data.timestamp);
+            
             if (currentAdminTab === 'withdrawals') {
-                html += `<div class="admin-transaction-card"><div class="admin-tx-header"><div class="admin-tx-type withdraw"><i class="fas fa-arrow-up"></i><span>WITHDRAWAL</span></div><span class="admin-tx-status pending">PENDING</span></div>
-                    <div class="admin-tx-details"><div class="admin-tx-row"><span class="admin-tx-label">User:</span><span class="admin-tx-value">${data.username || data.userId.slice(0,8)}</span></div>
-                    <div class="admin-tx-row"><span class="admin-tx-label">Amount:</span><span class="admin-tx-value">${data.amount} ${data.currency}</span></div>
-                    <div class="admin-tx-row"><span class="admin-tx-label">Address:</span><div class="admin-address-container"><code>${formatAddress(data.address)}</code><button class="admin-copy-btn" onclick="copyToClipboard('${data.address}')"><i class="fas fa-copy"></i></button></div></div>
-                    ${data.fee ? `<div class="admin-tx-row"><span class="admin-tx-label">Fee:</span><span class="admin-tx-value">${data.fee} ${data.feeCurrency}</span></div>` : ''}
-                    <div class="admin-tx-row"><span class="admin-tx-label">Time:</span><span class="admin-tx-value">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</span></div></div>
-                    <div class="admin-tx-actions"><button class="admin-approve-btn" onclick="approveRequest('${doc.id}', 'withdraw', ${data.amount}, '${data.userId}', '${data.currency}', ${data.fee || 0}, '${data.feeCurrency || data.currency}')"><i class="fas fa-check"></i> Approve</button>
-                    <button class="admin-reject-btn" onclick="rejectRequest('${doc.id}', 'withdraw', ${data.amount}, '${data.userId}', '${data.currency}')"><i class="fas fa-times"></i> Reject</button></div></div>`;
+                html += `<div class="admin-transaction-card">
+                    <div class="admin-tx-header">
+                        <div class="admin-tx-type withdraw"><i class="fas fa-arrow-up"></i><span>WITHDRAWAL</span></div>
+                        <span class="admin-tx-status pending">PENDING</span>
+                    </div>
+                    <div class="admin-tx-details">
+                        <div class="admin-tx-row"><span class="admin-tx-label">User:</span><span class="admin-tx-value">${data.username || data.userId?.slice(0,8)}</span></div>
+                        <div class="admin-tx-row"><span class="admin-tx-label">Amount:</span><span class="admin-tx-value">${data.amount} ${data.currency}</span></div>
+                        <div class="admin-tx-row"><span class="admin-tx-label">Address:</span>
+                            <div class="admin-address-container"><code>${formatAddress(data.address)}</code>
+                                <button class="admin-copy-btn" onclick="copyToClipboard('${data.address}')"><i class="fas fa-copy"></i></button>
+                            </div>
+                        </div>
+                        ${data.fee ? `<div class="admin-tx-row"><span class="admin-tx-label">Fee:</span><span class="admin-tx-value">${data.fee} ${data.feeCurrency}</span></div>` : ''}
+                        <div class="admin-tx-row"><span class="admin-tx-label">Time:</span><span class="admin-tx-value">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</span></div>
+                    </div>
+                    <div class="admin-tx-actions">
+                        <button class="admin-approve-btn" onclick="approveRequest('${doc.id}', 'withdraw', ${data.amount}, '${data.userId}', '${data.currency}', ${data.fee || 0}, '${data.feeCurrency || data.currency}')"><i class="fas fa-check"></i> Approve</button>
+                        <button class="admin-reject-btn" onclick="rejectRequest('${doc.id}', 'withdraw', ${data.amount}, '${data.userId}', '${data.currency}')"><i class="fas fa-times"></i> Reject</button>
+                    </div>
+                </div>`;
             } else {
-                html += `<div class="admin-transaction-card"><div class="admin-tx-header"><div class="admin-tx-type deposit"><i class="fas fa-arrow-down"></i><span>DEPOSIT</span></div><span class="admin-tx-status pending">PENDING</span></div>
-                    <div class="admin-tx-details"><div class="admin-tx-row"><span class="admin-tx-label">User:</span><span class="admin-tx-value">${data.username || data.userId.slice(0,8)}</span></div>
-                    <div class="admin-tx-row"><span class="admin-tx-label">Amount:</span><span class="admin-tx-value">${data.amount} ${data.currency}</span></div>
-                    <div class="admin-tx-row"><span class="admin-tx-label">TXID:</span><div class="admin-address-container"><code>${data.txHash?.slice(0,16)}...</code><button class="admin-copy-btn" onclick="copyToClipboard('${data.txHash}')"><i class="fas fa-copy"></i></button></div></div>
-                    <div class="admin-tx-row"><span class="admin-tx-label">Time:</span><span class="admin-tx-value">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</span></div></div>
-                    <div class="admin-tx-actions"><button class="admin-approve-btn" onclick="approveRequest('${doc.id}', 'deposit', ${data.amount}, '${data.userId}', '${data.currency}')"><i class="fas fa-check"></i> Approve</button>
-                    <button class="admin-reject-btn" onclick="rejectRequest('${doc.id}', 'deposit', ${data.amount}, '${data.userId}', '${data.currency}')"><i class="fas fa-times"></i> Reject</button></div></div>`;
+                html += `<div class="admin-transaction-card">
+                    <div class="admin-tx-header">
+                        <div class="admin-tx-type deposit"><i class="fas fa-arrow-down"></i><span>DEPOSIT</span></div>
+                        <span class="admin-tx-status pending">PENDING</span>
+                    </div>
+                    <div class="admin-tx-details">
+                        <div class="admin-tx-row"><span class="admin-tx-label">User:</span><span class="admin-tx-value">${data.username || data.userId?.slice(0,8)}</span></div>
+                        <div class="admin-tx-row"><span class="admin-tx-label">Amount:</span><span class="admin-tx-value">${data.amount} ${data.currency}</span></div>
+                        <div class="admin-tx-row"><span class="admin-tx-label">TXID:</span>
+                            <div class="admin-address-container"><code>${data.txHash?.slice(0,16)}...</code>
+                                <button class="admin-copy-btn" onclick="copyToClipboard('${data.txHash}')"><i class="fas fa-copy"></i></button>
+                            </div>
+                        </div>
+                        <div class="admin-tx-row"><span class="admin-tx-label">Time:</span><span class="admin-tx-value">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</span></div>
+                    </div>
+                    <div class="admin-tx-actions">
+                        <button class="admin-approve-btn" onclick="approveRequest('${doc.id}', 'deposit', ${data.amount}, '${data.userId}', '${data.currency}')"><i class="fas fa-check"></i> Approve</button>
+                        <button class="admin-reject-btn" onclick="rejectRequest('${doc.id}', 'deposit', ${data.amount}, '${data.userId}', '${data.currency}')"><i class="fas fa-times"></i> Reject</button>
+                    </div>
+                </div>`;
             }
         });
         content.innerHTML = html;
-    } catch (e) { content.innerHTML = '<div class="empty-state">Error loading requests</div>'; }
-    setTimeout(() => icon.classList.remove('fa-spin'), 500);
+    } catch (e) { 
+        content.innerHTML = '<div class="empty-state">Error loading requests</div>'; 
+    }
+    
+    if (icon) setTimeout(() => icon.classList.remove('fa-spin'), 500);
 }
+
 async function approveRequest(id, type, amount, targetUserId, currency, fee = 0, feeCurrency = currency) {
     if (!isAdmin || !db) return;
     try {
         const col = type === 'deposit' ? 'deposits' : 'withdrawals';
-        await db.collection(col).doc(id).update({ status: 'approved', approvedAt: firebase.firestore.FieldValue.serverTimestamp() });
-        if (type === 'deposit') await db.collection('users').doc(targetUserId).update({ [`balances.${currency}`]: firebase.firestore.FieldValue.increment(amount), totalDeposited: firebase.firestore.FieldValue.increment(amount) });
+        await db.collection(col).doc(id).update({ 
+            status: 'approved', 
+            approvedAt: firebase.firestore.FieldValue.serverTimestamp() 
+        });
+        if (type === 'deposit') {
+            await db.collection('users').doc(targetUserId).update({ 
+                [`balances.${currency}`]: firebase.firestore.FieldValue.increment(amount),
+                totalDeposited: firebase.firestore.FieldValue.increment(amount)
+            });
+        }
         showToast('Request approved', 'success');
         refreshAdminPanel();
     } catch (e) { showToast('Error approving', 'error'); }
 }
+
 async function rejectRequest(id, type, amount, targetUserId, currency) {
     if (!isAdmin || !db) return;
     const reason = prompt('Enter rejection reason:');
     if (!reason) return;
     try {
         const col = type === 'deposit' ? 'deposits' : 'withdrawals';
-        await db.collection(col).doc(id).update({ status: 'rejected', reason, rejectedAt: firebase.firestore.FieldValue.serverTimestamp() });
+        await db.collection(col).doc(id).update({ 
+            status: 'rejected', 
+            reason, 
+            rejectedAt: firebase.firestore.FieldValue.serverTimestamp() 
+        });
         showToast('Request rejected', 'success');
         refreshAdminPanel();
     } catch (e) { showToast('Error rejecting', 'error'); }
 }
-function copyToClipboard(text) { navigator.clipboard.writeText(text); showToast('Copied!', 'success'); }
 
-// ====== 46. INITIALIZATION ======
+function copyToClipboard(text) { 
+    navigator.clipboard.writeText(text); 
+    showToast('Copied!', 'success'); 
+}
+
+// ====== 50. INITIALIZATION ======
 document.addEventListener('DOMContentLoaded', async () => {
     hideAllModals();
-    if (currentLanguage === 'ar') { document.body.classList.add('rtl'); document.documentElement.dir = 'rtl'; }
-    document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t(el.getAttribute('data-i18n')));
+    
+    if (currentLanguage === 'ar') { 
+        document.body.classList.add('rtl'); 
+        document.documentElement.dir = 'rtl'; 
+    }
+    
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        el.textContent = t(el.getAttribute('data-i18n'));
+    });
+    
     await loadUserData();
     await loadPrices();
     await initTonConnect();
+    
     startMining();
     updateUI();
     renderMarket();
@@ -2422,33 +3416,65 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderWheelSegments();
     renderSlots();
     setupScrollListener();
+    
     setInterval(() => {
         if (!userData.autoClicker?.active) {
             const btn = document.getElementById('autoClickerFloat');
-            if (btn) { btn.classList.add('show'); setTimeout(() => btn.classList.remove('show'), 10000); }
+            if (btn) { 
+                btn.classList.add('show'); 
+                setTimeout(() => btn.classList.remove('show'), 10000); 
+            }
         }
     }, 300000);
-    setTimeout(() => { document.getElementById('loading').style.opacity = '0'; setTimeout(() => document.getElementById('loading').style.display = 'none', 500); }, 2000);
+    
+    setTimeout(() => { 
+        document.getElementById('loading').style.opacity = '0'; 
+        setTimeout(() => document.getElementById('loading').style.display = 'none', 500); 
+    }, 2000);
+    
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
+    
+    console.log("✅ TON MINING CASINO - ULTIMATE EDITION v50.0");
+    console.log("✅ ZERO WASTE ARCHITECTURE - 50K+ USERS READY");
+    console.log("✅ On-demand listeners: 30 seconds only");
+    console.log("✅ Cache: User 5min, Prices 3h, History 10min");
+    console.log("✅ Admin: Manual refresh only");
+    console.log("✅ Win popups + haptic feedback");
+    console.log("✅ Slot packs: 5,10,50,100 spins");
+    console.log("✅ Wheel packs: 5,10,50,100 spins");
+    console.log("✅ All systems ready! 🚀");
 });
 
 function setupScrollListener() {
     const btn = document.getElementById('scrollTopBtn');
     const container = document.querySelector('.main-content');
-    container?.addEventListener('scroll', () => btn?.classList.toggle('show', container.scrollTop > 300));
+    container?.addEventListener('scroll', () => {
+        btn?.classList.toggle('show', container.scrollTop > 300);
+    });
 }
 
 setInterval(() => { if (userData) saveUserToCache(); }, 60000);
 setInterval(() => { if (userData && db) saveToFirebase(); }, 300000);
 
-window.addEventListener('beforeunload', () => { stopMining(); stopFloatingNotifications(); stopAllListeners(); saveUserToCache(); });
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { stopMining(); stopFloatingNotifications(); }
-    else { startMining(); if (currentPage === 'mining') startFloatingNotifications(); }
+window.addEventListener('beforeunload', () => { 
+    stopMining(); 
+    stopFloatingNotifications(); 
+    stopAllListeners(); 
+    saveUserToCache(); 
 });
 
-// ====== 47. EXPORT FUNCTIONS ======
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { 
+        stopMining(); 
+        stopFloatingNotifications(); 
+    } else { 
+        startMining(); 
+        if (currentPage === 'mining') startFloatingNotifications(); 
+    }
+});
+
+// ====== 51. EXPORT FUNCTIONS ======
 window.showPage = showPage;
 window.showMarket = ()=>showPage('market');
 window.showWallet = ()=>showPage('profile');
@@ -2461,6 +3487,8 @@ window.showWheelModal = showWheelModal;
 window.showSlotsModal = showSlotsModal;
 window.spinWheel = spinWheel;
 window.spinSlots = spinSlots;
+window.buyWheelPack = buyWheelPack;
+window.buySlotsPack = buySlotsPack;
 window.buyAutoClicker = buyAutoClicker;
 window.showReferralDetails = showReferralDetails;
 window.showAdminPanel = showAdminPanel;
@@ -2499,7 +3527,7 @@ window.approveRequest = approveRequest;
 window.rejectRequest = rejectRequest;
 window.copyToClipboard = copyToClipboard;
 window.handleAvatarClick = handleAvatarClick;
-
+window.refreshPrices = refreshPrices;
 console.log("✅ TON MINING CASINO - ULTIMATE EDITION v40.0 LOADED");
 console.log("✅ Features: Mining, Wheel, Slots, Market, Profile, Referral, Daily Bonus, Auto Clicker");
 console.log("✅ All systems ready! 🚀");
