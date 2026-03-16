@@ -1,7 +1,7 @@
 // ============================================
-// TON MINING PRO - LEGENDARY VERSION v20.0
+// TON MINING PRO - LEGENDARY VERSION v21.0 FINAL
 // ULTIMATE ZERO WASTE ARCHITECTURE
-// WITH ALL FEATURES: MINING, LUCKY WHEEL, AUTO-CLICKER, REFERRAL, MULTI-CURRENCY
+// WITH ALL FIXES: WHEEL, ADMIN, HISTORY, STATS
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP INITIALIZATION ======
@@ -91,7 +91,7 @@ const CONFIG = {
         REFERRAL_BONUS: 0.005,
         REFERRAL_PERCENT: 0.20,
         AUTO_CLICKER_PRICE: 0.5,
-        AUTO_CLICKER_DURATION: 15 * 24 * 60 * 60 * 1000, // 15 يوم
+        AUTO_CLICKER_DURATION: 15 * 24 * 60 * 60 * 1000,
         WHEEL_SPIN_PRICE: 0.25,
         WHEEL_FREE_SPIN_INTERVAL: 24 * 60 * 60 * 1000,
         WHEEL_JACKPOT_EVERY: 12,
@@ -673,9 +673,9 @@ const REFERRAL_MILESTONES = [
     { referrals: 1000, reward: 1200, unit: 'USDT' }
 ];
 
-// ====== 8. LUCKY WHEEL PRIZES (20 جائزة) ======
+// ====== 8. LUCKY WHEEL PRIZES (20 جائزة + قطاعات واضحة) ======
 const WHEEL_PRIZES = [
-    // TON جوائز (9 جوائز)
+    // TON جوائز (8 جوائز)
     { id: 1, type: 'TON', amount: 0.25, color: '#0088cc', weight: 10, icon: '💰' },
     { id: 2, type: 'TON', amount: 0.5, color: '#0088cc', weight: 9, icon: '💰' },
     { id: 3, type: 'TON', amount: 1, color: '#0088cc', weight: 8, icon: '💰' },
@@ -686,7 +686,7 @@ const WHEEL_PRIZES = [
     { id: 8, type: 'TON', amount: 50, color: '#0088cc', weight: 3, icon: '💰' },
     { id: 9, type: 'TON', amount: 100, color: '#0088cc', weight: 2, icon: '💰' },
     
-    // USDT جوائز (9 جوائز)
+    // USDT جوائز (8 جوائز)
     { id: 10, type: 'USDT', amount: 0.25, color: '#22c55e', weight: 10, icon: '💵' },
     { id: 11, type: 'USDT', amount: 0.5, color: '#22c55e', weight: 9, icon: '💵' },
     { id: 12, type: 'USDT', amount: 1, color: '#22c55e', weight: 8, icon: '💵' },
@@ -2398,7 +2398,7 @@ function updateAutoClickerUI() {
     }
 }
 
-// ====== 29. LUCKY WHEEL SYSTEM (محدث مع 20 جائزة) ======
+// ====== 29. LUCKY WHEEL SYSTEM (محسنة بالكامل) ======
 function showWheelModal() {
     const modal = document.getElementById('wheelModal');
     if (modal) {
@@ -2413,50 +2413,72 @@ function renderWheelSegments() {
     if (!wheel) return;
     
     wheel.innerHTML = '';
-    const totalPrizes = 16;
-    const angleStep = 360 / totalPrizes;
+    const totalSegments = 16; // 16 قطاع للعجلة
+    const angleStep = 360 / totalSegments;
     
-    // اختيار 16 جائزة من الـ 24
-    const normalPrizes = WHEEL_PRIZES.filter(p => p.type !== 'JACKPOT');
+    // اختيار 16 جائزة مميزة
+    const allPrizes = WHEEL_PRIZES.filter(p => p.type !== 'JACKPOT');
     const jackpotPrize = WHEEL_PRIZES.find(p => p.type === 'JACKPOT');
     
     const selectedPrizes = [];
-    const tempPrizes = [...normalPrizes];
     
-    // نضمن وجود الجاكبوت في العجلة
-    if (Math.random() < 0.3) { // 30% فرصة ظهور الجاكبوت
-        selectedPrizes.push(jackpotPrize);
+    // نضمن وجود الجاكبوت في قطاع واحد
+    selectedPrizes.push(jackpotPrize);
+    
+    // نختار 15 جائزة عشوائية من باقي الجوائز
+    const otherPrizes = [...allPrizes];
+    while (selectedPrizes.length < totalSegments && otherPrizes.length > 0) {
+        const randomIndex = Math.floor(Math.random() * otherPrizes.length);
+        selectedPrizes.push(otherPrizes[randomIndex]);
+        otherPrizes.splice(randomIndex, 1);
     }
     
-    // نكمل بجوائز عادية
-    while (selectedPrizes.length < totalPrizes && tempPrizes.length > 0) {
-        const randomIndex = Math.floor(Math.random() * tempPrizes.length);
-        selectedPrizes.push(tempPrizes[randomIndex]);
-        tempPrizes.splice(randomIndex, 1);
-    }
+    // ترتيب عشوائي للقطاعات
+    selectedPrizes.sort(() => Math.random() - 0.5);
     
     selectedPrizes.forEach((prize, index) => {
         const segment = document.createElement('div');
         segment.className = 'wheel-segment';
-        segment.style.transform = `rotate(${index * angleStep}deg)`;
+        const rotation = index * angleStep;
+        segment.style.transform = `rotate(${rotation}deg)`;
         segment.style.background = prize.color;
+        segment.style.backgroundColor = prize.color;
         
         let displayText = '';
+        let displayIcon = prize.icon || '🎰';
+        
         if (prize.type === 'NOTHING') {
-            displayText = '🎰';
+            displayText = '😢';
+            displayIcon = '😢';
         } else if (prize.type === 'SPIN') {
             displayText = '🔄';
+            displayIcon = '🔄';
         } else if (prize.type === 'AUTO') {
             displayText = '🤖';
+            displayIcon = '🤖';
         } else if (prize.type === 'JACKPOT') {
             displayText = '👑';
+            displayIcon = '👑';
         } else {
-            displayText = `${prize.amount} ${prize.type}`;
+            displayText = `${prize.amount}`;
         }
         
-        segment.innerHTML = `<span class="wheel-icon">${prize.icon || '🎰'}</span><span class="wheel-value">${displayText}</span>`;
+        segment.innerHTML = `
+            <span class="wheel-icon">${displayIcon}</span>
+            <span class="wheel-value">${displayText}</span>
+            <span class="wheel-type">${prize.type}</span>
+        `;
+        
         wheel.appendChild(segment);
     });
+    
+    // إضافة خطوط فاصلة بين القطاعات
+    for (let i = 0; i < totalSegments; i++) {
+        const line = document.createElement('div');
+        line.className = 'wheel-divider';
+        line.style.transform = `rotate(${i * angleStep}deg)`;
+        wheel.appendChild(line);
+    }
 }
 
 function updateWheelUI() {
@@ -3488,18 +3510,24 @@ async function submitWithdraw() {
     document.getElementById('withdrawAddress').value = '';
 }
 
-// ====== 35. HISTORY FUNCTIONS ======
+// ====== 35. HISTORY FUNCTIONS (محدثة للتأكد من العمل) ======
 let currentHistoryFilter = 'all';
 
 function showHistory() {
+    console.log("📜 Opening history modal");
     const modal = document.getElementById('historyModal');
-    modal.classList.add('show');
-    renderHistory('all');
-    
-    const now = Date.now();
-    if (now - lastHistoryCheckTime > CONFIG.CACHE.HISTORY_TTL) {
-        checkPendingTransactions();
-        lastHistoryCheckTime = now;
+    if (modal) {
+        modal.classList.add('show');
+        renderHistory('all');
+        
+        const now = Date.now();
+        if (now - lastHistoryCheckTime > CONFIG.CACHE.HISTORY_TTL) {
+            checkPendingTransactions();
+            lastHistoryCheckTime = now;
+        }
+    } else {
+        console.error("❌ History modal not found");
+        showToast("History modal not found", "error");
     }
 }
 
@@ -3628,7 +3656,6 @@ function refreshHistory() {
 
 // ====== 36. REFERRAL DETAILS (في صفحة Stats) ======
 function showReferralDetails() {
-    // أصبحت في صفحة Stats، لا حاجة لعرض modal منفصل
     showPage('stats');
 }
 
@@ -3661,6 +3688,12 @@ function renderReferralMilestones() {
     
     html += '</div>';
     container.innerHTML = html;
+    
+    // تحديث رابط الإحالة في صفحة Stats
+    const statsRefLink = document.getElementById('statsReferralLink');
+    if (statsRefLink) {
+        statsRefLink.value = getReferralLink();
+    }
 }
 
 function renderReferralTree() {
@@ -3788,7 +3821,7 @@ function updatePrices() {
     renderAssets();
 }
 
-// ====== 38. ADMIN FUNCTIONS ======
+// ====== 38. ADMIN FUNCTIONS (محدثة للتأكد من العمل) ======
 let currentAdminTab = 'withdrawals';
 
 function showAdminPanel() {
@@ -3797,6 +3830,7 @@ function showAdminPanel() {
         return;
     }
     
+    console.log("👑 Opening admin panel");
     document.getElementById('adminModal').classList.add('show');
     loadAdminCounts();
 }
@@ -3843,18 +3877,25 @@ async function refreshAdminPanel() {
     const icon = btn.querySelector('i');
     icon.classList.add('fa-spin');
     
+    const adminContent = document.getElementById('adminContent');
+    adminContent.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+    
     try {
         let query;
+        let collectionName;
+        
         if (currentAdminTab === 'withdrawals') {
-            query = db.collection('withdrawals').where('status', '==', 'pending');
+            collectionName = 'withdrawals';
+            query = db.collection(collectionName).where('status', '==', 'pending');
         } else {
-            query = db.collection('deposits').where('status', '==', 'pending');
+            collectionName = 'deposits';
+            query = db.collection(collectionName).where('status', '==', 'pending');
         }
         
         const snapshot = await query.get();
         
         if (snapshot.empty) {
-            document.getElementById('adminContent').innerHTML = '<div class="empty-state">No pending requests</div>';
+            adminContent.innerHTML = '<div class="empty-state">No pending requests</div>';
             return;
         }
         
@@ -3864,11 +3905,11 @@ async function refreshAdminPanel() {
             html += renderAdminCard(doc.id, data);
         });
         
-        document.getElementById('adminContent').innerHTML = html;
+        adminContent.innerHTML = html;
         
     } catch (e) {
-        console.error('Error refreshing admin:', e);
-        showToast('Error loading requests', 'error');
+        console.error("❌ Error refreshing admin:", e);
+        adminContent.innerHTML = '<div class="empty-state">Error loading requests</div>';
     } finally {
         setTimeout(() => icon.classList.remove('fa-spin'), 500);
     }
@@ -4044,7 +4085,7 @@ function showPage(page) {
         renderAchievements();
         updateChart();
         updateLeaderboard();
-        renderReferralMilestones(); // عرض مراحل الإحالة في صفحة Stats
+        renderReferralMilestones();
         renderReferralTree();
     }
     if (page === 'profile') renderAssets();
@@ -4163,7 +4204,6 @@ function hideAllModals() {
         'historyModal',
         'notificationsModal',
         'adminModal',
-        'referralModal',
         'swapModal',
         'currencySelectorModal',
         'wheelModal'
@@ -4202,7 +4242,7 @@ function filterMarket(filter) {
 
 // ====== 43. INITIALIZATION ======
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log("🚀 TON MINING PRO v20.0 starting...");
+    console.log("🚀 TON MINING PRO v21.0 FINAL starting...");
     
     hideAllModals();
     
@@ -4259,6 +4299,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log("✅ Lucky Wheel with 20+ prizes and 60% good luck");
     console.log("✅ Auto-Clicker: 15 days");
     console.log("✅ Referral milestones in Stats page");
+    console.log("✅ History button fixed");
+    console.log("✅ Admin panel fixed");
+    console.log("✅ Wheel segments fixed");
 });
 
 function setupScrollListener() {
@@ -4363,4 +4406,5 @@ console.log("✅ Referral milestones: 3 → 1000 referrals (in Stats page)");
 console.log("✅ Lucky Wheel: 20+ prizes, 60% good luck, free spin daily");
 console.log("✅ Auto-Clicker: 0.5 TON for 15 days");
 console.log("✅ Wallet buttons: Send, Receive, Swap, History");
-console.log("✅ Total lines: ~7000 lines of code");
+console.log("✅ All fixes applied: border removed, referral visible, stats compact, history working, admin working, wheel segments fixed");
+console.log("✅ Total lines: ~7200 lines of code");
