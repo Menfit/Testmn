@@ -40,10 +40,16 @@
         <!-- Welcome Sticker -->
         <div class="welcome-sticker" id="welcomeSticker"></div>
 
-        <!-- Header Premium - Compact Design -->
+        <!-- Auto-Clicker Floating Button -->
+        <div class="auto-clicker-float" id="autoClickerFloat" onclick="buyAutoClicker()">
+            <i class="fas fa-robot"></i>
+            <span class="auto-clicker-tooltip">Auto Miner 0.5 TON</span>
+        </div>
+
+        <!-- Header Premium - New Design -->
         <header class="glass-header">
             <div class="header-left">
-                <div class="user-avatar" id="userAvatar">
+                <div class="user-avatar" id="userAvatar" onclick="handleAvatarClick()">
                     <img id="avatarImage" src="" alt="" style="display: none;">
                     <i class="fas fa-user-astronaut" id="avatarIcon"></i>
                 </div>
@@ -111,13 +117,14 @@
                             </div>
                         </div>
                         
-                        <div class="stat-orb" id="streakOrb">
+                        <div class="stat-orb" id="streakOrb" onclick="showWheelModal()">
                             <div class="orb-glow"></div>
                             <div class="orb-content">
                                 <i class="fas fa-fire"></i>
                                 <span class="orb-value" id="streakCount">0</span>
-                                <span class="orb-label">Streak</span>
+                                <span class="orb-label" id="streakLabel">Streak</span>
                             </div>
+                            <div class="wheel-indicator">🎡</div>
                         </div>
                         
                         <div class="stat-orb" id="earningsOrb">
@@ -168,6 +175,12 @@
                             <div class="btn-particles"></div>
                         </button>
                     </div>
+                </div>
+
+                <!-- Auto Miner Status -->
+                <div class="auto-miner-status" id="autoMinerStatus" style="display: none;">
+                    <i class="fas fa-robot"></i>
+                    <span id="autoMinerTime"></span>
                 </div>
 
                 <!-- Active Machines Section -->
@@ -306,7 +319,6 @@
                     </div>
                     
                     <div class="chart-container" id="earningsChart">
-                        <!-- Simple Chart Representation -->
                         <div class="chart-bars" id="chartBars"></div>
                     </div>
                 </div>
@@ -318,36 +330,7 @@
                     </div>
                     
                     <div class="leaderboard" id="leaderboard">
-                        <div class="leaderboard-item gold">
-                            <span class="rank">🥇</span>
-                            <span class="name">CryptoKing</span>
-                            <span class="earnings">12,450 TON</span>
-                        </div>
-                        <div class="leaderboard-item silver">
-                            <span class="rank">🥈</span>
-                            <span class="name">TonWhale</span>
-                            <span class="earnings">8,230 TON</span>
-                        </div>
-                        <div class="leaderboard-item bronze">
-                            <span class="rank">🥉</span>
-                            <span class="name">MinerPro</span>
-                            <span class="earnings">5,670 TON</span>
-                        </div>
-                        <div class="leaderboard-item">
-                            <span class="rank">4</span>
-                            <span class="name">QuantumMiner</span>
-                            <span class="earnings">3,890 TON</span>
-                        </div>
-                        <div class="leaderboard-item">
-                            <span class="rank">5</span>
-                            <span class="name">ASICMaster</span>
-                            <span class="earnings">2,450 TON</span>
-                        </div>
-                        <div class="leaderboard-item you">
-                            <span class="rank">24</span>
-                            <span class="name" id="leaderboardYou">You</span>
-                            <span class="earnings" id="yourEarnings">1,247 TON</span>
-                        </div>
+                        <!-- يتم تعبئتها عبر JavaScript -->
                     </div>
                 </div>
 
@@ -367,7 +350,7 @@
             <div class="page" id="profilePage">
                 <h2><i class="fas fa-user"></i> <span data-i18n="profile.title">My Profile</span></h2>
                 
-                <!-- Wallet Card -->
+                <!-- Wallet Card with Send/Receive/Swap -->
                 <div class="wallet-card-legendary">
                     <div class="wallet-header">
                         <i class="fas fa-wallet"></i>
@@ -377,13 +360,13 @@
                     <div class="wallet-usd" id="profileUsd">≈ $0.00</div>
                     
                     <div class="wallet-actions">
-                        <button class="wallet-action-btn deposit" onclick="showDepositModal()">
-                            <i class="fas fa-arrow-down"></i>
-                            <span data-i18n="actions.deposit">Deposit</span>
+                        <button class="wallet-action-btn send" onclick="showWithdrawModal()">
+                            <i class="fas fa-paper-plane"></i>
+                            <span data-i18n="actions.send">Send</span>
                         </button>
-                        <button class="wallet-action-btn withdraw" onclick="showWithdrawModal()">
-                            <i class="fas fa-arrow-up"></i>
-                            <span data-i18n="actions.withdraw">Withdraw</span>
+                        <button class="wallet-action-btn receive" onclick="showDepositModal()">
+                            <i class="fas fa-arrow-down"></i>
+                            <span data-i18n="actions.receive">Receive</span>
                         </button>
                         <button class="wallet-action-btn swap" onclick="showSwapModal()">
                             <i class="fas fa-exchange-alt"></i>
@@ -406,7 +389,7 @@
                     </div>
                 </div>
 
-                <!-- Assets List with Live Prices -->
+                <!-- Assets List -->
                 <div class="section legendary-section">
                     <div class="section-header">
                         <h3><i class="fas fa-coins"></i> <span data-i18n="wallet.myAssets">My Assets</span></h3>
@@ -421,7 +404,7 @@
                     </div>
                 </div>
 
-                <!-- Referral Section -->
+                <!-- Referral Section - Visible and Clear -->
                 <div class="section legendary-section">
                     <div class="section-header">
                         <h3><i class="fas fa-users"></i> <span data-i18n="referral.title">Referral Program</span></h3>
@@ -439,7 +422,7 @@
                             </div>
                             <div class="mini-stat">
                                 <span class="value" id="previewRefEarnings">0.0000</span>
-                                <span class="label" data-i18n="referral.earned">Earned</span>
+                                <span class="label" data-i18n="referral.earned">Earned (USDT)</span>
                             </div>
                         </div>
                         
@@ -448,6 +431,23 @@
                             <button class="copy-btn-mini" onclick="copyReferralLink()">
                                 <i class="fas fa-copy"></i>
                             </button>
+                        </div>
+                        <p class="referral-bonus-note" data-i18n="referral.bonusNote">Get 0.005 TON + 20% of their mining!</p>
+                    </div>
+
+                    <!-- Quick Milestones Preview -->
+                    <div class="milestones-preview">
+                        <div class="milestone-preview-item">
+                            <span>3 → 1 USDT</span>
+                            <div class="progress-mini">
+                                <div class="progress-mini-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="milestone-preview-item">
+                            <span>10 → 5 USDT</span>
+                            <div class="progress-mini">
+                                <div class="progress-mini-fill" style="width: 0%"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -542,6 +542,56 @@
                 <div class="nav-glow"></div>
             </button>
         </nav>
+
+        <!-- Lucky Wheel Modal -->
+        <div class="modal legendary-modal" id="wheelModal">
+            <div class="modal-content wheel-modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-wheelchair"></i> <span data-i18n="wheel.title">Lucky Wheel</span></h3>
+                    <button class="close-btn" onclick="closeModal('wheelModal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <!-- Wheel Animation -->
+                    <div class="wheel-container">
+                        <div class="wheel" id="wheel">
+                            <div class="wheel-segment" style="transform: rotate(0deg)">0.1 TON</div>
+                            <div class="wheel-segment" style="transform: rotate(36deg)">0.2 TON</div>
+                            <div class="wheel-segment" style="transform: rotate(72deg)">0.5 TON</div>
+                            <div class="wheel-segment" style="transform: rotate(108deg)">1 TON</div>
+                            <div class="wheel-segment" style="transform: rotate(144deg)">2 TON</div>
+                            <div class="wheel-segment" style="transform: rotate(180deg)">5 TON</div>
+                            <div class="wheel-segment" style="transform: rotate(216deg)">10 TON</div>
+                            <div class="wheel-segment" style="transform: rotate(252deg)">25 TON</div>
+                            <div class="wheel-segment" style="transform: rotate(288deg)">50 TON</div>
+                            <div class="wheel-segment" style="transform: rotate(324deg)">100 TON</div>
+                        </div>
+                        <div class="wheel-pointer">▼</div>
+                    </div>
+
+                    <!-- Wheel Info -->
+                    <div class="wheel-info">
+                        <div class="wheel-stats">
+                            <div class="wheel-spins-left" id="wheelSpinsLeft">11 spins until jackpot</div>
+                            <div class="wheel-jackpot">🎰 JACKPOT: 50 TON + 100 USDT</div>
+                        </div>
+                        
+                        <div class="wheel-controls">
+                            <button class="wheel-spin-btn free" id="wheelFreeSpin" onclick="spinWheel(true)">
+                                <i class="fas fa-gift"></i>
+                                <span data-i18n="wheel.free">FREE</span>
+                            </button>
+                            <button class="wheel-spin-btn paid" onclick="spinWheel(false)">
+                                <i class="fas fa-coins"></i>
+                                <span data-i18n="wheel.price">0.25 TON</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Payment Modal with Dual Payment Options -->
         <div class="modal legendary-modal" id="paymentModal">
@@ -723,11 +773,11 @@
             </div>
         </div>
 
-        <!-- Deposit Modal - Multi-Currency -->
+        <!-- Deposit Modal (Receive) -->
         <div class="modal legendary-modal" id="depositModal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3><i class="fas fa-arrow-down"></i> <span data-i18n="deposit.title">Deposit Funds</span></h3>
+                    <h3><i class="fas fa-arrow-down"></i> <span data-i18n="deposit.title">Receive Funds</span></h3>
                     <button class="close-btn" onclick="closeModal('depositModal')">
                         <i class="fas fa-times"></i>
                     </button>
@@ -764,7 +814,7 @@
                     
                     <!-- Network Hint -->
                     <div class="network-hint" id="depositNetworkHint">
-                        BSC (BEP20) - starts with 0x (66 chars)
+                        BSC/ERC20 - starts with 0x (42 chars)
                     </div>
 
                     <!-- Amount Input -->
@@ -782,17 +832,17 @@
 
                     <button class="confirm-btn-legendary" id="confirmDepositBtn" onclick="submitDeposit()" disabled>
                         <i class="fas fa-arrow-down"></i>
-                        <span data-i18n="deposit.submit">Submit Deposit</span>
+                        <span data-i18n="deposit.submit">Submit Request</span>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Withdraw Modal - Multi-Currency -->
+        <!-- Withdraw Modal (Send) -->
         <div class="modal legendary-modal" id="withdrawModal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3><i class="fas fa-arrow-up"></i> <span data-i18n="withdraw.title">Withdraw Funds</span></h3>
+                    <h3><i class="fas fa-paper-plane"></i> <span data-i18n="withdraw.title">Send Funds</span></h3>
                     <button class="close-btn" onclick="closeModal('withdrawModal')">
                         <i class="fas fa-times"></i>
                     </button>
@@ -843,8 +893,8 @@
                     </div>
                     
                     <button class="confirm-btn-legendary" id="submitWithdraw" onclick="submitWithdraw()" disabled>
-                        <i class="fas fa-arrow-up"></i>
-                        <span data-i18n="withdraw.submit">Request Withdrawal</span>
+                        <i class="fas fa-paper-plane"></i>
+                        <span data-i18n="withdraw.submit">Send Request</span>
                     </button>
                 </div>
             </div>
@@ -873,6 +923,7 @@
                         <button class="history-filter" onclick="filterHistory('mining')" data-i18n="history.mining">Mining</button>
                         <button class="history-filter" onclick="filterHistory('rental')" data-i18n="history.rentals">Rentals</button>
                         <button class="history-filter" onclick="filterHistory('swap')" data-i18n="history.swaps">Swaps</button>
+                        <button class="history-filter" onclick="filterHistory('wheel')" data-i18n="history.wheel">Wheel</button>
                     </div>
                     
                     <div class="history-list" id="historyList">
@@ -937,7 +988,6 @@
                     </div>
                     
                     <div class="admin-content" id="adminContent">
-                        <!-- Manual Refresh Required -->
                         <div class="admin-refresh-message">
                             <i class="fas fa-hand-pointer"></i>
                             <p data-i18n="admin.clickRefresh">Click refresh button to load requests</p>
@@ -970,7 +1020,7 @@
                         </div>
                         <div class="stat-box">
                             <span class="value" id="modalRefEarnings">0.0000</span>
-                            <span class="label" data-i18n="referral.earned">Earned (TON)</span>
+                            <span class="label" data-i18n="referral.earned">Earned (USDT)</span>
                         </div>
                     </div>
 
@@ -983,7 +1033,7 @@
                                 <i class="fas fa-copy"></i>
                             </button>
                         </div>
-                        <p class="link-note" data-i18n="referral.bonusNote">You get 0.1 TON for each friend!</p>
+                        <p class="link-note" data-i18n="referral.bonusNote">Get 0.005 TON + 20% of their mining!</p>
                     </div>
 
                     <!-- Referral Milestones -->
