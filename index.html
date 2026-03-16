@@ -43,10 +43,10 @@
         <!-- Auto-Clicker Floating Button -->
         <div class="auto-clicker-float" id="autoClickerFloat" onclick="buyAutoClicker()">
             <i class="fas fa-robot"></i>
-            <span class="auto-clicker-tooltip">Auto Miner 0.5 TON</span>
+            <span class="auto-clicker-tooltip" data-i18n="autoclicker.buy">Buy Auto Miner 0.5 TON</span>
         </div>
 
-        <!-- Header Premium - New Design -->
+        <!-- Header Premium - Compact Design with Balance on Far Right -->
         <header class="glass-header">
             <div class="header-left">
                 <div class="user-avatar" id="userAvatar" onclick="handleAvatarClick()">
@@ -67,14 +67,16 @@
                     <span class="currency">TON</span>
                 </div>
                 
-                <button class="icon-btn notification-btn" id="notificationBtn" onclick="showNotifications()">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="badge" id="notificationBadge">0</span>
-                </button>
-                
-                <button class="icon-btn lang-btn" id="langToggle" onclick="toggleLanguage()">
-                    <span id="currentLanguageFlag">🇬🇧</span>
-                </button>
+                <div class="header-actions-bottom">
+                    <button class="icon-btn notification-btn" id="notificationBtn" onclick="showNotifications()">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="badge" id="notificationBadge">0</span>
+                    </button>
+                    
+                    <button class="icon-btn lang-btn" id="langToggle" onclick="toggleLanguage()">
+                        <span id="currentLanguageFlag">🇬🇧</span>
+                    </button>
+                </div>
             </div>
         </header>
 
@@ -117,7 +119,8 @@
                             </div>
                         </div>
                         
-                        <div class="stat-orb" id="streakOrb" onclick="showWheelModal()">
+                        <!-- Streak Orb with Lucky Wheel Indicator -->
+                        <div class="stat-orb wheel-orb" id="streakOrb" onclick="showWheelModal()">
                             <div class="orb-glow"></div>
                             <div class="orb-content">
                                 <i class="fas fa-fire"></i>
@@ -125,6 +128,7 @@
                                 <span class="orb-label" id="streakLabel">Streak</span>
                             </div>
                             <div class="wheel-indicator">🎡</div>
+                            <div class="wheel-pulse"></div>
                         </div>
                         
                         <div class="stat-orb" id="earningsOrb">
@@ -181,6 +185,7 @@
                 <div class="auto-miner-status" id="autoMinerStatus" style="display: none;">
                     <i class="fas fa-robot"></i>
                     <span id="autoMinerTime"></span>
+                    <span data-i18n="autoclicker.active">active</span>
                 </div>
 
                 <!-- Active Machines Section -->
@@ -350,7 +355,7 @@
             <div class="page" id="profilePage">
                 <h2><i class="fas fa-user"></i> <span data-i18n="profile.title">My Profile</span></h2>
                 
-                <!-- Wallet Card with Send/Receive/Swap -->
+                <!-- Wallet Card with Send/Receive/Swap (no "actions." prefix) -->
                 <div class="wallet-card-legendary">
                     <div class="wallet-header">
                         <i class="fas fa-wallet"></i>
@@ -449,6 +454,12 @@
                                 <div class="progress-mini-fill" style="width: 0%"></div>
                             </div>
                         </div>
+                        <div class="milestone-preview-item">
+                            <span>50 → 50 USDT</span>
+                            <div class="progress-mini">
+                                <div class="progress-mini-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -543,7 +554,7 @@
             </button>
         </nav>
 
-        <!-- Lucky Wheel Modal -->
+        <!-- Lucky Wheel Modal - Full Featured -->
         <div class="modal legendary-modal" id="wheelModal">
             <div class="modal-content wheel-modal-content">
                 <div class="modal-header">
@@ -554,40 +565,46 @@
                 </div>
                 
                 <div class="modal-body">
-                    <!-- Wheel Animation -->
+                    <!-- Wheel Container -->
                     <div class="wheel-container">
                         <div class="wheel" id="wheel">
-                            <div class="wheel-segment" style="transform: rotate(0deg)">0.1 TON</div>
-                            <div class="wheel-segment" style="transform: rotate(36deg)">0.2 TON</div>
-                            <div class="wheel-segment" style="transform: rotate(72deg)">0.5 TON</div>
-                            <div class="wheel-segment" style="transform: rotate(108deg)">1 TON</div>
-                            <div class="wheel-segment" style="transform: rotate(144deg)">2 TON</div>
-                            <div class="wheel-segment" style="transform: rotate(180deg)">5 TON</div>
-                            <div class="wheel-segment" style="transform: rotate(216deg)">10 TON</div>
-                            <div class="wheel-segment" style="transform: rotate(252deg)">25 TON</div>
-                            <div class="wheel-segment" style="transform: rotate(288deg)">50 TON</div>
-                            <div class="wheel-segment" style="transform: rotate(324deg)">100 TON</div>
+                            <!-- Dynamic segments created by JS -->
                         </div>
                         <div class="wheel-pointer">▼</div>
+                        <div class="wheel-center">🎰</div>
                     </div>
 
-                    <!-- Wheel Info -->
-                    <div class="wheel-info">
-                        <div class="wheel-stats">
-                            <div class="wheel-spins-left" id="wheelSpinsLeft">11 spins until jackpot</div>
-                            <div class="wheel-jackpot">🎰 JACKPOT: 50 TON + 100 USDT</div>
-                        </div>
-                        
-                        <div class="wheel-controls">
-                            <button class="wheel-spin-btn free" id="wheelFreeSpin" onclick="spinWheel(true)">
-                                <i class="fas fa-gift"></i>
-                                <span data-i18n="wheel.free">FREE</span>
-                            </button>
-                            <button class="wheel-spin-btn paid" onclick="spinWheel(false)">
-                                <i class="fas fa-coins"></i>
-                                <span data-i18n="wheel.price">0.25 TON</span>
-                            </button>
-                        </div>
+                    <!-- Wheel Stats -->
+                    <div class="wheel-stats">
+                        <div class="wheel-counter" id="wheelJackpotCounter">0/12</div>
+                        <div class="wheel-spins-left" id="wheelSpinsLeft">12 spins until jackpot</div>
+                    </div>
+
+                    <!-- Jackpot Display -->
+                    <div class="wheel-jackpot">
+                        <span class="jackpot-label">JACKPOT</span>
+                        <span class="jackpot-value">50 TON + 100 USDT</span>
+                    </div>
+
+                    <!-- Wheel Controls -->
+                    <div class="wheel-controls">
+                        <button class="wheel-spin-btn free" id="wheelFreeSpin" onclick="spinWheel(true)">
+                            <i class="fas fa-gift"></i>
+                            <span data-i18n="wheel.free">FREE</span>
+                        </button>
+                        <button class="wheel-spin-btn paid" onclick="spinWheel(false)">
+                            <i class="fas fa-coins"></i>
+                            <span data-i18n="wheel.price">0.25 TON</span>
+                        </button>
+                    </div>
+
+                    <!-- Prize List Preview -->
+                    <div class="wheel-prizes-preview">
+                        <div class="prize-tag ton">0.1-50 TON</div>
+                        <div class="prize-tag usdt">0.1-100 USDT</div>
+                        <div class="prize-tag sol">SOL</div>
+                        <div class="prize-tag btc">BTC</div>
+                        <div class="prize-tag special">FREE SPIN</div>
                     </div>
                 </div>
             </div>
