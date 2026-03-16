@@ -46,7 +46,7 @@
             <span class="auto-clicker-tooltip" data-i18n="autoclicker.buy">Buy Auto Miner 0.5 TON</span>
         </div>
 
-        <!-- Header Premium - Compact Design with Balance on Far Right -->
+        <!-- Header Premium - Compact Design with 10% larger -->
         <header class="glass-header">
             <div class="header-left">
                 <div class="user-avatar" id="userAvatar" onclick="handleAvatarClick()">
@@ -82,11 +82,11 @@
 
         <!-- Main Content -->
         <main class="main-content" id="mainContent">
-            <!-- Mining Page -->
+            <!-- Mining Page (جميع الميزات القديمة محفوظة) -->
             <div class="page active" id="miningPage">
-                <!-- 3D Legendary Miner -->
+                <!-- 3D Legendary Miner with Pulse Effect -->
                 <div class="legendary-miner">
-                    <div class="miner-3d-container">
+                    <div class="miner-3d-container pulse-border">
                         <div class="miner-3d">
                             <div class="miner-body">
                                 <div class="miner-core"></div>
@@ -119,7 +119,7 @@
                             </div>
                         </div>
                         
-                        <!-- Streak Orb with Lucky Wheel Indicator -->
+                        <!-- Streak Orb with Lucky Wheel Indicator (محدث) -->
                         <div class="stat-orb wheel-orb" id="streakOrb" onclick="showWheelModal()">
                             <div class="orb-glow"></div>
                             <div class="orb-content">
@@ -181,7 +181,7 @@
                     </div>
                 </div>
 
-                <!-- Auto Miner Status -->
+                <!-- Auto Miner Status (15 days) -->
                 <div class="auto-miner-status" id="autoMinerStatus" style="display: none;">
                     <i class="fas fa-robot"></i>
                     <span id="autoMinerTime"></span>
@@ -193,7 +193,7 @@
                     <div class="section-header">
                         <h3><i class="fas fa-microchip"></i> <span data-i18n="mining.activeRigs">Active Mining Rigs</span></h3>
                         <button class="section-action" onclick="showMarket()">
-                            <span data-i18n="actions.manage">Manage</span>
+                            <span data-i18n="manage">Manage</span>
                             <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
@@ -208,7 +208,7 @@
                     <div class="section-header">
                         <h3><i class="fas fa-chart-line"></i> <span data-i18n="mining.plansReturns">Mining Plans & Returns</span></h3>
                         <button class="section-action" onclick="showMarket()">
-                            <span data-i18n="actions.viewAll">View All</span>
+                            <span data-i18n="viewAll">View All</span>
                             <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
@@ -235,7 +235,7 @@
                     <div class="section-header">
                         <h3><i class="fas fa-history"></i> <span data-i18n="mining.recentActivity">Recent Activity</span></h3>
                         <button class="section-action" onclick="showHistory()">
-                            <span data-i18n="actions.seeAll">See All</span>
+                            <span data-i18n="seeAll">See All</span>
                             <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
@@ -277,7 +277,7 @@
                 </div>
             </div>
 
-            <!-- Stats Page -->
+            <!-- Stats Page (مع الإحالة المنقولة) -->
             <div class="page" id="statsPage">
                 <h2><i class="fas fa-chart-pie"></i> <span data-i18n="stats.title">Mining Statistics</span></h2>
                 <p class="page-subtitle" data-i18n="stats.subtitle">Your mining performance and achievements</p>
@@ -339,6 +339,28 @@
                     </div>
                 </div>
 
+                <!-- Referral Milestones - منقول هنا -->
+                <div class="section legendary-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-users"></i> <span data-i18n="referral.milestones">Referral Milestones</span></h3>
+                    </div>
+                    
+                    <div id="referralMilestonesContainer" class="referral-milestones-grid">
+                        <!-- يتم تعبئتها عبر JavaScript -->
+                    </div>
+                    
+                    <!-- Referral Link Preview -->
+                    <div class="referral-preview-mini">
+                        <div class="referral-link-mini">
+                            <input type="text" id="statsReferralLink" readonly value="https://t.me/bot?start=CODE">
+                            <button class="copy-btn-mini" onclick="copyReferralLink()">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <p class="referral-bonus-note" data-i18n="referral.bonusNote">Get 0.005 TON + 20% of their mining!</p>
+                    </div>
+                </div>
+
                 <!-- Achievements Grid -->
                 <div class="section legendary-section">
                     <div class="section-header">
@@ -351,11 +373,11 @@
                 </div>
             </div>
 
-            <!-- Profile Page -->
+            <!-- Profile Page (مع أزرار محفظة محدثة) -->
             <div class="page" id="profilePage">
                 <h2><i class="fas fa-user"></i> <span data-i18n="profile.title">My Profile</span></h2>
                 
-                <!-- Wallet Card with Send/Receive/Swap (no "actions." prefix) -->
+                <!-- Wallet Card with Send/Receive/Swap/History -->
                 <div class="wallet-card-legendary">
                     <div class="wallet-header">
                         <i class="fas fa-wallet"></i>
@@ -367,15 +389,19 @@
                     <div class="wallet-actions">
                         <button class="wallet-action-btn send" onclick="showWithdrawModal()">
                             <i class="fas fa-paper-plane"></i>
-                            <span data-i18n="actions.send">Send</span>
+                            <span data-i18n="send">Send</span>
                         </button>
                         <button class="wallet-action-btn receive" onclick="showDepositModal()">
                             <i class="fas fa-arrow-down"></i>
-                            <span data-i18n="actions.receive">Receive</span>
+                            <span data-i18n="receive">Receive</span>
                         </button>
                         <button class="wallet-action-btn swap" onclick="showSwapModal()">
                             <i class="fas fa-exchange-alt"></i>
-                            <span data-i18n="actions.swap">Swap</span>
+                            <span data-i18n="swap">Swap</span>
+                        </button>
+                        <button class="wallet-action-btn history" onclick="showHistory()">
+                            <i class="fas fa-history"></i>
+                            <span data-i18n="history">History</span>
                         </button>
                     </div>
                 </div>
@@ -400,66 +426,12 @@
                         <h3><i class="fas fa-coins"></i> <span data-i18n="wallet.myAssets">My Assets</span></h3>
                         <button class="section-action" onclick="refreshPrices()">
                             <i class="fas fa-sync-alt"></i>
-                            <span data-i18n="actions.refresh">Refresh</span>
+                            <span data-i18n="refresh">Refresh</span>
                         </button>
                     </div>
                     
                     <div class="assets-list-legendary" id="assetsList">
                         <!-- يتم تعبئتها عبر JavaScript -->
-                    </div>
-                </div>
-
-                <!-- Referral Section - Visible and Clear -->
-                <div class="section legendary-section">
-                    <div class="section-header">
-                        <h3><i class="fas fa-users"></i> <span data-i18n="referral.title">Referral Program</span></h3>
-                        <button class="section-action" onclick="showReferralDetails()">
-                            <span data-i18n="actions.manage">Manage</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="referral-preview">
-                        <div class="referral-stats-mini">
-                            <div class="mini-stat">
-                                <span class="value" id="previewRefCount">0</span>
-                                <span class="label" data-i18n="referral.friends">Friends</span>
-                            </div>
-                            <div class="mini-stat">
-                                <span class="value" id="previewRefEarnings">0.0000</span>
-                                <span class="label" data-i18n="referral.earned">Earned (USDT)</span>
-                            </div>
-                        </div>
-                        
-                        <div class="referral-link-mini">
-                            <input type="text" id="previewReferralLink" readonly value="https://t.me/bot?start=CODE">
-                            <button class="copy-btn-mini" onclick="copyReferralLink()">
-                                <i class="fas fa-copy"></i>
-                            </button>
-                        </div>
-                        <p class="referral-bonus-note" data-i18n="referral.bonusNote">Get 0.005 TON + 20% of their mining!</p>
-                    </div>
-
-                    <!-- Quick Milestones Preview -->
-                    <div class="milestones-preview">
-                        <div class="milestone-preview-item">
-                            <span>3 → 1 USDT</span>
-                            <div class="progress-mini">
-                                <div class="progress-mini-fill" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="milestone-preview-item">
-                            <span>10 → 5 USDT</span>
-                            <div class="progress-mini">
-                                <div class="progress-mini-fill" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="milestone-preview-item">
-                            <span>50 → 50 USDT</span>
-                            <div class="progress-mini">
-                                <div class="progress-mini-fill" style="width: 0%"></div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -554,7 +526,7 @@
             </button>
         </nav>
 
-        <!-- Lucky Wheel Modal - Full Featured -->
+        <!-- Lucky Wheel Modal - محسنة مع 20 جائزة -->
         <div class="modal legendary-modal" id="wheelModal">
             <div class="modal-content wheel-modal-content">
                 <div class="modal-header">
@@ -565,10 +537,15 @@
                 </div>
                 
                 <div class="modal-body">
+                    <!-- Streak Display inside wheel -->
+                    <div class="wheel-streak" id="wheelStreakDisplay">
+                        🔥 47 DAYS | BEST: 12
+                    </div>
+                    
                     <!-- Wheel Container -->
                     <div class="wheel-container">
                         <div class="wheel" id="wheel">
-                            <!-- Dynamic segments created by JS -->
+                            <!-- Dynamic segments created by JS (20 قطاع) -->
                         </div>
                         <div class="wheel-pointer">▼</div>
                         <div class="wheel-center">🎰</div>
@@ -583,7 +560,16 @@
                     <!-- Jackpot Display -->
                     <div class="wheel-jackpot">
                         <span class="jackpot-label">JACKPOT</span>
-                        <span class="jackpot-value">50 TON + 100 USDT</span>
+                        <span class="jackpot-value">100 TON</span>
+                    </div>
+
+                    <!-- Prize Distribution Info -->
+                    <div class="wheel-prizes-info">
+                        <span class="prize-badge ton">TON 0.25-100</span>
+                        <span class="prize-badge usdt">USDT 0.25-500</span>
+                        <span class="prize-badge special">FREE SPIN</span>
+                        <span class="prize-badge auto">AUTO CLICKER</span>
+                        <span class="prize-badge luck">60% GOOD LUCK</span>
                     </div>
 
                     <!-- Wheel Controls -->
@@ -596,15 +582,6 @@
                             <i class="fas fa-coins"></i>
                             <span data-i18n="wheel.price">0.25 TON</span>
                         </button>
-                    </div>
-
-                    <!-- Prize List Preview -->
-                    <div class="wheel-prizes-preview">
-                        <div class="prize-tag ton">0.1-50 TON</div>
-                        <div class="prize-tag usdt">0.1-100 USDT</div>
-                        <div class="prize-tag sol">SOL</div>
-                        <div class="prize-tag btc">BTC</div>
-                        <div class="prize-tag special">FREE SPIN</div>
                     </div>
                 </div>
             </div>
@@ -1013,58 +990,6 @@
                                 <span data-i18n="admin.refresh">Refresh</span>
                             </button>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Referral Details Modal -->
-        <div class="modal legendary-modal" id="referralModal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3><i class="fas fa-users"></i> <span data-i18n="referral.title">Referral Program</span></h3>
-                    <button class="close-btn" onclick="closeModal('referralModal')">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                
-                <div class="modal-body">
-                    <!-- Referral Stats -->
-                    <div class="referral-stats-legendary">
-                        <div class="stat-box">
-                            <span class="value" id="modalRefCount">0</span>
-                            <span class="label" data-i18n="referral.totalReferrals">Total Referrals</span>
-                        </div>
-                        <div class="stat-box">
-                            <span class="value" id="modalRefEarnings">0.0000</span>
-                            <span class="label" data-i18n="referral.earned">Earned (USDT)</span>
-                        </div>
-                    </div>
-
-                    <!-- Referral Link -->
-                    <div class="referral-link-card-legendary">
-                        <h4 data-i18n="referral.yourLink">Your Referral Link</h4>
-                        <div class="link-box-legendary">
-                            <input type="text" id="modalReferralLink" readonly>
-                            <button class="copy-btn-legendary" onclick="copyReferralLink()">
-                                <i class="fas fa-copy"></i>
-                            </button>
-                        </div>
-                        <p class="link-note" data-i18n="referral.bonusNote">Get 0.005 TON + 20% of their mining!</p>
-                    </div>
-
-                    <!-- Referral Milestones -->
-                    <div class="section">
-                        <h4 data-i18n="referral.milestones">Referral Milestones</h4>
-                        <div class="milestones-list" id="milestonesList">
-                            <!-- يتم تعبئتها عبر JavaScript -->
-                        </div>
-                    </div>
-
-                    <!-- Referral Tree -->
-                    <div class="section">
-                        <h4 data-i18n="referral.yourNetwork">Your Network</h4>
-                        <div class="referral-tree" id="referralTree"></div>
                     </div>
                 </div>
             </div>
