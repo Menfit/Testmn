@@ -40,7 +40,7 @@
         <!-- Welcome Sticker -->
         <div class="welcome-sticker" id="welcomeSticker"></div>
 
-        <!-- Auto-Clicker Turbine Button - قرب المروحة -->
+        <!-- Auto-Clicker Turbine Button -->
         <div class="auto-clicker-turbine" id="autoClickerTurbine" onclick="buyAutoClicker()">
             <div class="turbine-mini">
                 <div class="turbine-mini-blade"></div>
@@ -50,7 +50,7 @@
             <span class="auto-clicker-tooltip" data-i18n="autoclicker.buy">Auto Miner 0.5 TON</span>
         </div>
 
-        <!-- Header - مضغوط مع اسم المستخدم والمعرف -->
+        <!-- Header -->
         <header class="glass-header">
             <div class="header-left">
                 <div class="user-avatar" id="userAvatar" onclick="handleAvatarClick()">
@@ -85,12 +85,12 @@
 
         <!-- Main Content -->
         <main class="main-content" id="mainContent">
-            <!-- ========== MINING PAGE ========== -->
+            <!-- MINING PAGE -->
             <div class="page active" id="miningPage">
                 <!-- Hero Section with Turbines -->
                 <div class="mining-hero">
                     <div class="turbine-field-container">
-                        <!-- Turbine 1 - كبيرة في المقدمة -->
+                        <!-- Turbine 1 - Large -->
                         <div class="turbine-large turbine-1">
                             <div class="turbine-pole"></div>
                             <div class="turbine-head">
@@ -101,7 +101,7 @@
                             </div>
                         </div>
                         
-                        <!-- Turbine 2 - متوسطة في الخلف -->
+                        <!-- Turbine 2 - Medium -->
                         <div class="turbine-medium turbine-2">
                             <div class="turbine-pole"></div>
                             <div class="turbine-head">
@@ -112,7 +112,7 @@
                             </div>
                         </div>
                         
-                        <!-- Turbine 3 - صغيرة في الأفق -->
+                        <!-- Turbine 3 - Small -->
                         <div class="turbine-small turbine-3">
                             <div class="turbine-pole"></div>
                             <div class="turbine-head">
@@ -220,9 +220,7 @@
                         </button>
                     </div>
                     
-                    <div class="active-machines-grid" id="activeMachinesGrid">
-                        <!-- Dynamic content from JS -->
-                    </div>
+                    <div class="active-machines-grid" id="activeMachinesGrid"></div>
                 </div>
 
                 <!-- Plans Table -->
@@ -245,9 +243,7 @@
                                     <th data-i18n="table.15days">15 Days</th>
                                 </tr>
                             </thead>
-                            <tbody id="plansTableBody">
-                                <!-- Dynamic content from JS -->
-                            </tbody>
+                            <tbody id="plansTableBody"></tbody>
                         </table>
                     </div>
                 </div>
@@ -262,13 +258,11 @@
                         </button>
                     </div>
                     
-                    <div class="activity-feed" id="activityFeed">
-                        <!-- Dynamic content from JS -->
-                    </div>
+                    <div class="activity-feed" id="activityFeed"></div>
                 </div>
             </div>
 
-            <!-- ========== MARKET PAGE ========== -->
+            <!-- MARKET PAGE -->
             <div class="page" id="marketPage">
                 <h2><i class="fas fa-store"></i> <span data-i18n="market.title">Mining Hardware</span></h2>
                 <p class="page-subtitle" data-i18n="market.subtitle">Choose your mining rig and start earning</p>
@@ -281,12 +275,10 @@
                     <button class="filter-btn" onclick="filterMarket('hot')" data-i18n="filters.hot">Hot Deals</button>
                 </div>
                 
-                <div class="machines-showcase-legendary" id="machinesShowcase">
-                    <!-- Dynamic content from JS -->
-                </div>
+                <div class="machines-showcase-legendary" id="machinesShowcase"></div>
             </div>
 
-            <!-- ========== CASINO PAGE ========== -->
+            <!-- CASINO PAGE -->
             <div class="page" id="casinoPage">
                 <h2><i class="fas fa-dice"></i> <span data-i18n="casino.title">Casino Games</span></h2>
                 
@@ -460,7 +452,7 @@
                 </div>
             </div>
 
-            <!-- ========== PROFILE PAGE ========== -->
+            <!-- PROFILE PAGE -->
             <div class="page" id="profilePage">
                 <h2><i class="fas fa-user"></i> <span data-i18n="profile.title">My Profile</span></h2>
                 
@@ -511,9 +503,7 @@
                             <i class="fas fa-sync-alt"></i> <span data-i18n="refresh">Refresh</span>
                         </button>
                     </div>
-                    <div class="assets-list-legendary" id="assetsList">
-                        <!-- Dynamic content from JS -->
-                    </div>
+                    <div class="assets-list-legendary" id="assetsList"></div>
                 </div>
 
                 <!-- Statistics -->
@@ -552,14 +542,10 @@
                 </div>
 
                 <!-- Leaderboard -->
-                <div class="leaderboard" id="leaderboard">
-                    <!-- Dynamic content from JS -->
-                </div>
+                <div class="leaderboard" id="leaderboard"></div>
 
                 <!-- Referral Milestones -->
-                <div id="referralMilestonesContainer" class="referral-milestones-grid">
-                    <!-- Dynamic content from JS -->
-                </div>
+                <div id="referralMilestonesContainer" class="referral-milestones-grid"></div>
             </div>
         </main>
 
@@ -590,9 +576,7 @@
             </button>
         </nav>
 
-        <!-- ========== MODALS ========== -->
-
-        <!-- WHEEL MODAL - Casino Style -->
+        <!-- WHEEL MODAL -->
         <div class="modal legendary-modal" id="wheelModal">
             <div class="modal-content wheel-modal-content">
                 <div class="modal-header">
@@ -605,9 +589,7 @@
                     
                     <!-- Main Wheel -->
                     <div class="wheel-casino-container">
-                        <div class="wheel-casino" id="wheelCasino">
-                            <!-- Dynamic segments from JS -->
-                        </div>
+                        <div class="wheel-casino" id="wheelCasino"></div>
                         <div class="wheel-casino-pointer">▼</div>
                         <div class="wheel-casino-center">🎰</div>
                         <div class="wheel-outer-glow"></div>
@@ -771,7 +753,7 @@
             </div>
         </div>
 
-        <!-- SWAP MODAL - PancakeSwap Style -->
+        <!-- SWAP MODAL -->
         <div class="modal legendary-modal" id="swapModal">
             <div class="modal-content swap-modal-content">
                 <div class="modal-header">
@@ -844,9 +826,7 @@
                         <i class="fas fa-search"></i>
                         <input type="text" id="currencySearch" placeholder="Search..." oninput="filterCurrencies()">
                     </div>
-                    <div class="currency-list" id="currencyList">
-                        <!-- Dynamic content from JS -->
-                    </div>
+                    <div class="currency-list" id="currencyList"></div>
                 </div>
             </div>
         </div>
@@ -861,9 +841,7 @@
                 <div class="modal-body">
                     <div class="currency-select-wrapper">
                         <label data-i18n="deposit.selectCurrency">Select Currency</label>
-                        <select class="currency-select" id="depositCurrencySelect" onchange="updateDepositInfo()">
-                            <!-- Dynamic from JS -->
-                        </select>
+                        <select class="currency-select" id="depositCurrencySelect" onchange="updateDepositInfo()"></select>
                     </div>
                     <div class="deposit-address-card-legendary">
                         <h4 data-i18n="deposit.sendTo">Send to this address:</h4>
@@ -903,9 +881,7 @@
                 <div class="modal-body">
                     <div class="currency-select-wrapper">
                         <label data-i18n="withdraw.selectCurrency">Select Currency</label>
-                        <select class="currency-select" id="withdrawCurrencySelect" onchange="updateWithdrawInfo()">
-                            <!-- Dynamic from JS -->
-                        </select>
+                        <select class="currency-select" id="withdrawCurrencySelect" onchange="updateWithdrawInfo()"></select>
                     </div>
                     <div class="balance-info-legendary">
                         <span data-i18n="withdraw.available">Available:</span>
@@ -1021,9 +997,7 @@
                         <button class="history-filter" onclick="filterHistory('wheel')" data-i18n="history.wheel">Wheel</button>
                         <button class="history-filter" onclick="filterHistory('slots')" data-i18n="history.slots">Slots</button>
                     </div>
-                    <div class="history-list" id="historyList">
-                        <!-- Dynamic from JS -->
-                    </div>
+                    <div class="history-list" id="historyList"></div>
                 </div>
             </div>
         </div>
@@ -1040,9 +1014,7 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <div class="notifications-list" id="notificationsList">
-                        <!-- Dynamic from JS -->
-                    </div>
+                    <div class="notifications-list" id="notificationsList"></div>
                 </div>
             </div>
         </div>
