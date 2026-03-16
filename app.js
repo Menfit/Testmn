@@ -1,7 +1,7 @@
 // ============================================
-// TON MINING PRO - LEGENDARY VERSION v17.0
+// TON MINING PRO - LEGENDARY VERSION v18.0
 // ULTIMATE ZERO WASTE ARCHITECTURE
-// WITH LUCKY WHEEL, AUTO-CLICKER, REFERRAL SYSTEM
+// WITH ALL FEATURES: MINING, LUCKY WHEEL, AUTO-CLICKER, REFERRAL, MULTI-CURRENCY
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP INITIALIZATION ======
@@ -130,15 +130,12 @@ const CONFIG = {
 // ====== 3. TRANSLATION SYSTEM ======
 const translations = {
     en: {
-        // General
         'app.name': 'TON Mining Pro',
         'welcome.title': 'Welcome back,',
         'nav.mining': 'Mining',
         'nav.market': 'Market',
         'nav.stats': 'Stats',
         'nav.profile': 'Profile',
-        
-        // Actions
         'actions.send': 'Send',
         'actions.receive': 'Receive',
         'actions.swap': 'Swap',
@@ -150,8 +147,6 @@ const translations = {
         'actions.confirm': 'Confirm',
         'actions.refresh': 'Refresh',
         'actions.buy': 'Buy',
-        
-        // Mining
         'mining.currentCycle': 'Current Mining Cycle',
         'mining.nextReward': 'Next Reward',
         'mining.activeRigs': 'Active Mining Rigs',
@@ -159,19 +154,13 @@ const translations = {
         'mining.recentActivity': 'Recent Activity',
         'mining.streak': 'Day Streak',
         'mining.best': 'Best',
-        
-        // Market
         'market.title': 'Mining Hardware',
         'market.subtitle': 'Choose your mining rig and start earning',
-        
-        // Filters
         'filters.all': 'All',
         'filters.free': 'Free',
         'filters.basic': 'Basic',
         'filters.pro': 'Pro',
         'filters.quantum': 'Quantum',
-        
-        // Stats
         'stats.title': 'Mining Statistics',
         'stats.subtitle': 'Your mining performance and achievements',
         'stats.miningDays': 'Mining Days',
@@ -180,23 +169,17 @@ const translations = {
         'stats.achievements': 'Achievements',
         'stats.earningsHistory': 'Earnings History',
         'stats.leaderboard': 'Mining Leaderboard',
-        
-        // Profile
         'profile.title': 'My Profile',
         'wallet.totalBalance': 'Total Balance',
         'wallet.myAssets': 'My Assets',
         'wallet.connected': 'Connected:',
         'wallet.disconnected': 'Wallet disconnected',
         'wallet.notConnected': 'Wallet not connected',
-        
-        // Swap
         'swap.title': 'Swap Assets',
         'swap.from': 'From',
         'swap.to': 'To',
         'swap.rate': 'Rate',
         'swap.confirm': 'Confirm Swap',
-        
-        // Payment
         'payment.title': 'Complete Rental',
         'payment.selectMethod': 'Select Payment Method:',
         'payment.balance': 'Pay with Balance',
@@ -209,8 +192,6 @@ const translations = {
         'payment.price': 'Price:',
         'payment.return': 'Return:',
         'payment.youReceive': 'You will receive:',
-        
-        // Deposit
         'deposit.title': 'Receive Funds',
         'deposit.selectCurrency': 'Select Currency',
         'deposit.amount': 'Amount',
@@ -219,8 +200,6 @@ const translations = {
         'deposit.confirmation': '✓ Blockchain confirmation 1-5 minutes',
         'deposit.submit': 'Submit Request',
         'deposit.minimum': 'Minimum: {amount} {currency}',
-        
-        // Withdraw
         'withdraw.title': 'Send Funds',
         'withdraw.selectCurrency': 'Select Currency',
         'withdraw.amount': 'Amount',
@@ -229,8 +208,6 @@ const translations = {
         'withdraw.networkFee': 'Network fee:',
         'withdraw.submit': 'Send Request',
         'withdraw.feeNote': '{note}',
-        
-        // Referral
         'referral.title': 'Referral Program',
         'referral.totalReferrals': 'Total Referrals',
         'referral.earned': 'Earned (USDT)',
@@ -242,8 +219,6 @@ const translations = {
         'referral.referrals': 'Referrals',
         'referral.reward': 'Reward',
         'referral.progress': 'Progress',
-        
-        // Lucky Wheel
         'wheel.title': 'Lucky Wheel',
         'wheel.spin': 'SPIN',
         'wheel.free': 'FREE',
@@ -254,29 +229,21 @@ const translations = {
         'wheel.won': 'You won {prize}!',
         'wheel.insufficient': 'Insufficient balance. Need 0.25 TON',
         'wheel.wait': 'Next free spin in {time}',
-        
-        // Auto Clicker
         'autoclicker.title': 'Auto Miner',
         'autoclicker.description': 'Mine automatically for 24 hours',
         'autoclicker.price': '0.5 TON',
         'autoclicker.buy': 'Buy Auto Miner',
         'autoclicker.active': 'Active: {time} left',
         'autoclicker.bought': 'Auto Miner activated for 24h!',
-        
-        // Settings
         'settings.title': 'Settings',
         'settings.notifications': 'Notifications',
         'settings.darkMode': 'Dark Mode',
         'settings.language': 'Language',
         'settings.support': 'Support',
-        
-        // Table
         'table.machine': 'Machine',
         'table.3days': '3 Days',
         'table.7days': '7 Days',
         'table.15days': '15 Days',
-        
-        // History
         'history.title': 'Transaction History',
         'history.all': 'All',
         'history.deposits': 'Deposits',
@@ -284,28 +251,19 @@ const translations = {
         'history.mining': 'Mining',
         'history.rentals': 'Rentals',
         'history.swaps': 'Swaps',
-        
-        // Notifications
+        'history.wheel': 'Wheel',
         'notifications.title': 'Notifications',
         'notifications.no_notifications': 'No notifications',
-        
-        // Currency
         'currency.select': 'Select Currency',
-        
-        // Admin
         'admin.clickRefresh': 'Click refresh button to load requests',
         'admin.refresh': 'Refresh',
         'admin.password': 'Enter Admin Password',
         'admin.wrongPassword': 'Wrong password',
-        
-        // Messages
         'messages.loading': 'Loading...',
         'messages.success': 'Success',
         'messages.error': 'Error',
         'messages.warning': 'Warning',
         'messages.info': 'Info',
-        
-        // Notifications Messages
         'notif.welcomeBonus': '🎉 Welcome! You got 0.005 TON bonus!',
         'notif.referralBonus': '🎉 Someone joined with your link! You got 0.005 TON!',
         'notif.referralMiningBonus': '⚡ Your referral just mined! You got 20% ({amount} TON)',
@@ -317,8 +275,6 @@ const translations = {
         'notif.wheelWin': '🎡 You won {prize}!',
         'notif.wheelJackpot': '🎡🎡🎡 JACKPOT! You won {prize}!',
         'notif.autoClickerBought': '🤖 Auto Miner activated for 24 hours!',
-        
-        // Errors
         'error.minDeposit': 'Minimum deposit is {min} {currency}',
         'error.minWithdraw': 'Minimum withdrawal is {min} {currency}',
         'error.invalidHash': 'Invalid transaction hash format',
@@ -331,15 +287,12 @@ const translations = {
     },
     
     ar: {
-        // General
         'app.name': 'TON للتعدين',
         'welcome.title': 'أهلاً بعودتك،',
         'nav.mining': 'التعدين',
         'nav.market': 'المتجر',
         'nav.stats': 'الإحصائيات',
         'nav.profile': 'الملف الشخصي',
-        
-        // Actions
         'actions.send': 'إرسال',
         'actions.receive': 'استقبال',
         'actions.swap': 'تبديل',
@@ -351,8 +304,6 @@ const translations = {
         'actions.confirm': 'تأكيد',
         'actions.refresh': 'تحديث',
         'actions.buy': 'شراء',
-        
-        // Mining
         'mining.currentCycle': 'دورة التعدين الحالية',
         'mining.nextReward': 'المكافأة القادمة',
         'mining.activeRigs': 'أجهزة التعدين النشطة',
@@ -360,19 +311,13 @@ const translations = {
         'mining.recentActivity': 'النشاط الأخير',
         'mining.streak': 'يوم متتالي',
         'mining.best': 'الأفضل',
-        
-        // Market
         'market.title': 'أجهزة التعدين',
         'market.subtitle': 'اختر جهاز التعدين وابدأ الربح',
-        
-        // Filters
         'filters.all': 'الكل',
         'filters.free': 'مجاني',
         'filters.basic': 'أساسي',
         'filters.pro': 'محترف',
         'filters.quantum': 'كمومي',
-        
-        // Stats
         'stats.title': 'إحصائيات التعدين',
         'stats.subtitle': 'أداء التعدين والإنجازات',
         'stats.miningDays': 'أيام التعدين',
@@ -381,23 +326,17 @@ const translations = {
         'stats.achievements': 'الإنجازات',
         'stats.earningsHistory': 'تاريخ الأرباح',
         'stats.leaderboard': 'قائمة المتصدرين',
-        
-        // Profile
         'profile.title': 'ملفي الشخصي',
         'wallet.totalBalance': 'الرصيد الإجمالي',
         'wallet.myAssets': 'أصولي',
         'wallet.connected': 'متصل:',
         'wallet.disconnected': 'المحفظة غير متصلة',
         'wallet.notConnected': 'المحفظة غير متصلة',
-        
-        // Swap
         'swap.title': 'تبديل العملات',
         'swap.from': 'من',
         'swap.to': 'إلى',
         'swap.rate': 'سعر الصرف',
         'swap.confirm': 'تأكيد التبديل',
-        
-        // Payment
         'payment.title': 'إتمام التأجير',
         'payment.selectMethod': 'اختر طريقة الدفع:',
         'payment.balance': 'الدفع من الرصيد',
@@ -410,8 +349,6 @@ const translations = {
         'payment.price': 'السعر:',
         'payment.return': 'العائد:',
         'payment.youReceive': 'سوف تستلم:',
-        
-        // Deposit
         'deposit.title': 'استقبال الأموال',
         'deposit.selectCurrency': 'اختر العملة',
         'deposit.amount': 'المبلغ',
@@ -420,8 +357,6 @@ const translations = {
         'deposit.confirmation': '✓ تأكيد البلوكشين 1-5 دقائق',
         'deposit.submit': 'تقديم الطلب',
         'deposit.minimum': 'الحد الأدنى: {amount} {currency}',
-        
-        // Withdraw
         'withdraw.title': 'إرسال الأموال',
         'withdraw.selectCurrency': 'اختر العملة',
         'withdraw.amount': 'المبلغ',
@@ -430,8 +365,6 @@ const translations = {
         'withdraw.networkFee': 'رسوم الشبكة:',
         'withdraw.submit': 'طلب الإرسال',
         'withdraw.feeNote': '{note}',
-        
-        // Referral
         'referral.title': 'برنامج الإحالة',
         'referral.totalReferrals': 'إجمالي الإحالات',
         'referral.earned': 'المكتسب (USDT)',
@@ -443,8 +376,6 @@ const translations = {
         'referral.referrals': 'إحالات',
         'referral.reward': 'المكافأة',
         'referral.progress': 'التقدم',
-        
-        // Lucky Wheel
         'wheel.title': 'عجلة الحظ',
         'wheel.spin': 'دوران',
         'wheel.free': 'مجاني',
@@ -455,29 +386,21 @@ const translations = {
         'wheel.won': 'فزت بـ {prize}!',
         'wheel.insufficient': 'رصيد غير كاف. تحتاج 0.25 TON',
         'wheel.wait': 'الدوران المجاني بعد {time}',
-        
-        // Auto Clicker
         'autoclicker.title': 'منجم آلي',
         'autoclicker.description': 'تعدين تلقائي لمدة 24 ساعة',
         'autoclicker.price': '0.5 TON',
         'autoclicker.buy': 'شراء منجم آلي',
         'autoclicker.active': 'نشط: {time} متبقي',
         'autoclicker.bought': 'تم تفعيل المنجم الآلي لمدة 24 ساعة!',
-        
-        // Settings
         'settings.title': 'الإعدادات',
         'settings.notifications': 'الإشعارات',
         'settings.darkMode': 'الوضع الليلي',
         'settings.language': 'اللغة',
         'settings.support': 'الدعم الفني',
-        
-        // Table
         'table.machine': 'الجهاز',
         'table.3days': '٣ أيام',
         'table.7days': '٧ أيام',
         'table.15days': '١٥ يوماً',
-        
-        // History
         'history.title': 'سجل المعاملات',
         'history.all': 'الكل',
         'history.deposits': 'إيداعات',
@@ -485,28 +408,19 @@ const translations = {
         'history.mining': 'تعدين',
         'history.rentals': 'تأجير',
         'history.swaps': 'تبديل',
-        
-        // Notifications
+        'history.wheel': 'عجلة الحظ',
         'notifications.title': 'الإشعارات',
         'notifications.no_notifications': 'لا توجد إشعارات',
-        
-        // Currency
         'currency.select': 'اختر العملة',
-        
-        // Admin
         'admin.clickRefresh': 'اضغط زر التحديث لعرض الطلبات',
         'admin.refresh': 'تحديث',
         'admin.password': 'أدخل كلمة سر المشرف',
         'admin.wrongPassword': 'كلمة سر خاطئة',
-        
-        // Messages
         'messages.loading': 'جاري التحميل...',
         'messages.success': 'نجاح',
         'messages.error': 'خطأ',
         'messages.warning': 'تحذير',
         'messages.info': 'معلومات',
-        
-        // Notifications Messages
         'notif.welcomeBonus': '🎉 مرحباً! حصلت على 0.005 TON كمكافأة!',
         'notif.referralBonus': '🎉 شخص ما انضم عبر رابطك! حصلت على 0.005 TON!',
         'notif.referralMiningBonus': '⚡ صديقك تعدن للتو! حصلت على 20% ({amount} TON)',
@@ -518,8 +432,6 @@ const translations = {
         'notif.wheelWin': '🎡 فزت بـ {prize}!',
         'notif.wheelJackpot': '🎡🎡🎡 جاكبوت! فزت بـ {prize}!',
         'notif.autoClickerBought': '🤖 تم تفعيل المنجم الآلي لمدة 24 ساعة!',
-        
-        // Errors
         'error.minDeposit': 'الحد الأدنى للإيداع هو {min} {currency}',
         'error.minWithdraw': 'الحد الأدنى للسحب هو {min} {currency}',
         'error.invalidHash': 'تنسيق هاش معاملة غير صالح',
@@ -743,7 +655,7 @@ const ACHIEVEMENTS = [
     { id: 'early_bird', name: 'Early Bird', nameAr: 'طير باكر', icon: '🐦', reward: 0.2, condition: 'special:early' }
 ];
 
-// ====== 7. REFERRAL MILESTONES (NEW) ======
+// ====== 7. REFERRAL MILESTONES ======
 const REFERRAL_MILESTONES = [
     { referrals: 3, reward: 1, unit: 'USDT' },
     { referrals: 10, reward: 5, unit: 'USDT' },
@@ -756,24 +668,33 @@ const REFERRAL_MILESTONES = [
 
 // ====== 8. LUCKY WHEEL PRIZES ======
 const WHEEL_PRIZES = [
-    // Small prizes (first 11 spins)
     { type: 'TON', amount: 0.1, weight: 15 },
     { type: 'TON', amount: 0.2, weight: 12 },
     { type: 'TON', amount: 0.5, weight: 10 },
     { type: 'TON', amount: 1, weight: 8 },
     { type: 'TON', amount: 2, weight: 6 },
+    { type: 'TON', amount: 5, weight: 5 },
+    { type: 'TON', amount: 10, weight: 4 },
+    { type: 'TON', amount: 25, weight: 3 },
+    { type: 'TON', amount: 50, weight: 2 },
+    { type: 'TON', amount: 100, weight: 1 },
     { type: 'USDT', amount: 0.25, weight: 12 },
     { type: 'USDT', amount: 0.5, weight: 10 },
     { type: 'USDT', amount: 1, weight: 8 },
     { type: 'USDT', amount: 2, weight: 6 },
-    { type: 'USDT', amount: 5, weight: 4 },
+    { type: 'USDT', amount: 5, weight: 5 },
+    { type: 'USDT', amount: 10, weight: 4 },
+    { type: 'USDT', amount: 25, weight: 3 },
+    { type: 'USDT', amount: 50, weight: 2 },
+    { type: 'USDT', amount: 100, weight: 1 },
+    { type: 'USDT', amount: 250, weight: 1 },
+    { type: 'USDT', amount: 500, weight: 1 },
     { type: 'SOL', amount: 1, weight: 3 },
     { type: 'BTC', amount: 0.0001, weight: 2 },
     { type: 'ETH', amount: 0.001, weight: 2 },
-    { type: 'SPIN', amount: 1, weight: 5 }, // Free spin
-    { type: 'NOTHING', amount: 0, weight: 10 }, // Try again
+    { type: 'SPIN', amount: 1, weight: 5 },
+    { type: 'NOTHING', amount: 0, weight: 10 },
     
-    // Jackpot (12th spin)
     { type: 'TON', amount: 50, weight: 40, jackpot: true },
     { type: 'USDT', amount: 100, weight: 30, jackpot: true },
     { type: 'SOL', amount: 5, weight: 20, jackpot: true },
@@ -787,10 +708,8 @@ try {
     if (typeof firebase !== 'undefined') {
         firebaseApp = firebase.initializeApp(CONFIG.FIREBASE);
         db = firebase.firestore();
-        
         db.enablePersistence({ synchronizeTabs: true })
             .catch(err => console.warn('Firestore persistence error:', err));
-        
         console.log("🔥 Firebase initialized successfully");
     }
 } catch (error) {
@@ -816,9 +735,7 @@ async function initTonConnect() {
         
         tonConnectUI.onStatusChange(handleWalletChange);
         console.log('✅ TON Connect initialized');
-        
         setTimeout(updateWalletUI, 1000);
-        
         return true;
     } catch (e) {
         console.error('TON Connect error:', e);
@@ -958,6 +875,7 @@ async function disconnectWallet() {
         showToast('Wallet disconnected', 'info');
     }
 }
+
 // ====== 11. USER IDENTIFICATION ======
 const userId = tg?.initDataUnsafe?.user?.id?.toString() || 
                localStorage.getItem('ton_user_id') || 
@@ -1054,14 +972,12 @@ let userData = {
     lastClaimDate: new Date().toDateString(),
     upgrades: 0,
     
-    // Auto Clicker
     autoClicker: {
         active: false,
         expiry: 0,
         lastAutoClaim: 0
     },
     
-    // Lucky Wheel
     wheel: {
         spinsToday: 0,
         lastFreeSpin: 0,
@@ -1076,6 +992,7 @@ let userData = {
     referralCode: null,
     referredBy: null,
     referralMilestonesClaimed: [],
+    referralMiningTrack: {},
     
     pendingWithdrawals: [],
     completedWithdrawals: [],
@@ -1934,7 +1851,6 @@ function updateMining() {
         handleExpiry();
     }
     
-    // Check auto-clicker expiry
     if (userData.autoClicker && userData.autoClicker.active) {
         if (Date.now() > userData.autoClicker.expiry) {
             userData.autoClicker.active = false;
@@ -2454,25 +2370,23 @@ function renderAssets() {
 }
 
 function updateAutoClickerUI() {
-    const btn = document.getElementById('autoClickerBtn');
-    if (!btn) return;
+    const statusEl = document.getElementById('autoMinerStatus');
+    const timeEl = document.getElementById('autoMinerTime');
     
     if (userData.autoClicker && userData.autoClicker.active) {
         const timeLeft = userData.autoClicker.expiry - Date.now();
         if (timeLeft > 0) {
             const hours = Math.floor(timeLeft / 3600000);
             const minutes = Math.floor((timeLeft % 3600000) / 60000);
-            btn.innerHTML = `<i class="fas fa-robot"></i> ${hours}h ${minutes}m`;
-            btn.classList.add('active');
+            if (statusEl) statusEl.style.display = 'flex';
+            if (timeEl) timeEl.textContent = `${hours}h ${minutes}m`;
         } else {
             userData.autoClicker.active = false;
             saveUserToCache();
-            btn.innerHTML = `<i class="fas fa-robot"></i> ${t('autoclicker.buy')}`;
-            btn.classList.remove('active');
+            if (statusEl) statusEl.style.display = 'none';
         }
     } else {
-        btn.innerHTML = `<i class="fas fa-robot"></i> ${t('autoclicker.buy')}`;
-        btn.classList.remove('active');
+        if (statusEl) statusEl.style.display = 'none';
     }
 }
 
@@ -2488,7 +2402,6 @@ function showWheelModal() {
 function updateWheelUI() {
     const spinsLeftEl = document.getElementById('wheelSpinsLeft');
     const freeSpinEl = document.getElementById('wheelFreeSpin');
-    const priceEl = document.getElementById('wheelPrice');
     
     if (spinsLeftEl) {
         const spinsUntilJackpot = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - (userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY);
@@ -2532,12 +2445,10 @@ async function spinWheel(isFree = false) {
     userData.wheel.totalSpins++;
     userData.wheel.jackpotCounter++;
     
-    // Determine prize
     let prize = null;
     const isJackpotSpin = userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY === 0;
     
     if (isJackpotSpin) {
-        // Jackpot spin - bigger prizes
         const jackpotPrizes = WHEEL_PRIZES.filter(p => p.jackpot);
         const totalWeight = jackpotPrizes.reduce((sum, p) => sum + p.weight, 0);
         let random = Math.random() * totalWeight;
@@ -2552,7 +2463,6 @@ async function spinWheel(isFree = false) {
         
         userData.wheel.jackpotWon++;
     } else {
-        // Normal spin
         const normalPrizes = WHEEL_PRIZES.filter(p => !p.jackpot);
         const totalWeight = normalPrizes.reduce((sum, p) => sum + p.weight, 0);
         let random = Math.random() * totalWeight;
@@ -2566,7 +2476,6 @@ async function spinWheel(isFree = false) {
         }
     }
     
-    // Award prize
     if (prize.type === 'TON') {
         userData.balances.TON += prize.amount;
         userData.balance = userData.balances.TON;
@@ -2585,13 +2494,11 @@ async function spinWheel(isFree = false) {
         userData.balances.ETH += prize.amount;
         addTransaction('wheel', prize.amount, { currency: 'ETH' });
     } else if (prize.type === 'SPIN') {
-        // Free spin awarded
         setTimeout(() => spinWheel(false), 500);
     }
     
     saveUserToCache();
     
-    // Play sound (simulated)
     playWheelSound('spin');
     setTimeout(() => playWheelSound('win'), 1000);
     
@@ -2607,9 +2514,7 @@ async function spinWheel(isFree = false) {
 }
 
 function playWheelSound(type) {
-    // This would play actual sounds in production
     console.log(`🔊 Playing ${type} sound`);
-    // For now, just vibrate if on mobile
     if (tg && type === 'win') {
         tg.HapticFeedback?.notificationOccurred('success');
     }
@@ -2670,6 +2575,7 @@ function checkRequirements(machine) {
     
     return true;
 }
+
 // ====== 31. DUAL PAYMENT SYSTEM ======
 let currentPaymentMethod = 'balance';
 let currentPayment = null;
@@ -4159,7 +4065,7 @@ function filterMarket(filter) {
 
 // ====== 43. INITIALIZATION ======
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log("🚀 TON MINING PRO v17.0 starting...");
+    console.log("🚀 TON MINING PRO v18.0 starting...");
     
     hideAllModals();
     
@@ -4188,12 +4094,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     setupScrollListener();
     
-    // Auto-clicker floating button (appears every 5 minutes)
     setInterval(() => {
         if (!userData.autoClicker || !userData.autoClicker.active) {
-            showFloatingAutoClicker();
+            const floatBtn = document.getElementById('autoClickerFloat');
+            if (floatBtn) {
+                floatBtn.classList.add('show');
+                setTimeout(() => {
+                    floatBtn.classList.remove('show');
+                }, 10000);
+            }
         }
-    }, 300000); // 5 minutes
+    }, 300000);
     
     setTimeout(() => {
         document.getElementById('loading').style.opacity = '0';
@@ -4224,16 +4135,6 @@ function setupScrollListener() {
             scrollBtn.classList.remove('show');
         }
     });
-}
-
-function showFloatingAutoClicker() {
-    const btn = document.getElementById('autoClickerFloat');
-    if (btn) {
-        btn.classList.add('show');
-        setTimeout(() => {
-            btn.classList.remove('show');
-        }, 10000);
-    }
 }
 
 // ====== 44. PERIODIC SAVES ======
