@@ -250,11 +250,11 @@
                 <div class="machines-showcase-legendary" id="machinesShowcase"></div>
             </div>
 
-            <!-- CASINO PAGE (مع باقات الشراء) -->
+            <!-- CASINO PAGE (مع عرض اللفات المشتراة) -->
             <div class="page" id="casinoPage">
                 <h2><i class="fas fa-dice"></i> <span data-i18n="casino.title">Casino Games</span></h2>
                 
-                <!-- Lucky Wheel Card مع الباقات -->
+                <!-- Lucky Wheel Card مع الباقات وعرض اللفات -->
                 <div class="casino-card" id="wheelCard">
                     <div class="casino-card-header">
                         <span class="casino-icon">🎡</span>
@@ -268,9 +268,14 @@
                             <div class="casino-free" id="wheelFreeTimer"><i class="fas fa-clock"></i> 23:45:12</div>
                         </div>
                         
+                        <!-- عرض اللفات المشتراة -->
+                        <div class="purchased-spins" id="wheelPurchasedSpins">
+                            0 spins left
+                        </div>
+                        
                         <!-- باقات عجلة الحظ -->
                         <div class="packs-container">
-                            <div class="packs-title">🎟️ Packs</div>
+                            <div class="packs-title">🎟️ Quick Buy Packs</div>
                             <div class="packs-grid">
                                 <div class="pack-card" onclick="buyWheelPack('p5')">
                                     <span class="pack-spins">5 Spins</span>
@@ -298,7 +303,7 @@
                     </div>
                 </div>
 
-                <!-- Slot Machine Card مع الباقات وشرح الجوائز -->
+                <!-- Slot Machine Card مع الباقات وعرض اللفات -->
                 <div class="casino-card" id="slotsCard">
                     <div class="casino-card-header">
                         <span class="casino-icon">🎰</span>
@@ -317,9 +322,14 @@
                             <div class="casino-free" id="slotsFreeTimer"><i class="fas fa-clock"></i> 11:23:45</div>
                         </div>
                         
+                        <!-- عرض اللفات المشتراة -->
+                        <div class="purchased-spins" id="slotsPurchasedSpins">
+                            0 spins left
+                        </div>
+                        
                         <!-- باقات السلوت -->
                         <div class="packs-container">
-                            <div class="packs-title">🎟️ Packs</div>
+                            <div class="packs-title">🎟️ Quick Buy Packs</div>
                             <div class="packs-grid">
                                 <div class="pack-card" onclick="buySlotsPack('p5')">
                                     <span class="pack-spins">5 Spins</span>
@@ -496,7 +506,7 @@
             </button>
         </nav>
 
-        <!-- WHEEL MODAL -->
+        <!-- WHEEL MODAL (مع عرض اللفات المشتراة) -->
         <div class="modal legendary-modal" id="wheelModal">
             <div class="modal-content wheel-modal-content">
                 <div class="modal-header">
@@ -517,6 +527,11 @@
                     <div class="wheel-jackpot">
                         <span class="jackpot-label">JACKPOT</span>
                         <span class="jackpot-value">100 TON</span>
+                    </div>
+                    
+                    <!-- عرض اللفات المشتراة داخل المودال -->
+                    <div class="purchased-spins-modal" id="wheelModalPurchasedSpins">
+                        Your spins: <span class="spin-count">0</span>
                     </div>
                     
                     <!-- باقات داخل المودال -->
@@ -546,15 +561,15 @@
                         <button class="wheel-spin-btn free" id="wheelFreeSpin" onclick="spinWheel(true)">
                             <i class="fas fa-gift"></i> <span data-i18n="wheel.free">FREE</span>
                         </button>
-                        <button class="wheel-spin-btn paid" onclick="spinWheel(false)">
-                            <i class="fas fa-coins"></i> <span data-i18n="wheel.price">0.25 TON</span>
+                        <button class="wheel-spin-btn paid" id="wheelPaidSpin" onclick="spinWheel(false)">
+                            <i class="fas fa-coins"></i> <span>SPIN (0.25)</span>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLOTS MODAL (مع باقات) -->
+        <!-- SLOTS MODAL (مع عرض اللفات المشتراة) -->
         <div class="modal legendary-modal" id="slotsModal">
             <div class="modal-content">
                 <div class="modal-header">
@@ -567,6 +582,11 @@
                             <div class="slot-reel" id="slotReel1"></div>
                             <div class="slot-reel" id="slotReel2"></div>
                             <div class="slot-reel" id="slotReel3"></div>
+                        </div>
+                        
+                        <!-- عرض اللفات المشتراة داخل المودال -->
+                        <div class="purchased-spins-modal" id="slotsModalPurchasedSpins">
+                            Your spins: <span class="spin-count">0</span>
                         </div>
                         
                         <!-- شرح الجوائز داخل المودال -->
@@ -609,11 +629,11 @@
                             <button class="slot-spin-btn free" id="slotsFreeSpin" onclick="spinSlots(true, false)">
                                 <i class="fas fa-gift"></i> <span data-i18n="slots.free">FREE</span>
                             </button>
-                            <button class="slot-spin-btn normal" onclick="spinSlots(false, false)">
-                                <i class="fas fa-coins"></i> <span data-i18n="slots.price">0.15</span>
+                            <button class="slot-spin-btn normal" id="slotsNormalSpin" onclick="spinSlots(false, false)">
+                                <i class="fas fa-coins"></i> <span>0.15</span>
                             </button>
-                            <button class="slot-spin-btn turbo" onclick="spinSlots(false, true)">
-                                <i class="fas fa-bolt"></i> <span data-i18n="slots.turbo">TURBO</span>
+                            <button class="slot-spin-btn turbo" id="slotsTurboSpin" onclick="spinSlots(false, true)">
+                                <i class="fas fa-bolt"></i> <span>0.30</span>
                             </button>
                         </div>
                     </div>
