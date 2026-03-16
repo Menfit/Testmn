@@ -1,7 +1,7 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v60.0
-// ZERO WASTE ARCHITECTURE - 100K+ USERS READY
-// مع كل الميزات + الإضافات الجديدة
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v100.0
+// COMPLETE EDITION - كل الميزات القديمة + الجديدة
+// مع تحسينات اقتصادية - 100K+ USERS READY
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -45,6 +45,11 @@ const CONFIG = {
         TRANSACTIONS: 'transactions'
     },
     
+    APP: {
+        BASE_URL: "https://t.me/TONMininginstantbot/Ton",
+        REFERRAL_PARAM: "startapp"
+    },
+    
     DEPOSIT_ADDRESSES: {
         TON: "UQAq2CLybaIP93EGFlGL2n8A9DkGk5RPL2lYWJpoJlp8foJh",
         USDT: "0x7b80739cC565bFd9Cc115C821FE628d7FB11d9e1",
@@ -72,14 +77,14 @@ const CONFIG = {
     },
     
     CACHE: {
-        USER_TTL: 300000,        // 5 دقائق
-        PRICES_TTL: 10800000,     // 3 ساعات
-        HISTORY_TTL: 600000,      // 10 دقائق
-        MINING_TTL: 60000,        // دقيقة
-        LISTENER_TTL: 30000,      // 30 ثانية فقط!
-        LEADERBOARD_TTL: 3600000, // ساعة
-        WHEEL_TTL: 86400000,      // يوم
-        SLOTS_TTL: 86400000       // يوم
+        USER_TTL: 300000,
+        PRICES_TTL: 10800000,
+        HISTORY_TTL: 600000,
+        MINING_TTL: 60000,
+        LISTENER_TTL: 30000,
+        LEADERBOARD_TTL: 3600000,
+        WHEEL_TTL: 86400000,
+        SLOTS_TTL: 86400000
     },
     
     ECONOMY: {
@@ -88,24 +93,20 @@ const CONFIG = {
         AUTO_CLICKER_PRICE: 0.5,
         AUTO_CLICKER_DURATION: 15 * 24 * 60 * 60 * 1000,
         
-        // عجلة الحظ
         WHEEL_SPIN_PRICE: 0.25,
         WHEEL_FREE_SPIN_INTERVAL: 24 * 60 * 60 * 1000,
         WHEEL_JACKPOT_EVERY: 12,
         
-        // سلوت - سخي جداً!
         SLOTS_SPIN_PRICE: 0.15,
         SLOTS_TURBO_PRICE: 0.30,
         SLOTS_FREE_SPIN_INTERVAL: 12 * 60 * 60 * 1000,
-        SLOTS_WIN_RATE: 0.70, // 70% فرصة فوز!
+        SLOTS_WIN_RATE: 0.70,
         
-        // باقات السلوت (شراء فقط عبر تليجرام)
         SLOTS_PACK_5: { spins: 5, price: 0.75, bonus: 0 },
         SLOTS_PACK_10: { spins: 10, price: 1.5, bonus: 1 },
         SLOTS_PACK_50: { spins: 50, price: 7.5, bonus: 5 },
         SLOTS_PACK_100: { spins: 100, price: 15, bonus: 10 },
         
-        // باقات العجلة (شراء فقط عبر تليجرام)
         WHEEL_PACK_5: { spins: 5, price: 1.25, bonus: 0 },
         WHEEL_PACK_10: { spins: 10, price: 2.5, bonus: 1 },
         WHEEL_PACK_50: { spins: 50, price: 12.5, bonus: 5 },
@@ -131,10 +132,21 @@ const CONFIG = {
         BTC: "bitcoin", ETH: "ethereum", SOL: "solana"
     },
     
+    SWAP_CURRENCIES: [
+        { symbol: 'TON', name: 'Toncoin' },
+        { symbol: 'USDT', name: 'Tether' },
+        { symbol: 'BTC', name: 'Bitcoin' },
+        { symbol: 'ETH', name: 'Ethereum' },
+        { symbol: 'SOL', name: 'Solana' }
+    ],
+    
     ALL_ASSETS: [
-        { symbol: 'TON', name: 'Toncoin' }, { symbol: 'USDT', name: 'Tether' },
-        { symbol: 'BNB', name: 'BNB' }, { symbol: 'BTC', name: 'Bitcoin' },
-        { symbol: 'ETH', name: 'Ethereum' }, { symbol: 'SOL', name: 'Solana' }
+        { symbol: 'TON', name: 'Toncoin' },
+        { symbol: 'USDT', name: 'Tether' },
+        { symbol: 'BNB', name: 'BNB' },
+        { symbol: 'BTC', name: 'Bitcoin' },
+        { symbol: 'ETH', name: 'Ethereum' },
+        { symbol: 'SOL', name: 'Solana' }
     ]
 };
 
@@ -155,14 +167,12 @@ const translations = {
         'confirm': 'Confirm',
         'refresh': 'Refresh',
         
-        // Mining
         'mining.currentCycle': 'Current Mining Cycle',
         'mining.nextReward': 'Next Reward',
         'mining.activeRigs': 'Active Mining Rigs',
         'mining.hashrate': 'Hashrate',
         'mining.earned': 'Earned',
         
-        // Market
         'market.title': 'Mining Hardware',
         'filters.all': 'All',
         'filters.basic': 'Basic',
@@ -170,7 +180,6 @@ const translations = {
         'filters.quantum': 'Quantum',
         'filters.hot': 'Hot Deals',
         
-        // Casino
         'casino.title': 'Casino Games',
         'casino.wheel': 'Lucky Wheel',
         'casino.slots': 'Slot Machine',
@@ -182,7 +191,6 @@ const translations = {
         'casino.spinsLeft': 'spins left',
         'casino.yourSpins': 'Your Spins',
         
-        // Slot Machine
         'slots.title': 'Slot Machine',
         'slots.spin': 'SPIN',
         'slots.turbo': 'TURBO',
@@ -198,7 +206,6 @@ const translations = {
         'slots.pack100': '100 Spins +10',
         'slots.bought': '✅ Purchased {spins} spins!',
         
-        // Lucky Wheel
         'wheel.title': 'Lucky Wheel',
         'wheel.spin': 'SPIN',
         'wheel.free': 'FREE',
@@ -214,31 +221,26 @@ const translations = {
         'wheel.jackpotTimer': '{count}/{total}',
         'wheel.streak': '{days} DAYS | BEST: {best}',
         
-        // Profile
         'profile.title': 'My Profile',
         'wallet.totalBalance': 'Total Balance',
         'wallet.myAssets': 'My Assets',
         'wallet.connected': 'Connected:',
         'wallet.disconnected': 'Wallet disconnected',
         
-        // Referral
         'referral.title': 'Referral Program',
         'referral.yourLink': 'Your Referral Link',
         'referral.bonusNote': 'Get 0.005 TON + 20% of their mining!',
         'referral.milestones': 'Referral Milestones',
         
-        // Notifications
         'notifications.title': 'Notifications',
         'notifications.clear_read': 'Clear Read',
         'notifications.clear_all': 'Clear All',
         'notifications.no_notifications': 'No notifications',
         
-        // Messages
         'messages.success': 'Success',
         'messages.error': 'Error',
         'messages.loading': 'Loading...',
         
-        // Notifications Messages
         'notif.welcomeBonus': '🎉 Welcome! You got 0.005 TON!',
         'notif.referralBonus': '🎉 Someone joined with your link! You got 0.005 TON!',
         'notif.wheelWin': '🎡 You won {prize}!',
@@ -253,34 +255,39 @@ const translations = {
         'notif.withdrawApproved': '✅ Your withdrawal of {amount} {currency} has been approved!',
         'notif.withdrawRejected': '❌ Your withdrawal was rejected: {reason}',
         
-        // Admin
         'admin.clickRefresh': 'Click refresh to load pending requests',
         'admin.refresh': 'Refresh',
         'admin.password': 'Enter Admin Password',
         'admin.wrongPassword': 'Wrong password',
         'admin.noPending': 'No pending requests',
         'admin.error': 'Error loading requests',
+        'admin.approve': 'Approve',
+        'admin.reject': 'Reject',
         
-        // Errors
-        'error.insufficientBalance': 'Insufficient {currency} balance',
-        'error.invalidAddress': 'Invalid {currency} address',
-        'error.paymentFailed': 'Payment failed',
+        'error.insufficient': 'Insufficient balance! Need {amount} TON',
+        'error.insufficient.pack': 'Insufficient balance! Buy a pack or add funds.',
+        'error.payment': 'Payment failed. Please try again.',
         'error.minDeposit': 'Minimum deposit is {min} {currency}',
         'error.invalidHash': 'Invalid transaction hash',
         'error.hashUsed': 'Transaction hash already used',
         'error.enterAmount': 'Please enter a valid amount',
+        'error.invalidAddress': 'Invalid {currency} address',
         
-        // Pack Purchase
         'pack.buy': 'Buy Pack',
         'pack.confirm': 'Confirm purchase of {spins} spins for {price} TON?',
         'pack.telegramPay': 'Payment via Telegram Stars',
         'pack.success': '✅ Successfully purchased {spins} spins!',
-        'pack.insufficient': 'Insufficient balance. Payment via Telegram required.',
         
-        // Win Popups
+        'autospin.on': 'Auto Spin ON',
+        'autospin.off': 'Auto Spin OFF',
         'win.normal': '🎉 YOU WON!',
         'win.big': '🌟🌟 BIG WIN! 🌟🌟',
-        'win.jackpot': '🎰🎰🎰 JACKPOT! 🎰🎰🎰'
+        'win.jackpot': '🎰🎰🎰 JACKPOT! 🎰🎰🎰',
+        
+        'table.machine': 'Machine',
+        'table.3days': '3 Days',
+        'table.7days': '7 Days',
+        'table.15days': '15 Days'
     },
     ar: {
         'app.name': 'كازينو تعدين TON',
@@ -297,14 +304,12 @@ const translations = {
         'confirm': 'تأكيد',
         'refresh': 'تحديث',
         
-        // Mining
         'mining.currentCycle': 'دورة التعدين الحالية',
         'mining.nextReward': 'المكافأة القادمة',
         'mining.activeRigs': 'الأجهزة النشطة',
         'mining.hashrate': 'السرعة',
         'mining.earned': 'الأرباح',
         
-        // Market
         'market.title': 'أجهزة التعدين',
         'filters.all': 'الكل',
         'filters.basic': 'أساسي',
@@ -312,7 +317,6 @@ const translations = {
         'filters.quantum': 'كمومي',
         'filters.hot': 'عروض ساخنة',
         
-        // Casino
         'casino.title': 'ألعاب الكازينو',
         'casino.wheel': 'عجلة الحظ',
         'casino.slots': 'آلة السلوت',
@@ -324,7 +328,6 @@ const translations = {
         'casino.spinsLeft': 'لفة متبقية',
         'casino.yourSpins': 'لفاتك',
         
-        // Slot Machine
         'slots.title': 'آلة السلوت',
         'slots.spin': 'لفة',
         'slots.turbo': 'سرعة',
@@ -340,7 +343,6 @@ const translations = {
         'slots.pack100': '100 لفة +10',
         'slots.bought': '✅ تم شراء {spins} لفة!',
         
-        // Lucky Wheel
         'wheel.title': 'عجلة الحظ',
         'wheel.spin': 'دوران',
         'wheel.free': 'مجاني',
@@ -356,31 +358,26 @@ const translations = {
         'wheel.jackpotTimer': '{count}/{total}',
         'wheel.streak': '{days} يوم | الأفضل: {best}',
         
-        // Profile
         'profile.title': 'ملفي الشخصي',
         'wallet.totalBalance': 'الرصيد الإجمالي',
         'wallet.myAssets': 'أصولي',
         'wallet.connected': 'متصل:',
         'wallet.disconnected': 'المحفظة غير متصلة',
         
-        // Referral
         'referral.title': 'برنامج الإحالة',
         'referral.yourLink': 'رابط الإحالة',
         'referral.bonusNote': 'احصل على 0.005 TON + 20% من تعدينهم!',
         'referral.milestones': 'مراحل الإحالة',
         
-        // Notifications
         'notifications.title': 'الإشعارات',
         'notifications.clear_read': 'حذف المقروء',
         'notifications.clear_all': 'حذف الكل',
         'notifications.no_notifications': 'لا توجد إشعارات',
         
-        // Messages
         'messages.success': 'نجاح',
         'messages.error': 'خطأ',
         'messages.loading': 'جاري التحميل...',
         
-        // Notifications Messages
         'notif.welcomeBonus': '🎉 مرحباً! حصلت على 0.005 TON!',
         'notif.referralBonus': '🎉 شخص انضم عبر رابطك! حصلت على 0.005 TON!',
         'notif.wheelWin': '🎡 فزت بـ {prize}!',
@@ -395,34 +392,39 @@ const translations = {
         'notif.withdrawApproved': '✅ تمت الموافقة على سحب {amount} {currency}!',
         'notif.withdrawRejected': '❌ تم رفض السحب: {reason}',
         
-        // Admin
         'admin.clickRefresh': 'اضغط تحديث لتحميل الطلبات',
         'admin.refresh': 'تحديث',
         'admin.password': 'أدخل كلمة سر المشرف',
         'admin.wrongPassword': 'كلمة سر خاطئة',
         'admin.noPending': 'لا توجد طلبات معلقة',
         'admin.error': 'خطأ في تحميل الطلبات',
+        'admin.approve': 'موافقة',
+        'admin.reject': 'رفض',
         
-        // Errors
-        'error.insufficientBalance': 'رصيد {currency} غير كافٍ',
-        'error.invalidAddress': 'عنوان {currency} غير صالح',
-        'error.paymentFailed': 'فشل الدفع',
+        'error.insufficient': 'رصيد غير كاف! تحتاج {amount} TON',
+        'error.insufficient.pack': 'رصيد غير كاف! اشتر باقة أو أضف رصيد.',
+        'error.payment': 'فشل الدفع. حاول مرة أخرى.',
         'error.minDeposit': 'الحد الأدنى للإيداع {min} {currency}',
         'error.invalidHash': 'هاش معاملة غير صالح',
         'error.hashUsed': 'هاش المعاملة مستخدم بالفعل',
         'error.enterAmount': 'الرجاء إدخال مبلغ صحيح',
+        'error.invalidAddress': 'عنوان {currency} غير صالح',
         
-        // Pack Purchase
         'pack.buy': 'شراء الباقة',
         'pack.confirm': 'تأكيد شراء {spins} لفة بـ {price} TON؟',
         'pack.telegramPay': 'الدفع عبر نجوم تليجرام',
         'pack.success': '✅ تم شراء {spins} لفة بنجاح!',
-        'pack.insufficient': 'رصيد غير كاف. الدفع عبر تليجرام مطلوب.',
         
-        // Win Popups
+        'autospin.on': 'تشغيل تلقائي',
+        'autospin.off': 'إيقاف تلقائي',
         'win.normal': '🎉 فزت!',
         'win.big': '🌟🌟 فوز كبير! 🌟🌟',
-        'win.jackpot': '🎰🎰🎰 جاكبوت! 🎰🎰🎰'
+        'win.jackpot': '🎰🎰🎰 جاكبوت! 🎰🎰🎰',
+        
+        'table.machine': 'الجهاز',
+        'table.3days': '٣ أيام',
+        'table.7days': '٧ أيام',
+        'table.15days': '١٥ يوماً'
     }
 };
 
@@ -448,98 +450,89 @@ function toggleLanguage() {
     showToast(t('messages.success'), 'success');
 }
 
-// ====== 5. MACHINES DATA ======
+// ====== 5. MACHINES DATA - كاملة (6 مكاين) ======
 const MACHINES = [
     {
         id: 'm1', name: 'Free Miner', nameAr: 'منجم مجاني',
-        description: 'Start mining for free!', descriptionAr: 'ابدأ التعدين مجاناً!',
+        description: 'Start mining for free! Perfect for beginners.',
+        descriptionAr: 'ابدأ التعدين مجاناً! مثالي للمبتدئين.',
         icon: 'fa-gem', color: '#808080', filter: 'free',
         yield: 0.01, interval: 4 * 3600000, cycleText: '4 hours', cycleTextAr: '٤ ساعات',
         hashrate: '10 MH/s', requirements: null,
         plans: [
-            { duration: 3, price: 0, returnPercent: 0, returnAmount: 0, total: 0 },
-            { duration: 7, price: 0, returnPercent: 0, returnAmount: 0, total: 0 },
-            { duration: 15, price: 0, returnPercent: 0, returnAmount: 0, total: 0 }
+            { duration: 3, durationText: '3 days', durationTextAr: '٣ أيام', price: 0, returnPercent: 0, returnAmount: 0, total: 0 },
+            { duration: 7, durationText: '7 days', durationTextAr: '٧ أيام', price: 0, returnPercent: 0, returnAmount: 0, total: 0 },
+            { duration: 15, durationText: '15 days', durationTextAr: '١٥ يوماً', price: 0, returnPercent: 0, returnAmount: 0, total: 0 }
         ]
     },
     {
         id: 'm2', name: 'Turbo v2', nameAr: 'تربو v2',
-        description: 'High-speed ASIC miner. 3x faster!', descriptionAr: 'جهاز عالي السرعة. أسرع بثلاث مرات!',
+        description: 'High-speed ASIC miner. 3x faster!',
+        descriptionAr: 'جهاز عالي السرعة. أسرع بثلاث مرات!',
         icon: 'fa-bolt', color: '#0088cc', filter: 'basic',
         yield: 0.2, interval: 2.5 * 3600000, cycleText: '2.5 hours', cycleTextAr: '٢.٥ ساعة',
         hashrate: '50 MH/s', requirements: null,
         plans: [
-            { duration: 3, price: 5.0, returnPercent: 40, returnAmount: 2.0, total: 7.0 },
-            { duration: 7, price: 10.0, returnPercent: 80, returnAmount: 8.0, total: 18.0 },
-            { duration: 15, price: 15.0, returnPercent: 170, returnAmount: 25.5, total: 40.5 }
+            { duration: 3, durationText: '3 days', durationTextAr: '٣ أيام', price: 5.0, returnPercent: 40, returnAmount: 2.0, total: 7.0 },
+            { duration: 7, durationText: '7 days', durationTextAr: '٧ أيام', price: 10.0, returnPercent: 80, returnAmount: 8.0, total: 18.0 },
+            { duration: 15, durationText: '15 days', durationTextAr: '١٥ يوماً', price: 15.0, returnPercent: 170, returnAmount: 25.5, total: 40.5 }
         ]
     },
     {
         id: 'm3', name: 'Turbo v3', nameAr: 'تربو v3',
-        description: 'Next-gen cooling system. Maximum efficiency!', descriptionAr: 'تبريد متطور. كفاءة قصوى!',
+        description: 'Next-gen cooling system. Maximum efficiency!',
+        descriptionAr: 'تبريد متطور. كفاءة قصوى!',
         icon: 'fa-rocket', color: '#00f2ff', filter: 'pro',
         yield: 0.35, interval: 2 * 3600000, cycleText: '2 hours', cycleTextAr: 'ساعتان',
         hashrate: '120 MH/s', requirements: null,
         plans: [
-            { duration: 3, price: 7.5, returnPercent: 40, returnAmount: 3.0, total: 10.5 },
-            { duration: 7, price: 15.0, returnPercent: 80, returnAmount: 12.0, total: 27.0 },
-            { duration: 15, price: 22.5, returnPercent: 170, returnAmount: 38.25, total: 60.75 }
+            { duration: 3, durationText: '3 days', durationTextAr: '٣ أيام', price: 7.5, returnPercent: 40, returnAmount: 3.0, total: 10.5 },
+            { duration: 7, durationText: '7 days', durationTextAr: '٧ أيام', price: 15.0, returnPercent: 80, returnAmount: 12.0, total: 27.0 },
+            { duration: 15, durationText: '15 days', durationTextAr: '١٥ يوماً', price: 22.5, returnPercent: 170, returnAmount: 38.25, total: 60.75 }
         ]
     },
     {
         id: 'm4', name: 'ASIC Pro', nameAr: 'ASIC برو',
-        description: 'Professional mining rig. Serious power!', descriptionAr: 'جهاز احترافي. قوة هائلة!',
+        description: 'Professional mining rig. Serious power!',
+        descriptionAr: 'جهاز احترافي. قوة هائلة!',
         icon: 'fa-gem', color: '#bc13fe', filter: 'pro',
         yield: 0.5, interval: 3600000, cycleText: '1 hour', cycleTextAr: 'ساعة',
         hashrate: '300 MH/s', requirements: { minEarnings: 5 },
         plans: [
-            { duration: 3, price: 10.0, returnPercent: 40, returnAmount: 4.0, total: 14.0 },
-            { duration: 7, price: 20.0, returnPercent: 80, returnAmount: 16.0, total: 36.0 },
-            { duration: 15, price: 30.0, returnPercent: 170, returnAmount: 51.0, total: 81.0 }
+            { duration: 3, durationText: '3 days', durationTextAr: '٣ أيام', price: 10.0, returnPercent: 40, returnAmount: 4.0, total: 14.0 },
+            { duration: 7, durationText: '7 days', durationTextAr: '٧ أيام', price: 20.0, returnPercent: 80, returnAmount: 16.0, total: 36.0 },
+            { duration: 15, durationText: '15 days', durationTextAr: '١٥ يوماً', price: 30.0, returnPercent: 170, returnAmount: 51.0, total: 81.0 }
         ]
     },
     {
         id: 'm5', name: 'Quantum RIG', nameAr: 'كوانتم ريج',
-        description: 'Quantum computing technology. The future!', descriptionAr: 'تقنية كمومية. مستقبل التعدين!',
+        description: 'Quantum computing technology. The future!',
+        descriptionAr: 'تقنية كمومية. مستقبل التعدين!',
         icon: 'fa-crown', color: '#ffaa00', filter: 'quantum',
         yield: 0.8, interval: 45 * 60 * 1000, cycleText: '45 minutes', cycleTextAr: '٤٥ دقيقة',
         hashrate: '800 MH/s', requirements: { referrals: 3 },
         plans: [
-            { duration: 3, price: 50, returnPercent: 80, returnAmount: 40, total: 90 },
-            { duration: 7, price: 75, returnPercent: 120, returnAmount: 90, total: 165 },
-            { duration: 15, price: 100, returnPercent: 200, returnAmount: 200, total: 300 }
+            { duration: 3, durationText: '3 days', durationTextAr: '٣ أيام', price: 50, returnPercent: 80, returnAmount: 40, total: 90 },
+            { duration: 7, durationText: '7 days', durationTextAr: '٧ أيام', price: 75, returnPercent: 120, returnAmount: 90, total: 165 },
+            { duration: 15, durationText: '15 days', durationTextAr: '١٥ يوماً', price: 100, returnPercent: 200, returnAmount: 200, total: 300 }
         ]
     },
     {
         id: 'm6', name: 'Legendary', nameAr: 'أسطوري',
-        description: 'The ultimate mining machine. Legendary status!', descriptionAr: 'الجهاز الأقوى. مكانة أسطورية!',
+        description: 'The ultimate mining machine. Legendary status!',
+        descriptionAr: 'الجهاز الأقوى. مكانة أسطورية!',
         icon: 'fa-star', color: '#ff4444', filter: 'quantum',
         yield: 1.2, interval: 30 * 60 * 1000, cycleText: '30 minutes', cycleTextAr: '٣٠ دقيقة',
         hashrate: '2 GH/s', requirements: { referrals: 5, minEarnings: 25, streak: 7 },
         plans: [
-            { duration: 3, price: 75, returnPercent: 80, returnAmount: 60, total: 135 },
-            { duration: 7, price: 112.5, returnPercent: 120, returnAmount: 135, total: 247.5 },
-            { duration: 15, price: 150, returnPercent: 200, returnAmount: 300, total: 450 }
+            { duration: 3, durationText: '3 days', durationTextAr: '٣ أيام', price: 75, returnPercent: 80, returnAmount: 60, total: 135 },
+            { duration: 7, durationText: '7 days', durationTextAr: '٧ أيام', price: 112.5, returnPercent: 120, returnAmount: 135, total: 247.5 },
+            { duration: 15, durationText: '15 days', durationTextAr: '١٥ يوماً', price: 150, returnPercent: 200, returnAmount: 300, total: 450 }
         ]
     }
 ];
 
-// ====== 6. ACHIEVEMENTS ======
-const ACHIEVEMENTS = [
-    { id: 'first_claim', name: 'First Blood', nameAr: 'أول تعدين', icon: '🥇', reward: 0.5, condition: 'claims:1' },
-    { id: 'streak_3', name: '3-Day Streak', nameAr: '٣ أيام', icon: '🔥', reward: 0.3, condition: 'streak:3' },
-    { id: 'streak_7', name: '7-Day Streak', nameAr: '٧ أيام', icon: '🔥🔥', reward: 0.7, condition: 'streak:7' },
-    { id: 'streak_30', name: 'Monthly Legend', nameAr: 'أسطورة الشهر', icon: '👑🔥', reward: 2.0, condition: 'streak:30' },
-    { id: 'referrals_1', name: 'Social Starter', nameAr: 'بداية اجتماعية', icon: '👥', reward: 0.2, condition: 'referrals:1' },
-    { id: 'referrals_5', name: 'Social Butterfly', nameAr: 'فراشة اجتماعية', icon: '🦋', reward: 1.0, condition: 'referrals:5' },
-    { id: 'referrals_10', name: 'Community Leader', nameAr: 'قائد المجتمع', icon: '👑👥', reward: 2.5, condition: 'referrals:10' },
-    { id: 'upgrades_1', name: 'First Upgrade', nameAr: 'أول ترقية', icon: '⚡', reward: 0.3, condition: 'upgrades:1' },
-    { id: 'earnings_5', name: 'Crypto Starter', nameAr: 'بداية', icon: '💎', reward: 0.5, condition: 'earnings:5' },
-    { id: 'earnings_25', name: 'Crypto Trader', nameAr: 'متداول', icon: '💎💎', reward: 1.5, condition: 'earnings:25' },
-    { id: 'earnings_100', name: 'Crypto Whale', nameAr: 'حوت', icon: '🐋', reward: 3.0, condition: 'earnings:100' }
-];
-
-// ====== 7. REFERRAL MILESTONES ======
+// ====== 6. REFERRAL MILESTONES ======
 const REFERRAL_MILESTONES = [
     { referrals: 3, reward: 1, unit: 'USDT' },
     { referrals: 10, reward: 5, unit: 'USDT' },
@@ -550,7 +543,7 @@ const REFERRAL_MILESTONES = [
     { referrals: 1000, reward: 1200, unit: 'USDT' }
 ];
 
-// ====== 8. WHEEL PRIZES (16 قطاع مثل الصورة) ======
+// ====== 7. WHEEL PRIZES (16 قطاع - تصميم كازينو) ======
 const WHEEL_PRIZES = [
     { id: 1, type: 'TON', amount: 0.25, color: '#0088cc', weight: 10, icon: '💰', label: '0.25' },
     { id: 2, type: 'TON', amount: 0.5, color: '#0088cc', weight: 9, icon: '💰', label: '0.5' },
@@ -570,40 +563,27 @@ const WHEEL_PRIZES = [
     { id: 16, type: 'JACKPOT', amount: 100, color: '#ff4444', weight: 1, icon: '👑', label: 'JACKPOT', jackpot: true }
 ];
 
-// ====== 9. SLOTS PRIZES ======
+// ====== 8. SLOTS PRIZES ======
 const SLOTS_SYMBOLS = ['🍒', '💎', '💰', '⭐', '👑', '7️⃣', '🎰'];
 
 const SLOTS_PRIZES = [
-    // جائزة صغيرة (30%)
     { symbols: ['🍒', '🍒', '🍒'], amount: 0.25, type: 'TON', icon: '🍒', weight: 30 },
     { symbols: ['🍒', '🍒', '🍒'], amount: 0.25, type: 'USDT', icon: '🍒', weight: 30 },
-    
-    // جائزة متوسطة (25%)
     { symbols: ['💎', '💎', '💎'], amount: 0.5, type: 'TON', icon: '💎', weight: 25 },
     { symbols: ['💎', '💎', '💎'], amount: 0.5, type: 'USDT', icon: '💎', weight: 25 },
-    
-    // جائزة متوسطة كبيرة (20%)
     { symbols: ['💰', '💰', '💰'], amount: 1.0, type: 'TON', icon: '💰', weight: 20 },
     { symbols: ['💰', '💰', '💰'], amount: 1.0, type: 'USDT', icon: '💰', weight: 20 },
-    
-    // جائزة كبيرة (15%)
     { symbols: ['⭐', '⭐', '⭐'], amount: 2.0, type: 'TON', icon: '⭐', weight: 15 },
     { symbols: ['⭐', '⭐', '⭐'], amount: 2.0, type: 'USDT', icon: '⭐', weight: 15 },
-    
-    // جائزة كبيرة جداً (7%)
     { symbols: ['👑', '👑', '👑'], amount: 5.0, type: 'TON', icon: '👑', weight: 7 },
     { symbols: ['👑', '👑', '👑'], amount: 5.0, type: 'USDT', icon: '👑', weight: 7 },
-    
-    // جائزة ضخمة (2.9%)
     { symbols: ['7️⃣', '7️⃣', '7️⃣'], amount: 10.0, type: 'TON', icon: '7️⃣', weight: 2.9 },
     { symbols: ['7️⃣', '7️⃣', '7️⃣'], amount: 10.0, type: 'USDT', icon: '7️⃣', weight: 2.9 },
-    
-    // جاكبوت (0.1%)
     { symbols: ['🎰', '🎰', '🎰'], amount: 100, type: 'TON', icon: '🎰', weight: 0.1, jackpot: true },
     { symbols: ['🎰', '🎰', '🎰'], amount: 100, type: 'USDT', icon: '🎰', weight: 0.1, jackpot: true }
 ];
 
-// ====== 10. FIREBASE ======
+// ====== 9. FIREBASE ======
 let firebaseApp, db;
 try {
     if (typeof firebase !== 'undefined') {
@@ -616,7 +596,7 @@ try {
     console.error("Firebase error:", error);
 }
 
-// ====== 11. USER ID ======
+// ====== 10. USER ID ======
 const userId = tg?.initDataUnsafe?.user?.id?.toString() || 
                localStorage.getItem('ton_user_id') || 
                'user_' + Math.random().toString(36).substr(2, 9);
@@ -626,9 +606,10 @@ const userUsername = tg?.initDataUnsafe?.user?.username || '';
 
 localStorage.setItem('ton_user_id', userId);
 
-// ====== 12. ADMIN ======
+// ====== 11. ADMIN ======
 let isAdmin = userId === CONFIG.TON.ADMIN_ID;
 let adminClickCount = 0, lastAdminClick = 0;
+let currentRejectId = null, currentRejectType = null, currentRejectData = null;
 
 function checkAdminAndAddCrown() {
     if (!isAdmin) return;
@@ -660,7 +641,7 @@ function handleAvatarClick() {
     }
 }
 
-// ====== 13. CACHE KEYS ======
+// ====== 12. CACHE KEYS ======
 const CACHE_KEYS = {
     USER: `user_${userId}`,
     TRANSACTIONS: `transactions_${userId}`,
@@ -674,7 +655,7 @@ const CACHE_KEYS = {
     BACKUPS: 'user_backups'
 };
 
-// ====== 14. USER STATE ======
+// ====== 13. USER STATE ======
 let userData = {
     uid: userId,
     username: userName,
@@ -696,7 +677,6 @@ let userData = {
     upgrades: 0,
     autoClicker: { active: false, expiry: 0, lastAutoClaim: 0 },
     
-    // Wheel data - مع تتبع اللفات المشتراة
     wheel: { 
         spinsToday: 0, 
         lastFreeSpin: 0, 
@@ -705,18 +685,19 @@ let userData = {
         jackpotWon: 0, 
         lastWin: null, 
         spinHistory: [],
-        purchasedSpins: 0, // اللفات المشتراة (تظهر للمستخدم)
+        purchasedSpins: 0,
+        autoSpin: false,
         packs: { p5: 0, p10: 0, p50: 0, p100: 0 }
     },
     
-    // Slots data - مع تتبع اللفات المشتراة
     slots: { 
         spinsToday: 0, 
         lastFreeSpin: 0, 
         totalSpins: 0, 
         lastWin: null, 
         spinHistory: [],
-        purchasedSpins: 0, // اللفات المشتراة (تظهر للمستخدم)
+        purchasedSpins: 0,
+        autoSpin: false,
         packs: { p5: 0, p10: 0, p50: 0, p100: 0 }
     },
     
@@ -733,7 +714,6 @@ let userData = {
     pendingDeposits: [],
     completedDeposits: [],
     transactions: [],
-    achievements: [],
     notifications: [],
     
     language: currentLanguage,
@@ -746,7 +726,7 @@ let userData = {
 
 userData.balance = userData.balances.TON;
 
-// ====== 15. CACHE MANAGEMENT ======
+// ====== 14. CACHE MANAGEMENT ======
 let lastUserLoadTime = 0;
 let lastPricesLoadTime = 0;
 let lastHistoryCheckTime = 0;
@@ -756,7 +736,6 @@ function loadUserFromCache() {
         const cached = localStorage.getItem(CACHE_KEYS.USER);
         if (cached) {
             const data = JSON.parse(cached);
-            // نستخدم البيانات المحلية فوراً (حتى لو قديمة)
             Object.assign(userData, data);
             userData.balance = userData.balances.TON;
             console.log("✅ User loaded from cache");
@@ -769,7 +748,6 @@ function loadUserFromCache() {
 function saveUserToCache() {
     try {
         localStorage.setItem(CACHE_KEYS.USER, JSON.stringify({ ...userData, _timestamp: Date.now() }));
-        // نعمل نسخة احتياطية أيضاً
         backupUserData();
     } catch (e) {}
 }
@@ -802,18 +780,12 @@ function saveLocalNotifications(notes) {
     } catch {}
 }
 
-// نظام النسخ الاحتياطي (آخر 3 نسخ)
 function backupUserData() {
     try {
         const backups = JSON.parse(localStorage.getItem(CACHE_KEYS.BACKUPS) || '[]');
-        backups.unshift({
-            data: userData,
-            timestamp: Date.now()
-        });
-        // نحتفظ بآخر 3 نسخ فقط
+        backups.unshift({ data: userData, timestamp: Date.now() });
         if (backups.length > 3) backups.pop();
         localStorage.setItem(CACHE_KEYS.BACKUPS, JSON.stringify(backups));
-        console.log("💾 Backup created");
     } catch (e) {}
 }
 
@@ -837,7 +809,7 @@ function restoreFromBackup() {
     }
 }
 
-// ====== 16. ON-DEMAND LISTENERS (30 ثانية فقط!) ======
+// ====== 15. ON-DEMAND LISTENERS ======
 let activeListeners = new Map();
 let listenerTimeouts = new Map();
 
@@ -901,12 +873,11 @@ function stopAllListeners() {
     listenerTimeouts.clear();
 }
 
-// ====== 17. LOAD USER DATA (نسخة REFI - آمنة) ======
+// ====== 16. LOAD USER DATA ======
 async function loadUserData(force = false) {
     try {
         console.log("📂 Loading user data for:", userId);
         
-        // ====== 1️⃣ دائماً نستخدم localStorage فوراً ======
         const localData = localStorage.getItem(CACHE_KEYS.USER);
         if (localData) {
             try {
@@ -914,23 +885,19 @@ async function loadUserData(force = false) {
                 Object.assign(userData, parsed);
                 userData.balance = userData.balances.TON;
                 console.log("📦 Using localStorage data immediately");
-                updateUI(); // نحدث الواجهة فوراً
+                updateUI();
             } catch (e) {}
         }
         
-        // ====== 2️⃣ نحاول التحديث من Firebase في الخلفية ======
         if (db && !force) {
             try {
                 const doc = await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).get();
                 
                 if (doc.exists) {
                     const fbData = doc.data();
-                    
-                    // دمج البيانات (نحتفظ بالتغييرات المحلية)
                     Object.assign(userData, fbData);
                     userData.balance = userData.balances.TON;
                     
-                    // دمج المعاملات
                     const localTxs = loadLocalTransactions();
                     const fbTxs = fbData.transactions || [];
                     const txMap = new Map();
@@ -941,7 +908,6 @@ async function loadUserData(force = false) {
                     userData.transactions = Array.from(txMap.values());
                     saveLocalTransactions(userData.transactions);
                     
-                    // دمج الإشعارات
                     const localNotes = loadLocalNotifications();
                     const fbNotes = fbData.notifications || [];
                     const noteMap = new Map();
@@ -949,14 +915,11 @@ async function loadUserData(force = false) {
                     userData.notifications = Array.from(noteMap.values());
                     saveLocalNotifications(userData.notifications);
                     
-                    // حفظ في localStorage
                     saveUserToCache();
                     lastUserLoadTime = Date.now();
-                    
-                    updateUI(); // نحدث مرة أخرى ببيانات Firebase
+                    updateUI();
                     console.log("✅ Updated from Firebase");
                 } else {
-                    // مستخدم جديد
                     if (!localData) {
                         userData.referralCode = generateReferralCode();
                         userData.createdAt = Date.now();
@@ -969,11 +932,9 @@ async function loadUserData(force = false) {
                 }
             } catch (e) {
                 console.error('Firebase error, using cached data only:', e);
-                // حتى لو فشل Firebase، البيانات المحلية موجودة!
             }
         }
         
-        // معالجة الإحالة
         if (hasReferralCode() && !userData.referredBy) await processReferral();
         
         updateNotificationBadge();
@@ -985,26 +946,28 @@ async function loadUserData(force = false) {
     }
 }
 
-// ====== 18. REFERRAL SYSTEM ======
+// ====== 17. REFERRAL SYSTEM ======
 function generateReferralCode() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     return userId.slice(-4) + Array.from({length:6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
 }
 
 function getReferralLink() {
-    return `https://t.me/TONMiningbot/app?startapp=${userData.referralCode || userId}`;
+    return `${CONFIG.APP.BASE_URL}?${CONFIG.APP.REFERRAL_PARAM}=${userData.referralCode || userId}`;
 }
 
 function hasReferralCode() {
     const urlParams = new URLSearchParams(window.location.search);
-    return !!(urlParams.get('startapp') || tg?.initDataUnsafe?.start_param);
+    return !!(urlParams.get(CONFIG.APP.REFERRAL_PARAM) || tg?.initDataUnsafe?.start_param);
 }
 
 async function processReferral() {
     const processed = localStorage.getItem(CACHE_KEYS.REFERRAL_PROCESSED);
     if (processed) return;
     
-    const referralCode = new URLSearchParams(window.location.search).get('startapp') || tg?.initDataUnsafe?.start_param;
+    const urlParams = new URLSearchParams(window.location.search);
+    let referralCode = urlParams.get(CONFIG.APP.REFERRAL_PARAM) || tg?.initDataUnsafe?.start_param;
+    
     if (!referralCode || referralCode === userData.referralCode || userData.referredBy) return;
     
     localStorage.setItem(CACHE_KEYS.REFERRAL_PROCESSED, referralCode);
@@ -1079,7 +1042,7 @@ async function processReferralMiningBonus(referralId, miningAmount) {
     addLocalNotification(t('notif.referralMiningBonus', { amount: bonus.toFixed(4) }), 'success');
 }
 
-// ====== 19. REFERRAL MILESTONES ======
+// ====== 18. REFERRAL MILESTONES ======
 async function checkReferralMilestones() {
     if (!userData.referralMilestonesClaimed) userData.referralMilestonesClaimed = [];
     
@@ -1107,7 +1070,7 @@ async function checkReferralMilestones() {
     saveUserToCache();
 }
 
-// ====== 20. DAILY LOGIN BONUS ======
+// ====== 19. DAILY LOGIN BONUS ======
 function checkDailyLogin() {
     const today = new Date().toDateString();
     if (!userData.dailyLogin) userData.dailyLogin = { lastLogin: null, streak: 0 };
@@ -1133,7 +1096,7 @@ function checkDailyLogin() {
     }
 }
 
-// ====== 21. NOTIFICATION SYSTEM ======
+// ====== 20. NOTIFICATION SYSTEM ======
 let unreadCount = 0;
 
 function addLocalNotification(message, type = 'info') {
@@ -1145,9 +1108,7 @@ function addLocalNotification(message, type = 'info') {
     if (!userData.notifications) userData.notifications = [];
     userData.notifications.unshift(notification);
     
-    if (userData.notifications.length > 50) {
-        userData.notifications = userData.notifications.slice(0, 50);
-    }
+    if (userData.notifications.length > 50) userData.notifications = userData.notifications.slice(0, 50);
     
     saveLocalNotifications(userData.notifications);
     updateNotificationBadge();
@@ -1265,7 +1226,7 @@ function showNotifications() {
     }
 }
 
-// ====== 22. FLOATING NOTIFICATIONS ======
+// ====== 21. FLOATING NOTIFICATIONS ======
 let floatingTimeouts = [];
 
 function showFloatingToast(message, type = 'info') {
@@ -1303,7 +1264,7 @@ function stopFloatingNotifications() {
     floatingTimeouts = [];
 }
 
-// ====== 23. WELCOME STICKER ======
+// ====== 22. WELCOME STICKER ======
 const WELCOME_STICKERS = ['🤝', '🫣', '🥰', '🥳', '💲', '💰', '💸', '💵', '🤪', '😱', '😎', '🤑', '💯', '💖', '✨', '🌟', '⭐', '🔥', '⚡', '💎', '🎁', '🎈', '🎉', '👑', '🚀', '💫'];
 let lastStickerTime = 0;
 const STICKER_COOLDOWN = 12 * 60 * 1000;
@@ -1329,7 +1290,7 @@ function showRandomSticker() {
     lastStickerTime = now;
 }
 
-// ====== 24. PRICES (مع كاش 3 ساعات) ======
+// ====== 23. PRICES ======
 let livePrices = {};
 
 async function loadPrices(force = false) {
@@ -1373,7 +1334,7 @@ function refreshPrices() {
     loadPrices(true);
 }
 
-// ====== 25. UTILITIES ======
+// ====== 24. UTILITIES ======
 function formatAddress(addr) { return addr?.length > 10 ? addr.slice(0,6) + '...' + addr.slice(-4) : addr || ''; }
 function formatTON(amount) { return amount.toFixed(4); }
 function formatNumber(num) {
@@ -1463,7 +1424,6 @@ function animateElement(selector, animation) {
 
 function scrollToTop() { document.querySelector('.main-content')?.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-// ====== 26. HAPTIC FEEDBACK (إرتجاج) ======
 function hapticFeedback(type = 'light') {
     if (tg?.HapticFeedback) {
         if (type === 'light') tg.HapticFeedback.impactOccurred('light');
@@ -1475,9 +1435,7 @@ function hapticFeedback(type = 'light') {
     }
 }
 
-// ====== 27. WIN POPUP (رسائل فوز احترافية) ======
 function showWinPopup(prize, type = 'normal') {
-    // إزالة أي popup سابق
     const existing = document.querySelector('.win-popup');
     if (existing) existing.remove();
     
@@ -1504,16 +1462,12 @@ function showWinPopup(prize, type = 'normal') {
     `;
     
     document.body.appendChild(popup);
-    
-    // تأكيد أن الـ z-index عالي
     popup.style.zIndex = '10000';
     
     setTimeout(() => popup.classList.add('show'), 10);
     
-    // إرتجاج حسب نوع الفوز
     if (type === 'jackpot') {
         hapticFeedback('heavy');
-        // إضافة تأثير فلاش للشاشة
         document.body.style.animation = 'jackpotFlash 0.5s 3';
         setTimeout(() => document.body.style.animation = '', 1500);
     } else if (type === 'big') {
@@ -1528,7 +1482,21 @@ function showWinPopup(prize, type = 'normal') {
     }, 2500);
 }
 
-// ====== 28. MINING MANAGER ======
+function createParticles() {
+    const container = document.querySelector('.miner-particles');
+    if (!container) return;
+    for (let i = 0; i < 10; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.top = Math.random() * 100 + '%';
+        p.style.animationDelay = Math.random() + 's';
+        container.appendChild(p);
+        setTimeout(() => p.remove(), 2000);
+    }
+}
+
+// ====== 25. MINING MANAGER ======
 let miningTimer = null, autoClickerTimer = null;
 
 function startMining() {
@@ -1623,7 +1591,6 @@ async function claim() {
     showWinPopup(`${formatTON(reward)} TON`, 'normal');
     createParticles();
     updateUI();
-    checkAchievements();
     if (db) saveToFirebase();
 }
 
@@ -1638,20 +1605,6 @@ async function addReferralMiningBonus(referrerId, miningAmount) {
         });
         await addNotification(referrerId, t('notif.referralMiningBonus', { amount: bonus.toFixed(4) }), 'success');
     } catch (e) {}
-}
-
-function createParticles() {
-    const container = document.querySelector('.miner-particles');
-    if (!container) return;
-    for (let i = 0; i < 10; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        p.style.left = Math.random() * 100 + '%';
-        p.style.top = Math.random() * 100 + '%';
-        p.style.animationDelay = Math.random() + 's';
-        container.appendChild(p);
-        setTimeout(() => p.remove(), 2000);
-    }
 }
 
 function handleExpiry() {
@@ -1681,11 +1634,10 @@ function addTransaction(type, amount, details = {}) {
     if (userData.transactions.length > 100) userData.transactions = userData.transactions.slice(0, 100);
     
     saveLocalTransactions(userData.transactions);
-    updateActivityFeed();
     return tx;
 }
 
-// ====== 29. AUTO CLICKER ======
+// ====== 26. AUTO CLICKER ======
 function startAutoClicker() {
     if (autoClickerTimer) clearInterval(autoClickerTimer);
     autoClickerTimer = setInterval(async () => {
@@ -1707,7 +1659,7 @@ function stopAutoClicker() {
 
 function buyAutoClicker() {
     if (userData.balances.TON < CONFIG.ECONOMY.AUTO_CLICKER_PRICE) {
-        showToast(t('error.insufficientBalance', { currency: 'TON' }), 'error');
+        showToast(t('error.insufficient', { amount: CONFIG.ECONOMY.AUTO_CLICKER_PRICE }), 'error');
         return;
     }
     userData.balances.TON -= CONFIG.ECONOMY.AUTO_CLICKER_PRICE;
@@ -1723,48 +1675,11 @@ function buyAutoClicker() {
         details: 'Auto Miner purchase (15 days)' 
     });
     startAutoClicker();
-    showToast(t('autoclicker.bought'), 'success');
+    showToast(t('notif.autoClickerBought'), 'success');
     updateUI();
 }
 
-// ====== 30. ACHIEVEMENTS ======
-function checkAchievements() {
-    const newlyUnlocked = [];
-    
-    ACHIEVEMENTS.forEach(ach => {
-        if (userData.achievements.includes(ach.id)) return;
-        
-        let completed = false;
-        const [type, target] = ach.condition.split(':');
-        const val = parseInt(target);
-        
-        switch(type) {
-            case 'claims': completed = userData.claims >= val; break;
-            case 'streak': completed = userData.streak >= val; break;
-            case 'referrals': completed = (userData.referrals?.length || 0) >= val; break;
-            case 'upgrades': completed = (userData.upgrades || 0) >= val; break;
-            case 'earnings': completed = userData.totalEarned >= val; break;
-        }
-        
-        if (completed) {
-            newlyUnlocked.push(ach);
-            userData.achievements.push(ach.id);
-            userData.balances.TON += ach.reward;
-            userData.balance = userData.balances.TON;
-            userData.totalEarned += ach.reward;
-            showToast(`🏆 ${currentLanguage === 'ar' ? ach.nameAr : ach.name} +${ach.reward} TON`, 'success');
-            hapticFeedback('success');
-            createParticles();
-        }
-    });
-    
-    if (newlyUnlocked.length > 0) {
-        saveUserToCache();
-        renderAchievements();
-    }
-}
-
-// ====== 31. TON CONNECT ======
+// ====== 27. TON CONNECT ======
 let tonConnectUI = null, tonWallet = null;
 
 async function initTonConnect() {
@@ -1848,7 +1763,7 @@ async function connectWallet() {
 
 async function disconnectWallet() { if (tonConnectUI) { await tonConnectUI.disconnect(); showToast('Wallet disconnected', 'info'); } }
 
-// ====== 32. UI UPDATE ======
+// ====== 28. UI UPDATE ======
 function updateUI() {
     updateBalance();
     updateMiningStats();
@@ -1895,7 +1810,6 @@ function updateMiningStats() {
     const bestStreak = document.getElementById('bestStreak');
     const miningDays = document.getElementById('miningDays');
     const yourEarnings = document.getElementById('yourEarnings');
-    const achievementsCount = document.getElementById('achievementsCount');
     const totalReferralsStats = document.getElementById('totalReferralsStats');
     const machine = getActiveMachine();
     
@@ -1905,7 +1819,6 @@ function updateMiningStats() {
     if (bestStreak) bestStreak.textContent = userData.longestStreak;
     if (miningDays) miningDays.textContent = Math.floor(userData.claims / 6) || 1;
     if (totalReferralsStats) totalReferralsStats.textContent = userData.referrals?.length || 0;
-    if (achievementsCount) achievementsCount.textContent = `${userData.achievements?.length || 0}/${ACHIEVEMENTS.length}`;
     if (yourEarnings) yourEarnings.textContent = formatTON(userData.totalEarned) + ' TON';
 }
 
@@ -1998,19 +1911,6 @@ function updateReferralPreview() {
     if (userIdEl) userIdEl.textContent = userData.telegramUsername ? `@${userData.telegramUsername}` : `ID: ${userData.uid.slice(-8)}`;
 }
 
-function renderAchievements() {
-    const grid = document.getElementById('achievementsGrid');
-    if (!grid) return;
-    grid.innerHTML = ACHIEVEMENTS.slice(0, 8).map(ach => {
-        const unlocked = userData.achievements?.includes(ach.id);
-        return `<div class="achievement-item-legendary ${unlocked ? 'unlocked' : ''}">
-            <span class="achievement-icon-legendary">${ach.icon}</span>
-            <span class="achievement-name-legendary">${currentLanguage === 'ar' ? ach.nameAr : ach.name}</span>
-            <span class="achievement-reward-legendary">${ach.reward} TON</span>
-        </div>`;
-    }).join('');
-}
-
 function renderAssets() {
     const list = document.getElementById('assetsList');
     if (!list) return;
@@ -2049,28 +1949,28 @@ function updateAutoClickerUI() {
     } else if (statusEl) statusEl.style.display = 'none';
 }
 
-// ====== 33. WHEEL SYSTEM (مثل الصورة بالضبط) ======
+// ====== 29. WHEEL SYSTEM (تصميم كازينو) ======
+let wheelAutoSpinTimer = null;
+
 function showWheelModal() {
     const modal = document.getElementById('wheelModal');
-    if (modal) { 
-        updateWheelUI(); 
-        renderWheelSegments(); 
+    if (modal) {
+        updateWheelUI();
+        renderWheelSegments();
         modal.classList.add('show');
-        
-        // تحديث عرض اللفات المشتراة
         updatePurchasedSpinsDisplay();
+        document.getElementById('wheelBalanceError')?.classList.add('hidden');
     }
 }
 
 function renderWheelSegments() {
-    const wheel = document.getElementById('wheel');
+    const wheel = document.getElementById('wheelCasino');
     if (!wheel) return;
     wheel.innerHTML = '';
     
     const totalSegments = 16;
     const angleStep = 360 / totalSegments;
     
-    // ترتيب الجوائز (نضمن وجود الجاكبوت في قطاع واحد)
     const allPrizes = WHEEL_PRIZES;
     
     allPrizes.forEach((prize, index) => {
@@ -2078,6 +1978,7 @@ function renderWheelSegments() {
         segment.className = 'wheel-segment';
         segment.style.transform = `rotate(${index * angleStep}deg)`;
         segment.style.backgroundColor = prize.color;
+        segment.setAttribute('data-color', prize.type.toLowerCase());
         
         segment.innerHTML = `
             <span class="wheel-icon">${prize.icon}</span>
@@ -2086,14 +1987,6 @@ function renderWheelSegments() {
         
         wheel.appendChild(segment);
     });
-    
-    // إضافة خطوط فاصلة
-    for (let i = 0; i < totalSegments; i++) {
-        const line = document.createElement('div');
-        line.className = 'wheel-divider';
-        line.style.transform = `rotate(${i * angleStep}deg)`;
-        wheel.appendChild(line);
-    }
 }
 
 function updateWheelUI() {
@@ -2101,6 +1994,7 @@ function updateWheelUI() {
     const freeSpinEl = document.getElementById('wheelFreeSpin');
     const jackpotCounterEl = document.getElementById('wheelJackpotCounter');
     const streakDisplay = document.getElementById('wheelStreakDisplay');
+    const purchasedSpinsEl = document.getElementById('wheelModalPurchasedSpins');
     
     if (spinsLeftEl) {
         const left = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - (userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY);
@@ -2136,25 +2030,86 @@ function updateWheelUI() {
         }
     }
     
-    // تحديث عرض اللفات المشتراة
-    updatePurchasedSpinsDisplay();
+    if (purchasedSpinsEl) {
+        const spinCount = purchasedSpinsEl.querySelector('.spin-count');
+        if (spinCount) spinCount.textContent = userData.wheel.purchasedSpins || 0;
+    }
+    
+    const autoSpinCheckbox = document.getElementById('wheelModalAutoSpin');
+    if (autoSpinCheckbox) {
+        autoSpinCheckbox.checked = userData.wheel.autoSpin || false;
+    }
+    
+    const wheelPurchasedSpins = document.getElementById('wheelPurchasedSpins');
+    if (wheelPurchasedSpins) {
+        wheelPurchasedSpins.innerHTML = `${t('casino.yourSpins')}: <span class="spin-count">${userData.wheel.purchasedSpins || 0}</span>`;
+    }
 }
 
 function updatePurchasedSpinsDisplay() {
-    // عرض اللفات المشتراة في واجهة العجلة
-    const wheelSpinsDisplay = document.getElementById('wheelPurchasedSpins');
-    if (wheelSpinsDisplay) {
-        wheelSpinsDisplay.textContent = `${userData.wheel.purchasedSpins || 0} ${t('casino.spinsLeft')}`;
-    }
+    const wheelSpins = document.getElementById('wheelPurchasedSpins');
+    const wheelModalSpins = document.getElementById('wheelModalPurchasedSpins');
+    const slotsSpins = document.getElementById('slotsPurchasedSpins');
+    const slotsModalSpins = document.getElementById('slotsModalPurchasedSpins');
     
-    // عرض اللفات المشتراة في واجهة السلوت
-    const slotsSpinsDisplay = document.getElementById('slotsPurchasedSpins');
-    if (slotsSpinsDisplay) {
-        slotsSpinsDisplay.textContent = `${userData.slots.purchasedSpins || 0} ${t('casino.spinsLeft')}`;
+    if (wheelSpins) {
+        wheelSpins.innerHTML = `${t('casino.yourSpins')}: <span class="spin-count">${userData.wheel.purchasedSpins || 0}</span>`;
+    }
+    if (wheelModalSpins) {
+        const spinCount = wheelModalSpins.querySelector('.spin-count');
+        if (spinCount) spinCount.textContent = userData.wheel.purchasedSpins || 0;
+    }
+    if (slotsSpins) {
+        slotsSpins.innerHTML = `${t('casino.yourSpins')}: <span class="spin-count">${userData.slots.purchasedSpins || 0}</span>`;
+    }
+    if (slotsModalSpins) {
+        const spinCount = slotsModalSpins.querySelector('.spin-count');
+        if (spinCount) spinCount.textContent = userData.slots.purchasedSpins || 0;
     }
 }
 
-// ====== 34. WHEEL PACKS (شراء فقط عبر تليجرام) ======
+function toggleWheelAutoSpin() {
+    const checkbox = document.getElementById('wheelModalAutoSpin');
+    if (checkbox) {
+        userData.wheel.autoSpin = checkbox.checked;
+        saveUserToCache();
+        
+        if (userData.wheel.autoSpin) {
+            startWheelAutoSpin();
+        } else {
+            stopWheelAutoSpin();
+        }
+    }
+}
+
+function startWheelAutoSpin() {
+    if (wheelAutoSpinTimer) clearInterval(wheelAutoSpinTimer);
+    
+    wheelAutoSpinTimer = setInterval(() => {
+        if (!userData.wheel.autoSpin) {
+            stopWheelAutoSpin();
+            return;
+        }
+        
+        if (userData.wheel.purchasedSpins > 0) {
+            spinWheel(false);
+        } else {
+            userData.wheel.autoSpin = false;
+            const checkbox = document.getElementById('wheelModalAutoSpin');
+            if (checkbox) checkbox.checked = false;
+            stopWheelAutoSpin();
+            showToast('Auto Spin stopped: No spins left', 'info');
+        }
+    }, 4000);
+}
+
+function stopWheelAutoSpin() {
+    if (wheelAutoSpinTimer) {
+        clearInterval(wheelAutoSpinTimer);
+        wheelAutoSpinTimer = null;
+    }
+}
+
 async function buyWheelPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -2167,12 +2122,10 @@ async function buyWheelPack(pack) {
     
     const totalSpins = spins + bonus;
     
-    // تأكيد الشراء
     if (!confirm(t('pack.confirm', { spins: totalSpins, price }))) {
         return;
     }
     
-    // الدفع عبر تليجرام فقط (ليس من الرصيد الداخلي)
     if (!tg?.pay) {
         showToast(t('pack.telegramPay'), 'error');
         return;
@@ -2181,17 +2134,11 @@ async function buyWheelPack(pack) {
     try {
         showToast(t('messages.loading'), 'info');
         
-        // محاولة الدفع عبر تليجرام
         const result = await tg.pay(price.toString());
         
         if (result.success) {
-            // إضافة اللفات المشتراة
             if (!userData.wheel.purchasedSpins) userData.wheel.purchasedSpins = 0;
             userData.wheel.purchasedSpins += totalSpins;
-            
-            // تسجيل في الباقات أيضاً
-            if (!userData.wheel.packs) userData.wheel.packs = { p5: 0, p10: 0, p50: 0, p100: 0 };
-            userData.wheel.packs[pack] += totalSpins;
             
             addTransaction('wheel_pack', price, { 
                 currency: 'TON', 
@@ -2203,20 +2150,19 @@ async function buyWheelPack(pack) {
             updatePurchasedSpinsDisplay();
             updateUI();
         } else {
-            showToast(t('error.paymentFailed'), 'error');
+            showToast(t('error.payment'), 'error');
         }
     } catch (e) {
         console.error("Payment error:", e);
-        showToast(t('error.paymentFailed'), 'error');
+        showToast(t('error.payment'), 'error');
     }
 }
 
 async function spinWheel(isFree = false) {
-    // التحقق من وجود لفات مشتراة (إذا لم تكن لفة مجانية)
-    let canSpin = false;
+    const errorEl = document.getElementById('wheelBalanceError');
+    if (errorEl) errorEl.classList.add('hidden');
     
     if (isFree) {
-        // لفة مجانية: نتحقق من الوقت
         const now = Date.now();
         if (now < userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL) {
             const left = (userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL) - now;
@@ -2225,27 +2171,27 @@ async function spinWheel(isFree = false) {
             showToast(t('wheel.wait', { time: `${h}h ${m}m` }), 'warning');
             return;
         }
-        canSpin = true;
         userData.wheel.lastFreeSpin = now;
     } else {
-        // لفة مدفوعة: نستخدم اللفات المشتراة أولاً
         if (userData.wheel.purchasedSpins > 0) {
             userData.wheel.purchasedSpins--;
-            canSpin = true;
         } else {
-            // إذا لم يكن لديه لفات مشتراة، لا يمكنه اللعب
-            showToast(t('pack.insufficient'), 'error');
-            return;
+            if (userData.balances.TON >= CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
+                userData.balances.TON -= CONFIG.ECONOMY.WHEEL_SPIN_PRICE;
+                userData.balance = userData.balances.TON;
+            } else {
+                if (errorEl) errorEl.classList.remove('hidden');
+                showToast(t('error.insufficient', { amount: CONFIG.ECONOMY.WHEEL_SPIN_PRICE }), 'error');
+                return;
+            }
         }
     }
-    
-    if (!canSpin) return;
     
     userData.wheel.totalSpins++;
     userData.wheel.jackpotCounter++;
     userData.wheel.spinHistory.push({ timestamp: Date.now(), isFree });
     
-    const wheel = document.getElementById('wheel');
+    const wheel = document.getElementById('wheelCasino');
     if (wheel) {
         const spins = 5 + Math.floor(Math.random() * 5);
         wheel.style.transition = 'transform 3s cubic-bezier(0.17, 0.67, 0.83, 0.67)';
@@ -2257,6 +2203,10 @@ async function spinWheel(isFree = false) {
     setTimeout(() => {
         const prize = getRandomWheelPrize();
         awardWheelPrize(prize, isFree);
+        
+        if (userData.wheel.autoSpin && !isFree) {
+            setTimeout(() => spinWheel(false), 2000);
+        }
     }, 3000);
     
     saveUserToCache();
@@ -2304,35 +2254,32 @@ function awardWheelPrize(prize, isFree = false) {
         userData.wheel.jackpotWon++;
     }
     
-    if (prize.type !== 'NOTHING') {
-        if (winType === 'jackpot') {
-            showToast(t('notif.wheelJackpot', { amount: prize.amount }), 'success');
-            showWinPopup(prizeText, 'jackpot');
-        } else if (winType === 'big') {
-            showToast(t('wheel.bigwin', { prize: prizeText }), 'success');
-            showWinPopup(prizeText, 'big');
-        } else {
-            showToast(t('wheel.win', { prize: prizeText }), 'success');
-            showWinPopup(prizeText, 'normal');
-        }
+    if (winType === 'jackpot') {
+        showToast(t('notif.wheelJackpot', { amount: prize.amount }), 'success');
+        showWinPopup(prizeText, 'jackpot');
+    } else if (winType === 'big') {
+        showToast(t('wheel.bigwin', { prize: prizeText }), 'success');
+        showWinPopup(prizeText, 'big');
     } else {
-        showToast(t('wheel.goodLuck'), 'info');
+        showToast(t('wheel.win', { prize: prizeText }), 'success');
+        showWinPopup(prizeText, 'normal');
     }
     
     saveUserToCache();
     updateUI();
 }
 
-// ====== 35. SLOTS SYSTEM ======
+// ====== 30. SLOTS SYSTEM ======
+let slotsAutoSpinTimer = null;
+
 function showSlotsModal() {
     const modal = document.getElementById('slotsModal');
-    if (modal) { 
-        updateSlotsUI(); 
-        renderSlots(); 
+    if (modal) {
+        updateSlotsUI();
+        renderSlots();
         modal.classList.add('show');
-        
-        // تحديث عرض اللفات المشتراة
         updatePurchasedSpinsDisplay();
+        document.getElementById('slotsBalanceError')?.classList.add('hidden');
     }
 }
 
@@ -2354,26 +2301,81 @@ function renderSlots() {
 
 function updateSlotsUI() {
     const freeSpinEl = document.getElementById('slotsFreeSpin');
-    if (!freeSpinEl) return;
+    const purchasedSpinsEl = document.getElementById('slotsModalPurchasedSpins');
     
-    const now = Date.now();
-    const next = userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
-    if (now < next) {
-        const left = next - now;
-        const h = Math.floor(left / 3600000);
-        const m = Math.floor((left % 3600000) / 60000);
-        freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${h}h ${m}m`;
-        freeSpinEl.classList.add('disabled');
-    } else {
-        freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> ${t('slots.free')}`;
-        freeSpinEl.classList.remove('disabled');
+    if (freeSpinEl) {
+        const now = Date.now();
+        const next = userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
+        if (now < next) {
+            const left = next - now;
+            const h = Math.floor(left / 3600000);
+            const m = Math.floor((left % 3600000) / 60000);
+            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${h}h ${m}m`;
+            freeSpinEl.classList.add('disabled');
+        } else {
+            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> ${t('slots.free')}`;
+            freeSpinEl.classList.remove('disabled');
+        }
     }
     
-    // تحديث عرض اللفات المشتراة
-    updatePurchasedSpinsDisplay();
+    if (purchasedSpinsEl) {
+        const spinCount = purchasedSpinsEl.querySelector('.spin-count');
+        if (spinCount) spinCount.textContent = userData.slots.purchasedSpins || 0;
+    }
+    
+    const autoSpinCheckbox = document.getElementById('slotsModalAutoSpin');
+    if (autoSpinCheckbox) {
+        autoSpinCheckbox.checked = userData.slots.autoSpin || false;
+    }
+    
+    const slotsPurchasedSpins = document.getElementById('slotsPurchasedSpins');
+    if (slotsPurchasedSpins) {
+        slotsPurchasedSpins.innerHTML = `${t('casino.yourSpins')}: <span class="spin-count">${userData.slots.purchasedSpins || 0}</span>`;
+    }
 }
 
-// ====== 36. SLOTS PACKS (شراء فقط عبر تليجرام) ======
+function toggleSlotsAutoSpin() {
+    const checkbox = document.getElementById('slotsModalAutoSpin');
+    if (checkbox) {
+        userData.slots.autoSpin = checkbox.checked;
+        saveUserToCache();
+        
+        if (userData.slots.autoSpin) {
+            startSlotsAutoSpin();
+        } else {
+            stopSlotsAutoSpin();
+        }
+    }
+}
+
+function startSlotsAutoSpin() {
+    if (slotsAutoSpinTimer) clearInterval(slotsAutoSpinTimer);
+    
+    slotsAutoSpinTimer = setInterval(() => {
+        if (!userData.slots.autoSpin) {
+            stopSlotsAutoSpin();
+            return;
+        }
+        
+        if (userData.slots.purchasedSpins > 0) {
+            spinSlots(false, false);
+        } else {
+            userData.slots.autoSpin = false;
+            const checkbox = document.getElementById('slotsModalAutoSpin');
+            if (checkbox) checkbox.checked = false;
+            stopSlotsAutoSpin();
+            showToast('Auto Spin stopped: No spins left', 'info');
+        }
+    }, 3000);
+}
+
+function stopSlotsAutoSpin() {
+    if (slotsAutoSpinTimer) {
+        clearInterval(slotsAutoSpinTimer);
+        slotsAutoSpinTimer = null;
+    }
+}
+
 async function buySlotsPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -2386,12 +2388,10 @@ async function buySlotsPack(pack) {
     
     const totalSpins = spins + bonus;
     
-    // تأكيد الشراء
     if (!confirm(t('pack.confirm', { spins: totalSpins, price }))) {
         return;
     }
     
-    // الدفع عبر تليجرام فقط (ليس من الرصيد الداخلي)
     if (!tg?.pay) {
         showToast(t('pack.telegramPay'), 'error');
         return;
@@ -2400,17 +2400,11 @@ async function buySlotsPack(pack) {
     try {
         showToast(t('messages.loading'), 'info');
         
-        // محاولة الدفع عبر تليجرام
         const result = await tg.pay(price.toString());
         
         if (result.success) {
-            // إضافة اللفات المشتراة
             if (!userData.slots.purchasedSpins) userData.slots.purchasedSpins = 0;
             userData.slots.purchasedSpins += totalSpins;
-            
-            // تسجيل في الباقات أيضاً
-            if (!userData.slots.packs) userData.slots.packs = { p5: 0, p10: 0, p50: 0, p100: 0 };
-            userData.slots.packs[pack] += totalSpins;
             
             addTransaction('slots_pack', price, { 
                 currency: 'TON', 
@@ -2422,20 +2416,21 @@ async function buySlotsPack(pack) {
             updatePurchasedSpinsDisplay();
             updateUI();
         } else {
-            showToast(t('error.paymentFailed'), 'error');
+            showToast(t('error.payment'), 'error');
         }
     } catch (e) {
         console.error("Payment error:", e);
-        showToast(t('error.paymentFailed'), 'error');
+        showToast(t('error.payment'), 'error');
     }
 }
 
 async function spinSlots(isFree = false, isTurbo = false) {
-    // التحقق من وجود لفات مشتراة (إذا لم تكن لفة مجانية)
-    let canSpin = false;
+    const errorEl = document.getElementById('slotsBalanceError');
+    if (errorEl) errorEl.classList.add('hidden');
+    
+    const price = isTurbo ? CONFIG.ECONOMY.SLOTS_TURBO_PRICE : CONFIG.ECONOMY.SLOTS_SPIN_PRICE;
     
     if (isFree) {
-        // لفة مجانية: نتحقق من الوقت
         const now = Date.now();
         if (now < userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL) {
             const left = (userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL) - now;
@@ -2444,21 +2439,21 @@ async function spinSlots(isFree = false, isTurbo = false) {
             showToast(t('slots.wait', { time: `${h}h ${m}m` }), 'warning');
             return;
         }
-        canSpin = true;
         userData.slots.lastFreeSpin = now;
     } else {
-        // لفة مدفوعة: نستخدم اللفات المشتراة أولاً
         if (userData.slots.purchasedSpins > 0) {
             userData.slots.purchasedSpins--;
-            canSpin = true;
         } else {
-            // إذا لم يكن لديه لفات مشتراة، لا يمكنه اللعب
-            showToast(t('pack.insufficient'), 'error');
-            return;
+            if (userData.balances.TON >= price) {
+                userData.balances.TON -= price;
+                userData.balance = userData.balances.TON;
+            } else {
+                if (errorEl) errorEl.classList.remove('hidden');
+                showToast(t('error.insufficient', { amount: price }), 'error');
+                return;
+            }
         }
     }
-    
-    if (!canSpin) return;
     
     userData.slots.totalSpins++;
     userData.slots.spinHistory.push({ timestamp: Date.now(), isFree, isTurbo });
@@ -2466,13 +2461,15 @@ async function spinSlots(isFree = false, isTurbo = false) {
     const duration = isTurbo ? 1000 : 2000;
     const prize = await animateSlots(duration);
     
-    // 70% فرصة فوز
     if (Math.random() < CONFIG.ECONOMY.SLOTS_WIN_RATE) {
         awardSlotsPrize(prize);
     } else {
-        // لا فوز
         showToast('Better luck next time!', 'info');
         hapticFeedback('light');
+    }
+    
+    if (userData.slots.autoSpin && !isFree) {
+        setTimeout(() => spinSlots(false, isTurbo), 2000);
     }
     
     saveUserToCache();
@@ -2500,7 +2497,6 @@ async function animateSlots(duration) {
             } else {
                 reels.forEach(reel => reel.style.transform = 'translateY(0)');
                 
-                // اختيار جائزة عشوائية
                 const rand = Math.random() * 100;
                 let cumulative = 0;
                 let selectedPrize = SLOTS_PRIZES[0];
@@ -2551,7 +2547,7 @@ function awardSlotsPrize(prize) {
     saveUserToCache();
 }
 
-// ====== 37. MARKET FUNCTIONS ======
+// ====== 31. MARKET FUNCTIONS ======
 function renderMarket() {
     const showcase = document.getElementById('machinesShowcase');
     if (!showcase) return;
@@ -2574,7 +2570,7 @@ function renderMarket() {
                 <div class="showcase-plans">
                     ${m.plans.map((p, idx) => 
                         `<div class="plan-card-mini ${p.price === 0 ? 'free' : ''}" onclick="selectPlan('${m.id}', ${idx})">
-                            <div class="duration">${p.duration} ${currentLanguage === 'ar' ? 'أيام' : 'days'}</div>
+                            <div class="duration">${p.durationText || p.duration + ' days'}</div>
                             <div class="price">${p.price === 0 ? 'FREE' : p.price + ' TON'}</div>
                             ${p.price > 0 ? `<div class="return">+${p.returnAmount} TON</div>` : ''}
                         </div>`
@@ -2594,7 +2590,7 @@ function checkRequirements(m) {
     return true;
 }
 
-// ====== 38. PAYMENT SYSTEM ======
+// ====== 32. PAYMENT SYSTEM ======
 let currentPaymentMethod = 'balance', currentPayment = null;
 
 function switchPaymentMethod(method) {
@@ -2634,7 +2630,7 @@ function openPaymentModal(machine, planIndex) {
     const plan = machine.plans[planIndex];
     document.getElementById('paymentMachineIcon').innerHTML = `<i class="fas ${machine.icon}" style="color: ${machine.color};"></i>`;
     document.getElementById('paymentMachineName').textContent = machine.name;
-    document.getElementById('paymentDuration').textContent = plan.duration + ' days';
+    document.getElementById('paymentDuration').textContent = plan.durationText || plan.duration + ' days';
     document.getElementById('paymentPrice').textContent = plan.price + ' TON';
     document.getElementById('paymentReturn').textContent = `${plan.returnAmount} TON (${plan.returnPercent}%)`;
     document.getElementById('paymentTotal').textContent = plan.total + ' TON';
@@ -2657,7 +2653,6 @@ function activateMachine(machineId, planIndex) {
     showToast(`${machine.name} activated!`, 'success');
     hapticFeedback('success');
     updateUI();
-    checkAchievements();
     if (db) saveToFirebase();
 }
 
@@ -2671,7 +2666,7 @@ function rentWithBalance(machineId, planIndex) {
     userData.balances.TON -= plan.price;
     userData.balance = userData.balances.TON;
     activateMachine(machineId, planIndex);
-    addTransaction('rental', plan.price, { machine: machine.name, plan: plan.duration + ' days', currency: 'TON' });
+    addTransaction('rental', plan.price, { machine: machine.name, plan: plan.durationText || plan.duration + ' days', currency: 'TON' });
     showToast(`✅ ${machine.name} rented!`, 'success');
     saveUserToCache(); 
     updateUI(); 
@@ -2702,7 +2697,7 @@ async function confirmWalletPayment() {
             closeModal('paymentModal');
             addTransaction('rental', plan.price, { 
                 machine: machine.name, 
-                plan: plan.duration + ' days', 
+                plan: plan.durationText || plan.duration + ' days', 
                 method: 'wallet', 
                 currency: 'TON' 
             });
@@ -2710,7 +2705,7 @@ async function confirmWalletPayment() {
     } catch (e) { showToast('Payment failed', 'error'); }
 }
 
-// ====== 39. SWAP SYSTEM ======
+// ====== 33. SWAP SYSTEM (بدون BNB) ======
 let swapMode = 'from', swapFromCurrency = 'TON', swapToCurrency = 'USDT';
 
 function showSwapModal() {
@@ -2733,7 +2728,7 @@ function updateSwapBalances() {
 function showCurrencySelector(type) {
     swapMode = type;
     const list = document.getElementById('currencyList');
-    list.innerHTML = CONFIG.ALL_ASSETS.map(a => 
+    list.innerHTML = CONFIG.SWAP_CURRENCIES.map(a => 
         `<div class="currency-list-item" onclick="selectCurrency('${a.symbol}')">
             <img src="${CONFIG.CMC_ICONS[a.symbol]}" alt="${a.symbol}">
             <div class="currency-info"><h4>${a.name}</h4><p>${a.symbol}</p></div>
@@ -2814,13 +2809,18 @@ function confirmSwap() {
     });
     
     saveUserToCache();
-    showToast(`✅ Swapped ${formatBalance(from, swapFromCurrency)} ${swapFromCurrency} to ${formatBalance(to, swapToCurrency)} ${swapToCurrency}`, 'success');
+    showToast(t('success.swapCompleted', { 
+        fromAmount: formatBalance(from, swapFromCurrency),
+        fromCurrency: swapFromCurrency,
+        toAmount: formatBalance(to, swapToCurrency),
+        toCurrency: swapToCurrency
+    }), 'success');
     closeModal('swapModal');
     updateUI();
     renderAssets();
 }
 
-// ====== 40. DEPOSIT FUNCTIONS (مع Firebase) ======
+// ====== 34. DEPOSIT FUNCTIONS ======
 let selectedDepositCurrency = 'TON';
 
 function showDepositModal() {
@@ -2892,7 +2892,7 @@ function validateDepositInput() {
 
 function copyDepositAddress() {
     navigator.clipboard.writeText(document.getElementById('depositAddress').textContent);
-    showToast('Address copied', 'success');
+    showToast(t('success.addressCopied'), 'success');
 }
 
 async function submitDeposit() {
@@ -2919,14 +2919,12 @@ async function submitDeposit() {
     
     if (db) {
         try {
-            // حفظ في Firebase Collection
             const docRef = await db.collection(CONFIG.COLLECTIONS.DEPOSITS).add({ 
                 ...deposit, 
                 timestamp: firebase.firestore.FieldValue.serverTimestamp() 
             });
             deposit.firebaseId = docRef.id;
             
-            // تحديث في localStorage
             const allTxs = loadLocalTransactions();
             const txIndex = allTxs.findIndex(t => t.id === deposit.id);
             if (txIndex !== -1) {
@@ -2934,7 +2932,6 @@ async function submitDeposit() {
                 saveLocalTransactions(allTxs);
             }
             
-            // بدء مستمع (30 ثانية)
             startOnDemandListener(CONFIG.COLLECTIONS.DEPOSITS, docRef.id, (data) => {
                 if (data.status === 'approved') {
                     userData.balances[cur] = (userData.balances[cur] || 0) + amt;
@@ -2947,7 +2944,6 @@ async function submitDeposit() {
                     showToast(t('notif.depositApproved', { amount: amt, currency: cur }), 'success');
                     updateUI();
                     
-                    // إضافة إشعار للمستخدم
                     addLocalNotification(t('notif.depositApproved', { amount: amt, currency: cur }), 'success');
                     
                 } else if (data.status === 'rejected') {
@@ -2959,7 +2955,6 @@ async function submitDeposit() {
                 }
             }, CONFIG.CACHE.LISTENER_TTL);
             
-            // إشعار للمشرف
             await addNotification(CONFIG.TON.ADMIN_ID, `💰 New deposit request: ${amt} ${cur} from ${userName}`, 'info');
             
         } catch (e) {
@@ -2972,11 +2967,10 @@ async function submitDeposit() {
     document.getElementById('depositAmount').value = '';
     document.getElementById('depositTxHash').value = '';
     
-    // إضافة المعاملة محلياً
     addTransaction('deposit', amt, { currency: cur, txHash: hash, status: 'pending' });
 }
 
-// ====== 41. WITHDRAW FUNCTIONS (مع Firebase) ======
+// ====== 35. WITHDRAW FUNCTIONS ======
 let selectedWithdrawCurrency = 'TON';
 
 function showWithdrawModal() {
@@ -3076,7 +3070,6 @@ async function submitWithdraw() {
     
     const fee = CONFIG.WITHDRAW_FEES[cur];
     
-    // خصم الرصيد فوراً
     userData.balances[cur] -= amt;
     if (fee && fee.feeCurrency !== cur) {
         userData.balances[fee.feeCurrency] -= fee.fee;
@@ -3103,14 +3096,12 @@ async function submitWithdraw() {
     
     if (db) {
         try {
-            // حفظ في Firebase Collection
             const docRef = await db.collection(CONFIG.COLLECTIONS.WITHDRAWALS).add({ 
                 ...withdraw, 
                 timestamp: firebase.firestore.FieldValue.serverTimestamp() 
             });
             withdraw.firebaseId = docRef.id;
             
-            // بدء مستمع (30 ثانية)
             startOnDemandListener(CONFIG.COLLECTIONS.WITHDRAWALS, docRef.id, (data) => {
                 if (data.status === 'approved') {
                     userData.pendingWithdrawals = userData.pendingWithdrawals.filter(w => w.id !== withdraw.id);
@@ -3122,7 +3113,6 @@ async function submitWithdraw() {
                     addLocalNotification(t('notif.withdrawApproved', { amount: amt, currency: cur }), 'success');
                     
                 } else if (data.status === 'rejected') {
-                    // إعادة الرصيد في حالة الرفض
                     userData.balances[cur] += amt;
                     if (fee && fee.feeCurrency !== cur) {
                         userData.balances[fee.feeCurrency] += fee.fee;
@@ -3138,7 +3128,6 @@ async function submitWithdraw() {
                 }
             }, CONFIG.CACHE.LISTENER_TTL);
             
-            // إشعار للمشرف
             await addNotification(CONFIG.TON.ADMIN_ID, `💸 New withdrawal request: ${amt} ${cur} from ${userName}`, 'info');
             
         } catch (e) {
@@ -3152,17 +3141,15 @@ async function submitWithdraw() {
     document.getElementById('withdrawAmount').value = '';
     document.getElementById('withdrawAddress').value = '';
     
-    // إضافة المعاملة محلياً
     addTransaction('withdraw', amt, { currency: cur, address: addr, status: 'pending' });
 }
 
-// ====== 42. HISTORY FUNCTIONS ======
+// ====== 36. HISTORY FUNCTIONS ======
 let currentHistoryFilter = 'all';
 
 function showHistory() {
     document.getElementById('historyModal').classList.add('show');
     renderHistory('all');
-    // التحقق من الطلبات المعلقة عند فتح التاريخ فقط
     checkPendingTransactions();
 }
 
@@ -3236,7 +3223,6 @@ async function checkPendingTransactions() {
     
     console.log("🔍 Checking pending transactions...");
     
-    // التحقق من الإيداعات المعلقة
     for (const d of userData.pendingDeposits?.filter(d => d.firebaseId) || []) {
         try {
             const doc = await db.collection(CONFIG.COLLECTIONS.DEPOSITS).doc(d.firebaseId).get();
@@ -3250,7 +3236,6 @@ async function checkPendingTransactions() {
                     if (d.currency === 'TON') userData.balance = userData.balances.TON;
                     showToast(t('notif.depositApproved', { amount: d.amount, currency: d.currency }), 'success');
                     
-                    // تحديث المعاملة المحلية
                     const allTxs = loadLocalTransactions();
                     const txIndex = allTxs.findIndex(t => t.id === d.id);
                     if (txIndex !== -1) {
@@ -3262,7 +3247,6 @@ async function checkPendingTransactions() {
         } catch (e) {}
     }
     
-    // التحقق من السحوبات المعلقة
     for (const w of userData.pendingWithdrawals?.filter(w => w.firebaseId) || []) {
         try {
             const doc = await db.collection(CONFIG.COLLECTIONS.WITHDRAWALS).doc(w.firebaseId).get();
@@ -3274,7 +3258,6 @@ async function checkPendingTransactions() {
                     userData.completedWithdrawals.push({ ...w, status: 'approved' });
                     showToast(t('notif.withdrawApproved', { amount: w.amount, currency: w.currency }), 'success');
                     
-                    // تحديث المعاملة المحلية
                     const allTxs = loadLocalTransactions();
                     const txIndex = allTxs.findIndex(t => t.id === w.id);
                     if (txIndex !== -1) {
@@ -3283,7 +3266,6 @@ async function checkPendingTransactions() {
                     }
                     
                 } else if (data.status === 'rejected') {
-                    // إعادة الرصيد في حالة الرفض
                     userData.balances[w.currency] += w.amount;
                     if (w.fee && w.feeCurrency !== w.currency) {
                         userData.balances[w.feeCurrency] += w.fee;
@@ -3292,7 +3274,6 @@ async function checkPendingTransactions() {
                     
                     showToast(t('notif.withdrawRejected', { reason: data.reason || 'Unknown' }), 'error');
                     
-                    // تحديث المعاملة المحلية
                     const allTxs = loadLocalTransactions();
                     const txIndex = allTxs.findIndex(t => t.id === w.id);
                     if (txIndex !== -1) {
@@ -3315,7 +3296,7 @@ function refreshHistory() {
     checkPendingTransactions().then(() => renderHistory(currentHistoryFilter)); 
 }
 
-// ====== 43. LEADERBOARD ======
+// ====== 37. LEADERBOARD ======
 let leaderboardCache = { data: null, timestamp: 0 };
 
 async function updateLeaderboard() {
@@ -3373,7 +3354,7 @@ function renderLeaderboard(data) {
     el.innerHTML = html;
 }
 
-// ====== 44. REFERRAL DETAILS ======
+// ====== 38. REFERRAL DETAILS ======
 function showReferralDetails() { showPage('profile'); }
 
 function renderReferralMilestones() {
@@ -3411,10 +3392,10 @@ function renderReferralTree() {
 
 function copyReferralLink() {
     navigator.clipboard.writeText(getReferralLink());
-    showToast('Referral link copied', 'success');
+    showToast(t('success.referralCopied'), 'success');
 }
 
-// ====== 45. PAGE NAVIGATION ======
+// ====== 39. PAGE NAVIGATION ======
 let currentPage = 'mining';
 
 function showPage(page) {
@@ -3426,7 +3407,6 @@ function showPage(page) {
     
     if (page === 'market') renderMarket();
     if (page === 'profile') { 
-        renderAchievements(); 
         updateLeaderboard(); 
         renderReferralMilestones(); 
         renderReferralTree(); 
@@ -3464,7 +3444,7 @@ function updateChart() {
     ).join('');
 }
 
-// ====== 46. SAVE TO FIREBASE ======
+// ====== 40. SAVE TO FIREBASE ======
 async function saveToFirebase() {
     if (!db) return;
     try {
@@ -3489,14 +3469,13 @@ async function saveToFirebase() {
             autoClicker: userData.autoClicker,
             wheel: userData.wheel,
             slots: userData.slots,
-            achievements: userData.achievements,
             dailyLogin: userData.dailyLogin,
             lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
         }, { merge: true });
     } catch (e) {}
 }
 
-// ====== 47. MODAL FUNCTIONS ======
+// ====== 41. MODAL FUNCTIONS ======
 function closeModal(id) {
     const modal = document.getElementById(id);
     if (!modal) return;
@@ -3513,20 +3492,20 @@ function closeModal(id) {
         document.getElementById('withdrawAddress').value = ''; 
     }
     if (id === 'wheelModal') { 
-        const w = document.getElementById('wheel'); 
+        const w = document.getElementById('wheelCasino'); 
         if (w) { w.style.transition = ''; w.style.transform = 'rotate(0deg)'; } 
     }
     if (id === 'slotsModal') { renderSlots(); }
 }
 
 function hideAllModals() {
-    ['paymentModal','depositModal','withdrawModal','historyModal','notificationsModal','adminModal','swapModal','currencySelectorModal','wheelModal','slotsModal'].forEach(id => {
+    ['paymentModal','depositModal','withdrawModal','historyModal','notificationsModal','adminModal','swapModal','currencySelectorModal','wheelModal','slotsModal','rejectModal'].forEach(id => {
         const m = document.getElementById(id);
         if (m) m.classList.remove('show');
     });
 }
 
-// ====== 48. FILTER MARKET ======
+// ====== 42. FILTER MARKET ======
 function filterMarket(filter) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     event.target.classList.add('active');
@@ -3537,7 +3516,7 @@ function filterMarket(filter) {
     });
 }
 
-// ====== 49. ADMIN FUNCTIONS (مع Firebase Collections) ======
+// ====== 43. ADMIN FUNCTIONS ======
 let currentAdminTab = 'withdrawals';
 
 function showAdminPanel() {
@@ -3570,9 +3549,7 @@ async function loadAdminCounts() {
         ]);
         document.getElementById('pendingDepositsCount').textContent = d.size;
         document.getElementById('pendingWithdrawalsCount').textContent = w.size;
-    } catch (e) {
-        console.error("Error loading counts:", e);
-    }
+    } catch (e) {}
 }
 
 async function refreshAdminPanel() {
@@ -3617,8 +3594,8 @@ async function refreshAdminPanel() {
                         <div class="admin-tx-row"><span class="admin-tx-label">Time:</span><span class="admin-tx-value">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</span></div>
                     </div>
                     <div class="admin-tx-actions">
-                        <button class="admin-approve-btn" onclick="approveRequest('${doc.id}', 'withdraw', ${data.amount}, '${data.userId}', '${data.currency}', ${data.fee || 0}, '${data.feeCurrency || data.currency}')"><i class="fas fa-check"></i> Approve</button>
-                        <button class="admin-reject-btn" onclick="rejectRequest('${doc.id}', 'withdraw', ${data.amount}, '${data.userId}', '${data.currency}')"><i class="fas fa-times"></i> Reject</button>
+                        <button class="admin-approve-btn" onclick="approveRequest('${doc.id}', 'withdraw', ${data.amount}, '${data.userId}', '${data.currency}', ${data.fee || 0}, '${data.feeCurrency || data.currency}')"><i class="fas fa-check"></i> ${t('admin.approve')}</button>
+                        <button class="admin-reject-btn" onclick="openRejectModal('${doc.id}', 'withdraw', '${data.userId}', '${data.currency}', ${data.amount})"><i class="fas fa-times"></i> ${t('admin.reject')}</button>
                     </div>
                 </div>`;
             } else {
@@ -3638,8 +3615,8 @@ async function refreshAdminPanel() {
                         <div class="admin-tx-row"><span class="admin-tx-label">Time:</span><span class="admin-tx-value">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</span></div>
                     </div>
                     <div class="admin-tx-actions">
-                        <button class="admin-approve-btn" onclick="approveRequest('${doc.id}', 'deposit', ${data.amount}, '${data.userId}', '${data.currency}')"><i class="fas fa-check"></i> Approve</button>
-                        <button class="admin-reject-btn" onclick="rejectRequest('${doc.id}', 'deposit', ${data.amount}, '${data.userId}', '${data.currency}')"><i class="fas fa-times"></i> Reject</button>
+                        <button class="admin-approve-btn" onclick="approveRequest('${doc.id}', 'deposit', ${data.amount}, '${data.userId}', '${data.currency}')"><i class="fas fa-check"></i> ${t('admin.approve')}</button>
+                        <button class="admin-reject-btn" onclick="openRejectModal('${doc.id}', 'deposit', '${data.userId}', '${data.currency}', ${data.amount})"><i class="fas fa-times"></i> ${t('admin.reject')}</button>
                     </div>
                 </div>`;
             }
@@ -3651,6 +3628,53 @@ async function refreshAdminPanel() {
     }
     
     if (icon) setTimeout(() => icon.classList.remove('fa-spin'), 500);
+}
+
+function openRejectModal(id, type, targetUserId, currency, amount) {
+    currentRejectId = id;
+    currentRejectType = type;
+    currentRejectData = { targetUserId, currency, amount };
+    document.getElementById('rejectModal').classList.add('show');
+}
+
+async function submitRejection() {
+    const reason = document.getElementById('rejectReason').value.trim();
+    if (!reason) {
+        showToast('Please enter a reason', 'error');
+        return;
+    }
+    
+    if (!isAdmin || !db) return;
+    
+    try {
+        const col = currentRejectType === 'deposit' ? CONFIG.COLLECTIONS.DEPOSITS : CONFIG.COLLECTIONS.WITHDRAWALS;
+        await db.collection(col).doc(currentRejectId).update({ 
+            status: 'rejected', 
+            reason, 
+            rejectedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            rejectedBy: userId
+        });
+        
+        if (currentRejectType === 'withdraw') {
+            await db.collection(CONFIG.COLLECTIONS.USERS).doc(currentRejectData.targetUserId).update({
+                [`balances.${currentRejectData.currency}`]: firebase.firestore.FieldValue.increment(currentRejectData.amount)
+            });
+        }
+        
+        showToast('Request rejected', 'success');
+        
+        await addNotification(currentRejectData.targetUserId, 
+            `❌ Your ${currentRejectType} of ${currentRejectData.amount} ${currentRejectData.currency} was rejected. Reason: ${reason}`, 
+            'error');
+        
+        closeModal('rejectModal');
+        document.getElementById('rejectReason').value = '';
+        refreshAdminPanel();
+        
+    } catch (e) { 
+        console.error("Error rejecting:", e);
+        showToast('Error rejecting', 'error'); 
+    }
 }
 
 async function approveRequest(id, type, amount, targetUserId, currency, fee = 0, feeCurrency = currency) {
@@ -3671,47 +3695,16 @@ async function approveRequest(id, type, amount, targetUserId, currency, fee = 0,
         }
         
         showToast('Request approved', 'success');
-        refreshAdminPanel();
         
-        // إشعار للمستخدم
-        await addNotification(targetUserId, t(type === 'deposit' ? 'notif.depositApproved' : 'notif.withdrawApproved', { amount, currency }), 'success');
+        await addNotification(targetUserId, 
+            `✅ Your ${type} of ${amount} ${currency} has been approved!`, 
+            'success');
+        
+        refreshAdminPanel();
         
     } catch (e) { 
         console.error("Error approving:", e);
         showToast('Error approving', 'error'); 
-    }
-}
-
-async function rejectRequest(id, type, amount, targetUserId, currency) {
-    if (!isAdmin || !db) return;
-    const reason = prompt('Enter rejection reason:');
-    if (!reason) return;
-    
-    try {
-        const col = type === 'deposit' ? CONFIG.COLLECTIONS.DEPOSITS : CONFIG.COLLECTIONS.WITHDRAWALS;
-        await db.collection(col).doc(id).update({ 
-            status: 'rejected', 
-            reason, 
-            rejectedAt: firebase.firestore.FieldValue.serverTimestamp(),
-            rejectedBy: userId
-        });
-        
-        if (type === 'withdraw') {
-            // إعادة الرصيد في حالة رفض السحب
-            await db.collection(CONFIG.COLLECTIONS.USERS).doc(targetUserId).update({
-                [`balances.${currency}`]: firebase.firestore.FieldValue.increment(amount)
-            });
-        }
-        
-        showToast('Request rejected', 'success');
-        refreshAdminPanel();
-        
-        // إشعار للمستخدم
-        await addNotification(targetUserId, t(type === 'deposit' ? 'notif.depositRejected' : 'notif.withdrawRejected', { reason }), 'error');
-        
-    } catch (e) { 
-        console.error("Error rejecting:", e);
-        showToast('Error rejecting', 'error'); 
     }
 }
 
@@ -3720,7 +3713,7 @@ function copyToClipboard(text) {
     showToast('Copied!', 'success'); 
 }
 
-// ====== 50. INITIALIZATION ======
+// ====== 44. INITIALIZATION ======
 document.addEventListener('DOMContentLoaded', async () => {
     hideAllModals();
     
@@ -3741,7 +3734,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateUI();
     renderMarket();
     updateChart();
-    renderAchievements();
     renderReferralMilestones();
     renderWheelSegments();
     renderSlots();
@@ -3749,7 +3741,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     setInterval(() => {
         if (!userData.autoClicker?.active) {
-            const btn = document.getElementById('autoClickerFloat');
+            const btn = document.getElementById('autoClickerTurbine');
             if (btn) { 
                 btn.classList.add('show'); 
                 setTimeout(() => btn.classList.remove('show'), 10000); 
@@ -3765,16 +3757,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     
-    console.log("✅ TON MINING CASINO - ULTIMATE EDITION v60.0");
-    console.log("✅ ZERO WASTE ARCHITECTURE - 100K+ USERS READY");
-    console.log("✅ On-demand listeners: 30 seconds only");
-    console.log("✅ Cache: User localStorage first (like REFI)");
-    console.log("✅ Firebase Collections: users, deposits, withdrawals");
-    console.log("✅ Admin: Manual refresh with Firebase");
-    console.log("✅ Win popups: professional animations");
-    console.log("✅ Slot packs: Telegram payment only");
-    console.log("✅ Wheel packs: Telegram payment only");
-    console.log("✅ Purchased spins counter added");
+    document.getElementById('wheelModalAutoSpin')?.addEventListener('change', toggleWheelAutoSpin);
+    document.getElementById('slotsModalAutoSpin')?.addEventListener('change', toggleSlotsAutoSpin);
+    
+    console.log("✅ TON MINING CASINO - ULTIMATE EDITION v100.0");
+    console.log("✅ Complete edition with all features");
+    console.log("✅ 6 mining machines included");
+    console.log("✅ Casino wheel with casino-style design");
+    console.log("✅ Slot machine with auto spin");
+    console.log("✅ Admin panel with reject reason modal");
+    console.log("✅ Referral link:", CONFIG.APP.BASE_URL);
     console.log("✅ All systems ready! 🚀");
 });
 
@@ -3806,10 +3798,7 @@ document.addEventListener('visibilitychange', () => {
     }
 });
 
-// ====== 51. RESTORE FUNCTION ======
-window.restoreFromBackup = restoreFromBackup;
-
-// ====== 52. EXPORT FUNCTIONS ======
+// ====== 45. EXPORT FUNCTIONS ======
 window.showPage = showPage;
 window.showMarket = ()=>showPage('market');
 window.showWallet = ()=>showPage('profile');
@@ -3859,7 +3848,8 @@ window.clearAllNotifications = clearAllNotifications;
 window.switchAdminTab = switchAdminTab;
 window.refreshAdminPanel = refreshAdminPanel;
 window.approveRequest = approveRequest;
-window.rejectRequest = rejectRequest;
+window.openRejectModal = openRejectModal;
+window.submitRejection = submitRejection;
 window.copyToClipboard = copyToClipboard;
 window.handleAvatarClick = handleAvatarClick;
 window.refreshPrices = refreshPrices;
