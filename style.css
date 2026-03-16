@@ -1,6 +1,6 @@
 /* ============================================
-   TON MINING PRO - LEGENDARY DESIGN SYSTEM v13.0
-   WITH MULTI-CURRENCY SUPPORT
+   TON MINING PRO - LEGENDARY DESIGN SYSTEM v17.0
+   WITH LUCKY WHEEL, AUTO-CLICKER & PREMIUM UI
    ============================================ */
 
 /* CSS Variables */
@@ -20,6 +20,7 @@
     --gradient-success: linear-gradient(135deg, #22c55e, #10b981);
     --gradient-error: linear-gradient(135deg, #ef4444, #dc2626);
     --gradient-legendary: linear-gradient(135deg, #0088cc, #8855ff, #ff44cc, #00f2ff);
+    --gradient-wheel: conic-gradient(#0088cc, #8855ff, #ff44cc, #00f2ff, #fbbf24, #22c55e, #0088cc);
     
     --bg-primary: #0a0b0f;
     --bg-secondary: #111318;
@@ -42,6 +43,7 @@
     
     --shadow-glow: 0 0 30px var(--ton-glow);
     --shadow-legendary: 0 20px 40px rgba(0,0,0,0.4), 0 0 0 2px rgba(0,242,255,0.1);
+    --shadow-wheel: 0 0 50px rgba(255,68,204,0.3);
     
     --spacing-xs: 4px;
     --spacing-sm: 8px;
@@ -65,6 +67,7 @@
     --z-index-toast: 1900;
     --z-index-header: 100;
     --z-index-nav: 90;
+    --z-index-float: 150;
 }
 
 /* Animations */
@@ -186,6 +189,21 @@
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
+}
+
+@keyframes wheelSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(1440deg); }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes floatBtn {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
 }
 
 /* Reset & Base */
@@ -352,6 +370,61 @@ body::before {
     box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
 }
 
+.floating-notification.wheel {
+    border-color: #fbbf24;
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+}
+
+/* Auto-Clicker Floating Button */
+.auto-clicker-float {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-glow);
+    z-index: var(--z-index-float);
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s ease;
+    animation: floatBtn 2s infinite ease-in-out;
+}
+
+.auto-clicker-float.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.auto-clicker-float:hover {
+    transform: scale(1.1);
+}
+
+.auto-clicker-tooltip {
+    position: absolute;
+    right: 70px;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.auto-clicker-float:hover .auto-clicker-tooltip {
+    opacity: 1;
+}
+
 /* Legendary Header - Compact Design */
 .glass-header {
     padding: 8px 16px;
@@ -389,6 +462,12 @@ body::before {
     box-shadow: 0 0 15px rgba(0,242,255,0.3);
     position: relative;
     overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.user-avatar:hover {
+    transform: scale(1.05) rotate(5deg);
 }
 
 .user-avatar img {
@@ -449,6 +528,21 @@ body::before {
     height: 34px;
     cursor: pointer;
     transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.balance-chip::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(0,242,255,0.2), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+}
+
+.balance-chip:hover::before {
+    transform: translateX(100%);
 }
 
 .balance-chip i {
@@ -560,6 +654,26 @@ h2 i {
     margin-bottom: 24px;
     border-left: 3px solid var(--ton-cyan);
     padding-left: 12px;
+}
+
+/* Auto Miner Status */
+.auto-miner-status {
+    background: rgba(0,242,255,0.1);
+    border: 1px solid rgba(0,242,255,0.3);
+    border-radius: var(--radius-full);
+    padding: 8px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: var(--text-accent);
+    animation: pulse 2s infinite;
+}
+
+.auto-miner-status i {
+    font-size: 1.2rem;
 }
 
 /* Legendary Bottom Navigation (4 Buttons) */
@@ -878,6 +992,14 @@ h2 i {
     color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+}
+
+.wheel-indicator {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 1.2rem;
+    animation: pulse 2s infinite;
 }
 
 /* Legendary Progress Bar */
@@ -1835,12 +1957,12 @@ h2 i {
     font-size: 1rem;
 }
 
-.wallet-action-btn.deposit i {
-    color: #22c55e;
+.wallet-action-btn.send i {
+    color: #fbbf24;
 }
 
-.wallet-action-btn.withdraw i {
-    color: #ef4444;
+.wallet-action-btn.receive i {
+    color: #22c55e;
 }
 
 .wallet-action-btn.swap i {
@@ -1992,6 +2114,7 @@ h2 i {
     border: 1px solid var(--glass-border-strong);
     border-radius: var(--radius-xl);
     padding: 20px;
+    margin-bottom: 15px;
 }
 
 .referral-stats-mini {
@@ -2020,6 +2143,7 @@ h2 i {
 .referral-link-mini {
     display: flex;
     gap: 8px;
+    margin-bottom: 10px;
 }
 
 .referral-link-mini input {
@@ -2046,6 +2170,46 @@ h2 i {
 .copy-btn-mini:hover {
     transform: scale(1.05);
     box-shadow: var(--shadow-glow);
+}
+
+.referral-bonus-note {
+    color: var(--text-gold);
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+/* Milestones Preview */
+.milestones-preview {
+    display: flex;
+    gap: 10px;
+}
+
+.milestone-preview-item {
+    flex: 1;
+    background: rgba(0,0,0,0.2);
+    border-radius: var(--radius-lg);
+    padding: 10px;
+}
+
+.milestone-preview-item span {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+}
+
+.progress-mini {
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.progress-mini-fill {
+    height: 100%;
+    background: var(--gradient-gold);
+    border-radius: var(--radius-full);
+    width: 0%;
 }
 
 /* Settings */
@@ -2149,7 +2313,128 @@ input:checked + .toggle-slider:before {
     background: white;
 }
 
-/* ===== MODALS - مخفية افتراضياً وتظهر فقط عند الحاجة ===== */
+/* ===== LUCKY WHEEL MODAL ===== */
+.wheel-modal-content {
+    max-width: 500px;
+}
+
+.wheel-container {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    margin: 20px auto;
+}
+
+.wheel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--gradient-wheel);
+    box-shadow: var(--shadow-wheel);
+    transition: transform 3s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+    overflow: hidden;
+}
+
+.wheel-spinning {
+    animation: wheelSpin 3s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+}
+
+.wheel-segment {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 0;
+    left: 50%;
+    transform-origin: 0% 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    padding-left: 20px;
+    box-sizing: border-box;
+}
+
+.wheel-pointer {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    color: var(--ton-gold);
+    filter: drop-shadow(0 0 10px gold);
+    z-index: 10;
+}
+
+.wheel-info {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.wheel-stats {
+    margin-bottom: 20px;
+}
+
+.wheel-spins-left {
+    font-size: 1rem;
+    color: var(--text-accent);
+    margin-bottom: 5px;
+}
+
+.wheel-jackpot {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--text-gold);
+    background: rgba(251,191,36,0.1);
+    padding: 10px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(251,191,36,0.3);
+}
+
+.wheel-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.wheel-spin-btn {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.wheel-spin-btn.free {
+    background: var(--gradient-success);
+    color: white;
+}
+
+.wheel-spin-btn.paid {
+    background: var(--gradient-gold);
+    color: white;
+}
+
+.wheel-spin-btn:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-glow);
+}
+
+.wheel-spin-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ===== MODALS ===== */
 .modal {
     display: none !important;
     position: fixed;
@@ -2462,7 +2747,7 @@ input:checked + .toggle-slider:before {
     font-weight: 700;
 }
 
-/* ===== DEPOSIT MODAL - MULTI-CURRENCY ===== */
+/* ===== DEPOSIT MODAL ===== */
 .deposit-address-card-legendary {
     background: rgba(0,0,0,0.3);
     border-radius: var(--radius-xl);
@@ -2568,13 +2853,13 @@ input:checked + .toggle-slider:before {
 .network-hint {
     font-size: 0.8rem;
     color: var(--text-secondary);
-    margin-top: 5px;
+    margin-bottom: 15px;
     padding: 8px;
     background: rgba(0,242,255,0.05);
     border-radius: var(--radius-sm);
 }
 
-/* ===== WITHDRAW MODAL - MULTI-CURRENCY ===== */
+/* ===== WITHDRAW MODAL ===== */
 .balance-info-legendary {
     display: flex;
     align-items: center;
@@ -2966,6 +3251,11 @@ input:checked + .toggle-slider:before {
 .history-type.rental {
     background: rgba(136,85,255,0.1);
     color: #8855ff;
+}
+
+.history-type.wheel {
+    background: rgba(255,68,204,0.1);
+    color: #ff44cc;
 }
 
 .history-status {
@@ -3542,6 +3832,17 @@ input:checked + .toggle-slider:before {
     color: var(--ton-cyan);
 }
 
+/* Particles */
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--ton-cyan);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particleFloat 2s infinite;
+}
+
 /* RTL Support */
 [dir="rtl"] {
     text-align: right;
@@ -3604,6 +3905,16 @@ input:checked + .toggle-slider:before {
     left: 20px;
 }
 
+[dir="rtl"] .auto-clicker-float {
+    right: auto;
+    left: 20px;
+}
+
+[dir="rtl"] .auto-clicker-tooltip {
+    right: 70px;
+    left: auto;
+}
+
 [dir="rtl"] .nav-item {
     transform: scaleX(-1);
 }
@@ -3639,6 +3950,10 @@ input:checked + .toggle-slider:before {
 
 [dir="rtl"] .currency-select {
     background-position: left 15px center;
+}
+
+[dir="rtl"] .wheel-pointer {
+    transform: translateX(50%);
 }
 
 /* Responsive */
@@ -3716,6 +4031,15 @@ input:checked + .toggle-slider:before {
         flex-direction: column;
         text-align: center;
     }
+    
+    .wheel-container {
+        width: 220px;
+        height: 220px;
+    }
+    
+    .milestones-preview {
+        flex-direction: column;
+    }
 }
 
 /* Animation Classes */
@@ -3745,17 +4069,6 @@ input:checked + .toggle-slider:before {
 
 .fadeOut {
     animation: fadeOut 0.3s ease;
-}
-
-/* Particles */
-.particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: var(--ton-cyan);
-    border-radius: 50%;
-    pointer-events: none;
-    animation: particleFloat 2s infinite;
 }
 
 /* Custom Scrollbar */
@@ -3790,7 +4103,9 @@ input:checked + .toggle-slider:before {
     .bottom-nav-legendary,
     .glass-header,
     .scroll-top-btn,
-    .modal {
+    .modal,
+    .auto-clicker-float,
+    .welcome-sticker {
         display: none !important;
     }
     
