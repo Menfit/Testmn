@@ -1,5 +1,5 @@
 /* ============================================
-   TON MINING CASINO - LEGENDARY DESIGN SYSTEM v2000.0
+   TON MINING CASINO - LEGENDARY DESIGN SYSTEM v5000.0
    ULTIMATE EDITION - COMPLETE STYLING
    مع جميع التصميمات والتأثيرات البصرية والحركية الأسطورية
    ============================================ */
@@ -30,9 +30,13 @@
     
     /* ألوان القطاعات */
     --wheel-ton: #0088cc;
+    --wheel-ton-dark: #0066aa;
     --wheel-usdt: #22c55e;
+    --wheel-usdt-dark: #1a8c4a;
     --wheel-jackpot: #ef4444;
+    --wheel-jackpot-dark: #b91c1c;
     --wheel-goodluck: #94a3b8;
+    --wheel-goodluck-dark: #4a5568;
     
     /* تدرجات أنيقة */
     --gradient-primary: linear-gradient(135deg, #0088cc, #00f2ff);
@@ -46,6 +50,7 @@
     --gradient-turbine: linear-gradient(145deg, #2a2a3a, #1a1a2a);
     --gradient-jackpot: linear-gradient(145deg, #ffd700, #ff8c00, #ff4500);
     --gradient-wheel-segment: linear-gradient(145deg, rgba(255,255,255,0.2), rgba(0,0,0,0.2));
+    --gradient-cosmic: conic-gradient(from 0deg, #00f2ff, #8855ff, #ff44cc, #00f2ff);
     
     /* الخلفيات */
     --bg-primary: #0a0b0f;
@@ -80,6 +85,7 @@
     --shadow-casino: 0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,215,0,0.2);
     --shadow-jackpot: 0 0 100px rgba(255,215,0,0.8), 0 0 200px rgba(255,140,0,0.5);
     --shadow-wheel-segment: inset 0 0 10px rgba(255,255,255,0.3);
+    --shadow-cosmic: 0 0 50px rgba(0,242,255,0.3), 0 0 100px rgba(136,85,255,0.2);
     
     /* المسافات */
     --spacing-xs: 4px;
@@ -112,6 +118,7 @@
     --z-index-popup: 3000;
     --z-index-jackpot: 4000;
     --z-index-error: 5000;
+    --z-index-cosmic: 1;
 }
 
 /* ====== 2. ANIMATIONS - تأثيرات حركية ساحرة ====== */
@@ -268,7 +275,24 @@
     50% { transform: scale(1.1); opacity: 1; }
 }
 
-/* ====== 3. JACKPOT POPUP ANIMATIONS - تأثيرات الجاكبوت الأسطورية ====== */
+/* ====== 3. COSMIC ANIMATIONS - تأثيرات كونية ====== */
+
+@keyframes cosmicSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes cosmicFloat {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+    100% { transform: translate(100px, -100px) scale(2); opacity: 0; }
+}
+
+@keyframes cosmicPulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+/* ====== 4. JACKPOT POPUP ANIMATIONS - تأثيرات الجاكبوت الأسطورية ====== */
 
 @keyframes jackpotPopIn {
     0% { transform: scale(0.2) rotate(-10deg); opacity: 0; }
@@ -297,7 +321,7 @@
     50% { box-shadow: 0 0 100px gold, 0 0 200px orange, 0 0 300px red; }
 }
 
-/* ====== 4. WIN POPUP ANIMATIONS - تأثيرات فوز احترافية ====== */
+/* ====== 5. WIN POPUP ANIMATIONS - تأثيرات فوز احترافية ====== */
 
 @keyframes winPopupIn {
     0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
@@ -310,11 +334,11 @@
     50% { filter: brightness(1.3); text-shadow: 0 0 20px cyan, 0 0 30px blue; }
 }
 
-/* ====== 5. WHEEL SEGMENT ANIMATIONS - تأثيرات قطاعات العجلة ====== */
+/* ====== 6. WHEEL SEGMENT ANIMATIONS - تأثيرات قطاعات العجلة ====== */
 
 @keyframes segmentGlow {
-    0%, 100% { filter: brightness(1); }
-    50% { filter: brightness(1.3); }
+    0%, 100% { filter: brightness(1); text-shadow: 0 0 5px currentColor, 0 0 10px currentColor; }
+    50% { filter: brightness(1.3); text-shadow: 0 0 10px currentColor, 0 0 20px currentColor; }
 }
 
 @keyframes segmentPulse {
@@ -322,7 +346,7 @@
     50% { transform: scale(1.02); }
 }
 
-/* ====== 6. SLOTS ANIMATIONS - تأثيرات السلوت ====== */
+/* ====== 7. SLOTS ANIMATIONS - تأثيرات السلوت ====== */
 
 @keyframes reelSpin {
     0% { transform: translateY(0); }
@@ -339,7 +363,7 @@
     50% { opacity: 1; }
 }
 
-/* ====== 7. RESET & BASE ====== */
+/* ====== 8. RESET & BASE ====== */
 * {
     margin: 0;
     padding: 0;
@@ -367,7 +391,7 @@ body::before {
     z-index: -1;
 }
 
-/* ====== 8. LOADING SCREEN ====== */
+/* ====== 9. LOADING SCREEN ====== */
 .loading-overlay {
     position: fixed;
     inset: 0;
@@ -433,7 +457,7 @@ body::before {
     animation: gradientFlow 3s ease infinite;
 }
 
-/* ====== 9. JACKPOT POPUP - التصميم الأسطوري المحسن ====== */
+/* ====== 10. JACKPOT POPUP - التصميم الأسطوري المحسن ====== */
 .jackpot-popup {
     position: fixed;
     top: 0;
@@ -469,12 +493,12 @@ body::before {
 
 .jackpot-content {
     position: relative;
-    width: 90%;
-    max-width: 450px;
+    width: 85%;
+    max-width: 380px;
     background: var(--gradient-jackpot);
-    border: 5px solid gold;
+    border: 4px solid gold;
     border-radius: var(--radius-2xl);
-    padding: 40px 20px;
+    padding: 30px 20px;
     text-align: center;
     box-shadow: var(--shadow-jackpot);
     transform: scale(0.2) rotate(-10deg);
@@ -491,8 +515,8 @@ body::before {
 }
 
 .jackpot-stars {
-    font-size: 2.5rem;
-    margin: 10px 0;
+    font-size: 2rem;
+    margin: 8px 0;
     color: gold;
     animation: jackpotStars 3s infinite linear;
     text-shadow: 0 0 10px gold;
@@ -507,9 +531,9 @@ body::before {
 }
 
 .jackpot-title {
-    font-size: 3rem;
+    font-size: 2.2rem;
     font-weight: 900;
-    margin: 15px 0;
+    margin: 10px 0;
     background: linear-gradient(45deg, gold, orange, red, gold);
     background-size: 300% 300%;
     -webkit-background-clip: text;
@@ -518,17 +542,17 @@ body::before {
 }
 
 .jackpot-message {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     color: white;
-    margin: 10px 0;
+    margin: 8px 0;
     text-shadow: 0 0 10px gold;
     animation: gentlePulse 2s infinite;
 }
 
 .jackpot-amount {
-    font-size: 4rem;
+    font-size: 2.8rem;
     font-weight: 900;
-    margin: 20px 0;
+    margin: 15px 0;
     color: gold;
     text-shadow: 0 0 20px gold, 0 0 40px orange, 0 0 60px red;
     animation: jackpotAmount 1s infinite;
@@ -538,13 +562,13 @@ body::before {
     background: linear-gradient(45deg, gold, orange);
     border: none;
     border-radius: var(--radius-full);
-    padding: 15px 50px;
-    font-size: 1.3rem;
+    padding: 12px 40px;
+    font-size: 1.2rem;
     font-weight: 700;
     color: black;
     cursor: pointer;
     transition: var(--transition-fast);
-    margin-top: 20px;
+    margin-top: 15px;
     box-shadow: 0 0 20px gold;
     position: relative;
     overflow: hidden;
@@ -563,15 +587,15 @@ body::before {
 }
 
 .jackpot-ok-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 40px gold;
+    transform: scale(1.05);
+    box-shadow: 0 0 30px gold;
 }
 
 .jackpot-popup.hidden {
     display: none;
 }
 
-/* ====== 10. APP CONTAINER ====== */
+/* ====== 11. APP CONTAINER ====== */
 .app {
     height: 100vh;
     display: flex;
@@ -584,7 +608,7 @@ body::before {
     box-shadow: 0 0 50px rgba(0,0,0,0.5);
 }
 
-/* ====== 11. WELCOME STICKER ====== */
+/* ====== 12. WELCOME STICKER ====== */
 .welcome-sticker {
     position: fixed;
     top: 70px;
@@ -599,7 +623,7 @@ body::before {
 .welcome-sticker.sticker-pop { animation: pop 0.5s ease; }
 .welcome-sticker.sticker-shake { animation: shake 0.5s ease; }
 
-/* ====== 12. FLOATING NOTIFICATION ====== */
+/* ====== 13. FLOATING NOTIFICATION ====== */
 .floating-notification {
     position: fixed;
     top: 60px;
@@ -633,7 +657,7 @@ body::before {
 .floating-notification.error { border-color: #ef4444; box-shadow: 0 0 20px rgba(239,68,68,0.3); }
 .floating-notification.warning { border-color: #fbbf24; box-shadow: 0 0 20px rgba(251,191,36,0.3); }
 
-/* ====== 13. AUTO-CLICKER TURBINE BUTTON ====== */
+/* ====== 14. AUTO-CLICKER TURBINE BUTTON ====== */
 .auto-clicker-turbine {
     position: fixed;
     top: 90px;
@@ -710,7 +734,7 @@ body::before {
 
 .auto-clicker-turbine:hover .auto-clicker-tooltip { opacity: 1; }
 
-/* ====== 14. HEADER ====== */
+/* ====== 15. HEADER ====== */
 .glass-header {
     padding: 10px 15px;
     background: rgba(20, 25, 35, 0.95);
@@ -871,7 +895,7 @@ body::before {
 
 #langIcon { font-size: 1.1rem; }
 
-/* ====== 15. MAIN CONTENT ====== */
+/* ====== 16. MAIN CONTENT ====== */
 .main-content {
     flex: 1;
     overflow-y: auto;
@@ -913,7 +937,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     padding-left: 10px;
 }
 
-/* ====== 16. BOTTOM NAVIGATION ====== */
+/* ====== 17. BOTTOM NAVIGATION ====== */
 .bottom-nav-legendary {
     position: fixed;
     bottom: 0;
@@ -999,7 +1023,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .nav-label { transition: var(--transition-fast); font-weight: 600; letter-spacing: 0.3px; font-size: 0.7rem; }
 .nav-item:hover .nav-label { color: var(--text-accent); }
 
-/* ====== 17. MINING HERO - توربينات الرياح المحسنة ====== */
+/* ====== 18. MINING HERO - توربينات الرياح المحسنة ====== */
 .mining-hero {
     position: relative;
     height: 200px;
@@ -1148,7 +1172,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .status-text { font-weight: 700; font-size: 0.9rem; color: var(--text-accent); }
 .status-icon { color: #22c55e; font-size: 1rem; }
 
-/* ====== 18. MINING STATS ORBS ====== */
+/* ====== 19. MINING STATS ORBS ====== */
 .mining-stats-legendary {
     display: flex;
     align-items: center;
@@ -1203,7 +1227,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .orb-value { font-size: 1.4rem; font-weight: 800; color: var(--text-primary); line-height: 1; }
 .orb-label { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
 
-/* ====== 19. LEGENDARY PROGRESS BAR ====== */
+/* ====== 20. LEGENDARY PROGRESS BAR ====== */
 .legendary-progress {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -1298,7 +1322,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .next-reward .label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
 .next-reward .value { font-size: 1.3rem; font-weight: 800; color: var(--text-gold); }
 
-/* ====== 20. CLAIM BUTTON ====== */
+/* ====== 21. CLAIM BUTTON ====== */
 .claim-btn-legendary {
     padding: 12px 30px;
     background: var(--gradient-legendary);
@@ -1332,7 +1356,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     box-shadow: 0 0 40px rgba(0,242,255,0.4);
 }
 
-/* ====== 21. AUTO MINER STATUS ====== */
+/* ====== 22. AUTO MINER STATUS ====== */
 .auto-miner-status {
     background: rgba(0,242,255,0.1);
     border: 1px solid rgba(0,242,255,0.3);
@@ -1350,7 +1374,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 
 .auto-miner-status i { font-size: 1.1rem; }
 
-/* ====== 22. SECTION STYLES ====== */
+/* ====== 23. SECTION STYLES ====== */
 .legendary-section { margin-top: 25px; position: relative; }
 
 .section-header {
@@ -1391,7 +1415,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     transform: translateX(-3px);
 }
 
-/* ====== 23. ACTIVE MACHINES GRID ====== */
+/* ====== 24. ACTIVE MACHINES GRID ====== */
 .active-machines-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -1475,7 +1499,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .machine-yield { color: var(--text-gold); font-weight: 700; }
 .machine-status { color: #22c55e; font-size: 0.75rem; display: flex; align-items: center; gap: 3px; }
 
-/* ====== 24. PLANS TABLE ====== */
+/* ====== 25. PLANS TABLE ====== */
 .plans-table-legendary {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -1510,7 +1534,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .legendary-table td:first-child i { margin-right: 6px; color: var(--ton-cyan); }
 .return-text { color: #22c55e; font-size: 0.75rem; }
 
-/* ====== 25. ACTIVITY FEED ====== */
+/* ====== 26. ACTIVITY FEED ====== */
 .activity-feed {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -1545,7 +1569,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .activity-time { font-size: 0.7rem; color: var(--text-secondary); }
 .activity-amount { font-weight: 700; color: var(--text-gold); font-size: 0.9rem; }
 
-/* ====== 26. MARKET PAGE ====== */
+/* ====== 27. MARKET PAGE ====== */
 .market-filters-legendary {
     display: flex;
     gap: 8px;
@@ -1577,7 +1601,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .filter-btn:hover { border-color: var(--ton-cyan); color: var(--text-accent); }
 .filter-btn.active { background: var(--gradient-primary); color: white; border-color: transparent; box-shadow: var(--shadow-glow); }
 
-/* ====== 27. MACHINES SHOWCASE ====== */
+/* ====== 28. MACHINES SHOWCASE ====== */
 .machines-showcase-legendary {
     display: flex;
     flex-direction: column;
@@ -1696,7 +1720,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .plan-card-mini.free .price { color: #22c55e; }
 .plan-card-mini .return { font-size: 0.7rem; color: #22c55e; }
 
-/* ====== 28. CASINO PAGE ====== */
+/* ====== 29. CASINO PAGE ====== */
 .casino-card {
     background: var(--gradient-casino);
     border: 1px solid var(--glass-border-strong);
@@ -1778,13 +1802,23 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 }
 
 .mini-wheel-segment:nth-child(1) { transform: rotate(0deg) skewY(45deg); left: 0; top: 0; }
-.mini-wheel-segment:nth-child(2) { transform: rotate(45deg) skewY(45deg); left: 0; top: 0; }
-.mini-wheel-segment:nth-child(3) { transform: rotate(90deg) skewY(45deg); left: 0; top: 0; }
-.mini-wheel-segment:nth-child(4) { transform: rotate(135deg) skewY(45deg); left: 0; top: 0; }
-.mini-wheel-segment:nth-child(5) { transform: rotate(180deg) skewY(45deg); left: 0; top: 0; }
-.mini-wheel-segment:nth-child(6) { transform: rotate(225deg) skewY(45deg); left: 0; top: 0; }
-.mini-wheel-segment:nth-child(7) { transform: rotate(270deg) skewY(45deg); left: 0; top: 0; }
-.mini-wheel-segment:nth-child(8) { transform: rotate(315deg) skewY(45deg); left: 0; top: 0; }
+.mini-wheel-segment:nth-child(2) { transform: rotate(20deg) skewY(45deg); left: 0; top: 0; }
+.mini-wheel-segment:nth-child(3) { transform: rotate(40deg) skewY(45deg); left: 0; top: 0; }
+.mini-wheel-segment:nth-child(4) { transform: rotate(60deg) skewY(45deg); left: 0; top: 0; }
+.mini-wheel-segment:nth-child(5) { transform: rotate(80deg) skewY(45deg); left: 0; top: 0; }
+.mini-wheel-segment:nth-child(6) { transform: rotate(100deg) skewY(45deg); left: 0; top: 0; }
+.mini-wheel-segment:nth-child(7) { transform: rotate(120deg) skewY(45deg); left: 0; top: 0; }
+.mini-wheel-segment:nth-child(8) { transform: rotate(140deg) skewY(45deg); left: 0; top: 0; }
+.mini-wheel-segment:nth-child(9) { transform: rotate(160deg) skewY(45deg); left: 0; top: 0; }
+.mini-wheel-segment:nth-child(10) { transform: rotate(180deg) skewY(45deg); left: 0; top: 0; }
+.mini-wheel-segment:nth-child(11) { transform: rotate(200deg) skewY(45deg); left: 0; top: 0; }
+.mini-wheel-segment:nth-child(12) { transform: rotate(220deg) skewY(45deg); left: 0; top: 0; }
+.mini-wheel-segment:nth-child(13) { transform: rotate(240deg) skewY(45deg); left: 0; top: 0; }
+.mini-wheel-segment:nth-child(14) { transform: rotate(260deg) skewY(45deg); left: 0; top: 0; }
+.mini-wheel-segment:nth-child(15) { transform: rotate(280deg) skewY(45deg); left: 0; top: 0; }
+.mini-wheel-segment:nth-child(16) { transform: rotate(300deg) skewY(45deg); left: 0; top: 0; }
+.mini-wheel-segment:nth-child(17) { transform: rotate(320deg) skewY(45deg); left: 0; top: 0; }
+.mini-wheel-segment:nth-child(18) { transform: rotate(340deg) skewY(45deg); left: 0; top: 0; }
 
 /* Slots Preview */
 .slots-preview {
@@ -2049,7 +2083,7 @@ input:checked + .toggle-slider:before {
 .winner-name { color: var(--text-accent); font-weight: 600; }
 .winner-amount { color: var(--text-gold); font-weight: 700; }
 
-/* ====== 29. WHEEL MODAL - تصميم كازينو فاخر مع تأثيرات محسنة ====== */
+/* ====== 30. WHEEL MODAL - تصميم كازينو فاخر مع تأثيرات كونية ====== */
 .wheel-modal-content { max-width: 450px; }
 
 .wheel-streak {
@@ -2083,6 +2117,7 @@ input:checked + .toggle-slider:before {
         0 0 30px rgba(0,242,255,0.3);
     overflow: hidden;
     transition: transform 3s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+    z-index: 5;
 }
 
 .wheel-casino::before {
@@ -2091,7 +2126,20 @@ input:checked + .toggle-slider:before {
     inset: 8px;
     border-radius: 50%;
     background: rgba(0,0,0,0.3);
+    z-index: 6;
+}
+
+/* الشعاع الكوني الدوار */
+.wheel-cosmic-glow {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: var(--gradient-cosmic);
+    filter: blur(20px);
+    animation: cosmicSpin 8s infinite linear;
+    pointer-events: none;
     z-index: 1;
+    opacity: 0.5;
 }
 
 .wheel-outer-glow {
@@ -2102,9 +2150,10 @@ input:checked + .toggle-slider:before {
     filter: blur(10px);
     animation: glow 3s infinite;
     pointer-events: none;
+    z-index: 2;
 }
 
-/* القطاعات المحسنة */
+/* القطاعات المحسنة مع الإضاءة */
 .wheel-segment {
     position: absolute;
     width: 50%;
@@ -2116,31 +2165,33 @@ input:checked + .toggle-slider:before {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     font-weight: 700;
     color: white;
-    text-shadow: 0 0 3px black, 0 0 5px black;
+    text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 20px currentColor;
     padding-left: 12px;
     box-sizing: border-box;
-    z-index: 2;
+    z-index: 7;
     border: 1px solid rgba(255,255,255,0.2);
     background: rgba(0,0,0,0.5);
     transition: all 0.3s ease;
     animation: segmentPulse 3s infinite;
+    box-shadow: inset 0 0 15px rgba(255,255,255,0.3);
 }
 
 .wheel-segment:hover {
     filter: brightness(1.2);
     transform-origin: 0% 100%;
     transform: scale(1.02) rotate(var(--rotation));
-    z-index: 3;
+    z-index: 10;
+    animation: segmentGlow 1s infinite;
 }
 
 .wheel-segment .wheel-icon {
     display: block;
     font-size: 1.2rem;
     margin-bottom: 2px;
-    filter: drop-shadow(0 0 3px gold);
+    filter: drop-shadow(0 0 5px currentColor);
     animation: segmentGlow 2s infinite;
 }
 
@@ -2151,28 +2202,33 @@ input:checked + .toggle-slider:before {
     padding: 2px 6px;
     border-radius: 10px;
     border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 0 5px currentColor;
 }
 
-/* ألوان القطاعات */
+/* ألوان القطاعات مع تأثير الإضاءة */
 .wheel-segment[data-type="ton"] {
-    background: linear-gradient(145deg, rgba(0,136,204,0.9), rgba(0,136,204,0.7));
+    background: linear-gradient(145deg, var(--wheel-ton-dark), var(--wheel-ton));
     border-right: 2px solid #00f2ff;
+    color: #aaf0ff;
 }
 
 .wheel-segment[data-type="usdt"] {
-    background: linear-gradient(145deg, rgba(34,197,94,0.9), rgba(34,197,94,0.7));
+    background: linear-gradient(145deg, var(--wheel-usdt-dark), var(--wheel-usdt));
     border-right: 2px solid #22c55e;
+    color: #aaffaa;
 }
 
 .wheel-segment[data-type="jackpot"] {
-    background: linear-gradient(145deg, rgba(239,68,68,0.95), rgba(239,68,68,0.8));
+    background: linear-gradient(145deg, var(--wheel-jackpot-dark), var(--wheel-jackpot));
     border-right: 2px solid #ef4444;
     font-weight: 900;
+    color: #ffaaaa;
 }
 
 .wheel-segment[data-type="goodluck"] {
-    background: linear-gradient(145deg, rgba(148,163,184,0.9), rgba(148,163,184,0.7));
+    background: linear-gradient(145deg, var(--wheel-goodluck-dark), var(--wheel-goodluck));
     border-right: 2px solid #94a3b8;
+    color: #eeeeee;
 }
 
 .wheel-casino-pointer {
@@ -2182,7 +2238,7 @@ input:checked + .toggle-slider:before {
     transform: translateX(-50%);
     font-size: 2.5rem;
     color: gold;
-    filter: drop-shadow(0 0 10px orange);
+    filter: drop-shadow(0 0 10px orange) drop-shadow(0 0 20px red);
     z-index: 20;
     text-shadow: 0 0 10px rgba(0,0,0,0.5);
     animation: gentlePulse 2s infinite;
@@ -2294,7 +2350,7 @@ input:checked + .toggle-slider:before {
 .wheel-spin-btn:hover { transform: scale(1.02); box-shadow: var(--shadow-glow); }
 .wheel-spin-btn.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
 
-/* Error Message (تظهر فوق كل شيء) */
+/* Error Message */
 .error-message {
     display: flex;
     align-items: center;
@@ -2315,7 +2371,7 @@ input:checked + .toggle-slider:before {
 .error-message.hidden { display: none; }
 .error-message i { font-size: 1.1rem; }
 
-/* ====== 30. SLOTS MODAL ====== */
+/* ====== 31. SLOTS MODAL ====== */
 .slots-container {
     background: linear-gradient(145deg, #1a1a2a, #0a0a1a);
     border-radius: var(--radius-xl);
@@ -2438,7 +2494,7 @@ input:checked + .toggle-slider:before {
     text-shadow: 0 0 15px gold;
 }
 
-/* ====== 31. WIN POPUP ====== */
+/* ====== 32. WIN POPUP ====== */
 .win-popup {
     position: fixed;
     top: 50%;
@@ -2554,7 +2610,7 @@ input:checked + .toggle-slider:before {
     animation-delay: 0.5s;
 }
 
-/* ====== 32. PROFILE PAGE ====== */
+/* ====== 33. PROFILE PAGE ====== */
 .wallet-card-legendary {
     background: var(--gradient-legendary);
     background-size: 200% 200%;
@@ -2645,7 +2701,7 @@ input:checked + .toggle-slider:before {
 .wallet-action-btn.swap i { color: var(--ton-cyan); }
 .wallet-action-btn.history i { color: #8855ff; }
 
-/* ====== 33. TON CONNECT CARD ====== */
+/* ====== 34. TON CONNECT CARD ====== */
 .ton-connect-card-legendary {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -2691,7 +2747,7 @@ input:checked + .toggle-slider:before {
 .connected-wallet-info .address { font-family: monospace; color: var(--text-accent); font-size: 0.8rem; }
 .connected-wallet-info .balance { font-weight: 700; color: var(--text-gold); }
 
-/* ====== 34. ASSETS LIST ====== */
+/* ====== 35. ASSETS LIST ====== */
 .assets-list-legendary {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -2775,7 +2831,7 @@ input:checked + .toggle-slider:before {
     white-space: nowrap;
 }
 
-/* ====== 35. STATS COMPACT ====== */
+/* ====== 36. STATS COMPACT ====== */
 .stats-compact {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -2804,7 +2860,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-accent);
 }
 
-/* ====== 36. CHART ====== */
+/* ====== 37. CHART ====== */
 .chart-container {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -2851,7 +2907,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-secondary);
 }
 
-/* ====== 37. REFERRAL SECTION ====== */
+/* ====== 38. REFERRAL SECTION ====== */
 .referral-section {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -2923,7 +2979,7 @@ input:checked + .toggle-slider:before {
     font-weight: 600;
 }
 
-/* ====== 38. LEADERBOARD ====== */
+/* ====== 39. LEADERBOARD ====== */
 .leaderboard {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -2951,7 +3007,7 @@ input:checked + .toggle-slider:before {
 .name { flex: 1; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .earnings { font-weight: 700; color: var(--text-accent); white-space: nowrap; }
 
-/* ====== 39. REFERRAL MILESTONES GRID ====== */
+/* ====== 40. REFERRAL MILESTONES GRID ====== */
 .referral-milestones-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -3004,7 +3060,7 @@ input:checked + .toggle-slider:before {
 
 .claimed-badge { color: #22c55e; font-size: 0.7rem; }
 
-/* ====== 40. MODALS GENERAL ====== */
+/* ====== 41. MODALS GENERAL ====== */
 .modal {
     display: none !important;
     position: fixed;
@@ -3091,7 +3147,7 @@ input:checked + .toggle-slider:before {
 
 .modal-body { padding: 16px; max-height: calc(85vh - 70px); overflow-y: auto; }
 
-/* ====== 41. PAYMENT OPTIONS ====== */
+/* ====== 42. PAYMENT OPTIONS ====== */
 .payment-options-legendary { margin: 15px 0; }
 
 .payment-option-title { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 10px; }
@@ -3140,7 +3196,7 @@ input:checked + .toggle-slider:before {
 .payment-option-desc { font-size: 0.8rem; color: var(--text-secondary); }
 .payment-option-desc .balance-amount { color: var(--text-gold); font-weight: 700; }
 
-/* ====== 42. SWAP MODAL - PancakeSwap Style ====== */
+/* ====== 43. SWAP MODAL - PancakeSwap Style ====== */
 .swap-modal-content { max-width: 400px; }
 
 .swap-field {
@@ -3274,7 +3330,7 @@ input:checked + .toggle-slider:before {
     box-shadow: 0 0 30px rgba(0,242,255,0.5);
 }
 
-/* ====== 43. CURRENCY SELECTOR MODAL ====== */
+/* ====== 44. CURRENCY SELECTOR MODAL ====== */
 .currency-search {
     position: relative;
     margin-bottom: 15px;
@@ -3318,7 +3374,7 @@ input:checked + .toggle-slider:before {
 .currency-list-item .currency-info h4 { font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
 .currency-list-item .currency-info p { font-size: 0.8rem; color: var(--text-secondary); }
 
-/* ====== 44. DEPOSIT MODAL ====== */
+/* ====== 45. DEPOSIT MODAL ====== */
 .deposit-address-card-legendary {
     background: rgba(0,0,0,0.3);
     border-radius: var(--radius-xl);
@@ -3400,7 +3456,7 @@ input:checked + .toggle-slider:before {
     border-radius: var(--radius-sm);
 }
 
-/* ====== 45. INPUT GROUPS ====== */
+/* ====== 46. INPUT GROUPS ====== */
 .input-group-legendary { margin-bottom: 15px; }
 
 .input-group-legendary label {
@@ -3438,7 +3494,7 @@ input:checked + .toggle-slider:before {
 .validation-hint.valid { color: #22c55e; background: rgba(34,197,94,0.1); }
 .validation-hint.invalid { color: #ef4444; background: rgba(239,68,68,0.1); }
 
-/* ====== 46. WITHDRAW MODAL (بدون TON Network) ====== */
+/* ====== 47. WITHDRAW MODAL ====== */
 .withdraw-icon {
     width: 48px;
     height: 48px;
@@ -3469,7 +3525,6 @@ input:checked + .toggle-slider:before {
     color: var(--text-gold);
 }
 
-/* رصيد عملة الرسوم */
 .fee-currency-balance {
     font-size: 0.8rem;
     color: var(--text-secondary);
@@ -3494,7 +3549,7 @@ input:checked + .toggle-slider:before {
 .receive-amount .label { color: var(--text-secondary); }
 .receive-amount .value { font-weight: 700; color: var(--text-success); }
 
-/* ====== 47. CONFIRM BUTTON ====== */
+/* ====== 48. CONFIRM BUTTON ====== */
 .confirm-btn-legendary {
     width: 100%;
     padding: 15px;
@@ -3520,7 +3575,7 @@ input:checked + .toggle-slider:before {
 .confirm-btn-legendary:disabled { opacity: 0.5; cursor: not-allowed; animation: none; }
 .confirm-btn-legendary:not(:disabled):hover { transform: scale(1.02); box-shadow: 0 0 40px rgba(0,242,255,0.4); }
 
-/* ====== 48. HISTORY MODAL ====== */
+/* ====== 49. HISTORY MODAL ====== */
 .history-filters {
     display: flex;
     gap: 6px;
@@ -3594,7 +3649,7 @@ input:checked + .toggle-slider:before {
 .history-amount { font-weight: 700; color: var(--text-primary); }
 .history-date { color: var(--text-secondary); font-size: 0.7rem; }
 
-/* ====== 49. NOTIFICATIONS MODAL ====== */
+/* ====== 50. NOTIFICATIONS MODAL ====== */
 .notifications-list { max-height: 350px; overflow-y: auto; }
 
 .notification-item {
@@ -3629,7 +3684,7 @@ input:checked + .toggle-slider:before {
 .notification-time { font-size: 0.7rem; color: var(--text-secondary); }
 .notification-message { font-size: 0.9rem; color: var(--text-primary); }
 
-/* ====== 50. ADMIN MODAL ====== */
+/* ====== 51. ADMIN MODAL ====== */
 .admin-modal-content { max-width: 450px; }
 
 .admin-tabs {
@@ -3806,7 +3861,7 @@ input:checked + .toggle-slider:before {
 
 .admin-reject-btn:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(239,68,68,0.3); }
 
-/* ====== 51. REJECT MODAL ====== */
+/* ====== 52. REJECT MODAL ====== */
 .reject-form {
     padding: 16px;
 }
@@ -3840,7 +3895,7 @@ input:checked + .toggle-slider:before {
     background: var(--gradient-error) !important;
 }
 
-/* ====== 52. TOAST NOTIFICATION ====== */
+/* ====== 53. TOAST NOTIFICATION ====== */
 .toast-notification {
     position: fixed;
     bottom: 90px;
@@ -3866,7 +3921,7 @@ input:checked + .toggle-slider:before {
 .toast-notification.hidden { display: none; }
 .toast-notification i { color: var(--ton-cyan); }
 
-/* ====== 53. SCROLL TO TOP BUTTON ====== */
+/* ====== 54. SCROLL TO TOP BUTTON ====== */
 .scroll-top-btn {
     position: fixed;
     bottom: 90px;
@@ -3892,7 +3947,7 @@ input:checked + .toggle-slider:before {
 .scroll-top-btn.show { opacity: 1; visibility: visible; }
 .scroll-top-btn:hover { transform: scale(1.1); }
 
-/* ====== 54. EMPTY STATE ====== */
+/* ====== 55. EMPTY STATE ====== */
 .empty-state {
     text-align: center;
     padding: 30px 15px;
@@ -3904,7 +3959,7 @@ input:checked + .toggle-slider:before {
 .empty-state p { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
 .empty-state span { font-size: 0.9rem; color: var(--text-secondary); }
 
-/* ====== 55. LOADING SPINNER ====== */
+/* ====== 56. LOADING SPINNER ====== */
 .loading-spinner {
     text-align: center;
     padding: 30px;
@@ -3913,7 +3968,7 @@ input:checked + .toggle-slider:before {
 
 .loading-spinner i { font-size: 2.2rem; margin-bottom: 8px; color: var(--ton-cyan); }
 
-/* ====== 56. RTL SUPPORT ====== */
+/* ====== 57. RTL SUPPORT ====== */
 [dir="rtl"] { text-align: right; }
 [dir="rtl"] .header-left { flex-direction: row-reverse; }
 [dir="rtl"] .user-info { text-align: right; }
@@ -3937,7 +3992,7 @@ input:checked + .toggle-slider:before {
 [dir="rtl"] .currency-select { background-position: left 12px center; }
 [dir="rtl"] .wheel-casino-pointer { transform: translateX(50%); }
 
-/* ====== 57. RESPONSIVE ====== */
+/* ====== 58. RESPONSIVE ====== */
 @media (max-width: 400px) {
     .mining-stats-legendary { gap: 10px; }
     .stat-orb { width: 80px; height: 80px; }
@@ -3961,27 +4016,20 @@ input:checked + .toggle-slider:before {
     .mini-reel { width: 35px; height: 50px; font-size: 1.4rem; }
 }
 
-/* ====== 58. ANIMATION CLASSES ====== */
+/* ====== 59. ANIMATION CLASSES ====== */
 .slideIn { animation: slideIn 0.4s ease; }
 .slideUpModal { animation: slideUpModal 0.4s ease; }
-.slideDown { animation: slideDown 0.4s ease; }
-.slideLeft { animation: slideLeft 0.4s ease; }
-.slideRight { animation: slideRight 0.4s ease; }
 .scaleIn { animation: scaleIn 0.3s ease; }
-.scaleOut { animation: scaleOut 0.3s ease; }
 .pop { animation: pop 0.3s ease; }
-.popBig { animation: popBig 0.3s ease; }
 .shake { animation: shake 0.5s ease; }
-.shakeIntense { animation: shakeIntense 0.5s ease; }
 .fadeIn { animation: fadeIn 0.3s ease; }
-.fadeOut { animation: fadeOut 0.3s ease; }
 
-/* ====== 59. CUSTOM SCROLLBAR ====== */
+/* ====== 60. CUSTOM SCROLLBAR ====== */
 ::-webkit-scrollbar { width: 0px; background: transparent; }
 
-/* ====== 60. FOCUS STYLES ====== */
+/* ====== 61. FOCUS STYLES ====== */
 :focus { outline: none; }
 :focus-visible { outline: 2px solid var(--ton-cyan); outline-offset: 2px; }
 
-/* ====== 61. SELECTION ====== */
+/* ====== 62. SELECTION ====== */
 ::selection { background: var(--ton-cyan); color: var(--bg-primary); }
