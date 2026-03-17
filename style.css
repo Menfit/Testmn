@@ -1,8 +1,10 @@
 /* ============================================
-   TON MINING CASINO - LEGENDARY DESIGN SYSTEM v5000.0
+   TON MINING CASINO - LEGENDARY DESIGN SYSTEM v6000.0
    ULTIMATE EDITION - COMPLETE STYLING
    مع جميع التصميمات والتأثيرات البصرية والحركية الأسطورية
-   + صفحات الكازينو المنفصلة (Wheel & Slots)
+   + تحسينات 3D للعجلة والسلوت
+   + إصلاح مشاكل Z-index
+   + تأثيرات جزيئات احتفالية
    ============================================ */
 
 /* ====== 1. CSS VARIABLES - نظام ألوان متناسق وفخم ====== */
@@ -110,15 +112,16 @@
     --transition-normal: 0.3s ease;
     --transition-slow: 0.5s ease;
     
-    /* طبقات */
-    --z-index-modal: 2000;
-    --z-index-toast: 1900;
+    /* طبقات - Z-index hierarchy */
+    --z-index-base: 1;
     --z-index-header: 100;
     --z-index-nav: 90;
     --z-index-float: 150;
-    --z-index-popup: 3000;
-    --z-index-jackpot: 4000;
-    --z-index-error: 5000;
+    --z-index-modal: 10000;
+    --z-index-toast: 20000;
+    --z-index-popup: 30000;
+    --z-index-jackpot: 2147483647; /* أقصى قيمة ممكنة */
+    --z-index-error: 2147483646;
     --z-index-cosmic: 1;
 }
 
@@ -296,8 +299,10 @@
 /* ====== 4. JACKPOT POPUP ANIMATIONS - تأثيرات الجاكبوت الأسطورية ====== */
 
 @keyframes jackpotPopIn {
-    0% { transform: scale(0.2) rotate(-10deg); opacity: 0; }
-    50% { transform: scale(1.2) rotate(5deg); opacity: 1; }
+    0% { transform: scale(0.1) rotate(-30deg); opacity: 0; }
+    40% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+    60% { transform: scale(0.95) rotate(-5deg); }
+    80% { transform: scale(1.05) rotate(2deg); }
     100% { transform: scale(1) rotate(0); opacity: 1; }
 }
 
@@ -325,9 +330,10 @@
 /* ====== 5. WIN POPUP ANIMATIONS - تأثيرات فوز احترافية ====== */
 
 @keyframes winPopupIn {
-    0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
-    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
-    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    0% { transform: translate(-50%, -50%) scale(0.1) rotate(-20deg); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.2) rotate(10deg); opacity: 1; }
+    75% { transform: translate(-50%, -50%) scale(0.95) rotate(-5deg); }
+    100% { transform: translate(-50%, -50%) scale(1) rotate(0); opacity: 1; }
 }
 
 @keyframes bigWinFlash {
@@ -351,14 +357,19 @@
 
 @keyframes pointerBounce {
     0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(-8px); }
+    50% { transform: translateX(-50%) translateY(-10px); }
+}
+
+@keyframes pointerDance {
+    0% { transform: translateX(-50%) translateY(0) rotate(-2deg); }
+    100% { transform: translateX(-50%) translateY(-10px) rotate(2deg); }
 }
 
 @keyframes wheelBounce {
     0% { transform: rotate(var(--current-rotation)); }
-    25% { transform: rotate(calc(var(--current-rotation) + 3deg)); }
-    50% { transform: rotate(calc(var(--current-rotation) - 2deg)); }
-    75% { transform: rotate(calc(var(--current-rotation) + 1deg)); }
+    25% { transform: rotate(calc(var(--current-rotation) + 5deg)); }
+    50% { transform: rotate(calc(var(--current-rotation) - 3deg)); }
+    75% { transform: rotate(calc(var(--current-rotation) + 2deg)); }
     100% { transform: rotate(var(--current-rotation)); }
 }
 
@@ -370,6 +381,26 @@
 @keyframes cosmicRotate {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+@keyframes wheelFloat {
+    0%, 100% { transform: rotateX(2deg) translateY(0); }
+    50% { transform: rotateX(0deg) translateY(-5px); }
+}
+
+@keyframes centerSpin {
+    0% { transform: translate(-50%, -50%) translateZ(30px) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) translateZ(30px) rotate(360deg); }
+}
+
+@keyframes centerPulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(255,215,0,0.3), 0 0 0 8px rgba(255,215,0,0.1), 0 0 50px gold; }
+    50% { box-shadow: 0 0 0 6px rgba(255,215,0,0.5), 0 0 0 12px rgba(255,215,0,0.2), 0 0 80px gold; }
+}
+
+@keyframes winningPulse {
+    0% { transform: rotate(var(--rotation)) scale(1.1) translateZ(30px); }
+    100% { transform: rotate(var(--rotation)) scale(1.15) translateZ(40px); }
 }
 
 /* ====== 8. SLOTS PRO ANIMATIONS - تأثيرات السلوت المحسّنة ====== */
@@ -385,8 +416,8 @@
 }
 
 @keyframes winLineFlash {
-    0%, 100% { opacity: 1; box-shadow: 0 0 20px #ffdd00, 0 0 40px #ff6600; }
-    50% { opacity: 0.8; box-shadow: 0 0 30px #ffdd00, 0 0 60px #ff6600; }
+    0%, 100% { opacity: 1; box-shadow: 0 0 30px #ffdd00, 0 0 60px #ff6600; }
+    50% { opacity: 0.8; box-shadow: 0 0 50px #ffdd00, 0 0 100px #ff6600, 0 0 150px #ff4444; }
 }
 
 @keyframes winPulse {
@@ -396,11 +427,11 @@
 
 @keyframes reelBounce {
     0% { transform: translateY(0); }
-    20% { transform: translateY(-8px); }
-    40% { transform: translateY(4px); }
-    60% { transform: translateY(-3px); }
-    80% { transform: translateY(2px); }
-    100% { transform: translateY(0); }
+    20% { transform: translateY(-15px) scale(1.02); }
+    40% { transform: translateY(8px) scale(0.98); }
+    60% { transform: translateY(-5px) scale(1.01); }
+    80% { transform: translateY(2px) scale(0.99); }
+    100% { transform: translateY(0) scale(1); }
 }
 
 @keyframes particleExplode {
@@ -409,43 +440,17 @@
         opacity: 1;
     }
     100% {
-        transform: translate(var(--tx), var(--ty)) scale(0);
+        transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0);
         opacity: 0;
     }
 }
 
-/* ====== 9. CASINO PAGES ANIMATIONS - تأثيرات الصفحات المنفصلة ====== */
-
-@keyframes pageSlideIn {
-    from {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+@keyframes winGlow {
+    0% { text-shadow: 0 0 20px currentColor, 0 0 40px currentColor; }
+    100% { text-shadow: 0 0 40px currentColor, 0 0 80px currentColor, 0 0 120px gold; }
 }
 
-@keyframes buttonGlow {
-    0%, 100% {
-        box-shadow: 0 0 15px currentColor;
-    }
-    50% {
-        box-shadow: 0 0 30px currentColor, 0 0 45px currentColor;
-    }
-}
-
-@keyframes spinButtonPulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-}
-
-/* ====== 10. RESET & BASE ====== */
+/* ====== 9. RESET & BASE ====== */
 * {
     margin: 0;
     padding: 0;
@@ -462,6 +467,8 @@ body {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    touch-action: manipulation; /* تحسين للمس */
+    -webkit-tap-highlight-color: transparent;
 }
 
 body::before {
@@ -470,15 +477,15 @@ body::before {
     inset: 0;
     background: var(--bg-legendary);
     pointer-events: none;
-    z-index: -1;
+    z-index: var(--z-index-base);
 }
 
-/* ====== 11. LOADING SCREEN ====== */
+/* ====== 10. LOADING SCREEN ====== */
 .loading-overlay {
     position: fixed;
     inset: 0;
     background: var(--bg-primary);
-    z-index: 9999;
+    z-index: 999999;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -539,14 +546,14 @@ body::before {
     animation: gradientFlow 3s ease infinite;
 }
 
-/* ====== 12. JACKPOT POPUP - التصميم الأسطوري المحسن ====== */
+/* ====== 11. JACKPOT POPUP - التصميم الأسطوري المحسن ====== */
 .jackpot-popup {
-    position: fixed;
+    position: fixed !important;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: var(--z-index-jackpot);
+    z-index: var(--z-index-jackpot) !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -577,23 +584,24 @@ body::before {
     position: relative;
     width: 85%;
     max-width: 380px;
-    background: var(--gradient-jackpot);
-    border: 4px solid gold;
+    background: linear-gradient(145deg, #ffd700, #ff8c00, #ff4500, #ff8c00, #ffd700);
+    background-size: 300% 300%;
+    border: 6px solid gold;
     border-radius: var(--radius-2xl);
     padding: 30px 20px;
     text-align: center;
     box-shadow: var(--shadow-jackpot);
-    transform: scale(0.2) rotate(-10deg);
+    transform: scale(0.1) rotate(-30deg);
     opacity: 0;
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    z-index: 2;
-    animation: jackpotGlow 2s infinite;
+    z-index: calc(var(--z-index-jackpot) + 1);
+    animation: jackpotGlow 2s infinite, gradientFlow 3s ease infinite;
 }
 
 .jackpot-popup.show .jackpot-content {
     transform: scale(1) rotate(0);
     opacity: 1;
-    animation: jackpotPopIn 0.5s ease, jackpotGlow 2s infinite;
+    animation: jackpotPopIn 0.5s ease, jackpotGlow 2s infinite, gradientFlow 3s ease infinite;
 }
 
 .jackpot-stars {
@@ -654,6 +662,8 @@ body::before {
     box-shadow: 0 0 20px gold;
     position: relative;
     overflow: hidden;
+    touch-action: manipulation;
+    font-size: 16px; /* منع zoom على iOS */
 }
 
 .jackpot-ok-btn::before {
@@ -677,7 +687,7 @@ body::before {
     display: none;
 }
 
-/* ====== 13. APP CONTAINER ====== */
+/* ====== 12. APP CONTAINER ====== */
 .app {
     height: 100vh;
     display: flex;
@@ -690,13 +700,13 @@ body::before {
     box-shadow: 0 0 50px rgba(0,0,0,0.5);
 }
 
-/* ====== 14. WELCOME STICKER ====== */
+/* ====== 13. WELCOME STICKER ====== */
 .welcome-sticker {
     position: fixed;
     top: 70px;
     right: 20px;
     font-size: 3rem;
-    z-index: 1000;
+    z-index: var(--z-index-float);
     pointer-events: none;
     filter: drop-shadow(0 0 20px rgba(0,242,255,0.5));
     animation: float 3s infinite ease-in-out;
@@ -705,9 +715,9 @@ body::before {
 .welcome-sticker.sticker-pop { animation: pop 0.5s ease; }
 .welcome-sticker.sticker-shake { animation: shake 0.5s ease; }
 
-/* ====== 15. FLOATING NOTIFICATION ====== */
+/* ====== 14. FLOATING NOTIFICATION ====== */
 .floating-notification {
-    position: fixed;
+    position: fixed !important;
     top: 60px;
     left: 50%;
     transform: translateX(-50%);
@@ -719,7 +729,7 @@ body::before {
     color: var(--text-primary);
     font-weight: 600;
     font-size: 0.85rem;
-    z-index: 1000;
+    z-index: var(--z-index-toast) !important;
     opacity: 0;
     transition: opacity 0.3s ease, transform 0.3s ease;
     white-space: nowrap;
@@ -739,7 +749,7 @@ body::before {
 .floating-notification.error { border-color: #ef4444; box-shadow: 0 0 20px rgba(239,68,68,0.3); }
 .floating-notification.warning { border-color: #fbbf24; box-shadow: 0 0 20px rgba(251,191,36,0.3); }
 
-/* ====== 16. AUTO-CLICKER TURBINE BUTTON ====== */
+/* ====== 15. AUTO-CLICKER TURBINE BUTTON ====== */
 .auto-clicker-turbine {
     position: fixed;
     top: 90px;
@@ -761,6 +771,7 @@ body::before {
     transition: all 0.3s ease;
     border: 1px solid rgba(0,242,255,0.3);
     overflow: hidden;
+    touch-action: manipulation;
 }
 
 .auto-clicker-turbine.show {
@@ -816,7 +827,7 @@ body::before {
 
 .auto-clicker-turbine:hover .auto-clicker-tooltip { opacity: 1; }
 
-/* ====== 17. HEADER ====== */
+/* ====== 16. HEADER ====== */
 .glass-header {
     padding: 10px 15px;
     background: rgba(20, 25, 35, 0.95);
@@ -852,6 +863,7 @@ body::before {
     box-shadow: 0 0 15px rgba(0,242,255,0.3);
     cursor: pointer;
     transition: all 0.3s ease;
+    touch-action: manipulation;
 }
 
 .user-avatar:hover {
@@ -913,6 +925,7 @@ body::before {
     transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
+    touch-action: manipulation;
 }
 
 .balance-chip::before {
@@ -949,6 +962,7 @@ body::before {
     align-items: center;
     justify-content: center;
     position: relative;
+    touch-action: manipulation;
 }
 
 .icon-btn:hover {
@@ -977,7 +991,7 @@ body::before {
 
 #langIcon { font-size: 1.1rem; }
 
-/* ====== 18. MAIN CONTENT ====== */
+/* ====== 17. MAIN CONTENT ====== */
 .main-content {
     flex: 1;
     overflow-y: auto;
@@ -1019,7 +1033,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     padding-left: 10px;
 }
 
-/* ====== 19. BOTTOM NAVIGATION ====== */
+/* ====== 18. BOTTOM NAVIGATION ====== */
 .bottom-nav-legendary {
     position: fixed;
     bottom: 0;
@@ -1054,6 +1068,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     position: relative;
     padding: 6px 10px;
     width: 25%;
+    touch-action: manipulation;
 }
 
 .nav-icon {
@@ -1105,7 +1120,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .nav-label { transition: var(--transition-fast); font-weight: 600; letter-spacing: 0.3px; font-size: 0.7rem; }
 .nav-item:hover .nav-label { color: var(--text-accent); }
 
-/* ====== 20. MINING HERO - توربينات الرياح المحسنة ====== */
+/* ====== 19. MINING HERO - توربينات الرياح المحسنة ====== */
 .mining-hero {
     position: relative;
     height: 220px;
@@ -1453,7 +1468,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     50% { transform: scale(1.2); opacity: 0.8; }
 }
 
-/* ====== 21. MINING STATS ORBS ====== */
+/* ====== 20. MINING STATS ORBS ====== */
 .mining-stats-legendary {
     display: flex;
     align-items: center;
@@ -1477,6 +1492,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     transition: var(--transition-fast);
     cursor: pointer;
     overflow: hidden;
+    touch-action: manipulation;
 }
 
 .stat-orb:hover {
@@ -1508,7 +1524,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .orb-value { font-size: 1.4rem; font-weight: 800; color: var(--text-primary); line-height: 1; }
 .orb-label { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
 
-/* ====== 22. LEGENDARY PROGRESS BAR ====== */
+/* ====== 21. LEGENDARY PROGRESS BAR ====== */
 .legendary-progress {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -1603,7 +1619,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .next-reward .label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
 .next-reward .value { font-size: 1.3rem; font-weight: 800; color: var(--text-gold); }
 
-/* ====== 23. CLAIM BUTTON ====== */
+/* ====== 22. CLAIM BUTTON ====== */
 .claim-btn-legendary {
     padding: 12px 30px;
     background: var(--gradient-legendary);
@@ -1624,6 +1640,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     pointer-events: none;
     box-shadow: 0 0 30px rgba(0,242,255,0.2);
     animation: gradientFlow 3s ease infinite;
+    touch-action: manipulation;
 }
 
 .claim-btn-legendary:not(:disabled) {
@@ -1637,7 +1654,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     box-shadow: 0 0 40px rgba(0,242,255,0.4);
 }
 
-/* ====== 24. AUTO MINER STATUS ====== */
+/* ====== 23. AUTO MINER STATUS ====== */
 .auto-miner-status {
     background: rgba(0,242,255,0.1);
     border: 1px solid rgba(0,242,255,0.3);
@@ -1655,7 +1672,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 
 .auto-miner-status i { font-size: 1.1rem; }
 
-/* ====== 25. SECTION STYLES ====== */
+/* ====== 24. SECTION STYLES ====== */
 .legendary-section { margin-top: 25px; position: relative; }
 
 .section-header {
@@ -1689,6 +1706,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     transition: var(--transition-fast);
     padding: 4px 8px;
     border-radius: var(--radius-full);
+    touch-action: manipulation;
 }
 
 .section-action:hover {
@@ -1696,7 +1714,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     transform: translateX(-3px);
 }
 
-/* ====== 26. ACTIVE MACHINES GRID ====== */
+/* ====== 25. ACTIVE MACHINES GRID ====== */
 .active-machines-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -1780,7 +1798,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .machine-yield { color: var(--text-gold); font-weight: 700; }
 .machine-status { color: #22c55e; font-size: 0.75rem; display: flex; align-items: center; gap: 3px; }
 
-/* ====== 27. PLANS TABLE ====== */
+/* ====== 26. PLANS TABLE ====== */
 .plans-table-legendary {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -1815,7 +1833,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .legendary-table td:first-child i { margin-right: 6px; color: var(--ton-cyan); }
 .return-text { color: #22c55e; font-size: 0.75rem; }
 
-/* ====== 28. ACTIVITY FEED ====== */
+/* ====== 27. ACTIVITY FEED ====== */
 .activity-feed {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -1850,7 +1868,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .activity-time { font-size: 0.7rem; color: var(--text-secondary); }
 .activity-amount { font-weight: 700; color: var(--text-gold); font-size: 0.9rem; }
 
-/* ====== 29. MARKET PAGE ====== */
+/* ====== 28. MARKET PAGE ====== */
 .market-filters-legendary {
     display: flex;
     gap: 8px;
@@ -1876,13 +1894,14 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     display: flex;
     align-items: center;
     gap: 4px;
+    touch-action: manipulation;
 }
 
 .filter-btn i { font-size: 1rem; }
 .filter-btn:hover { border-color: var(--ton-cyan); color: var(--text-accent); }
 .filter-btn.active { background: var(--gradient-primary); color: white; border-color: transparent; box-shadow: var(--shadow-glow); }
 
-/* ====== 30. MACHINES SHOWCASE ====== */
+/* ====== 29. MACHINES SHOWCASE ====== */
 .machines-showcase-legendary {
     display: flex;
     flex-direction: column;
@@ -1989,6 +2008,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     text-align: center;
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .plan-card-mini:hover {
@@ -2001,7 +2021,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .plan-card-mini.free .price { color: #22c55e; }
 .plan-card-mini .return { font-size: 0.7rem; color: #22c55e; }
 
-/* ====== 31. CASINO PAGE ====== */
+/* ====== 30. CASINO PAGE ====== */
 .casino-card {
     background: var(--gradient-casino);
     border: 1px solid var(--glass-border-strong);
@@ -2012,6 +2032,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    touch-action: manipulation;
 }
 
 .casino-card:hover {
@@ -2255,6 +2276,7 @@ input:checked + .toggle-slider:before {
     text-align: center;
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .pack-card:hover {
@@ -2327,6 +2349,8 @@ input:checked + .toggle-slider:before {
     font-size: 1rem;
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
+    font-size: 16px; /* منع zoom على iOS */
 }
 
 .casino-play-btn:hover {
@@ -2364,7 +2388,7 @@ input:checked + .toggle-slider:before {
 .winner-name { color: var(--text-accent); font-weight: 600; }
 .winner-amount { color: var(--text-gold); font-weight: 700; }
 
-/* ====== 32. CASINO PAGES HEADER (للصفحات المنفصلة) ====== */
+/* ====== 31. CASINO PAGES HEADER ====== */
 .casino-page-header {
     display: flex;
     align-items: center;
@@ -2392,6 +2416,7 @@ input:checked + .toggle-slider:before {
     transition: var(--transition-fast);
     padding: 8px 12px;
     border-radius: var(--radius-full);
+    touch-action: manipulation;
 }
 
 .back-btn:hover {
@@ -2413,6 +2438,7 @@ input:checked + .toggle-slider:before {
     display: flex;
     align-items: center;
     justify-content: center;
+    touch-action: manipulation;
 }
 
 .game-info-btn:hover {
@@ -2438,7 +2464,7 @@ input:checked + .toggle-slider:before {
     color: var(--ton-cyan);
 }
 
-/* ====== 33. WHEEL PAGE ====== */
+/* ====== 32. WHEEL PAGE - التصميم 3D المحسن ====== */
 .wheel-page-container {
     position: relative;
     width: 100%;
@@ -2447,6 +2473,7 @@ input:checked + .toggle-slider:before {
     display: flex;
     flex-direction: column;
     align-items: center;
+    perspective: 1200px;
 }
 
 .wheel-page {
@@ -2461,6 +2488,12 @@ input:checked + .toggle-slider:before {
         0 0 0 8px #1a1a2a,
         0 0 60px rgba(0,242,255,0.4),
         inset 0 0 40px rgba(0,0,0,0.5);
+    transform-style: preserve-3d;
+    transition: transform 0.1s linear;
+    filter: drop-shadow(0 0 30px rgba(0,242,255,0.3));
+    animation: wheelFloat 3s infinite ease-in-out;
+    will-change: transform;
+    backface-visibility: hidden;
 }
 
 .wheel-page.spinning-fast {
@@ -2479,67 +2512,80 @@ input:checked + .toggle-slider:before {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding-top: 30px;
+    padding-top: 25px;
     color: white;
     font-weight: 800;
-    font-size: 0.95rem;
-    text-shadow: 0 0 10px rgba(0,0,0,0.9);
+    font-size: 0.9rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
     border-right: 3px solid rgba(255,255,255,0.4);
-    box-shadow: inset 0 0 20px rgba(255,255,255,0.2);
+    box-shadow: inset 0 -10px 20px rgba(0,0,0,0.6), inset 0 10px 20px rgba(255,255,255,0.2);
     z-index: 5;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    will-change: transform;
 }
 
 .wheel-segment-pro:hover {
-    filter: brightness(1.3) !important;
-    z-index: 10 !important;
+    transform: rotate(var(--rotation)) scale(1.02) translateZ(5px);
+    filter: brightness(1.3);
+    z-index: 10;
+}
+
+.wheel-segment-pro.winning {
+    animation: winningPulse 0.5s infinite alternate;
+    z-index: 100 !important;
+    filter: brightness(1.5) drop-shadow(0 0 30px gold) !important;
 }
 
 .wheel-segment-pro span:first-child {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     margin-bottom: 5px;
-    filter: drop-shadow(0 0 8px currentColor);
+    filter: drop-shadow(0 0 10px currentColor);
+    transform: translateZ(10px);
 }
 
 .wheel-segment-pro span:last-child {
-    font-size: 0.85rem;
-    background: rgba(0,0,0,0.6);
+    font-size: 0.9rem;
+    background: rgba(0,0,0,0.7);
     padding: 4px 12px;
     border-radius: 20px;
     border: 1px solid currentColor;
+    box-shadow: 0 0 15px currentColor;
+    transform: translateZ(10px);
 }
 
 .wheel-center-pro {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80px;
-    height: 80px;
-    background: radial-gradient(circle, #2a2a3a 0%, #1a1a2a 100%);
+    transform: translate(-50%, -50%) translateZ(30px);
+    width: 90px;
+    height: 90px;
+    background: radial-gradient(circle, #ffd700 0%, #ff8c00 50%, #ff4500 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.5rem;
-    color: gold;
+    font-size: 3rem;
+    color: white;
     border: 4px solid gold;
-    box-shadow: 0 0 30px gold, inset 0 0 20px rgba(255,215,0,0.3);
+    box-shadow: 0 0 0 10px rgba(255,215,0,0.3), 0 0 50px gold;
     z-index: 20;
-    text-shadow: 0 0 10px orange;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    animation: centerSpin 10s infinite linear, centerPulse 2s infinite;
 }
 
 .wheel-pointer-pro {
     position: absolute;
-    top: -20px;
+    top: -25px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 3rem;
-    color: #ffd700;
-    filter: drop-shadow(0 0 10px orange) drop-shadow(0 0 20px red);
+    font-size: 3.5rem;
+    color: gold;
+    filter: drop-shadow(0 0 20px gold) drop-shadow(0 0 40px orange);
     z-index: 30;
-    animation: pointerBounce 1s infinite alternate;
-    text-shadow: 0 0 10px rgba(0,0,0,0.8);
+    animation: pointerDance 0.5s infinite alternate;
+    text-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
 .wheel-jackpot-counter-page {
@@ -2552,6 +2598,7 @@ input:checked + .toggle-slider:before {
     border-radius: var(--radius-full);
     border: 1px solid rgba(251,191,36,0.3);
     box-shadow: 0 0 20px rgba(251,191,36,0.2);
+    animation: gentlePulse 2s infinite;
 }
 
 .wheel-controls-page {
@@ -2578,6 +2625,8 @@ input:checked + .toggle-slider:before {
     position: relative;
     overflow: hidden;
     box-shadow: 0 0 20px currentColor;
+    touch-action: manipulation;
+    font-size: 16px; /* منع zoom على iOS */
 }
 
 .wheel-btn-page::before {
@@ -2666,13 +2715,14 @@ input:checked + .toggle-slider:before {
     max-width: 350px;
     backdrop-filter: blur(5px);
     animation: shake 0.5s ease;
+    z-index: var(--z-index-error) !important;
 }
 
 .error-message-page.hidden {
     display: none;
 }
 
-/* ====== 34. SLOTS PAGE ====== */
+/* ====== 33. SLOTS PAGE - التصميم 3D المحسن ====== */
 .slots-page-container {
     width: 100%;
     max-width: 450px;
@@ -2712,20 +2762,31 @@ input:checked + .toggle-slider:before {
     position: relative;
     width: 110px;
     height: 360px;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+    box-shadow: 
+        inset 0 0 20px rgba(0,0,0,0.8),
+        0 0 0 2px #3a3a4a,
+        0 0 0 4px #1a1a2e;
 }
 
 .slot-reel-page {
     width: 100%;
     height: 100%;
     background: linear-gradient(145deg, #2a2a3a, #1a1a2a);
-    border-radius: 20px;
-    border: 3px solid #3a3a4a;
     overflow: hidden;
     position: relative;
     box-shadow: 
-        0 0 30px rgba(0,0,0,0.6),
-        inset 0 0 30px rgba(0,0,0,0.4);
+        0 0 0 2px #3a3a4a,
+        0 0 0 4px #2a2a3a,
+        0 0 30px rgba(0,242,255,0.2),
+        inset 0 0 30px rgba(0,0,0,0.5);
     will-change: transform;
+    transform-style: preserve-3d;
+    transition: transform 0.05s linear;
 }
 
 .slot-reel-page::before {
@@ -2745,7 +2806,7 @@ input:checked + .toggle-slider:before {
 
 .slot-reel-wrapper-page.spinning .slot-reel-page {
     border-color: #00f2ff;
-    box-shadow: 0 0 40px rgba(0,242,255,0.5);
+    box-shadow: 0 0 0 2px #00f2ff, 0 0 0 4px #0088cc, 0 0 40px rgba(0,242,255,0.5);
 }
 
 .win-line {
@@ -2753,19 +2814,19 @@ input:checked + .toggle-slider:before {
     top: 50%;
     left: 0;
     right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, transparent, #ffdd00, #ff6600, #ffdd00, transparent);
+    height: 6px;
+    background: linear-gradient(90deg, transparent, #ffdd00, #ff6600, #ff4444, #ff6600, #ffdd00, transparent);
     transform: translateY(-50%);
-    z-index: 15;
+    z-index: 30;
     opacity: 0;
     transition: opacity 0.3s ease;
-    box-shadow: 0 0 30px #ffdd00, 0 0 60px #ff6600;
+    box-shadow: 0 0 30px #ffdd00, 0 0 60px #ff6600, 0 0 90px #ff4444;
     border-radius: 2px;
 }
 
 .win-line.active {
     opacity: 1;
-    animation: winLineFlash 0.5s ease infinite;
+    animation: winLineFlash 0.2s infinite;
 }
 
 .slot-symbol-page {
@@ -2777,20 +2838,42 @@ input:checked + .toggle-slider:before {
     font-size: 3.5rem;
     background: rgba(0,0,0,0.2);
     border-bottom: 1px solid rgba(255,255,255,0.05);
-    text-shadow: 0 0 20px currentColor;
+    text-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
     transition: all 0.2s ease;
     will-change: transform, filter;
+    transform: translateZ(10px);
+    transform-origin: center bottom;
+    filter: brightness(0.9);
+}
+
+.slot-symbol-page:nth-child(even) {
+    transform: rotateX(-10deg);
+    transform-origin: center top;
+}
+
+.slot-symbol-page:nth-child(odd) {
+    transform: rotateX(10deg);
+    transform-origin: center bottom;
 }
 
 .slot-symbol-page.winning-symbol {
-    animation: winPulse 0.5s ease infinite;
-    transform: scale(1.2);
-    filter: brightness(1.5) drop-shadow(0 0 30px currentColor);
-    z-index: 5;
+    transform: scale(1.3) translateZ(30px);
+    filter: brightness(1.5);
+    z-index: 20;
+    animation: winGlow 0.3s infinite alternate;
 }
 
 .reel-stop-bounce {
-    animation: reelBounce 0.4s ease;
+    animation: reelStopPro 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes reelStopPro {
+    0% { transform: translateY(0); }
+    20% { transform: translateY(-15px) scale(1.02); }
+    40% { transform: translateY(8px) scale(0.98); }
+    60% { transform: translateY(-5px) scale(1.01); }
+    80% { transform: translateY(2px) scale(0.99); }
+    100% { transform: translateY(0) scale(1); }
 }
 
 .slot-controls-page {
@@ -2818,6 +2901,8 @@ input:checked + .toggle-slider:before {
     overflow: hidden;
     text-transform: uppercase;
     letter-spacing: 1px;
+    touch-action: manipulation;
+    font-size: 16px; /* منع zoom على iOS */
 }
 
 .slot-btn-page::before {
@@ -2840,6 +2925,11 @@ input:checked + .toggle-slider:before {
     padding: 20px 35px;
     min-width: 150px;
     animation: spinButtonPulse 2s infinite;
+}
+
+@keyframes spinButtonPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
 }
 
 .slot-btn-page.spin:hover:not(:disabled) {
@@ -2914,23 +3004,24 @@ input:checked + .toggle-slider:before {
     color: var(--text-gold);
 }
 
-/* ====== 35. WIN POPUP ====== */
+/* ====== 34. WIN POPUP ====== */
 .win-popup {
-    position: fixed;
+    position: fixed !important;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.3);
+    transform: translate(-50%, -50%) scale(0.1) rotate(-20deg);
     background: linear-gradient(145deg, #1e1f2a, #0f1018);
-    border: 3px solid var(--ton-gold);
+    border: 4px solid var(--ton-gold);
     border-radius: var(--radius-2xl);
     padding: 30px 50px;
-    z-index: var(--z-index-popup);
+    z-index: var(--z-index-popup) !important;
     text-align: center;
-    box-shadow: 0 0 60px rgba(251,191,36,0.4);
+    box-shadow: 0 0 100px rgba(0,0,0,0.8), 0 0 50px currentColor;
     opacity: 0;
     transition: all 0.3s ease;
     min-width: 280px;
     pointer-events: none;
+    backdrop-filter: blur(20px);
 }
 
 .win-popup.show {
@@ -2974,10 +3065,29 @@ input:checked + .toggle-slider:before {
 }
 
 .win-popup.jackpot {
-    border-color: var(--ton-red);
+    border-color: gold;
     border-width: 5px;
+    background: linear-gradient(145deg, #000, #1a0000);
     box-shadow: 0 0 80px rgba(239,68,68,0.5);
-    animation: jackpotFlash 0.5s infinite;
+    animation: winPopupLegendary 0.5s ease;
+}
+
+@keyframes winPopupLegendary {
+    0% {
+        transform: translate(-50%, -50%) scale(0.1) rotate(-20deg);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2) rotate(10deg);
+        opacity: 1;
+    }
+    75% {
+        transform: translate(-50%, -50%) scale(0.95) rotate(-5deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(0);
+        opacity: 1;
+    }
 }
 
 .win-popup.jackpot .win-icon {
@@ -3030,7 +3140,7 @@ input:checked + .toggle-slider:before {
     animation-delay: 0.5s;
 }
 
-/* ====== 36. PROFILE PAGE ====== */
+/* ====== 35. PROFILE PAGE ====== */
 .wallet-card-legendary {
     background: var(--gradient-legendary);
     background-size: 200% 200%;
@@ -3109,6 +3219,7 @@ input:checked + .toggle-slider:before {
     transition: var(--transition-fast);
     backdrop-filter: blur(5px);
     white-space: nowrap;
+    touch-action: manipulation;
 }
 
 .wallet-action-btn:hover {
@@ -3121,7 +3232,7 @@ input:checked + .toggle-slider:before {
 .wallet-action-btn.swap i { color: var(--ton-cyan); }
 .wallet-action-btn.history i { color: #8855ff; }
 
-/* ====== 37. TON CONNECT CARD ====== */
+/* ====== 36. TON CONNECT CARD ====== */
 .ton-connect-card-legendary {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3167,7 +3278,7 @@ input:checked + .toggle-slider:before {
 .connected-wallet-info .address { font-family: monospace; color: var(--text-accent); font-size: 0.8rem; }
 .connected-wallet-info .balance { font-weight: 700; color: var(--text-gold); }
 
-/* ====== 38. ASSETS LIST ====== */
+/* ====== 37. ASSETS LIST ====== */
 .assets-list-legendary {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3251,7 +3362,7 @@ input:checked + .toggle-slider:before {
     white-space: nowrap;
 }
 
-/* ====== 39. STATS COMPACT ====== */
+/* ====== 38. STATS COMPACT ====== */
 .stats-compact {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -3280,7 +3391,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-accent);
 }
 
-/* ====== 40. CHART ====== */
+/* ====== 39. CHART ====== */
 .chart-container {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3327,7 +3438,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-secondary);
 }
 
-/* ====== 41. REFERRAL SECTION ====== */
+/* ====== 40. REFERRAL SECTION ====== */
 .referral-section {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3377,6 +3488,7 @@ input:checked + .toggle-slider:before {
     color: white;
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .copy-btn:hover { transform: scale(1.05); box-shadow: var(--shadow-glow); }
@@ -3399,7 +3511,7 @@ input:checked + .toggle-slider:before {
     font-weight: 600;
 }
 
-/* ====== 42. LEADERBOARD ====== */
+/* ====== 41. LEADERBOARD ====== */
 .leaderboard {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3427,7 +3539,7 @@ input:checked + .toggle-slider:before {
 .name { flex: 1; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .earnings { font-weight: 700; color: var(--text-accent); white-space: nowrap; }
 
-/* ====== 43. REFERRAL MILESTONES GRID ====== */
+/* ====== 42. REFERRAL MILESTONES GRID ====== */
 .referral-milestones-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -3480,14 +3592,14 @@ input:checked + .toggle-slider:before {
 
 .claimed-badge { color: #22c55e; font-size: 0.7rem; }
 
-/* ====== 44. MODALS GENERAL ====== */
+/* ====== 43. MODALS GENERAL ====== */
 .modal {
     display: none !important;
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.8);
     backdrop-filter: blur(10px);
-    z-index: var(--z-index-modal);
+    z-index: var(--z-index-modal) !important;
     align-items: center;
     justify-content: center;
     padding: var(--spacing-lg);
@@ -3545,6 +3657,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-secondary);
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .refresh-btn:hover, .clear-btn:hover { border-color: var(--ton-cyan); color: var(--text-accent); transform: rotate(180deg); }
@@ -3561,13 +3674,14 @@ input:checked + .toggle-slider:before {
     display: flex;
     align-items: center;
     justify-content: center;
+    touch-action: manipulation;
 }
 
 .close-btn:hover { border-color: var(--ton-cyan); color: var(--text-accent); transform: rotate(90deg); }
 
 .modal-body { padding: 16px; max-height: calc(85vh - 70px); overflow-y: auto; }
 
-/* ====== 45. PAYMENT OPTIONS ====== */
+/* ====== 44. PAYMENT OPTIONS ====== */
 .payment-options-legendary { margin: 15px 0; }
 
 .payment-option-title { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 10px; }
@@ -3583,6 +3697,7 @@ input:checked + .toggle-slider:before {
     margin-bottom: 8px;
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .payment-option:hover { border-color: var(--ton-cyan); background: rgba(0,242,255,0.05); }
@@ -3616,7 +3731,7 @@ input:checked + .toggle-slider:before {
 .payment-option-desc { font-size: 0.8rem; color: var(--text-secondary); }
 .payment-option-desc .balance-amount { color: var(--text-gold); font-weight: 700; }
 
-/* ====== 46. SWAP MODAL - PancakeSwap Style ====== */
+/* ====== 45. SWAP MODAL - PancakeSwap Style ====== */
 .swap-modal-content { max-width: 400px; }
 
 .swap-field {
@@ -3664,6 +3779,7 @@ input:checked + .toggle-slider:before {
     border-radius: var(--radius-full);
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .swap-currency:hover {
@@ -3705,6 +3821,7 @@ input:checked + .toggle-slider:before {
     color: var(--ton-cyan);
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .swap-switch i:hover {
@@ -3743,6 +3860,7 @@ input:checked + .toggle-slider:before {
     cursor: pointer;
     transition: var(--transition-fast);
     box-shadow: var(--shadow-glow);
+    touch-action: manipulation;
 }
 
 .swap-confirm-btn:hover {
@@ -3750,7 +3868,7 @@ input:checked + .toggle-slider:before {
     box-shadow: 0 0 30px rgba(0,242,255,0.5);
 }
 
-/* ====== 47. CURRENCY SELECTOR MODAL ====== */
+/* ====== 46. CURRENCY SELECTOR MODAL ====== */
 .currency-search {
     position: relative;
     margin-bottom: 15px;
@@ -3786,6 +3904,7 @@ input:checked + .toggle-slider:before {
     border-bottom: 1px solid var(--glass-border);
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .currency-list-item:hover { background: rgba(0,242,255,0.05); }
@@ -3794,7 +3913,7 @@ input:checked + .toggle-slider:before {
 .currency-list-item .currency-info h4 { font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
 .currency-list-item .currency-info p { font-size: 0.8rem; color: var(--text-secondary); }
 
-/* ====== 48. DEPOSIT MODAL ====== */
+/* ====== 47. DEPOSIT MODAL ====== */
 .deposit-address-card-legendary {
     background: rgba(0,0,0,0.3);
     border-radius: var(--radius-xl);
@@ -3827,6 +3946,7 @@ input:checked + .toggle-slider:before {
     cursor: pointer;
     transition: var(--transition-fast);
     flex-shrink: 0;
+    touch-action: manipulation;
 }
 
 .copy-btn-legendary:hover { transform: scale(1.05); box-shadow: var(--shadow-glow); }
@@ -3876,7 +3996,7 @@ input:checked + .toggle-slider:before {
     border-radius: var(--radius-sm);
 }
 
-/* ====== 49. INPUT GROUPS ====== */
+/* ====== 48. INPUT GROUPS ====== */
 .input-group-legendary { margin-bottom: 15px; }
 
 .input-group-legendary label {
@@ -3896,6 +4016,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-primary);
     font-size: 1rem;
     transition: var(--transition-fast);
+    font-size: 16px; /* منع zoom على iOS */
 }
 
 .input-group-legendary input:focus {
@@ -3914,7 +4035,7 @@ input:checked + .toggle-slider:before {
 .validation-hint.valid { color: #22c55e; background: rgba(34,197,94,0.1); }
 .validation-hint.invalid { color: #ef4444; background: rgba(239,68,68,0.1); }
 
-/* ====== 50. WITHDRAW MODAL ====== */
+/* ====== 49. WITHDRAW MODAL ====== */
 .withdraw-icon {
     width: 48px;
     height: 48px;
@@ -3969,7 +4090,7 @@ input:checked + .toggle-slider:before {
 .receive-amount .label { color: var(--text-secondary); }
 .receive-amount .value { font-weight: 700; color: var(--text-success); }
 
-/* ====== 51. CONFIRM BUTTON ====== */
+/* ====== 50. CONFIRM BUTTON ====== */
 .confirm-btn-legendary {
     width: 100%;
     padding: 15px;
@@ -3990,12 +4111,13 @@ input:checked + .toggle-slider:before {
     overflow: hidden;
     animation: gradientFlow 3s ease infinite;
     box-shadow: 0 0 30px rgba(0,242,255,0.3);
+    touch-action: manipulation;
 }
 
 .confirm-btn-legendary:disabled { opacity: 0.5; cursor: not-allowed; animation: none; }
 .confirm-btn-legendary:not(:disabled):hover { transform: scale(1.02); box-shadow: 0 0 40px rgba(0,242,255,0.4); }
 
-/* ====== 52. HISTORY MODAL ====== */
+/* ====== 51. HISTORY MODAL ====== */
 .history-filters {
     display: flex;
     gap: 6px;
@@ -4015,6 +4137,7 @@ input:checked + .toggle-slider:before {
     cursor: pointer;
     transition: var(--transition-fast);
     white-space: nowrap;
+    touch-action: manipulation;
 }
 
 .history-filter.active { background: var(--gradient-primary); color: white; border-color: transparent; box-shadow: var(--shadow-glow); }
@@ -4069,7 +4192,7 @@ input:checked + .toggle-slider:before {
 .history-amount { font-weight: 700; color: var(--text-primary); }
 .history-date { color: var(--text-secondary); font-size: 0.7rem; }
 
-/* ====== 53. NOTIFICATIONS MODAL ====== */
+/* ====== 52. NOTIFICATIONS MODAL ====== */
 .notifications-list { max-height: 350px; overflow-y: auto; }
 
 .notification-item {
@@ -4080,6 +4203,7 @@ input:checked + .toggle-slider:before {
     margin-bottom: 8px;
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .notification-item.unread { border-left: 3px solid var(--ton-cyan); background: rgba(0,242,255,0.05); }
@@ -4104,7 +4228,7 @@ input:checked + .toggle-slider:before {
 .notification-time { font-size: 0.7rem; color: var(--text-secondary); }
 .notification-message { font-size: 0.9rem; color: var(--text-primary); }
 
-/* ====== 54. ADMIN MODAL ====== */
+/* ====== 53. ADMIN MODAL ====== */
 .admin-modal-content { max-width: 450px; }
 
 .admin-tabs {
@@ -4129,6 +4253,7 @@ input:checked + .toggle-slider:before {
     align-items: center;
     justify-content: center;
     gap: 4px;
+    touch-action: manipulation;
 }
 
 .admin-tab .badge {
@@ -4174,6 +4299,7 @@ input:checked + .toggle-slider:before {
     cursor: pointer;
     transition: var(--transition-fast);
     box-shadow: var(--shadow-glow);
+    touch-action: manipulation;
 }
 
 .admin-refresh-btn:hover { transform: scale(1.05); }
@@ -4242,6 +4368,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-secondary);
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .admin-copy-btn:hover { color: var(--text-accent); }
@@ -4262,6 +4389,7 @@ input:checked + .toggle-slider:before {
     font-size: 0.9rem;
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .admin-approve-btn:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(34,197,94,0.3); }
@@ -4277,11 +4405,12 @@ input:checked + .toggle-slider:before {
     font-size: 0.9rem;
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .admin-reject-btn:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(239,68,68,0.3); }
 
-/* ====== 55. REJECT MODAL ====== */
+/* ====== 54. REJECT MODAL ====== */
 .reject-form {
     padding: 16px;
 }
@@ -4304,6 +4433,7 @@ input:checked + .toggle-slider:before {
     margin-bottom: 16px;
     resize: vertical;
     min-height: 100px;
+    font-size: 16px; /* منع zoom على iOS */
 }
 
 .reject-form textarea:focus {
@@ -4315,9 +4445,9 @@ input:checked + .toggle-slider:before {
     background: var(--gradient-error) !important;
 }
 
-/* ====== 56. TOAST NOTIFICATION ====== */
+/* ====== 55. TOAST NOTIFICATION ====== */
 .toast-notification {
-    position: fixed;
+    position: fixed !important;
     bottom: 90px;
     left: 50%;
     transform: translateX(-50%);
@@ -4329,7 +4459,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-primary);
     font-weight: 600;
     font-size: 0.9rem;
-    z-index: var(--z-index-toast);
+    z-index: var(--z-index-toast) !important;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -4341,7 +4471,7 @@ input:checked + .toggle-slider:before {
 .toast-notification.hidden { display: none; }
 .toast-notification i { color: var(--ton-cyan); }
 
-/* ====== 57. SCROLL TO TOP BUTTON ====== */
+/* ====== 56. SCROLL TO TOP BUTTON ====== */
 .scroll-top-btn {
     position: fixed;
     bottom: 90px;
@@ -4362,12 +4492,13 @@ input:checked + .toggle-slider:before {
     opacity: 0;
     visibility: hidden;
     z-index: 50;
+    touch-action: manipulation;
 }
 
 .scroll-top-btn.show { opacity: 1; visibility: visible; }
 .scroll-top-btn:hover { transform: scale(1.1); }
 
-/* ====== 58. EMPTY STATE ====== */
+/* ====== 57. EMPTY STATE ====== */
 .empty-state {
     text-align: center;
     padding: 30px 15px;
@@ -4379,7 +4510,7 @@ input:checked + .toggle-slider:before {
 .empty-state p { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
 .empty-state span { font-size: 0.9rem; color: var(--text-secondary); }
 
-/* ====== 59. LOADING SPINNER ====== */
+/* ====== 58. LOADING SPINNER ====== */
 .loading-spinner {
     text-align: center;
     padding: 30px;
@@ -4388,7 +4519,7 @@ input:checked + .toggle-slider:before {
 
 .loading-spinner i { font-size: 2.2rem; margin-bottom: 8px; color: var(--ton-cyan); }
 
-/* ====== 60. RTL SUPPORT ====== */
+/* ====== 59. RTL SUPPORT ====== */
 [dir="rtl"] { text-align: right; }
 [dir="rtl"] .header-left { flex-direction: row-reverse; }
 [dir="rtl"] .user-info { text-align: right; }
@@ -4413,7 +4544,7 @@ input:checked + .toggle-slider:before {
 [dir="rtl"] .back-btn i { transform: rotate(180deg); }
 [dir="rtl"] .back-btn:hover { transform: translateX(3px); }
 
-/* ====== 61. RESPONSIVE ====== */
+/* ====== 60. RESPONSIVE ====== */
 @media (max-width: 400px) {
     .mining-stats-legendary { gap: 10px; }
     .stat-orb { width: 80px; height: 80px; }
@@ -4444,7 +4575,7 @@ input:checked + .toggle-slider:before {
     .payout-grid-page { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ====== 62. ANIMATION CLASSES ====== */
+/* ====== 61. ANIMATION CLASSES ====== */
 .slideIn { animation: slideIn 0.4s ease; }
 .slideUpModal { animation: slideUpModal 0.4s ease; }
 .scaleIn { animation: scaleIn 0.3s ease; }
@@ -4452,12 +4583,24 @@ input:checked + .toggle-slider:before {
 .shake { animation: shake 0.5s ease; }
 .fadeIn { animation: fadeIn 0.3s ease; }
 
-/* ====== 63. CUSTOM SCROLLBAR ====== */
+/* ====== 62. CUSTOM SCROLLBAR ====== */
 ::-webkit-scrollbar { width: 0px; background: transparent; }
 
-/* ====== 64. FOCUS STYLES ====== */
+/* ====== 63. FOCUS STYLES ====== */
 :focus { outline: none; }
 :focus-visible { outline: 2px solid var(--ton-cyan); outline-offset: 2px; }
 
-/* ====== 65. SELECTION ====== */
+/* ====== 64. SELECTION ====== */
 ::selection { background: var(--ton-cyan); color: var(--bg-primary); }
+
+/* ====== 65. TOUCH OPTIMIZATIONS ====== */
+@media (pointer: coarse) {
+    button, .btn, .clickable {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    input, select, textarea {
+        font-size: 16px !important;
+    }
+}
