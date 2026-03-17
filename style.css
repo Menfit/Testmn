@@ -2,6 +2,7 @@
    TON MINING CASINO - LEGENDARY DESIGN SYSTEM v5000.0
    ULTIMATE EDITION - COMPLETE STYLING
    مع جميع التصميمات والتأثيرات البصرية والحركية الأسطورية
+   + صفحات الكازينو المنفصلة (Wheel & Slots)
    ============================================ */
 
 /* ====== 1. CSS VARIABLES - نظام ألوان متناسق وفخم ====== */
@@ -413,7 +414,38 @@
     }
 }
 
-/* ====== 9. RESET & BASE ====== */
+/* ====== 9. CASINO PAGES ANIMATIONS - تأثيرات الصفحات المنفصلة ====== */
+
+@keyframes pageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes buttonGlow {
+    0%, 100% {
+        box-shadow: 0 0 15px currentColor;
+    }
+    50% {
+        box-shadow: 0 0 30px currentColor, 0 0 45px currentColor;
+    }
+}
+
+@keyframes spinButtonPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* ====== 10. RESET & BASE ====== */
 * {
     margin: 0;
     padding: 0;
@@ -441,7 +473,7 @@ body::before {
     z-index: -1;
 }
 
-/* ====== 10. LOADING SCREEN ====== */
+/* ====== 11. LOADING SCREEN ====== */
 .loading-overlay {
     position: fixed;
     inset: 0;
@@ -507,7 +539,7 @@ body::before {
     animation: gradientFlow 3s ease infinite;
 }
 
-/* ====== 11. JACKPOT POPUP - التصميم الأسطوري المحسن ====== */
+/* ====== 12. JACKPOT POPUP - التصميم الأسطوري المحسن ====== */
 .jackpot-popup {
     position: fixed;
     top: 0;
@@ -645,7 +677,7 @@ body::before {
     display: none;
 }
 
-/* ====== 12. APP CONTAINER ====== */
+/* ====== 13. APP CONTAINER ====== */
 .app {
     height: 100vh;
     display: flex;
@@ -658,7 +690,7 @@ body::before {
     box-shadow: 0 0 50px rgba(0,0,0,0.5);
 }
 
-/* ====== 13. WELCOME STICKER ====== */
+/* ====== 14. WELCOME STICKER ====== */
 .welcome-sticker {
     position: fixed;
     top: 70px;
@@ -673,7 +705,7 @@ body::before {
 .welcome-sticker.sticker-pop { animation: pop 0.5s ease; }
 .welcome-sticker.sticker-shake { animation: shake 0.5s ease; }
 
-/* ====== 14. FLOATING NOTIFICATION ====== */
+/* ====== 15. FLOATING NOTIFICATION ====== */
 .floating-notification {
     position: fixed;
     top: 60px;
@@ -707,7 +739,7 @@ body::before {
 .floating-notification.error { border-color: #ef4444; box-shadow: 0 0 20px rgba(239,68,68,0.3); }
 .floating-notification.warning { border-color: #fbbf24; box-shadow: 0 0 20px rgba(251,191,36,0.3); }
 
-/* ====== 15. AUTO-CLICKER TURBINE BUTTON ====== */
+/* ====== 16. AUTO-CLICKER TURBINE BUTTON ====== */
 .auto-clicker-turbine {
     position: fixed;
     top: 90px;
@@ -784,7 +816,7 @@ body::before {
 
 .auto-clicker-turbine:hover .auto-clicker-tooltip { opacity: 1; }
 
-/* ====== 16. HEADER ====== */
+/* ====== 17. HEADER ====== */
 .glass-header {
     padding: 10px 15px;
     background: rgba(20, 25, 35, 0.95);
@@ -945,7 +977,7 @@ body::before {
 
 #langIcon { font-size: 1.1rem; }
 
-/* ====== 17. MAIN CONTENT ====== */
+/* ====== 18. MAIN CONTENT ====== */
 .main-content {
     flex: 1;
     overflow-y: auto;
@@ -987,7 +1019,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     padding-left: 10px;
 }
 
-/* ====== 18. BOTTOM NAVIGATION ====== */
+/* ====== 19. BOTTOM NAVIGATION ====== */
 .bottom-nav-legendary {
     position: fixed;
     bottom: 0;
@@ -1073,7 +1105,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .nav-label { transition: var(--transition-fast); font-weight: 600; letter-spacing: 0.3px; font-size: 0.7rem; }
 .nav-item:hover .nav-label { color: var(--text-accent); }
 
-/* ====== 19. MINING HERO - توربينات الرياح المحسنة ====== */
+/* ====== 20. MINING HERO - توربينات الرياح المحسنة ====== */
 .mining-hero {
     position: relative;
     height: 220px;
@@ -1421,7 +1453,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     50% { transform: scale(1.2); opacity: 0.8; }
 }
 
-/* ====== 20. MINING STATS ORBS ====== */
+/* ====== 21. MINING STATS ORBS ====== */
 .mining-stats-legendary {
     display: flex;
     align-items: center;
@@ -1476,7 +1508,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .orb-value { font-size: 1.4rem; font-weight: 800; color: var(--text-primary); line-height: 1; }
 .orb-label { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
 
-/* ====== 21. LEGENDARY PROGRESS BAR ====== */
+/* ====== 22. LEGENDARY PROGRESS BAR ====== */
 .legendary-progress {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -1571,7 +1603,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .next-reward .label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
 .next-reward .value { font-size: 1.3rem; font-weight: 800; color: var(--text-gold); }
 
-/* ====== 22. CLAIM BUTTON ====== */
+/* ====== 23. CLAIM BUTTON ====== */
 .claim-btn-legendary {
     padding: 12px 30px;
     background: var(--gradient-legendary);
@@ -1605,7 +1637,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     box-shadow: 0 0 40px rgba(0,242,255,0.4);
 }
 
-/* ====== 23. AUTO MINER STATUS ====== */
+/* ====== 24. AUTO MINER STATUS ====== */
 .auto-miner-status {
     background: rgba(0,242,255,0.1);
     border: 1px solid rgba(0,242,255,0.3);
@@ -1623,7 +1655,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 
 .auto-miner-status i { font-size: 1.1rem; }
 
-/* ====== 24. SECTION STYLES ====== */
+/* ====== 25. SECTION STYLES ====== */
 .legendary-section { margin-top: 25px; position: relative; }
 
 .section-header {
@@ -1664,7 +1696,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     transform: translateX(-3px);
 }
 
-/* ====== 25. ACTIVE MACHINES GRID ====== */
+/* ====== 26. ACTIVE MACHINES GRID ====== */
 .active-machines-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -1748,7 +1780,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .machine-yield { color: var(--text-gold); font-weight: 700; }
 .machine-status { color: #22c55e; font-size: 0.75rem; display: flex; align-items: center; gap: 3px; }
 
-/* ====== 26. PLANS TABLE ====== */
+/* ====== 27. PLANS TABLE ====== */
 .plans-table-legendary {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -1783,7 +1815,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .legendary-table td:first-child i { margin-right: 6px; color: var(--ton-cyan); }
 .return-text { color: #22c55e; font-size: 0.75rem; }
 
-/* ====== 27. ACTIVITY FEED ====== */
+/* ====== 28. ACTIVITY FEED ====== */
 .activity-feed {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -1818,7 +1850,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .activity-time { font-size: 0.7rem; color: var(--text-secondary); }
 .activity-amount { font-weight: 700; color: var(--text-gold); font-size: 0.9rem; }
 
-/* ====== 28. MARKET PAGE ====== */
+/* ====== 29. MARKET PAGE ====== */
 .market-filters-legendary {
     display: flex;
     gap: 8px;
@@ -1850,7 +1882,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .filter-btn:hover { border-color: var(--ton-cyan); color: var(--text-accent); }
 .filter-btn.active { background: var(--gradient-primary); color: white; border-color: transparent; box-shadow: var(--shadow-glow); }
 
-/* ====== 29. MACHINES SHOWCASE ====== */
+/* ====== 30. MACHINES SHOWCASE ====== */
 .machines-showcase-legendary {
     display: flex;
     flex-direction: column;
@@ -1969,7 +2001,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 .plan-card-mini.free .price { color: #22c55e; }
 .plan-card-mini .return { font-size: 0.7rem; color: #22c55e; }
 
-/* ====== 30. CASINO PAGE ====== */
+/* ====== 31. CASINO PAGE ====== */
 .casino-card {
     background: var(--gradient-casino);
     border: 1px solid var(--glass-border-strong);
@@ -2332,69 +2364,110 @@ input:checked + .toggle-slider:before {
 .winner-name { color: var(--text-accent); font-weight: 600; }
 .winner-amount { color: var(--text-gold); font-weight: 700; }
 
-/* ====== 31. WHEEL MODAL - التصميم الأسطوري الجديد ====== */
-.wheel-modal-content { max-width: 450px; }
+/* ====== 32. CASINO PAGES HEADER (للصفحات المنفصلة) ====== */
+.casino-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background: rgba(20, 25, 35, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 242, 255, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: var(--z-index-header);
+    margin-bottom: 20px;
+}
 
-.wheel-streak {
-    text-align: center;
+.back-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    padding: 8px 12px;
+    border-radius: var(--radius-full);
+}
+
+.back-btn:hover {
+    background: rgba(0,242,255,0.1);
+    color: var(--text-accent);
+    transform: translateX(-3px);
+}
+
+.game-info-btn {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--glass-border-strong);
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-info-btn:hover {
+    border-color: var(--ton-cyan);
+    color: var(--text-accent);
+    transform: rotate(180deg);
+}
+
+.game-balance {
     font-size: 1.1rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--text-gold);
-    margin-bottom: 8px;
-    padding: 6px;
-    background: rgba(0,0,0,0.3);
+    background: rgba(251,191,36,0.1);
+    padding: 8px 16px;
     border-radius: var(--radius-full);
     border: 1px solid rgba(251,191,36,0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-/* حاوية العجلة مع التأثيرات الكونية */
-.wheel-casino-container {
+.game-balance i {
+    color: var(--ton-cyan);
+}
+
+/* ====== 33. WHEEL PAGE ====== */
+.wheel-page-container {
     position: relative;
-    width: 280px;
-    height: 280px;
-    margin: 20px auto;
-    filter: drop-shadow(0 0 30px rgba(0,242,255,0.3));
-}
-
-.wheel-casino {
     width: 100%;
-    height: 100%;
-    border-radius: 50%;
+    max-width: 450px;
+    margin: 0 auto 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wheel-page {
     position: relative;
+    width: 350px;
+    height: 350px;
+    margin: 20px auto;
+    border-radius: 50%;
+    overflow: visible;
     box-shadow: 
         0 0 0 4px #2a2a3a,
         0 0 0 8px #1a1a2a,
-        0 0 50px rgba(0,242,255,0.4),
-        inset 0 0 50px rgba(0,0,0,0.5);
+        0 0 60px rgba(0,242,255,0.4),
+        inset 0 0 40px rgba(0,0,0,0.5);
 }
 
-.wheel-casino.spinning-fast {
+.wheel-page.spinning-fast {
     filter: blur(1px);
     transition: filter 0.3s ease;
 }
 
-/* تأثير الضوء الكوني */
-.wheel-casino-container::before {
-    content: '';
-    position: absolute;
-    inset: -30px;
-    border-radius: 50%;
-    background: conic-gradient(
-        from 0deg,
-        transparent 0deg,
-        rgba(0,242,255,0.1) 60deg,
-        transparent 120deg,
-        rgba(136,85,255,0.1) 180deg,
-        transparent 240deg,
-        rgba(255,68,204,0.1) 300deg,
-        transparent 360deg
-    );
-    animation: cosmicRotate 10s linear infinite;
-    pointer-events: none;
-    z-index: -1;
-}
-
-/* قطاعات العجلة المحسّنة */
 .wheel-segment-pro {
     position: absolute;
     width: 50%;
@@ -2406,15 +2479,14 @@ input:checked + .toggle-slider:before {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding-top: 20px;
+    padding-top: 30px;
     color: white;
     font-weight: 800;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     text-shadow: 0 0 10px rgba(0,0,0,0.9);
     border-right: 3px solid rgba(255,255,255,0.4);
-    box-shadow: inset 0 0 15px rgba(255,255,255,0.1);
+    box-shadow: inset 0 0 20px rgba(255,255,255,0.2);
     z-index: 5;
-    cursor: pointer;
     transition: all 0.3s ease;
 }
 
@@ -2423,24 +2495,33 @@ input:checked + .toggle-slider:before {
     z-index: 10 !important;
 }
 
-.wheel-segment-pro.jackpot-segment {
-    animation: segmentGlow 2s infinite alternate;
+.wheel-segment-pro span:first-child {
+    font-size: 2.2rem;
+    margin-bottom: 5px;
+    filter: drop-shadow(0 0 8px currentColor);
 }
 
-/* المركز المضيء */
+.wheel-segment-pro span:last-child {
+    font-size: 0.85rem;
+    background: rgba(0,0,0,0.6);
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid currentColor;
+}
+
 .wheel-center-pro {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     background: radial-gradient(circle, #2a2a3a 0%, #1a1a2a 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: gold;
     border: 4px solid gold;
     box-shadow: 0 0 30px gold, inset 0 0 20px rgba(255,215,0,0.3);
@@ -2448,13 +2529,12 @@ input:checked + .toggle-slider:before {
     text-shadow: 0 0 10px orange;
 }
 
-/* المؤشر المتحرك */
 .wheel-pointer-pro {
     position: absolute;
-    top: -15px;
+    top: -20px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 2.5rem;
+    font-size: 3rem;
     color: #ffd700;
     filter: drop-shadow(0 0 10px orange) drop-shadow(0 0 20px red);
     z-index: 30;
@@ -2462,148 +2542,151 @@ input:checked + .toggle-slider:before {
     text-shadow: 0 0 10px rgba(0,0,0,0.8);
 }
 
-/* عداد السرعة */
-#wheelSpeedometer {
-    position: absolute;
-    bottom: -40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 120px;
-    text-align: center;
-    z-index: 25;
-}
-
-#speedFill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #22c55e, #fbbf24, #ef4444);
-    transition: width 0.1s ease;
-    box-shadow: 0 0 10px currentColor;
-}
-
-.wheel-stats {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 12px 0;
-    padding: 8px;
-    background: rgba(0,0,0,0.3);
-    border-radius: var(--radius-lg);
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.wheel-counter {
-    font-size: 1.1rem;
-    font-weight: 800;
+.wheel-jackpot-counter-page {
+    font-size: 1.2rem;
+    font-weight: 700;
     color: var(--text-gold);
-    background: rgba(251,191,36,0.1);
-    padding: 4px 12px;
+    margin: 15px 0;
+    padding: 10px 25px;
+    background: rgba(0,0,0,0.3);
     border-radius: var(--radius-full);
     border: 1px solid rgba(251,191,36,0.3);
+    box-shadow: 0 0 20px rgba(251,191,36,0.2);
 }
 
-.wheel-spins-left { font-size: 0.9rem; color: var(--text-accent); }
-
-/* Purchased Spins Modal */
-.purchased-spins-modal {
-    text-align: center;
-    margin: 8px 0;
-    padding: 8px;
-    background: rgba(0,242,255,0.1);
-    border: 1px solid rgba(0,242,255,0.3);
-    border-radius: var(--radius-full);
-    font-size: 0.9rem;
-    color: var(--text-accent);
-}
-
-.purchased-spins-modal i { margin-right: 4px; }
-.purchased-spins-modal .spin-count { font-weight: 700; color: var(--text-gold); }
-
-.modal-packs {
-    margin: 12px 0;
-    background: rgba(0,0,0,0.2);
-}
-
-.modal-toggle {
-    margin: 12px 0;
-}
-
-.wheel-controls {
+.wheel-controls-page {
     display: flex;
-    gap: 8px;
-    margin: 15px 0;
+    gap: 15px;
+    margin: 20px 0;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-.wheel-spin-btn {
-    flex: 1;
-    padding: 12px;
+.wheel-btn-page {
+    min-width: 140px;
+    padding: 16px 28px;
     border: none;
-    border-radius: var(--radius-lg);
-    font-weight: 700;
-    font-size: 1rem;
+    border-radius: var(--radius-full);
+    font-weight: 800;
+    font-size: 1.2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
     cursor: pointer;
-    transition: var(--transition-fast);
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 0 20px currentColor;
 }
 
-.wheel-spin-btn::before {
+.wheel-btn-page::before {
     content: '';
     position: absolute;
     top: -50%;
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
     transform: rotate(45deg);
     animation: shimmer 3s infinite;
 }
 
-.wheel-spin-btn.free { background: var(--gradient-success); color: white; }
-.wheel-spin-btn.paid { background: var(--gradient-gold); color: white; }
-.wheel-spin-btn:hover { transform: scale(1.02); box-shadow: var(--shadow-glow); }
-.wheel-spin-btn.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+.wheel-btn-page.free {
+    background: var(--gradient-success);
+    color: white;
+    box-shadow: 0 0 30px rgba(34,197,94,0.4);
+}
 
-/* Error Message */
-.error-message {
+.wheel-btn-page.paid {
+    background: var(--gradient-gold);
+    color: black;
+    box-shadow: 0 0 30px rgba(251,191,36,0.4);
+}
+
+.wheel-btn-page:hover {
+    transform: scale(1.08) translateY(-3px);
+    box-shadow: 0 0 40px currentColor;
+}
+
+.wheel-btn-page.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none;
+}
+
+.purchased-spins-page {
+    margin: 15px 0;
+    padding: 12px 25px;
+    background: rgba(0,242,255,0.1);
+    border: 1px solid rgba(0,242,255,0.3);
+    border-radius: var(--radius-full);
+    font-size: 1.1rem;
+    color: var(--text-accent);
+    display: inline-block;
+    box-shadow: 0 0 20px rgba(0,242,255,0.2);
+}
+
+.purchased-spins-page .spin-count {
+    font-weight: 800;
+    color: var(--text-gold);
+    font-size: 1.4rem;
+    margin-left: 5px;
+}
+
+.auto-spin-section {
+    margin: 15px 0;
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 12px;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(0,0,0,0.2);
+    border-radius: var(--radius-full);
+}
+
+.packs-section {
+    margin: 20px 0;
+    width: 100%;
+    max-width: 400px;
+}
+
+.error-message-page {
+    margin: 15px 0;
+    padding: 15px 25px;
     background: rgba(239,68,68,0.2);
     border: 1px solid rgba(239,68,68,0.5);
     border-radius: var(--radius-lg);
     color: #ef4444;
-    font-size: 0.9rem;
-    margin: 10px 0;
-    z-index: var(--z-index-error);
-    position: relative;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 350px;
     backdrop-filter: blur(5px);
     animation: shake 0.5s ease;
 }
 
-.error-message.hidden { display: none; }
-.error-message i { font-size: 1.1rem; }
+.error-message-page.hidden {
+    display: none;
+}
 
-/* ====== 32. SLOTS MODAL - التصميم الأسطوري الجديد ====== */
-.slots-container-pro {
+/* ====== 34. SLOTS PAGE ====== */
+.slots-page-container {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto 30px;
+    padding: 25px 20px;
     background: linear-gradient(145deg, #1a1a2e, #0a0a1a);
-    border-radius: 24px;
-    padding: 30px 20px;
-    margin-bottom: 20px;
+    border-radius: 32px;
     border: 2px solid rgba(255, 215, 0, 0.3);
-    box-shadow: 
-        0 0 50px rgba(0, 242, 255, 0.1),
-        inset 0 0 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 50px rgba(0,242,255,0.2), inset 0 0 30px rgba(0,0,0,0.5);
     position: relative;
     overflow: hidden;
 }
 
-.slots-container-pro::before {
+.slots-page-container::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -2617,37 +2700,35 @@ input:checked + .toggle-slider:before {
     100% { transform: translateX(100%); }
 }
 
-/* البكرات المحسّنة */
-#slotReels {
+.slot-reels-page {
     display: flex;
-    gap: 15px;
+    gap: 20px;
     justify-content: center;
     margin-bottom: 30px;
     perspective: 1000px;
 }
 
-.slot-reel-wrapper {
+.slot-reel-wrapper-page {
     position: relative;
-    width: 100px;
-    height: 300px;
+    width: 110px;
+    height: 360px;
 }
 
-.slot-reel-pro {
+.slot-reel-page {
     width: 100%;
     height: 100%;
     background: linear-gradient(145deg, #2a2a3a, #1a1a2a);
-    border-radius: 16px;
+    border-radius: 20px;
     border: 3px solid #3a3a4a;
     overflow: hidden;
     position: relative;
     box-shadow: 
-        0 0 20px rgba(0, 0, 0, 0.5),
-        inset 0 0 20px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
+        0 0 30px rgba(0,0,0,0.6),
+        inset 0 0 30px rgba(0,0,0,0.4);
     will-change: transform;
 }
 
-.slot-reel-pro::before {
+.slot-reel-page::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -2662,24 +2743,23 @@ input:checked + .toggle-slider:before {
     pointer-events: none;
 }
 
-.slot-reel-wrapper.spinning .slot-reel-pro {
+.slot-reel-wrapper-page.spinning .slot-reel-page {
     border-color: #00f2ff;
-    box-shadow: 0 0 30px rgba(0, 242, 255, 0.4);
+    box-shadow: 0 0 40px rgba(0,242,255,0.5);
 }
 
-/* خط الفوز المضيء */
 .win-line {
     position: absolute;
     top: 50%;
     left: 0;
     right: 0;
-    height: 3px;
+    height: 4px;
     background: linear-gradient(90deg, transparent, #ffdd00, #ff6600, #ffdd00, transparent);
     transform: translateY(-50%);
     z-index: 15;
     opacity: 0;
     transition: opacity 0.3s ease;
-    box-shadow: 0 0 20px #ffdd00, 0 0 40px #ff6600;
+    box-shadow: 0 0 30px #ffdd00, 0 0 60px #ff6600;
     border-radius: 2px;
 }
 
@@ -2688,61 +2768,59 @@ input:checked + .toggle-slider:before {
     animation: winLineFlash 0.5s ease infinite;
 }
 
-/* الرموز */
-.slot-symbol-pro {
+.slot-symbol-page {
     width: 100%;
-    height: 100px;
+    height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
-    background: rgba(0, 0, 0, 0.2);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    text-shadow: 0 0 15px currentColor;
+    font-size: 3.5rem;
+    background: rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    text-shadow: 0 0 20px currentColor;
     transition: all 0.2s ease;
     will-change: transform, filter;
 }
 
-.slot-symbol-pro.winning-symbol {
+.slot-symbol-page.winning-symbol {
     animation: winPulse 0.5s ease infinite;
-    transform: scale(1.15);
-    filter: brightness(1.5) drop-shadow(0 0 20px currentColor);
+    transform: scale(1.2);
+    filter: brightness(1.5) drop-shadow(0 0 30px currentColor);
     z-index: 5;
 }
 
-/* تأثير الاهتزاز عند التوقف */
 .reel-stop-bounce {
     animation: reelBounce 0.4s ease;
 }
 
-/* الأزرار المحسّنة */
-.slot-controls-pro {
+.slot-controls-page {
     display: flex;
-    gap: 12px;
+    gap: 15px;
     justify-content: center;
     flex-wrap: wrap;
+    margin: 25px 0;
 }
 
-.slot-btn-pro {
-    min-width: 110px;
-    padding: 16px 28px;
+.slot-btn-page {
+    min-width: 120px;
+    padding: 18px 25px;
     border: none;
-    border-radius: 16px;
+    border-radius: 20px;
     font-weight: 800;
-    font-size: 1rem;
+    font-size: 1.1rem;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-.slot-btn-pro::before {
+.slot-btn-page::before {
     content: '';
     position: absolute;
     top: -50%;
@@ -2754,102 +2832,89 @@ input:checked + .toggle-slider:before {
     animation: shimmer 3s infinite;
 }
 
-.slot-btn-pro.spin {
+.slot-btn-page.spin {
     background: linear-gradient(135deg, #00f2ff, #0088cc);
     color: white;
-    box-shadow: 0 0 30px rgba(0, 242, 255, 0.4);
+    box-shadow: 0 0 40px rgba(0,242,255,0.5);
     font-size: 1.3rem;
-    padding: 20px 50px;
-    min-width: 140px;
+    padding: 20px 35px;
+    min-width: 150px;
+    animation: spinButtonPulse 2s infinite;
 }
 
-.slot-btn-pro.spin:hover:not(:disabled) {
-    transform: scale(1.08) translateY(-3px);
-    box-shadow: 0 0 50px rgba(0, 242, 255, 0.6);
+.slot-btn-page.spin:hover:not(:disabled) {
+    transform: scale(1.1) translateY(-3px);
+    box-shadow: 0 0 60px rgba(0,242,255,0.7);
 }
 
-.slot-btn-pro.spin:disabled {
+.slot-btn-page.free {
+    background: linear-gradient(135deg, #22c55e, #10b981);
+    color: white;
+    box-shadow: 0 0 30px rgba(34,197,94,0.4);
+}
+
+.slot-btn-page.turbo {
+    background: linear-gradient(135deg, #ffdd00, #ff8800);
+    color: black;
+    box-shadow: 0 0 30px rgba(255,221,0,0.4);
+}
+
+.slot-btn-page:hover:not(:disabled) {
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 0 40px currentColor;
+}
+
+.slot-btn-page:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     transform: none;
 }
 
-.slot-btn-pro.turbo {
-    background: linear-gradient(135deg, #ffdd00, #ff8800);
-    color: black;
-    box-shadow: 0 0 20px rgba(255, 221, 0, 0.3);
-}
-
-.slot-btn-pro.turbo:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba(255, 221, 0, 0.5);
-}
-
-.slot-btn-pro.free {
-    background: linear-gradient(135deg, #22c55e, #10b981);
-    color: white;
-    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
-}
-
-.slot-btn-pro.free:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba(34, 197, 94, 0.5);
-}
-
-/* جدول الجوائز */
-.payout-table-pro {
-    margin-top: 20px;
+.payout-table-page {
+    margin-top: 25px;
     background: rgba(0,0,0,0.3);
-    border-radius: 16px;
-    padding: 12px;
+    border-radius: 20px;
+    padding: 15px;
+    border: 1px solid rgba(255,215,0,0.2);
 }
 
 .payout-title {
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--text-gold);
-    margin-bottom: 10px;
-    letter-spacing: 1px;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
 }
 
-.payout-grid {
+.payout-grid-page {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+    gap: 10px;
 }
 
-.payout-item {
+.payout-item-page {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 6px 10px;
-    background: rgba(0,242,255,0.05);
-    border-radius: 8px;
-    font-size: 0.85rem;
+    padding: 8px 12px;
+    background: rgba(0,242,255,0.08);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    border: 1px solid rgba(0,242,255,0.1);
 }
 
-.payout-item .symbol { font-size: 1.2rem; }
-.payout-item .value { font-weight: 700; color: var(--text-gold); }
-
-/* جسيمات الفوز */
-.particles-container {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 100;
+.payout-item-page .symbol {
+    font-size: 1.5rem;
+    filter: drop-shadow(0 0 5px currentColor);
 }
 
-.particle-win {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    animation: particleExplode 1s ease-out forwards;
+.payout-item-page .value {
+    font-weight: 700;
+    color: var(--text-gold);
 }
 
-/* ====== 33. WIN POPUP ====== */
+/* ====== 35. WIN POPUP ====== */
 .win-popup {
     position: fixed;
     top: 50%;
@@ -2965,7 +3030,7 @@ input:checked + .toggle-slider:before {
     animation-delay: 0.5s;
 }
 
-/* ====== 34. PROFILE PAGE ====== */
+/* ====== 36. PROFILE PAGE ====== */
 .wallet-card-legendary {
     background: var(--gradient-legendary);
     background-size: 200% 200%;
@@ -3056,7 +3121,7 @@ input:checked + .toggle-slider:before {
 .wallet-action-btn.swap i { color: var(--ton-cyan); }
 .wallet-action-btn.history i { color: #8855ff; }
 
-/* ====== 35. TON CONNECT CARD ====== */
+/* ====== 37. TON CONNECT CARD ====== */
 .ton-connect-card-legendary {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3102,7 +3167,7 @@ input:checked + .toggle-slider:before {
 .connected-wallet-info .address { font-family: monospace; color: var(--text-accent); font-size: 0.8rem; }
 .connected-wallet-info .balance { font-weight: 700; color: var(--text-gold); }
 
-/* ====== 36. ASSETS LIST ====== */
+/* ====== 38. ASSETS LIST ====== */
 .assets-list-legendary {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3186,7 +3251,7 @@ input:checked + .toggle-slider:before {
     white-space: nowrap;
 }
 
-/* ====== 37. STATS COMPACT ====== */
+/* ====== 39. STATS COMPACT ====== */
 .stats-compact {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -3215,7 +3280,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-accent);
 }
 
-/* ====== 38. CHART ====== */
+/* ====== 40. CHART ====== */
 .chart-container {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3262,7 +3327,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-secondary);
 }
 
-/* ====== 39. REFERRAL SECTION ====== */
+/* ====== 41. REFERRAL SECTION ====== */
 .referral-section {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3334,7 +3399,7 @@ input:checked + .toggle-slider:before {
     font-weight: 600;
 }
 
-/* ====== 40. LEADERBOARD ====== */
+/* ====== 42. LEADERBOARD ====== */
 .leaderboard {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3362,7 +3427,7 @@ input:checked + .toggle-slider:before {
 .name { flex: 1; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .earnings { font-weight: 700; color: var(--text-accent); white-space: nowrap; }
 
-/* ====== 41. REFERRAL MILESTONES GRID ====== */
+/* ====== 43. REFERRAL MILESTONES GRID ====== */
 .referral-milestones-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -3415,7 +3480,7 @@ input:checked + .toggle-slider:before {
 
 .claimed-badge { color: #22c55e; font-size: 0.7rem; }
 
-/* ====== 42. MODALS GENERAL ====== */
+/* ====== 44. MODALS GENERAL ====== */
 .modal {
     display: none !important;
     position: fixed;
@@ -3502,7 +3567,7 @@ input:checked + .toggle-slider:before {
 
 .modal-body { padding: 16px; max-height: calc(85vh - 70px); overflow-y: auto; }
 
-/* ====== 43. PAYMENT OPTIONS ====== */
+/* ====== 45. PAYMENT OPTIONS ====== */
 .payment-options-legendary { margin: 15px 0; }
 
 .payment-option-title { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 10px; }
@@ -3551,7 +3616,7 @@ input:checked + .toggle-slider:before {
 .payment-option-desc { font-size: 0.8rem; color: var(--text-secondary); }
 .payment-option-desc .balance-amount { color: var(--text-gold); font-weight: 700; }
 
-/* ====== 44. SWAP MODAL - PancakeSwap Style ====== */
+/* ====== 46. SWAP MODAL - PancakeSwap Style ====== */
 .swap-modal-content { max-width: 400px; }
 
 .swap-field {
@@ -3685,7 +3750,7 @@ input:checked + .toggle-slider:before {
     box-shadow: 0 0 30px rgba(0,242,255,0.5);
 }
 
-/* ====== 45. CURRENCY SELECTOR MODAL ====== */
+/* ====== 47. CURRENCY SELECTOR MODAL ====== */
 .currency-search {
     position: relative;
     margin-bottom: 15px;
@@ -3729,7 +3794,7 @@ input:checked + .toggle-slider:before {
 .currency-list-item .currency-info h4 { font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
 .currency-list-item .currency-info p { font-size: 0.8rem; color: var(--text-secondary); }
 
-/* ====== 46. DEPOSIT MODAL ====== */
+/* ====== 48. DEPOSIT MODAL ====== */
 .deposit-address-card-legendary {
     background: rgba(0,0,0,0.3);
     border-radius: var(--radius-xl);
@@ -3811,7 +3876,7 @@ input:checked + .toggle-slider:before {
     border-radius: var(--radius-sm);
 }
 
-/* ====== 47. INPUT GROUPS ====== */
+/* ====== 49. INPUT GROUPS ====== */
 .input-group-legendary { margin-bottom: 15px; }
 
 .input-group-legendary label {
@@ -3849,7 +3914,7 @@ input:checked + .toggle-slider:before {
 .validation-hint.valid { color: #22c55e; background: rgba(34,197,94,0.1); }
 .validation-hint.invalid { color: #ef4444; background: rgba(239,68,68,0.1); }
 
-/* ====== 48. WITHDRAW MODAL ====== */
+/* ====== 50. WITHDRAW MODAL ====== */
 .withdraw-icon {
     width: 48px;
     height: 48px;
@@ -3904,7 +3969,7 @@ input:checked + .toggle-slider:before {
 .receive-amount .label { color: var(--text-secondary); }
 .receive-amount .value { font-weight: 700; color: var(--text-success); }
 
-/* ====== 49. CONFIRM BUTTON ====== */
+/* ====== 51. CONFIRM BUTTON ====== */
 .confirm-btn-legendary {
     width: 100%;
     padding: 15px;
@@ -3930,7 +3995,7 @@ input:checked + .toggle-slider:before {
 .confirm-btn-legendary:disabled { opacity: 0.5; cursor: not-allowed; animation: none; }
 .confirm-btn-legendary:not(:disabled):hover { transform: scale(1.02); box-shadow: 0 0 40px rgba(0,242,255,0.4); }
 
-/* ====== 50. HISTORY MODAL ====== */
+/* ====== 52. HISTORY MODAL ====== */
 .history-filters {
     display: flex;
     gap: 6px;
@@ -4004,7 +4069,7 @@ input:checked + .toggle-slider:before {
 .history-amount { font-weight: 700; color: var(--text-primary); }
 .history-date { color: var(--text-secondary); font-size: 0.7rem; }
 
-/* ====== 51. NOTIFICATIONS MODAL ====== */
+/* ====== 53. NOTIFICATIONS MODAL ====== */
 .notifications-list { max-height: 350px; overflow-y: auto; }
 
 .notification-item {
@@ -4039,7 +4104,7 @@ input:checked + .toggle-slider:before {
 .notification-time { font-size: 0.7rem; color: var(--text-secondary); }
 .notification-message { font-size: 0.9rem; color: var(--text-primary); }
 
-/* ====== 52. ADMIN MODAL ====== */
+/* ====== 54. ADMIN MODAL ====== */
 .admin-modal-content { max-width: 450px; }
 
 .admin-tabs {
@@ -4216,7 +4281,7 @@ input:checked + .toggle-slider:before {
 
 .admin-reject-btn:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(239,68,68,0.3); }
 
-/* ====== 53. REJECT MODAL ====== */
+/* ====== 55. REJECT MODAL ====== */
 .reject-form {
     padding: 16px;
 }
@@ -4250,7 +4315,7 @@ input:checked + .toggle-slider:before {
     background: var(--gradient-error) !important;
 }
 
-/* ====== 54. TOAST NOTIFICATION ====== */
+/* ====== 56. TOAST NOTIFICATION ====== */
 .toast-notification {
     position: fixed;
     bottom: 90px;
@@ -4276,7 +4341,7 @@ input:checked + .toggle-slider:before {
 .toast-notification.hidden { display: none; }
 .toast-notification i { color: var(--ton-cyan); }
 
-/* ====== 55. SCROLL TO TOP BUTTON ====== */
+/* ====== 57. SCROLL TO TOP BUTTON ====== */
 .scroll-top-btn {
     position: fixed;
     bottom: 90px;
@@ -4302,7 +4367,7 @@ input:checked + .toggle-slider:before {
 .scroll-top-btn.show { opacity: 1; visibility: visible; }
 .scroll-top-btn:hover { transform: scale(1.1); }
 
-/* ====== 56. EMPTY STATE ====== */
+/* ====== 58. EMPTY STATE ====== */
 .empty-state {
     text-align: center;
     padding: 30px 15px;
@@ -4314,7 +4379,7 @@ input:checked + .toggle-slider:before {
 .empty-state p { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
 .empty-state span { font-size: 0.9rem; color: var(--text-secondary); }
 
-/* ====== 57. LOADING SPINNER ====== */
+/* ====== 59. LOADING SPINNER ====== */
 .loading-spinner {
     text-align: center;
     padding: 30px;
@@ -4323,7 +4388,7 @@ input:checked + .toggle-slider:before {
 
 .loading-spinner i { font-size: 2.2rem; margin-bottom: 8px; color: var(--ton-cyan); }
 
-/* ====== 58. RTL SUPPORT ====== */
+/* ====== 60. RTL SUPPORT ====== */
 [dir="rtl"] { text-align: right; }
 [dir="rtl"] .header-left { flex-direction: row-reverse; }
 [dir="rtl"] .user-info { text-align: right; }
@@ -4345,11 +4410,10 @@ input:checked + .toggle-slider:before {
 [dir="rtl"] .currency-search i { left: auto; right: 12px; }
 [dir="rtl"] .currency-search input { padding: 12px 40px 12px 12px; }
 [dir="rtl"] .currency-select { background-position: left 12px center; }
-[dir="rtl"] .wheel-casino-pointer { transform: translateX(50%); }
-[dir="rtl"] .turbine-large { margin-right: 0; margin-left: -15px; }
-[dir="rtl"] .turbine-small { margin-left: 0; margin-right: -10px; }
+[dir="rtl"] .back-btn i { transform: rotate(180deg); }
+[dir="rtl"] .back-btn:hover { transform: translateX(3px); }
 
-/* ====== 59. RESPONSIVE ====== */
+/* ====== 61. RESPONSIVE ====== */
 @media (max-width: 400px) {
     .mining-stats-legendary { gap: 10px; }
     .stat-orb { width: 80px; height: 80px; }
@@ -4366,17 +4430,21 @@ input:checked + .toggle-slider:before {
     .swap-field-input { flex-direction: column; align-items: stretch; }
     .swap-currency { justify-content: center; }
     .deposit-info-row { flex-direction: column; text-align: center; }
-    .wheel-casino-container { width: 240px; height: 240px; }
-    .referral-milestones-grid { grid-template-columns: 1fr; }
-    .slot-reel-wrapper { width: 75px; height: 225px; }
-    .slot-symbol-pro { height: 75px; font-size: 2.2rem; }
-    .slot-btn-pro { min-width: 80px; padding: 12px 16px; font-size: 0.9rem; }
-    .slot-btn-pro.spin { padding: 16px 25px; font-size: 1.1rem; }
+    .wheel-page { width: 280px; height: 280px; }
+    .wheel-segment-pro span:first-child { font-size: 1.8rem; }
+    .wheel-segment-pro span:last-child { font-size: 0.7rem; padding: 2px 8px; }
+    .wheel-center-pro { width: 60px; height: 60px; font-size: 2rem; }
+    .wheel-controls-page { flex-direction: column; align-items: center; }
+    .wheel-btn-page { width: 80%; }
+    .slot-reel-wrapper-page { width: 85px; height: 280px; }
+    .slot-symbol-page { height: 93px; font-size: 2.8rem; }
+    .slot-btn-page { min-width: 100px; padding: 14px 20px; font-size: 1rem; }
+    .slot-btn-page.spin { padding: 16px 25px; font-size: 1.1rem; }
     .packs-grid { grid-template-columns: repeat(2, 1fr); }
-    .mini-reel { width: 35px; height: 50px; font-size: 1.4rem; }
+    .payout-grid-page { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ====== 60. ANIMATION CLASSES ====== */
+/* ====== 62. ANIMATION CLASSES ====== */
 .slideIn { animation: slideIn 0.4s ease; }
 .slideUpModal { animation: slideUpModal 0.4s ease; }
 .scaleIn { animation: scaleIn 0.3s ease; }
@@ -4384,12 +4452,12 @@ input:checked + .toggle-slider:before {
 .shake { animation: shake 0.5s ease; }
 .fadeIn { animation: fadeIn 0.3s ease; }
 
-/* ====== 61. CUSTOM SCROLLBAR ====== */
+/* ====== 63. CUSTOM SCROLLBAR ====== */
 ::-webkit-scrollbar { width: 0px; background: transparent; }
 
-/* ====== 62. FOCUS STYLES ====== */
+/* ====== 64. FOCUS STYLES ====== */
 :focus { outline: none; }
 :focus-visible { outline: 2px solid var(--ton-cyan); outline-offset: 2px; }
 
-/* ====== 63. SELECTION ====== */
+/* ====== 65. SELECTION ====== */
 ::selection { background: var(--ton-cyan); color: var(--bg-primary); }
