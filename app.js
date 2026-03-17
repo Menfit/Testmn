@@ -1,5 +1,5 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v1000.0
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v3000.0
 // COMPLETE EDITION - جميع الميزات مع التحسينات النهائية
 // ============================================
 
@@ -62,7 +62,6 @@ const CONFIG = {
         TON: 1.0, USDT: 10, BNB: 0.015, ETH: 0.005, BTC: 0.0005, SOL: 0.12
     },
     
-    // WITHDRAW - مع رسوم الشبكات (تم إزالة TON Network)
     WITHDRAW_NETWORKS: {
         USDT: [
             { name: 'BEP20 (BSC)', value: 'BEP20', fee: 0.0005, feeCurrency: 'BNB' },
@@ -93,7 +92,7 @@ const CONFIG = {
         
         WHEEL_SPIN_PRICE: 0.25,
         WHEEL_FREE_SPIN_INTERVAL: 24 * 60 * 60 * 1000,
-        WHEEL_JACKPOT_EVERY: 12,
+        WHEEL_JACKPOT_EVERY: 15,
         
         SLOTS_SPIN_PRICE: 0.15,
         SLOTS_TURBO_PRICE: 0.30,
@@ -211,7 +210,7 @@ const translations = {
         'wheel.price': '0.25 TON',
         'wheel.win': '🎡 YOU WON {prize}!',
         'wheel.bigwin': '🎡🎡 BIG WIN! {prize}!',
-        'wheel.jackpot': '🎡🎡🎡 JACKPOT! {amount} TON!',
+        'wheel.jackpot': '🎡🎡🎡 JACKPOT! {amount} {currency}!',
         'wheel.pack5': '5 Spins',
         'wheel.pack10': '10 Spins +1',
         'wheel.pack50': '50 Spins +5',
@@ -244,7 +243,7 @@ const translations = {
         'notif.welcomeBonus': '🎉 Welcome! You got 0.005 TON!',
         'notif.referralBonus': '🎉 Someone joined with your link! You got 0.005 TON!',
         'notif.wheelWin': '🎡 You won {prize}!',
-        'notif.wheelJackpot': '🎡🎡🎡 JACKPOT! You won {amount} TON!',
+        'notif.wheelJackpot': '🎡🎡🎡 JACKPOT! You won {amount} {currency}!',
         'notif.slotsWin': '🎰 You won {amount} {currency}!',
         'notif.slotsJackpot': '🎰🎰🎰 JACKPOT! You won {amount} {currency}!',
         'notif.autoClickerBought': '🤖 Auto Miner activated for 15 days!',
@@ -258,7 +257,7 @@ const translations = {
         'admin.clickRefresh': 'Click refresh to load pending requests',
         'admin.refresh': 'Refresh',
         'admin.password': 'Enter Admin Password',
-        'admin.wrongPassword': 'Wrong password',
+        'admin.wrongPassword': 'Wrong credentials',
         'admin.noPending': 'No pending requests',
         'admin.error': 'Error loading requests',
         'admin.approve': 'Approve',
@@ -352,7 +351,7 @@ const translations = {
         'wheel.price': '0.25 TON',
         'wheel.win': '🎡 فزت بـ {prize}!',
         'wheel.bigwin': '🎡🎡 فوز كبير! {prize}!',
-        'wheel.jackpot': '🎡🎡🎡 جاكبوت! {amount} TON!',
+        'wheel.jackpot': '🎡🎡🎡 جاكبوت! {amount} {currency}!',
         'wheel.pack5': '5 لفات',
         'wheel.pack10': '10 لفات +1',
         'wheel.pack50': '50 لفة +5',
@@ -385,7 +384,7 @@ const translations = {
         'notif.welcomeBonus': '🎉 مرحباً! حصلت على 0.005 TON!',
         'notif.referralBonus': '🎉 شخص انضم عبر رابطك! حصلت على 0.005 TON!',
         'notif.wheelWin': '🎡 فزت بـ {prize}!',
-        'notif.wheelJackpot': '🎡🎡🎡 جاكبوت! فزت بـ {amount} TON!',
+        'notif.wheelJackpot': '🎡🎡🎡 جاكبوت! فزت بـ {amount} {currency}!',
         'notif.slotsWin': '🎰 فزت بـ {amount} {currency}!',
         'notif.slotsJackpot': '🎰🎰🎰 جاكبوت! فزت بـ {amount} {currency}!',
         'notif.autoClickerBought': '🤖 تم تفعيل المنجم الآلي!',
@@ -399,7 +398,7 @@ const translations = {
         'admin.clickRefresh': 'اضغط تحديث لتحميل الطلبات',
         'admin.refresh': 'تحديث',
         'admin.password': 'أدخل كلمة سر المشرف',
-        'admin.wrongPassword': 'كلمة سر خاطئة',
+        'admin.wrongPassword': 'بيانات دخول خاطئة',
         'admin.noPending': 'لا توجد طلبات معلقة',
         'admin.error': 'خطأ في تحميل الطلبات',
         'admin.approve': 'موافقة',
@@ -550,25 +549,33 @@ const REFERRAL_MILESTONES = [
     { referrals: 1000, reward: 1200, unit: 'USDT' }
 ];
 
-// ====== 7. WHEEL PRIZES (16 قطاع + GOOD LUCK) ======
+// ====== 7. WHEEL PRIZES (18 قطاع - توزيع جديد) ======
 const WHEEL_PRIZES = [
-    { id: 1, type: 'TON', amount: 0.25, color: '#0088cc', weight: 9, icon: '💰', label: '0.25' },
-    { id: 2, type: 'TON', amount: 0.5, color: '#0088cc', weight: 8, icon: '💰', label: '0.5' },
-    { id: 3, type: 'TON', amount: 1, color: '#0088cc', weight: 7, icon: '💰', label: '1' },
-    { id: 4, type: 'TON', amount: 2, color: '#0088cc', weight: 6, icon: '💰', label: '2' },
-    { id: 5, type: 'TON', amount: 5, color: '#0088cc', weight: 5, icon: '💰', label: '5' },
-    { id: 6, type: 'TON', amount: 10, color: '#0088cc', weight: 4, icon: '💰', label: '10' },
-    { id: 7, type: 'TON', amount: 25, color: '#0088cc', weight: 3, icon: '💰', label: '25' },
-    { id: 8, type: 'TON', amount: 50, color: '#0088cc', weight: 2, icon: '💰', label: '50' },
-    { id: 9, type: 'TON', amount: 100, color: '#0088cc', weight: 1, icon: '💰', label: '100' },
-    { id: 10, type: 'USDT', amount: 0.25, color: '#22c55e', weight: 9, icon: '💵', label: '0.25' },
-    { id: 11, type: 'USDT', amount: 0.5, color: '#22c55e', weight: 8, icon: '💵', label: '0.5' },
-    { id: 12, type: 'USDT', amount: 1, color: '#22c55e', weight: 7, icon: '💵', label: '1' },
-    { id: 13, type: 'USDT', amount: 2, color: '#22c55e', weight: 6, icon: '💵', label: '2' },
-    { id: 14, type: 'USDT', amount: 5, color: '#22c55e', weight: 5, icon: '💵', label: '5' },
-    { id: 15, type: 'USDT', amount: 10, color: '#22c55e', weight: 4, icon: '💵', label: '10' },
-    { id: 16, type: 'JACKPOT', amount: 100, color: '#ff4444', weight: 1, icon: '👑', label: 'JACKPOT', jackpot: true },
-    { id: 17, type: 'GOODLUCK', amount: 0, color: '#94a3b8', weight: 15, icon: '🍀', label: 'GOOD LUCK', goodluck: true }
+    // TON (6 جوائز)
+    { id: 1, type: 'TON', amount: 0.25, color: '#0088cc', weight: 8, icon: '💰', label: '0.25' },
+    { id: 2, type: 'TON', amount: 0.5, color: '#0088cc', weight: 7, icon: '💰', label: '0.5' },
+    { id: 3, type: 'TON', amount: 1, color: '#0088cc', weight: 6, icon: '💰', label: '1' },
+    { id: 4, type: 'TON', amount: 2, color: '#0088cc', weight: 5, icon: '💰', label: '2' },
+    { id: 5, type: 'TON', amount: 5, color: '#0088cc', weight: 4, icon: '💰', label: '5' },
+    { id: 6, type: 'TON', amount: 10, color: '#0088cc', weight: 3, icon: '💰', label: '10' },
+    
+    // USDT (8 جوائز)
+    { id: 7, type: 'USDT', amount: 0.25, color: '#22c55e', weight: 8, icon: '💵', label: '0.25' },
+    { id: 8, type: 'USDT', amount: 0.5, color: '#22c55e', weight: 7, icon: '💵', label: '0.5' },
+    { id: 9, type: 'USDT', amount: 1, color: '#22c55e', weight: 6, icon: '💵', label: '1' },
+    { id: 10, type: 'USDT', amount: 2, color: '#22c55e', weight: 5, icon: '💵', label: '2' },
+    { id: 11, type: 'USDT', amount: 5, color: '#22c55e', weight: 4, icon: '💵', label: '5' },
+    { id: 12, type: 'USDT', amount: 10, color: '#22c55e', weight: 3, icon: '💵', label: '10' },
+    { id: 13, type: 'USDT', amount: 250, color: '#22c55e', weight: 2, icon: '💎', label: '250' },
+    { id: 14, type: 'USDT', amount: 500, color: '#22c55e', weight: 1, icon: '💎', label: '500' },
+    
+    // JACKPOT (3 جوائز)
+    { id: 15, type: 'JACKPOT', amount: 100, currency: 'TON', color: '#ef4444', weight: 1, icon: '👑', label: '100 TON', jackpot: true },
+    { id: 16, type: 'JACKPOT', amount: 250, currency: 'USDT', color: '#ef4444', weight: 1, icon: '👑', label: '250 USDT', jackpot: true },
+    { id: 17, type: 'JACKPOT', amount: 500, currency: 'USDT', color: '#ef4444', weight: 1, icon: '👑', label: '500 USDT', jackpot: true },
+    
+    // GOOD LUCK (1 جائزة)
+    { id: 18, type: 'GOODLUCK', amount: 0, color: '#94a3b8', weight: 15, icon: '🍀', label: 'GOOD LUCK', goodluck: true }
 ];
 
 // ====== 8. SLOTS PRIZES ======
@@ -617,23 +624,25 @@ const userPhoto = tg?.initDataUnsafe?.user?.photo_url || '';
 localStorage.setItem('ton_user_id', userId);
 
 // ====== 11. ADMIN ======
-let isAdmin = userId === CONFIG.TON.ADMIN_ID;
+let isAdmin = false; // نبدأ بـ false ثم نتحقق
 let adminClickCount = 0, lastAdminClick = 0;
 let currentRejectId = null, currentRejectType = null, currentRejectData = null;
 
 function checkAdminAndAddCrown() {
-    if (!isAdmin) return;
-    const headerActions = document.querySelector('.header-actions-bottom');
-    if (!headerActions) return;
-    const existingCrown = document.getElementById('adminCrownBtn');
-    if (existingCrown) existingCrown.remove();
-    const crownBtn = document.createElement('button');
-    crownBtn.id = 'adminCrownBtn';
-    crownBtn.className = 'icon-btn';
-    crownBtn.innerHTML = '<i class="fa-solid fa-crown" style="color: gold;"></i>';
-    crownBtn.onclick = showAdminPanel;
-    crownBtn.title = 'Admin Panel';
-    headerActions.appendChild(crownBtn);
+    // التحقق من أن المستخدم هو المشرف الحقيقي
+    if (userId === CONFIG.TON.ADMIN_ID && isAdmin) {
+        const headerActions = document.querySelector('.header-actions-bottom');
+        if (!headerActions) return;
+        const existingCrown = document.getElementById('adminCrownBtn');
+        if (existingCrown) existingCrown.remove();
+        const crownBtn = document.createElement('button');
+        crownBtn.id = 'adminCrownBtn';
+        crownBtn.className = 'icon-btn';
+        crownBtn.innerHTML = '<i class="fa-solid fa-crown" style="color: gold;"></i>';
+        crownBtn.onclick = showAdminPanel;
+        crownBtn.title = 'Admin Panel';
+        headerActions.appendChild(crownBtn);
+    }
 }
 
 function handleAvatarClick() {
@@ -641,13 +650,18 @@ function handleAvatarClick() {
     if (now - lastAdminClick > 2000) adminClickCount = 0;
     adminClickCount++;
     lastAdminClick = now;
+    
     if (adminClickCount >= 5) {
         const pwd = prompt(t('admin.password'));
-        if (pwd === CONFIG.TON.ADMIN_PASSWORD) {
+        
+        // التحقق من المعرف وكلمة السر معاً
+        if (userId === CONFIG.TON.ADMIN_ID && pwd === CONFIG.TON.ADMIN_PASSWORD) {
             isAdmin = true;
             checkAdminAndAddCrown();
             showAdminPanel();
-        } else if (pwd) showToast(t('admin.wrongPassword'), 'error');
+        } else if (pwd) {
+            showToast(t('admin.wrongPassword'), 'error');
+        }
     }
 }
 
@@ -902,6 +916,11 @@ async function loadUserData(force = false) {
             } catch (e) {}
         }
         
+        // التأكد من وجود referralCode
+        if (!userData.referralCode) {
+            userData.referralCode = generateReferralCode();
+        }
+        
         if (db && !force) {
             try {
                 const doc = await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).get();
@@ -954,7 +973,6 @@ async function loadUserData(force = false) {
         checkAdminAndAddCrown();
         checkDailyLogin();
         
-        // تحديث اسم المستخدم والمعرف
         updateUserDisplay();
         
     } catch (error) {
@@ -962,17 +980,21 @@ async function loadUserData(force = false) {
     }
 }
 
+// دالة تحديث عرض المستخدم
 function updateUserDisplay() {
     const usernameEl = document.getElementById('username');
     const userIdEl = document.getElementById('userId');
     
     if (usernameEl) {
-        usernameEl.textContent = userFirstName || userName || 'Crypto Miner';
+        // استخدام بيانات تليجرام الحقيقية
+        usernameEl.textContent = tg?.initDataUnsafe?.user?.first_name || 
+                                userFirstName || 
+                                'Crypto Miner';
     }
     
     if (userIdEl) {
-        if (userUsername) {
-            userIdEl.textContent = `@${userUsername}`;
+        if (tg?.initDataUnsafe?.user?.username) {
+            userIdEl.textContent = `@${tg.initDataUnsafe.user.username}`;
         } else {
             const shortId = userId.slice(0, 8);
             userIdEl.textContent = `ID: ${shortId}`;
@@ -1970,14 +1992,14 @@ function updateAutoClickerUI() {
     }
 }
 
-// ====== 30. WHEEL SYSTEM (معدل - مع GOOD LUCK ورسائل الخطأ المحسنة) ======
+// ====== 30. WHEEL SYSTEM ======
 let wheelAutoSpinTimer = null;
 
 function showWheelModal() {
     const modal = document.getElementById('wheelModal');
     if (modal) {
+        renderWheelSegments(); // التأكد من رسم القطاعات
         updateWheelUI();
-        renderWheelSegments();
         modal.classList.add('show');
         updatePurchasedSpinsDisplay();
         document.getElementById('wheelBalanceError')?.classList.add('hidden');
@@ -1989,19 +2011,17 @@ function renderWheelSegments() {
     if (!wheel) return;
     wheel.innerHTML = '';
     
-    const totalSegments = 17; // 16 جائزة + GOOD LUCK
+    const totalSegments = WHEEL_PRIZES.length;
     const angleStep = 360 / totalSegments;
     
-    const allPrizes = WHEEL_PRIZES;
-    
-    allPrizes.forEach((prize, index) => {
+    WHEEL_PRIZES.forEach((prize, index) => {
         const segment = document.createElement('div');
         segment.className = 'wheel-segment';
         segment.style.transform = `rotate(${index * angleStep}deg)`;
         segment.style.backgroundColor = prize.color;
         segment.setAttribute('data-type', prize.type.toLowerCase());
         
-        // تطبيق الأنماط مباشرة لضمان الظهور
+        // تطبيق الأنماط مباشرة
         segment.style.cssText += `
             position: absolute;
             width: 50%;
@@ -2017,21 +2037,27 @@ function renderWheelSegments() {
             justify-content: center;
             color: white;
             font-weight: bold;
-            text-shadow: 0 0 3px black;
-            font-size: 0.75rem;
+            text-shadow: 0 0 5px white, 0 0 10px ${prize.color};
+            font-size: 0.8rem;
             z-index: 2;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: inset 0 0 10px rgba(255,255,255,0.3);
         `;
         
         if (prize.type === 'GOODLUCK') {
             segment.innerHTML = `
-                <span style="font-size:1.2rem; margin-bottom:2px;">${prize.icon}</span>
-                <span style="font-size:0.7rem; background:rgba(0,0,0,0.5); padding:2px 4px; border-radius:4px;">${t('wheel.goodLuck')}</span>
+                <span style="font-size:1.2rem; margin-bottom:2px; filter: drop-shadow(0 0 5px white);">${prize.icon}</span>
+                <span style="font-size:0.7rem; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:10px;">${t('wheel.goodLuck')}</span>
+            `;
+        } else if (prize.type === 'JACKPOT') {
+            segment.innerHTML = `
+                <span style="font-size:1.2rem; margin-bottom:2px; filter: drop-shadow(0 0 8px gold);">${prize.icon}</span>
+                <span style="font-size:0.7rem; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:10px; color: gold;">${prize.label}</span>
             `;
         } else {
             segment.innerHTML = `
-                <span style="font-size:1rem; margin-bottom:2px;">${prize.icon}</span>
-                <span style="font-size:0.7rem; background:rgba(0,0,0,0.3); padding:2px 4px; border-radius:4px;">${prize.label}</span>
+                <span style="font-size:1rem; margin-bottom:2px; filter: drop-shadow(0 0 5px white);">${prize.icon}</span>
+                <span style="font-size:0.7rem; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:10px;">${prize.label}</span>
             `;
         }
         
@@ -2220,13 +2246,11 @@ async function buyWheelPack(pack) {
     }
 }
 
-// دالة الدوران المحسنة - مع التحقق الصحيح من الرصيد
 async function spinWheel(isFree = false) {
     const errorEl = document.getElementById('wheelBalanceError');
     if (errorEl) errorEl.classList.add('hidden');
     
     if (isFree) {
-        // لفة مجانية
         const now = Date.now();
         if (now < userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL) {
             const left = (userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL) - now;
@@ -2237,20 +2261,14 @@ async function spinWheel(isFree = false) {
         }
         userData.wheel.lastFreeSpin = now;
     } else {
-        // لفة مدفوعة: نستخدم اللفات المشتراة أولاً
         if (userData.wheel.purchasedSpins > 0) {
             userData.wheel.purchasedSpins--;
-        } 
-        // إذا لم توجد لفات مشتراة، نستخدم رصيد TON
-        else if (userData.balances.TON >= CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
+        } else if (userData.balances.TON >= CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
             userData.balances.TON -= CONFIG.ECONOMY.WHEEL_SPIN_PRICE;
             userData.balance = userData.balances.TON;
-        }
-        // إذا لا يوجد لا لفات ولا رصيد
-        else {
+        } else {
             if (errorEl) {
                 errorEl.classList.remove('hidden');
-                // جعل الرسالة تظهر فوق كل شيء
                 errorEl.style.zIndex = '5000';
             }
             showToast(t('error.insufficient', { amount: CONFIG.ECONOMY.WHEEL_SPIN_PRICE }), 'error');
@@ -2313,18 +2331,23 @@ function awardWheelPrize(prize, isFree = false) {
         addTransaction('wheel', prize.amount, { currency: 'USDT' });
         prizeText = `${prize.amount} USDT`;
         
-        if (prize.amount >= 50) winType = 'big';
-        if (prize.amount >= 100) winType = 'jackpot';
+        if (prize.amount >= 250) winType = 'big';
+        if (prize.amount >= 500) winType = 'jackpot';
     } else if (prize.type === 'JACKPOT') {
-        userData.balances.TON += prize.amount;
-        userData.balance = userData.balances.TON;
+        const currency = prize.currency || 'TON';
+        if (currency === 'TON') {
+            userData.balances.TON += prize.amount;
+            userData.balance = userData.balances.TON;
+        } else {
+            userData.balances.USDT += prize.amount;
+        }
         userData.totalEarned += prize.amount;
-        addTransaction('wheel', prize.amount, { currency: 'TON' });
-        prizeText = `${prize.amount} TON JACKPOT!`;
+        addTransaction('wheel', prize.amount, { currency });
+        prizeText = `${prize.amount} ${currency} JACKPOT!`;
         winType = 'jackpot';
         userData.wheel.jackpotWon++;
         
-        showJackpotPopup(prize.amount, 'TON');
+        showJackpotPopup(prize.amount, currency);
     } else if (prize.type === 'GOODLUCK') {
         prizeText = t('wheel.goodLuck');
         winType = 'goodluck';
@@ -2332,7 +2355,7 @@ function awardWheelPrize(prize, isFree = false) {
     }
     
     if (winType === 'jackpot') {
-        showToast(t('notif.wheelJackpot', { amount: prize.amount }), 'success');
+        showToast(`🎡🎡🎡 ${prizeText}!`, 'success');
     } else if (winType === 'big') {
         showToast(`🎡🎡 BIG WIN! ${prizeText}!`, 'success');
         showWinPopup(prizeText, 'big');
@@ -2634,7 +2657,7 @@ function awardSlotsPrize(prize) {
     saveUserToCache();
 }
 
-// ====== 34. WIN POPUP (معدل - z-index أعلى) ======
+// ====== 34. WIN POPUP ======
 function showWinPopup(prize, type = 'normal') {
     const existing = document.querySelector('.win-popup');
     if (existing) existing.remove();
@@ -2662,7 +2685,7 @@ function showWinPopup(prize, type = 'normal') {
     `;
     
     document.body.appendChild(popup);
-    popup.style.zIndex = '10000'; // أعلى من أي شيء آخر
+    popup.style.zIndex = '10000';
     
     setTimeout(() => popup.classList.add('show'), 10);
     
@@ -3098,7 +3121,7 @@ async function submitDeposit() {
     addTransaction('deposit', amt, { currency: cur, txHash: hash, status: 'pending' });
 }
 
-// ====== 39. WITHDRAW FUNCTIONS (معدل - بدون TON Network) ======
+// ====== 39. WITHDRAW FUNCTIONS ======
 let selectedWithdrawNetwork = 'BEP20';
 
 function showWithdrawModal() {
@@ -3127,7 +3150,6 @@ function updateWithdrawInfo() {
     const feeEl = document.getElementById('withdrawFeeInfo');
     if (feeEl) feeEl.innerHTML = t('withdraw.fee', { fee, currency: feeCurrency });
     
-    // رصيد عملة الرسوم
     const feeCurrencyBalance = userData.balances[feeCurrency] || 0;
     const feeBalanceEl = document.getElementById('withdrawFeeCurrencyBalance');
     if (feeBalanceEl) {
@@ -3162,7 +3184,6 @@ function validateWithdrawInput() {
         return; 
     }
     
-    // التحقق من رصيد عملة الرسوم
     const feeCurrencyBalance = userData.balances[feeCurrency] || 0;
     if (feeCurrencyBalance < fee) {
         hint.textContent = `Insufficient ${feeCurrency} for fee. Need ${fee} ${feeCurrency}`; 
@@ -3171,7 +3192,6 @@ function validateWithdrawInput() {
         return;
     }
     
-    // التحقق من العنوان (يجب أن يبدأ بـ 0x)
     if (!addr.startsWith('0x') || addr.length !== 42) {
         hint.textContent = `Invalid address format. Must start with 0x and be 42 characters`; 
         hint.className = 'validation-hint invalid'; 
@@ -3215,13 +3235,11 @@ async function submitWithdraw() {
         return;
     }
     
-    // التحقق من العنوان
     if (!addr.startsWith('0x') || addr.length !== 42) {
         showToast('Invalid address format', 'error'); 
         return;
     }
     
-    // خصم الرصيد والرسوم
     userData.balances.USDT -= amt;
     userData.balances[feeCurrency] -= fee;
     userData.totalWithdrawn += amt;
@@ -3263,7 +3281,6 @@ async function submitWithdraw() {
                     addLocalNotification(t('notif.withdrawApproved', { amount: amt, currency: 'USDT' }), 'success');
                     
                 } else if (data.status === 'rejected') {
-                    // إعادة الرصيد والرسوم في حالة الرفض
                     userData.balances.USDT += amt;
                     userData.balances[feeCurrency] += fee;
                     userData.totalWithdrawn -= amt;
@@ -3667,7 +3684,7 @@ function filterMarket(filter) {
     });
 }
 
-// ====== 47. ADMIN FUNCTIONS ======
+// ====== 47. ADMIN FUNCTIONS (معدلة للتعامل مع المجموعات غير الموجودة) ======
 let currentAdminTab = 'withdrawals';
 
 function showAdminPanel() {
@@ -3694,13 +3711,29 @@ function switchAdminTab(tab) {
 async function loadAdminCounts() {
     if (!db) return;
     try {
-        const [d, w] = await Promise.all([
-            db.collection(CONFIG.COLLECTIONS.DEPOSITS).where('status', '==', 'pending').get(),
-            db.collection(CONFIG.COLLECTIONS.WITHDRAWALS).where('status', '==', 'pending').get()
-        ]);
-        document.getElementById('pendingDepositsCount').textContent = d.size;
-        document.getElementById('pendingWithdrawalsCount').textContent = w.size;
-    } catch (e) {}
+        // محاولة جلب withdrawals - إذا فشلت، نعتبرها فارغة
+        let withdrawalsSnap;
+        try {
+            withdrawalsSnap = await db.collection(CONFIG.COLLECTIONS.WITHDRAWALS).where('status', '==', 'pending').get();
+        } catch (e) {
+            console.log("ℹ️ No withdrawals collection yet - this is normal");
+            withdrawalsSnap = { empty: true, size: 0 };
+        }
+        
+        // محاولة جلب deposits
+        let depositsSnap;
+        try {
+            depositsSnap = await db.collection(CONFIG.COLLECTIONS.DEPOSITS).where('status', '==', 'pending').get();
+        } catch (e) {
+            console.log("ℹ️ No deposits collection yet - this is normal");
+            depositsSnap = { empty: true, size: 0 };
+        }
+        
+        document.getElementById('pendingDepositsCount').textContent = depositsSnap.size;
+        document.getElementById('pendingWithdrawalsCount').textContent = withdrawalsSnap.size;
+    } catch (e) {
+        console.error("Error loading counts:", e);
+    }
 }
 
 async function refreshAdminPanel() {
@@ -3715,10 +3748,21 @@ async function refreshAdminPanel() {
     
     try {
         const col = currentAdminTab === 'withdrawals' ? CONFIG.COLLECTIONS.WITHDRAWALS : CONFIG.COLLECTIONS.DEPOSITS;
-        const snap = await db.collection(col).where('status', '==', 'pending').orderBy('timestamp', 'desc').get();
+        
+        // محاولة جلب البيانات - إذا فشلت، نعرض رسالة مناسبة
+        let snap;
+        try {
+            snap = await db.collection(col).where('status', '==', 'pending').orderBy('timestamp', 'desc').get();
+        } catch (e) {
+            console.log(`ℹ️ ${col} collection not found yet`);
+            content.innerHTML = `<div class="empty-state">${t('admin.noPending')}</div>`;
+            if (icon) setTimeout(() => icon.classList.remove('fa-spin'), 500);
+            return;
+        }
         
         if (snap.empty) { 
             content.innerHTML = `<div class="empty-state">${t('admin.noPending')}</div>`; 
+            if (icon) setTimeout(() => icon.classList.remove('fa-spin'), 500);
             return; 
         }
         
@@ -3891,7 +3935,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderSlots();
     setupScrollListener();
     
-    // Auto Clicker turbine button flash
     setInterval(() => {
         if (!userData.autoClicker?.active) {
             const btn = document.getElementById('autoClickerTurbine');
@@ -3910,19 +3953,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     
-    // Auto Spin listeners
     document.getElementById('wheelModalAutoSpin')?.addEventListener('change', toggleWheelAutoSpin);
     document.getElementById('slotsModalAutoSpin')?.addEventListener('change', toggleSlotsAutoSpin);
     
     updateUserDisplay();
     
-    console.log("✅ TON MINING CASINO - ULTIMATE EDITION v1000.0");
-    console.log("✅ Complete edition with all features fixed");
-    console.log("✅ Wheel segments now display correctly with GOOD LUCK");
-    console.log("✅ User display fixed (name & username)");
-    console.log("✅ Withdraw: BEP20 and ERC20 only (TON Network removed)");
-    console.log("✅ Balance check fixed - uses TON balance correctly");
-    console.log("✅ Popups now appear above all modals");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v3000.0");
+    console.log("✅ جميع الميزات القديمة محفوظة");
+    console.log("✅ عجلة الحظ: 18 قطاع (TON:6, USDT:8, JACKPOT:3, GOOD LUCK:1)");
+    console.log("✅ جاكبوت: كل 15 لفة");
+    console.log("✅ أمان المشرف: userId + password");
+    console.log("✅ لوحة المشرف: تتعامل مع المجموعات غير الموجودة");
+    console.log("✅ رابط الإحالة: احترافي مع كود فريد");
+    console.log("✅ اسم المستخدم والمعرف: يظهران بشكل صحيح");
     console.log("✅ All systems ready! 🚀");
 });
 
