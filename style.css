@@ -3888,3 +3888,30 @@ input:checked + .toggle-slider:before {
 
 /* ====== 60. SELECTION ====== */
 ::selection { background: var(--ton-cyan); color: var(--bg-primary); }
+/* ====== FIX: عجلة الحظ - إظهار النصوص بشكل واضح ====== */
+.wheel-segment {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: white !important;
+    text-shadow: 0 0 3px black, 0 0 5px black !important;
+    font-weight: bold !important;
+    z-index: 10 !important;
+}
+
+.wheel-segment .wheel-icon {
+    display: block !important;
+    font-size: 1.2rem !important;
+    margin-bottom: 2px !important;
+    color: white !important;
+}
+
+.wheel-segment .wheel-value {
+    display: block !important;
+    font-size: 0.8rem !important;
+    color: white !important;
+    background: rgba(0,0,0,0.3);
+    padding: 2px 4px;
+    border-radius: 4px;
+}
