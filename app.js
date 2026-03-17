@@ -1,7 +1,7 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v100.0
-// COMPLETE EDITION - كل الميزات القديمة + الجديدة
-// مع تحسينات اقتصادية - 100K+ USERS READY
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v600.0
+// COMPLETE EDITION - جميع الميزات القديمة + الجديدة
+// مع تحسينات اقتصادية وتأثيرات احترافية
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -63,13 +63,13 @@ const CONFIG = {
         TON: 1.0, USDT: 10, BNB: 0.015, ETH: 0.005, BTC: 0.0005, SOL: 0.12
     },
     
-    WITHDRAW_FEES: {
-        USDT: { fee: 0.00016, feeCurrency: 'BNB', note: 'USDT withdrawal requires 0.00016 BNB fee' },
-        BNB: { fee: 0.0005, feeCurrency: 'BNB', note: 'BNB withdrawal requires 0.0005 BNB fee' },
-        ETH: { fee: 0.001, feeCurrency: 'ETH', note: 'ETH withdrawal fee' },
-        BTC: { fee: 0.0001, feeCurrency: 'BTC', note: 'BTC withdrawal fee' },
-        SOL: { fee: 0.00001, feeCurrency: 'SOL', note: 'SOL withdrawal fee' },
-        TON: { fee: 0.05, feeCurrency: 'TON', note: 'TON withdrawal fee' }
+    // WITHDRAW - معدل: USDT فقط مع الشبكات
+    WITHDRAW_NETWORKS: {
+        USDT: [
+            { name: 'TON Network', value: 'TON', fee: 0.05 },
+            { name: 'BEP20 (BSC)', value: 'BEP20', fee: 0.05 },
+            { name: 'ERC20 (Ethereum)', value: 'ERC20', fee: 0.1 }
+        ]
     },
     
     NETWORK_TYPES: {
@@ -275,7 +275,7 @@ const translations = {
         
         'pack.buy': 'Buy Pack',
         'pack.confirm': 'Confirm purchase of {spins} spins for {price} TON?',
-        'pack.telegramPay': 'Payment via Telegram Stars',
+        'pack.telegramPay': 'Payment via Telegram Wallet',
         'pack.success': '✅ Successfully purchased {spins} spins!',
         
         'autospin.on': 'Auto Spin ON',
@@ -287,7 +287,10 @@ const translations = {
         'table.machine': 'Machine',
         'table.3days': '3 Days',
         'table.7days': '7 Days',
-        'table.15days': '15 Days'
+        'table.15days': '15 Days',
+        
+        'withdraw.network': 'Select Network',
+        'withdraw.fee': 'Network fee: {fee} USDT'
     },
     ar: {
         'app.name': 'كازينو تعدين TON',
@@ -412,7 +415,7 @@ const translations = {
         
         'pack.buy': 'شراء الباقة',
         'pack.confirm': 'تأكيد شراء {spins} لفة بـ {price} TON؟',
-        'pack.telegramPay': 'الدفع عبر نجوم تليجرام',
+        'pack.telegramPay': 'الدفع عبر محفظة تليجرام',
         'pack.success': '✅ تم شراء {spins} لفة بنجاح!',
         
         'autospin.on': 'تشغيل تلقائي',
@@ -424,7 +427,10 @@ const translations = {
         'table.machine': 'الجهاز',
         'table.3days': '٣ أيام',
         'table.7days': '٧ أيام',
-        'table.15days': '١٥ يوماً'
+        'table.15days': '١٥ يوماً',
+        
+        'withdraw.network': 'اختر الشبكة',
+        'withdraw.fee': 'رسوم الشبكة: {fee} USDT'
     }
 };
 
@@ -602,7 +608,9 @@ const userId = tg?.initDataUnsafe?.user?.id?.toString() ||
                'user_' + Math.random().toString(36).substr(2, 9);
 const userName = tg?.initDataUnsafe?.user?.first_name || 'Crypto Miner';
 const userFirstName = tg?.initDataUnsafe?.user?.first_name || 'Miner';
+const userLastName = tg?.initDataUnsafe?.user?.last_name || '';
 const userUsername = tg?.initDataUnsafe?.user?.username || '';
+const userPhoto = tg?.initDataUnsafe?.user?.photo_url || '';
 
 localStorage.setItem('ton_user_id', userId);
 
@@ -660,7 +668,10 @@ let userData = {
     uid: userId,
     username: userName,
     firstName: userFirstName,
+    lastName: userLastName,
     telegramUsername: userUsername,
+    photoUrl: userPhoto,
+    
     balances: { TON: 0, USDT: 0, BNB: 0, BTC: 0, ETH: 0, SOL: 0 },
     balance: 0,
     totalEarned: 0,
@@ -873,7 +884,7 @@ function stopAllListeners() {
     listenerTimeouts.clear();
 }
 
-// ====== 16. LOAD USER DATA ======
+// ====== 16. LOAD USER DATA (مع عرض اسم المستخدم والمعرف) ======
 async function loadUserData(force = false) {
     try {
         console.log("📂 Loading user data for:", userId);
@@ -940,6 +951,23 @@ async function loadUserData(force = false) {
         updateNotificationBadge();
         checkAdminAndAddCrown();
         checkDailyLogin();
+        
+        // تحديث اسم المستخدم والمعرف من تليجرام
+        const usernameEl = document.getElementById('username');
+        const userIdEl = document.getElementById('userId');
+        
+        if (usernameEl) {
+            usernameEl.textContent = userFirstName || userName || 'Crypto Miner';
+        }
+        
+        if (userIdEl) {
+            if (userUsername) {
+                userIdEl.textContent = `@${userUsername}`;
+            } else {
+                const shortId = userId.slice(0, 8);
+                userIdEl.textContent = `ID: ${shortId}`;
+            }
+        }
         
     } catch (error) {
         console.error("❌ Error loading user data:", error);
@@ -1435,68 +1463,37 @@ function hapticFeedback(type = 'light') {
     }
 }
 
-function showWinPopup(prize, type = 'normal') {
-    const existing = document.querySelector('.win-popup');
-    if (existing) existing.remove();
+// ====== 25. JACKPOT POPUP - الأسطوري ======
+function showJackpotPopup(amount, currency = 'TON') {
+    const popup = document.getElementById('jackpotPopup');
+    const amountEl = document.getElementById('jackpotAmount');
     
-    const popup = document.createElement('div');
-    popup.className = `win-popup ${type}`;
+    if (!popup || !amountEl) return;
     
-    let icon = '🎉';
-    let title = t('win.normal');
-    let amount = prize;
+    amountEl.textContent = `${amount} ${currency}`;
+    popup.classList.remove('hidden');
+    popup.classList.add('show');
     
-    if (type === 'big') {
-        icon = '🌟🌟';
-        title = t('win.big');
-    } else if (type === 'jackpot') {
-        icon = '🎰🎰🎰';
-        title = t('win.jackpot');
-    }
+    hapticFeedback('heavy');
     
-    popup.innerHTML = `
-        <div class="win-icon">${icon}</div>
-        <div class="win-title">${title}</div>
-        <div class="win-amount">${amount}</div>
-        <div class="win-confetti"></div>
-    `;
-    
-    document.body.appendChild(popup);
-    popup.style.zIndex = '10000';
-    
-    setTimeout(() => popup.classList.add('show'), 10);
-    
-    if (type === 'jackpot') {
-        hapticFeedback('heavy');
-        document.body.style.animation = 'jackpotFlash 0.5s 3';
-        setTimeout(() => document.body.style.animation = '', 1500);
-    } else if (type === 'big') {
-        hapticFeedback('medium');
-    } else {
-        hapticFeedback('light');
-    }
-    
+    // اهتزاز الشاشة (تأثير إضافي)
+    document.body.style.animation = 'shakeIntense 0.5s';
     setTimeout(() => {
-        popup.classList.remove('show');
-        setTimeout(() => popup.remove(), 300);
-    }, 2500);
+        document.body.style.animation = '';
+    }, 500);
 }
 
-function createParticles() {
-    const container = document.querySelector('.miner-particles');
-    if (!container) return;
-    for (let i = 0; i < 10; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        p.style.left = Math.random() * 100 + '%';
-        p.style.top = Math.random() * 100 + '%';
-        p.style.animationDelay = Math.random() + 's';
-        container.appendChild(p);
-        setTimeout(() => p.remove(), 2000);
+function closeJackpotPopup() {
+    const popup = document.getElementById('jackpotPopup');
+    if (popup) {
+        popup.classList.remove('show');
+        setTimeout(() => {
+            popup.classList.add('hidden');
+        }, 300);
     }
 }
 
-// ====== 25. MINING MANAGER ======
+// ====== 26. MINING MANAGER ======
 let miningTimer = null, autoClickerTimer = null;
 
 function startMining() {
@@ -1607,6 +1604,20 @@ async function addReferralMiningBonus(referrerId, miningAmount) {
     } catch (e) {}
 }
 
+function createParticles() {
+    const container = document.querySelector('.energy-particles');
+    if (!container) return;
+    for (let i = 0; i < 10; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.top = Math.random() * 100 + '%';
+        p.style.animationDelay = Math.random() + 's';
+        container.appendChild(p);
+        setTimeout(() => p.remove(), 2000);
+    }
+}
+
 function handleExpiry() {
     if (userData.activeMachine !== 'm1') {
         userData.activeMachine = 'm1';
@@ -1637,7 +1648,7 @@ function addTransaction(type, amount, details = {}) {
     return tx;
 }
 
-// ====== 26. AUTO CLICKER ======
+// ====== 27. AUTO CLICKER ======
 function startAutoClicker() {
     if (autoClickerTimer) clearInterval(autoClickerTimer);
     autoClickerTimer = setInterval(async () => {
@@ -1679,7 +1690,7 @@ function buyAutoClicker() {
     updateUI();
 }
 
-// ====== 27. TON CONNECT ======
+// ====== 28. TON CONNECT ======
 let tonConnectUI = null, tonWallet = null;
 
 async function initTonConnect() {
@@ -1763,7 +1774,7 @@ async function connectWallet() {
 
 async function disconnectWallet() { if (tonConnectUI) { await tonConnectUI.disconnect(); showToast('Wallet disconnected', 'info'); } }
 
-// ====== 28. UI UPDATE ======
+// ====== 29. UI UPDATE ======
 function updateUI() {
     updateBalance();
     updateMiningStats();
@@ -1778,6 +1789,23 @@ function updateUI() {
     updateAutoClickerUI();
     updateWheelUI();
     updateSlotsUI();
+    
+    // تحديث اسم المستخدم والمعرف
+    const usernameEl = document.getElementById('username');
+    const userIdEl = document.getElementById('userId');
+    
+    if (usernameEl) {
+        usernameEl.textContent = userFirstName || userName || 'Crypto Miner';
+    }
+    
+    if (userIdEl) {
+        if (userUsername) {
+            userIdEl.textContent = `@${userUsername}`;
+        } else {
+            const shortId = userId.slice(0, 8);
+            userIdEl.textContent = `ID: ${shortId}`;
+        }
+    }
 }
 
 function updateBalance() {
@@ -1901,14 +1929,10 @@ function updateReferralPreview() {
     const refCount = document.getElementById('previewRefCount');
     const refEarnings = document.getElementById('previewRefEarnings');
     const refLink = document.getElementById('previewReferralLink');
-    const usernameEl = document.getElementById('username');
-    const userIdEl = document.getElementById('userId');
     
     if (refCount) refCount.textContent = userData.referrals?.length || 0;
     if (refEarnings) refEarnings.textContent = formatTON(userData.referralEarnings || 0);
     if (refLink) refLink.value = getReferralLink();
-    if (usernameEl) usernameEl.textContent = userData.firstName || userData.username;
-    if (userIdEl) userIdEl.textContent = userData.telegramUsername ? `@${userData.telegramUsername}` : `ID: ${userData.uid.slice(-8)}`;
 }
 
 function renderAssets() {
@@ -1934,6 +1958,8 @@ function renderAssets() {
 function updateAutoClickerUI() {
     const statusEl = document.getElementById('autoMinerStatus');
     const timeEl = document.getElementById('autoMinerTime');
+    const turbineBtn = document.getElementById('autoClickerTurbine');
+    
     if (userData.autoClicker?.active) {
         const timeLeft = userData.autoClicker.expiry - Date.now();
         if (timeLeft > 0) {
@@ -1941,15 +1967,20 @@ function updateAutoClickerUI() {
             const hours = Math.floor((timeLeft % (24 * 3600000)) / 3600000);
             if (statusEl) statusEl.style.display = 'flex';
             if (timeEl) timeEl.textContent = `${days}d ${hours}h`;
+            if (turbineBtn) turbineBtn.classList.add('active');
         } else {
             userData.autoClicker.active = false;
             saveUserToCache();
             if (statusEl) statusEl.style.display = 'none';
+            if (turbineBtn) turbineBtn.classList.remove('active');
         }
-    } else if (statusEl) statusEl.style.display = 'none';
+    } else {
+        if (statusEl) statusEl.style.display = 'none';
+        if (turbineBtn) turbineBtn.classList.remove('active');
+    }
 }
 
-// ====== 29. WHEEL SYSTEM (تصميم كازينو) ======
+// ====== 30. WHEEL SYSTEM ======
 let wheelAutoSpinTimer = null;
 
 function showWheelModal() {
@@ -2110,6 +2141,7 @@ function stopWheelAutoSpin() {
     }
 }
 
+// ====== 31. WHEEL PACKS - شراء عبر محفظة تليجرام (مثل تأجير الماكينة) ======
 async function buyWheelPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -2126,17 +2158,29 @@ async function buyWheelPack(pack) {
         return;
     }
     
-    if (!tg?.pay) {
-        showToast(t('pack.telegramPay'), 'error');
+    // الدفع عبر محفظة تليجرام (مثل تأجير الماكينة)
+    if (!tonConnectUI || !tonWallet) {
+        showToast('Please connect your TON wallet first', 'error');
         return;
     }
     
     try {
-        showToast(t('messages.loading'), 'info');
+        showToast('Opening wallet...', 'info');
         
-        const result = await tg.pay(price.toString());
+        const tx = {
+            validUntil: Date.now() + 600000,
+            messages: [{
+                address: CONFIG.TON.WALLET,
+                amount: (price * 1e9).toString()
+            }]
+        };
         
-        if (result.success) {
+        const result = await tonConnectUI.sendTransaction(tx);
+        
+        showToast('Payment sent! Waiting for confirmation...', 'info');
+        
+        // انتظار 3 ثواني للتأكيد
+        setTimeout(() => {
             if (!userData.wheel.purchasedSpins) userData.wheel.purchasedSpins = 0;
             userData.wheel.purchasedSpins += totalSpins;
             
@@ -2149,9 +2193,8 @@ async function buyWheelPack(pack) {
             showToast(t('pack.success', { spins: totalSpins }), 'success');
             updatePurchasedSpinsDisplay();
             updateUI();
-        } else {
-            showToast(t('error.payment'), 'error');
-        }
+        }, 3000);
+        
     } catch (e) {
         console.error("Payment error:", e);
         showToast(t('error.payment'), 'error');
@@ -2173,17 +2216,13 @@ async function spinWheel(isFree = false) {
         }
         userData.wheel.lastFreeSpin = now;
     } else {
+        // استخدام اللفات المشتراة
         if (userData.wheel.purchasedSpins > 0) {
             userData.wheel.purchasedSpins--;
         } else {
-            if (userData.balances.TON >= CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
-                userData.balances.TON -= CONFIG.ECONOMY.WHEEL_SPIN_PRICE;
-                userData.balance = userData.balances.TON;
-            } else {
-                if (errorEl) errorEl.classList.remove('hidden');
-                showToast(t('error.insufficient', { amount: CONFIG.ECONOMY.WHEEL_SPIN_PRICE }), 'error');
-                return;
-            }
+            if (errorEl) errorEl.classList.remove('hidden');
+            showToast(t('error.insufficient.pack'), 'error');
+            return;
         }
     }
     
@@ -2252,11 +2291,13 @@ function awardWheelPrize(prize, isFree = false) {
         prizeText = `${prize.amount} TON JACKPOT!`;
         winType = 'jackpot';
         userData.wheel.jackpotWon++;
+        
+        // إظهار الجاكبوت بوب أب الأسطوري
+        showJackpotPopup(prize.amount, 'TON');
     }
     
     if (winType === 'jackpot') {
         showToast(t('notif.wheelJackpot', { amount: prize.amount }), 'success');
-        showWinPopup(prizeText, 'jackpot');
     } else if (winType === 'big') {
         showToast(t('wheel.bigwin', { prize: prizeText }), 'success');
         showWinPopup(prizeText, 'big');
@@ -2269,7 +2310,7 @@ function awardWheelPrize(prize, isFree = false) {
     updateUI();
 }
 
-// ====== 30. SLOTS SYSTEM ======
+// ====== 32. SLOTS SYSTEM ======
 let slotsAutoSpinTimer = null;
 
 function showSlotsModal() {
@@ -2376,6 +2417,7 @@ function stopSlotsAutoSpin() {
     }
 }
 
+// ====== 33. SLOTS PACKS - شراء عبر محفظة تليجرام (مثل تأجير الماكينة) ======
 async function buySlotsPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -2392,17 +2434,29 @@ async function buySlotsPack(pack) {
         return;
     }
     
-    if (!tg?.pay) {
-        showToast(t('pack.telegramPay'), 'error');
+    // الدفع عبر محفظة تليجرام (مثل تأجير الماكينة)
+    if (!tonConnectUI || !tonWallet) {
+        showToast('Please connect your TON wallet first', 'error');
         return;
     }
     
     try {
-        showToast(t('messages.loading'), 'info');
+        showToast('Opening wallet...', 'info');
         
-        const result = await tg.pay(price.toString());
+        const tx = {
+            validUntil: Date.now() + 600000,
+            messages: [{
+                address: CONFIG.TON.WALLET,
+                amount: (price * 1e9).toString()
+            }]
+        };
         
-        if (result.success) {
+        const result = await tonConnectUI.sendTransaction(tx);
+        
+        showToast('Payment sent! Waiting for confirmation...', 'info');
+        
+        // انتظار 3 ثواني للتأكيد
+        setTimeout(() => {
             if (!userData.slots.purchasedSpins) userData.slots.purchasedSpins = 0;
             userData.slots.purchasedSpins += totalSpins;
             
@@ -2415,9 +2469,8 @@ async function buySlotsPack(pack) {
             showToast(t('pack.success', { spins: totalSpins }), 'success');
             updatePurchasedSpinsDisplay();
             updateUI();
-        } else {
-            showToast(t('error.payment'), 'error');
-        }
+        }, 3000);
+        
     } catch (e) {
         console.error("Payment error:", e);
         showToast(t('error.payment'), 'error');
@@ -2427,8 +2480,6 @@ async function buySlotsPack(pack) {
 async function spinSlots(isFree = false, isTurbo = false) {
     const errorEl = document.getElementById('slotsBalanceError');
     if (errorEl) errorEl.classList.add('hidden');
-    
-    const price = isTurbo ? CONFIG.ECONOMY.SLOTS_TURBO_PRICE : CONFIG.ECONOMY.SLOTS_SPIN_PRICE;
     
     if (isFree) {
         const now = Date.now();
@@ -2441,17 +2492,13 @@ async function spinSlots(isFree = false, isTurbo = false) {
         }
         userData.slots.lastFreeSpin = now;
     } else {
+        // استخدام اللفات المشتراة
         if (userData.slots.purchasedSpins > 0) {
             userData.slots.purchasedSpins--;
         } else {
-            if (userData.balances.TON >= price) {
-                userData.balances.TON -= price;
-                userData.balance = userData.balances.TON;
-            } else {
-                if (errorEl) errorEl.classList.remove('hidden');
-                showToast(t('error.insufficient', { amount: price }), 'error');
-                return;
-            }
+            if (errorEl) errorEl.classList.remove('hidden');
+            showToast(t('error.insufficient.pack'), 'error');
+            return;
         }
     }
     
@@ -2532,7 +2579,7 @@ function awardSlotsPrize(prize) {
     if (prize.jackpot) {
         showToast(t('slots.jackpot', { amount: prize.amount, currency: prize.type }), 'success');
         hapticFeedback('heavy');
-        showWinPopup(`${prize.amount} ${prize.type}`, 'jackpot');
+        showJackpotPopup(prize.amount, prize.type);
         createParticles();
     } else if (prize.amount >= 10) {
         showToast(t('slots.bigwin', { amount: prize.amount, currency: prize.type }), 'success');
@@ -2547,7 +2594,53 @@ function awardSlotsPrize(prize) {
     saveUserToCache();
 }
 
-// ====== 31. MARKET FUNCTIONS ======
+// ====== 34. WIN POPUP ======
+function showWinPopup(prize, type = 'normal') {
+    const existing = document.querySelector('.win-popup');
+    if (existing) existing.remove();
+    
+    const popup = document.createElement('div');
+    popup.className = `win-popup ${type}`;
+    
+    let icon = '🎉';
+    let title = t('win.normal');
+    let amount = prize;
+    
+    if (type === 'big') {
+        icon = '🌟🌟';
+        title = t('win.big');
+    } else if (type === 'jackpot') {
+        icon = '🎰🎰🎰';
+        title = t('win.jackpot');
+    }
+    
+    popup.innerHTML = `
+        <div class="win-icon">${icon}</div>
+        <div class="win-title">${title}</div>
+        <div class="win-amount">${amount}</div>
+        <div class="win-confetti"></div>
+    `;
+    
+    document.body.appendChild(popup);
+    popup.style.zIndex = '3500';
+    
+    setTimeout(() => popup.classList.add('show'), 10);
+    
+    if (type === 'jackpot') {
+        hapticFeedback('heavy');
+    } else if (type === 'big') {
+        hapticFeedback('medium');
+    } else {
+        hapticFeedback('light');
+    }
+    
+    setTimeout(() => {
+        popup.classList.remove('show');
+        setTimeout(() => popup.remove(), 300);
+    }, 2500);
+}
+
+// ====== 35. MARKET FUNCTIONS ======
 function renderMarket() {
     const showcase = document.getElementById('machinesShowcase');
     if (!showcase) return;
@@ -2590,7 +2683,7 @@ function checkRequirements(m) {
     return true;
 }
 
-// ====== 32. PAYMENT SYSTEM ======
+// ====== 36. PAYMENT SYSTEM ======
 let currentPaymentMethod = 'balance', currentPayment = null;
 
 function switchPaymentMethod(method) {
@@ -2705,7 +2798,7 @@ async function confirmWalletPayment() {
     } catch (e) { showToast('Payment failed', 'error'); }
 }
 
-// ====== 33. SWAP SYSTEM (بدون BNB) ======
+// ====== 37. SWAP SYSTEM ======
 let swapMode = 'from', swapFromCurrency = 'TON', swapToCurrency = 'USDT';
 
 function showSwapModal() {
@@ -2767,7 +2860,7 @@ function flipSwap() {
     document.getElementById('swapToIcon').src = CONFIG.CMC_ICONS[swapToCurrency];
     updateSwapBalances();
     calculateSwap();
-    animateElement('.swap-arrow i', 'pop');
+    animateElement('.swap-switch i', 'pop');
 }
 
 function calculateSwap() {
@@ -2820,7 +2913,7 @@ function confirmSwap() {
     renderAssets();
 }
 
-// ====== 34. DEPOSIT FUNCTIONS ======
+// ====== 38. DEPOSIT FUNCTIONS ======
 let selectedDepositCurrency = 'TON';
 
 function showDepositModal() {
@@ -2970,35 +3063,38 @@ async function submitDeposit() {
     addTransaction('deposit', amt, { currency: cur, txHash: hash, status: 'pending' });
 }
 
-// ====== 35. WITHDRAW FUNCTIONS ======
-let selectedWithdrawCurrency = 'TON';
+// ====== 39. WITHDRAW FUNCTIONS - (معدل: USDT فقط مع الشبكات) ======
+let selectedWithdrawNetwork = 'TON';
 
 function showWithdrawModal() {
-    const select = document.getElementById('withdrawCurrencySelect');
-    select.innerHTML = CONFIG.ALL_ASSETS.map(a => 
-        `<option value="${a.symbol}" ${a.symbol === selectedWithdrawCurrency ? 'selected' : ''}>${a.name} (${a.symbol})</option>`
-    ).join('');
+    const select = document.getElementById('withdrawNetworkSelect');
+    if (select) {
+        select.innerHTML = CONFIG.WITHDRAW_NETWORKS.USDT.map(net => 
+            `<option value="${net.value}" ${net.value === selectedWithdrawNetwork ? 'selected' : ''}>${net.name}</option>`
+        ).join('');
+    }
     updateWithdrawInfo();
     document.getElementById('withdrawModal').classList.add('show');
 }
 
 function updateWithdrawInfo() {
-    const cur = document.getElementById('withdrawCurrencySelect')?.value || selectedWithdrawCurrency;
-    selectedWithdrawCurrency = cur;
-    const bal = userData.balances[cur] || 0;
-    document.getElementById('withdrawBalance').textContent = `${formatBalance(bal, cur)}`;
-    document.getElementById('withdrawIcon').src = CONFIG.CMC_ICONS[cur];
+    const netValue = document.getElementById('withdrawNetworkSelect')?.value || selectedWithdrawNetwork;
+    selectedWithdrawNetwork = netValue;
     
-    const fee = CONFIG.WITHDRAW_FEES[cur];
+    const network = CONFIG.WITHDRAW_NETWORKS.USDT.find(n => n.value === netValue);
+    const fee = network ? network.fee : 0.05;
+    
+    const bal = userData.balances.USDT || 0;
+    document.getElementById('withdrawBalance').textContent = `${formatBalance(bal, 'USDT')} USDT`;
+    document.getElementById('withdrawIcon').src = CONFIG.CMC_ICONS.USDT;
+    
     const feeEl = document.getElementById('withdrawFeeInfo');
-    if (fee) feeEl.innerHTML = `${fee.note}<br>Fee: ${fee.fee} ${fee.feeCurrency}`;
-    else feeEl.innerHTML = 'Network fee: 0';
+    if (feeEl) feeEl.innerHTML = t('withdraw.fee', { fee });
     
     validateWithdrawInput();
 }
 
 function validateWithdrawInput() {
-    const cur = selectedWithdrawCurrency;
     const amt = parseFloat(document.getElementById('withdrawAmount').value);
     const addr = document.getElementById('withdrawAddress').value.trim();
     const hint = document.getElementById('withdrawAddressHint');
@@ -3010,30 +3106,20 @@ function validateWithdrawInput() {
         return; 
     }
     
-    const bal = userData.balances[cur] || 0;
+    const bal = userData.balances.USDT || 0;
     if (amt > bal) { 
-        hint.textContent = `Insufficient ${cur}`; 
+        hint.textContent = 'Insufficient USDT balance'; 
         hint.className = 'validation-hint invalid'; 
         btn.disabled = true; 
         return; 
     }
     
-    if (!isValidAddress(addr, cur)) { 
-        hint.textContent = `Invalid ${cur} address`; 
+    // التحقق من عنوان USDT (يبدأ بـ 0x أو UQ)
+    if (!addr.startsWith('0x') && !addr.startsWith('UQ') && !addr.startsWith('EQ')) {
+        hint.textContent = 'Invalid USDT address format'; 
         hint.className = 'validation-hint invalid'; 
         btn.disabled = true; 
-        return; 
-    }
-    
-    const fee = CONFIG.WITHDRAW_FEES[cur];
-    if (fee && fee.feeCurrency !== cur) {
-        const feeBal = userData.balances[fee.feeCurrency] || 0;
-        if (feeBal < fee.fee) { 
-            hint.textContent = `Insufficient ${fee.feeCurrency} for fee`; 
-            hint.className = 'validation-hint invalid'; 
-            btn.disabled = true; 
-            return; 
-        }
+        return;
     }
     
     hint.textContent = '✓ Valid'; 
@@ -3043,49 +3129,48 @@ function validateWithdrawInput() {
 
 function updateWithdrawAmount() {
     const amt = parseFloat(document.getElementById('withdrawAmount').value) || 0;
-    const cur = selectedWithdrawCurrency;
-    const fee = CONFIG.WITHDRAW_FEES[cur];
-    const receiveEl = document.getElementById('withdrawReceiveAmount');
+    const netValue = document.getElementById('withdrawNetworkSelect')?.value || selectedWithdrawNetwork;
+    const network = CONFIG.WITHDRAW_NETWORKS.USDT.find(n => n.value === netValue);
+    const fee = network ? network.fee : 0.05;
     
+    const receiveEl = document.getElementById('withdrawReceiveAmount');
     if (receiveEl) {
-        if (fee && fee.feeCurrency === cur) receiveEl.textContent = `${formatBalance(amt - fee.fee, cur)}`;
-        else receiveEl.textContent = `${formatBalance(amt, cur)}`;
+        receiveEl.textContent = `${formatBalance(amt - fee, 'USDT')} USDT`;
     }
     validateWithdrawInput();
 }
 
 async function submitWithdraw() {
-    const cur = selectedWithdrawCurrency;
     const amt = parseFloat(document.getElementById('withdrawAmount').value);
     const addr = document.getElementById('withdrawAddress').value.trim();
+    const netValue = selectedWithdrawNetwork;
+    const network = CONFIG.WITHDRAW_NETWORKS.USDT.find(n => n.value === netValue);
+    const fee = network ? network.fee : 0.05;
     
-    if (amt > (userData.balances[cur] || 0)) { 
-        showToast(t('error.insufficientBalance', { currency: cur }), 'error'); 
+    if (amt > (userData.balances.USDT || 0)) { 
+        showToast('Insufficient USDT balance', 'error'); 
         return; 
     }
-    if (!isValidAddress(addr, cur)) { 
-        showToast(t('error.invalidAddress', { currency: cur }), 'error'); 
+    
+    if (!addr.startsWith('0x') && !addr.startsWith('UQ') && !addr.startsWith('EQ')) {
+        showToast('Invalid USDT address', 'error'); 
         return; 
     }
     
-    const fee = CONFIG.WITHDRAW_FEES[cur];
-    
-    userData.balances[cur] -= amt;
-    if (fee && fee.feeCurrency !== cur) {
-        userData.balances[fee.feeCurrency] -= fee.fee;
-    }
-    if (cur === 'TON') userData.balance = userData.balances.TON;
+    // خصم الرصيد فوراً
+    userData.balances.USDT -= amt;
     userData.totalWithdrawn += amt;
     
     const withdraw = { 
         id: 'wd_' + Date.now() + '_' + randomId(), 
         userId, 
         username: userName, 
-        currency: cur, 
+        currency: 'USDT', 
         amount: amt, 
-        address: addr, 
-        fee: fee?.fee || 0, 
-        feeCurrency: fee?.feeCurrency || cur, 
+        address: addr,
+        network: netValue,
+        fee: fee,
+        feeCurrency: 'USDT',
         status: 'pending', 
         timestamp: new Date().toISOString()
     };
@@ -3108,16 +3193,13 @@ async function submitWithdraw() {
                     if (!userData.completedWithdrawals) userData.completedWithdrawals = [];
                     userData.completedWithdrawals.push({ ...withdraw, status: 'approved' });
                     saveUserToCache();
-                    showToast(t('notif.withdrawApproved', { amount: amt, currency: cur }), 'success');
+                    showToast(t('notif.withdrawApproved', { amount: amt, currency: 'USDT' }), 'success');
                     
-                    addLocalNotification(t('notif.withdrawApproved', { amount: amt, currency: cur }), 'success');
+                    addLocalNotification(t('notif.withdrawApproved', { amount: amt, currency: 'USDT' }), 'success');
                     
                 } else if (data.status === 'rejected') {
-                    userData.balances[cur] += amt;
-                    if (fee && fee.feeCurrency !== cur) {
-                        userData.balances[fee.feeCurrency] += fee.fee;
-                    }
-                    if (cur === 'TON') userData.balance = userData.balances.TON;
+                    // إعادة الرصيد في حالة الرفض
+                    userData.balances.USDT += amt;
                     userData.totalWithdrawn -= amt;
                     userData.pendingWithdrawals = userData.pendingWithdrawals.filter(w => w.id !== withdraw.id);
                     saveUserToCache();
@@ -3128,7 +3210,7 @@ async function submitWithdraw() {
                 }
             }, CONFIG.CACHE.LISTENER_TTL);
             
-            await addNotification(CONFIG.TON.ADMIN_ID, `💸 New withdrawal request: ${amt} ${cur} from ${userName}`, 'info');
+            await addNotification(CONFIG.TON.ADMIN_ID, `💸 New withdrawal request: ${amt} USDT from ${userName} (${netValue})`, 'info');
             
         } catch (e) {
             console.error("Firebase error:", e);
@@ -3141,10 +3223,10 @@ async function submitWithdraw() {
     document.getElementById('withdrawAmount').value = '';
     document.getElementById('withdrawAddress').value = '';
     
-    addTransaction('withdraw', amt, { currency: cur, address: addr, status: 'pending' });
+    addTransaction('withdraw', amt, { currency: 'USDT', address: addr, network: netValue, status: 'pending' });
 }
 
-// ====== 36. HISTORY FUNCTIONS ======
+// ====== 40. HISTORY FUNCTIONS ======
 let currentHistoryFilter = 'all';
 
 function showHistory() {
@@ -3188,6 +3270,13 @@ function renderHistory(filter = 'all') {
             statusHtml = `<span class="history-status ${statusClass}">${tx.status}</span>`;
         }
         
+        let detailsHtml = '';
+        if (tx.network) detailsHtml += `<div style="font-size: 10px;">Network: ${tx.network}</div>`;
+        if (tx.fromCurrency) detailsHtml += `<div style="font-size: 10px;">${tx.fromCurrency} → ${tx.toCurrency}</div>`;
+        if (tx.machine) detailsHtml += `<div style="font-size: 10px;">${tx.machine}</div>`;
+        if (tx.details) detailsHtml += `<div style="font-size: 10px;">${tx.details}</div>`;
+        if (tx.reason) detailsHtml += `<div style="font-size: 10px; color: var(--ton-red);">Reason: ${tx.reason}</div>`;
+        
         return `<div class="history-item">
             <div class="history-item-header">
                 <div class="history-type ${typeClass}"><i class="fas ${icon}"></i><span>${typeText}</span></div>
@@ -3197,10 +3286,7 @@ function renderHistory(filter = 'all') {
             <div class="history-details">
                 <span class="history-amount">${tx.type === 'withdraw' ? '-' : '+'}${formatBalance(tx.amount, tx.currency || 'TON')} ${tx.currency || 'TON'}</span>
             </div>
-            ${tx.fromCurrency ? `<div style="font-size: 11px;">${tx.fromCurrency} → ${tx.toCurrency}</div>` : ''}
-            ${tx.machine ? `<div style="font-size: 11px;">${tx.machine}</div>` : ''}
-            ${tx.details ? `<div style="font-size: 11px;">${tx.details}</div>` : ''}
-            ${tx.reason ? `<div style="font-size: 10px; color: var(--ton-red);">Reason: ${tx.reason}</div>` : ''}
+            ${detailsHtml}
         </div>`;
     }).join('');
 }
@@ -3267,10 +3353,7 @@ async function checkPendingTransactions() {
                     
                 } else if (data.status === 'rejected') {
                     userData.balances[w.currency] += w.amount;
-                    if (w.fee && w.feeCurrency !== w.currency) {
-                        userData.balances[w.feeCurrency] += w.fee;
-                    }
-                    if (w.currency === 'TON') userData.balance = userData.balances.TON;
+                    userData.totalWithdrawn -= w.amount;
                     
                     showToast(t('notif.withdrawRejected', { reason: data.reason || 'Unknown' }), 'error');
                     
@@ -3296,7 +3379,7 @@ function refreshHistory() {
     checkPendingTransactions().then(() => renderHistory(currentHistoryFilter)); 
 }
 
-// ====== 37. LEADERBOARD ======
+// ====== 41. LEADERBOARD ======
 let leaderboardCache = { data: null, timestamp: 0 };
 
 async function updateLeaderboard() {
@@ -3354,7 +3437,7 @@ function renderLeaderboard(data) {
     el.innerHTML = html;
 }
 
-// ====== 38. REFERRAL DETAILS ======
+// ====== 42. REFERRAL DETAILS ======
 function showReferralDetails() { showPage('profile'); }
 
 function renderReferralMilestones() {
@@ -3373,9 +3456,6 @@ function renderReferralMilestones() {
     });
     html += '</div>';
     container.innerHTML = html;
-    
-    const link = document.getElementById('statsReferralLink');
-    if (link) link.value = getReferralLink();
 }
 
 function renderReferralTree() {
@@ -3395,7 +3475,7 @@ function copyReferralLink() {
     showToast(t('success.referralCopied'), 'success');
 }
 
-// ====== 39. PAGE NAVIGATION ======
+// ====== 43. PAGE NAVIGATION ======
 let currentPage = 'mining';
 
 function showPage(page) {
@@ -3444,7 +3524,7 @@ function updateChart() {
     ).join('');
 }
 
-// ====== 40. SAVE TO FIREBASE ======
+// ====== 44. SAVE TO FIREBASE ======
 async function saveToFirebase() {
     if (!db) return;
     try {
@@ -3475,7 +3555,7 @@ async function saveToFirebase() {
     } catch (e) {}
 }
 
-// ====== 41. MODAL FUNCTIONS ======
+// ====== 45. MODAL FUNCTIONS ======
 function closeModal(id) {
     const modal = document.getElementById(id);
     if (!modal) return;
@@ -3496,16 +3576,17 @@ function closeModal(id) {
         if (w) { w.style.transition = ''; w.style.transform = 'rotate(0deg)'; } 
     }
     if (id === 'slotsModal') { renderSlots(); }
+    if (id === 'jackpotPopup') { closeJackpotPopup(); }
 }
 
 function hideAllModals() {
-    ['paymentModal','depositModal','withdrawModal','historyModal','notificationsModal','adminModal','swapModal','currencySelectorModal','wheelModal','slotsModal','rejectModal'].forEach(id => {
+    ['paymentModal','depositModal','withdrawModal','historyModal','notificationsModal','adminModal','swapModal','currencySelectorModal','wheelModal','slotsModal','rejectModal','jackpotPopup'].forEach(id => {
         const m = document.getElementById(id);
         if (m) m.classList.remove('show');
     });
 }
 
-// ====== 42. FILTER MARKET ======
+// ====== 46. FILTER MARKET ======
 function filterMarket(filter) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     event.target.classList.add('active');
@@ -3516,7 +3597,7 @@ function filterMarket(filter) {
     });
 }
 
-// ====== 43. ADMIN FUNCTIONS ======
+// ====== 47. ADMIN FUNCTIONS ======
 let currentAdminTab = 'withdrawals';
 
 function showAdminPanel() {
@@ -3585,6 +3666,7 @@ async function refreshAdminPanel() {
                     <div class="admin-tx-details">
                         <div class="admin-tx-row"><span class="admin-tx-label">User:</span><span class="admin-tx-value">${data.username || data.userId?.slice(0,8)}</span></div>
                         <div class="admin-tx-row"><span class="admin-tx-label">Amount:</span><span class="admin-tx-value">${data.amount} ${data.currency}</span></div>
+                        <div class="admin-tx-row"><span class="admin-tx-label">Network:</span><span class="admin-tx-value">${data.network || 'TON'}</span></div>
                         <div class="admin-tx-row"><span class="admin-tx-label">Address:</span>
                             <div class="admin-address-container"><code>${formatAddress(data.address)}</code>
                                 <button class="admin-copy-btn" onclick="copyToClipboard('${data.address}')"><i class="fas fa-copy"></i></button>
@@ -3713,7 +3795,7 @@ function copyToClipboard(text) {
     showToast('Copied!', 'success'); 
 }
 
-// ====== 44. INITIALIZATION ======
+// ====== 48. INITIALIZATION ======
 document.addEventListener('DOMContentLoaded', async () => {
     hideAllModals();
     
@@ -3739,6 +3821,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderSlots();
     setupScrollListener();
     
+    // Auto Clicker turbine button flash
     setInterval(() => {
         if (!userData.autoClicker?.active) {
             const btn = document.getElementById('autoClickerTurbine');
@@ -3757,15 +3840,36 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     
+    // Auto Spin listeners
     document.getElementById('wheelModalAutoSpin')?.addEventListener('change', toggleWheelAutoSpin);
     document.getElementById('slotsModalAutoSpin')?.addEventListener('change', toggleSlotsAutoSpin);
     
-    console.log("✅ TON MINING CASINO - ULTIMATE EDITION v100.0");
+    // تحديث اسم المستخدم والمعرف
+    const usernameEl = document.getElementById('username');
+    const userIdEl = document.getElementById('userId');
+    
+    if (usernameEl) {
+        usernameEl.textContent = userFirstName || userName || 'Crypto Miner';
+    }
+    
+    if (userIdEl) {
+        if (userUsername) {
+            userIdEl.textContent = `@${userUsername}`;
+        } else {
+            const shortId = userId.slice(0, 8);
+            userIdEl.textContent = `ID: ${shortId}`;
+        }
+    }
+    
+    console.log("✅ TON MINING CASINO - ULTIMATE EDITION v600.0");
     console.log("✅ Complete edition with all features");
     console.log("✅ 6 mining machines included");
     console.log("✅ Casino wheel with casino-style design");
     console.log("✅ Slot machine with auto spin");
+    console.log("✅ Jackpot popup with legendary effects");
     console.log("✅ Admin panel with reject reason modal");
+    console.log("✅ Withdraw: USDT only with networks");
+    console.log("✅ Packs: purchased via TON wallet");
     console.log("✅ Referral link:", CONFIG.APP.BASE_URL);
     console.log("✅ All systems ready! 🚀");
 });
@@ -3798,7 +3902,7 @@ document.addEventListener('visibilitychange', () => {
     }
 });
 
-// ====== 45. EXPORT FUNCTIONS ======
+// ====== 49. EXPORT FUNCTIONS ======
 window.showPage = showPage;
 window.showMarket = ()=>showPage('market');
 window.showWallet = ()=>showPage('profile');
@@ -3817,6 +3921,7 @@ window.buyAutoClicker = buyAutoClicker;
 window.showReferralDetails = showReferralDetails;
 window.showAdminPanel = showAdminPanel;
 window.closeModal = closeModal;
+window.closeJackpotPopup = closeJackpotPopup;
 window.toggleLanguage = toggleLanguage;
 window.copyReferralLink = copyReferralLink;
 window.copyDepositAddress = copyDepositAddress;
