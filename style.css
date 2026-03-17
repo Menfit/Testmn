@@ -1,7 +1,10 @@
 /* ============================================
-   TON MINING CASINO - LEGENDARY DESIGN SYSTEM v5000.0
+   TON MINING CASINO - LEGENDARY DESIGN SYSTEM v6000.0
    ULTIMATE EDITION - COMPLETE STYLING
    مع جميع التصميمات والتأثيرات البصرية والحركية الأسطورية
+   + تحسينات 3D للعجلة والسلوت
+   + إصلاح مشاكل Z-index
+   + تأثيرات جزيئات احتفالية
    ============================================ */
 
 /* ====== 1. CSS VARIABLES - نظام ألوان متناسق وفخم ====== */
@@ -109,15 +112,16 @@
     --transition-normal: 0.3s ease;
     --transition-slow: 0.5s ease;
     
-    /* طبقات */
-    --z-index-modal: 2000;
-    --z-index-toast: 1900;
+    /* طبقات - Z-index hierarchy */
+    --z-index-base: 1;
     --z-index-header: 100;
     --z-index-nav: 90;
     --z-index-float: 150;
-    --z-index-popup: 3000;
-    --z-index-jackpot: 4000;
-    --z-index-error: 5000;
+    --z-index-modal: 10000;
+    --z-index-toast: 20000;
+    --z-index-popup: 30000;
+    --z-index-jackpot: 2147483647; /* أقصى قيمة ممكنة */
+    --z-index-error: 2147483646;
     --z-index-cosmic: 1;
 }
 
@@ -295,8 +299,10 @@
 /* ====== 4. JACKPOT POPUP ANIMATIONS - تأثيرات الجاكبوت الأسطورية ====== */
 
 @keyframes jackpotPopIn {
-    0% { transform: scale(0.2) rotate(-10deg); opacity: 0; }
-    50% { transform: scale(1.2) rotate(5deg); opacity: 1; }
+    0% { transform: scale(0.1) rotate(-30deg); opacity: 0; }
+    40% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+    60% { transform: scale(0.95) rotate(-5deg); }
+    80% { transform: scale(1.05) rotate(2deg); }
     100% { transform: scale(1) rotate(0); opacity: 1; }
 }
 
@@ -324,9 +330,10 @@
 /* ====== 5. WIN POPUP ANIMATIONS - تأثيرات فوز احترافية ====== */
 
 @keyframes winPopupIn {
-    0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
-    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
-    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    0% { transform: translate(-50%, -50%) scale(0.1) rotate(-20deg); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.2) rotate(10deg); opacity: 1; }
+    75% { transform: translate(-50%, -50%) scale(0.95) rotate(-5deg); }
+    100% { transform: translate(-50%, -50%) scale(1) rotate(0); opacity: 1; }
 }
 
 @keyframes bigWinFlash {
@@ -350,14 +357,19 @@
 
 @keyframes pointerBounce {
     0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(-8px); }
+    50% { transform: translateX(-50%) translateY(-10px); }
+}
+
+@keyframes pointerDance {
+    0% { transform: translateX(-50%) translateY(0) rotate(-2deg); }
+    100% { transform: translateX(-50%) translateY(-10px) rotate(2deg); }
 }
 
 @keyframes wheelBounce {
     0% { transform: rotate(var(--current-rotation)); }
-    25% { transform: rotate(calc(var(--current-rotation) + 3deg)); }
-    50% { transform: rotate(calc(var(--current-rotation) - 2deg)); }
-    75% { transform: rotate(calc(var(--current-rotation) + 1deg)); }
+    25% { transform: rotate(calc(var(--current-rotation) + 5deg)); }
+    50% { transform: rotate(calc(var(--current-rotation) - 3deg)); }
+    75% { transform: rotate(calc(var(--current-rotation) + 2deg)); }
     100% { transform: rotate(var(--current-rotation)); }
 }
 
@@ -369,6 +381,26 @@
 @keyframes cosmicRotate {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+@keyframes wheelFloat {
+    0%, 100% { transform: rotateX(2deg) translateY(0); }
+    50% { transform: rotateX(0deg) translateY(-5px); }
+}
+
+@keyframes centerSpin {
+    0% { transform: translate(-50%, -50%) translateZ(30px) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) translateZ(30px) rotate(360deg); }
+}
+
+@keyframes centerPulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(255,215,0,0.3), 0 0 0 8px rgba(255,215,0,0.1), 0 0 50px gold; }
+    50% { box-shadow: 0 0 0 6px rgba(255,215,0,0.5), 0 0 0 12px rgba(255,215,0,0.2), 0 0 80px gold; }
+}
+
+@keyframes winningPulse {
+    0% { transform: rotate(var(--rotation)) scale(1.1) translateZ(30px); }
+    100% { transform: rotate(var(--rotation)) scale(1.15) translateZ(40px); }
 }
 
 /* ====== 8. SLOTS PRO ANIMATIONS - تأثيرات السلوت المحسّنة ====== */
@@ -384,8 +416,8 @@
 }
 
 @keyframes winLineFlash {
-    0%, 100% { opacity: 1; box-shadow: 0 0 20px #ffdd00, 0 0 40px #ff6600; }
-    50% { opacity: 0.8; box-shadow: 0 0 30px #ffdd00, 0 0 60px #ff6600; }
+    0%, 100% { opacity: 1; box-shadow: 0 0 30px #ffdd00, 0 0 60px #ff6600; }
+    50% { opacity: 0.8; box-shadow: 0 0 50px #ffdd00, 0 0 100px #ff6600, 0 0 150px #ff4444; }
 }
 
 @keyframes winPulse {
@@ -395,11 +427,11 @@
 
 @keyframes reelBounce {
     0% { transform: translateY(0); }
-    20% { transform: translateY(-8px); }
-    40% { transform: translateY(4px); }
-    60% { transform: translateY(-3px); }
-    80% { transform: translateY(2px); }
-    100% { transform: translateY(0); }
+    20% { transform: translateY(-15px) scale(1.02); }
+    40% { transform: translateY(8px) scale(0.98); }
+    60% { transform: translateY(-5px) scale(1.01); }
+    80% { transform: translateY(2px) scale(0.99); }
+    100% { transform: translateY(0) scale(1); }
 }
 
 @keyframes particleExplode {
@@ -408,9 +440,14 @@
         opacity: 1;
     }
     100% {
-        transform: translate(var(--tx), var(--ty)) scale(0);
+        transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0);
         opacity: 0;
     }
+}
+
+@keyframes winGlow {
+    0% { text-shadow: 0 0 20px currentColor, 0 0 40px currentColor; }
+    100% { text-shadow: 0 0 40px currentColor, 0 0 80px currentColor, 0 0 120px gold; }
 }
 
 /* ====== 9. RESET & BASE ====== */
@@ -430,6 +467,8 @@ body {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    touch-action: manipulation; /* تحسين للمس */
+    -webkit-tap-highlight-color: transparent;
 }
 
 body::before {
@@ -438,7 +477,7 @@ body::before {
     inset: 0;
     background: var(--bg-legendary);
     pointer-events: none;
-    z-index: -1;
+    z-index: var(--z-index-base);
 }
 
 /* ====== 10. LOADING SCREEN ====== */
@@ -446,7 +485,7 @@ body::before {
     position: fixed;
     inset: 0;
     background: var(--bg-primary);
-    z-index: 9999;
+    z-index: 999999;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -509,12 +548,12 @@ body::before {
 
 /* ====== 11. JACKPOT POPUP - التصميم الأسطوري المحسن ====== */
 .jackpot-popup {
-    position: fixed;
+    position: fixed !important;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: var(--z-index-jackpot);
+    z-index: var(--z-index-jackpot) !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -545,23 +584,24 @@ body::before {
     position: relative;
     width: 85%;
     max-width: 380px;
-    background: var(--gradient-jackpot);
-    border: 4px solid gold;
+    background: linear-gradient(145deg, #ffd700, #ff8c00, #ff4500, #ff8c00, #ffd700);
+    background-size: 300% 300%;
+    border: 6px solid gold;
     border-radius: var(--radius-2xl);
     padding: 30px 20px;
     text-align: center;
     box-shadow: var(--shadow-jackpot);
-    transform: scale(0.2) rotate(-10deg);
+    transform: scale(0.1) rotate(-30deg);
     opacity: 0;
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    z-index: 2;
-    animation: jackpotGlow 2s infinite;
+    z-index: calc(var(--z-index-jackpot) + 1);
+    animation: jackpotGlow 2s infinite, gradientFlow 3s ease infinite;
 }
 
 .jackpot-popup.show .jackpot-content {
     transform: scale(1) rotate(0);
     opacity: 1;
-    animation: jackpotPopIn 0.5s ease, jackpotGlow 2s infinite;
+    animation: jackpotPopIn 0.5s ease, jackpotGlow 2s infinite, gradientFlow 3s ease infinite;
 }
 
 .jackpot-stars {
@@ -622,6 +662,8 @@ body::before {
     box-shadow: 0 0 20px gold;
     position: relative;
     overflow: hidden;
+    touch-action: manipulation;
+    font-size: 16px; /* منع zoom على iOS */
 }
 
 .jackpot-ok-btn::before {
@@ -664,7 +706,7 @@ body::before {
     top: 70px;
     right: 20px;
     font-size: 3rem;
-    z-index: 1000;
+    z-index: var(--z-index-float);
     pointer-events: none;
     filter: drop-shadow(0 0 20px rgba(0,242,255,0.5));
     animation: float 3s infinite ease-in-out;
@@ -675,7 +717,7 @@ body::before {
 
 /* ====== 14. FLOATING NOTIFICATION ====== */
 .floating-notification {
-    position: fixed;
+    position: fixed !important;
     top: 60px;
     left: 50%;
     transform: translateX(-50%);
@@ -687,7 +729,7 @@ body::before {
     color: var(--text-primary);
     font-weight: 600;
     font-size: 0.85rem;
-    z-index: 1000;
+    z-index: var(--z-index-toast) !important;
     opacity: 0;
     transition: opacity 0.3s ease, transform 0.3s ease;
     white-space: nowrap;
@@ -729,6 +771,7 @@ body::before {
     transition: all 0.3s ease;
     border: 1px solid rgba(0,242,255,0.3);
     overflow: hidden;
+    touch-action: manipulation;
 }
 
 .auto-clicker-turbine.show {
@@ -820,6 +863,7 @@ body::before {
     box-shadow: 0 0 15px rgba(0,242,255,0.3);
     cursor: pointer;
     transition: all 0.3s ease;
+    touch-action: manipulation;
 }
 
 .user-avatar:hover {
@@ -881,6 +925,7 @@ body::before {
     transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
+    touch-action: manipulation;
 }
 
 .balance-chip::before {
@@ -917,6 +962,7 @@ body::before {
     align-items: center;
     justify-content: center;
     position: relative;
+    touch-action: manipulation;
 }
 
 .icon-btn:hover {
@@ -1022,6 +1068,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     position: relative;
     padding: 6px 10px;
     width: 25%;
+    touch-action: manipulation;
 }
 
 .nav-icon {
@@ -1445,6 +1492,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     transition: var(--transition-fast);
     cursor: pointer;
     overflow: hidden;
+    touch-action: manipulation;
 }
 
 .stat-orb:hover {
@@ -1592,6 +1640,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     pointer-events: none;
     box-shadow: 0 0 30px rgba(0,242,255,0.2);
     animation: gradientFlow 3s ease infinite;
+    touch-action: manipulation;
 }
 
 .claim-btn-legendary:not(:disabled) {
@@ -1657,6 +1706,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     transition: var(--transition-fast);
     padding: 4px 8px;
     border-radius: var(--radius-full);
+    touch-action: manipulation;
 }
 
 .section-action:hover {
@@ -1844,6 +1894,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     display: flex;
     align-items: center;
     gap: 4px;
+    touch-action: manipulation;
 }
 
 .filter-btn i { font-size: 1rem; }
@@ -1957,6 +2008,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     text-align: center;
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .plan-card-mini:hover {
@@ -1980,6 +2032,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    touch-action: manipulation;
 }
 
 .casino-card:hover {
@@ -2223,6 +2276,7 @@ input:checked + .toggle-slider:before {
     text-align: center;
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .pack-card:hover {
@@ -2295,6 +2349,8 @@ input:checked + .toggle-slider:before {
     font-size: 1rem;
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
+    font-size: 16px; /* منع zoom على iOS */
 }
 
 .casino-play-btn:hover {
@@ -2332,69 +2388,119 @@ input:checked + .toggle-slider:before {
 .winner-name { color: var(--text-accent); font-weight: 600; }
 .winner-amount { color: var(--text-gold); font-weight: 700; }
 
-/* ====== 31. WHEEL MODAL - التصميم الأسطوري الجديد ====== */
-.wheel-modal-content { max-width: 450px; }
+/* ====== 31. CASINO PAGES HEADER ====== */
+.casino-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background: rgba(20, 25, 35, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 242, 255, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: var(--z-index-header);
+    margin-bottom: 20px;
+}
 
-.wheel-streak {
-    text-align: center;
+.back-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    padding: 8px 12px;
+    border-radius: var(--radius-full);
+    touch-action: manipulation;
+}
+
+.back-btn:hover {
+    background: rgba(0,242,255,0.1);
+    color: var(--text-accent);
+    transform: translateX(-3px);
+}
+
+.game-info-btn {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--glass-border-strong);
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+}
+
+.game-info-btn:hover {
+    border-color: var(--ton-cyan);
+    color: var(--text-accent);
+    transform: rotate(180deg);
+}
+
+.game-balance {
     font-size: 1.1rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--text-gold);
-    margin-bottom: 8px;
-    padding: 6px;
-    background: rgba(0,0,0,0.3);
+    background: rgba(251,191,36,0.1);
+    padding: 8px 16px;
     border-radius: var(--radius-full);
     border: 1px solid rgba(251,191,36,0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-/* حاوية العجلة مع التأثيرات الكونية */
-.wheel-casino-container {
+.game-balance i {
+    color: var(--ton-cyan);
+}
+
+/* ====== 32. WHEEL PAGE - التصميم 3D المحسن ====== */
+.wheel-page-container {
     position: relative;
-    width: 280px;
-    height: 280px;
-    margin: 20px auto;
-    filter: drop-shadow(0 0 30px rgba(0,242,255,0.3));
-}
-
-.wheel-casino {
     width: 100%;
-    height: 100%;
-    border-radius: 50%;
+    max-width: 450px;
+    margin: 0 auto 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    perspective: 1200px;
+}
+
+.wheel-page {
     position: relative;
+    width: 350px;
+    height: 350px;
+    margin: 20px auto;
+    border-radius: 50%;
+    overflow: visible;
     box-shadow: 
         0 0 0 4px #2a2a3a,
         0 0 0 8px #1a1a2a,
-        0 0 50px rgba(0,242,255,0.4),
-        inset 0 0 50px rgba(0,0,0,0.5);
+        0 0 60px rgba(0,242,255,0.4),
+        inset 0 0 40px rgba(0,0,0,0.5);
+    transform-style: preserve-3d;
+    transition: transform 0.1s linear;
+    filter: drop-shadow(0 0 30px rgba(0,242,255,0.3));
+    animation: wheelFloat 3s infinite ease-in-out;
+    will-change: transform;
+    backface-visibility: hidden;
 }
 
-.wheel-casino.spinning-fast {
+.wheel-page.spinning-fast {
     filter: blur(1px);
     transition: filter 0.3s ease;
 }
 
-/* تأثير الضوء الكوني */
-.wheel-casino-container::before {
-    content: '';
-    position: absolute;
-    inset: -30px;
-    border-radius: 50%;
-    background: conic-gradient(
-        from 0deg,
-        transparent 0deg,
-        rgba(0,242,255,0.1) 60deg,
-        transparent 120deg,
-        rgba(136,85,255,0.1) 180deg,
-        transparent 240deg,
-        rgba(255,68,204,0.1) 300deg,
-        transparent 360deg
-    );
-    animation: cosmicRotate 10s linear infinite;
-    pointer-events: none;
-    z-index: -1;
-}
-
-/* قطاعات العجلة المحسّنة */
 .wheel-segment-pro {
     position: absolute;
     width: 50%;
@@ -2406,204 +2512,231 @@ input:checked + .toggle-slider:before {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding-top: 20px;
+    padding-top: 25px;
     color: white;
     font-weight: 800;
-    font-size: 0.85rem;
-    text-shadow: 0 0 10px rgba(0,0,0,0.9);
+    font-size: 0.9rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
     border-right: 3px solid rgba(255,255,255,0.4);
-    box-shadow: inset 0 0 15px rgba(255,255,255,0.1);
+    box-shadow: inset 0 -10px 20px rgba(0,0,0,0.6), inset 0 10px 20px rgba(255,255,255,0.2);
     z-index: 5;
+    transition: all 0.2s ease;
     cursor: pointer;
-    transition: all 0.3s ease;
+    will-change: transform;
 }
 
 .wheel-segment-pro:hover {
-    filter: brightness(1.3) !important;
-    z-index: 10 !important;
+    transform: rotate(var(--rotation)) scale(1.02) translateZ(5px);
+    filter: brightness(1.3);
+    z-index: 10;
 }
 
-.wheel-segment-pro.jackpot-segment {
-    animation: segmentGlow 2s infinite alternate;
+.wheel-segment-pro.winning {
+    animation: winningPulse 0.5s infinite alternate;
+    z-index: 100 !important;
+    filter: brightness(1.5) drop-shadow(0 0 30px gold) !important;
 }
 
-/* المركز المضيء */
+.wheel-segment-pro span:first-child {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+    filter: drop-shadow(0 0 10px currentColor);
+    transform: translateZ(10px);
+}
+
+.wheel-segment-pro span:last-child {
+    font-size: 0.9rem;
+    background: rgba(0,0,0,0.7);
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid currentColor;
+    box-shadow: 0 0 15px currentColor;
+    transform: translateZ(10px);
+}
+
 .wheel-center-pro {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
-    background: radial-gradient(circle, #2a2a3a 0%, #1a1a2a 100%);
+    transform: translate(-50%, -50%) translateZ(30px);
+    width: 90px;
+    height: 90px;
+    background: radial-gradient(circle, #ffd700 0%, #ff8c00 50%, #ff4500 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
-    color: gold;
+    font-size: 3rem;
+    color: white;
     border: 4px solid gold;
-    box-shadow: 0 0 30px gold, inset 0 0 20px rgba(255,215,0,0.3);
+    box-shadow: 0 0 0 10px rgba(255,215,0,0.3), 0 0 50px gold;
     z-index: 20;
-    text-shadow: 0 0 10px orange;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    animation: centerSpin 10s infinite linear, centerPulse 2s infinite;
 }
 
-/* المؤشر المتحرك */
 .wheel-pointer-pro {
     position: absolute;
-    top: -15px;
+    top: -25px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 2.5rem;
-    color: #ffd700;
-    filter: drop-shadow(0 0 10px orange) drop-shadow(0 0 20px red);
+    font-size: 3.5rem;
+    color: gold;
+    filter: drop-shadow(0 0 20px gold) drop-shadow(0 0 40px orange);
     z-index: 30;
-    animation: pointerBounce 1s infinite alternate;
-    text-shadow: 0 0 10px rgba(0,0,0,0.8);
+    animation: pointerDance 0.5s infinite alternate;
+    text-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
-/* عداد السرعة */
-#wheelSpeedometer {
-    position: absolute;
-    bottom: -40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 120px;
-    text-align: center;
-    z-index: 25;
-}
-
-#speedFill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #22c55e, #fbbf24, #ef4444);
-    transition: width 0.1s ease;
-    box-shadow: 0 0 10px currentColor;
-}
-
-.wheel-stats {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 12px 0;
-    padding: 8px;
-    background: rgba(0,0,0,0.3);
-    border-radius: var(--radius-lg);
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.wheel-counter {
-    font-size: 1.1rem;
-    font-weight: 800;
+.wheel-jackpot-counter-page {
+    font-size: 1.2rem;
+    font-weight: 700;
     color: var(--text-gold);
-    background: rgba(251,191,36,0.1);
-    padding: 4px 12px;
+    margin: 15px 0;
+    padding: 10px 25px;
+    background: rgba(0,0,0,0.3);
     border-radius: var(--radius-full);
     border: 1px solid rgba(251,191,36,0.3);
+    box-shadow: 0 0 20px rgba(251,191,36,0.2);
+    animation: gentlePulse 2s infinite;
 }
 
-.wheel-spins-left { font-size: 0.9rem; color: var(--text-accent); }
-
-/* Purchased Spins Modal */
-.purchased-spins-modal {
-    text-align: center;
-    margin: 8px 0;
-    padding: 8px;
-    background: rgba(0,242,255,0.1);
-    border: 1px solid rgba(0,242,255,0.3);
-    border-radius: var(--radius-full);
-    font-size: 0.9rem;
-    color: var(--text-accent);
-}
-
-.purchased-spins-modal i { margin-right: 4px; }
-.purchased-spins-modal .spin-count { font-weight: 700; color: var(--text-gold); }
-
-.modal-packs {
-    margin: 12px 0;
-    background: rgba(0,0,0,0.2);
-}
-
-.modal-toggle {
-    margin: 12px 0;
-}
-
-.wheel-controls {
+.wheel-controls-page {
     display: flex;
-    gap: 8px;
-    margin: 15px 0;
+    gap: 15px;
+    margin: 20px 0;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-.wheel-spin-btn {
-    flex: 1;
-    padding: 12px;
+.wheel-btn-page {
+    min-width: 140px;
+    padding: 16px 28px;
     border: none;
-    border-radius: var(--radius-lg);
-    font-weight: 700;
-    font-size: 1rem;
+    border-radius: var(--radius-full);
+    font-weight: 800;
+    font-size: 1.2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
     cursor: pointer;
-    transition: var(--transition-fast);
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 0 20px currentColor;
+    touch-action: manipulation;
+    font-size: 16px; /* منع zoom على iOS */
 }
 
-.wheel-spin-btn::before {
+.wheel-btn-page::before {
     content: '';
     position: absolute;
     top: -50%;
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
     transform: rotate(45deg);
     animation: shimmer 3s infinite;
 }
 
-.wheel-spin-btn.free { background: var(--gradient-success); color: white; }
-.wheel-spin-btn.paid { background: var(--gradient-gold); color: white; }
-.wheel-spin-btn:hover { transform: scale(1.02); box-shadow: var(--shadow-glow); }
-.wheel-spin-btn.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+.wheel-btn-page.free {
+    background: var(--gradient-success);
+    color: white;
+    box-shadow: 0 0 30px rgba(34,197,94,0.4);
+}
 
-/* Error Message */
-.error-message {
+.wheel-btn-page.paid {
+    background: var(--gradient-gold);
+    color: black;
+    box-shadow: 0 0 30px rgba(251,191,36,0.4);
+}
+
+.wheel-btn-page:hover {
+    transform: scale(1.08) translateY(-3px);
+    box-shadow: 0 0 40px currentColor;
+}
+
+.wheel-btn-page.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none;
+}
+
+.purchased-spins-page {
+    margin: 15px 0;
+    padding: 12px 25px;
+    background: rgba(0,242,255,0.1);
+    border: 1px solid rgba(0,242,255,0.3);
+    border-radius: var(--radius-full);
+    font-size: 1.1rem;
+    color: var(--text-accent);
+    display: inline-block;
+    box-shadow: 0 0 20px rgba(0,242,255,0.2);
+}
+
+.purchased-spins-page .spin-count {
+    font-weight: 800;
+    color: var(--text-gold);
+    font-size: 1.4rem;
+    margin-left: 5px;
+}
+
+.auto-spin-section {
+    margin: 15px 0;
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 12px;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(0,0,0,0.2);
+    border-radius: var(--radius-full);
+}
+
+.packs-section {
+    margin: 20px 0;
+    width: 100%;
+    max-width: 400px;
+}
+
+.error-message-page {
+    margin: 15px 0;
+    padding: 15px 25px;
     background: rgba(239,68,68,0.2);
     border: 1px solid rgba(239,68,68,0.5);
     border-radius: var(--radius-lg);
     color: #ef4444;
-    font-size: 0.9rem;
-    margin: 10px 0;
-    z-index: var(--z-index-error);
-    position: relative;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 350px;
     backdrop-filter: blur(5px);
     animation: shake 0.5s ease;
+    z-index: var(--z-index-error) !important;
 }
 
-.error-message.hidden { display: none; }
-.error-message i { font-size: 1.1rem; }
+.error-message-page.hidden {
+    display: none;
+}
 
-/* ====== 32. SLOTS MODAL - التصميم الأسطوري الجديد ====== */
-.slots-container-pro {
+/* ====== 33. SLOTS PAGE - التصميم 3D المحسن ====== */
+.slots-page-container {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto 30px;
+    padding: 25px 20px;
     background: linear-gradient(145deg, #1a1a2e, #0a0a1a);
-    border-radius: 24px;
-    padding: 30px 20px;
-    margin-bottom: 20px;
+    border-radius: 32px;
     border: 2px solid rgba(255, 215, 0, 0.3);
-    box-shadow: 
-        0 0 50px rgba(0, 242, 255, 0.1),
-        inset 0 0 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 50px rgba(0,242,255,0.2), inset 0 0 30px rgba(0,0,0,0.5);
     position: relative;
     overflow: hidden;
 }
 
-.slots-container-pro::before {
+.slots-page-container::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -2617,37 +2750,46 @@ input:checked + .toggle-slider:before {
     100% { transform: translateX(100%); }
 }
 
-/* البكرات المحسّنة */
-#slotReels {
+.slot-reels-page {
     display: flex;
-    gap: 15px;
+    gap: 20px;
     justify-content: center;
     margin-bottom: 30px;
     perspective: 1000px;
 }
 
-.slot-reel-wrapper {
+.slot-reel-wrapper-page {
     position: relative;
-    width: 100px;
-    height: 300px;
+    width: 110px;
+    height: 360px;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+    box-shadow: 
+        inset 0 0 20px rgba(0,0,0,0.8),
+        0 0 0 2px #3a3a4a,
+        0 0 0 4px #1a1a2e;
 }
 
-.slot-reel-pro {
+.slot-reel-page {
     width: 100%;
     height: 100%;
     background: linear-gradient(145deg, #2a2a3a, #1a1a2a);
-    border-radius: 16px;
-    border: 3px solid #3a3a4a;
     overflow: hidden;
     position: relative;
     box-shadow: 
-        0 0 20px rgba(0, 0, 0, 0.5),
-        inset 0 0 20px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
+        0 0 0 2px #3a3a4a,
+        0 0 0 4px #2a2a3a,
+        0 0 30px rgba(0,242,255,0.2),
+        inset 0 0 30px rgba(0,0,0,0.5);
     will-change: transform;
+    transform-style: preserve-3d;
+    transition: transform 0.05s linear;
 }
 
-.slot-reel-pro::before {
+.slot-reel-page::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -2662,87 +2804,108 @@ input:checked + .toggle-slider:before {
     pointer-events: none;
 }
 
-.slot-reel-wrapper.spinning .slot-reel-pro {
+.slot-reel-wrapper-page.spinning .slot-reel-page {
     border-color: #00f2ff;
-    box-shadow: 0 0 30px rgba(0, 242, 255, 0.4);
+    box-shadow: 0 0 0 2px #00f2ff, 0 0 0 4px #0088cc, 0 0 40px rgba(0,242,255,0.5);
 }
 
-/* خط الفوز المضيء */
 .win-line {
     position: absolute;
     top: 50%;
     left: 0;
     right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, #ffdd00, #ff6600, #ffdd00, transparent);
+    height: 6px;
+    background: linear-gradient(90deg, transparent, #ffdd00, #ff6600, #ff4444, #ff6600, #ffdd00, transparent);
     transform: translateY(-50%);
-    z-index: 15;
+    z-index: 30;
     opacity: 0;
     transition: opacity 0.3s ease;
-    box-shadow: 0 0 20px #ffdd00, 0 0 40px #ff6600;
+    box-shadow: 0 0 30px #ffdd00, 0 0 60px #ff6600, 0 0 90px #ff4444;
     border-radius: 2px;
 }
 
 .win-line.active {
     opacity: 1;
-    animation: winLineFlash 0.5s ease infinite;
+    animation: winLineFlash 0.2s infinite;
 }
 
-/* الرموز */
-.slot-symbol-pro {
+.slot-symbol-page {
     width: 100%;
-    height: 100px;
+    height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
-    background: rgba(0, 0, 0, 0.2);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    text-shadow: 0 0 15px currentColor;
+    font-size: 3.5rem;
+    background: rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    text-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
     transition: all 0.2s ease;
     will-change: transform, filter;
+    transform: translateZ(10px);
+    transform-origin: center bottom;
+    filter: brightness(0.9);
 }
 
-.slot-symbol-pro.winning-symbol {
-    animation: winPulse 0.5s ease infinite;
-    transform: scale(1.15);
-    filter: brightness(1.5) drop-shadow(0 0 20px currentColor);
-    z-index: 5;
+.slot-symbol-page:nth-child(even) {
+    transform: rotateX(-10deg);
+    transform-origin: center top;
 }
 
-/* تأثير الاهتزاز عند التوقف */
+.slot-symbol-page:nth-child(odd) {
+    transform: rotateX(10deg);
+    transform-origin: center bottom;
+}
+
+.slot-symbol-page.winning-symbol {
+    transform: scale(1.3) translateZ(30px);
+    filter: brightness(1.5);
+    z-index: 20;
+    animation: winGlow 0.3s infinite alternate;
+}
+
 .reel-stop-bounce {
-    animation: reelBounce 0.4s ease;
+    animation: reelStopPro 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* الأزرار المحسّنة */
-.slot-controls-pro {
+@keyframes reelStopPro {
+    0% { transform: translateY(0); }
+    20% { transform: translateY(-15px) scale(1.02); }
+    40% { transform: translateY(8px) scale(0.98); }
+    60% { transform: translateY(-5px) scale(1.01); }
+    80% { transform: translateY(2px) scale(0.99); }
+    100% { transform: translateY(0) scale(1); }
+}
+
+.slot-controls-page {
     display: flex;
-    gap: 12px;
+    gap: 15px;
     justify-content: center;
     flex-wrap: wrap;
+    margin: 25px 0;
 }
 
-.slot-btn-pro {
-    min-width: 110px;
-    padding: 16px 28px;
+.slot-btn-page {
+    min-width: 120px;
+    padding: 18px 25px;
     border: none;
-    border-radius: 16px;
+    border-radius: 20px;
     font-weight: 800;
-    font-size: 1rem;
+    font-size: 1.1rem;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
     text-transform: uppercase;
     letter-spacing: 1px;
+    touch-action: manipulation;
+    font-size: 16px; /* منع zoom على iOS */
 }
 
-.slot-btn-pro::before {
+.slot-btn-page::before {
     content: '';
     position: absolute;
     top: -50%;
@@ -2754,118 +2917,111 @@ input:checked + .toggle-slider:before {
     animation: shimmer 3s infinite;
 }
 
-.slot-btn-pro.spin {
+.slot-btn-page.spin {
     background: linear-gradient(135deg, #00f2ff, #0088cc);
     color: white;
-    box-shadow: 0 0 30px rgba(0, 242, 255, 0.4);
+    box-shadow: 0 0 40px rgba(0,242,255,0.5);
     font-size: 1.3rem;
-    padding: 20px 50px;
-    min-width: 140px;
+    padding: 20px 35px;
+    min-width: 150px;
+    animation: spinButtonPulse 2s infinite;
 }
 
-.slot-btn-pro.spin:hover:not(:disabled) {
-    transform: scale(1.08) translateY(-3px);
-    box-shadow: 0 0 50px rgba(0, 242, 255, 0.6);
+@keyframes spinButtonPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
 }
 
-.slot-btn-pro.spin:disabled {
+.slot-btn-page.spin:hover:not(:disabled) {
+    transform: scale(1.1) translateY(-3px);
+    box-shadow: 0 0 60px rgba(0,242,255,0.7);
+}
+
+.slot-btn-page.free {
+    background: linear-gradient(135deg, #22c55e, #10b981);
+    color: white;
+    box-shadow: 0 0 30px rgba(34,197,94,0.4);
+}
+
+.slot-btn-page.turbo {
+    background: linear-gradient(135deg, #ffdd00, #ff8800);
+    color: black;
+    box-shadow: 0 0 30px rgba(255,221,0,0.4);
+}
+
+.slot-btn-page:hover:not(:disabled) {
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 0 40px currentColor;
+}
+
+.slot-btn-page:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     transform: none;
 }
 
-.slot-btn-pro.turbo {
-    background: linear-gradient(135deg, #ffdd00, #ff8800);
-    color: black;
-    box-shadow: 0 0 20px rgba(255, 221, 0, 0.3);
-}
-
-.slot-btn-pro.turbo:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba(255, 221, 0, 0.5);
-}
-
-.slot-btn-pro.free {
-    background: linear-gradient(135deg, #22c55e, #10b981);
-    color: white;
-    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
-}
-
-.slot-btn-pro.free:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba(34, 197, 94, 0.5);
-}
-
-/* جدول الجوائز */
-.payout-table-pro {
-    margin-top: 20px;
+.payout-table-page {
+    margin-top: 25px;
     background: rgba(0,0,0,0.3);
-    border-radius: 16px;
-    padding: 12px;
+    border-radius: 20px;
+    padding: 15px;
+    border: 1px solid rgba(255,215,0,0.2);
 }
 
 .payout-title {
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--text-gold);
-    margin-bottom: 10px;
-    letter-spacing: 1px;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
 }
 
-.payout-grid {
+.payout-grid-page {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+    gap: 10px;
 }
 
-.payout-item {
+.payout-item-page {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 6px 10px;
-    background: rgba(0,242,255,0.05);
-    border-radius: 8px;
-    font-size: 0.85rem;
+    padding: 8px 12px;
+    background: rgba(0,242,255,0.08);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    border: 1px solid rgba(0,242,255,0.1);
 }
 
-.payout-item .symbol { font-size: 1.2rem; }
-.payout-item .value { font-weight: 700; color: var(--text-gold); }
-
-/* جسيمات الفوز */
-.particles-container {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 100;
+.payout-item-page .symbol {
+    font-size: 1.5rem;
+    filter: drop-shadow(0 0 5px currentColor);
 }
 
-.particle-win {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    animation: particleExplode 1s ease-out forwards;
+.payout-item-page .value {
+    font-weight: 700;
+    color: var(--text-gold);
 }
 
-/* ====== 33. WIN POPUP ====== */
+/* ====== 34. WIN POPUP ====== */
 .win-popup {
-    position: fixed;
+    position: fixed !important;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.3);
+    transform: translate(-50%, -50%) scale(0.1) rotate(-20deg);
     background: linear-gradient(145deg, #1e1f2a, #0f1018);
-    border: 3px solid var(--ton-gold);
+    border: 4px solid var(--ton-gold);
     border-radius: var(--radius-2xl);
     padding: 30px 50px;
-    z-index: var(--z-index-popup);
+    z-index: var(--z-index-popup) !important;
     text-align: center;
-    box-shadow: 0 0 60px rgba(251,191,36,0.4);
+    box-shadow: 0 0 100px rgba(0,0,0,0.8), 0 0 50px currentColor;
     opacity: 0;
     transition: all 0.3s ease;
     min-width: 280px;
     pointer-events: none;
+    backdrop-filter: blur(20px);
 }
 
 .win-popup.show {
@@ -2909,10 +3065,29 @@ input:checked + .toggle-slider:before {
 }
 
 .win-popup.jackpot {
-    border-color: var(--ton-red);
+    border-color: gold;
     border-width: 5px;
+    background: linear-gradient(145deg, #000, #1a0000);
     box-shadow: 0 0 80px rgba(239,68,68,0.5);
-    animation: jackpotFlash 0.5s infinite;
+    animation: winPopupLegendary 0.5s ease;
+}
+
+@keyframes winPopupLegendary {
+    0% {
+        transform: translate(-50%, -50%) scale(0.1) rotate(-20deg);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2) rotate(10deg);
+        opacity: 1;
+    }
+    75% {
+        transform: translate(-50%, -50%) scale(0.95) rotate(-5deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(0);
+        opacity: 1;
+    }
 }
 
 .win-popup.jackpot .win-icon {
@@ -2965,7 +3140,7 @@ input:checked + .toggle-slider:before {
     animation-delay: 0.5s;
 }
 
-/* ====== 34. PROFILE PAGE ====== */
+/* ====== 35. PROFILE PAGE ====== */
 .wallet-card-legendary {
     background: var(--gradient-legendary);
     background-size: 200% 200%;
@@ -3044,6 +3219,7 @@ input:checked + .toggle-slider:before {
     transition: var(--transition-fast);
     backdrop-filter: blur(5px);
     white-space: nowrap;
+    touch-action: manipulation;
 }
 
 .wallet-action-btn:hover {
@@ -3056,7 +3232,7 @@ input:checked + .toggle-slider:before {
 .wallet-action-btn.swap i { color: var(--ton-cyan); }
 .wallet-action-btn.history i { color: #8855ff; }
 
-/* ====== 35. TON CONNECT CARD ====== */
+/* ====== 36. TON CONNECT CARD ====== */
 .ton-connect-card-legendary {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3102,7 +3278,7 @@ input:checked + .toggle-slider:before {
 .connected-wallet-info .address { font-family: monospace; color: var(--text-accent); font-size: 0.8rem; }
 .connected-wallet-info .balance { font-weight: 700; color: var(--text-gold); }
 
-/* ====== 36. ASSETS LIST ====== */
+/* ====== 37. ASSETS LIST ====== */
 .assets-list-legendary {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3186,7 +3362,7 @@ input:checked + .toggle-slider:before {
     white-space: nowrap;
 }
 
-/* ====== 37. STATS COMPACT ====== */
+/* ====== 38. STATS COMPACT ====== */
 .stats-compact {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -3215,7 +3391,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-accent);
 }
 
-/* ====== 38. CHART ====== */
+/* ====== 39. CHART ====== */
 .chart-container {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3262,7 +3438,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-secondary);
 }
 
-/* ====== 39. REFERRAL SECTION ====== */
+/* ====== 40. REFERRAL SECTION ====== */
 .referral-section {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3312,6 +3488,7 @@ input:checked + .toggle-slider:before {
     color: white;
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .copy-btn:hover { transform: scale(1.05); box-shadow: var(--shadow-glow); }
@@ -3334,7 +3511,7 @@ input:checked + .toggle-slider:before {
     font-weight: 600;
 }
 
-/* ====== 40. LEADERBOARD ====== */
+/* ====== 41. LEADERBOARD ====== */
 .leaderboard {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3362,7 +3539,7 @@ input:checked + .toggle-slider:before {
 .name { flex: 1; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .earnings { font-weight: 700; color: var(--text-accent); white-space: nowrap; }
 
-/* ====== 41. REFERRAL MILESTONES GRID ====== */
+/* ====== 42. REFERRAL MILESTONES GRID ====== */
 .referral-milestones-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -3415,14 +3592,14 @@ input:checked + .toggle-slider:before {
 
 .claimed-badge { color: #22c55e; font-size: 0.7rem; }
 
-/* ====== 42. MODALS GENERAL ====== */
+/* ====== 43. MODALS GENERAL ====== */
 .modal {
     display: none !important;
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.8);
     backdrop-filter: blur(10px);
-    z-index: var(--z-index-modal);
+    z-index: var(--z-index-modal) !important;
     align-items: center;
     justify-content: center;
     padding: var(--spacing-lg);
@@ -3480,6 +3657,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-secondary);
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .refresh-btn:hover, .clear-btn:hover { border-color: var(--ton-cyan); color: var(--text-accent); transform: rotate(180deg); }
@@ -3496,13 +3674,14 @@ input:checked + .toggle-slider:before {
     display: flex;
     align-items: center;
     justify-content: center;
+    touch-action: manipulation;
 }
 
 .close-btn:hover { border-color: var(--ton-cyan); color: var(--text-accent); transform: rotate(90deg); }
 
 .modal-body { padding: 16px; max-height: calc(85vh - 70px); overflow-y: auto; }
 
-/* ====== 43. PAYMENT OPTIONS ====== */
+/* ====== 44. PAYMENT OPTIONS ====== */
 .payment-options-legendary { margin: 15px 0; }
 
 .payment-option-title { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 10px; }
@@ -3518,6 +3697,7 @@ input:checked + .toggle-slider:before {
     margin-bottom: 8px;
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .payment-option:hover { border-color: var(--ton-cyan); background: rgba(0,242,255,0.05); }
@@ -3551,7 +3731,7 @@ input:checked + .toggle-slider:before {
 .payment-option-desc { font-size: 0.8rem; color: var(--text-secondary); }
 .payment-option-desc .balance-amount { color: var(--text-gold); font-weight: 700; }
 
-/* ====== 44. SWAP MODAL - PancakeSwap Style ====== */
+/* ====== 45. SWAP MODAL - PancakeSwap Style ====== */
 .swap-modal-content { max-width: 400px; }
 
 .swap-field {
@@ -3599,6 +3779,7 @@ input:checked + .toggle-slider:before {
     border-radius: var(--radius-full);
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .swap-currency:hover {
@@ -3640,6 +3821,7 @@ input:checked + .toggle-slider:before {
     color: var(--ton-cyan);
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .swap-switch i:hover {
@@ -3678,6 +3860,7 @@ input:checked + .toggle-slider:before {
     cursor: pointer;
     transition: var(--transition-fast);
     box-shadow: var(--shadow-glow);
+    touch-action: manipulation;
 }
 
 .swap-confirm-btn:hover {
@@ -3685,7 +3868,7 @@ input:checked + .toggle-slider:before {
     box-shadow: 0 0 30px rgba(0,242,255,0.5);
 }
 
-/* ====== 45. CURRENCY SELECTOR MODAL ====== */
+/* ====== 46. CURRENCY SELECTOR MODAL ====== */
 .currency-search {
     position: relative;
     margin-bottom: 15px;
@@ -3721,6 +3904,7 @@ input:checked + .toggle-slider:before {
     border-bottom: 1px solid var(--glass-border);
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .currency-list-item:hover { background: rgba(0,242,255,0.05); }
@@ -3729,7 +3913,7 @@ input:checked + .toggle-slider:before {
 .currency-list-item .currency-info h4 { font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
 .currency-list-item .currency-info p { font-size: 0.8rem; color: var(--text-secondary); }
 
-/* ====== 46. DEPOSIT MODAL ====== */
+/* ====== 47. DEPOSIT MODAL ====== */
 .deposit-address-card-legendary {
     background: rgba(0,0,0,0.3);
     border-radius: var(--radius-xl);
@@ -3762,6 +3946,7 @@ input:checked + .toggle-slider:before {
     cursor: pointer;
     transition: var(--transition-fast);
     flex-shrink: 0;
+    touch-action: manipulation;
 }
 
 .copy-btn-legendary:hover { transform: scale(1.05); box-shadow: var(--shadow-glow); }
@@ -3811,7 +3996,7 @@ input:checked + .toggle-slider:before {
     border-radius: var(--radius-sm);
 }
 
-/* ====== 47. INPUT GROUPS ====== */
+/* ====== 48. INPUT GROUPS ====== */
 .input-group-legendary { margin-bottom: 15px; }
 
 .input-group-legendary label {
@@ -3831,6 +4016,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-primary);
     font-size: 1rem;
     transition: var(--transition-fast);
+    font-size: 16px; /* منع zoom على iOS */
 }
 
 .input-group-legendary input:focus {
@@ -3849,7 +4035,7 @@ input:checked + .toggle-slider:before {
 .validation-hint.valid { color: #22c55e; background: rgba(34,197,94,0.1); }
 .validation-hint.invalid { color: #ef4444; background: rgba(239,68,68,0.1); }
 
-/* ====== 48. WITHDRAW MODAL ====== */
+/* ====== 49. WITHDRAW MODAL ====== */
 .withdraw-icon {
     width: 48px;
     height: 48px;
@@ -3904,7 +4090,7 @@ input:checked + .toggle-slider:before {
 .receive-amount .label { color: var(--text-secondary); }
 .receive-amount .value { font-weight: 700; color: var(--text-success); }
 
-/* ====== 49. CONFIRM BUTTON ====== */
+/* ====== 50. CONFIRM BUTTON ====== */
 .confirm-btn-legendary {
     width: 100%;
     padding: 15px;
@@ -3925,12 +4111,13 @@ input:checked + .toggle-slider:before {
     overflow: hidden;
     animation: gradientFlow 3s ease infinite;
     box-shadow: 0 0 30px rgba(0,242,255,0.3);
+    touch-action: manipulation;
 }
 
 .confirm-btn-legendary:disabled { opacity: 0.5; cursor: not-allowed; animation: none; }
 .confirm-btn-legendary:not(:disabled):hover { transform: scale(1.02); box-shadow: 0 0 40px rgba(0,242,255,0.4); }
 
-/* ====== 50. HISTORY MODAL ====== */
+/* ====== 51. HISTORY MODAL ====== */
 .history-filters {
     display: flex;
     gap: 6px;
@@ -3950,6 +4137,7 @@ input:checked + .toggle-slider:before {
     cursor: pointer;
     transition: var(--transition-fast);
     white-space: nowrap;
+    touch-action: manipulation;
 }
 
 .history-filter.active { background: var(--gradient-primary); color: white; border-color: transparent; box-shadow: var(--shadow-glow); }
@@ -4004,7 +4192,7 @@ input:checked + .toggle-slider:before {
 .history-amount { font-weight: 700; color: var(--text-primary); }
 .history-date { color: var(--text-secondary); font-size: 0.7rem; }
 
-/* ====== 51. NOTIFICATIONS MODAL ====== */
+/* ====== 52. NOTIFICATIONS MODAL ====== */
 .notifications-list { max-height: 350px; overflow-y: auto; }
 
 .notification-item {
@@ -4015,6 +4203,7 @@ input:checked + .toggle-slider:before {
     margin-bottom: 8px;
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .notification-item.unread { border-left: 3px solid var(--ton-cyan); background: rgba(0,242,255,0.05); }
@@ -4039,7 +4228,7 @@ input:checked + .toggle-slider:before {
 .notification-time { font-size: 0.7rem; color: var(--text-secondary); }
 .notification-message { font-size: 0.9rem; color: var(--text-primary); }
 
-/* ====== 52. ADMIN MODAL ====== */
+/* ====== 53. ADMIN MODAL ====== */
 .admin-modal-content { max-width: 450px; }
 
 .admin-tabs {
@@ -4064,6 +4253,7 @@ input:checked + .toggle-slider:before {
     align-items: center;
     justify-content: center;
     gap: 4px;
+    touch-action: manipulation;
 }
 
 .admin-tab .badge {
@@ -4109,6 +4299,7 @@ input:checked + .toggle-slider:before {
     cursor: pointer;
     transition: var(--transition-fast);
     box-shadow: var(--shadow-glow);
+    touch-action: manipulation;
 }
 
 .admin-refresh-btn:hover { transform: scale(1.05); }
@@ -4177,6 +4368,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-secondary);
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .admin-copy-btn:hover { color: var(--text-accent); }
@@ -4197,6 +4389,7 @@ input:checked + .toggle-slider:before {
     font-size: 0.9rem;
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .admin-approve-btn:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(34,197,94,0.3); }
@@ -4212,11 +4405,12 @@ input:checked + .toggle-slider:before {
     font-size: 0.9rem;
     cursor: pointer;
     transition: var(--transition-fast);
+    touch-action: manipulation;
 }
 
 .admin-reject-btn:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(239,68,68,0.3); }
 
-/* ====== 53. REJECT MODAL ====== */
+/* ====== 54. REJECT MODAL ====== */
 .reject-form {
     padding: 16px;
 }
@@ -4239,6 +4433,7 @@ input:checked + .toggle-slider:before {
     margin-bottom: 16px;
     resize: vertical;
     min-height: 100px;
+    font-size: 16px; /* منع zoom على iOS */
 }
 
 .reject-form textarea:focus {
@@ -4250,9 +4445,9 @@ input:checked + .toggle-slider:before {
     background: var(--gradient-error) !important;
 }
 
-/* ====== 54. TOAST NOTIFICATION ====== */
+/* ====== 55. TOAST NOTIFICATION ====== */
 .toast-notification {
-    position: fixed;
+    position: fixed !important;
     bottom: 90px;
     left: 50%;
     transform: translateX(-50%);
@@ -4264,7 +4459,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-primary);
     font-weight: 600;
     font-size: 0.9rem;
-    z-index: var(--z-index-toast);
+    z-index: var(--z-index-toast) !important;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -4276,7 +4471,7 @@ input:checked + .toggle-slider:before {
 .toast-notification.hidden { display: none; }
 .toast-notification i { color: var(--ton-cyan); }
 
-/* ====== 55. SCROLL TO TOP BUTTON ====== */
+/* ====== 56. SCROLL TO TOP BUTTON ====== */
 .scroll-top-btn {
     position: fixed;
     bottom: 90px;
@@ -4297,12 +4492,13 @@ input:checked + .toggle-slider:before {
     opacity: 0;
     visibility: hidden;
     z-index: 50;
+    touch-action: manipulation;
 }
 
 .scroll-top-btn.show { opacity: 1; visibility: visible; }
 .scroll-top-btn:hover { transform: scale(1.1); }
 
-/* ====== 56. EMPTY STATE ====== */
+/* ====== 57. EMPTY STATE ====== */
 .empty-state {
     text-align: center;
     padding: 30px 15px;
@@ -4314,7 +4510,7 @@ input:checked + .toggle-slider:before {
 .empty-state p { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
 .empty-state span { font-size: 0.9rem; color: var(--text-secondary); }
 
-/* ====== 57. LOADING SPINNER ====== */
+/* ====== 58. LOADING SPINNER ====== */
 .loading-spinner {
     text-align: center;
     padding: 30px;
@@ -4323,7 +4519,7 @@ input:checked + .toggle-slider:before {
 
 .loading-spinner i { font-size: 2.2rem; margin-bottom: 8px; color: var(--ton-cyan); }
 
-/* ====== 58. RTL SUPPORT ====== */
+/* ====== 59. RTL SUPPORT ====== */
 [dir="rtl"] { text-align: right; }
 [dir="rtl"] .header-left { flex-direction: row-reverse; }
 [dir="rtl"] .user-info { text-align: right; }
@@ -4345,11 +4541,10 @@ input:checked + .toggle-slider:before {
 [dir="rtl"] .currency-search i { left: auto; right: 12px; }
 [dir="rtl"] .currency-search input { padding: 12px 40px 12px 12px; }
 [dir="rtl"] .currency-select { background-position: left 12px center; }
-[dir="rtl"] .wheel-casino-pointer { transform: translateX(50%); }
-[dir="rtl"] .turbine-large { margin-right: 0; margin-left: -15px; }
-[dir="rtl"] .turbine-small { margin-left: 0; margin-right: -10px; }
+[dir="rtl"] .back-btn i { transform: rotate(180deg); }
+[dir="rtl"] .back-btn:hover { transform: translateX(3px); }
 
-/* ====== 59. RESPONSIVE ====== */
+/* ====== 60. RESPONSIVE ====== */
 @media (max-width: 400px) {
     .mining-stats-legendary { gap: 10px; }
     .stat-orb { width: 80px; height: 80px; }
@@ -4366,17 +4561,21 @@ input:checked + .toggle-slider:before {
     .swap-field-input { flex-direction: column; align-items: stretch; }
     .swap-currency { justify-content: center; }
     .deposit-info-row { flex-direction: column; text-align: center; }
-    .wheel-casino-container { width: 240px; height: 240px; }
-    .referral-milestones-grid { grid-template-columns: 1fr; }
-    .slot-reel-wrapper { width: 75px; height: 225px; }
-    .slot-symbol-pro { height: 75px; font-size: 2.2rem; }
-    .slot-btn-pro { min-width: 80px; padding: 12px 16px; font-size: 0.9rem; }
-    .slot-btn-pro.spin { padding: 16px 25px; font-size: 1.1rem; }
+    .wheel-page { width: 280px; height: 280px; }
+    .wheel-segment-pro span:first-child { font-size: 1.8rem; }
+    .wheel-segment-pro span:last-child { font-size: 0.7rem; padding: 2px 8px; }
+    .wheel-center-pro { width: 60px; height: 60px; font-size: 2rem; }
+    .wheel-controls-page { flex-direction: column; align-items: center; }
+    .wheel-btn-page { width: 80%; }
+    .slot-reel-wrapper-page { width: 85px; height: 280px; }
+    .slot-symbol-page { height: 93px; font-size: 2.8rem; }
+    .slot-btn-page { min-width: 100px; padding: 14px 20px; font-size: 1rem; }
+    .slot-btn-page.spin { padding: 16px 25px; font-size: 1.1rem; }
     .packs-grid { grid-template-columns: repeat(2, 1fr); }
-    .mini-reel { width: 35px; height: 50px; font-size: 1.4rem; }
+    .payout-grid-page { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ====== 60. ANIMATION CLASSES ====== */
+/* ====== 61. ANIMATION CLASSES ====== */
 .slideIn { animation: slideIn 0.4s ease; }
 .slideUpModal { animation: slideUpModal 0.4s ease; }
 .scaleIn { animation: scaleIn 0.3s ease; }
@@ -4384,12 +4583,24 @@ input:checked + .toggle-slider:before {
 .shake { animation: shake 0.5s ease; }
 .fadeIn { animation: fadeIn 0.3s ease; }
 
-/* ====== 61. CUSTOM SCROLLBAR ====== */
+/* ====== 62. CUSTOM SCROLLBAR ====== */
 ::-webkit-scrollbar { width: 0px; background: transparent; }
 
-/* ====== 62. FOCUS STYLES ====== */
+/* ====== 63. FOCUS STYLES ====== */
 :focus { outline: none; }
 :focus-visible { outline: 2px solid var(--ton-cyan); outline-offset: 2px; }
 
-/* ====== 63. SELECTION ====== */
+/* ====== 64. SELECTION ====== */
 ::selection { background: var(--ton-cyan); color: var(--bg-primary); }
+
+/* ====== 65. TOUCH OPTIMIZATIONS ====== */
+@media (pointer: coarse) {
+    button, .btn, .clickable {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    input, select, textarea {
+        font-size: 16px !important;
+    }
+}
