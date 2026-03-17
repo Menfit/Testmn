@@ -20,6 +20,15 @@
     
     <!-- CSS File -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Test Script للتأكد من تحميل الملفات -->
+    <script>
+        console.log("✅ HTML loaded");
+        window.onload = function() {
+            console.log("✅ Window loaded");
+            document.body.style.border = "2px solid green";
+        }
+    </script>
 </head>
 <body>
     <!-- Loading Screen -->
@@ -50,7 +59,7 @@
             <span class="auto-clicker-tooltip" data-i18n="autoclicker.buy">Auto Miner 0.5 TON</span>
         </div>
 
-        <!-- Header (يظهر فقط في الصفحات الرئيسية) -->
+        <!-- Header -->
         <header class="glass-header" id="mainHeader">
             <div class="header-left">
                 <div class="user-avatar" id="userAvatar" onclick="handleAvatarClick()">
@@ -742,7 +751,7 @@
             </div>
         </main>
 
-        <!-- Bottom Navigation (يخفي نفسه في صفحات الكازينو المنفصلة) -->
+        <!-- Bottom Navigation -->
         <nav class="bottom-nav-legendary" id="bottomNav">
             <button class="nav-item active" onclick="showPage('mining')" data-page="mining">
                 <div class="nav-icon"><i class="fas fa-microchip"></i></div>
@@ -1121,5 +1130,17 @@
 
     <!-- JavaScript File -->
     <script src="app.js"></script>
+    
+    <!-- Test Script للتأكد من تحميل الملفات -->
+    <script>
+        console.log("✅ Script tag at bottom loaded");
+        setTimeout(function() {
+            if (document.getElementById('miningPage')) {
+                console.log("✅ Mining page found");
+            } else {
+                console.error("❌ Mining page NOT found");
+            }
+        }, 100);
+    </script>
 </body>
 </html>
