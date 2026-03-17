@@ -50,7 +50,7 @@
             <span class="auto-clicker-tooltip" data-i18n="autoclicker.buy">Auto Miner 0.5 TON</span>
         </div>
 
-        <!-- Header -->
+        <!-- Header - مع اسم المستخدم والمعرف -->
         <header class="glass-header">
             <div class="header-left">
                 <div class="user-avatar" id="userAvatar" onclick="handleAvatarClick()">
@@ -299,6 +299,7 @@
                                 <div class="mini-wheel-segment" style="background: #fbbf24;">5</div>
                                 <div class="mini-wheel-segment" style="background: #22c55e;">10</div>
                                 <div class="mini-wheel-segment" style="background: #ef4444;">J</div>
+                                <div class="mini-wheel-segment" style="background: #94a3b8;">🍀</div>
                             </div>
                         </div>
                         <div class="casino-info">
@@ -589,7 +590,7 @@
             </div>
         </div>
 
-        <!-- WHEEL MODAL (بدون كرت الجاكبوت) -->
+        <!-- WHEEL MODAL (مع GOOD LUCK) -->
         <div class="modal legendary-modal" id="wheelModal">
             <div class="modal-content wheel-modal-content">
                 <div class="modal-header">
@@ -608,7 +609,7 @@
                         <div class="wheel-outer-glow"></div>
                     </div>
                     
-                    <!-- Jackpot Counter (بدون الكرت البرتقالي) -->
+                    <!-- Jackpot Counter -->
                     <div class="wheel-stats">
                         <div class="wheel-counter" id="wheelJackpotCounter">4/12</div>
                         <div class="wheel-spins-left" id="wheelSpinsLeft">8 spins until jackpot</div>
@@ -661,8 +662,8 @@
                         </button>
                     </div>
                     
-                    <!-- Error Message -->
-                    <div class="error-message hidden" id="wheelBalanceError">
+                    <!-- Error Message (تظهر فوق كل شيء) -->
+                    <div class="error-message hidden" id="wheelBalanceError" style="z-index: 5000;">
                         <i class="fas fa-exclamation-triangle"></i>
                         <span>Insufficient balance! You need 0.25 TON or buy a pack.</span>
                     </div>
@@ -749,8 +750,8 @@
                             </button>
                         </div>
                         
-                        <!-- Error Message -->
-                        <div class="error-message hidden" id="slotsBalanceError">
+                        <!-- Error Message (تظهر فوق كل شيء) -->
+                        <div class="error-message hidden" id="slotsBalanceError" style="z-index: 5000;">
                             <i class="fas fa-exclamation-triangle"></i>
                             <span>Insufficient balance! You need 0.15 TON or buy a pack.</span>
                         </div>
@@ -878,7 +879,7 @@
             </div>
         </div>
 
-        <!-- WITHDRAW MODAL (معدل مع رسوم الشبكات) -->
+        <!-- WITHDRAW MODAL (بدون TON Network) -->
         <div class="modal legendary-modal" id="withdrawModal">
             <div class="modal-content">
                 <div class="modal-header">
@@ -889,7 +890,6 @@
                     <div class="currency-select-wrapper">
                         <label data-i18n="withdraw.selectCurrency">Select Network</label>
                         <select class="currency-select" id="withdrawNetworkSelect" onchange="updateWithdrawInfo()">
-                            <option value="TON">TON Network</option>
                             <option value="BEP20">BEP20 (BSC)</option>
                             <option value="ERC20">ERC20 (Ethereum)</option>
                         </select>
@@ -903,11 +903,11 @@
                         <label data-i18n="withdraw.amount">Amount (USDT)</label>
                         <input type="number" id="withdrawAmount" placeholder="10.0" oninput="updateWithdrawAmount()">
                     </div>
-                    <div class="fee-info" id="withdrawFeeInfo">Network fee: 0.05 TON</div>
+                    <div class="fee-info" id="withdrawFeeInfo">Network fee: 0.0005 BNB</div>
                     
-                    <!-- رصيد عملة الرسوم (مضاف) -->
+                    <!-- رصيد عملة الرسوم -->
                     <div class="fee-currency-balance" id="withdrawFeeCurrencyBalance">
-                        Your TON balance: 0.00 TON
+                        Your BNB balance: 0.00 BNB
                     </div>
                     
                     <div class="receive-amount">
@@ -916,7 +916,7 @@
                     </div>
                     <div class="input-group-legendary">
                         <label data-i18n="withdraw.address">Wallet Address</label>
-                        <input type="text" id="withdrawAddress" placeholder="Enter address" oninput="validateWithdrawInput()">
+                        <input type="text" id="withdrawAddress" placeholder="0x... (42 characters)" oninput="validateWithdrawInput()">
                         <div class="validation-hint" id="withdrawAddressHint"></div>
                     </div>
                     <button class="confirm-btn-legendary" id="submitWithdraw" onclick="submitWithdraw()" disabled>
