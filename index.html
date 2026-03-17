@@ -50,7 +50,7 @@
             <span class="auto-clicker-tooltip" data-i18n="autoclicker.buy">Auto Miner 0.5 TON</span>
         </div>
 
-        <!-- Header - مع اسم المستخدم والمعرف -->
+        <!-- Header -->
         <header class="glass-header">
             <div class="header-left">
                 <div class="user-avatar" id="userAvatar" onclick="handleAvatarClick()">
@@ -293,12 +293,22 @@
                         <div class="casino-preview wheel-preview">
                             <div class="mini-wheel">
                                 <div class="mini-wheel-segment" style="background: #0088cc;">0.25</div>
-                                <div class="mini-wheel-segment" style="background: #8855ff;">0.5</div>
-                                <div class="mini-wheel-segment" style="background: #ff44cc;">1</div>
-                                <div class="mini-wheel-segment" style="background: #00f2ff;">2</div>
-                                <div class="mini-wheel-segment" style="background: #fbbf24;">5</div>
+                                <div class="mini-wheel-segment" style="background: #0088cc;">0.5</div>
+                                <div class="mini-wheel-segment" style="background: #0088cc;">1</div>
+                                <div class="mini-wheel-segment" style="background: #0088cc;">2</div>
+                                <div class="mini-wheel-segment" style="background: #0088cc;">5</div>
+                                <div class="mini-wheel-segment" style="background: #0088cc;">10</div>
+                                <div class="mini-wheel-segment" style="background: #22c55e;">0.25</div>
+                                <div class="mini-wheel-segment" style="background: #22c55e;">0.5</div>
+                                <div class="mini-wheel-segment" style="background: #22c55e;">1</div>
+                                <div class="mini-wheel-segment" style="background: #22c55e;">2</div>
+                                <div class="mini-wheel-segment" style="background: #22c55e;">5</div>
                                 <div class="mini-wheel-segment" style="background: #22c55e;">10</div>
-                                <div class="mini-wheel-segment" style="background: #ef4444;">J</div>
+                                <div class="mini-wheel-segment" style="background: #22c55e;">250</div>
+                                <div class="mini-wheel-segment" style="background: #22c55e;">500</div>
+                                <div class="mini-wheel-segment" style="background: #ef4444;">100</div>
+                                <div class="mini-wheel-segment" style="background: #ef4444;">250</div>
+                                <div class="mini-wheel-segment" style="background: #ef4444;">500</div>
                                 <div class="mini-wheel-segment" style="background: #94a3b8;">🍀</div>
                             </div>
                         </div>
@@ -577,7 +587,7 @@
             </button>
         </nav>
 
-        <!-- JACKPOT POPUP -->
+        <!-- JACKPOT POPUP (محسن) -->
         <div class="jackpot-popup hidden" id="jackpotPopup">
             <div class="jackpot-overlay"></div>
             <div class="jackpot-content">
@@ -590,7 +600,7 @@
             </div>
         </div>
 
-        <!-- WHEEL MODAL (مع GOOD LUCK) -->
+        <!-- WHEEL MODAL (تصميم أسطوري) -->
         <div class="modal legendary-modal" id="wheelModal">
             <div class="modal-content wheel-modal-content">
                 <div class="modal-header">
@@ -601,18 +611,19 @@
                     <!-- Streak Display -->
                     <div class="wheel-streak" id="wheelStreakDisplay">0 DAYS | BEST: 0</div>
                     
-                    <!-- Main Wheel -->
+                    <!-- Main Wheel with Cosmic Glow -->
                     <div class="wheel-casino-container">
                         <div class="wheel-casino" id="wheelCasino"></div>
                         <div class="wheel-casino-pointer">▼</div>
                         <div class="wheel-casino-center">🎰</div>
+                        <div class="wheel-cosmic-glow"></div>
                         <div class="wheel-outer-glow"></div>
                     </div>
                     
                     <!-- Jackpot Counter -->
                     <div class="wheel-stats">
-                        <div class="wheel-counter" id="wheelJackpotCounter">4/12</div>
-                        <div class="wheel-spins-left" id="wheelSpinsLeft">8 spins until jackpot</div>
+                        <div class="wheel-counter" id="wheelJackpotCounter">4/15</div>
+                        <div class="wheel-spins-left" id="wheelSpinsLeft">11 spins until jackpot</div>
                     </div>
                     
                     <!-- Purchased Spins -->
@@ -662,8 +673,8 @@
                         </button>
                     </div>
                     
-                    <!-- Error Message (تظهر فوق كل شيء) -->
-                    <div class="error-message hidden" id="wheelBalanceError" style="z-index: 5000;">
+                    <!-- Error Message -->
+                    <div class="error-message hidden" id="wheelBalanceError">
                         <i class="fas fa-exclamation-triangle"></i>
                         <span>Insufficient balance! You need 0.25 TON or buy a pack.</span>
                     </div>
@@ -750,8 +761,8 @@
                             </button>
                         </div>
                         
-                        <!-- Error Message (تظهر فوق كل شيء) -->
-                        <div class="error-message hidden" id="slotsBalanceError" style="z-index: 5000;">
+                        <!-- Error Message -->
+                        <div class="error-message hidden" id="slotsBalanceError">
                             <i class="fas fa-exclamation-triangle"></i>
                             <span>Insufficient balance! You need 0.15 TON or buy a pack.</span>
                         </div>
@@ -879,7 +890,7 @@
             </div>
         </div>
 
-        <!-- WITHDRAW MODAL (بدون TON Network) -->
+        <!-- WITHDRAW MODAL -->
         <div class="modal legendary-modal" id="withdrawModal">
             <div class="modal-content">
                 <div class="modal-header">
@@ -905,7 +916,7 @@
                     </div>
                     <div class="fee-info" id="withdrawFeeInfo">Network fee: 0.0005 BNB</div>
                     
-                    <!-- رصيد عملة الرسوم -->
+                    <!-- Fee Currency Balance -->
                     <div class="fee-currency-balance" id="withdrawFeeCurrencyBalance">
                         Your BNB balance: 0.00 BNB
                     </div>
