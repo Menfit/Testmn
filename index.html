@@ -576,6 +576,19 @@
             </button>
         </nav>
 
+        <!-- JACKPOT POPUP - الأسطوري -->
+        <div class="jackpot-popup hidden" id="jackpotPopup">
+            <div class="jackpot-overlay"></div>
+            <div class="jackpot-content">
+                <div class="jackpot-stars">🌟🌟🌟🌟🌟🌟🌟🌟🌟</div>
+                <div class="jackpot-title">🎰🎰🎰 JACKPOT! 🎰🎰🎰</div>
+                <div class="jackpot-message">YOU WON</div>
+                <div class="jackpot-amount" id="jackpotAmount">100 TON</div>
+                <div class="jackpot-stars">🌟🌟🌟🌟🌟🌟🌟🌟🌟</div>
+                <button class="jackpot-ok-btn" onclick="closeJackpotPopup()">OK</button>
+            </div>
+        </div>
+
         <!-- WHEEL MODAL -->
         <div class="modal legendary-modal" id="wheelModal">
             <div class="modal-content wheel-modal-content">
@@ -871,7 +884,7 @@
             </div>
         </div>
 
-        <!-- WITHDRAW MODAL -->
+        <!-- WITHDRAW MODAL (معدل - USDT فقط) -->
         <div class="modal legendary-modal" id="withdrawModal">
             <div class="modal-content">
                 <div class="modal-header">
@@ -880,22 +893,26 @@
                 </div>
                 <div class="modal-body">
                     <div class="currency-select-wrapper">
-                        <label data-i18n="withdraw.selectCurrency">Select Currency</label>
-                        <select class="currency-select" id="withdrawCurrencySelect" onchange="updateWithdrawInfo()"></select>
+                        <label data-i18n="withdraw.selectCurrency">Select Network</label>
+                        <select class="currency-select" id="withdrawNetworkSelect" onchange="updateWithdrawInfo()">
+                            <option value="TON">TON Network</option>
+                            <option value="BEP20">BEP20 (BSC)</option>
+                            <option value="ERC20">ERC20 (Ethereum)</option>
+                        </select>
                     </div>
                     <div class="balance-info-legendary">
-                        <span data-i18n="withdraw.available">Available:</span>
-                        <span class="amount" id="withdrawBalance">0.00 TON</span>
+                        <span data-i18n="withdraw.available">Available USDT:</span>
+                        <span class="amount" id="withdrawBalance">0.00 USDT</span>
                     </div>
-                    <img id="withdrawIcon" class="withdraw-icon">
+                    <img id="withdrawIcon" src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png" class="withdraw-icon">
                     <div class="input-group-legendary">
-                        <label data-i18n="withdraw.amount">Amount</label>
-                        <input type="number" id="withdrawAmount" placeholder="1.0" oninput="updateWithdrawAmount()">
+                        <label data-i18n="withdraw.amount">Amount (USDT)</label>
+                        <input type="number" id="withdrawAmount" placeholder="10.0" oninput="updateWithdrawAmount()">
                     </div>
-                    <div class="fee-info" id="withdrawFeeInfo">Network fee: 0</div>
+                    <div class="fee-info" id="withdrawFeeInfo">Network fee: 0.05 USDT</div>
                     <div class="receive-amount">
                         <span class="label" data-i18n="withdraw.youReceive">You receive:</span>
-                        <span class="value" id="withdrawReceiveAmount">0.00 TON</span>
+                        <span class="value" id="withdrawReceiveAmount">0.00 USDT</span>
                     </div>
                     <div class="input-group-legendary">
                         <label data-i18n="withdraw.address">Wallet Address</label>
