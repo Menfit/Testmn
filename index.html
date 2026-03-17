@@ -20,6 +20,15 @@
     
     <!-- CSS File -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Test Script للتأكد من تحميل الملفات -->
+    <script>
+        console.log("✅ HTML loaded");
+        window.onload = function() {
+            console.log("✅ Window loaded");
+            document.body.style.border = "2px solid green";
+        }
+    </script>
 </head>
 <body>
     <!-- Loading Screen -->
@@ -51,7 +60,7 @@
         </div>
 
         <!-- Header -->
-        <header class="glass-header">
+        <header class="glass-header" id="mainHeader">
             <div class="header-left">
                 <div class="user-avatar" id="userAvatar" onclick="handleAvatarClick()">
                     <img id="avatarImage" src="" alt="" style="display: none;">
@@ -146,7 +155,7 @@
                         </div>
                     </div>
                     
-                    <div class="stat-orb" id="streakOrb" onclick="showWheelModal()">
+                    <div class="stat-orb" id="streakOrb" onclick="showWheelPage()">
                         <div class="orb-glow"></div>
                         <div class="orb-content">
                             <i class="fas fa-fire"></i>
@@ -283,7 +292,7 @@
                 <h2><i class="fas fa-dice"></i> <span data-i18n="casino.title">Casino Games</span></h2>
                 
                 <!-- Lucky Wheel Card -->
-                <div class="casino-card" id="wheelCard" onclick="showWheelModal()">
+                <div class="casino-card" id="wheelCard" onclick="showWheelPage()">
                     <div class="casino-card-header">
                         <span class="casino-icon">🎡</span>
                         <span class="casino-title" data-i18n="casino.wheel">Lucky Wheel</span>
@@ -323,9 +332,9 @@
                         </div>
                         
                         <!-- Auto Spin Toggle -->
-                        <div class="auto-spin-toggle">
+                        <div class="auto-spin-toggle" onclick="event.stopPropagation()">
                             <label class="toggle-switch">
-                                <input type="checkbox" id="wheelAutoSpin">
+                                <input type="checkbox" id="wheelAutoSpin" onchange="toggleWheelAutoSpin()">
                                 <span class="toggle-slider"></span>
                             </label>
                             <span class="auto-spin-label" data-i18n="autospin.on">Auto Spin</span>
@@ -357,12 +366,12 @@
                         <div class="casino-jackpot">JACKPOT 100 TON</div>
                     </div>
                     <div class="casino-card-footer">
-                        <button class="casino-play-btn" onclick="event.stopPropagation(); showWheelModal()" data-i18n="casino.play">Play Now</button>
+                        <button class="casino-play-btn" onclick="event.stopPropagation(); showWheelPage()" data-i18n="casino.play">Play Now</button>
                     </div>
                 </div>
 
                 <!-- Slot Machine Card -->
-                <div class="casino-card" id="slotsCard" onclick="showSlotsModal()">
+                <div class="casino-card" id="slotsCard" onclick="showSlotsPage()">
                     <div class="casino-card-header">
                         <span class="casino-icon">🎰</span>
                         <span class="casino-title" data-i18n="casino.slots">Slot Machine</span>
@@ -386,9 +395,9 @@
                         </div>
                         
                         <!-- Auto Spin Toggle -->
-                        <div class="auto-spin-toggle">
+                        <div class="auto-spin-toggle" onclick="event.stopPropagation()">
                             <label class="toggle-switch">
-                                <input type="checkbox" id="slotsAutoSpin">
+                                <input type="checkbox" id="slotsAutoSpin" onchange="toggleSlotsAutoSpin()">
                                 <span class="toggle-slider"></span>
                             </label>
                             <span class="auto-spin-label" data-i18n="autospin.on">Auto Spin</span>
@@ -439,7 +448,7 @@
                         <div class="casino-jackpot">JACKPOT 100 TON</div>
                     </div>
                     <div class="casino-card-footer">
-                        <button class="casino-play-btn" onclick="event.stopPropagation(); showSlotsModal()" data-i18n="casino.play">Play Now</button>
+                        <button class="casino-play-btn" onclick="event.stopPropagation(); showSlotsPage()" data-i18n="casino.play">Play Now</button>
                     </div>
                 </div>
 
@@ -558,10 +567,192 @@
                 <!-- Referral Milestones -->
                 <div id="referralMilestonesContainer" class="referral-milestones-grid"></div>
             </div>
+
+            <!-- ====== WHEEL PAGE (صفحة العجلة المنفصلة) ====== -->
+            <div class="page" id="wheelPage">
+                <!-- Header خاص بالصفحة -->
+                <div class="casino-page-header">
+                    <button class="back-btn" onclick="goBackToCasino()">
+                        <i class="fas fa-arrow-left"></i>
+                        <span data-i18n="backToCasino">← Casino</span>
+                    </button>
+                    
+                    <div class="game-balance" id="wheelBalance">
+                        <i class="fas fa-coins"></i>
+                        <span>0.00 TON</span>
+                    </div>
+                    
+                    <button class="game-info-btn" onclick="showWheelInfo()">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                </div>
+                
+                <div class="wheel-page-container">
+                    <!-- العجلة -->
+                    <div class="wheel-page" id="wheelCasinoPage"></div>
+                    
+                    <!-- عداد الجاكبوت -->
+                    <div class="wheel-jackpot-counter-page" id="wheelJackpotCounterPage">
+                        Jackpot every 15 spins
+                    </div>
+                    
+                    <!-- اللفات المشتراة -->
+                    <div class="purchased-spins-page" id="wheelPurchasedSpinsPage">
+                        <i class="fas fa-ticket-alt"></i> Your spins: <span class="spin-count">0</span>
+                    </div>
+                    
+                    <!-- أزرار التحكم -->
+                    <div class="wheel-controls-page">
+                        <button class="wheel-btn-page free" id="wheelFreeSpinPage" onclick="spinWheelPage(true)">
+                            <i class="fas fa-gift"></i> FREE
+                        </button>
+                        <button class="wheel-btn-page paid" id="wheelPaidSpinPage" onclick="spinWheelPage(false)">
+                            <i class="fas fa-coins"></i> SPIN (0.25)
+                        </button>
+                    </div>
+                    
+                    <!-- Auto Spin Toggle -->
+                    <div class="auto-spin-section">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="wheelAutoSpinPage" onchange="toggleWheelAutoSpin()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span class="auto-spin-label" data-i18n="autospin.on">Auto Spin</span>
+                    </div>
+                    
+                    <!-- باقات سريعة -->
+                    <div class="packs-section">
+                        <div class="packs-title">🎟️ <span data-i18n="casino.packs">Quick Buy Packs</span></div>
+                        <div class="packs-grid">
+                            <div class="pack-card" onclick="buyWheelPack('p5')">
+                                <span class="pack-spins">5</span>
+                                <span class="pack-price">1.25</span>
+                            </div>
+                            <div class="pack-card" onclick="buyWheelPack('p10')">
+                                <span class="pack-spins">10+<span class="pack-bonus">1</span></span>
+                                <span class="pack-price">2.5</span>
+                            </div>
+                            <div class="pack-card" onclick="buyWheelPack('p50')">
+                                <span class="pack-spins">50+<span class="pack-bonus">5</span></span>
+                                <span class="pack-price">12.5</span>
+                            </div>
+                            <div class="pack-card" onclick="buyWheelPack('p100')">
+                                <span class="pack-spins">100+<span class="pack-bonus">10</span></span>
+                                <span class="pack-price">25</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- رسالة الخطأ -->
+                    <div class="error-message-page hidden" id="wheelError">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Insufficient balance! You need 0.25 TON or buy a pack.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== SLOTS PAGE (صفحة السلوت المنفصلة) ====== -->
+            <div class="page" id="slotsPage">
+                <!-- Header خاص بالصفحة -->
+                <div class="casino-page-header">
+                    <button class="back-btn" onclick="goBackToCasino()">
+                        <i class="fas fa-arrow-left"></i>
+                        <span data-i18n="backToCasino">← Casino</span>
+                    </button>
+                    
+                    <div class="game-balance" id="slotsBalance">
+                        <i class="fas fa-coins"></i>
+                        <span>0.00 TON</span>
+                    </div>
+                    
+                    <button class="game-info-btn" onclick="showSlotsInfo()">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                </div>
+                
+                <div class="slots-page-container">
+                    <!-- البكرات -->
+                    <div class="slot-reels-page" id="slotReelsPage"></div>
+                    
+                    <!-- اللفات المشتراة -->
+                    <div class="purchased-spins-page" id="slotsPurchasedSpinsPage">
+                        <i class="fas fa-ticket-alt"></i> Your spins: <span class="spin-count">0</span>
+                    </div>
+                    
+                    <!-- أزرار التحكم -->
+                    <div class="slot-controls-page">
+                        <button class="slot-btn-page free" id="slotsFreeSpinPage" onclick="spinSlotsPage(true, false)">
+                            <i class="fas fa-gift"></i> FREE
+                        </button>
+                        <button class="slot-btn-page spin" id="slotsSpinBtnPage" onclick="spinSlotsPage(false, false)">
+                            <i class="fas fa-play"></i> SPIN
+                            <small>0.15</small>
+                        </button>
+                        <button class="slot-btn-page turbo" id="slotsTurboBtnPage" onclick="spinSlotsPage(false, true)">
+                            <i class="fas fa-bolt"></i> TURBO
+                            <small>0.30</small>
+                        </button>
+                    </div>
+                    
+                    <!-- Auto Spin Toggle -->
+                    <div class="auto-spin-section">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="slotsAutoSpinPage" onchange="toggleSlotsAutoSpin()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span class="auto-spin-label" data-i18n="autospin.on">Auto Spin</span>
+                    </div>
+                    
+                    <!-- باقات سريعة -->
+                    <div class="packs-section">
+                        <div class="packs-title">🎟️ <span data-i18n="casino.packs">Quick Buy Packs</span></div>
+                        <div class="packs-grid">
+                            <div class="pack-card" onclick="buySlotsPack('p5')">
+                                <span class="pack-spins">5</span>
+                                <span class="pack-price">0.75</span>
+                            </div>
+                            <div class="pack-card" onclick="buySlotsPack('p10')">
+                                <span class="pack-spins">10+<span class="pack-bonus">1</span></span>
+                                <span class="pack-price">1.5</span>
+                            </div>
+                            <div class="pack-card" onclick="buySlotsPack('p50')">
+                                <span class="pack-spins">50+<span class="pack-bonus">5</span></span>
+                                <span class="pack-price">7.5</span>
+                            </div>
+                            <div class="pack-card" onclick="buySlotsPack('p100')">
+                                <span class="pack-spins">100+<span class="pack-bonus">10</span></span>
+                                <span class="pack-price">15</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- جدول الجوائز -->
+                    <div class="payout-table-page">
+                        <div class="payout-title">PAYOUT TABLE</div>
+                        <div class="payout-grid-page">
+                            <div class="payout-item-page"><span class="symbol">🍒</span> <span class="value">0.25</span></div>
+                            <div class="payout-item-page"><span class="symbol">🍋</span> <span class="value">0.25</span></div>
+                            <div class="payout-item-page"><span class="symbol">🍇</span> <span class="value">0.5</span></div>
+                            <div class="payout-item-page"><span class="symbol">💎</span> <span class="value">1</span></div>
+                            <div class="payout-item-page"><span class="symbol">💰</span> <span class="value">2</span></div>
+                            <div class="payout-item-page"><span class="symbol">⭐</span> <span class="value">5</span></div>
+                            <div class="payout-item-page"><span class="symbol">👑</span> <span class="value">10</span></div>
+                            <div class="payout-item-page"><span class="symbol">7️⃣</span> <span class="value">25</span></div>
+                            <div class="payout-item-page"><span class="symbol">🎰</span> <span class="value">100</span></div>
+                        </div>
+                    </div>
+                    
+                    <!-- رسالة الخطأ -->
+                    <div class="error-message-page hidden" id="slotsError">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Insufficient balance! Need 0.15 TON</span>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <!-- Bottom Navigation -->
-        <nav class="bottom-nav-legendary">
+        <nav class="bottom-nav-legendary" id="bottomNav">
             <button class="nav-item active" onclick="showPage('mining')" data-page="mining">
                 <div class="nav-icon"><i class="fas fa-microchip"></i></div>
                 <span class="nav-label" data-i18n="nav.mining">Mining</span>
@@ -587,7 +778,7 @@
             </button>
         </nav>
 
-        <!-- JACKPOT POPUP (محسن) -->
+        <!-- JACKPOT POPUP -->
         <div class="jackpot-popup hidden" id="jackpotPopup">
             <div class="jackpot-overlay"></div>
             <div class="jackpot-content">
@@ -597,185 +788,6 @@
                 <div class="jackpot-amount" id="jackpotAmount">100 TON</div>
                 <div class="jackpot-stars">🌟🌟🌟🌟🌟🌟🌟🌟🌟</div>
                 <button class="jackpot-ok-btn" onclick="closeJackpotPopup()">OK</button>
-            </div>
-        </div>
-
-        <!-- WHEEL MODAL (التصميم الأسطوري الجديد) -->
-        <div class="modal legendary-modal" id="wheelModal">
-            <div class="modal-content wheel-modal-content">
-                <div class="modal-header">
-                    <h3><i class="fas fa-wheelchair"></i> <span data-i18n="wheel.title">Lucky Wheel</span></h3>
-                    <button class="close-btn" onclick="closeModal('wheelModal')"><i class="fas fa-times"></i></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Streak Display -->
-                    <div class="wheel-streak" id="wheelStreakDisplay">0 DAYS | BEST: 0</div>
-                    
-                    <!-- Main Wheel with Cosmic Glow -->
-                    <div class="wheel-casino-container">
-                        <div class="wheel-casino" id="wheelCasino"></div>
-                        <div class="wheel-pointer-pro">▼</div>
-                        <div class="wheel-center-pro">★</div>
-                        <!-- Speedometer will be added by JS -->
-                    </div>
-                    
-                    <!-- Jackpot Counter -->
-                    <div class="wheel-stats">
-                        <div class="wheel-counter" id="wheelJackpotCounter">4/15</div>
-                        <div class="wheel-spins-left" id="wheelSpinsLeft">11 spins until jackpot</div>
-                    </div>
-                    
-                    <!-- Purchased Spins -->
-                    <div class="purchased-spins-modal" id="wheelModalPurchasedSpins">
-                        <i class="fas fa-ticket-alt"></i> Your spins: <span class="spin-count">0</span>
-                    </div>
-                    
-                    <!-- Quick Buy Packs -->
-                    <div class="packs-container modal-packs">
-                        <div class="packs-title">🎟️ <span data-i18n="casino.packs">Quick Buy Packs</span></div>
-                        <div class="packs-grid small">
-                            <div class="pack-card mini" onclick="buyWheelPack('p5')">
-                                <span class="pack-spins">5</span>
-                                <span class="pack-price">1.25</span>
-                            </div>
-                            <div class="pack-card mini" onclick="buyWheelPack('p10')">
-                                <span class="pack-spins">10+1</span>
-                                <span class="pack-price">2.5</span>
-                            </div>
-                            <div class="pack-card mini" onclick="buyWheelPack('p50')">
-                                <span class="pack-spins">50+5</span>
-                                <span class="pack-price">12.5</span>
-                            </div>
-                            <div class="pack-card mini" onclick="buyWheelPack('p100')">
-                                <span class="pack-spins">100+10</span>
-                                <span class="pack-price">25</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Auto Spin Toggle -->
-                    <div class="auto-spin-toggle modal-toggle">
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="wheelModalAutoSpin">
-                            <span class="toggle-slider"></span>
-                        </label>
-                        <span class="auto-spin-label" data-i18n="autospin.on">Auto Spin</span>
-                    </div>
-                    
-                    <!-- Spin Controls -->
-                    <div class="wheel-controls">
-                        <button class="wheel-spin-btn free" id="wheelFreeSpin" onclick="spinWheelPro(true)">
-                            <i class="fas fa-gift"></i> <span data-i18n="wheel.free">FREE</span>
-                        </button>
-                        <button class="wheel-spin-btn paid" id="wheelPaidSpin" onclick="spinWheelPro(false)">
-                            <i class="fas fa-coins"></i> <span>SPIN (0.25)</span>
-                        </button>
-                    </div>
-                    
-                    <!-- Error Message -->
-                    <div class="error-message hidden" id="wheelBalanceError">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <span>Insufficient balance! You need 0.25 TON or buy a pack.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLOTS MODAL (التصميم الأسطوري الجديد) -->
-        <div class="modal legendary-modal" id="slotsModal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3><i class="fas fa-sliders-h"></i> <span data-i18n="slots.title">Slot Machine</span></h3>
-                    <button class="close-btn" onclick="closeModal('slotsModal')"><i class="fas fa-times"></i></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Streak Display -->
-                    <div class="wheel-streak" id="slotsStreakDisplay">🔥 0 DAYS | BEST: 0</div>
-                    
-                    <!-- Slots Container -->
-                    <div class="slots-container-pro">
-                        <!-- Reels Container -->
-                        <div id="slotReels" class="slot-reels-pro"></div>
-                        
-                        <!-- Controls -->
-                        <div class="slot-controls-pro">
-                            <button class="slot-btn-pro free" id="slotsFreeSpin" onclick="spinSlots(true, false)">
-                                <i class="fas fa-gift"></i> <span data-i18n="slots.free">FREE</span>
-                            </button>
-                            
-                            <button class="slot-btn-pro spin" id="slotsSpinBtn" onclick="spinSlots(false, false)">
-                                <i class="fas fa-play"></i> <span data-i18n="slots.spin">SPIN</span>
-                                <small>0.15</small>
-                            </button>
-                            
-                            <button class="slot-btn-pro turbo" id="slotsTurboBtn" onclick="spinSlots(false, true)">
-                                <i class="fas fa-bolt"></i> <span data-i18n="slots.turbo">TURBO</span>
-                                <small>0.30</small>
-                            </button>
-                        </div>
-                        
-                        <!-- Payout Table -->
-                        <div class="payout-table-pro">
-                            <div class="payout-title">PAYOUT TABLE</div>
-                            <div class="payout-grid">
-                                <div class="payout-item"><span class="symbol">🍒</span> <span class="value">0.25</span></div>
-                                <div class="payout-item"><span class="symbol">🍋</span> <span class="value">0.25</span></div>
-                                <div class="payout-item"><span class="symbol">🍇</span> <span class="value">0.5</span></div>
-                                <div class="payout-item"><span class="symbol">💎</span> <span class="value">1</span></div>
-                                <div class="payout-item"><span class="symbol">💰</span> <span class="value">2</span></div>
-                                <div class="payout-item"><span class="symbol">⭐</span> <span class="value">5</span></div>
-                                <div class="payout-item"><span class="symbol">👑</span> <span class="value">10</span></div>
-                                <div class="payout-item"><span class="symbol">7️⃣</span> <span class="value">25</span></div>
-                                <div class="payout-item"><span class="symbol">🎰</span> <span class="value">100</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Error Message -->
-                    <div class="error-message hidden" id="slotsBalanceError">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <span>Insufficient balance! Need 0.15 TON</span>
-                    </div>
-                    
-                    <!-- Purchased Spins -->
-                    <div class="purchased-spins-modal" id="slotsModalPurchasedSpins">
-                        <i class="fas fa-ticket-alt"></i> Your spins: <span class="spin-count">0</span>
-                    </div>
-                    
-                    <!-- Auto Spin -->
-                    <div class="modal-toggle">
-                        <label class="auto-spin-toggle">
-                            <span class="auto-spin-label">Auto Spin</span>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="slotsModalAutoSpin" onchange="toggleSlotsAutoSpin()">
-                                <span class="toggle-slider"></span>
-                            </label>
-                        </label>
-                    </div>
-                    
-                    <!-- Packs -->
-                    <div class="modal-packs">
-                        <div class="packs-title">BUY SPINS PACK</div>
-                        <div class="packs-grid small">
-                            <div class="pack-card mini" onclick="buySlotsPack('p5')">
-                                <span class="pack-spins">5</span>
-                                <span class="pack-price">0.75 TON</span>
-                            </div>
-                            <div class="pack-card mini" onclick="buySlotsPack('p10')">
-                                <span class="pack-spins">10+1</span>
-                                <span class="pack-price">1.5 TON</span>
-                            </div>
-                            <div class="pack-card mini" onclick="buySlotsPack('p50')">
-                                <span class="pack-spins">50+5</span>
-                                <span class="pack-price">7.5 TON</span>
-                            </div>
-                            <div class="pack-card mini" onclick="buySlotsPack('p100')">
-                                <span class="pack-spins">100+10</span>
-                                <span class="pack-price">15 TON</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -1118,5 +1130,17 @@
 
     <!-- JavaScript File -->
     <script src="app.js"></script>
+    
+    <!-- Test Script للتأكد من تحميل الملفات -->
+    <script>
+        console.log("✅ Script tag at bottom loaded");
+        setTimeout(function() {
+            if (document.getElementById('miningPage')) {
+                console.log("✅ Mining page found");
+            } else {
+                console.error("❌ Mining page NOT found");
+            }
+        }, 100);
+    </script>
 </body>
 </html>
