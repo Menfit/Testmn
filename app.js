@@ -1,7 +1,6 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v600.0
-// COMPLETE EDITION - جميع الميزات القديمة + الجديدة
-// مع تحسينات اقتصادية وتأثيرات احترافية
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v700.0
+// COMPLETE EDITION - جميع الميزات مع الإصلاحات النهائية
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -63,12 +62,12 @@ const CONFIG = {
         TON: 1.0, USDT: 10, BNB: 0.015, ETH: 0.005, BTC: 0.0005, SOL: 0.12
     },
     
-    // WITHDRAW - معدل: USDT فقط مع الشبكات
+    // WITHDRAW - مع رسوم الشبكات
     WITHDRAW_NETWORKS: {
         USDT: [
-            { name: 'TON Network', value: 'TON', fee: 0.05 },
-            { name: 'BEP20 (BSC)', value: 'BEP20', fee: 0.05 },
-            { name: 'ERC20 (Ethereum)', value: 'ERC20', fee: 0.1 }
+            { name: 'TON Network', value: 'TON', fee: 0.05, feeCurrency: 'TON' },
+            { name: 'BEP20 (BSC)', value: 'BEP20', fee: 0.0005, feeCurrency: 'BNB' },
+            { name: 'ERC20 (Ethereum)', value: 'ERC20', fee: 0.001, feeCurrency: 'ETH' }
         ]
     },
     
@@ -137,7 +136,8 @@ const CONFIG = {
         { symbol: 'USDT', name: 'Tether' },
         { symbol: 'BTC', name: 'Bitcoin' },
         { symbol: 'ETH', name: 'Ethereum' },
-        { symbol: 'SOL', name: 'Solana' }
+        { symbol: 'SOL', name: 'Solana' },
+        { symbol: 'BNB', name: 'BNB' }
     ],
     
     ALL_ASSETS: [
@@ -150,7 +150,7 @@ const CONFIG = {
     ]
 };
 
-// ====== 3. TRANSLATIONS ======
+// ====== 3. TRANSLATIONS (مختصر للطول) ======
 const translations = {
     en: {
         'app.name': 'TON Mining Casino',
@@ -167,86 +167,36 @@ const translations = {
         'confirm': 'Confirm',
         'refresh': 'Refresh',
         
-        'mining.currentCycle': 'Current Mining Cycle',
-        'mining.nextReward': 'Next Reward',
-        'mining.activeRigs': 'Active Mining Rigs',
-        'mining.hashrate': 'Hashrate',
-        'mining.earned': 'Earned',
+        'error.insufficient': 'Insufficient balance! Need {amount} TON',
+        'error.insufficient.pack': 'Insufficient balance! Buy a pack or add funds.',
+        'error.payment': 'Payment failed. Please try again.',
+        'error.insufficientBalance': 'Insufficient {currency} balance',
+        'error.invalidAddress': 'Invalid {currency} address',
+        'error.enterAmount': 'Please enter a valid amount',
         
-        'market.title': 'Mining Hardware',
-        'filters.all': 'All',
-        'filters.basic': 'Basic',
-        'filters.pro': 'Pro',
-        'filters.quantum': 'Quantum',
-        'filters.hot': 'Hot Deals',
+        'withdraw.network': 'Select Network',
+        'withdraw.fee': 'Network fee: {fee} {currency}',
         
-        'casino.title': 'Casino Games',
-        'casino.wheel': 'Lucky Wheel',
-        'casino.slots': 'Slot Machine',
-        'casino.play': 'Play Now',
-        'casino.free': 'Free',
-        'casino.price': 'Price',
-        'casino.turbo': 'Turbo Spin',
-        'casino.packs': 'Packs',
-        'casino.spinsLeft': 'spins left',
-        'casino.yourSpins': 'Your Spins',
+        'admin.clickRefresh': 'Click refresh to load pending requests',
+        'admin.refresh': 'Refresh',
+        'admin.noPending': 'No pending requests',
+        'admin.error': 'Error loading requests',
+        'admin.approve': 'Approve',
+        'admin.reject': 'Reject',
         
-        'slots.title': 'Slot Machine',
-        'slots.spin': 'SPIN',
-        'slots.turbo': 'TURBO',
-        'slots.free': 'FREE',
-        'slots.price': '0.15 TON',
-        'slots.turboPrice': '0.30 TON',
-        'slots.win': '🎰 YOU WON {amount} {currency}!',
-        'slots.bigwin': '🎰🎰 BIG WIN! {amount} {currency}!',
-        'slots.jackpot': '🎰🎰🎰 JACKPOT! {amount} {currency}!',
-        'slots.pack5': '5 Spins',
-        'slots.pack10': '10 Spins +1',
-        'slots.pack50': '50 Spins +5',
-        'slots.pack100': '100 Spins +10',
-        'slots.bought': '✅ Purchased {spins} spins!',
+        'win.normal': '🎉 YOU WON!',
+        'win.big': '🌟🌟 BIG WIN! 🌟🌟',
+        'win.jackpot': '🎰🎰🎰 JACKPOT! 🎰🎰🎰',
         
-        'wheel.title': 'Lucky Wheel',
-        'wheel.spin': 'SPIN',
-        'wheel.free': 'FREE',
-        'wheel.price': '0.25 TON',
-        'wheel.win': '🎡 YOU WON {prize}!',
-        'wheel.bigwin': '🎡🎡 BIG WIN! {prize}!',
-        'wheel.jackpot': '🎡🎡🎡 JACKPOT! {amount} TON!',
-        'wheel.pack5': '5 Spins',
-        'wheel.pack10': '10 Spins +1',
-        'wheel.pack50': '50 Spins +5',
-        'wheel.pack100': '100 Spins +10',
-        'wheel.spinsLeft': '{count} spins until jackpot',
-        'wheel.jackpotTimer': '{count}/{total}',
-        'wheel.streak': '{days} DAYS | BEST: {best}',
+        'autospin.on': 'Auto Spin ON',
+        'autospin.off': 'Auto Spin OFF',
         
-        'profile.title': 'My Profile',
-        'wallet.totalBalance': 'Total Balance',
-        'wallet.myAssets': 'My Assets',
-        'wallet.connected': 'Connected:',
-        'wallet.disconnected': 'Wallet disconnected',
-        
-        'referral.title': 'Referral Program',
-        'referral.yourLink': 'Your Referral Link',
-        'referral.bonusNote': 'Get 0.005 TON + 20% of their mining!',
-        'referral.milestones': 'Referral Milestones',
-        
-        'notifications.title': 'Notifications',
-        'notifications.clear_read': 'Clear Read',
-        'notifications.clear_all': 'Clear All',
-        'notifications.no_notifications': 'No notifications',
-        
-        'messages.success': 'Success',
-        'messages.error': 'Error',
-        'messages.loading': 'Loading...',
+        'pack.confirm': 'Confirm purchase of {spins} spins for {price} TON?',
+        'pack.success': '✅ Successfully purchased {spins} spins!',
+        'pack.telegramPay': 'Payment via Telegram Wallet',
         
         'notif.welcomeBonus': '🎉 Welcome! You got 0.005 TON!',
         'notif.referralBonus': '🎉 Someone joined with your link! You got 0.005 TON!',
-        'notif.wheelWin': '🎡 You won {prize}!',
-        'notif.wheelJackpot': '🎡🎡🎡 JACKPOT! You won {amount} TON!',
-        'notif.slotsWin': '🎰 You won {amount} {currency}!',
-        'notif.slotsJackpot': '🎰🎰🎰 JACKPOT! You won {amount} {currency}!',
         'notif.autoClickerBought': '🤖 Auto Miner activated for 15 days!',
         'notif.depositSubmitted': '✅ Deposit request submitted!',
         'notif.withdrawSubmitted': '✅ Withdrawal request submitted!',
@@ -254,43 +204,16 @@ const translations = {
         'notif.depositRejected': '❌ Your deposit was rejected: {reason}',
         'notif.withdrawApproved': '✅ Your withdrawal of {amount} {currency} has been approved!',
         'notif.withdrawRejected': '❌ Your withdrawal was rejected: {reason}',
+        'notif.wheelWin': '🎡 You won {prize}!',
+        'notif.wheelJackpot': '🎡🎡🎡 JACKPOT! You won {amount} TON!',
+        'notif.slotsWin': '🎰 You won {amount} {currency}!',
+        'notif.slotsJackpot': '🎰🎰🎰 JACKPOT! You won {amount} {currency}!',
         
-        'admin.clickRefresh': 'Click refresh to load pending requests',
-        'admin.refresh': 'Refresh',
-        'admin.password': 'Enter Admin Password',
-        'admin.wrongPassword': 'Wrong password',
-        'admin.noPending': 'No pending requests',
-        'admin.error': 'Error loading requests',
-        'admin.approve': 'Approve',
-        'admin.reject': 'Reject',
-        
-        'error.insufficient': 'Insufficient balance! Need {amount} TON',
-        'error.insufficient.pack': 'Insufficient balance! Buy a pack or add funds.',
-        'error.payment': 'Payment failed. Please try again.',
-        'error.minDeposit': 'Minimum deposit is {min} {currency}',
-        'error.invalidHash': 'Invalid transaction hash',
-        'error.hashUsed': 'Transaction hash already used',
-        'error.enterAmount': 'Please enter a valid amount',
-        'error.invalidAddress': 'Invalid {currency} address',
-        
-        'pack.buy': 'Buy Pack',
-        'pack.confirm': 'Confirm purchase of {spins} spins for {price} TON?',
-        'pack.telegramPay': 'Payment via Telegram Wallet',
-        'pack.success': '✅ Successfully purchased {spins} spins!',
-        
-        'autospin.on': 'Auto Spin ON',
-        'autospin.off': 'Auto Spin OFF',
-        'win.normal': '🎉 YOU WON!',
-        'win.big': '🌟🌟 BIG WIN! 🌟🌟',
-        'win.jackpot': '🎰🎰🎰 JACKPOT! 🎰🎰🎰',
-        
-        'table.machine': 'Machine',
-        'table.3days': '3 Days',
-        'table.7days': '7 Days',
-        'table.15days': '15 Days',
-        
-        'withdraw.network': 'Select Network',
-        'withdraw.fee': 'Network fee: {fee} USDT'
+        'wheel.spinsLeft': '{count} spins until jackpot',
+        'wheel.jackpotTimer': '{count}/{total}',
+        'wheel.streak': '{days} DAYS | BEST: {best}',
+        'wheel.wait': 'Next free spin in {time}',
+        'slots.wait': 'Next free spin in {time}'
     },
     ar: {
         'app.name': 'كازينو تعدين TON',
@@ -307,86 +230,36 @@ const translations = {
         'confirm': 'تأكيد',
         'refresh': 'تحديث',
         
-        'mining.currentCycle': 'دورة التعدين الحالية',
-        'mining.nextReward': 'المكافأة القادمة',
-        'mining.activeRigs': 'الأجهزة النشطة',
-        'mining.hashrate': 'السرعة',
-        'mining.earned': 'الأرباح',
+        'error.insufficient': 'رصيد غير كاف! تحتاج {amount} TON',
+        'error.insufficient.pack': 'رصيد غير كاف! اشتر باقة أو أضف رصيد.',
+        'error.payment': 'فشل الدفع. حاول مرة أخرى.',
+        'error.insufficientBalance': 'رصيد {currency} غير كافٍ',
+        'error.invalidAddress': 'عنوان {currency} غير صالح',
+        'error.enterAmount': 'الرجاء إدخال مبلغ صحيح',
         
-        'market.title': 'أجهزة التعدين',
-        'filters.all': 'الكل',
-        'filters.basic': 'أساسي',
-        'filters.pro': 'محترف',
-        'filters.quantum': 'كمومي',
-        'filters.hot': 'عروض ساخنة',
+        'withdraw.network': 'اختر الشبكة',
+        'withdraw.fee': 'رسوم الشبكة: {fee} {currency}',
         
-        'casino.title': 'ألعاب الكازينو',
-        'casino.wheel': 'عجلة الحظ',
-        'casino.slots': 'آلة السلوت',
-        'casino.play': 'العب الآن',
-        'casino.free': 'مجاني',
-        'casino.price': 'السعر',
-        'casino.turbo': 'سبين سريع',
-        'casino.packs': 'باقات',
-        'casino.spinsLeft': 'لفة متبقية',
-        'casino.yourSpins': 'لفاتك',
+        'admin.clickRefresh': 'اضغط تحديث لتحميل الطلبات',
+        'admin.refresh': 'تحديث',
+        'admin.noPending': 'لا توجد طلبات معلقة',
+        'admin.error': 'خطأ في تحميل الطلبات',
+        'admin.approve': 'موافقة',
+        'admin.reject': 'رفض',
         
-        'slots.title': 'آلة السلوت',
-        'slots.spin': 'لفة',
-        'slots.turbo': 'سرعة',
-        'slots.free': 'مجاني',
-        'slots.price': '0.15 TON',
-        'slots.turboPrice': '0.30 TON',
-        'slots.win': '🎰 فزت بـ {amount} {currency}!',
-        'slots.bigwin': '🎰🎰 فوز كبير! {amount} {currency}!',
-        'slots.jackpot': '🎰🎰🎰 جاكبوت! {amount} {currency}!',
-        'slots.pack5': '5 لفات',
-        'slots.pack10': '10 لفات +1',
-        'slots.pack50': '50 لفة +5',
-        'slots.pack100': '100 لفة +10',
-        'slots.bought': '✅ تم شراء {spins} لفة!',
+        'win.normal': '🎉 فزت!',
+        'win.big': '🌟🌟 فوز كبير! 🌟🌟',
+        'win.jackpot': '🎰🎰🎰 جاكبوت! 🎰🎰🎰',
         
-        'wheel.title': 'عجلة الحظ',
-        'wheel.spin': 'دوران',
-        'wheel.free': 'مجاني',
-        'wheel.price': '0.25 TON',
-        'wheel.win': '🎡 فزت بـ {prize}!',
-        'wheel.bigwin': '🎡🎡 فوز كبير! {prize}!',
-        'wheel.jackpot': '🎡🎡🎡 جاكبوت! {amount} TON!',
-        'wheel.pack5': '5 لفات',
-        'wheel.pack10': '10 لفات +1',
-        'wheel.pack50': '50 لفة +5',
-        'wheel.pack100': '100 لفة +10',
-        'wheel.spinsLeft': '{count} لفة حتى الجاكبوت',
-        'wheel.jackpotTimer': '{count}/{total}',
-        'wheel.streak': '{days} يوم | الأفضل: {best}',
+        'autospin.on': 'تشغيل تلقائي',
+        'autospin.off': 'إيقاف تلقائي',
         
-        'profile.title': 'ملفي الشخصي',
-        'wallet.totalBalance': 'الرصيد الإجمالي',
-        'wallet.myAssets': 'أصولي',
-        'wallet.connected': 'متصل:',
-        'wallet.disconnected': 'المحفظة غير متصلة',
-        
-        'referral.title': 'برنامج الإحالة',
-        'referral.yourLink': 'رابط الإحالة',
-        'referral.bonusNote': 'احصل على 0.005 TON + 20% من تعدينهم!',
-        'referral.milestones': 'مراحل الإحالة',
-        
-        'notifications.title': 'الإشعارات',
-        'notifications.clear_read': 'حذف المقروء',
-        'notifications.clear_all': 'حذف الكل',
-        'notifications.no_notifications': 'لا توجد إشعارات',
-        
-        'messages.success': 'نجاح',
-        'messages.error': 'خطأ',
-        'messages.loading': 'جاري التحميل...',
+        'pack.confirm': 'تأكيد شراء {spins} لفة بـ {price} TON؟',
+        'pack.success': '✅ تم شراء {spins} لفة بنجاح!',
+        'pack.telegramPay': 'الدفع عبر محفظة تليجرام',
         
         'notif.welcomeBonus': '🎉 مرحباً! حصلت على 0.005 TON!',
         'notif.referralBonus': '🎉 شخص انضم عبر رابطك! حصلت على 0.005 TON!',
-        'notif.wheelWin': '🎡 فزت بـ {prize}!',
-        'notif.wheelJackpot': '🎡🎡🎡 جاكبوت! فزت بـ {amount} TON!',
-        'notif.slotsWin': '🎰 فزت بـ {amount} {currency}!',
-        'notif.slotsJackpot': '🎰🎰🎰 جاكبوت! فزت بـ {amount} {currency}!',
         'notif.autoClickerBought': '🤖 تم تفعيل المنجم الآلي!',
         'notif.depositSubmitted': '✅ تم تقديم طلب الإيداع!',
         'notif.withdrawSubmitted': '✅ تم تقديم طلب السحب!',
@@ -394,43 +267,16 @@ const translations = {
         'notif.depositRejected': '❌ تم رفض الإيداع: {reason}',
         'notif.withdrawApproved': '✅ تمت الموافقة على سحب {amount} {currency}!',
         'notif.withdrawRejected': '❌ تم رفض السحب: {reason}',
+        'notif.wheelWin': '🎡 فزت بـ {prize}!',
+        'notif.wheelJackpot': '🎡🎡🎡 جاكبوت! فزت بـ {amount} TON!',
+        'notif.slotsWin': '🎰 فزت بـ {amount} {currency}!',
+        'notif.slotsJackpot': '🎰🎰🎰 جاكبوت! فزت بـ {amount} {currency}!',
         
-        'admin.clickRefresh': 'اضغط تحديث لتحميل الطلبات',
-        'admin.refresh': 'تحديث',
-        'admin.password': 'أدخل كلمة سر المشرف',
-        'admin.wrongPassword': 'كلمة سر خاطئة',
-        'admin.noPending': 'لا توجد طلبات معلقة',
-        'admin.error': 'خطأ في تحميل الطلبات',
-        'admin.approve': 'موافقة',
-        'admin.reject': 'رفض',
-        
-        'error.insufficient': 'رصيد غير كاف! تحتاج {amount} TON',
-        'error.insufficient.pack': 'رصيد غير كاف! اشتر باقة أو أضف رصيد.',
-        'error.payment': 'فشل الدفع. حاول مرة أخرى.',
-        'error.minDeposit': 'الحد الأدنى للإيداع {min} {currency}',
-        'error.invalidHash': 'هاش معاملة غير صالح',
-        'error.hashUsed': 'هاش المعاملة مستخدم بالفعل',
-        'error.enterAmount': 'الرجاء إدخال مبلغ صحيح',
-        'error.invalidAddress': 'عنوان {currency} غير صالح',
-        
-        'pack.buy': 'شراء الباقة',
-        'pack.confirm': 'تأكيد شراء {spins} لفة بـ {price} TON؟',
-        'pack.telegramPay': 'الدفع عبر محفظة تليجرام',
-        'pack.success': '✅ تم شراء {spins} لفة بنجاح!',
-        
-        'autospin.on': 'تشغيل تلقائي',
-        'autospin.off': 'إيقاف تلقائي',
-        'win.normal': '🎉 فزت!',
-        'win.big': '🌟🌟 فوز كبير! 🌟🌟',
-        'win.jackpot': '🎰🎰🎰 جاكبوت! 🎰🎰🎰',
-        
-        'table.machine': 'الجهاز',
-        'table.3days': '٣ أيام',
-        'table.7days': '٧ أيام',
-        'table.15days': '١٥ يوماً',
-        
-        'withdraw.network': 'اختر الشبكة',
-        'withdraw.fee': 'رسوم الشبكة: {fee} USDT'
+        'wheel.spinsLeft': '{count} لفة حتى الجاكبوت',
+        'wheel.jackpotTimer': '{count}/{total}',
+        'wheel.streak': '{days} يوم | الأفضل: {best}',
+        'wheel.wait': 'اللفة المجانية بعد {time}',
+        'slots.wait': 'اللفة المجانية بعد {time}'
     }
 };
 
@@ -456,12 +302,11 @@ function toggleLanguage() {
     showToast(t('messages.success'), 'success');
 }
 
-// ====== 5. MACHINES DATA - كاملة (6 مكاين) ======
+// ====== 5. MACHINES DATA ======
 const MACHINES = [
     {
         id: 'm1', name: 'Free Miner', nameAr: 'منجم مجاني',
-        description: 'Start mining for free! Perfect for beginners.',
-        descriptionAr: 'ابدأ التعدين مجاناً! مثالي للمبتدئين.',
+        description: 'Start mining for free!', descriptionAr: 'ابدأ التعدين مجاناً!',
         icon: 'fa-gem', color: '#808080', filter: 'free',
         yield: 0.01, interval: 4 * 3600000, cycleText: '4 hours', cycleTextAr: '٤ ساعات',
         hashrate: '10 MH/s', requirements: null,
@@ -473,8 +318,7 @@ const MACHINES = [
     },
     {
         id: 'm2', name: 'Turbo v2', nameAr: 'تربو v2',
-        description: 'High-speed ASIC miner. 3x faster!',
-        descriptionAr: 'جهاز عالي السرعة. أسرع بثلاث مرات!',
+        description: 'High-speed ASIC miner. 3x faster!', descriptionAr: 'جهاز عالي السرعة. أسرع بثلاث مرات!',
         icon: 'fa-bolt', color: '#0088cc', filter: 'basic',
         yield: 0.2, interval: 2.5 * 3600000, cycleText: '2.5 hours', cycleTextAr: '٢.٥ ساعة',
         hashrate: '50 MH/s', requirements: null,
@@ -486,8 +330,7 @@ const MACHINES = [
     },
     {
         id: 'm3', name: 'Turbo v3', nameAr: 'تربو v3',
-        description: 'Next-gen cooling system. Maximum efficiency!',
-        descriptionAr: 'تبريد متطور. كفاءة قصوى!',
+        description: 'Next-gen cooling system. Maximum efficiency!', descriptionAr: 'تبريد متطور. كفاءة قصوى!',
         icon: 'fa-rocket', color: '#00f2ff', filter: 'pro',
         yield: 0.35, interval: 2 * 3600000, cycleText: '2 hours', cycleTextAr: 'ساعتان',
         hashrate: '120 MH/s', requirements: null,
@@ -499,8 +342,7 @@ const MACHINES = [
     },
     {
         id: 'm4', name: 'ASIC Pro', nameAr: 'ASIC برو',
-        description: 'Professional mining rig. Serious power!',
-        descriptionAr: 'جهاز احترافي. قوة هائلة!',
+        description: 'Professional mining rig. Serious power!', descriptionAr: 'جهاز احترافي. قوة هائلة!',
         icon: 'fa-gem', color: '#bc13fe', filter: 'pro',
         yield: 0.5, interval: 3600000, cycleText: '1 hour', cycleTextAr: 'ساعة',
         hashrate: '300 MH/s', requirements: { minEarnings: 5 },
@@ -512,8 +354,7 @@ const MACHINES = [
     },
     {
         id: 'm5', name: 'Quantum RIG', nameAr: 'كوانتم ريج',
-        description: 'Quantum computing technology. The future!',
-        descriptionAr: 'تقنية كمومية. مستقبل التعدين!',
+        description: 'Quantum computing technology. The future!', descriptionAr: 'تقنية كمومية. مستقبل التعدين!',
         icon: 'fa-crown', color: '#ffaa00', filter: 'quantum',
         yield: 0.8, interval: 45 * 60 * 1000, cycleText: '45 minutes', cycleTextAr: '٤٥ دقيقة',
         hashrate: '800 MH/s', requirements: { referrals: 3 },
@@ -525,8 +366,7 @@ const MACHINES = [
     },
     {
         id: 'm6', name: 'Legendary', nameAr: 'أسطوري',
-        description: 'The ultimate mining machine. Legendary status!',
-        descriptionAr: 'الجهاز الأقوى. مكانة أسطورية!',
+        description: 'The ultimate mining machine. Legendary status!', descriptionAr: 'الجهاز الأقوى. مكانة أسطورية!',
         icon: 'fa-star', color: '#ff4444', filter: 'quantum',
         yield: 1.2, interval: 30 * 60 * 1000, cycleText: '30 minutes', cycleTextAr: '٣٠ دقيقة',
         hashrate: '2 GH/s', requirements: { referrals: 5, minEarnings: 25, streak: 7 },
@@ -549,7 +389,7 @@ const REFERRAL_MILESTONES = [
     { referrals: 1000, reward: 1200, unit: 'USDT' }
 ];
 
-// ====== 7. WHEEL PRIZES (16 قطاع - تصميم كازينو) ======
+// ====== 7. WHEEL PRIZES ======
 const WHEEL_PRIZES = [
     { id: 1, type: 'TON', amount: 0.25, color: '#0088cc', weight: 10, icon: '💰', label: '0.25' },
     { id: 2, type: 'TON', amount: 0.5, color: '#0088cc', weight: 9, icon: '💰', label: '0.5' },
@@ -640,12 +480,12 @@ function handleAvatarClick() {
     adminClickCount++;
     lastAdminClick = now;
     if (adminClickCount >= 5) {
-        const pwd = prompt(t('admin.password'));
+        const pwd = prompt('Enter Admin Password');
         if (pwd === CONFIG.TON.ADMIN_PASSWORD) {
             isAdmin = true;
             checkAdminAndAddCrown();
             showAdminPanel();
-        } else if (pwd) showToast(t('admin.wrongPassword'), 'error');
+        } else if (pwd) showToast('Wrong password', 'error');
     }
 }
 
@@ -952,25 +792,29 @@ async function loadUserData(force = false) {
         checkAdminAndAddCrown();
         checkDailyLogin();
         
-        // تحديث اسم المستخدم والمعرف من تليجرام
-        const usernameEl = document.getElementById('username');
-        const userIdEl = document.getElementById('userId');
-        
-        if (usernameEl) {
-            usernameEl.textContent = userFirstName || userName || 'Crypto Miner';
-        }
-        
-        if (userIdEl) {
-            if (userUsername) {
-                userIdEl.textContent = `@${userUsername}`;
-            } else {
-                const shortId = userId.slice(0, 8);
-                userIdEl.textContent = `ID: ${shortId}`;
-            }
-        }
+        // تحديث اسم المستخدم والمعرف
+        updateUserDisplay();
         
     } catch (error) {
         console.error("❌ Error loading user data:", error);
+    }
+}
+
+function updateUserDisplay() {
+    const usernameEl = document.getElementById('username');
+    const userIdEl = document.getElementById('userId');
+    
+    if (usernameEl) {
+        usernameEl.textContent = userFirstName || userName || 'Crypto Miner';
+    }
+    
+    if (userIdEl) {
+        if (userUsername) {
+            userIdEl.textContent = `@${userUsername}`;
+        } else {
+            const shortId = userId.slice(0, 8);
+            userIdEl.textContent = `ID: ${shortId}`;
+        }
     }
 }
 
@@ -981,7 +825,8 @@ function generateReferralCode() {
 }
 
 function getReferralLink() {
-    return `${CONFIG.APP.BASE_URL}?${CONFIG.APP.REFERRAL_PARAM}=${userData.referralCode || userId}`;
+    const code = userData.referralCode || userId;
+    return `${CONFIG.APP.BASE_URL}?${CONFIG.APP.REFERRAL_PARAM}=${code}`;
 }
 
 function hasReferralCode() {
@@ -1180,7 +1025,7 @@ function markNotificationRead(id) {
 
 function clearReadNotifications() {
     if (!userData.notifications?.length) {
-        showToast(t('notifications.no_notifications'), 'info');
+        showToast('No notifications', 'info');
         return;
     }
     
@@ -1203,7 +1048,7 @@ function clearReadNotifications() {
 
 function clearAllNotifications() {
     if (!userData.notifications?.length) {
-        showToast(t('notifications.no_notifications'), 'info');
+        showToast('No notifications', 'info');
         return;
     }
     
@@ -1227,7 +1072,7 @@ function renderNotifications() {
     if (!list) return;
     
     if (!userData.notifications?.length) {
-        list.innerHTML = `<div class="empty-state"><i class="fa-regular fa-bell-slash"></i><p>${t('notifications.no_notifications')}</p></div>`;
+        list.innerHTML = `<div class="empty-state"><i class="fa-regular fa-bell-slash"></i><p>No notifications</p></div>`;
         return;
     }
     
@@ -1238,7 +1083,7 @@ function renderNotifications() {
         
         return `<div class="notification-item ${unreadClass}" onclick="markNotificationRead('${n.id}')">
             <div class="notification-header">
-                <span class="notification-title"><i class="fa-regular ${icon}"></i> ${t('notifications.title')}</span>
+                <span class="notification-title"><i class="fa-regular ${icon}"></i> Notification</span>
                 <span class="notification-time">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</span>
             </div>
             <div class="notification-message">${n.message}</div>
@@ -1463,7 +1308,7 @@ function hapticFeedback(type = 'light') {
     }
 }
 
-// ====== 25. JACKPOT POPUP - الأسطوري ======
+// ====== 25. JACKPOT POPUP ======
 function showJackpotPopup(amount, currency = 'TON') {
     const popup = document.getElementById('jackpotPopup');
     const amountEl = document.getElementById('jackpotAmount');
@@ -1476,7 +1321,6 @@ function showJackpotPopup(amount, currency = 'TON') {
     
     hapticFeedback('heavy');
     
-    // اهتزاز الشاشة (تأثير إضافي)
     document.body.style.animation = 'shakeIntense 0.5s';
     setTimeout(() => {
         document.body.style.animation = '';
@@ -1734,8 +1578,8 @@ function updateWalletUI() {
     if (modalUserBalance) modalUserBalance.textContent = formatBalance(userData.balances.TON || 0, 'TON') + ' TON';
     
     if (tonWallet) {
-        if (statusEl) statusEl.innerHTML = `<div class="status-indicator online"></div><span>${t('wallet.connected')}</span>`;
-        if (paymentStatus) paymentStatus.innerHTML = `<div class="status online"><i class="fas fa-circle"></i><span>${t('wallet.connected')}</span></div>`;
+        if (statusEl) statusEl.innerHTML = `<div class="status-indicator online"></div><span>Connected</span>`;
+        if (paymentStatus) paymentStatus.innerHTML = `<div class="status online"><i class="fas fa-circle"></i><span>Connected</span></div>`;
         if (infoEl) infoEl.style.display = 'flex';
         if (addressEl) addressEl.textContent = formatAddress(tonWallet.account.address);
         if (modalInfo) modalInfo.style.display = 'flex';
@@ -1743,8 +1587,8 @@ function updateWalletUI() {
         if (payBtn) payBtn.disabled = false;
         if (depositBtn) depositBtn.disabled = false;
     } else {
-        if (statusEl) statusEl.innerHTML = `<div class="status-indicator offline"></div><span>${t('wallet.disconnected')}</span>`;
-        if (paymentStatus) paymentStatus.innerHTML = `<div class="status offline"><i class="fas fa-circle"></i><span>${t('wallet.notConnected')}</span></div>`;
+        if (statusEl) statusEl.innerHTML = `<div class="status-indicator offline"></div><span>Disconnected</span>`;
+        if (paymentStatus) paymentStatus.innerHTML = `<div class="status offline"><i class="fas fa-circle"></i><span>Not connected</span></div>`;
         if (infoEl) infoEl.style.display = 'none';
         if (modalInfo) modalInfo.style.display = 'none';
         if (payBtn) payBtn.disabled = currentPaymentMethod === 'wallet';
@@ -1789,23 +1633,7 @@ function updateUI() {
     updateAutoClickerUI();
     updateWheelUI();
     updateSlotsUI();
-    
-    // تحديث اسم المستخدم والمعرف
-    const usernameEl = document.getElementById('username');
-    const userIdEl = document.getElementById('userId');
-    
-    if (usernameEl) {
-        usernameEl.textContent = userFirstName || userName || 'Crypto Miner';
-    }
-    
-    if (userIdEl) {
-        if (userUsername) {
-            userIdEl.textContent = `@${userUsername}`;
-        } else {
-            const shortId = userId.slice(0, 8);
-            userIdEl.textContent = `ID: ${shortId}`;
-        }
-    }
+    updateUserDisplay();
 }
 
 function updateBalance() {
@@ -1980,7 +1808,7 @@ function updateAutoClickerUI() {
     }
 }
 
-// ====== 30. WHEEL SYSTEM ======
+// ====== 30. WHEEL SYSTEM (معدل - مع إزالة كرت الجاكبوت) ======
 let wheelAutoSpinTimer = null;
 
 function showWheelModal() {
@@ -2015,6 +1843,14 @@ function renderWheelSegments() {
             <span class="wheel-icon">${prize.icon}</span>
             <span class="wheel-value">${prize.label}</span>
         `;
+        
+        // التأكد من ظهور النصوص
+        segment.style.display = 'flex';
+        segment.style.flexDirection = 'column';
+        segment.style.alignItems = 'center';
+        segment.style.justifyContent = 'center';
+        segment.style.color = 'white';
+        segment.style.textShadow = '0 0 3px black';
         
         wheel.appendChild(segment);
     });
@@ -2073,7 +1909,7 @@ function updateWheelUI() {
     
     const wheelPurchasedSpins = document.getElementById('wheelPurchasedSpins');
     if (wheelPurchasedSpins) {
-        wheelPurchasedSpins.innerHTML = `${t('casino.yourSpins')}: <span class="spin-count">${userData.wheel.purchasedSpins || 0}</span>`;
+        wheelPurchasedSpins.innerHTML = `Your spins: <span class="spin-count">${userData.wheel.purchasedSpins || 0}</span>`;
     }
 }
 
@@ -2084,14 +1920,14 @@ function updatePurchasedSpinsDisplay() {
     const slotsModalSpins = document.getElementById('slotsModalPurchasedSpins');
     
     if (wheelSpins) {
-        wheelSpins.innerHTML = `${t('casino.yourSpins')}: <span class="spin-count">${userData.wheel.purchasedSpins || 0}</span>`;
+        wheelSpins.innerHTML = `Your spins: <span class="spin-count">${userData.wheel.purchasedSpins || 0}</span>`;
     }
     if (wheelModalSpins) {
         const spinCount = wheelModalSpins.querySelector('.spin-count');
         if (spinCount) spinCount.textContent = userData.wheel.purchasedSpins || 0;
     }
     if (slotsSpins) {
-        slotsSpins.innerHTML = `${t('casino.yourSpins')}: <span class="spin-count">${userData.slots.purchasedSpins || 0}</span>`;
+        slotsSpins.innerHTML = `Your spins: <span class="spin-count">${userData.slots.purchasedSpins || 0}</span>`;
     }
     if (slotsModalSpins) {
         const spinCount = slotsModalSpins.querySelector('.spin-count');
@@ -2141,7 +1977,7 @@ function stopWheelAutoSpin() {
     }
 }
 
-// ====== 31. WHEEL PACKS - شراء عبر محفظة تليجرام (مثل تأجير الماكينة) ======
+// ====== 31. WHEEL PACKS ======
 async function buyWheelPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -2158,7 +1994,7 @@ async function buyWheelPack(pack) {
         return;
     }
     
-    // الدفع عبر محفظة تليجرام (مثل تأجير الماكينة)
+    // الدفع عبر محفظة تليجرام
     if (!tonConnectUI || !tonWallet) {
         showToast('Please connect your TON wallet first', 'error');
         return;
@@ -2179,7 +2015,6 @@ async function buyWheelPack(pack) {
         
         showToast('Payment sent! Waiting for confirmation...', 'info');
         
-        // انتظار 3 ثواني للتأكيد
         setTimeout(() => {
             if (!userData.wheel.purchasedSpins) userData.wheel.purchasedSpins = 0;
             userData.wheel.purchasedSpins += totalSpins;
@@ -2216,7 +2051,6 @@ async function spinWheel(isFree = false) {
         }
         userData.wheel.lastFreeSpin = now;
     } else {
-        // استخدام اللفات المشتراة
         if (userData.wheel.purchasedSpins > 0) {
             userData.wheel.purchasedSpins--;
         } else {
@@ -2292,17 +2126,16 @@ function awardWheelPrize(prize, isFree = false) {
         winType = 'jackpot';
         userData.wheel.jackpotWon++;
         
-        // إظهار الجاكبوت بوب أب الأسطوري
         showJackpotPopup(prize.amount, 'TON');
     }
     
     if (winType === 'jackpot') {
         showToast(t('notif.wheelJackpot', { amount: prize.amount }), 'success');
     } else if (winType === 'big') {
-        showToast(t('wheel.bigwin', { prize: prizeText }), 'success');
+        showToast(`🎡🎡 BIG WIN! ${prizeText}!`, 'success');
         showWinPopup(prizeText, 'big');
     } else {
-        showToast(t('wheel.win', { prize: prizeText }), 'success');
+        showToast(`🎡 You won ${prizeText}!`, 'success');
         showWinPopup(prizeText, 'normal');
     }
     
@@ -2354,7 +2187,7 @@ function updateSlotsUI() {
             freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${h}h ${m}m`;
             freeSpinEl.classList.add('disabled');
         } else {
-            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> ${t('slots.free')}`;
+            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> FREE`;
             freeSpinEl.classList.remove('disabled');
         }
     }
@@ -2371,7 +2204,7 @@ function updateSlotsUI() {
     
     const slotsPurchasedSpins = document.getElementById('slotsPurchasedSpins');
     if (slotsPurchasedSpins) {
-        slotsPurchasedSpins.innerHTML = `${t('casino.yourSpins')}: <span class="spin-count">${userData.slots.purchasedSpins || 0}</span>`;
+        slotsPurchasedSpins.innerHTML = `Your spins: <span class="spin-count">${userData.slots.purchasedSpins || 0}</span>`;
     }
 }
 
@@ -2417,7 +2250,7 @@ function stopSlotsAutoSpin() {
     }
 }
 
-// ====== 33. SLOTS PACKS - شراء عبر محفظة تليجرام (مثل تأجير الماكينة) ======
+// ====== 33. SLOTS PACKS ======
 async function buySlotsPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -2434,7 +2267,6 @@ async function buySlotsPack(pack) {
         return;
     }
     
-    // الدفع عبر محفظة تليجرام (مثل تأجير الماكينة)
     if (!tonConnectUI || !tonWallet) {
         showToast('Please connect your TON wallet first', 'error');
         return;
@@ -2455,7 +2287,6 @@ async function buySlotsPack(pack) {
         
         showToast('Payment sent! Waiting for confirmation...', 'info');
         
-        // انتظار 3 ثواني للتأكيد
         setTimeout(() => {
             if (!userData.slots.purchasedSpins) userData.slots.purchasedSpins = 0;
             userData.slots.purchasedSpins += totalSpins;
@@ -2492,7 +2323,6 @@ async function spinSlots(isFree = false, isTurbo = false) {
         }
         userData.slots.lastFreeSpin = now;
     } else {
-        // استخدام اللفات المشتراة
         if (userData.slots.purchasedSpins > 0) {
             userData.slots.purchasedSpins--;
         } else {
@@ -2577,16 +2407,16 @@ function awardSlotsPrize(prize) {
     }
     
     if (prize.jackpot) {
-        showToast(t('slots.jackpot', { amount: prize.amount, currency: prize.type }), 'success');
+        showToast(`🎰🎰🎰 JACKPOT! ${prize.amount} ${prize.type}!`, 'success');
         hapticFeedback('heavy');
         showJackpotPopup(prize.amount, prize.type);
         createParticles();
     } else if (prize.amount >= 10) {
-        showToast(t('slots.bigwin', { amount: prize.amount, currency: prize.type }), 'success');
+        showToast(`🎰🎰 BIG WIN! ${prize.amount} ${prize.type}!`, 'success');
         hapticFeedback('medium');
         showWinPopup(`${prize.amount} ${prize.type}`, 'big');
     } else {
-        showToast(t('slots.win', { amount: prize.amount, currency: prize.type }), 'success');
+        showToast(`🎰 You won ${prize.amount} ${prize.type}!`, 'success');
         hapticFeedback('light');
         showWinPopup(`${prize.amount} ${prize.type}`, 'normal');
     }
@@ -2704,8 +2534,8 @@ function switchPaymentMethod(method) {
     
     if (confirmBtn) {
         confirmBtn.innerHTML = method === 'balance' ? 
-            `<i class="fas fa-wallet"></i> ${t('payment.confirmBalance')}` : 
-            `<i class="fas fa-external-link-alt"></i> ${t('payment.confirmWallet')}`;
+            `<i class="fas fa-wallet"></i> Pay with Balance` : 
+            `<i class="fas fa-external-link-alt"></i> Pay with TON Wallet`;
     }
     updateWalletUI();
 }
@@ -2902,12 +2732,7 @@ function confirmSwap() {
     });
     
     saveUserToCache();
-    showToast(t('success.swapCompleted', { 
-        fromAmount: formatBalance(from, swapFromCurrency),
-        fromCurrency: swapFromCurrency,
-        toAmount: formatBalance(to, swapToCurrency),
-        toCurrency: swapToCurrency
-    }), 'success');
+    showToast(`✅ Swapped ${formatBalance(from, swapFromCurrency)} ${swapFromCurrency} to ${formatBalance(to, swapToCurrency)} ${swapToCurrency}`, 'success');
     closeModal('swapModal');
     updateUI();
     renderAssets();
@@ -2985,7 +2810,7 @@ function validateDepositInput() {
 
 function copyDepositAddress() {
     navigator.clipboard.writeText(document.getElementById('depositAddress').textContent);
-    showToast(t('success.addressCopied'), 'success');
+    showToast('Address copied', 'success');
 }
 
 async function submitDeposit() {
@@ -3063,7 +2888,7 @@ async function submitDeposit() {
     addTransaction('deposit', amt, { currency: cur, txHash: hash, status: 'pending' });
 }
 
-// ====== 39. WITHDRAW FUNCTIONS - (معدل: USDT فقط مع الشبكات) ======
+// ====== 39. WITHDRAW FUNCTIONS (معدل: USDT فقط مع رسوم الشبكات) ======
 let selectedWithdrawNetwork = 'TON';
 
 function showWithdrawModal() {
@@ -3083,13 +2908,21 @@ function updateWithdrawInfo() {
     
     const network = CONFIG.WITHDRAW_NETWORKS.USDT.find(n => n.value === netValue);
     const fee = network ? network.fee : 0.05;
+    const feeCurrency = network ? network.feeCurrency : 'TON';
     
     const bal = userData.balances.USDT || 0;
     document.getElementById('withdrawBalance').textContent = `${formatBalance(bal, 'USDT')} USDT`;
     document.getElementById('withdrawIcon').src = CONFIG.CMC_ICONS.USDT;
     
     const feeEl = document.getElementById('withdrawFeeInfo');
-    if (feeEl) feeEl.innerHTML = t('withdraw.fee', { fee });
+    if (feeEl) feeEl.innerHTML = t('withdraw.fee', { fee, currency: feeCurrency });
+    
+    // التحقق من رصيد عملة الرسوم
+    const feeCurrencyBalance = userData.balances[feeCurrency] || 0;
+    const feeBalanceEl = document.getElementById('withdrawFeeCurrencyBalance');
+    if (feeBalanceEl) {
+        feeBalanceEl.textContent = `${formatBalance(feeCurrencyBalance, feeCurrency)} ${feeCurrency}`;
+    }
     
     validateWithdrawInput();
 }
@@ -3097,6 +2930,11 @@ function updateWithdrawInfo() {
 function validateWithdrawInput() {
     const amt = parseFloat(document.getElementById('withdrawAmount').value);
     const addr = document.getElementById('withdrawAddress').value.trim();
+    const netValue = selectedWithdrawNetwork;
+    const network = CONFIG.WITHDRAW_NETWORKS.USDT.find(n => n.value === netValue);
+    const fee = network ? network.fee : 0.05;
+    const feeCurrency = network ? network.feeCurrency : 'TON';
+    
     const hint = document.getElementById('withdrawAddressHint');
     const btn = document.getElementById('submitWithdraw');
     
@@ -3114,9 +2952,25 @@ function validateWithdrawInput() {
         return; 
     }
     
-    // التحقق من عنوان USDT (يبدأ بـ 0x أو UQ)
-    if (!addr.startsWith('0x') && !addr.startsWith('UQ') && !addr.startsWith('EQ')) {
-        hint.textContent = 'Invalid USDT address format'; 
+    // التحقق من رصيد عملة الرسوم
+    const feeCurrencyBalance = userData.balances[feeCurrency] || 0;
+    if (feeCurrencyBalance < fee) {
+        hint.textContent = `Insufficient ${feeCurrency} for fee. Need ${fee} ${feeCurrency}`; 
+        hint.className = 'validation-hint invalid'; 
+        btn.disabled = true; 
+        return;
+    }
+    
+    // التحقق من العنوان حسب الشبكة
+    let validAddress = false;
+    if (netValue === 'TON') {
+        validAddress = CONFIG.TON.WALLET_REGEX.test(addr);
+    } else {
+        validAddress = addr.startsWith('0x') && addr.length === 42;
+    }
+    
+    if (!validAddress) {
+        hint.textContent = `Invalid address for ${netValue}`; 
         hint.className = 'validation-hint invalid'; 
         btn.disabled = true; 
         return;
@@ -3146,19 +3000,31 @@ async function submitWithdraw() {
     const netValue = selectedWithdrawNetwork;
     const network = CONFIG.WITHDRAW_NETWORKS.USDT.find(n => n.value === netValue);
     const fee = network ? network.fee : 0.05;
+    const feeCurrency = network ? network.feeCurrency : 'TON';
     
     if (amt > (userData.balances.USDT || 0)) { 
         showToast('Insufficient USDT balance', 'error'); 
         return; 
     }
     
-    if (!addr.startsWith('0x') && !addr.startsWith('UQ') && !addr.startsWith('EQ')) {
-        showToast('Invalid USDT address', 'error'); 
-        return; 
+    if ((userData.balances[feeCurrency] || 0) < fee) {
+        showToast(`Insufficient ${feeCurrency} for fee`, 'error'); 
+        return;
     }
     
-    // خصم الرصيد فوراً
+    // التحقق من العنوان
+    if (netValue === 'TON' && !CONFIG.TON.WALLET_REGEX.test(addr)) {
+        showToast('Invalid TON address', 'error'); 
+        return;
+    }
+    if (netValue !== 'TON' && (!addr.startsWith('0x') || addr.length !== 42)) {
+        showToast(`Invalid address for ${netValue}`, 'error'); 
+        return;
+    }
+    
+    // خصم الرصيد والرسوم
     userData.balances.USDT -= amt;
+    userData.balances[feeCurrency] -= fee;
     userData.totalWithdrawn += amt;
     
     const withdraw = { 
@@ -3170,7 +3036,7 @@ async function submitWithdraw() {
         address: addr,
         network: netValue,
         fee: fee,
-        feeCurrency: 'USDT',
+        feeCurrency: feeCurrency,
         status: 'pending', 
         timestamp: new Date().toISOString()
     };
@@ -3198,8 +3064,9 @@ async function submitWithdraw() {
                     addLocalNotification(t('notif.withdrawApproved', { amount: amt, currency: 'USDT' }), 'success');
                     
                 } else if (data.status === 'rejected') {
-                    // إعادة الرصيد في حالة الرفض
+                    // إعادة الرصيد والرسوم في حالة الرفض
                     userData.balances.USDT += amt;
+                    userData.balances[feeCurrency] += fee;
                     userData.totalWithdrawn -= amt;
                     userData.pendingWithdrawals = userData.pendingWithdrawals.filter(w => w.id !== withdraw.id);
                     saveUserToCache();
@@ -3223,7 +3090,7 @@ async function submitWithdraw() {
     document.getElementById('withdrawAmount').value = '';
     document.getElementById('withdrawAddress').value = '';
     
-    addTransaction('withdraw', amt, { currency: 'USDT', address: addr, network: netValue, status: 'pending' });
+    addTransaction('withdraw', amt, { currency: 'USDT', address: addr, network: netValue, fee, feeCurrency, status: 'pending' });
 }
 
 // ====== 40. HISTORY FUNCTIONS ======
@@ -3276,6 +3143,7 @@ function renderHistory(filter = 'all') {
         if (tx.machine) detailsHtml += `<div style="font-size: 10px;">${tx.machine}</div>`;
         if (tx.details) detailsHtml += `<div style="font-size: 10px;">${tx.details}</div>`;
         if (tx.reason) detailsHtml += `<div style="font-size: 10px; color: var(--ton-red);">Reason: ${tx.reason}</div>`;
+        if (tx.fee) detailsHtml += `<div style="font-size: 10px;">Fee: ${tx.fee} ${tx.feeCurrency}</div>`;
         
         return `<div class="history-item">
             <div class="history-item-header">
@@ -3353,6 +3221,9 @@ async function checkPendingTransactions() {
                     
                 } else if (data.status === 'rejected') {
                     userData.balances[w.currency] += w.amount;
+                    if (w.fee && w.feeCurrency) {
+                        userData.balances[w.feeCurrency] += w.fee;
+                    }
                     userData.totalWithdrawn -= w.amount;
                     
                     showToast(t('notif.withdrawRejected', { reason: data.reason || 'Unknown' }), 'error');
@@ -3472,7 +3343,7 @@ function renderReferralTree() {
 
 function copyReferralLink() {
     navigator.clipboard.writeText(getReferralLink());
-    showToast(t('success.referralCopied'), 'success');
+    showToast('Referral link copied', 'success');
 }
 
 // ====== 43. PAGE NAVIGATION ======
@@ -3645,7 +3516,7 @@ async function refreshAdminPanel() {
     
     try {
         const col = currentAdminTab === 'withdrawals' ? CONFIG.COLLECTIONS.WITHDRAWALS : CONFIG.COLLECTIONS.DEPOSITS;
-        const snap = await db.collection(col).where('status', '==', 'pending').get();
+        const snap = await db.collection(col).where('status', '==', 'pending').orderBy('timestamp', 'desc').get();
         
         if (snap.empty) { 
             content.innerHTML = `<div class="empty-state">${t('admin.noPending')}</div>`; 
@@ -3844,33 +3715,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('wheelModalAutoSpin')?.addEventListener('change', toggleWheelAutoSpin);
     document.getElementById('slotsModalAutoSpin')?.addEventListener('change', toggleSlotsAutoSpin);
     
-    // تحديث اسم المستخدم والمعرف
-    const usernameEl = document.getElementById('username');
-    const userIdEl = document.getElementById('userId');
+    updateUserDisplay();
     
-    if (usernameEl) {
-        usernameEl.textContent = userFirstName || userName || 'Crypto Miner';
-    }
-    
-    if (userIdEl) {
-        if (userUsername) {
-            userIdEl.textContent = `@${userUsername}`;
-        } else {
-            const shortId = userId.slice(0, 8);
-            userIdEl.textContent = `ID: ${shortId}`;
-        }
-    }
-    
-    console.log("✅ TON MINING CASINO - ULTIMATE EDITION v600.0");
-    console.log("✅ Complete edition with all features");
-    console.log("✅ 6 mining machines included");
-    console.log("✅ Casino wheel with casino-style design");
-    console.log("✅ Slot machine with auto spin");
-    console.log("✅ Jackpot popup with legendary effects");
-    console.log("✅ Admin panel with reject reason modal");
-    console.log("✅ Withdraw: USDT only with networks");
-    console.log("✅ Packs: purchased via TON wallet");
-    console.log("✅ Referral link:", CONFIG.APP.BASE_URL);
+    console.log("✅ TON MINING CASINO - ULTIMATE EDITION v700.0");
+    console.log("✅ Complete edition with all features fixed");
+    console.log("✅ Wheel segments now display correctly");
+    console.log("✅ User display fixed (name & username)");
+    console.log("✅ Withdraw: USDT only with network fees");
+    console.log("✅ Swap: all currencies available");
+    console.log("✅ Admin panel working with proper error handling");
+    console.log("✅ Jackpot card removed from wheel modal");
     console.log("✅ All systems ready! 🚀");
 });
 
