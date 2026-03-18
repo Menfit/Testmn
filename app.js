@@ -1,7 +1,7 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v9000.1
-// مع تحسينات Vegas Elite و إصلاحات شاملة
-// جميع الميزات محفوظة، وتم تحسين الأداء والتصميم
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v9000.2
+// مع تحسينات شاملة وإصلاح مشكلة الأزرار نهائياً
+// جميع الميزات محفوظة، وتم تحسين الأداء والاستجابة
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -550,17 +550,14 @@ const REFERRAL_MILESTONES = [
     { referrals: 1000, reward: 1200, unit: 'USDT' }
 ];
 
-// ====== 7. WHEEL PRIZES (18 قطاع - توزيع جديد) ======
+// ====== 7. WHEEL PRIZES (18 قطاع) ======
 const WHEEL_PRIZES = [
-    // TON (6 جوائز)
     { id: 1, type: 'TON', amount: 0.25, color: '#0088cc', weight: 8, icon: '💰', label: '0.25' },
     { id: 2, type: 'TON', amount: 0.5, color: '#0088cc', weight: 7, icon: '💰', label: '0.5' },
     { id: 3, type: 'TON', amount: 1, color: '#0088cc', weight: 6, icon: '💰', label: '1' },
     { id: 4, type: 'TON', amount: 2, color: '#0088cc', weight: 5, icon: '💰', label: '2' },
     { id: 5, type: 'TON', amount: 5, color: '#0088cc', weight: 4, icon: '💰', label: '5' },
     { id: 6, type: 'TON', amount: 10, color: '#0088cc', weight: 3, icon: '💰', label: '10' },
-    
-    // USDT (8 جوائز)
     { id: 7, type: 'USDT', amount: 0.25, color: '#22c55e', weight: 8, icon: '💵', label: '0.25' },
     { id: 8, type: 'USDT', amount: 0.5, color: '#22c55e', weight: 7, icon: '💵', label: '0.5' },
     { id: 9, type: 'USDT', amount: 1, color: '#22c55e', weight: 6, icon: '💵', label: '1' },
@@ -569,13 +566,9 @@ const WHEEL_PRIZES = [
     { id: 12, type: 'USDT', amount: 10, color: '#22c55e', weight: 3, icon: '💵', label: '10' },
     { id: 13, type: 'USDT', amount: 250, color: '#22c55e', weight: 2, icon: '💎', label: '250' },
     { id: 14, type: 'USDT', amount: 500, color: '#22c55e', weight: 1, icon: '💎', label: '500' },
-    
-    // JACKPOT (3 جوائز)
     { id: 15, type: 'JACKPOT', amount: 100, currency: 'TON', color: '#ef4444', weight: 1, icon: '👑', label: '100 TON', jackpot: true },
     { id: 16, type: 'JACKPOT', amount: 250, currency: 'USDT', color: '#ef4444', weight: 1, icon: '👑', label: '250 USDT', jackpot: true },
     { id: 17, type: 'JACKPOT', amount: 500, currency: 'USDT', color: '#ef4444', weight: 1, icon: '👑', label: '500 USDT', jackpot: true },
-    
-    // GOOD LUCK (1 جائزة)
     { id: 18, type: 'GOODLUCK', amount: 0, color: '#94a3b8', weight: 15, icon: '🍀', label: 'GOOD LUCK', goodluck: true }
 ];
 
@@ -899,9 +892,13 @@ let currentPage = 'mining';
 
 function showPage(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(page + 'Page').classList.add('active');
+    const pageElement = document.getElementById(page + 'Page');
+    if (pageElement) pageElement.classList.add('active');
+    
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-    document.querySelector(`[data-page="${page}"]`).classList.add('active');
+    const navItem = document.querySelector(`[data-page="${page}"]`);
+    if (navItem) navItem.classList.add('active');
+    
     currentPage = page;
     
     if (page === 'market') renderMarket();
@@ -920,18 +917,21 @@ function showPage(page) {
 }
 
 function showWheelGamePage() {
+    document.body.classList.add('game-page-active');
     showPage('wheelGame');
     initWheelVegas();
     updateWheelVegasUI();
 }
 
 function showSlotsGamePage() {
+    document.body.classList.add('game-page-active');
     showPage('slotsGame');
     initSlotsVegas();
     updateSlotsVegasUI();
 }
 
 function exitGame() {
+    document.body.classList.remove('game-page-active');
     showPage('casino');
 }
 
@@ -3456,9 +3456,9 @@ function updateUserDisplay() {
     }
 }
 
-// ====== 49. VEGAS ELITE - تحسينات الكازينو النهائية ======
+// ====== 49. VEGAS ELITE - تحسينات الكازينو ======
 
-// محرك الصوت المتكامل (تم تحسينه ليعمل فوراً)
+// محرك الصوت المتكامل
 const VegasAudio = {
     ctx: null,
     isInitialized: false,
@@ -3664,7 +3664,7 @@ const VegasAudio = {
     }
 };
 
-// نظام الطقطقة المتدرج (محسن)
+// نظام الطقطقة المتدرج
 const TickSequencer = {
     timeouts: [],
     
@@ -3714,7 +3714,7 @@ const TickSequencer = {
     }
 };
 
-// مسرحية الجاكبوت (محسنة)
+// مسرحية الجاكبوت
 const JackpotTheater = {
     isPlaying: false,
     
@@ -3808,7 +3808,7 @@ const JackpotTheater = {
     }
 };
 
-// عجلة الحظ المحسنة (Vegas Elite)
+// عجلة الحظ المحسنة
 let wheelVegasState = {
     isSpinning: false,
     currentRotation: 0,
@@ -3837,7 +3837,6 @@ function initWheelVegas() {
         const rotation = index * anglePerSegment;
         const gradient = getVegasGradient(prize);
         
-        // تحسينات العرض: نصوص أكبر وتوهج أفضل
         segment.style.cssText = `
             position: absolute;
             width: 50%;
@@ -4147,7 +4146,7 @@ function updateWheelVegasUI() {
     }
 }
 
-// آلة السلوتس المحسنة (Vegas Elite)
+// آلة السلوتس المحسنة
 let slotsVegasState = {
     isSpinning: false,
     reels: [[], [], []],
@@ -4531,7 +4530,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }, { once: true });
     
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v9000.1");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v9000.2");
     console.log("✅ مع تحسينات Vegas Elite - جميع الميزات محفوظة!");
     console.log("✅ All systems ready! 🚀");
 });
@@ -4621,7 +4620,7 @@ window.showSlotsModal = showSlotsModal;
 window.buyWheelPack = buyWheelPack;
 window.buySlotsPack = buySlotsPack;
 
-// دوال Vegas الجديدة
+// دوال Vegas الجديدة - تم تصديرها للنطاق العام
 window.showWheelGamePage = showWheelGamePage;
 window.showSlotsGamePage = showSlotsGamePage;
 window.spinWheelVegas = spinWheelVegas;
@@ -4630,3 +4629,8 @@ window.showToastPro = showToastPro;
 window.VegasAudio = VegasAudio;
 window.TickSequencer = TickSequencer;
 window.JackpotTheater = JackpotTheater;
+
+// دوال إضافية لضمان عمل الأزرار
+window.exitGame = exitGame;
+window.spinWheel = spinWheelVegas; // للتوافق مع الإصدارات القديمة
+window.spinSlots = spinSlotsVegas; // للتوافق مع الإصدارات القديمة
