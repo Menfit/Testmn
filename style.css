@@ -1,7 +1,7 @@
 /* ============================================
-   TON MINING CASINO - LEGENDARY DESIGN SYSTEM v9000.0
-   ULTIMATE EDITION - جميع التأثيرات البصرية والحركية والصوتية
-   مع تحسينات الكازينو الاحترافية
+   TON MINING CASINO - ULTIMATE LEGENDARY EDITION v9000.0
+   مع تحسينات Vegas Elite - جميع التصاميم محفوظة
+   الكود الكامل - نسخة واحدة قابلة للنسخ واللصق
    ============================================ */
 
 /* ====== 1. CSS VARIABLES ====== */
@@ -49,6 +49,7 @@
     --gradient-casino: linear-gradient(145deg, #1a1f35, #0a0b1f);
     --gradient-turbine: linear-gradient(145deg, #2a2a3a, #1a1a2a);
     --gradient-jackpot: linear-gradient(145deg, #ffd700, #ff8c00, #ff4500);
+    --gradient-vegas: linear-gradient(135deg, #ff4444, #ffd700, #00f2ff, #8855ff);
     
     /* الخلفيات */
     --bg-primary: #0a0b0f;
@@ -82,6 +83,7 @@
     --shadow-wheel: 0 0 50px rgba(0,242,255,0.2);
     --shadow-casino: 0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,215,0,0.2);
     --shadow-jackpot: 0 0 100px rgba(255,215,0,0.8), 0 0 200px rgba(255,140,0,0.5);
+    --shadow-vegas: 0 0 80px rgba(255,215,0,0.4), 0 0 0 2px gold;
     
     /* المسافات */
     --spacing-xs: 4px;
@@ -113,6 +115,7 @@
     --z-index-popup: 2200;
     --z-index-jackpot: 2300;
     --z-index-error: 2400;
+    --z-index-vegas: 2500;
 }
 
 /* ====== 2. ANIMATIONS - التأثيرات الحركية ====== */
@@ -3318,7 +3321,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 ::selection { background: var(--ton-cyan); color: var(--bg-primary); }
 
 /* ============================================
-   CASINO PRO - تصميم الكازينو الاحترافي (جديد)
+   CASINO PRO - تصميم الكازينو الاحترافي
    ============================================ */
 
 /* Game Page Header */
@@ -3987,8 +3990,468 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
 }
 
 /* ============================================
-   PROFESSIONAL TOAST SYSTEM (جديد)
+   VEGAS ELITE - التأثيرات الجديدة
    ============================================ */
+
+/* === الخلفية الديناميكية === */
+.wheel-game-container::before,
+.slots-game-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        rgba(0, 242, 255, 0.03) 60deg,
+        transparent 120deg,
+        rgba(255, 215, 0, 0.03) 180deg,
+        transparent 240deg,
+        rgba(255, 68, 68, 0.03) 300deg,
+        transparent 360deg
+    );
+    animation: vegas-rotate 20s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes vegas-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* === نظام الحرارة === */
+.heat-low::after,
+.heat-medium::after,
+.heat-high::after,
+.heat-jackpot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.heat-low::after {
+    background: radial-gradient(circle at center, rgba(255, 68, 68, 0.1) 0%, transparent 70%);
+    animation: heat-pulse 2s ease-in-out infinite;
+}
+
+.heat-medium::after {
+    background: radial-gradient(circle at center, rgba(255, 140, 0, 0.2) 0%, transparent 70%);
+    animation: heat-pulse 1s ease-in-out infinite;
+}
+
+.heat-high::after {
+    background: radial-gradient(circle at center, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+    animation: heat-pulse 0.5s ease-in-out infinite;
+}
+
+.heat-jackpot::after {
+    background: radial-gradient(circle at center, rgba(255, 215, 0, 0.5) 0%, transparent 70%);
+    animation: jackpot-glow 0.3s ease-in-out infinite;
+}
+
+@keyframes heat-pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+@keyframes jackpot-glow {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* === عجلة الحظ - Vegas Edition === */
+.wheel-segment-vegas {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 0;
+    left: 50%;
+    transform-origin: 0% 100%;
+    clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 25px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 5;
+}
+
+.vegas-segment-icon {
+    font-size: 1.8rem;
+    filter: drop-shadow(0 0 8px currentColor);
+    margin-bottom: 5px;
+    z-index: 10;
+}
+
+.vegas-segment-label {
+    font-size: 0.75rem;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 4px 12px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-weight: 700;
+    color: white;
+    z-index: 10;
+    white-space: nowrap;
+}
+
+/* الجوائز الخاصة */
+.wheel-segment-vegas[data-index="14"],
+.wheel-segment-vegas[data-index="15"],
+.wheel-segment-vegas[data-index="16"] {
+    .vegas-segment-icon { font-size: 2.5rem; }
+    .vegas-segment-label {
+        font-size: 0.85rem;
+        border-color: #ffd700;
+        color: #ffd700;
+        font-weight: 900;
+    }
+}
+
+/* === شريط الجوائز الظاهر === */
+#wheelPrizeLegend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    margin: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.vegas-legend-group {
+    flex: 1;
+    min-width: 120px;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.vegas-legend-group h4 {
+    margin: 0 0 8px 0;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.vegas-legend-group span {
+    display: inline-block;
+    padding: 4px 8px;
+    margin: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.vegas-legend-group.jackpot {
+    background: linear-gradient(135deg, rgba(255, 68, 68, 0.3), rgba(255, 215, 0, 0.2));
+    border: 1px solid #ff4444;
+}
+.vegas-legend-group.jackpot h4 { color: #ff4444; }
+
+.vegas-legend-group.ton {
+    background: linear-gradient(135deg, rgba(0, 136, 204, 0.3), rgba(0, 242, 255, 0.2));
+    border: 1px solid #0088cc;
+}
+.vegas-legend-group.ton h4 { color: #00f2ff; }
+
+.vegas-legend-group.usdt {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(74, 222, 128, 0.2));
+    border: 1px solid #22c55e;
+}
+.vegas-legend-group.usdt h4 { color: #4ade80; }
+
+/* === رسوم العجلة === */
+.vegas-spinning {
+    filter: drop-shadow(0 0 30px rgba(0, 242, 255, 0.6)) !important;
+    animation: wheel-glow 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes wheel-glow {
+    from { filter: drop-shadow(0 0 20px rgba(0, 242, 255, 0.4)); }
+    to { filter: drop-shadow(0 0 40px rgba(0, 242, 255, 0.8)); }
+}
+
+.vegas-bounce {
+    animation: wheel-bounce-vegas 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes wheel-bounce-vegas {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.1); }
+    60% { transform: scale(0.95); }
+    80% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+.vegas-winner {
+    filter: brightness(2.5) drop-shadow(0 0 40px gold) !important;
+    transform: scale(1.1) !important;
+    z-index: 20 !important;
+    animation: winner-pulse-vegas 0.4s ease-in-out infinite;
+}
+
+@keyframes winner-pulse-vegas {
+    0%, 100% { filter: brightness(2.5) drop-shadow(0 0 40px gold); }
+    50% { filter: brightness(3) drop-shadow(0 0 60px gold); }
+}
+
+.vegas-dim {
+    filter: brightness(0.3) saturate(0.2) !important;
+    opacity: 0.4 !important;
+}
+
+/* === آلة السلوتس - Vegas Edition === */
+.vegas-slot-reel-wrapper {
+    width: 100px;
+    height: 110px;
+    overflow: hidden;
+    border-radius: 15px;
+    background: linear-gradient(180deg, #1a1f2e 0%, #0f1419 100%);
+    border: 2px solid rgba(0, 242, 255, 0.3);
+    box-shadow: 
+        inset 0 0 20px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(0, 242, 255, 0.2);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.vegas-slot-reel-wrapper::before,
+.vegas-slot-reel-wrapper::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 30px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.vegas-slot-reel-wrapper::before {
+    top: 0;
+    background: linear-gradient(to bottom, #0a0b0f 0%, transparent 100%);
+}
+
+.vegas-slot-reel-wrapper::after {
+    bottom: 0;
+    background: linear-gradient(to top, #0a0b0f 0%, transparent 100%);
+}
+
+.vegas-slot-reel {
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+}
+
+.vegas-slot-symbol {
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    text-shadow: 0 0 20px currentColor;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+    transition: all 0.2s ease;
+}
+
+.vegas-reel-spinning {
+    border-color: rgba(0, 242, 255, 0.8) !important;
+    box-shadow: 
+        inset 0 0 20px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(0, 242, 255, 0.4) !important;
+}
+
+.vegas-win-glow {
+    animation: symbol-win-glow-vegas 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes symbol-win-glow-vegas {
+    from { 
+        filter: brightness(1) drop-shadow(0 0 10px currentColor);
+        transform: scale(1);
+    }
+    to { 
+        filter: brightness(1.5) drop-shadow(0 0 30px gold);
+        transform: scale(1.1);
+    }
+}
+
+/* === جدول الجوائز المحسن === */
+.vegas-payout-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.vegas-payout-item:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 215, 0, 0.5);
+}
+
+.vegas-payout-item .symbol {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.vegas-payout-item .value {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #00f2ff;
+}
+
+.vegas-payout-item.jackpot {
+    background: linear-gradient(135deg, rgba(255, 68, 68, 0.3), rgba(255, 215, 0, 0.2));
+    border-color: #ff4444;
+    grid-column: 1 / -1;
+}
+
+.vegas-payout-item.jackpot .value {
+    color: #ffd700;
+    font-size: 1.2rem;
+}
+
+.vegas-payout-item .badge {
+    margin-top: 5px;
+    padding: 2px 8px;
+    background: #ff4444;
+    color: white;
+    font-size: 0.7rem;
+    border-radius: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+/* === مسرحية الجاكبوت === */
+.vegas-burst {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 100;
+}
+
+.burst-ray {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 50%;
+    background: linear-gradient(to top, gold, transparent);
+    transform-origin: bottom center;
+    animation: burst-expand 0.8s ease-out forwards;
+}
+
+@keyframes burst-expand {
+    0% { height: 0; opacity: 1; }
+    50% { opacity: 1; }
+    100% { height: 100%; opacity: 0; }
+}
+
+.vegas-jackpot-text {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    font-size: clamp(2rem, 8vw, 4rem);
+    font-weight: 900;
+    color: gold;
+    text-shadow: 
+        0 0 10px rgba(255, 215, 0, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.6),
+        0 0 40px rgba(255, 68, 68, 0.4),
+        0 0 80px rgba(255, 68, 68, 0.2);
+    z-index: 10000;
+    animation: jackpot-text-vegas 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+@keyframes jackpot-text-vegas {
+    0% { transform: translate(-50%, -50%) scale(0) rotate(-10deg); }
+    50% { transform: translate(-50%, -50%) scale(1.2) rotate(5deg); }
+    100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+}
+
+.vegas-shake {
+    animation: screen-shake-vegas 0.5s ease-in-out;
+}
+
+@keyframes screen-shake-vegas {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-5px, -5px); }
+    20% { transform: translate(5px, 5px); }
+    30% { transform: translate(-5px, 5px); }
+    40% { transform: translate(5px, -5px); }
+    50% { transform: translate(-3px, -3px); }
+    60% { transform: translate(3px, 3px); }
+    70% { transform: translate(-3px, 3px); }
+    80% { transform: translate(3px, -3px); }
+    90% { transform: translate(0, 0); }
+}
+
+.vegas-particle {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, gold 0%, orange 50%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particle-explode-vegas 1.5s ease-out forwards;
+    box-shadow: 0 0 20px gold;
+    z-index: 9999;
+}
+
+@keyframes particle-explode-vegas {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0);
+        opacity: 0;
+    }
+}
+
+.vegas-counter {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(2rem, 6vw, 3rem);
+    font-weight: 800;
+    color: #00f2ff;
+    text-shadow: 
+        0 0 10px rgba(0, 242, 255, 0.8),
+        0 0 30px rgba(0, 242, 255, 0.6),
+        0 0 50px gold;
+    z-index: 9999;
+    pointer-events: none;
+    animation: counter-glow-vegas 0.1s ease-in-out infinite alternate;
+}
+
+@keyframes counter-glow-vegas {
+    from { text-shadow: 0 0 10px rgba(0, 242, 255, 0.8); }
+    to { text-shadow: 0 0 30px rgba(0, 242, 255, 1), 0 0 60px gold; }
+}
+
+/* === Professional Toast System === */
 .toast-container {
     position: fixed;
     top: 80px;
@@ -4081,9 +4544,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     }
 }
 
-/* ============================================
-   WIN POPUP PRO (جديد)
-   ============================================ */
+/* === Win Popup Pro === */
 .win-popup-pro {
     position: fixed;
     top: 50%;
@@ -4176,7 +4637,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     border-radius: 30px;
 }
 
-/* Particle Explosion */
+/* === Particle Explosion === */
 @keyframes particleExplode {
     0% {
         transform: translate(-50%, -50%) scale(1);
@@ -4188,21 +4649,21 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     }
 }
 
-/* Responsive for Casino Pro */
+/* === Responsive for Vegas === */
 @media (max-width: 400px) {
     .wheel-casino-container-pro {
         width: 280px;
         height: 280px;
     }
     
-    .slot-reel-wrapper-pro {
+    .vegas-slot-reel-wrapper {
         width: 90px;
         height: 270px;
     }
     
-    .slot-symbol-pro {
+    .vegas-slot-symbol {
         height: 90px;
-        font-size: 2.8rem;
+        font-size: 3rem;
     }
     
     .legend-grid {
@@ -4222,5 +4683,13 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     .game-btn.spin {
         padding: 18px 30px;
         font-size: 1.2rem;
+    }
+    
+    .vegas-jackpot-text {
+        font-size: 2.5rem;
+    }
+    
+    .vegas-counter {
+        font-size: 2rem;
     }
 }
