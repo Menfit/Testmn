@@ -1,6 +1,7 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v6000.0
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v7000.0
 // مع صفحات الألعاب المستقلة وتجربة مستخدم احترافية
+// الكود الكامل - الجزء 1 من 2 (السطور 1-3500)
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -955,7 +956,7 @@ function updateGameHeaderBalance() {
     }
 }
 
-// ====== 17. WHEEL GAME (المحسنة) ======
+// ====== 17. WHEEL GAME (العجلة المحسنة مع تأثيرات حركية) ======
 let wheelGameState = {
     isSpinning: false,
     currentRotation: 0,
@@ -1069,18 +1070,18 @@ function animateWheelLegendary() {
     let velocity = 0;
     
     if (elapsed < 800) {
-        // Acceleration phase
+        // مرحلة التسارع
         wheelGameState.phase = 'accelerating';
         velocity = easeOutCubic(elapsed / 800) * 22;
         
     } else if (elapsed < wheelGameState.spinDuration - 2500) {
-        // Max speed with wobble
+        // سرعة قصوى مع تموج
         wheelGameState.phase = 'spinning';
         velocity = 20 + Math.sin(elapsed * 0.008) * 3;
         wheel.classList.add('spinning-fast');
         
     } else if (elapsed < wheelGameState.spinDuration) {
-        // Deceleration
+        // مرحلة التباطؤ
         wheelGameState.phase = 'decelerating';
         wheel.classList.remove('spinning-fast');
         
@@ -1092,6 +1093,7 @@ function animateWheelLegendary() {
             const segmentAngle = 360 / WHEEL_PRIZES.length;
             const prizeIndex = WHEEL_PRIZES.indexOf(wheelGameState.selectedPrize);
             
+            // المؤشر في الأعلى (270 درجة)
             const targetAngle = 270 - (prizeIndex * segmentAngle + segmentAngle / 2);
             const extraSpins = 5 + Math.floor(Math.random() * 4);
             
@@ -1101,7 +1103,7 @@ function animateWheelLegendary() {
         }
         
     } else {
-        // Stop
+        // توقف
         wheelGameState.phase = 'stopping';
         velocity = 0;
         wheelGameState.isSpinning = false;
@@ -1150,6 +1152,7 @@ function highlightWinningSegmentLegendary() {
             seg.style.zIndex = '15';
             seg.style.transition = 'all 0.5s ease';
             
+            // تأثير نبض
             seg.animate([
                 { filter: 'brightness(1.8) drop-shadow(0 0 30px gold)' },
                 { filter: 'brightness(2.5) drop-shadow(0 0 50px gold)' },
@@ -1318,21 +1321,21 @@ async function spinWheelGame(isFree = false) {
         }
     }
     
-    // Reset wheel state
+    // إعادة تعيين حالة العجلة
     wheelGameState.isSpinning = true;
     wheelGameState.spinStartTime = Date.now();
     wheelGameState.spinDuration = 5500 + Math.random() * 1500;
     wheelGameState.selectedPrize = null;
     wheelGameState.phase = 'accelerating';
     
-    // Clean up highlights
+    // إزالة التحديدات القديمة
     document.querySelectorAll('.wheel-segment-legendary').forEach(seg => {
         seg.style.filter = '';
         seg.style.opacity = '';
         seg.style.transform = seg.style.transform.replace(/ scale\([^)]+\)/, '');
     });
     
-    // Hide any existing win message
+    // إخفاء رسالة الفوز القديمة
     document.getElementById('wheelWinMessage')?.classList.add('hidden');
     
     wheelGameState.animationId = requestAnimationFrame(animateWheelLegendary);
@@ -1347,19 +1350,19 @@ async function spinWheelGame(isFree = false) {
 }
 
 function updateWheelGameUI() {
-    // Update streak
+    // تحديث الستريك
     const streakEl = document.getElementById('wheelGameStreak');
     if (streakEl) {
         streakEl.textContent = `${userData.streak} DAYS | BEST: ${userData.longestStreak}`;
     }
     
-    // Update spins
+    // تحديث اللفات
     const spinsEl = document.getElementById('wheelGameSpins');
     if (spinsEl) {
         spinsEl.textContent = userData.wheel.purchasedSpins || 0;
     }
     
-    // Update free timer
+    // تحديث مؤقت اللفة المجانية
     const freeTimerEl = document.getElementById('wheelGameFreeTimer');
     const freeBtn = document.getElementById('wheelFreeSpinBtn');
     const freeTimer = document.getElementById('wheelFreeTimer');
@@ -1383,7 +1386,7 @@ function updateWheelGameUI() {
         }
     }
     
-    // Update jackpot progress
+    // تحديث تقدم الجاكبوت
     const jackpotFill = document.getElementById('wheelJackpotFill');
     const jackpotCounter = document.getElementById('wheelJackpotCounter');
     
@@ -1395,7 +1398,7 @@ function updateWheelGameUI() {
         jackpotCounter.textContent = `${spinsLeft}/${CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY} spins until jackpot`;
     }
     
-    // Update auto spin checkbox
+    // تحديث checkbox التحويل التلقائي
     const autoSpinCheck = document.getElementById('wheelAutoSpinToggle');
     if (autoSpinCheck) {
         autoSpinCheck.checked = userData.wheel.autoSpin || false;
@@ -1544,8 +1547,7 @@ async function buyWheelPack(pack) {
         showToast(t('error.payment'), 'error');
     }
 }
-
-// ====== 19. SLOTS GAME (المحسنة) ======
+// ====== 19. SLOTS GAME (السلوتس المحسنة مع دوران احترافي) ======
 let slotsGameState = {
     isSpinning: false,
     reels: [
@@ -1706,7 +1708,6 @@ function checkSlotsWinLegendary() {
         visibleSymbols.push(reel.symbols[centerIndex]);
     }
     
-    // Highlight visible symbols
     for (let i = 0; i < 3; i++) {
         const reel = document.getElementById(`slot-reel-${i}`);
         if (!reel) continue;
@@ -1774,8 +1775,7 @@ function checkSlotsWinLegendary() {
     updateUI();
     updateGameHeaderBalance();
     
-    // Auto spin
-    if (userData.slots.autoSpin && !isFree) {
+    if (userData.slots.autoSpin) {
         setTimeout(() => spinSlotsGame(false, false), 2000);
     }
 }
@@ -1855,7 +1855,6 @@ async function spinSlotsGame(isFree = false, isTurbo = false) {
         }
     }
     
-    // Initialize spin
     slotsGameState.isSpinning = true;
     slotsGameState.spinStartTime = Date.now();
     
@@ -1879,19 +1878,16 @@ async function spinSlotsGame(isFree = false, isTurbo = false) {
 }
 
 function updateSlotsGameUI() {
-    // Update streak
     const streakEl = document.getElementById('slotsGameStreak');
     if (streakEl) {
         streakEl.textContent = `${userData.streak} DAYS | BEST: ${userData.longestStreak}`;
     }
     
-    // Update spins
     const spinsEl = document.getElementById('slotsGameSpins');
     if (spinsEl) {
         spinsEl.textContent = userData.slots.purchasedSpins || 0;
     }
     
-    // Update free timer
     const freeTimerEl = document.getElementById('slotsGameFreeTimer');
     const freeBtn = document.getElementById('slotsFreeSpinBtn');
     const freeTimer = document.getElementById('slotsFreeTimer');
@@ -1915,7 +1911,6 @@ function updateSlotsGameUI() {
         }
     }
     
-    // Update auto spin checkbox
     const autoSpinCheck = document.getElementById('slotsAutoSpinToggle');
     if (autoSpinCheck) {
         autoSpinCheck.checked = userData.slots.autoSpin || false;
@@ -2963,7 +2958,6 @@ function updateBalance() {
     if (profileUsd) profileUsd.textContent = '≈ $' + totalUsd.toFixed(2);
     if (modalUserBalance) modalUserBalance.textContent = formatTON(userData.balances.TON) + ' TON';
     
-    // Update game header if visible
     const gameBalance = document.getElementById('gameHeaderBalance');
     if (gameBalance) gameBalance.textContent = formatTON(userData.balances.TON) + ' TON';
 }
@@ -4035,7 +4029,6 @@ function copyReferralLink() {
 let currentPage = 'mining';
 
 function showPage(page) {
-    // Don't show pages if we're in a game
     if (document.getElementById('wheelGamePage').style.display === 'block' ||
         document.getElementById('slotsGamePage').style.display === 'block') {
         return;
@@ -4419,7 +4412,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     
-    // Initialize panels as collapsed
     document.getElementById('wheelPanelContent').style.display = 'none';
     document.getElementById('slotsPanelContent').style.display = 'none';
     document.getElementById('wheelPanelChevron').style.transform = 'rotate(-90deg)';
@@ -4428,10 +4420,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     updateUserDisplay();
     
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v6000.0");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v7000.0");
     console.log("✅ مع صفحات الألعاب المستقلة وتجربة المستخدم المحسّنة!");
     console.log("✅ عجلة الحظ: 18 قطاع مع تأثيرات سحرية");
-    console.log("✅ السلوتس: بكرات ثلاثية الأبعاد مع خط فوز متوهج");
+    console.log("✅ السلوتس: بكرات ثلاثية الأبعاد مع دوران احترافي");
     console.log("✅ رسائل الفوز داخل الصفحة (وليس في الخلفية)");
     console.log("✅ لوحة تحكم جانبية قابلة للطي");
     console.log("✅ نظام Auto Spin المتطور");
