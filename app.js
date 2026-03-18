@@ -1,7 +1,7 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v8000.0
-// مع تحسينات الكازينو الاحترافية مع الحفاظ على جميع الميزات القديمة
-// الكود الكامل - جميع الدوال محفوظة + التحسينات الجديدة
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v9000.0
+// مع تحسينات Vegas Elite - جميع الميزات محفوظة
+// الكود الكامل - نسخة واحدة قابلة للنسخ واللصق
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -550,7 +550,7 @@ const REFERRAL_MILESTONES = [
     { referrals: 1000, reward: 1200, unit: 'USDT' }
 ];
 
-// ====== 7. WHEEL PRIZES (محفوظة) ======
+// ====== 7. WHEEL PRIZES ======
 const WHEEL_PRIZES = [
     { id: 1, type: 'TON', amount: 0.25, color: '#0088cc', weight: 8, icon: '💰', label: '0.25' },
     { id: 2, type: 'TON', amount: 0.5, color: '#0088cc', weight: 7, icon: '💰', label: '0.5' },
@@ -890,1428 +890,52 @@ function stopAllListeners() {
     listenerTimeouts.clear();
 }
 
-// ====== 16. GAME PAGE NAVIGATION (محسنة) ======
+// ====== 16. GAME PAGE NAVIGATION ======
 let currentPage = 'mining';
-let wheelAutoSpinTimer = null;
-let slotsAutoSpinTimer = null;
 
 function showPage(page) {
-    // تنظيف أي رسوم متحركة قديمة
-    cleanupGameStates();
-    
-    // إخفاء جميع الصفحات
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(page + 'Page').classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    document.querySelector(`[data-page="${page}"]`).classList.add('active');
+    currentPage = page;
     
-    // إظهار الصفحة المطلوبة
-    const targetPage = document.getElementById(page + 'Page');
-    if (targetPage) {
-        targetPage.classList.add('active');
+    if (page === 'market') renderMarket();
+    if (page === 'profile') { 
+        updateLeaderboard(); 
+        renderReferralMilestones(); 
+        renderReferralTree(); 
+        updateChart(); 
     }
-    
-    // تحديث النافبار (فقط للصفحات الرئيسية)
-    if (['mining', 'market', 'casino', 'profile'].includes(page)) {
-        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-        const navItem = document.querySelector(`[data-page="${page}"]`);
-        if (navItem) navItem.classList.add('active');
-        currentPage = page;
-    }
-    
-    // تهيئة الصفحات الخاصة
-    if (page === 'wheelGame') {
-        initWheelPro();
-        updateWheelGameUI();
-    } else if (page === 'slotsGame') {
-        initSlotsPro();
-        updateSlotsGameUI();
-    } else if (page === 'casino') {
-        updateWheelUI();
-        updateSlotsUI();
-    } else if (page === 'profile') {
-        updateLeaderboard();
-        renderReferralMilestones();
-        updateChart();
-    } else if (page === 'market') {
-        renderMarket();
+    if (page === 'casino') { 
+        updateWheelUI(); 
+        updateSlotsUI(); 
     }
     
     showRandomSticker();
+}
+
+function showWheelGamePage() {
+    showPage('wheelGame');
+    initWheelVegas();
+    updateWheelVegasUI();
+}
+
+function showSlotsGamePage() {
+    showPage('slotsGame');
+    initSlotsVegas();
+    updateSlotsVegasUI();
+}
+
+function exitGame() {
+    showPage('casino');
 }
 
 function showWallet() {
     showPage('profile');
 }
 
-function cleanupGameStates() {
-    // إيقاف أي رسوم متحركة للعجلة
-    if (window.wheelGameState?.animationId) {
-        cancelAnimationFrame(window.wheelGameState.animationId);
-    }
-    // إيقاف أي رسوم متحركة للسلوتس
-    if (window.slotsGameState?.animationId) {
-        cancelAnimationFrame(window.slotsGameState.animationId);
-    }
-    // إيقاف Auto Spin
-    if (wheelAutoSpinTimer) {
-        clearInterval(wheelAutoSpinTimer);
-        wheelAutoSpinTimer = null;
-    }
-    if (slotsAutoSpinTimer) {
-        clearInterval(slotsAutoSpinTimer);
-        slotsAutoSpinTimer = null;
-    }
-}
-
-// ====== 17. PROFESSIONAL TOAST SYSTEM (جديد) ======
-let toastTimeouts = [];
-
-function showToastPro(message, type = 'info', duration = 3000) {
-    const container = document.getElementById('toastContainer');
-    if (!container) return;
-    
-    // إخفاء التوست القديم إذا وجد
-    const existingToast = container.querySelector('.toast-pro');
-    if (existingToast) {
-        existingToast.classList.add('closing');
-        setTimeout(() => existingToast.remove(), 300);
-    }
-    
-    const toast = document.createElement('div');
-    toast.className = `toast-pro ${type}`;
-    
-    let icon = 'fa-circle-info';
-    if (type === 'success') icon = 'fa-circle-check';
-    else if (type === 'error') icon = 'fa-circle-xmark';
-    else if (type === 'warning') icon = 'fa-circle-exclamation';
-    
-    toast.innerHTML = `
-        <i class="fa-regular ${icon}"></i>
-        <span class="message">${message}</span>
-    `;
-    
-    container.appendChild(toast);
-    
-    // اهتزاز عند الخطأ
-    if (type === 'error') {
-        hapticFeedback('error');
-    } else if (type === 'success') {
-        hapticFeedback('success');
-    }
-    
-    const timeout = setTimeout(() => {
-        toast.classList.add('closing');
-        setTimeout(() => toast.remove(), 300);
-    }, duration);
-    
-    toastTimeouts.push(timeout);
-}
-
-// ====== 18. WHEEL GAME PRO (محسن) ======
-let wheelGameState = {
-    isSpinning: false,
-    currentRotation: 0,
-    targetRotation: 0,
-    velocity: 0,
-    spinStartTime: 0,
-    spinDuration: 0,
-    selectedPrize: null,
-    animationId: null,
-    phase: 'idle'
-};
-
-function initWheelPro() {
-    const wheel = document.getElementById('wheelCasinoPro');
-    if (!wheel) return;
-    
-    wheel.innerHTML = '';
-    
-    const totalSegments = WHEEL_PRIZES.length;
-    const anglePerSegment = 360 / totalSegments;
-    
-    WHEEL_PRIZES.forEach((prize, index) => {
-        const segment = document.createElement('div');
-        segment.className = 'wheel-segment-pro';
-        segment.dataset.index = index;
-        
-        const rotation = index * anglePerSegment;
-        const gradient = getGradientForPrize(prize);
-        
-        segment.style.cssText = `
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            top: 0;
-            left: 50%;
-            transform-origin: 0% 100%;
-            transform: rotate(${rotation}deg);
-            background: ${gradient};
-            clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding-top: 25px;
-        `;
-        
-        const icon = document.createElement('span');
-        icon.className = 'icon';
-        icon.textContent = prize.icon;
-        icon.style.cssText = `
-            font-size: ${prize.jackpot ? '2.5rem' : '1.8rem'};
-            filter: drop-shadow(0 0 10px ${prize.color});
-            margin-bottom: 5px;
-        `;
-        
-        const label = document.createElement('span');
-        label.className = 'value';
-        label.textContent = prize.label;
-        label.style.cssText = `
-            font-size: ${prize.jackpot ? '0.85rem' : '0.75rem'};
-            background: rgba(0,0,0,0.6);
-            padding: 4px 12px;
-            border-radius: 15px;
-            border: 1px solid ${prize.color};
-            font-weight: ${prize.jackpot ? '900' : '700'};
-            color: ${prize.jackpot ? '#ffd700' : 'white'};
-        `;
-        
-        segment.appendChild(icon);
-        segment.appendChild(label);
-        wheel.appendChild(segment);
-    });
-    
-    wheelGameState.currentRotation = 0;
-    wheel.style.transform = 'rotate(0deg)';
-    
-    renderWheelPrizeLegend();
-}
-
-function renderWheelPrizeLegend() {
-    const legend = document.getElementById('wheelPrizeLegend');
-    if (!legend) return;
-    
-    legend.innerHTML = WHEEL_PRIZES.map(prize => `
-        <div class="legend-item">
-            <span class="icon">${prize.icon}</span>
-            <span class="value">${prize.label}</span>
-        </div>
-    `).join('');
-}
-
-function getGradientForPrize(prize) {
-    if (prize.jackpot) {
-        return `conic-gradient(from 0deg at 0% 100%, #ff4444 0deg, #ff8800 60deg, #ff4444 120deg)`;
-    }
-    if (prize.type === 'TON') {
-        return `linear-gradient(135deg, ${prize.color} 0%, #0066aa 50%, ${prize.color} 100%)`;
-    }
-    if (prize.type === 'USDT') {
-        return `linear-gradient(135deg, ${prize.color} 0%, #1a8c4a 50%, ${prize.color} 100%)`;
-    }
-    return `linear-gradient(135deg, ${prize.color} 0%, #4a5568 100%)`;
-}
-
-function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-function easeInCubic(t) { return t * t * t; }
-
-function animateWheelPro() {
-    if (!wheelGameState.isSpinning) return;
-    
-    const now = Date.now();
-    const elapsed = now - wheelGameState.spinStartTime;
-    const wheel = document.getElementById('wheelCasinoPro');
-    const speedFill = document.getElementById('wheelSpeedFill');
-    
-    let velocity = 0;
-    
-    if (elapsed < 800) {
-        wheelGameState.phase = 'accelerating';
-        velocity = easeOutCubic(elapsed / 800) * 22;
-    } else if (elapsed < wheelGameState.spinDuration - 2500) {
-        wheelGameState.phase = 'spinning';
-        velocity = 20 + Math.sin(elapsed * 0.008) * 3;
-        wheel?.classList.add('spinning');
-    } else if (elapsed < wheelGameState.spinDuration) {
-        wheelGameState.phase = 'decelerating';
-        wheel?.classList.remove('spinning');
-        
-        const remaining = wheelGameState.spinDuration - elapsed;
-        velocity = easeInCubic(remaining / 2500) * 20;
-        
-        if (!wheelGameState.selectedPrize) {
-            wheelGameState.selectedPrize = selectWheelPrize();
-            const segmentAngle = 360 / WHEEL_PRIZES.length;
-            const prizeIndex = WHEEL_PRIZES.indexOf(wheelGameState.selectedPrize);
-            const targetAngle = 270 - (prizeIndex * segmentAngle + segmentAngle / 2);
-            const extraSpins = 5 + Math.floor(Math.random() * 4);
-            
-            wheelGameState.targetRotation = wheelGameState.currentRotation + 
-                (extraSpins * 360) + 
-                ((targetAngle - (wheelGameState.currentRotation % 360) + 360) % 360);
-        }
-    } else {
-        wheelGameState.phase = 'stopping';
-        velocity = 0;
-        wheelGameState.isSpinning = false;
-        
-        if (wheel) {
-            wheel.style.animation = 'wheelBounce 0.4s ease';
-            setTimeout(() => wheel.style.animation = '', 400);
-        }
-        
-        highlightWinningSegment();
-        
-        setTimeout(() => {
-            awardWheelPrizePro(wheelGameState.selectedPrize);
-        }, 600);
-        
-        cancelAnimationFrame(wheelGameState.animationId);
-        if (speedFill) speedFill.style.width = '0%';
-        return;
-    }
-    
-    wheelGameState.currentRotation += velocity;
-    if (wheel) wheel.style.transform = `rotate(${wheelGameState.currentRotation}deg)`;
-    
-    if (speedFill) {
-        const pct = Math.min((velocity / 22) * 100, 100);
-        speedFill.style.width = `${pct}%`;
-    }
-    
-    wheelGameState.animationId = requestAnimationFrame(animateWheelPro);
-}
-
-function selectWheelPrize() {
-    const isJackpot = userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY === 0;
-    const eligible = isJackpot ? WHEEL_PRIZES.filter(p => p.jackpot) : WHEEL_PRIZES;
-    
-    const totalWeight = eligible.reduce((s, p) => s + p.weight, 0);
-    let rand = Math.random() * totalWeight;
-    
-    for (const prize of eligible) {
-        rand -= prize.weight;
-        if (rand <= 0) return prize;
-    }
-    return eligible[0];
-}
-
-function highlightWinningSegment() {
-    const segments = document.querySelectorAll('.wheel-segment-pro');
-    const prizeIndex = WHEEL_PRIZES.indexOf(wheelGameState.selectedPrize);
-    
-    segments.forEach((seg, idx) => {
-        if (idx === prizeIndex) {
-            seg.classList.add('winner');
-            seg.style.filter = 'brightness(1.8) drop-shadow(0 0 30px gold)';
-            seg.style.transform = seg.style.transform + ' scale(1.08)';
-            seg.style.zIndex = '15';
-        } else {
-            seg.style.filter = 'brightness(0.4) saturate(0.5)';
-            seg.style.opacity = '0.6';
-        }
-    });
-    
-    setTimeout(() => {
-        segments.forEach(seg => {
-            seg.classList.remove('winner');
-            seg.style.filter = '';
-            seg.style.opacity = '';
-            seg.style.transform = seg.style.transform.replace(' scale(1.08)', '');
-            seg.style.zIndex = '5';
-        });
-    }, 2500);
-}
-
-function awardWheelPrizePro(prize) {
-    userData.wheel.lastWin = { prize, timestamp: Date.now() };
-    userData.wheel.jackpotCounter++;
-    
-    let prizeText = '';
-    let winType = 'normal';
-    
-    if (prize.type === 'TON') {
-        userData.balances.TON += prize.amount;
-        userData.balance = userData.balances.TON;
-        userData.totalEarned += prize.amount;
-        addTransaction('wheel', prize.amount, { currency: 'TON' });
-        prizeText = `${prize.amount} TON`;
-        if (prize.amount >= 5) winType = 'big';
-        if (prize.amount >= 50) winType = 'jackpot';
-        
-    } else if (prize.type === 'USDT') {
-        userData.balances.USDT += prize.amount;
-        addTransaction('wheel', prize.amount, { currency: 'USDT' });
-        prizeText = `${prize.amount} USDT`;
-        if (prize.amount >= 10) winType = 'big';
-        if (prize.amount >= 100) winType = 'jackpot';
-        
-    } else if (prize.jackpot) {
-        const currency = prize.currency || 'TON';
-        if (currency === 'TON') {
-            userData.balances.TON += prize.amount;
-            userData.balance = userData.balances.TON;
-        } else {
-            userData.balances.USDT += prize.amount;
-        }
-        userData.totalEarned += prize.amount;
-        addTransaction('wheel', prize.amount, { currency, jackpot: true });
-        prizeText = `${prize.amount} ${currency} JACKPOT!`;
-        winType = 'jackpot';
-        userData.wheel.jackpotWon++;
-        createJackpotExplosion();
-        
-    } else if (prize.type === 'GOODLUCK') {
-        showToastPro('🍀 GOOD LUCK!', 'info');
-        hapticFeedback('light');
-        saveUserToCache();
-        updateUI();
-        updateWheelGameUI();
-        return;
-    }
-    
-    if (winType === 'jackpot') {
-        showWinPopupPro(prizeText, 'jackpot');
-    } else if (winType === 'big') {
-        showWinPopupPro(prizeText, 'big');
-    } else {
-        showWinPopupPro(prizeText, 'normal');
-    }
-    
-    showToastPro(`🎡 ${prizeText}!`, 'success');
-    hapticFeedback(winType === 'jackpot' ? 'heavy' : winType === 'big' ? 'medium' : 'light');
-    
-    saveUserToCache();
-    updateUI();
-    updateWheelGameUI();
-}
-
-function createJackpotExplosion() {
-    const container = document.querySelector('.wheel-game-container');
-    if (!container) return;
-    
-    const colors = ['#ffd700', '#ff8800', '#ff4444', '#00f2ff', '#ffffff'];
-    
-    for (let i = 0; i < 30; i++) {
-        const particle = document.createElement('div');
-        particle.style.cssText = `
-            position: absolute;
-            width: ${8 + Math.random() * 12}px;
-            height: ${8 + Math.random() * 12}px;
-            background: ${colors[Math.floor(Math.random() * colors.length)]};
-            border-radius: 50%;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 20px currentColor;
-            pointer-events: none;
-            z-index: 100;
-            animation: particleExplode 1s ease-out forwards;
-            --tx: ${(Math.random() - 0.5) * 400}px;
-            --ty: ${(Math.random() - 0.5) * 400}px;
-        `;
-        container.appendChild(particle);
-        setTimeout(() => particle.remove(), 1500);
-    }
-}
-
-async function spinWheelPro(isFree = false) {
-    if (wheelGameState.isSpinning) return;
-    
-    if (isFree) {
-        const now = Date.now();
-        const nextFree = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
-        if (now < nextFree) {
-            const left = nextFree - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            showToastPro(`⏰ Wait ${h}h ${m}m for free spin`, 'warning');
-            return;
-        }
-        userData.wheel.lastFreeSpin = now;
-    } else {
-        if (userData.wheel.purchasedSpins > 0) {
-            userData.wheel.purchasedSpins--;
-        } else if (userData.balances.TON >= CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
-            userData.balances.TON -= CONFIG.ECONOMY.WHEEL_SPIN_PRICE;
-            userData.balance = userData.balances.TON;
-        } else {
-            showToastPro(`❌ Need ${CONFIG.ECONOMY.WHEEL_SPIN_PRICE} TON`, 'error');
-            return;
-        }
-    }
-    
-    wheelGameState.isSpinning = true;
-    wheelGameState.spinStartTime = Date.now();
-    wheelGameState.spinDuration = 5500 + Math.random() * 1500;
-    wheelGameState.selectedPrize = null;
-    wheelGameState.phase = 'accelerating';
-    
-    document.querySelectorAll('.wheel-segment-pro').forEach(seg => {
-        seg.classList.remove('winner');
-        seg.style.filter = '';
-        seg.style.opacity = '';
-    });
-    
-    wheelGameState.animationId = requestAnimationFrame(animateWheelPro);
-    
-    userData.wheel.totalSpins++;
-    userData.wheel.spinHistory.push({ timestamp: Date.now(), isFree });
-    
-    saveUserToCache();
-    updateGameHeaderBalance();
-    updateWheelGameUI();
-    hapticFeedback('light');
-}
-
-function updateWheelGameUI() {
-    const spinsEl = document.getElementById('wheelGameSpins');
-    const jackpotEl = document.getElementById('wheelJackpotCounter');
-    const freeSpinEl = document.getElementById('wheelFreeSpin');
-    
-    if (spinsEl) spinsEl.textContent = userData.wheel.purchasedSpins || 0;
-    
-    if (jackpotEl) {
-        const current = userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY;
-        const total = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY;
-        jackpotEl.textContent = `${current}/${total}`;
-    }
-    
-    if (freeSpinEl) {
-        const now = Date.now();
-        const next = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
-        if (now < next) {
-            const left = next - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i><span>${h}h ${m}m</span>`;
-            freeSpinEl.disabled = true;
-        } else {
-            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i><span>FREE</span>`;
-            freeSpinEl.disabled = false;
-        }
-    }
-}
-
-function toggleWheelAutoSpin() {
-    const checkbox = document.getElementById('wheelPageAutoSpin');
-    if (checkbox) {
-        userData.wheel.autoSpin = checkbox.checked;
-        saveUserToCache();
-        
-        if (userData.wheel.autoSpin) {
-            startWheelAutoSpin();
-        } else {
-            stopWheelAutoSpin();
-        }
-    }
-}
-
-function startWheelAutoSpin() {
-    if (wheelAutoSpinTimer) clearInterval(wheelAutoSpinTimer);
-    
-    wheelAutoSpinTimer = setInterval(() => {
-        if (!userData.wheel.autoSpin) {
-            stopWheelAutoSpin();
-            return;
-        }
-        
-        if (userData.wheel.purchasedSpins > 0) {
-            spinWheelPro(false);
-        } else {
-            userData.wheel.autoSpin = false;
-            document.getElementById('wheelPageAutoSpin').checked = false;
-            stopWheelAutoSpin();
-            showToastPro('Auto Spin stopped: No spins left', 'info');
-        }
-    }, 4000);
-}
-
-function stopWheelAutoSpin() {
-    if (wheelAutoSpinTimer) {
-        clearInterval(wheelAutoSpinTimer);
-        wheelAutoSpinTimer = null;
-    }
-}
-
-// ====== 19. SLOTS GAME PRO (محسن) ======
-let slotsGameState = {
-    isSpinning: false,
-    reels: [],
-    animationId: null,
-    spinStartTime: 0
-};
-
-function initSlotsPro() {
-    const container = document.getElementById('slotReelsPro');
-    if (!container) return;
-    
-    container.innerHTML = '';
-    slotsGameState.reels = [];
-    
-    for (let i = 0; i < 3; i++) {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'slot-reel-wrapper-pro';
-        
-        const reel = document.createElement('div');
-        reel.className = 'slot-reel-pro';
-        reel.id = `reel-pro-${i}`;
-        
-        const strip = generateReelStrip();
-        slotsGameState.reels.push({
-            symbols: strip,
-            position: Math.floor(Math.random() * 50),
-            speed: 0,
-            stopping: false,
-            targetPosition: 0
-        });
-        
-        strip.forEach((item) => {
-            const symbol = document.createElement('div');
-            symbol.className = 'slot-symbol-pro';
-            symbol.textContent = item.symbol;
-            symbol.style.color = item.color;
-            reel.appendChild(symbol);
-        });
-        
-        wrapper.appendChild(reel);
-        container.appendChild(wrapper);
-        updateReelPositionPro(i);
-    }
-    
-    renderSlotsPayoutTable();
-}
-
-function generateReelStrip() {
-    const strip = [];
-    const totalWeight = SLOTS_SYMBOLS_DATA.reduce((s, item) => s + item.weight, 0);
-    
-    for (let i = 0; i < 100; i++) {
-        let random = Math.random() * totalWeight;
-        for (const item of SLOTS_SYMBOLS_DATA) {
-            random -= item.weight;
-            if (random <= 0) {
-                strip.push({ ...item });
-                break;
-            }
-        }
-    }
-    return strip;
-}
-
-function renderSlotsPayoutTable() {
-    const grid = document.getElementById('slotsPayoutGrid');
-    if (!grid) return;
-    
-    grid.innerHTML = SLOTS_SYMBOLS_DATA.map(item => `
-        <div class="payout-item">
-            <span class="symbol">${item.symbol}</span>
-            <span class="value">${item.value} ${item.type}</span>
-        </div>
-    `).join('');
-}
-
-function updateReelPositionPro(reelIndex) {
-    const reel = document.getElementById(`reel-pro-${reelIndex}`);
-    if (!reel) return;
-    
-    const symbolHeight = 110;
-    const position = slotsGameState.reels[reelIndex].position;
-    reel.style.transform = `translateY(-${position * symbolHeight}px)`;
-}
-
-function animateSlotsPro() {
-    if (!slotsGameState.isSpinning) return;
-    
-    const now = Date.now();
-    const elapsed = now - slotsGameState.spinStartTime;
-    let allStopped = true;
-    
-    for (let i = 0; i < 3; i++) {
-        const reel = slotsGameState.reels[i];
-        const reelWrapper = document.querySelectorAll('.slot-reel-wrapper-pro')[i];
-        
-        if (!reel.stopping) {
-            if (elapsed < 300) {
-                reel.speed = Math.min(reel.speed + 2, 30 + i * 5);
-            } else if (elapsed < 1500 + i * 400) {
-                reel.speed = 30 + i * 5;
-                if (reelWrapper) reelWrapper.classList.add('spinning');
-            } else {
-                reel.stopping = true;
-                const targetIndex = Math.floor(Math.random() * reel.symbols.length);
-                reel.targetPosition = targetIndex + Math.floor(reel.position / reel.symbols.length) * reel.symbols.length;
-            }
-            allStopped = false;
-        } else {
-            const distanceToTarget = reel.targetPosition - reel.position;
-            
-            if (Math.abs(distanceToTarget) < 0.3) {
-                reel.position = reel.targetPosition;
-                reel.speed = 0;
-                if (reelWrapper) {
-                    reelWrapper.classList.remove('spinning');
-                }
-                hapticFeedback(i === 2 ? 'medium' : 'light');
-            } else {
-                reel.speed *= 0.92;
-                if (reel.speed < 0.3) reel.speed = 0.3;
-                
-                const direction = distanceToTarget > 0 ? 1 : -1;
-                reel.position += reel.speed * direction * 0.15;
-                allStopped = false;
-            }
-        }
-        
-        if (reel.speed > 0 && !reel.stopping) {
-            reel.position += reel.speed * 0.1;
-            if (reel.position >= reel.symbols.length * 100) {
-                reel.position -= reel.symbols.length;
-            }
-        }
-        
-        updateReelPositionPro(i);
-    }
-    
-    if (allStopped && slotsGameState.isSpinning) {
-        slotsGameState.isSpinning = false;
-        cancelAnimationFrame(slotsGameState.animationId);
-        setTimeout(checkSlotsWinPro, 300);
-        return;
-    }
-    
-    slotsGameState.animationId = requestAnimationFrame(animateSlotsPro);
-}
-
-function checkSlotsWinPro() {
-    const visibleSymbols = [];
-    for (let i = 0; i < 3; i++) {
-        const reel = slotsGameState.reels[i];
-        const centerIndex = Math.floor(reel.position) % reel.symbols.length;
-        visibleSymbols.push(reel.symbols[centerIndex]);
-    }
-    
-    const allMatch = visibleSymbols[0].symbol === visibleSymbols[1].symbol && 
-                     visibleSymbols[1].symbol === visibleSymbols[2].symbol;
-    
-    if (allMatch) {
-        const winData = visibleSymbols[0];
-        const winAmount = winData.value;
-        
-        document.getElementById('slotsWinLine')?.classList.add('active');
-        document.getElementById('slotsWinAmount').textContent = winAmount.toFixed(2);
-        
-        if (winData.type === 'TON') {
-            userData.balances.TON += winAmount;
-            userData.balance = userData.balances.TON;
-        } else {
-            userData.balances.USDT += winAmount;
-        }
-        userData.totalEarned += winAmount;
-        
-        if (winData.jackpot) {
-            showWinPopupPro(`${winAmount} TON`, 'jackpot');
-            hapticFeedback('heavy');
-            createSlotsWinParticles();
-        } else if (winAmount >= 10) {
-            showWinPopupPro(`${winAmount} ${winData.type}`, 'big');
-            hapticFeedback('medium');
-        } else {
-            showWinPopupPro(`${winAmount} ${winData.type}`, 'normal');
-            hapticFeedback('light');
-        }
-        
-        highlightWinningSymbolsPro();
-        addTransaction('slots', winAmount, { currency: winData.type });
-        showToastPro(`🎰 Won ${winAmount} ${winData.type}!`, 'success');
-    } else {
-        showToastPro('🎰 Try again!', 'info');
-    }
-    
-    saveUserToCache();
-    updateUI();
-}
-
-function highlightWinningSymbolsPro() {
-    for (let i = 0; i < 3; i++) {
-        const reel = document.getElementById(`reel-pro-${i}`);
-        if (!reel) continue;
-        
-        const symbols = reel.querySelectorAll('.slot-symbol-pro');
-        const centerIndex = Math.floor(slotsGameState.reels[i].position) % slotsGameState.reels[i].symbols.length;
-        
-        symbols.forEach((sym, idx) => {
-            if (idx === centerIndex) {
-                sym.classList.add('winning');
-                setTimeout(() => sym.classList.remove('winning'), 2000);
-            }
-        });
-    }
-}
-
-function createSlotsWinParticles() {
-    const container = document.querySelector('.slots-game-container');
-    if (!container) return;
-    
-    for (let i = 0; i < 20; i++) {
-        const particle = document.createElement('div');
-        particle.style.cssText = `
-            position: absolute;
-            width: ${6 + Math.random() * 10}px;
-            height: ${6 + Math.random() * 10}px;
-            background: ${['#ffdd00', '#ff6600', '#00f2ff', '#ff00ff'][Math.floor(Math.random() * 4)]};
-            border-radius: 50%;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 15px currentColor;
-            pointer-events: none;
-            z-index: 100;
-            animation: particleExplode 1s ease-out forwards;
-            --tx: ${(Math.random() - 0.5) * 200}px;
-            --ty: ${(Math.random() - 0.5) * 200}px;
-        `;
-        container.appendChild(particle);
-        setTimeout(() => particle.remove(), 1500);
-    }
-}
-
-async function spinSlots(isFree = false, isTurbo = false) {
-    if (slotsGameState.isSpinning) return;
-    
-    const price = isTurbo ? CONFIG.ECONOMY.SLOTS_TURBO_PRICE : CONFIG.ECONOMY.SLOTS_SPIN_PRICE;
-    
-    if (isFree) {
-        const now = Date.now();
-        if (now < userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL) {
-            const left = (userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL) - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            showToastPro(`⏰ Wait ${h}h ${m}m`, 'warning');
-            return;
-        }
-        userData.slots.lastFreeSpin = now;
-    } else {
-        if (userData.slots.purchasedSpins > 0) {
-            userData.slots.purchasedSpins--;
-        } else if (userData.balances.TON >= price) {
-            userData.balances.TON -= price;
-            userData.balance = userData.balances.TON;
-        } else {
-            showToastPro(`❌ Need ${price} TON`, 'error');
-            return;
-        }
-    }
-    
-    slotsGameState.isSpinning = true;
-    slotsGameState.spinStartTime = Date.now();
-    
-    for (let i = 0; i < 3; i++) {
-        slotsGameState.reels[i].stopping = false;
-        slotsGameState.reels[i].speed = 5;
-        slotsGameState.reels[i].targetPosition = 0;
-    }
-    
-    document.getElementById('slotsWinLine')?.classList.remove('active');
-    document.getElementById('slotsWinAmount').textContent = '0.00';
-    document.getElementById('slotsWinMessage')?.classList.add('hidden');
-    
-    slotsGameState.animationId = requestAnimationFrame(animateSlotsPro);
-    
-    userData.slots.totalSpins++;
-    userData.slots.spinHistory.push({ timestamp: Date.now(), isFree, isTurbo });
-    
-    saveUserToCache();
-    updateGameHeaderBalance();
-    updateSlotsGameUI();
-}
-
-function updateSlotsGameUI() {
-    const spinsEl = document.getElementById('slotsGameSpins');
-    const freeSpinEl = document.getElementById('slotsFreeSpin');
-    
-    if (spinsEl) spinsEl.textContent = userData.slots.purchasedSpins || 0;
-    
-    if (freeSpinEl) {
-        const now = Date.now();
-        const next = userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
-        if (now < next) {
-            const left = next - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i><span>${h}h ${m}m</span>`;
-            freeSpinEl.disabled = true;
-        } else {
-            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i><span>FREE</span>`;
-            freeSpinEl.disabled = false;
-        }
-    }
-}
-
-function toggleSlotsAutoSpin() {
-    const checkbox = document.getElementById('slotsPageAutoSpin');
-    if (checkbox) {
-        userData.slots.autoSpin = checkbox.checked;
-        saveUserToCache();
-        
-        if (userData.slots.autoSpin) {
-            startSlotsAutoSpin();
-        } else {
-            stopSlotsAutoSpin();
-        }
-    }
-}
-
-function startSlotsAutoSpin() {
-    if (slotsAutoSpinTimer) clearInterval(slotsAutoSpinTimer);
-    
-    slotsAutoSpinTimer = setInterval(() => {
-        if (!userData.slots.autoSpin) {
-            stopSlotsAutoSpin();
-            return;
-        }
-        
-        if (userData.slots.purchasedSpins > 0) {
-            spinSlots(false, false);
-        } else {
-            userData.slots.autoSpin = false;
-            document.getElementById('slotsPageAutoSpin').checked = false;
-            stopSlotsAutoSpin();
-            showToastPro('Auto Spin stopped: No spins left', 'info');
-        }
-    }, 3000);
-}
-
-function stopSlotsAutoSpin() {
-    if (slotsAutoSpinTimer) {
-        clearInterval(slotsAutoSpinTimer);
-        slotsAutoSpinTimer = null;
-    }
-}
-
-// ====== 20. WIN POPUP PRO ======
-function showWinPopupPro(prize, type = 'normal') {
-    const existing = document.querySelector('.win-popup-pro');
-    if (existing) existing.remove();
-    
-    const popup = document.createElement('div');
-    popup.className = `win-popup-pro ${type}`;
-    
-    let icon = '🎉';
-    let title = 'YOU WON!';
-    
-    if (type === 'big') {
-        icon = '🌟🌟';
-        title = 'BIG WIN!';
-    } else if (type === 'jackpot') {
-        icon = '🎰🎰🎰';
-        title = 'JACKPOT!';
-    }
-    
-    popup.innerHTML = `
-        <div class="win-confetti"></div>
-        <div class="win-icon">${icon}</div>
-        <div class="win-title">${title}</div>
-        <div class="win-amount">${prize}</div>
-    `;
-    
-    document.body.appendChild(popup);
-    
-    setTimeout(() => popup.classList.add('show'), 10);
-    
-    setTimeout(() => {
-        popup.classList.remove('show');
-        setTimeout(() => popup.remove(), 400);
-    }, 3000);
-}
-
-// ====== 21. LOAD USER DATA (محفوظ) ======
-async function loadUserData(force = false) {
-    try {
-        console.log("📂 Loading user data for:", userId);
-        
-        const localData = localStorage.getItem(CACHE_KEYS.USER);
-        if (localData) {
-            try {
-                const parsed = JSON.parse(localData);
-                Object.assign(userData, parsed);
-                userData.balance = userData.balances.TON;
-                console.log("📦 Using localStorage data immediately");
-                updateUI();
-            } catch (e) {}
-        }
-        
-        if (!userData.referralCode) {
-            userData.referralCode = generateReferralCode();
-        }
-        
-        if (db && !force) {
-            try {
-                const doc = await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).get();
-                
-                if (doc.exists) {
-                    const fbData = doc.data();
-                    Object.assign(userData, fbData);
-                    userData.balance = userData.balances.TON;
-                    
-                    const localTxs = loadLocalTransactions();
-                    const fbTxs = fbData.transactions || [];
-                    const txMap = new Map();
-                    [...localTxs, ...fbTxs].forEach(tx => {
-                        const key = tx.firebaseId || `${tx.timestamp}_${tx.type}`;
-                        txMap.set(key, tx);
-                    });
-                    userData.transactions = Array.from(txMap.values());
-                    saveLocalTransactions(userData.transactions);
-                    
-                    const localNotes = loadLocalNotifications();
-                    const fbNotes = fbData.notifications || [];
-                    const noteMap = new Map();
-                    [...localNotes, ...fbNotes].forEach(n => noteMap.set(n.id, n));
-                    userData.notifications = Array.from(noteMap.values());
-                    saveLocalNotifications(userData.notifications);
-                    
-                    saveUserToCache();
-                    lastUserLoadTime = Date.now();
-                    updateUI();
-                    console.log("✅ Updated from Firebase");
-                } else {
-                    if (!localData) {
-                        userData.referralCode = generateReferralCode();
-                        userData.createdAt = Date.now();
-                        await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).set({
-                            ...userData,
-                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                        saveUserToCache();
-                    }
-                }
-            } catch (e) {
-                console.error('Firebase error, using cached data only:', e);
-            }
-        }
-        
-        if (hasReferralCode() && !userData.referredBy) await processReferral();
-        
-        updateNotificationBadge();
-        checkAdminAndAddCrown();
-        checkDailyLogin();
-        
-        updateUserDisplay();
-        
-    } catch (error) {
-        console.error("❌ Error loading user data:", error);
-    }
-}
-
-function updateUserDisplay() {
-    const usernameEl = document.getElementById('username');
-    const userIdEl = document.getElementById('userId');
-    
-    if (usernameEl) {
-        usernameEl.textContent = tg?.initDataUnsafe?.user?.first_name || 
-                                userFirstName || 
-                                'Crypto Miner';
-    }
-    
-    if (userIdEl) {
-        if (tg?.initDataUnsafe?.user?.username) {
-            userIdEl.textContent = `@${tg.initDataUnsafe.user.username}`;
-        } else {
-            const shortId = userId.slice(0, 8);
-            userIdEl.textContent = `ID: ${shortId}`;
-        }
-    }
-}
-
-// ====== 22. REFERRAL SYSTEM (محفوظ) ======
-function generateReferralCode() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    return userId.slice(-4) + Array.from({length:6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
-}
-
-function getReferralLink() {
-    const code = userData.referralCode || userId;
-    return `${CONFIG.APP.BASE_URL}?${CONFIG.APP.REFERRAL_PARAM}=${code}`;
-}
-
-function hasReferralCode() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return !!(urlParams.get(CONFIG.APP.REFERRAL_PARAM) || tg?.initDataUnsafe?.start_param);
-}
-
-async function processReferral() {
-    const processed = localStorage.getItem(CACHE_KEYS.REFERRAL_PROCESSED);
-    if (processed) return;
-    
-    const urlParams = new URLSearchParams(window.location.search);
-    let referralCode = urlParams.get(CONFIG.APP.REFERRAL_PARAM) || tg?.initDataUnsafe?.start_param;
-    
-    if (!referralCode || referralCode === userData.referralCode || userData.referredBy) return;
-    
-    localStorage.setItem(CACHE_KEYS.REFERRAL_PROCESSED, referralCode);
-    
-    if (!db) {
-        userData.referredBy = referralCode;
-        userData.balances.TON += CONFIG.ECONOMY.REFERRAL_BONUS;
-        userData.balance = userData.balances.TON;
-        userData.totalEarned += CONFIG.ECONOMY.REFERRAL_BONUS;
-        userData.referralEarnings += CONFIG.ECONOMY.REFERRAL_BONUS;
-        saveUserToCache();
-        showToast(t('notif.welcomeBonus'), 'success');
-        return;
-    }
-    
-    try {
-        const referrerQuery = await db.collection(CONFIG.COLLECTIONS.USERS).where('referralCode', '==', referralCode).limit(1).get();
-        if (!referrerQuery.empty) {
-            const referrerDoc = referrerQuery.docs[0];
-            const referrerId = referrerDoc.id;
-            const referrerData = referrerDoc.data();
-            
-            if (referrerId === userId) return;
-            if (referrerData.referrals?.includes(userId)) return;
-            
-            await db.collection(CONFIG.COLLECTIONS.USERS).doc(referrerId).update({
-                referrals: [...(referrerData.referrals || []), userId],
-                referralCount: (referrerData.referralCount || 0) + 1,
-                'balances.TON': firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS),
-                referralEarnings: firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS)
-            });
-            
-            userData.referredBy = referralCode;
-            userData.balances.TON += CONFIG.ECONOMY.REFERRAL_BONUS;
-            userData.balance = userData.balances.TON;
-            userData.totalEarned += CONFIG.ECONOMY.REFERRAL_BONUS;
-            userData.referralEarnings += CONFIG.ECONOMY.REFERRAL_BONUS;
-            
-            await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).update({
-                referredBy: referralCode,
-                'balances.TON': userData.balances.TON
-            });
-            
-            saveUserToCache();
-            showToast(t('notif.welcomeBonus'), 'success');
-            await addNotification(referrerId, t('notif.referralBonus'), 'success');
-        }
-    } catch (e) {
-        localStorage.removeItem(CACHE_KEYS.REFERRAL_PROCESSED);
-    }
-}
-
-async function processReferralMiningBonus(referralId, miningAmount) {
-    if (!db || !userData.referrals?.includes(referralId)) return;
-    const bonus = miningAmount * CONFIG.ECONOMY.REFERRAL_PERCENT;
-    userData.referralMiningTrack = userData.referralMiningTrack || {};
-    userData.referralMiningTrack[referralId] = (userData.referralMiningTrack[referralId] || 0) + miningAmount;
-    userData.balances.TON += bonus;
-    userData.balance = userData.balances.TON;
-    userData.totalEarned += bonus;
-    userData.referralEarnings += bonus;
-    saveUserToCache();
-    
-    try {
-        await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).update({
-            'balances.TON': userData.balances.TON,
-            totalEarned: userData.totalEarned,
-            referralEarnings: userData.referralEarnings
-        });
-    } catch (e) {}
-    
-    addLocalNotification(t('notif.referralMiningBonus', { amount: bonus.toFixed(4) }), 'success');
-}
-
-// ====== 23. REFERRAL MILESTONES (محفوظ) ======
-async function checkReferralMilestones() {
-    if (!userData.referralMilestonesClaimed) userData.referralMilestonesClaimed = [];
-    
-    for (const milestone of REFERRAL_MILESTONES) {
-        if (userData.referralMilestonesClaimed.includes(milestone.referrals)) continue;
-        if (userData.referralCount >= milestone.referrals) {
-            userData.balances.USDT += milestone.reward;
-            userData.referralMilestonesClaimed.push(milestone.referrals);
-            
-            addTransaction('referral_bonus', milestone.reward, { 
-                currency: 'USDT', 
-                details: `${milestone.referrals} referrals milestone` 
-            });
-            
-            addLocalNotification(`🏆 You reached ${milestone.referrals} referrals! Earned ${milestone.reward} USDT!`, 'success');
-            
-            if (db) {
-                await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).update({
-                    'balances.USDT': userData.balances.USDT,
-                    referralMilestonesClaimed: userData.referralMilestonesClaimed
-                }).catch(console.error);
-            }
-        }
-    }
-    saveUserToCache();
-}
-
-// ====== 24. DAILY LOGIN BONUS (محفوظ) ======
-function checkDailyLogin() {
-    const today = new Date().toDateString();
-    if (!userData.dailyLogin) userData.dailyLogin = { lastLogin: null, streak: 0 };
-    if (userData.dailyLogin.lastLogin !== today) {
-        const yesterday = new Date(Date.now() - 86400000).toDateString();
-        if (userData.dailyLogin.lastLogin === yesterday) {
-            userData.dailyLogin.streak++;
-        } else {
-            userData.dailyLogin.streak = 1;
-        }
-        userData.dailyLogin.lastLogin = today;
-        
-        const bonusIndex = Math.min(userData.dailyLogin.streak - 1, CONFIG.ECONOMY.DAILY_LOGIN_BONUS.length - 1);
-        const bonus = CONFIG.ECONOMY.DAILY_LOGIN_BONUS[bonusIndex] || 0.1;
-        
-        userData.balances.TON += bonus;
-        userData.balance = userData.balances.TON;
-        userData.totalEarned += bonus;
-        
-        addTransaction('daily_bonus', bonus, { currency: 'TON', day: userData.dailyLogin.streak });
-        showToast(`🔥 Day ${userData.dailyLogin.streak} bonus: +${bonus} TON!`, 'success');
-        saveUserToCache();
-    }
-}
-
-// ====== 25. NOTIFICATION SYSTEM (محفوظ) ======
-let unreadCount = 0;
-
-function addLocalNotification(message, type = 'info') {
-    const notification = {
-        id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
-        message, type, read: false, timestamp: new Date().toISOString()
-    };
-    
-    if (!userData.notifications) userData.notifications = [];
-    userData.notifications.unshift(notification);
-    
-    if (userData.notifications.length > 50) userData.notifications = userData.notifications.slice(0, 50);
-    
-    saveLocalNotifications(userData.notifications);
-    updateNotificationBadge();
-    showFloatingToast(message, type);
-    return notification;
-}
-
-async function addNotification(targetUserId, message, type = 'info') {
-    if (targetUserId === userId) addLocalNotification(message, type);
-    
-    if (db && targetUserId !== userId) {
-        try {
-            await db.collection(CONFIG.COLLECTIONS.USERS).doc(targetUserId).update({
-                notifications: firebase.firestore.FieldValue.arrayUnion({
-                    id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
-                    message, type, read: false, timestamp: new Date().toISOString()
-                })
-            });
-        } catch (e) {}
-    }
-}
-
-function updateNotificationBadge() {
-    const badge = document.getElementById('notificationBadge');
-    if (badge && userData.notifications) {
-        unreadCount = userData.notifications.filter(n => !n.read).length;
-        badge.textContent = unreadCount;
-        badge.style.display = unreadCount > 0 ? 'flex' : 'none';
-    }
-}
-
-function markNotificationRead(id) {
-    const n = userData.notifications?.find(n => n.id === id);
-    if (n && !n.read) {
-        n.read = true;
-        saveLocalNotifications(userData.notifications);
-        updateNotificationBadge();
-        renderNotifications();
-    }
-}
-
-function clearReadNotifications() {
-    if (!userData.notifications?.length) {
-        showToast('No notifications', 'info');
-        return;
-    }
-    
-    const readCount = userData.notifications.filter(n => n.read).length;
-    const unreadCount = userData.notifications.filter(n => !n.read).length;
-    
-    if (readCount === 0) {
-        showToast('No read notifications', 'info');
-        return;
-    }
-    
-    if (confirm(`Clear ${readCount} read notification(s)? ${unreadCount} unread will remain.`)) {
-        userData.notifications = userData.notifications.filter(n => !n.read);
-        saveLocalNotifications(userData.notifications);
-        updateNotificationBadge();
-        renderNotifications();
-        showToast(`Cleared ${readCount} notifications`, 'success');
-    }
-}
-
-function clearAllNotifications() {
-    if (!userData.notifications?.length) {
-        showToast('No notifications', 'info');
-        return;
-    }
-    
-    const unreadCount = userData.notifications.filter(n => !n.read).length;
-    
-    if (unreadCount > 0) {
-        if (!confirm(`Warning: You have ${unreadCount} unread notifications. Delete all?`)) return;
-    } else {
-        if (!confirm('Delete all notifications?')) return;
-    }
-    
-    userData.notifications = [];
-    saveLocalNotifications([]);
-    updateNotificationBadge();
-    renderNotifications();
-    showToast('All notifications cleared', 'success');
-}
-
-function renderNotifications() {
-    const list = document.getElementById('notificationsList');
-    if (!list) return;
-    
-    if (!userData.notifications?.length) {
-        list.innerHTML = `<div class="empty-state"><i class="fa-regular fa-bell-slash"></i><p>No notifications</p></div>`;
-        return;
-    }
-    
-    list.innerHTML = userData.notifications.map(n => {
-        const d = new Date(n.timestamp);
-        const unreadClass = n.read ? '' : 'unread';
-        let icon = n.type === 'success' ? 'fa-circle-check' : 'fa-circle-info';
-        
-        return `<div class="notification-item ${unreadClass}" onclick="markNotificationRead('${n.id}')">
-            <div class="notification-header">
-                <span class="notification-title"><i class="fa-regular ${icon}"></i> Notification</span>
-                <span class="notification-time">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</span>
-            </div>
-            <div class="notification-message">${n.message}</div>
-        </div>`;
-    }).join('');
-}
-
-function showNotifications() {
-    const modal = document.getElementById('notificationsModal');
-    if (modal) {
-        modal.classList.add('show');
-        renderNotifications();
-    }
-}
-
-// ====== 26. FLOATING NOTIFICATIONS (محفوظ) ======
-let floatingTimeouts = [];
-
-function showFloatingToast(message, type = 'info') {
-    const toast = document.getElementById('floatingNotification');
-    if (!toast) return;
-    toast.textContent = message;
-    toast.className = 'floating-notification';
-    toast.classList.add(type, 'show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
-}
-
-function startFloatingNotifications() {
-    const messages = [
-        "🔥 User just won 50 TON on Wheel!",
-        "🎰 Someone hit JACKPOT on Slots!",
-        "⚡ Turbo v3 rented",
-        "💰 Withdrawal of 5 TON approved",
-        "🎡 Someone won 100 TON on Lucky Wheel!",
-        "🤖 Auto Miner bought",
-        "🎰 3️⃣ 7️⃣ 7️⃣ Big win 10 TON!",
-        "🎡 Wheel Jackpot 100 TON!",
-        "💎 New user joined with referral"
-    ];
-    
-    function showNext() {
-        const randomMsg = messages[Math.floor(Math.random() * messages.length)];
-        showFloatingToast(randomMsg, 'info');
-        floatingTimeouts.push(setTimeout(showNext, 8000 + Math.random() * 7000));
-    }
-    setTimeout(showNext, 3000);
-}
-
-function stopFloatingNotifications() {
-    floatingTimeouts.forEach(clearTimeout);
-    floatingTimeouts = [];
-}
-
-// ====== 27. WELCOME STICKER (محفوظ) ======
-const WELCOME_STICKERS = ['🤝', '🫣', '🥰', '🥳', '💲', '💰', '💸', '💵', '🤪', '😱', '😎', '🤑', '💯', '💖', '✨', '🌟', '⭐', '🔥', '⚡', '💎', '🎁', '🎈', '🎉', '👑', '🚀', '💫'];
-let lastStickerTime = 0;
-const STICKER_COOLDOWN = 12 * 60 * 1000;
-
-function showRandomSticker() {
-    const now = Date.now();
-    if (now - lastStickerTime < STICKER_COOLDOWN) return;
-    
-    const stickerEl = document.getElementById('welcomeSticker');
-    if (!stickerEl) return;
-    
-    stickerEl.textContent = WELCOME_STICKERS[Math.floor(Math.random() * WELCOME_STICKERS.length)];
-    stickerEl.classList.remove('sticker-pop', 'sticker-shake');
-    void stickerEl.offsetWidth;
-    stickerEl.classList.add('sticker-pop');
-    
-    setTimeout(() => stickerEl.classList.add('sticker-shake'), 200);
-    setTimeout(() => {
-        stickerEl.classList.remove('sticker-pop', 'sticker-shake');
-        setTimeout(() => stickerEl.textContent = '', 300);
-    }, 3000);
-    
-    lastStickerTime = now;
-}
-
-// ====== 28. PRICES (محفوظ) ======
-let livePrices = {};
-
-async function loadPrices(force = false) {
-    const now = Date.now();
-    const cached = localStorage.getItem(CACHE_KEYS.PRICES);
-    
-    if (!force && cached && (now - lastPricesLoadTime) < CONFIG.CACHE.PRICES_TTL) {
-        const { prices, timestamp } = JSON.parse(cached);
-        livePrices = prices;
-        lastPricesLoadTime = timestamp;
-        updatePrices();
-        return;
-    }
-    
-    try {
-        const ids = Object.values(CONFIG.CRYPTO_IDS).join(',');
-        const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`);
-        const data = await response.json();
-        
-        for (const [symbol, id] of Object.entries(CONFIG.CRYPTO_IDS)) {
-            if (data[id]) {
-                livePrices[symbol] = { price: data[id].usd, change: data[id].usd_24h_change || 0 };
-            }
-        }
-        
-        lastPricesLoadTime = now;
-        localStorage.setItem(CACHE_KEYS.PRICES, JSON.stringify({ prices: livePrices, timestamp: now }));
-        updatePrices();
-    } catch (error) {
-        console.error("Price fetch error:", error);
-    }
-}
-
-function updatePrices() {
-    renderAssets();
-    updateTotalBalance();
-}
-
-function refreshPrices() {
-    animateElement('.refresh-btn', 'pop');
-    loadPrices(true);
-}
-
-// ====== 29. UTILITIES (محفوظ) ======
+// ====== 17. UTILITIES ======
 function formatAddress(addr) { return addr?.length > 10 ? addr.slice(0,6) + '...' + addr.slice(-4) : addr || ''; }
 function formatTON(amount) { return amount.toFixed(4); }
 function formatNumber(num) {
@@ -2341,40 +965,6 @@ function validateTransactionHash(txHash, currency) {
     if (network === 'bsc' || network === 'erc20') return txHash.startsWith('0x') && txHash.length === 66;
     if (network === 'solana') return txHash.length >= 64 && txHash.length <= 88 && !txHash.startsWith('0x');
     return txHash.length > 10;
-}
-
-function getTimeUntilNextClaim() {
-    const machine = getActiveMachine();
-    return Math.max(0, machine.interval - (Date.now() - userData.lastClaim));
-}
-
-function getClaimProgress() {
-    const machine = getActiveMachine();
-    return Math.min((Date.now() - userData.lastClaim) / machine.interval * 100, 100);
-}
-
-function getActiveMachine() { return MACHINES.find(m => m.id === userData.activeMachine) || MACHINES[0]; }
-function getRemainingRentalTime() { return userData.activeMachine === 'm1' ? Infinity : Math.max(0, userData.machineExpiry - Date.now()); }
-function isMachineExpired() { return userData.activeMachine !== 'm1' && userData.machineExpiry < Date.now(); }
-
-function updateStreak() {
-    const today = new Date().toDateString();
-    if (userData.lastClaimDate === today) return userData.streak;
-    
-    const yesterday = new Date(Date.now() - 86400000).toDateString();
-    const newStreak = userData.lastClaimDate === yesterday ? userData.streak + 1 : 1;
-    
-    userData.streak = newStreak;
-    userData.lastClaimDate = today;
-    if (newStreak > userData.longestStreak) userData.longestStreak = newStreak;
-    return newStreak;
-}
-
-function getStreakBonus() {
-    if (userData.streak >= 30) return CONFIG.ECONOMY.STREAK_BONUS[30];
-    if (userData.streak >= 7) return CONFIG.ECONOMY.STREAK_BONUS[7];
-    if (userData.streak >= 3) return CONFIG.ECONOMY.STREAK_BONUS[3];
-    return 1.0;
 }
 
 function randomId() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 9); }
@@ -2412,7 +1002,7 @@ function hapticFeedback(type = 'light') {
     }
 }
 
-// ====== 30. MINING MANAGER (محفوظ) ======
+// ====== 18. MINING MANAGER ======
 let miningTimer = null, autoClickerTimer = null;
 
 function startMining() {
@@ -2567,7 +1157,41 @@ function addTransaction(type, amount, details = {}) {
     return tx;
 }
 
-// ====== 31. AUTO CLICKER (محفوظ) ======
+function getTimeUntilNextClaim() {
+    const machine = getActiveMachine();
+    return Math.max(0, machine.interval - (Date.now() - userData.lastClaim));
+}
+
+function getClaimProgress() {
+    const machine = getActiveMachine();
+    return Math.min((Date.now() - userData.lastClaim) / machine.interval * 100, 100);
+}
+
+function getActiveMachine() { return MACHINES.find(m => m.id === userData.activeMachine) || MACHINES[0]; }
+function getRemainingRentalTime() { return userData.activeMachine === 'm1' ? Infinity : Math.max(0, userData.machineExpiry - Date.now()); }
+function isMachineExpired() { return userData.activeMachine !== 'm1' && userData.machineExpiry < Date.now(); }
+
+function updateStreak() {
+    const today = new Date().toDateString();
+    if (userData.lastClaimDate === today) return userData.streak;
+    
+    const yesterday = new Date(Date.now() - 86400000).toDateString();
+    const newStreak = userData.lastClaimDate === yesterday ? userData.streak + 1 : 1;
+    
+    userData.streak = newStreak;
+    userData.lastClaimDate = today;
+    if (newStreak > userData.longestStreak) userData.longestStreak = newStreak;
+    return newStreak;
+}
+
+function getStreakBonus() {
+    if (userData.streak >= 30) return CONFIG.ECONOMY.STREAK_BONUS[30];
+    if (userData.streak >= 7) return CONFIG.ECONOMY.STREAK_BONUS[7];
+    if (userData.streak >= 3) return CONFIG.ECONOMY.STREAK_BONUS[3];
+    return 1.0;
+}
+
+// ====== 19. AUTO CLICKER ======
 function startAutoClicker() {
     if (autoClickerTimer) clearInterval(autoClickerTimer);
     autoClickerTimer = setInterval(async () => {
@@ -2609,7 +1233,7 @@ function buyAutoClicker() {
     updateUI();
 }
 
-// ====== 32. TON CONNECT (محفوظ) ======
+// ====== 20. TON CONNECT ======
 let tonConnectUI = null, tonWallet = null;
 
 async function initTonConnect() {
@@ -2693,7 +1317,7 @@ async function connectWallet() {
 
 async function disconnectWallet() { if (tonConnectUI) { await tonConnectUI.disconnect(); showToast('Wallet disconnected', 'info'); } }
 
-// ====== 33. UI UPDATE (محفوظ) ======
+// ====== 21. UI UPDATE ======
 function updateUI() {
     updateBalance();
     updateMiningStats();
@@ -2720,9 +1344,6 @@ function updateBalance() {
     const totalUsd = calculateTotalUsd();
     if (profileUsd) profileUsd.textContent = '≈ $' + totalUsd.toFixed(2);
     if (modalUserBalance) modalUserBalance.textContent = formatTON(userData.balances.TON) + ' TON';
-    
-    const gameBalance = document.getElementById('gameHeaderBalance');
-    if (gameBalance) gameBalance.textContent = formatTON(userData.balances.TON) + ' TON';
 }
 
 function calculateTotalUsd() {
@@ -2883,7 +1504,7 @@ function updateAutoClickerUI() {
     }
 }
 
-// ====== 34. WIN POPUP (للصفحات الرئيسية - محفوظ) ======
+// ====== 22. WIN POPUP ======
 function showWinPopup(prize, type = 'normal') {
     const existing = document.querySelector('.win-popup');
     if (existing) existing.remove();
@@ -2929,7 +1550,7 @@ function showWinPopup(prize, type = 'normal') {
     }, 2500);
 }
 
-// ====== 35. MARKET FUNCTIONS (محفوظ) ======
+// ====== 23. MARKET FUNCTIONS ======
 function renderMarket() {
     const showcase = document.getElementById('machinesShowcase');
     if (!showcase) return;
@@ -2972,7 +1593,7 @@ function checkRequirements(m) {
     return true;
 }
 
-// ====== 36. PAYMENT SYSTEM (محفوظ) ======
+// ====== 24. PAYMENT SYSTEM ======
 let currentPaymentMethod = 'balance', currentPayment = null;
 
 function switchPaymentMethod(method) {
@@ -3087,7 +1708,7 @@ async function confirmWalletPayment() {
     } catch (e) { showToast('Payment failed', 'error'); }
 }
 
-// ====== 37. SWAP SYSTEM (محفوظ) ======
+// ====== 25. SWAP SYSTEM ======
 let swapMode = 'from', swapFromCurrency = 'TON', swapToCurrency = 'USDT';
 
 function showSwapModal() {
@@ -3197,7 +1818,7 @@ function confirmSwap() {
     renderAssets();
 }
 
-// ====== 38. DEPOSIT FUNCTIONS (محفوظ) ======
+// ====== 26. DEPOSIT FUNCTIONS ======
 let selectedDepositCurrency = 'TON';
 
 function showDepositModal() {
@@ -3347,7 +1968,7 @@ async function submitDeposit() {
     addTransaction('deposit', amt, { currency: cur, txHash: hash, status: 'pending' });
 }
 
-// ====== 39. WITHDRAW FUNCTIONS (محفوظ) ======
+// ====== 27. WITHDRAW FUNCTIONS ======
 let selectedWithdrawNetwork = 'BEP20';
 
 function showWithdrawModal() {
@@ -3535,7 +2156,7 @@ async function submitWithdraw() {
     addTransaction('withdraw', amt, { currency: 'USDT', address: addr, network: netValue, fee, feeCurrency, status: 'pending' });
 }
 
-// ====== 40. HISTORY FUNCTIONS (محفوظ) ======
+// ====== 28. HISTORY FUNCTIONS ======
 let currentHistoryFilter = 'all';
 
 function showHistory() {
@@ -3692,7 +2313,7 @@ function refreshHistory() {
     checkPendingTransactions().then(() => renderHistory(currentHistoryFilter)); 
 }
 
-// ====== 41. LEADERBOARD (محفوظ) ======
+// ====== 29. LEADERBOARD ======
 let leaderboardCache = { data: null, timestamp: 0 };
 
 async function updateLeaderboard() {
@@ -3750,9 +2371,7 @@ function renderLeaderboard(data) {
     el.innerHTML = html;
 }
 
-// ====== 42. REFERRAL DETAILS (محفوظ) ======
-function showReferralDetails() { showPage('profile'); }
-
+// ====== 30. REFERRAL MILESTONES ======
 function renderReferralMilestones() {
     const container = document.getElementById('referralMilestonesContainer');
     if (!container) return;
@@ -3788,7 +2407,7 @@ function copyReferralLink() {
     showToast('Referral link copied', 'success');
 }
 
-// ====== 43. CHART (محفوظ) ======
+// ====== 31. CHART ======
 function updateChart() {
     const chart = document.getElementById('chartBars');
     if (!chart) return;
@@ -3813,7 +2432,7 @@ function updateChart() {
     ).join('');
 }
 
-// ====== 44. UPDATE WHEEL UI (محفوظ) ======
+// ====== 32. UPDATE WHEEL UI ======
 function updateWheelUI() {
     const spinsLeftEl = document.getElementById('wheelSpinsLeft');
     const freeSpinEl = document.getElementById('wheelFreeSpin');
@@ -3871,7 +2490,7 @@ function updateWheelUI() {
     }
 }
 
-// ====== 45. UPDATE SLOTS UI (محفوظ) ======
+// ====== 33. UPDATE SLOTS UI ======
 function updateSlotsUI() {
     const freeSpinEl = document.getElementById('slotsFreeSpin');
     const purchasedSpinsEl = document.getElementById('slotsModalPurchasedSpins');
@@ -3907,7 +2526,7 @@ function updateSlotsUI() {
     }
 }
 
-// ====== 46. UPDATE PURCHASED SPINS (محفوظ) ======
+// ====== 34. UPDATE PURCHASED SPINS ======
 function updatePurchasedSpinsDisplay() {
     const wheelSpins = document.getElementById('wheelPurchasedSpins');
     const wheelModalSpins = document.getElementById('wheelModalPurchasedSpins');
@@ -3930,7 +2549,7 @@ function updatePurchasedSpinsDisplay() {
     }
 }
 
-// ====== 47. WHEEL PACKS (محفوظ) ======
+// ====== 35. WHEEL PACKS ======
 async function buyWheelPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -3988,7 +2607,7 @@ async function buyWheelPack(pack) {
     }
 }
 
-// ====== 48. SLOTS PACKS (محفوظ) ======
+// ====== 36. SLOTS PACKS ======
 async function buySlotsPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -4046,7 +2665,7 @@ async function buySlotsPack(pack) {
     }
 }
 
-// ====== 49. SAVE TO FIREBASE (محفوظ) ======
+// ====== 37. SAVE TO FIREBASE ======
 async function saveToFirebase() {
     if (!db) return;
     try {
@@ -4077,7 +2696,7 @@ async function saveToFirebase() {
     } catch (e) {}
 }
 
-// ====== 50. MODAL FUNCTIONS (محفوظ) ======
+// ====== 38. MODAL FUNCTIONS ======
 function closeModal(id) {
     const modal = document.getElementById(id);
     if (!modal) return;
@@ -4102,7 +2721,7 @@ function hideAllModals() {
     });
 }
 
-// ====== 51. FILTER MARKET (محفوظ) ======
+// ====== 39. FILTER MARKET ======
 function filterMarket(filter) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     event.target.classList.add('active');
@@ -4113,7 +2732,7 @@ function filterMarket(filter) {
     });
 }
 
-// ====== 52. ADMIN FUNCTIONS (محفوظ) ======
+// ====== 40. ADMIN FUNCTIONS ======
 let currentAdminTab = 'withdrawals';
 
 function showAdminPanel() {
@@ -4335,7 +2954,7 @@ function copyToClipboard(text) {
     showToast('Copied!', 'success'); 
 }
 
-// ====== 53. CLOSE JACKPOT POPUP (محفوظ) ======
+// ====== 41. CLOSE JACKPOT POPUP ======
 function closeJackpotPopup() {
     const popup = document.getElementById('jackpotPopup');
     if (popup) {
@@ -4346,7 +2965,1506 @@ function closeJackpotPopup() {
     }
 }
 
-// ====== 54. INITIALIZATION ======
+// ====== 42. PRICES ======
+let livePrices = {};
+
+async function loadPrices(force = false) {
+    const now = Date.now();
+    const cached = localStorage.getItem(CACHE_KEYS.PRICES);
+    
+    if (!force && cached && (now - lastPricesLoadTime) < CONFIG.CACHE.PRICES_TTL) {
+        const { prices, timestamp } = JSON.parse(cached);
+        livePrices = prices;
+        lastPricesLoadTime = timestamp;
+        updatePrices();
+        return;
+    }
+    
+    try {
+        const ids = Object.values(CONFIG.CRYPTO_IDS).join(',');
+        const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`);
+        const data = await response.json();
+        
+        for (const [symbol, id] of Object.entries(CONFIG.CRYPTO_IDS)) {
+            if (data[id]) {
+                livePrices[symbol] = { price: data[id].usd, change: data[id].usd_24h_change || 0 };
+            }
+        }
+        
+        lastPricesLoadTime = now;
+        localStorage.setItem(CACHE_KEYS.PRICES, JSON.stringify({ prices: livePrices, timestamp: now }));
+        updatePrices();
+    } catch (error) {
+        console.error("Price fetch error:", error);
+    }
+}
+
+function updatePrices() {
+    renderAssets();
+    updateTotalBalance();
+}
+
+function refreshPrices() {
+    animateElement('.refresh-btn', 'pop');
+    loadPrices(true);
+}
+
+// ====== 43. REFERRAL SYSTEM ======
+function generateReferralCode() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    return userId.slice(-4) + Array.from({length:6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
+}
+
+function getReferralLink() {
+    const code = userData.referralCode || userId;
+    return `${CONFIG.APP.BASE_URL}?${CONFIG.APP.REFERRAL_PARAM}=${code}`;
+}
+
+function hasReferralCode() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return !!(urlParams.get(CONFIG.APP.REFERRAL_PARAM) || tg?.initDataUnsafe?.start_param);
+}
+
+async function processReferral() {
+    const processed = localStorage.getItem(CACHE_KEYS.REFERRAL_PROCESSED);
+    if (processed) return;
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    let referralCode = urlParams.get(CONFIG.APP.REFERRAL_PARAM) || tg?.initDataUnsafe?.start_param;
+    
+    if (!referralCode || referralCode === userData.referralCode || userData.referredBy) return;
+    
+    localStorage.setItem(CACHE_KEYS.REFERRAL_PROCESSED, referralCode);
+    
+    if (!db) {
+        userData.referredBy = referralCode;
+        userData.balances.TON += CONFIG.ECONOMY.REFERRAL_BONUS;
+        userData.balance = userData.balances.TON;
+        userData.totalEarned += CONFIG.ECONOMY.REFERRAL_BONUS;
+        userData.referralEarnings += CONFIG.ECONOMY.REFERRAL_BONUS;
+        saveUserToCache();
+        showToast(t('notif.welcomeBonus'), 'success');
+        return;
+    }
+    
+    try {
+        const referrerQuery = await db.collection(CONFIG.COLLECTIONS.USERS).where('referralCode', '==', referralCode).limit(1).get();
+        if (!referrerQuery.empty) {
+            const referrerDoc = referrerQuery.docs[0];
+            const referrerId = referrerDoc.id;
+            const referrerData = referrerDoc.data();
+            
+            if (referrerId === userId) return;
+            if (referrerData.referrals?.includes(userId)) return;
+            
+            await db.collection(CONFIG.COLLECTIONS.USERS).doc(referrerId).update({
+                referrals: [...(referrerData.referrals || []), userId],
+                referralCount: (referrerData.referralCount || 0) + 1,
+                'balances.TON': firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS),
+                referralEarnings: firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS)
+            });
+            
+            userData.referredBy = referralCode;
+            userData.balances.TON += CONFIG.ECONOMY.REFERRAL_BONUS;
+            userData.balance = userData.balances.TON;
+            userData.totalEarned += CONFIG.ECONOMY.REFERRAL_BONUS;
+            userData.referralEarnings += CONFIG.ECONOMY.REFERRAL_BONUS;
+            
+            await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).update({
+                referredBy: referralCode,
+                'balances.TON': userData.balances.TON
+            });
+            
+            saveUserToCache();
+            showToast(t('notif.welcomeBonus'), 'success');
+            await addNotification(referrerId, t('notif.referralBonus'), 'success');
+        }
+    } catch (e) {
+        localStorage.removeItem(CACHE_KEYS.REFERRAL_PROCESSED);
+    }
+}
+
+async function processReferralMiningBonus(referralId, miningAmount) {
+    if (!db || !userData.referrals?.includes(referralId)) return;
+    const bonus = miningAmount * CONFIG.ECONOMY.REFERRAL_PERCENT;
+    userData.referralMiningTrack = userData.referralMiningTrack || {};
+    userData.referralMiningTrack[referralId] = (userData.referralMiningTrack[referralId] || 0) + miningAmount;
+    userData.balances.TON += bonus;
+    userData.balance = userData.balances.TON;
+    userData.totalEarned += bonus;
+    userData.referralEarnings += bonus;
+    saveUserToCache();
+    
+    try {
+        await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).update({
+            'balances.TON': userData.balances.TON,
+            totalEarned: userData.totalEarned,
+            referralEarnings: userData.referralEarnings
+        });
+    } catch (e) {}
+    
+    addLocalNotification(t('notif.referralMiningBonus', { amount: bonus.toFixed(4) }), 'success');
+}
+
+async function checkReferralMilestones() {
+    if (!userData.referralMilestonesClaimed) userData.referralMilestonesClaimed = [];
+    
+    for (const milestone of REFERRAL_MILESTONES) {
+        if (userData.referralMilestonesClaimed.includes(milestone.referrals)) continue;
+        if (userData.referralCount >= milestone.referrals) {
+            userData.balances.USDT += milestone.reward;
+            userData.referralMilestonesClaimed.push(milestone.referrals);
+            
+            addTransaction('referral_bonus', milestone.reward, { 
+                currency: 'USDT', 
+                details: `${milestone.referrals} referrals milestone` 
+            });
+            
+            addLocalNotification(`🏆 You reached ${milestone.referrals} referrals! Earned ${milestone.reward} USDT!`, 'success');
+            
+            if (db) {
+                await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).update({
+                    'balances.USDT': userData.balances.USDT,
+                    referralMilestonesClaimed: userData.referralMilestonesClaimed
+                }).catch(console.error);
+            }
+        }
+    }
+    saveUserToCache();
+}
+
+// ====== 44. DAILY LOGIN BONUS ======
+function checkDailyLogin() {
+    const today = new Date().toDateString();
+    if (!userData.dailyLogin) userData.dailyLogin = { lastLogin: null, streak: 0 };
+    if (userData.dailyLogin.lastLogin !== today) {
+        const yesterday = new Date(Date.now() - 86400000).toDateString();
+        if (userData.dailyLogin.lastLogin === yesterday) {
+            userData.dailyLogin.streak++;
+        } else {
+            userData.dailyLogin.streak = 1;
+        }
+        userData.dailyLogin.lastLogin = today;
+        
+        const bonusIndex = Math.min(userData.dailyLogin.streak - 1, CONFIG.ECONOMY.DAILY_LOGIN_BONUS.length - 1);
+        const bonus = CONFIG.ECONOMY.DAILY_LOGIN_BONUS[bonusIndex] || 0.1;
+        
+        userData.balances.TON += bonus;
+        userData.balance = userData.balances.TON;
+        userData.totalEarned += bonus;
+        
+        addTransaction('daily_bonus', bonus, { currency: 'TON', day: userData.dailyLogin.streak });
+        showToast(`🔥 Day ${userData.dailyLogin.streak} bonus: +${bonus} TON!`, 'success');
+        saveUserToCache();
+    }
+}
+
+// ====== 45. NOTIFICATION SYSTEM ======
+let unreadCount = 0;
+
+function addLocalNotification(message, type = 'info') {
+    const notification = {
+        id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
+        message, type, read: false, timestamp: new Date().toISOString()
+    };
+    
+    if (!userData.notifications) userData.notifications = [];
+    userData.notifications.unshift(notification);
+    
+    if (userData.notifications.length > 50) userData.notifications = userData.notifications.slice(0, 50);
+    
+    saveLocalNotifications(userData.notifications);
+    updateNotificationBadge();
+    showFloatingToast(message, type);
+    return notification;
+}
+
+async function addNotification(targetUserId, message, type = 'info') {
+    if (targetUserId === userId) addLocalNotification(message, type);
+    
+    if (db && targetUserId !== userId) {
+        try {
+            await db.collection(CONFIG.COLLECTIONS.USERS).doc(targetUserId).update({
+                notifications: firebase.firestore.FieldValue.arrayUnion({
+                    id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
+                    message, type, read: false, timestamp: new Date().toISOString()
+                })
+            });
+        } catch (e) {}
+    }
+}
+
+function updateNotificationBadge() {
+    const badge = document.getElementById('notificationBadge');
+    if (badge && userData.notifications) {
+        unreadCount = userData.notifications.filter(n => !n.read).length;
+        badge.textContent = unreadCount;
+        badge.style.display = unreadCount > 0 ? 'flex' : 'none';
+    }
+}
+
+function markNotificationRead(id) {
+    const n = userData.notifications?.find(n => n.id === id);
+    if (n && !n.read) {
+        n.read = true;
+        saveLocalNotifications(userData.notifications);
+        updateNotificationBadge();
+        renderNotifications();
+    }
+}
+
+function clearReadNotifications() {
+    if (!userData.notifications?.length) {
+        showToast('No notifications', 'info');
+        return;
+    }
+    
+    const readCount = userData.notifications.filter(n => n.read).length;
+    const unreadCount = userData.notifications.filter(n => !n.read).length;
+    
+    if (readCount === 0) {
+        showToast('No read notifications', 'info');
+        return;
+    }
+    
+    if (confirm(`Clear ${readCount} read notification(s)? ${unreadCount} unread will remain.`)) {
+        userData.notifications = userData.notifications.filter(n => !n.read);
+        saveLocalNotifications(userData.notifications);
+        updateNotificationBadge();
+        renderNotifications();
+        showToast(`Cleared ${readCount} notifications`, 'success');
+    }
+}
+
+function clearAllNotifications() {
+    if (!userData.notifications?.length) {
+        showToast('No notifications', 'info');
+        return;
+    }
+    
+    const unreadCount = userData.notifications.filter(n => !n.read).length;
+    
+    if (unreadCount > 0) {
+        if (!confirm(`Warning: You have ${unreadCount} unread notifications. Delete all?`)) return;
+    } else {
+        if (!confirm('Delete all notifications?')) return;
+    }
+    
+    userData.notifications = [];
+    saveLocalNotifications([]);
+    updateNotificationBadge();
+    renderNotifications();
+    showToast('All notifications cleared', 'success');
+}
+
+function renderNotifications() {
+    const list = document.getElementById('notificationsList');
+    if (!list) return;
+    
+    if (!userData.notifications?.length) {
+        list.innerHTML = `<div class="empty-state"><i class="fa-regular fa-bell-slash"></i><p>No notifications</p></div>`;
+        return;
+    }
+    
+    list.innerHTML = userData.notifications.map(n => {
+        const d = new Date(n.timestamp);
+        const unreadClass = n.read ? '' : 'unread';
+        let icon = n.type === 'success' ? 'fa-circle-check' : 'fa-circle-info';
+        
+        return `<div class="notification-item ${unreadClass}" onclick="markNotificationRead('${n.id}')">
+            <div class="notification-header">
+                <span class="notification-title"><i class="fa-regular ${icon}"></i> Notification</span>
+                <span class="notification-time">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</span>
+            </div>
+            <div class="notification-message">${n.message}</div>
+        </div>`;
+    }).join('');
+}
+
+function showNotifications() {
+    const modal = document.getElementById('notificationsModal');
+    if (modal) {
+        modal.classList.add('show');
+        renderNotifications();
+    }
+}
+
+// ====== 46. FLOATING NOTIFICATIONS ======
+let floatingTimeouts = [];
+
+function showFloatingToast(message, type = 'info') {
+    const toast = document.getElementById('floatingNotification');
+    if (!toast) return;
+    toast.textContent = message;
+    toast.className = 'floating-notification';
+    toast.classList.add(type, 'show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+function startFloatingNotifications() {
+    const messages = [
+        "🔥 User just won 50 TON on Wheel!",
+        "🎰 Someone hit JACKPOT on Slots!",
+        "⚡ Turbo v3 rented",
+        "💰 Withdrawal of 5 TON approved",
+        "🎡 Someone won 100 TON on Lucky Wheel!",
+        "🤖 Auto Miner bought",
+        "🎰 3️⃣ 7️⃣ 7️⃣ Big win 10 TON!",
+        "🎡 Wheel Jackpot 100 TON!",
+        "💎 New user joined with referral"
+    ];
+    
+    function showNext() {
+        const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+        showFloatingToast(randomMsg, 'info');
+        floatingTimeouts.push(setTimeout(showNext, 8000 + Math.random() * 7000));
+    }
+    setTimeout(showNext, 3000);
+}
+
+function stopFloatingNotifications() {
+    floatingTimeouts.forEach(clearTimeout);
+    floatingTimeouts = [];
+}
+
+// ====== 47. WELCOME STICKER ======
+const WELCOME_STICKERS = ['🤝', '🫣', '🥰', '🥳', '💲', '💰', '💸', '💵', '🤪', '😱', '😎', '🤑', '💯', '💖', '✨', '🌟', '⭐', '🔥', '⚡', '💎', '🎁', '🎈', '🎉', '👑', '🚀', '💫'];
+let lastStickerTime = 0;
+const STICKER_COOLDOWN = 12 * 60 * 1000;
+
+function showRandomSticker() {
+    const now = Date.now();
+    if (now - lastStickerTime < STICKER_COOLDOWN) return;
+    
+    const stickerEl = document.getElementById('welcomeSticker');
+    if (!stickerEl) return;
+    
+    stickerEl.textContent = WELCOME_STICKERS[Math.floor(Math.random() * WELCOME_STICKERS.length)];
+    stickerEl.classList.remove('sticker-pop', 'sticker-shake');
+    void stickerEl.offsetWidth;
+    stickerEl.classList.add('sticker-pop');
+    
+    setTimeout(() => stickerEl.classList.add('sticker-shake'), 200);
+    setTimeout(() => {
+        stickerEl.classList.remove('sticker-pop', 'sticker-shake');
+        setTimeout(() => stickerEl.textContent = '', 300);
+    }, 3000);
+    
+    lastStickerTime = now;
+}
+
+// ====== 48. LOAD USER DATA ======
+async function loadUserData(force = false) {
+    try {
+        console.log("📂 Loading user data for:", userId);
+        
+        const localData = localStorage.getItem(CACHE_KEYS.USER);
+        if (localData) {
+            try {
+                const parsed = JSON.parse(localData);
+                Object.assign(userData, parsed);
+                userData.balance = userData.balances.TON;
+                console.log("📦 Using localStorage data immediately");
+                updateUI();
+            } catch (e) {}
+        }
+        
+        if (!userData.referralCode) {
+            userData.referralCode = generateReferralCode();
+        }
+        
+        if (db && !force) {
+            try {
+                const doc = await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).get();
+                
+                if (doc.exists) {
+                    const fbData = doc.data();
+                    Object.assign(userData, fbData);
+                    userData.balance = userData.balances.TON;
+                    
+                    const localTxs = loadLocalTransactions();
+                    const fbTxs = fbData.transactions || [];
+                    const txMap = new Map();
+                    [...localTxs, ...fbTxs].forEach(tx => {
+                        const key = tx.firebaseId || `${tx.timestamp}_${tx.type}`;
+                        txMap.set(key, tx);
+                    });
+                    userData.transactions = Array.from(txMap.values());
+                    saveLocalTransactions(userData.transactions);
+                    
+                    const localNotes = loadLocalNotifications();
+                    const fbNotes = fbData.notifications || [];
+                    const noteMap = new Map();
+                    [...localNotes, ...fbNotes].forEach(n => noteMap.set(n.id, n));
+                    userData.notifications = Array.from(noteMap.values());
+                    saveLocalNotifications(userData.notifications);
+                    
+                    saveUserToCache();
+                    lastUserLoadTime = Date.now();
+                    updateUI();
+                    console.log("✅ Updated from Firebase");
+                } else {
+                    if (!localData) {
+                        userData.referralCode = generateReferralCode();
+                        userData.createdAt = Date.now();
+                        await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).set({
+                            ...userData,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                        saveUserToCache();
+                    }
+                }
+            } catch (e) {
+                console.error('Firebase error, using cached data only:', e);
+            }
+        }
+        
+        if (hasReferralCode() && !userData.referredBy) await processReferral();
+        
+        updateNotificationBadge();
+        checkAdminAndAddCrown();
+        checkDailyLogin();
+        
+        updateUserDisplay();
+        
+    } catch (error) {
+        console.error("❌ Error loading user data:", error);
+    }
+}
+
+function updateUserDisplay() {
+    const usernameEl = document.getElementById('username');
+    const userIdEl = document.getElementById('userId');
+    
+    if (usernameEl) {
+        usernameEl.textContent = tg?.initDataUnsafe?.user?.first_name || 
+                                userFirstName || 
+                                'Crypto Miner';
+    }
+    
+    if (userIdEl) {
+        if (tg?.initDataUnsafe?.user?.username) {
+            userIdEl.textContent = `@${tg.initDataUnsafe.user.username}`;
+        } else {
+            const shortId = userId.slice(0, 8);
+            userIdEl.textContent = `ID: ${shortId}`;
+        }
+    }
+}
+
+// ====== 49. VEGAS ELITE - تحسينات الكازينو ======
+
+// محرك الصوت المتكامل
+const VegasAudio = {
+    ctx: null,
+    isInitialized: false,
+    fireworksBuffer: null,
+    
+    FIREWORKS_B64: 'data:audio/mp3;base64,//NExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq//NExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq//NExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq',
+    
+    init() {
+        if (this.isInitialized) return;
+        this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        this.loadFireworks();
+        this.isInitialized = true;
+    },
+    
+    async loadFireworks() {
+        try {
+            const response = await fetch(this.FIREWORKS_B64);
+            const arrayBuffer = await response.arrayBuffer();
+            this.fireworksBuffer = await this.ctx.decodeAudioData(arrayBuffer);
+        } catch(e) {
+            console.log('Using synthetic fireworks');
+        }
+    },
+    
+    click() {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(800, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(400, this.ctx.currentTime + 0.05);
+        gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.05);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.05);
+    },
+    
+    whoosh() {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        const filter = this.ctx.createBiquadFilter();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(200, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(600, this.ctx.currentTime + 0.3);
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(400, this.ctx.currentTime);
+        filter.frequency.exponentialRampToValueAtTime(2000, this.ctx.currentTime + 0.3);
+        gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.3);
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.3);
+    },
+    
+    tick(pitch = 1) {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(1200 * pitch, this.ctx.currentTime);
+        gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.03);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.03);
+    },
+    
+    clunk() {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(150, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(50, this.ctx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.4, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.15);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.15);
+    },
+    
+    coin() {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(1800, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(2200, this.ctx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.25, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.3);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.3);
+    },
+    
+    jackpotCoins() {
+        if (!this.ctx) return;
+        for (let i = 0; i < 15; i++) {
+            setTimeout(() => {
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(2000 + Math.random() * 500, this.ctx.currentTime);
+                gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.1);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.1);
+            }, i * 80);
+        }
+    },
+    
+    whistle() {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(800, this.ctx.currentTime);
+        osc.frequency.linearRampToValueAtTime(1200, this.ctx.currentTime + 0.3);
+        osc.frequency.linearRampToValueAtTime(800, this.ctx.currentTime + 0.6);
+        gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.6);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.6);
+    },
+    
+    fireworks(duration = 4000) {
+        if (!this.ctx) return;
+        
+        if (!this.fireworksBuffer) {
+            this.syntheticFireworks(duration);
+            return;
+        }
+        
+        const source = this.ctx.createBufferSource();
+        source.buffer = this.fireworksBuffer;
+        source.loop = true;
+        const gain = this.ctx.createGain();
+        gain.gain.setValueAtTime(0.4, this.ctx.currentTime);
+        source.connect(gain);
+        gain.connect(this.ctx.destination);
+        source.start();
+        
+        setTimeout(() => {
+            gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.5);
+            setTimeout(() => source.stop(), 500);
+        }, duration);
+    },
+    
+    syntheticFireworks(duration) {
+        const endTime = this.ctx.currentTime + (duration / 1000);
+        let currentTime = this.ctx.currentTime;
+        
+        while (currentTime < endTime) {
+            setTimeout(() => {
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                const filter = this.ctx.createBiquadFilter();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(100 + Math.random() * 200, this.ctx.currentTime);
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(1000, this.ctx.currentTime);
+                filter.frequency.exponentialRampToValueAtTime(100, this.ctx.currentTime + 0.5);
+                gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.5);
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.5);
+            }, (currentTime - this.ctx.currentTime) * 1000);
+            
+            currentTime += 0.3 + Math.random() * 0.4;
+        }
+    },
+    
+    crowdCheer() {
+        if (!this.ctx) return;
+        const bufferSize = this.ctx.sampleRate * 2;
+        const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+            data[i] = Math.random() * 2 - 1;
+        }
+        
+        const noise = this.ctx.createBufferSource();
+        noise.buffer = buffer;
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1000, this.ctx.currentTime);
+        const gain = this.ctx.createGain();
+        gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 2);
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.ctx.destination);
+        noise.start();
+    }
+};
+
+// نظام الطقطقة المتدرج
+const TickSequencer = {
+    timeouts: [],
+    
+    playWheelTicks(duration = 1500, onComplete = null) {
+        this.clear();
+        const tickCount = 15;
+        const baseInterval = duration / tickCount;
+        
+        for (let i = 0; i < tickCount; i++) {
+            const slowdownFactor = 1 + (i / tickCount) * 0.5;
+            const delay = baseInterval * i * slowdownFactor;
+            
+            const timeout = setTimeout(() => {
+                const pitch = 1 + (i / tickCount) * 0.3;
+                VegasAudio.tick(pitch);
+                
+                if (i === tickCount - 1 && onComplete) {
+                    setTimeout(onComplete, 100);
+                }
+            }, delay);
+            
+            this.timeouts.push(timeout);
+        }
+    },
+    
+    playSlotsTicks(reelIndex, onComplete = null) {
+        this.clear();
+        const delays = reelIndex === 0 ? 8 : reelIndex === 1 ? 12 : 16;
+        const baseDelay = 80;
+        
+        for (let i = 0; i < delays; i++) {
+            const timeout = setTimeout(() => {
+                VegasAudio.tick(1 + (i / delays) * 0.2);
+                
+                if (i === delays - 1 && onComplete) {
+                    setTimeout(onComplete, 50);
+                }
+            }, i * baseDelay * (1 + i * 0.05));
+            
+            this.timeouts.push(timeout);
+        }
+    },
+    
+    clear() {
+        this.timeouts.forEach(t => clearTimeout(t));
+        this.timeouts = [];
+    }
+};
+
+// مسرحية الجاكبوت
+const JackpotTheater = {
+    isPlaying: false,
+    
+    play(amount, currency = 'TON') {
+        if (this.isPlaying) return;
+        this.isPlaying = true;
+        
+        const container = document.querySelector('.wheel-game-container, .slots-game-container') || document.body;
+        
+        setTimeout(() => {
+            this.createLightBurst(container);
+            VegasAudio.fireworks(4000);
+        }, 200);
+        
+        setTimeout(() => {
+            this.showJackpotText(container);
+            VegasAudio.whistle();
+        }, 500);
+        
+        setTimeout(() => {
+            this.createGoldParticles(container);
+            VegasAudio.crowdCheer();
+        }, 1000);
+        
+        setTimeout(() => {
+            this.animateCounter(amount, currency);
+            VegasAudio.jackpotCoins();
+        }, 1500);
+        
+        setTimeout(() => {
+            this.isPlaying = false;
+        }, 4000);
+    },
+    
+    createLightBurst(container) {
+        const burst = document.createElement('div');
+        burst.className = 'vegas-burst';
+        for (let i = 0; i < 12; i++) {
+            const ray = document.createElement('div');
+            ray.className = 'burst-ray';
+            ray.style.transform = `translate(-50%, -100%) rotate(${i * 30}deg)`;
+            burst.appendChild(ray);
+        }
+        container.appendChild(burst);
+        setTimeout(() => burst.remove(), 1000);
+    },
+    
+    showJackpotText(container) {
+        const text = document.createElement('div');
+        text.className = 'vegas-jackpot-text';
+        text.innerHTML = '🎰 JACKPOT! 🎰';
+        document.body.appendChild(text);
+        document.body.classList.add('vegas-shake');
+        setTimeout(() => document.body.classList.remove('vegas-shake'), 500);
+        setTimeout(() => text.remove(), 3500);
+    },
+    
+    createGoldParticles(container) {
+        for (let i = 0; i < 50; i++) {
+            const p = document.createElement('div');
+            p.className = 'vegas-particle';
+            p.style.left = '50%';
+            p.style.top = '50%';
+            p.style.setProperty('--tx', `${(Math.random() - 0.5) * 400}px`);
+            p.style.setProperty('--ty', `${(Math.random() - 0.5) * 400}px`);
+            p.style.animationDelay = `${Math.random() * 0.5}s`;
+            container.appendChild(p);
+            setTimeout(() => p.remove(), 2000);
+        }
+    },
+    
+    animateCounter(amount, currency) {
+        const counter = document.createElement('div');
+        counter.className = 'vegas-counter';
+        document.body.appendChild(counter);
+        
+        let current = 0;
+        const steps = 30;
+        const increment = amount / steps;
+        
+        const interval = setInterval(() => {
+            current += increment;
+            if (current >= amount) {
+                current = amount;
+                clearInterval(interval);
+            }
+            counter.textContent = `+${current.toFixed(2)} ${currency}`;
+        }, 50);
+        
+        setTimeout(() => counter.remove(), 3000);
+    }
+};
+
+// عجلة الحظ المحسنة
+let wheelVegasState = {
+    isSpinning: false,
+    currentRotation: 0,
+    targetRotation: 0,
+    selectedPrize: null,
+    animationId: null,
+    spinStartTime: 0,
+    spinDuration: 2500
+};
+
+function initWheelVegas() {
+    const wheel = document.getElementById('wheelCasinoPro');
+    if (!wheel) return;
+    
+    wheel.innerHTML = '';
+    
+    const totalSegments = WHEEL_PRIZES.length;
+    const anglePerSegment = 360 / totalSegments;
+    
+    WHEEL_PRIZES.forEach((prize, index) => {
+        const segment = document.createElement('div');
+        segment.className = 'wheel-segment-vegas';
+        segment.dataset.index = index;
+        segment.dataset.type = prize.type;
+        
+        const rotation = index * anglePerSegment;
+        const gradient = getVegasGradient(prize);
+        
+        segment.style.cssText = `
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            top: 0;
+            left: 50%;
+            transform-origin: 0% 100%;
+            transform: rotate(${rotation}deg);
+            background: ${gradient};
+            clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 25px;
+            border-right: 2px solid rgba(255,255,255,0.2);
+        `;
+        
+        const icon = document.createElement('span');
+        icon.className = 'vegas-segment-icon';
+        icon.textContent = prize.icon;
+        
+        const label = document.createElement('span');
+        label.className = 'vegas-segment-label';
+        label.textContent = prize.label;
+        
+        segment.appendChild(icon);
+        segment.appendChild(label);
+        wheel.appendChild(segment);
+    });
+    
+    renderVegasPrizeLegend();
+}
+
+function getVegasGradient(prize) {
+    if (prize.jackpot) {
+        return `conic-gradient(from 0deg at 0% 100%, #ff4444 0deg, #ffd700 30deg, #ff4444 60deg, #ff8800 90deg, #ff4444 120deg)`;
+    }
+    if (prize.type === 'TON') {
+        return `linear-gradient(135deg, #0088cc 0%, #00f2ff 50%, #0088cc 100%)`;
+    }
+    if (prize.type === 'USDT') {
+        return `linear-gradient(135deg, #22c55e 0%, #4ade80 50%, #22c55e 100%)`;
+    }
+    return `linear-gradient(135deg, #94a3b8 0%, #cbd5e1 100%)`;
+}
+
+function renderVegasPrizeLegend() {
+    const legend = document.getElementById('wheelPrizeLegend');
+    if (!legend) return;
+    
+    const jackpotPrizes = WHEEL_PRIZES.filter(p => p.jackpot);
+    const tonPrizes = WHEEL_PRIZES.filter(p => p.type === 'TON' && !p.jackpot);
+    const usdtPrizes = WHEEL_PRIZES.filter(p => p.type === 'USDT');
+    
+    legend.innerHTML = `
+        <div class="vegas-legend-group jackpot">
+            <h4>👑 JACKPOT</h4>
+            ${jackpotPrizes.map(p => `<span>${p.label}</span>`).join('')}
+        </div>
+        <div class="vegas-legend-group ton">
+            <h4>💎 TON</h4>
+            ${tonPrizes.slice(0, 6).map(p => `<span>${p.label}</span>`).join('')}
+        </div>
+        <div class="vegas-legend-group usdt">
+            <h4>💵 USDT</h4>
+            ${usdtPrizes.slice(0, 6).map(p => `<span>${p.label}</span>`).join('')}
+        </div>
+    `;
+}
+
+function updateVegasHeat(spinsLeft) {
+    const container = document.querySelector('.wheel-game-container');
+    if (!container) return;
+    
+    container.classList.remove('heat-low', 'heat-medium', 'heat-high', 'heat-jackpot');
+    
+    if (spinsLeft === 1) container.classList.add('heat-jackpot');
+    else if (spinsLeft <= 3) container.classList.add('heat-high');
+    else if (spinsLeft <= 7) container.classList.add('heat-medium');
+    else if (spinsLeft <= 10) container.classList.add('heat-low');
+}
+
+function selectVegasPrize() {
+    const isJackpot = userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY === 0;
+    const spinsLeft = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - (userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY);
+    updateVegasHeat(spinsLeft);
+    
+    const eligible = isJackpot ? WHEEL_PRIZES.filter(p => p.jackpot) : WHEEL_PRIZES;
+    const totalWeight = eligible.reduce((s, p) => s + p.weight, 0);
+    let rand = Math.random() * totalWeight;
+    
+    for (const prize of eligible) {
+        rand -= prize.weight;
+        if (rand <= 0) return prize;
+    }
+    return eligible[0];
+}
+
+function animateWheelVegas() {
+    if (!wheelVegasState.isSpinning) return;
+    
+    const now = Date.now();
+    const elapsed = now - wheelVegasState.spinStartTime;
+    const wheel = document.getElementById('wheelCasinoPro');
+    
+    let velocity = 0;
+    
+    if (elapsed < 500) {
+        velocity = (elapsed / 500) * 20;
+        wheel?.classList.add('vegas-spinning');
+    } else if (elapsed < 1500) {
+        velocity = 20 + Math.sin(elapsed * 0.01) * 2;
+    } else if (elapsed < 2300) {
+        velocity = 20 * ((2300 - elapsed) / 800);
+        
+        if (!wheelVegasState.selectedPrize) {
+            wheelVegasState.selectedPrize = selectVegasPrize();
+            const segmentAngle = 360 / WHEEL_PRIZES.length;
+            const prizeIndex = WHEEL_PRIZES.indexOf(wheelVegasState.selectedPrize);
+            const targetAngle = 270 - (prizeIndex * segmentAngle + segmentAngle / 2);
+            const extraSpins = 3;
+            
+            wheelVegasState.targetRotation = wheelVegasState.currentRotation + 
+                (extraSpins * 360) + 
+                ((targetAngle - (wheelVegasState.currentRotation % 360) + 360) % 360);
+        }
+    } else {
+        wheelVegasState.isSpinning = false;
+        wheel?.classList.remove('vegas-spinning');
+        wheel?.classList.add('vegas-bounce');
+        
+        setTimeout(() => {
+            wheel?.classList.remove('vegas-bounce');
+            highlightVegasWinner();
+        }, 200);
+        
+        setTimeout(() => {
+            awardVegasPrize(wheelVegasState.selectedPrize);
+        }, 600);
+        
+        cancelAnimationFrame(wheelVegasState.animationId);
+        return;
+    }
+    
+    wheelVegasState.currentRotation += velocity;
+    if (wheel) wheel.style.transform = `rotate(${wheelVegasState.currentRotation}deg)`;
+    
+    wheelVegasState.animationId = requestAnimationFrame(animateWheelVegas);
+}
+
+function highlightVegasWinner() {
+    const segments = document.querySelectorAll('.wheel-segment-vegas');
+    const prizeIndex = WHEEL_PRIZES.indexOf(wheelVegasState.selectedPrize);
+    
+    segments.forEach((seg, idx) => {
+        if (idx === prizeIndex) {
+            seg.classList.add('vegas-winner');
+        } else {
+            seg.classList.add('vegas-dim');
+        }
+    });
+    
+    setTimeout(() => {
+        segments.forEach(seg => seg.classList.remove('vegas-winner', 'vegas-dim'));
+    }, 2500);
+}
+
+function spinWheelVegas(isFree = false) {
+    if (wheelVegasState.isSpinning) return;
+    
+    if (isFree) {
+        const now = Date.now();
+        const nextFree = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
+        if (now < nextFree) {
+            const left = nextFree - now;
+            const h = Math.floor(left / 3600000);
+            const m = Math.floor((left % 3600000) / 60000);
+            showToastPro(`⏰ Wait ${h}h ${m}m for free spin`, 'warning');
+            return;
+        }
+        userData.wheel.lastFreeSpin = now;
+    } else {
+        if (userData.wheel.purchasedSpins > 0) {
+            userData.wheel.purchasedSpins--;
+        } else if (userData.balances.TON >= CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
+            userData.balances.TON -= CONFIG.ECONOMY.WHEEL_SPIN_PRICE;
+            userData.balance = userData.balances.TON;
+        } else {
+            showToastPro(`❌ Need ${CONFIG.ECONOMY.WHEEL_SPIN_PRICE} TON`, 'error');
+            return;
+        }
+    }
+    
+    wheelVegasState.isSpinning = true;
+    wheelVegasState.spinStartTime = Date.now();
+    wheelVegasState.selectedPrize = null;
+    
+    VegasAudio.click();
+    setTimeout(() => VegasAudio.whoosh(), 50);
+    
+    TickSequencer.playWheelTicks(1500, () => {
+        VegasAudio.clunk();
+    });
+    
+    document.querySelectorAll('.wheel-segment-vegas').forEach(seg => {
+        seg.classList.remove('vegas-winner', 'vegas-dim');
+    });
+    
+    wheelVegasState.animationId = requestAnimationFrame(animateWheelVegas);
+    
+    userData.wheel.totalSpins++;
+    saveUserToCache();
+    updateWheelVegasUI();
+}
+
+function awardVegasPrize(prize) {
+    userData.wheel.lastWin = { prize, timestamp: Date.now() };
+    userData.wheel.jackpotCounter++;
+    
+    if (prize.jackpot) {
+        const currency = prize.currency || 'TON';
+        if (currency === 'TON') {
+            userData.balances.TON += prize.amount;
+            userData.balance = userData.balances.TON;
+        } else {
+            userData.balances.USDT += prize.amount;
+        }
+        userData.totalEarned += prize.amount;
+        addTransaction('wheel', prize.amount, { currency, jackpot: true });
+        
+        JackpotTheater.play(prize.amount, currency);
+        saveUserToCache();
+        updateUI();
+        updateWheelVegasUI();
+        return;
+    }
+    
+    if (prize.type === 'GOODLUCK') {
+        showToastPro('🍀 GOOD LUCK!', 'info');
+        VegasAudio.click();
+        saveUserToCache();
+        updateUI();
+        updateWheelVegasUI();
+        return;
+    }
+    
+    const currency = prize.type;
+    userData.balances[currency] += prize.amount;
+    if (currency === 'TON') userData.balance = userData.balances.TON;
+    userData.totalEarned += prize.amount;
+    addTransaction('wheel', prize.amount, { currency });
+    
+    const isBig = prize.amount >= (currency === 'TON' ? 5 : 10);
+    showWinPopupPro(`${prize.amount} ${currency}`, isBig ? 'big' : 'normal');
+    
+    if (isBig) {
+        for (let i = 0; i < 3; i++) setTimeout(() => VegasAudio.coin(), i * 200);
+    } else {
+        VegasAudio.coin();
+    }
+    
+    hapticFeedback(isBig ? 'medium' : 'light');
+    saveUserToCache();
+    updateUI();
+    updateWheelVegasUI();
+}
+
+function updateWheelVegasUI() {
+    const spinsEl = document.getElementById('wheelGameSpins');
+    const jackpotEl = document.getElementById('wheelJackpotCounter');
+    const freeSpinEl = document.getElementById('wheelFreeSpin');
+    
+    if (spinsEl) spinsEl.textContent = userData.wheel.purchasedSpins || 0;
+    
+    if (jackpotEl) {
+        const current = userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY;
+        const total = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY;
+        jackpotEl.textContent = `${current}/${total}`;
+    }
+    
+    if (freeSpinEl) {
+        const now = Date.now();
+        const next = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
+        if (now < next) {
+            const left = next - now;
+            const h = Math.floor(left / 3600000);
+            const m = Math.floor((left % 3600000) / 60000);
+            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i><span>${h}h ${m}m</span>`;
+            freeSpinEl.disabled = true;
+        } else {
+            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i><span>FREE</span>`;
+            freeSpinEl.disabled = false;
+        }
+    }
+}
+
+// آلة السلوتس المحسنة
+let slotsVegasState = {
+    isSpinning: false,
+    reels: [[], [], []],
+    positions: [0, 0, 0],
+    targetPositions: [0, 0, 0],
+    animationId: null
+};
+
+function initSlotsVegas() {
+    const container = document.getElementById('slotReelsPro');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    for (let i = 0; i < 3; i++) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'vegas-slot-reel-wrapper';
+        wrapper.dataset.reel = i;
+        
+        const reel = document.createElement('div');
+        reel.className = 'vegas-slot-reel';
+        reel.id = `vegas-reel-${i}`;
+        
+        const strip = generateVegasStrip();
+        slotsVegasState.reels[i] = strip;
+        
+        strip.forEach(item => {
+            const symbol = document.createElement('div');
+            symbol.className = 'vegas-slot-symbol';
+            symbol.textContent = item.symbol;
+            symbol.dataset.value = item.value;
+            symbol.dataset.type = item.type;
+            reel.appendChild(symbol);
+        });
+        
+        wrapper.appendChild(reel);
+        container.appendChild(wrapper);
+        
+        const startPos = Math.floor(Math.random() * strip.length);
+        updateVegasReelPosition(i, startPos);
+    }
+    
+    renderVegasSlotsLegend();
+}
+
+function generateVegasStrip() {
+    const strip = [];
+    const totalWeight = SLOTS_SYMBOLS_DATA.reduce((s, item) => s + item.weight, 0);
+    
+    for (let i = 0; i < 100; i++) {
+        let random = Math.random() * totalWeight;
+        for (const item of SLOTS_SYMBOLS_DATA) {
+            random -= item.weight;
+            if (random <= 0) {
+                strip.push({ ...item });
+                break;
+            }
+        }
+    }
+    return strip;
+}
+
+function renderVegasSlotsLegend() {
+    const grid = document.getElementById('slotsPayoutGrid');
+    if (!grid) return;
+    
+    const sorted = [...SLOTS_SYMBOLS_DATA].sort((a, b) => b.value - a.value);
+    
+    grid.innerHTML = sorted.map(item => `
+        <div class="vegas-payout-item ${item.jackpot ? 'jackpot' : ''}">
+            <span class="symbol">${item.symbol}</span>
+            <span class="value">${item.value} ${item.type}</span>
+            ${item.jackpot ? '<span class="badge">JACKPOT</span>' : ''}
+        </div>
+    `).join('');
+}
+
+function updateVegasReelPosition(reelIndex, position) {
+    const reel = document.getElementById(`vegas-reel-${reelIndex}`);
+    if (!reel) return;
+    
+    const symbolHeight = 110;
+    reel.style.transform = `translateY(-${position * symbolHeight}px)`;
+    slotsVegasState.positions[reelIndex] = position;
+}
+
+function spinSlotsVegas(isFree = false, isTurbo = false) {
+    if (slotsVegasState.isSpinning) return;
+    
+    const price = isTurbo ? CONFIG.ECONOMY.SLOTS_TURBO_PRICE : CONFIG.ECONOMY.SLOTS_SPIN_PRICE;
+    
+    if (isFree) {
+        const now = Date.now();
+        if (now < userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL) {
+            const left = (userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL) - now;
+            const h = Math.floor(left / 3600000);
+            const m = Math.floor((left % 3600000) / 60000);
+            showToastPro(`⏰ Wait ${h}h ${m}m`, 'warning');
+            return;
+        }
+        userData.slots.lastFreeSpin = now;
+    } else {
+        if (userData.slots.purchasedSpins > 0) {
+            userData.slots.purchasedSpins--;
+        } else if (userData.balances.TON >= price) {
+            userData.balances.TON -= price;
+            userData.balance = userData.balances.TON;
+        } else {
+            showToastPro(`❌ Need ${price} TON`, 'error');
+            return;
+        }
+    }
+    
+    slotsVegasState.isSpinning = true;
+    
+    VegasAudio.click();
+    VegasAudio.whoosh();
+    
+    const results = [
+        Math.floor(Math.random() * 100),
+        Math.floor(Math.random() * 100),
+        Math.floor(Math.random() * 100)
+    ];
+    
+    spinVegasReel(0, results[0], isTurbo ? 800 : 1200, () => {
+        spinVegasReel(1, results[1], isTurbo ? 800 : 1600, () => {
+            spinVegasReel(2, results[2], isTurbo ? 800 : 2000, () => {
+                checkVegasWin(results);
+            });
+        });
+    });
+    
+    userData.slots.totalSpins++;
+    saveUserToCache();
+    updateSlotsVegasUI();
+}
+
+function spinVegasReel(index, targetResult, duration, onComplete) {
+    const reel = document.getElementById(`vegas-reel-${index}`);
+    const wrapper = document.querySelector(`.vegas-slot-reel-wrapper[data-reel="${index}"]`);
+    
+    wrapper?.classList.add('vegas-reel-spinning');
+    
+    const tickInterval = setInterval(() => {
+        VegasAudio.tick(0.8 + Math.random() * 0.4);
+    }, 100);
+    
+    const startPos = slotsVegasState.positions[index];
+    const extraSpins = 5 + index * 2;
+    const targetPos = targetResult + (extraSpins * 100);
+    
+    const startTime = Date.now();
+    
+    const animate = () => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        const currentPos = startPos + (targetPos - startPos) * ease;
+        
+        updateVegasReelPosition(index, currentPos);
+        
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        } else {
+            clearInterval(tickInterval);
+            wrapper?.classList.remove('vegas-reel-spinning');
+            VegasAudio.clunk();
+            updateVegasReelPosition(index, targetResult);
+            if (onComplete) onComplete();
+        }
+    };
+    
+    requestAnimationFrame(animate);
+}
+
+function checkVegasWin(results) {
+    const reels = [
+        SLOTS_SYMBOLS_DATA[results[0] % SLOTS_SYMBOLS_DATA.length],
+        SLOTS_SYMBOLS_DATA[results[1] % SLOTS_SYMBOLS_DATA.length],
+        SLOTS_SYMBOLS_DATA[results[2] % SLOTS_SYMBOLS_DATA.length]
+    ];
+    
+    const allMatch = reels[0].symbol === reels[1].symbol && reels[1].symbol === reels[2].symbol;
+    
+    if (allMatch) {
+        const winData = reels[0];
+        
+        document.querySelectorAll('.vegas-slot-symbol').forEach((sym, idx) => {
+            const centerIndices = [
+                results[0] % 100,
+                results[1] % 100 + 100,
+                results[2] % 100 + 200
+            ];
+            if (centerIndices.includes(idx)) sym.classList.add('vegas-win-glow');
+        });
+        
+        setTimeout(() => {
+            document.querySelectorAll('.vegas-slot-symbol').forEach(s => s.classList.remove('vegas-win-glow'));
+        }, 2000);
+        
+        const winAmount = winData.value;
+        const currency = winData.type;
+        
+        if (currency === 'TON') {
+            userData.balances.TON += winAmount;
+            userData.balance = userData.balances.TON;
+        } else {
+            userData.balances.USDT += winAmount;
+        }
+        userData.totalEarned += winAmount;
+        
+        if (winData.jackpot) {
+            JackpotTheater.play(winAmount, currency);
+        } else if (winAmount >= 10) {
+            showWinPopupPro(`${winAmount} ${currency}`, 'big');
+            for (let i = 0; i < 5; i++) setTimeout(() => VegasAudio.coin(), i * 150);
+        } else {
+            showWinPopupPro(`${winAmount} ${currency}`, 'normal');
+            VegasAudio.coin();
+        }
+        
+        addTransaction('slots', winAmount, { currency, symbol: winData.symbol });
+        
+    } else {
+        showToastPro('🎰 Try again!', 'info');
+    }
+    
+    slotsVegasState.isSpinning = false;
+    saveUserToCache();
+    updateUI();
+}
+
+function updateSlotsVegasUI() {
+    const spinsEl = document.getElementById('slotsGameSpins');
+    const freeSpinEl = document.getElementById('slotsFreeSpin');
+    
+    if (spinsEl) spinsEl.textContent = userData.slots.purchasedSpins || 0;
+    
+    if (freeSpinEl) {
+        const now = Date.now();
+        const next = userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
+        if (now < next) {
+            const left = next - now;
+            const h = Math.floor(left / 3600000);
+            const m = Math.floor((left % 3600000) / 60000);
+            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i><span>${h}h ${m}m</span>`;
+            freeSpinEl.disabled = true;
+        } else {
+            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i><span>FREE</span>`;
+            freeSpinEl.disabled = false;
+        }
+    }
+}
+
+// نظام التوست المحترف
+function showToastPro(message, type = 'info', duration = 3000) {
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
+    
+    const existingToast = container.querySelector('.toast-pro');
+    if (existingToast) {
+        existingToast.classList.add('closing');
+        setTimeout(() => existingToast.remove(), 300);
+    }
+    
+    const toast = document.createElement('div');
+    toast.className = `toast-pro ${type}`;
+    
+    let icon = 'fa-circle-info';
+    if (type === 'success') icon = 'fa-circle-check';
+    else if (type === 'error') icon = 'fa-circle-xmark';
+    else if (type === 'warning') icon = 'fa-circle-exclamation';
+    
+    toast.innerHTML = `
+        <i class="fa-regular ${icon}"></i>
+        <span class="message">${message}</span>
+    `;
+    
+    container.appendChild(toast);
+    
+    if (type === 'error') {
+        hapticFeedback('error');
+    } else if (type === 'success') {
+        hapticFeedback('success');
+    }
+    
+    const timeout = setTimeout(() => {
+        toast.classList.add('closing');
+        setTimeout(() => toast.remove(), 300);
+    }, duration);
+}
+
+function showWinPopupPro(prize, type = 'normal') {
+    const existing = document.querySelector('.win-popup-pro');
+    if (existing) existing.remove();
+    
+    const popup = document.createElement('div');
+    popup.className = `win-popup-pro ${type}`;
+    
+    let icon = '🎉';
+    let title = 'YOU WON!';
+    
+    if (type === 'big') {
+        icon = '🌟🌟';
+        title = 'BIG WIN!';
+    } else if (type === 'jackpot') {
+        icon = '🎰🎰🎰';
+        title = 'JACKPOT!';
+    }
+    
+    popup.innerHTML = `
+        <div class="win-confetti"></div>
+        <div class="win-icon">${icon}</div>
+        <div class="win-title">${title}</div>
+        <div class="win-amount">${prize}</div>
+    `;
+    
+    document.body.appendChild(popup);
+    
+    setTimeout(() => popup.classList.add('show'), 10);
+    
+    setTimeout(() => {
+        popup.classList.remove('show');
+        setTimeout(() => popup.remove(), 400);
+    }, 3000);
+}
+
+// ====== 50. INITIALIZATION ======
 document.addEventListener('DOMContentLoaded', async () => {
     hideAllModals();
     
@@ -4369,9 +4487,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateChart();
     renderReferralMilestones();
     
-    // تهيئة أنظمة الكازينو الجديدة
-    initWheelPro();
-    initSlotsPro();
+    // تهيئة أنظمة Vegas
+    initWheelVegas();
+    initSlotsVegas();
     
     setupScrollListener();
     
@@ -4393,17 +4511,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     
-    // إضافة مستمعي الأحداث لأنظمة Auto Spin الجديدة
-    document.getElementById('wheelPageAutoSpin')?.addEventListener('change', toggleWheelAutoSpin);
-    document.getElementById('slotsPageAutoSpin')?.addEventListener('change', toggleSlotsAutoSpin);
-    
     updateUserDisplay();
     
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v8000.0");
-    console.log("✅ مع تحسينات الكازينو الاحترافية مع الحفاظ على جميع الميزات القديمة!");
-    console.log("✅ عجلة الحظ المحسنة: 18 قطاع مع تأثيرات سحرية");
-    console.log("✅ السلوتس المحسنة: بكرات ثلاثية الأبعاد مع دوران احترافي");
-    console.log("✅ نظام التوست الجديد: رسائل احترافية داخل الصفحة");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v9000.0");
+    console.log("✅ مع تحسينات Vegas Elite - جميع الميزات محفوظة!");
     console.log("✅ All systems ready! 🚀");
 });
 
@@ -4435,7 +4546,14 @@ document.addEventListener('visibilitychange', () => {
     }
 });
 
-// ====== 55. EXPORT FUNCTIONS (جميع الدوال القديمة + الجديدة) ======
+// تهيئة الصوت عند أول تفاعل
+document.addEventListener('click', () => {
+    if (!VegasAudio.isInitialized) {
+        VegasAudio.init();
+    }
+}, { once: true });
+
+// ====== 51. EXPORT FUNCTIONS ======
 window.showPage = showPage;
 window.showMarket = ()=>showPage('market');
 window.showWallet = showWallet;
@@ -4492,11 +4610,12 @@ window.showSlotsModal = showSlotsModal;
 window.buyWheelPack = buyWheelPack;
 window.buySlotsPack = buySlotsPack;
 
-// دوال الكازينو الجديدة
+// دوال Vegas الجديدة
 window.showWheelGamePage = showWheelGamePage;
 window.showSlotsGamePage = showSlotsGamePage;
-window.spinWheelPro = spinWheelPro;
-window.spinSlots = spinSlots;
+window.spinWheelVegas = spinWheelVegas;
+window.spinSlotsVegas = spinSlotsVegas;
 window.showToastPro = showToastPro;
-window.toggleWheelAutoSpin = toggleWheelAutoSpin;
-window.toggleSlotsAutoSpin = toggleSlotsAutoSpin;
+window.VegasAudio = VegasAudio;
+window.TickSequencer = TickSequencer;
+window.JackpotTheater = JackpotTheater;
