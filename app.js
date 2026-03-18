@@ -4620,7 +4620,7 @@ window.showSlotsModal = showSlotsModal;
 window.buyWheelPack = buyWheelPack;
 window.buySlotsPack = buySlotsPack;
 
-// دوال Vegas الجديدة - تم تصديرها للنطاق العام
+// ====== دوال Vegas الجديدة - تم تصديرها للنطاق العام ======
 window.showWheelGamePage = showWheelGamePage;
 window.showSlotsGamePage = showSlotsGamePage;
 window.spinWheelVegas = spinWheelVegas;
@@ -4630,7 +4630,7 @@ window.VegasAudio = VegasAudio;
 window.TickSequencer = TickSequencer;
 window.JackpotTheater = JackpotTheater;
 
-// دوال إضافية لضمان عمل الأزرار
+// ====== دوال إضافية لضمان عمل الأزرار (للتوافق) ======
 window.exitGame = exitGame;
 window.spinWheel = spinWheelVegas; // للتوافق مع الإصدارات القديمة
 window.spinSlots = spinSlotsVegas; // للتوافق مع الإصدارات القديمة
