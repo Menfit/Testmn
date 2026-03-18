@@ -18,7 +18,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     
-    <!-- CSS File -->
+    <!-- CSS File (تأكد من وجود style.css في نفس المجلد) -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -90,7 +90,6 @@
                 <!-- Hero Section with Turbines -->
                 <div class="mining-hero">
                     <div class="turbine-field-container">
-                        <!-- Turbine 1 - Large -->
                         <div class="turbine-large turbine-1">
                             <div class="turbine-pole"></div>
                             <div class="turbine-head">
@@ -100,8 +99,6 @@
                                 <div class="turbine-generator"></div>
                             </div>
                         </div>
-                        
-                        <!-- Turbine 2 - Medium -->
                         <div class="turbine-medium turbine-2">
                             <div class="turbine-pole"></div>
                             <div class="turbine-head">
@@ -111,8 +108,6 @@
                                 <div class="turbine-generator"></div>
                             </div>
                         </div>
-                        
-                        <!-- Turbine 3 - Small -->
                         <div class="turbine-small turbine-3">
                             <div class="turbine-pole"></div>
                             <div class="turbine-head">
@@ -122,13 +117,9 @@
                                 <div class="turbine-generator"></div>
                             </div>
                         </div>
-                        
-                        <!-- Energy particles -->
                         <div class="energy-particles" id="energyParticles"></div>
                         <div class="turbine-glow"></div>
                     </div>
-                    
-                    <!-- Machine Status Badge -->
                     <div class="machine-status-badge" id="machineStatusBadge">
                         <span class="status-text" id="activeMachineName">Free Miner</span>
                         <span class="status-icon"><i class="fas fa-bolt"></i></span>
@@ -146,7 +137,7 @@
                         </div>
                     </div>
                     
-                    <div class="stat-orb" id="streakOrb" onclick="showPage('casino')">
+                    <div class="stat-orb" id="streakOrb" onclick="showWheelModal()">
                         <div class="orb-glow"></div>
                         <div class="orb-content">
                             <i class="fas fa-fire"></i>
@@ -283,7 +274,7 @@
                 <h2><i class="fas fa-dice"></i> <span>Casino Games</span></h2>
                 
                 <!-- Lucky Wheel Card -->
-                <div class="casino-card" id="wheelCard" onclick="showPage('wheelGame')">
+                <div class="casino-card" id="wheelCard" onclick="showWheelGamePage()">
                     <div class="casino-card-header">
                         <span class="casino-icon">🎡</span>
                         <span class="casino-title">Lucky Wheel</span>
@@ -319,12 +310,12 @@
                         <div class="casino-jackpot">JACKPOT 100 TON</div>
                     </div>
                     <div class="casino-card-footer">
-                        <button class="casino-play-btn" onclick="event.stopPropagation(); showPage('wheelGame')">Play Now</button>
+                        <button class="casino-play-btn" onclick="event.stopPropagation(); showWheelGamePage()">Play Now</button>
                     </div>
                 </div>
 
                 <!-- Slot Machine Card -->
-                <div class="casino-card" id="slotsCard" onclick="showPage('slotsGame')">
+                <div class="casino-card" id="slotsCard" onclick="showSlotsGamePage()">
                     <div class="casino-card-header">
                         <span class="casino-icon">🎰</span>
                         <span class="casino-title">Slot Machine</span>
@@ -344,7 +335,7 @@
                         <div class="casino-jackpot">JACKPOT 100 TON</div>
                     </div>
                     <div class="casino-card-footer">
-                        <button class="casino-play-btn" onclick="event.stopPropagation(); showPage('slotsGame')">Play Now</button>
+                        <button class="casino-play-btn" onclick="event.stopPropagation(); showSlotsGamePage()">Play Now</button>
                     </div>
                 </div>
 
@@ -464,10 +455,10 @@
                 <div id="referralMilestonesContainer" class="referral-milestones-grid"></div>
             </div>
             
-            <!-- ========== WHEEL GAME PAGE - صفحة عجلة الحظ المخصصة ========== -->
+            <!-- ========== WHEEL GAME PAGE ========== -->
             <div class="page" id="wheelGamePage">
                 <div class="game-page-header">
-                    <button class="back-btn" onclick="showPage('casino')">
+                    <button class="back-btn" onclick="exitGame()">
                         <i class="fas fa-arrow-left"></i>
                     </button>
                     <h2><i class="fas fa-ferris-wheel"></i> Lucky Wheel</h2>
@@ -480,10 +471,8 @@
                 </div>
                 
                 <div class="wheel-game-container">
-                    <!-- Cosmic Background Effect -->
                     <div class="cosmic-bg"></div>
                     
-                    <!-- Main Wheel -->
                     <div class="wheel-casino-container-pro">
                         <div class="wheel-glow-ring"></div>
                         <div class="wheel-casino-pro" id="wheelCasinoPro"></div>
@@ -495,7 +484,6 @@
                         </div>
                     </div>
                     
-                    <!-- Speed & Effects Display -->
                     <div class="wheel-effects-panel">
                         <div class="speed-meter">
                             <div class="meter-label">SPEED</div>
@@ -509,26 +497,23 @@
                         </div>
                     </div>
                     
-                    <!-- Controls -->
                     <div class="game-controls-pro">
-                        <button class="game-btn free" id="wheelFreeSpin" onclick="spinWheelPro(true)">
+                        <button class="game-btn free" id="wheelFreeSpin" onclick="spinWheelVegas(true)">
                             <i class="fas fa-gift"></i>
                             <span>FREE</span>
                         </button>
-                        <button class="game-btn spin" id="wheelPaidSpin" onclick="spinWheelPro(false)">
+                        <button class="game-btn spin" id="wheelPaidSpin" onclick="spinWheelVegas(false)">
                             <i class="fas fa-play"></i>
                             <span>SPIN</span>
                             <small>0.25 TON</small>
                         </button>
                     </div>
                     
-                    <!-- Prize Legend -->
                     <div class="prize-legend">
                         <h4>🏆 Prize Segments</h4>
                         <div class="legend-grid" id="wheelPrizeLegend"></div>
                     </div>
                     
-                    <!-- Auto Spin -->
                     <div class="auto-spin-panel">
                         <label class="toggle-switch">
                             <input type="checkbox" id="wheelPageAutoSpin">
@@ -539,10 +524,10 @@
                 </div>
             </div>
 
-            <!-- ========== SLOTS GAME PAGE - صفحة السلوت المخصصة ========== -->
+            <!-- ========== SLOTS GAME PAGE ========== -->
             <div class="page" id="slotsGamePage">
                 <div class="game-page-header">
-                    <button class="back-btn" onclick="showPage('casino')">
+                    <button class="back-btn" onclick="exitGame()">
                         <i class="fas fa-arrow-left"></i>
                     </button>
                     <h2><i class="fas fa-slot-machine"></i> Slot Machine</h2>
@@ -555,10 +540,8 @@
                 </div>
                 
                 <div class="slots-game-container">
-                    <!-- Neon Background -->
                     <div class="neon-bg"></div>
                     
-                    <!-- Slots Machine -->
                     <div class="slots-machine-pro">
                         <div class="machine-frame">
                             <div class="machine-lights">
@@ -571,38 +554,34 @@
                             <div class="win-line" id="slotsWinLine"></div>
                         </div>
                         
-                        <!-- Win Display -->
                         <div class="win-display" id="slotsWinDisplay">
                             <span class="win-label">WIN</span>
                             <span class="win-amount" id="slotsWinAmount">0.00</span>
                         </div>
                     </div>
                     
-                    <!-- Controls -->
                     <div class="game-controls-pro">
-                        <button class="game-btn free" id="slotsFreeSpin" onclick="spinSlots(true, false)">
+                        <button class="game-btn free" id="slotsFreeSpin" onclick="spinSlotsVegas(true, false)">
                             <i class="fas fa-gift"></i>
                             <span>FREE</span>
                         </button>
-                        <button class="game-btn spin" id="slotsSpinBtn" onclick="spinSlots(false, false)">
+                        <button class="game-btn spin" id="slotsSpinBtn" onclick="spinSlotsVegas(false, false)">
                             <i class="fas fa-play"></i>
                             <span>SPIN</span>
                             <small>0.15 TON</small>
                         </button>
-                        <button class="game-btn turbo" id="slotsTurboBtn" onclick="spinSlots(false, true)">
+                        <button class="game-btn turbo" id="slotsTurboBtn" onclick="spinSlotsVegas(false, true)">
                             <i class="fas fa-bolt"></i>
                             <span>TURBO</span>
                             <small>0.30 TON</small>
                         </button>
                     </div>
                     
-                    <!-- Payout Table -->
                     <div class="payout-table-pro">
                         <h4>💰 Payout Table</h4>
                         <div class="payout-grid" id="slotsPayoutGrid"></div>
                     </div>
                     
-                    <!-- Auto Spin -->
                     <div class="auto-spin-panel">
                         <label class="toggle-switch">
                             <input type="checkbox" id="slotsPageAutoSpin">
@@ -665,7 +644,6 @@
                     <button class="close-btn" onclick="closeModal('swapModal')"><i class="fas fa-times"></i></button>
                 </div>
                 <div class="modal-body">
-                    <!-- From Field -->
                     <div class="swap-field">
                         <div class="swap-field-label">
                             <span>From</span>
@@ -681,12 +659,10 @@
                         </div>
                     </div>
                     
-                    <!-- Swap Arrow -->
                     <div class="swap-switch" onclick="flipSwap()">
                         <i class="fas fa-arrow-down"></i>
                     </div>
                     
-                    <!-- To Field -->
                     <div class="swap-field">
                         <div class="swap-field-label">
                             <span>To</span>
@@ -702,7 +678,6 @@
                         </div>
                     </div>
                     
-                    <!-- Rate Info -->
                     <div class="swap-info">
                         <div class="swap-info-row">
                             <span>Rate</span>
@@ -710,7 +685,6 @@
                         </div>
                     </div>
                     
-                    <!-- Confirm Button -->
                     <button class="swap-confirm-btn" onclick="confirmSwap()">
                         <i class="fas fa-exchange-alt"></i> <span>Confirm Swap</span>
                     </button>
@@ -801,7 +775,6 @@
                     </div>
                     <div class="fee-info" id="withdrawFeeInfo">Network fee: 0.0005 BNB</div>
                     
-                    <!-- Fee Currency Balance -->
                     <div class="fee-currency-balance" id="withdrawFeeCurrencyBalance">
                         Your BNB balance: 0.00 BNB
                     </div>
@@ -982,13 +955,19 @@
             </div>
         </div>
 
+        <!-- TOAST NOTIFICATION -->
+        <div class="toast-notification hidden" id="toast">
+            <i class="fa-regular fa-circle-check"></i>
+            <span id="toastMessage"></span>
+        </div>
+
         <!-- SCROLL TO TOP BUTTON -->
         <button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()">
             <i class="fas fa-arrow-up"></i>
         </button>
     </div>
 
-    <!-- JavaScript File -->
+    <!-- JavaScript File (تأكد من وجود app.js في نفس المجلد) -->
     <script src="app.js"></script>
 </body>
 </html>
