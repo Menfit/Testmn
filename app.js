@@ -1,6 +1,6 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v3000.0
-// COMPLETE EDITION - جميع الميزات مع التحسينات النهائية
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v6000.0
+// مع صفحات الألعاب المستقلة وتجربة مستخدم احترافية
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -456,7 +456,7 @@ function toggleLanguage() {
     showToast(t('messages.success'), 'success');
 }
 
-// ====== 5. MACHINES DATA - كاملة (6 مكاين) ======
+// ====== 5. MACHINES DATA ======
 const MACHINES = [
     {
         id: 'm1', name: 'Free Miner', nameAr: 'منجم مجاني',
@@ -549,9 +549,8 @@ const REFERRAL_MILESTONES = [
     { referrals: 1000, reward: 1200, unit: 'USDT' }
 ];
 
-// ====== 7. WHEEL PRIZES (18 قطاع - توزيع جديد) ======
+// ====== 7. WHEEL PRIZES ======
 const WHEEL_PRIZES = [
-    // TON (6 جوائز)
     { id: 1, type: 'TON', amount: 0.25, color: '#0088cc', weight: 8, icon: '💰', label: '0.25' },
     { id: 2, type: 'TON', amount: 0.5, color: '#0088cc', weight: 7, icon: '💰', label: '0.5' },
     { id: 3, type: 'TON', amount: 1, color: '#0088cc', weight: 6, icon: '💰', label: '1' },
@@ -559,7 +558,6 @@ const WHEEL_PRIZES = [
     { id: 5, type: 'TON', amount: 5, color: '#0088cc', weight: 4, icon: '💰', label: '5' },
     { id: 6, type: 'TON', amount: 10, color: '#0088cc', weight: 3, icon: '💰', label: '10' },
     
-    // USDT (8 جوائز)
     { id: 7, type: 'USDT', amount: 0.25, color: '#22c55e', weight: 8, icon: '💵', label: '0.25' },
     { id: 8, type: 'USDT', amount: 0.5, color: '#22c55e', weight: 7, icon: '💵', label: '0.5' },
     { id: 9, type: 'USDT', amount: 1, color: '#22c55e', weight: 6, icon: '💵', label: '1' },
@@ -569,36 +567,14 @@ const WHEEL_PRIZES = [
     { id: 13, type: 'USDT', amount: 250, color: '#22c55e', weight: 2, icon: '💎', label: '250' },
     { id: 14, type: 'USDT', amount: 500, color: '#22c55e', weight: 1, icon: '💎', label: '500' },
     
-    // JACKPOT (3 جوائز)
     { id: 15, type: 'JACKPOT', amount: 100, currency: 'TON', color: '#ef4444', weight: 1, icon: '👑', label: '100 TON', jackpot: true },
     { id: 16, type: 'JACKPOT', amount: 250, currency: 'USDT', color: '#ef4444', weight: 1, icon: '👑', label: '250 USDT', jackpot: true },
     { id: 17, type: 'JACKPOT', amount: 500, currency: 'USDT', color: '#ef4444', weight: 1, icon: '👑', label: '500 USDT', jackpot: true },
     
-    // GOOD LUCK (1 جائزة)
     { id: 18, type: 'GOODLUCK', amount: 0, color: '#94a3b8', weight: 15, icon: '🍀', label: 'GOOD LUCK', goodluck: true }
 ];
 
-// ====== 8. SLOTS PRIZES ======
-const SLOTS_SYMBOLS = ['🍒', '💎', '💰', '⭐', '👑', '7️⃣', '🎰'];
-
-const SLOTS_PRIZES = [
-    { symbols: ['🍒', '🍒', '🍒'], amount: 0.25, type: 'TON', icon: '🍒', weight: 30 },
-    { symbols: ['🍒', '🍒', '🍒'], amount: 0.25, type: 'USDT', icon: '🍒', weight: 30 },
-    { symbols: ['💎', '💎', '💎'], amount: 0.5, type: 'TON', icon: '💎', weight: 25 },
-    { symbols: ['💎', '💎', '💎'], amount: 0.5, type: 'USDT', icon: '💎', weight: 25 },
-    { symbols: ['💰', '💰', '💰'], amount: 1.0, type: 'TON', icon: '💰', weight: 20 },
-    { symbols: ['💰', '💰', '💰'], amount: 1.0, type: 'USDT', icon: '💰', weight: 20 },
-    { symbols: ['⭐', '⭐', '⭐'], amount: 2.0, type: 'TON', icon: '⭐', weight: 15 },
-    { symbols: ['⭐', '⭐', '⭐'], amount: 2.0, type: 'USDT', icon: '⭐', weight: 15 },
-    { symbols: ['👑', '👑', '👑'], amount: 5.0, type: 'TON', icon: '👑', weight: 7 },
-    { symbols: ['👑', '👑', '👑'], amount: 5.0, type: 'USDT', icon: '👑', weight: 7 },
-    { symbols: ['7️⃣', '7️⃣', '7️⃣'], amount: 10.0, type: 'TON', icon: '7️⃣', weight: 2.9 },
-    { symbols: ['7️⃣', '7️⃣', '7️⃣'], amount: 10.0, type: 'USDT', icon: '7️⃣', weight: 2.9 },
-    { symbols: ['🎰', '🎰', '🎰'], amount: 100, type: 'TON', icon: '🎰', weight: 0.1, jackpot: true },
-    { symbols: ['🎰', '🎰', '🎰'], amount: 100, type: 'USDT', icon: '🎰', weight: 0.1, jackpot: true }
-];
-
-// ====== 9. SLOTS SYMBOLS DATA (للعجلة الجديدة) ======
+// ====== 8. SLOTS SYMBOLS ======
 const SLOTS_SYMBOLS_DATA = [
     { symbol: '🍒', weight: 30, value: 0.25, type: 'USDT', color: '#ff4444' },
     { symbol: '🍋', weight: 25, value: 0.25, type: 'USDT', color: '#ffdd00' },
@@ -611,7 +587,7 @@ const SLOTS_SYMBOLS_DATA = [
     { symbol: '🎰', weight: 0.5, value: 100, type: 'TON', color: '#ff00ff', jackpot: true }
 ];
 
-// ====== 10. FIREBASE ======
+// ====== 9. FIREBASE ======
 let firebaseApp, db;
 try {
     if (typeof firebase !== 'undefined') {
@@ -624,7 +600,7 @@ try {
     console.error("Firebase error:", error);
 }
 
-// ====== 11. USER ID ======
+// ====== 10. USER ID ======
 const userId = tg?.initDataUnsafe?.user?.id?.toString() || 
                localStorage.getItem('ton_user_id') || 
                'user_' + Math.random().toString(36).substr(2, 9);
@@ -636,13 +612,12 @@ const userPhoto = tg?.initDataUnsafe?.user?.photo_url || '';
 
 localStorage.setItem('ton_user_id', userId);
 
-// ====== 12. ADMIN ======
-let isAdmin = false; // نبدأ بـ false ثم نتحقق
+// ====== 11. ADMIN ======
+let isAdmin = false;
 let adminClickCount = 0, lastAdminClick = 0;
 let currentRejectId = null, currentRejectType = null, currentRejectData = null;
 
 function checkAdminAndAddCrown() {
-    // التحقق من أن المستخدم هو المشرف الحقيقي
     if (userId === CONFIG.TON.ADMIN_ID && isAdmin) {
         const headerActions = document.querySelector('.header-actions-bottom');
         if (!headerActions) return;
@@ -667,7 +642,6 @@ function handleAvatarClick() {
     if (adminClickCount >= 5) {
         const pwd = prompt(t('admin.password'));
         
-        // التحقق من المعرف وكلمة السر معاً
         if (userId === CONFIG.TON.ADMIN_ID && pwd === CONFIG.TON.ADMIN_PASSWORD) {
             isAdmin = true;
             checkAdminAndAddCrown();
@@ -678,7 +652,7 @@ function handleAvatarClick() {
     }
 }
 
-// ====== 13. CACHE KEYS ======
+// ====== 12. CACHE KEYS ======
 const CACHE_KEYS = {
     USER: `user_${userId}`,
     TRANSACTIONS: `transactions_${userId}`,
@@ -692,7 +666,7 @@ const CACHE_KEYS = {
     BACKUPS: 'user_backups'
 };
 
-// ====== 14. USER STATE ======
+// ====== 13. USER STATE ======
 let userData = {
     uid: userId,
     username: userName,
@@ -727,6 +701,7 @@ let userData = {
         spinHistory: [],
         purchasedSpins: 0,
         autoSpin: false,
+        autoSpinCount: 0,
         packs: { p5: 0, p10: 0, p50: 0, p100: 0 }
     },
     
@@ -738,6 +713,7 @@ let userData = {
         spinHistory: [],
         purchasedSpins: 0,
         autoSpin: false,
+        autoSpinCount: 0,
         packs: { p5: 0, p10: 0, p50: 0, p100: 0 }
     },
     
@@ -766,7 +742,7 @@ let userData = {
 
 userData.balance = userData.balances.TON;
 
-// ====== 15. CACHE MANAGEMENT ======
+// ====== 14. CACHE MANAGEMENT ======
 let lastUserLoadTime = 0;
 let lastPricesLoadTime = 0;
 let lastHistoryCheckTime = 0;
@@ -849,7 +825,7 @@ function restoreFromBackup() {
     }
 }
 
-// ====== 16. ON-DEMAND LISTENERS ======
+// ====== 15. ON-DEMAND LISTENERS ======
 let activeListeners = new Map();
 let listenerTimeouts = new Map();
 
@@ -913,7 +889,1183 @@ function stopAllListeners() {
     listenerTimeouts.clear();
 }
 
-// ====== 17. LOAD USER DATA ======
+// ====== 16. GAME PAGE NAVIGATION ======
+function showWheelGame() {
+    // Hide main header and show game header
+    document.getElementById('mainHeader').style.display = 'none';
+    document.getElementById('gameHeader').style.display = 'flex';
+    document.getElementById('bottomNav').style.display = 'none';
+    
+    // Hide all main pages
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    
+    // Show wheel game page
+    document.getElementById('wheelGamePage').style.display = 'block';
+    
+    // Initialize wheel
+    initWheelLegendary();
+    
+    // Update game header balance
+    updateGameHeaderBalance();
+    
+    // Update wheel UI
+    updateWheelGameUI();
+}
+
+function showSlotsGame() {
+    // Hide main header and show game header
+    document.getElementById('mainHeader').style.display = 'none';
+    document.getElementById('gameHeader').style.display = 'flex';
+    document.getElementById('bottomNav').style.display = 'none';
+    
+    // Hide all main pages
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    
+    // Show slots game page
+    document.getElementById('slotsGamePage').style.display = 'block';
+    
+    // Initialize slots
+    initSlotsLegendary();
+    
+    // Update game header balance
+    updateGameHeaderBalance();
+    
+    // Update slots UI
+    updateSlotsGameUI();
+}
+
+function exitGame() {
+    // Show main header and bottom nav
+    document.getElementById('mainHeader').style.display = 'flex';
+    document.getElementById('gameHeader').style.display = 'none';
+    document.getElementById('bottomNav').style.display = 'flex';
+    
+    // Hide all game pages
+    document.getElementById('wheelGamePage').style.display = 'none';
+    document.getElementById('slotsGamePage').style.display = 'none';
+    
+    // Show casino page
+    showPage('casino');
+}
+
+function updateGameHeaderBalance() {
+    const gameBalanceEl = document.getElementById('gameHeaderBalance');
+    if (gameBalanceEl) {
+        gameBalanceEl.textContent = formatTON(userData.balances.TON) + ' TON';
+    }
+}
+
+// ====== 17. WHEEL GAME (المحسنة) ======
+let wheelGameState = {
+    isSpinning: false,
+    currentRotation: 0,
+    targetRotation: 0,
+    spinStartTime: 0,
+    spinDuration: 0,
+    selectedPrize: null,
+    animationId: null,
+    phase: 'idle'
+};
+
+let wheelAutoSpinTimer = null;
+
+function initWheelLegendary() {
+    const wheel = document.getElementById('wheelCasinoLegendary');
+    if (!wheel) return;
+    
+    wheel.innerHTML = '';
+    
+    const totalSegments = WHEEL_PRIZES.length;
+    const anglePerSegment = 360 / totalSegments;
+    
+    WHEEL_PRIZES.forEach((prize, index) => {
+        const segment = document.createElement('div');
+        segment.className = 'wheel-segment-legendary';
+        if (prize.jackpot) segment.classList.add('jackpot-segment');
+        
+        const gradient = getGradientForPrizeLegendary(prize);
+        const rotation = index * anglePerSegment;
+        
+        segment.style.cssText = `
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            top: 0;
+            left: 50%;
+            transform-origin: 0% 100%;
+            transform: rotate(${rotation}deg);
+            background: ${gradient};
+            clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 20px;
+            color: white;
+            font-weight: 800;
+            font-size: 0.9rem;
+            text-shadow: 0 0 10px rgba(0,0,0,0.9);
+            border-right: 2px solid rgba(255,255,255,0.3);
+            box-shadow: inset 0 0 15px rgba(255,255,255,0.1);
+            z-index: 5;
+            transition: all 0.3s ease;
+        `;
+        
+        const icon = document.createElement('span');
+        icon.textContent = prize.icon;
+        icon.style.cssText = `
+            font-size: ${prize.jackpot ? '2.2rem' : '1.8rem'};
+            filter: drop-shadow(0 0 8px ${prize.color});
+            margin-bottom: 4px;
+            animation: ${prize.jackpot ? 'jackpotPulse 0.8s infinite alternate' : 'none'};
+            display: block;
+        `;
+        
+        const label = document.createElement('span');
+        label.textContent = prize.label;
+        label.style.cssText = `
+            font-size: ${prize.jackpot ? '0.8rem' : '0.7rem'};
+            background: rgba(0,0,0,0.5);
+            padding: 2px 8px;
+            border-radius: 12px;
+            border: 1px solid ${prize.color};
+            box-shadow: 0 0 8px ${prize.color};
+            font-weight: ${prize.jackpot ? '900' : '700'};
+            color: ${prize.jackpot ? '#ffd700' : 'white'};
+        `;
+        
+        segment.appendChild(icon);
+        segment.appendChild(label);
+        wheel.appendChild(segment);
+    });
+    
+    wheelGameState.currentRotation = 0;
+    wheel.style.transform = 'rotate(0deg)';
+}
+
+function getGradientForPrizeLegendary(prize) {
+    if (prize.jackpot) {
+        return `conic-gradient(from 0deg at 0% 100%, #ff4444 0deg, #ff8800 60deg, #ff4444 120deg)`;
+    }
+    if (prize.type === 'TON') {
+        return `linear-gradient(135deg, ${prize.color} 0%, #0066aa 50%, ${prize.color} 100%)`;
+    }
+    if (prize.type === 'USDT') {
+        return `linear-gradient(135deg, ${prize.color} 0%, #1a8c4a 50%, ${prize.color} 100%)`;
+    }
+    return `linear-gradient(135deg, ${prize.color} 0%, #4a5568 100%)`;
+}
+
+function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+function easeInCubic(t) { return t * t * t; }
+
+function animateWheelLegendary() {
+    if (!wheelGameState.isSpinning) return;
+    
+    const now = Date.now();
+    const elapsed = now - wheelGameState.spinStartTime;
+    const wheel = document.getElementById('wheelCasinoLegendary');
+    
+    let velocity = 0;
+    
+    if (elapsed < 800) {
+        // Acceleration phase
+        wheelGameState.phase = 'accelerating';
+        velocity = easeOutCubic(elapsed / 800) * 22;
+        
+    } else if (elapsed < wheelGameState.spinDuration - 2500) {
+        // Max speed with wobble
+        wheelGameState.phase = 'spinning';
+        velocity = 20 + Math.sin(elapsed * 0.008) * 3;
+        wheel.classList.add('spinning-fast');
+        
+    } else if (elapsed < wheelGameState.spinDuration) {
+        // Deceleration
+        wheelGameState.phase = 'decelerating';
+        wheel.classList.remove('spinning-fast');
+        
+        const remaining = wheelGameState.spinDuration - elapsed;
+        velocity = easeInCubic(remaining / 2500) * 20;
+        
+        if (!wheelGameState.selectedPrize) {
+            wheelGameState.selectedPrize = selectWheelPrizeLegendary();
+            const segmentAngle = 360 / WHEEL_PRIZES.length;
+            const prizeIndex = WHEEL_PRIZES.indexOf(wheelGameState.selectedPrize);
+            
+            const targetAngle = 270 - (prizeIndex * segmentAngle + segmentAngle / 2);
+            const extraSpins = 5 + Math.floor(Math.random() * 4);
+            
+            wheelGameState.targetRotation = wheelGameState.currentRotation + 
+                (extraSpins * 360) + 
+                ((targetAngle - (wheelGameState.currentRotation % 360) + 360) % 360);
+        }
+        
+    } else {
+        // Stop
+        wheelGameState.phase = 'stopping';
+        velocity = 0;
+        wheelGameState.isSpinning = false;
+        
+        wheel.style.animation = 'wheelBounce 0.4s ease';
+        setTimeout(() => wheel.style.animation = '', 400);
+        
+        highlightWinningSegmentLegendary();
+        
+        setTimeout(() => {
+            awardWheelPrizeLegendary(wheelGameState.selectedPrize);
+        }, 600);
+        
+        cancelAnimationFrame(wheelGameState.animationId);
+        return;
+    }
+    
+    wheelGameState.currentRotation += velocity;
+    wheel.style.transform = `rotate(${wheelGameState.currentRotation}deg)`;
+    
+    wheelGameState.animationId = requestAnimationFrame(animateWheelLegendary);
+}
+
+function selectWheelPrizeLegendary() {
+    const isJackpot = userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY === 0;
+    const eligible = isJackpot ? WHEEL_PRIZES.filter(p => p.jackpot) : WHEEL_PRIZES;
+    
+    const totalWeight = eligible.reduce((s, p) => s + p.weight, 0);
+    let rand = Math.random() * totalWeight;
+    
+    for (const prize of eligible) {
+        rand -= prize.weight;
+        if (rand <= 0) return prize;
+    }
+    return eligible[0];
+}
+
+function highlightWinningSegmentLegendary() {
+    const segments = document.querySelectorAll('.wheel-segment-legendary');
+    const prizeIndex = WHEEL_PRIZES.indexOf(wheelGameState.selectedPrize);
+    
+    segments.forEach((seg, idx) => {
+        if (idx === prizeIndex) {
+            seg.style.filter = 'brightness(1.8) drop-shadow(0 0 30px gold)';
+            seg.style.transform = seg.style.transform + ' scale(1.08)';
+            seg.style.zIndex = '15';
+            seg.style.transition = 'all 0.5s ease';
+            
+            seg.animate([
+                { filter: 'brightness(1.8) drop-shadow(0 0 30px gold)' },
+                { filter: 'brightness(2.5) drop-shadow(0 0 50px gold)' },
+                { filter: 'brightness(1.8) drop-shadow(0 0 30px gold)' }
+            ], {
+                duration: 600,
+                iterations: 3
+            });
+        } else {
+            seg.style.filter = 'brightness(0.4) saturate(0.5)';
+            seg.style.opacity = '0.6';
+        }
+    });
+    
+    setTimeout(() => {
+        segments.forEach(seg => {
+            seg.style.filter = '';
+            seg.style.opacity = '';
+            seg.style.transform = seg.style.transform.replace(' scale(1.08)', '');
+            seg.style.zIndex = '5';
+        });
+    }, 2500);
+}
+
+function showGameWinMessage(message, type = 'normal') {
+    const winMessage = document.getElementById('wheelWinMessage');
+    const winText = document.getElementById('wheelWinText');
+    
+    if (!winMessage || !winText) return;
+    
+    winText.textContent = message;
+    winMessage.className = 'game-win-message';
+    winMessage.classList.add(type);
+    winMessage.classList.remove('hidden');
+    
+    setTimeout(() => {
+        winMessage.classList.add('hidden');
+    }, 3000);
+}
+
+function createJackpotExplosionLegendary() {
+    const container = document.getElementById('jackpotExplosion');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    const colors = ['#ffd700', '#ff8800', '#ff4444', '#00f2ff', '#ffffff'];
+    
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'explosion-particle';
+        
+        const angle = (Math.PI * 2 * i) / 30;
+        const velocity = 100 + Math.random() * 150;
+        const tx = Math.cos(angle) * velocity;
+        const ty = Math.sin(angle) * velocity;
+        
+        particle.style.cssText = `
+            position: absolute;
+            width: ${8 + Math.random() * 12}px;
+            height: ${8 + Math.random() * 12}px;
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            border-radius: 50%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px currentColor;
+            animation: particleExplode 1s ease-out forwards;
+            --tx: ${tx}px;
+            --ty: ${ty}px;
+        `;
+        
+        container.appendChild(particle);
+    }
+    
+    setTimeout(() => {
+        container.innerHTML = '';
+    }, 1500);
+}
+
+function awardWheelPrizeLegendary(prize) {
+    userData.wheel.lastWin = { prize, timestamp: Date.now() };
+    userData.wheel.jackpotCounter++;
+    
+    let prizeText = '';
+    let winType = 'normal';
+    
+    if (prize.type === 'TON') {
+        userData.balances.TON += prize.amount;
+        userData.balance = userData.balances.TON;
+        userData.totalEarned += prize.amount;
+        addTransaction('wheel', prize.amount, { currency: 'TON' });
+        prizeText = `${prize.amount} TON`;
+        if (prize.amount >= 5) winType = 'big';
+        if (prize.amount >= 50) winType = 'jackpot';
+        
+    } else if (prize.type === 'USDT') {
+        userData.balances.USDT += prize.amount;
+        addTransaction('wheel', prize.amount, { currency: 'USDT' });
+        prizeText = `${prize.amount} USDT`;
+        if (prize.amount >= 10) winType = 'big';
+        if (prize.amount >= 100) winType = 'jackpot';
+        
+    } else if (prize.jackpot) {
+        const currency = prize.currency || 'TON';
+        if (currency === 'TON') {
+            userData.balances.TON += prize.amount;
+            userData.balance = userData.balances.TON;
+        } else {
+            userData.balances.USDT += prize.amount;
+        }
+        userData.totalEarned += prize.amount;
+        addTransaction('wheel', prize.amount, { currency, jackpot: true });
+        prizeText = `${prize.amount} ${currency} JACKPOT!`;
+        winType = 'jackpot';
+        userData.wheel.jackpotWon++;
+        createJackpotExplosionLegendary();
+        
+    } else if (prize.type === 'GOODLUCK') {
+        showGameWinMessage('🍀 GOOD LUCK!', 'normal');
+        hapticFeedback('light');
+        saveUserToCache();
+        updateUI();
+        updateWheelGameUI();
+        return;
+    }
+    
+    showGameWinMessage(prizeText, winType);
+    
+    if (winType === 'jackpot') {
+        hapticFeedback('heavy');
+    } else if (winType === 'big') {
+        hapticFeedback('medium');
+    } else {
+        hapticFeedback('light');
+    }
+    
+    saveUserToCache();
+    updateUI();
+    updateGameHeaderBalance();
+    updateWheelGameUI();
+}
+
+async function spinWheelGame(isFree = false) {
+    if (wheelGameState.isSpinning) return;
+    
+    if (isFree) {
+        const now = Date.now();
+        const nextFree = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
+        if (now < nextFree) {
+            const left = nextFree - now;
+            const h = Math.floor(left / 3600000);
+            const m = Math.floor((left % 3600000) / 60000);
+            showToast(`⏰ Wait ${h}h ${m}m for free spin`, 'warning');
+            return;
+        }
+        userData.wheel.lastFreeSpin = now;
+    } else {
+        if (userData.wheel.purchasedSpins > 0) {
+            userData.wheel.purchasedSpins--;
+        } else if (userData.balances.TON >= CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
+            userData.balances.TON -= CONFIG.ECONOMY.WHEEL_SPIN_PRICE;
+            userData.balance = userData.balances.TON;
+        } else {
+            showToast(`❌ Need ${CONFIG.ECONOMY.WHEEL_SPIN_PRICE} TON`, 'error');
+            return;
+        }
+    }
+    
+    // Reset wheel state
+    wheelGameState.isSpinning = true;
+    wheelGameState.spinStartTime = Date.now();
+    wheelGameState.spinDuration = 5500 + Math.random() * 1500;
+    wheelGameState.selectedPrize = null;
+    wheelGameState.phase = 'accelerating';
+    
+    // Clean up highlights
+    document.querySelectorAll('.wheel-segment-legendary').forEach(seg => {
+        seg.style.filter = '';
+        seg.style.opacity = '';
+        seg.style.transform = seg.style.transform.replace(/ scale\([^)]+\)/, '');
+    });
+    
+    // Hide any existing win message
+    document.getElementById('wheelWinMessage')?.classList.add('hidden');
+    
+    wheelGameState.animationId = requestAnimationFrame(animateWheelLegendary);
+    
+    userData.wheel.totalSpins++;
+    userData.wheel.spinHistory.push({ timestamp: Date.now(), isFree });
+    
+    saveUserToCache();
+    updateGameHeaderBalance();
+    updateWheelGameUI();
+    hapticFeedback('light');
+}
+
+function updateWheelGameUI() {
+    // Update streak
+    const streakEl = document.getElementById('wheelGameStreak');
+    if (streakEl) {
+        streakEl.textContent = `${userData.streak} DAYS | BEST: ${userData.longestStreak}`;
+    }
+    
+    // Update spins
+    const spinsEl = document.getElementById('wheelGameSpins');
+    if (spinsEl) {
+        spinsEl.textContent = userData.wheel.purchasedSpins || 0;
+    }
+    
+    // Update free timer
+    const freeTimerEl = document.getElementById('wheelGameFreeTimer');
+    const freeBtn = document.getElementById('wheelFreeSpinBtn');
+    const freeTimer = document.getElementById('wheelFreeTimer');
+    
+    if (freeTimerEl && freeBtn && freeTimer) {
+        const now = Date.now();
+        const next = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
+        
+        if (now < next) {
+            const left = next - now;
+            const h = Math.floor(left / 3600000);
+            const m = Math.floor((left % 3600000) / 60000);
+            const timeText = `${h}h ${m}m`;
+            freeTimerEl.textContent = `Free in: ${timeText}`;
+            freeTimer.textContent = timeText;
+            freeBtn.disabled = true;
+        } else {
+            freeTimerEl.textContent = 'Free spin available!';
+            freeTimer.textContent = 'READY';
+            freeBtn.disabled = false;
+        }
+    }
+    
+    // Update jackpot progress
+    const jackpotFill = document.getElementById('wheelJackpotFill');
+    const jackpotCounter = document.getElementById('wheelJackpotCounter');
+    
+    if (jackpotFill && jackpotCounter) {
+        const progress = (userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY) / CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY * 100;
+        const spinsLeft = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - (userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY);
+        
+        jackpotFill.style.width = `${progress}%`;
+        jackpotCounter.textContent = `${spinsLeft}/${CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY} spins until jackpot`;
+    }
+    
+    // Update auto spin checkbox
+    const autoSpinCheck = document.getElementById('wheelAutoSpinToggle');
+    if (autoSpinCheck) {
+        autoSpinCheck.checked = userData.wheel.autoSpin || false;
+    }
+}
+
+function toggleWheelPanel() {
+    const panel = document.getElementById('wheelPanelContent');
+    const chevron = document.getElementById('wheelPanelChevron');
+    const header = document.querySelector('.panel-header');
+    
+    if (panel.style.display === 'none') {
+        panel.style.display = 'block';
+        chevron.style.transform = 'rotate(0deg)';
+        header.classList.remove('collapsed');
+    } else {
+        panel.style.display = 'none';
+        chevron.style.transform = 'rotate(-90deg)';
+        header.classList.add('collapsed');
+    }
+}
+
+function toggleWheelAutoSpin() {
+    const checkbox = document.getElementById('wheelAutoSpinToggle');
+    if (checkbox) {
+        userData.wheel.autoSpin = checkbox.checked;
+        saveUserToCache();
+        
+        if (userData.wheel.autoSpin) {
+            document.getElementById('autoSpinOptions').style.display = 'flex';
+        } else {
+            document.getElementById('autoSpinOptions').style.display = 'none';
+            stopWheelAutoSpin();
+        }
+    }
+}
+
+function setWheelAutoSpins(count) {
+    userData.wheel.autoSpinCount = count;
+    saveUserToCache();
+    
+    if (count === 0) {
+        showToast('Auto Spin will run until stopped', 'info');
+    } else {
+        showToast(`Auto Spin set to ${count} spins`, 'success');
+    }
+    
+    if (!wheelAutoSpinTimer) {
+        startWheelAutoSpin();
+    }
+}
+
+function startWheelAutoSpin() {
+    if (wheelAutoSpinTimer) clearInterval(wheelAutoSpinTimer);
+    
+    wheelAutoSpinTimer = setInterval(() => {
+        if (!userData.wheel.autoSpin) {
+            stopWheelAutoSpin();
+            return;
+        }
+        
+        if (userData.wheel.purchasedSpins > 0 || userData.balances.TON >= CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
+            spinWheelGame(false);
+            
+            if (userData.wheel.autoSpinCount > 0) {
+                userData.wheel.autoSpinCount--;
+                if (userData.wheel.autoSpinCount <= 0) {
+                    userData.wheel.autoSpin = false;
+                    document.getElementById('wheelAutoSpinToggle').checked = false;
+                    document.getElementById('autoSpinOptions').style.display = 'none';
+                    stopWheelAutoSpin();
+                    showToast('Auto Spin completed', 'info');
+                }
+            }
+        } else {
+            userData.wheel.autoSpin = false;
+            document.getElementById('wheelAutoSpinToggle').checked = false;
+            document.getElementById('autoSpinOptions').style.display = 'none';
+            stopWheelAutoSpin();
+            showToast('Auto Spin stopped: No spins left', 'info');
+        }
+    }, 4000);
+}
+
+function stopWheelAutoSpin() {
+    if (wheelAutoSpinTimer) {
+        clearInterval(wheelAutoSpinTimer);
+        wheelAutoSpinTimer = null;
+    }
+}
+
+// ====== 18. WHEEL PACKS ======
+async function buyWheelPack(pack) {
+    let spins, price, bonus;
+    switch(pack) {
+        case 'p5': spins = 5; price = CONFIG.ECONOMY.WHEEL_PACK_5.price; bonus = 0; break;
+        case 'p10': spins = 10; price = CONFIG.ECONOMY.WHEEL_PACK_10.price; bonus = 1; break;
+        case 'p50': spins = 50; price = CONFIG.ECONOMY.WHEEL_PACK_50.price; bonus = 5; break;
+        case 'p100': spins = 100; price = CONFIG.ECONOMY.WHEEL_PACK_100.price; bonus = 10; break;
+        default: return;
+    }
+    
+    const totalSpins = spins + bonus;
+    
+    if (!confirm(t('pack.confirm', { spins: totalSpins, price }))) {
+        return;
+    }
+    
+    if (!tonConnectUI || !tonWallet) {
+        showToast('Please connect your TON wallet first', 'error');
+        return;
+    }
+    
+    try {
+        showToast('Opening wallet...', 'info');
+        
+        const tx = {
+            validUntil: Date.now() + 600000,
+            messages: [{
+                address: CONFIG.TON.WALLET,
+                amount: (price * 1e9).toString()
+            }]
+        };
+        
+        const result = await tonConnectUI.sendTransaction(tx);
+        
+        showToast('Payment sent! Waiting for confirmation...', 'info');
+        
+        setTimeout(() => {
+            if (!userData.wheel.purchasedSpins) userData.wheel.purchasedSpins = 0;
+            userData.wheel.purchasedSpins += totalSpins;
+            
+            addTransaction('wheel_pack', price, { 
+                currency: 'TON', 
+                details: `Bought ${pack} pack: ${spins} spins + ${bonus} bonus` 
+            });
+            
+            saveUserToCache();
+            showToast(t('pack.success', { spins: totalSpins }), 'success');
+            updateWheelGameUI();
+            updateGameHeaderBalance();
+        }, 3000);
+        
+    } catch (e) {
+        console.error("Payment error:", e);
+        showToast(t('error.payment'), 'error');
+    }
+}
+
+// ====== 19. SLOTS GAME (المحسنة) ======
+let slotsGameState = {
+    isSpinning: false,
+    reels: [
+        { symbols: [], position: 0, targetPosition: 0, speed: 0, stopping: false },
+        { symbols: [], position: 0, targetPosition: 0, speed: 0, stopping: false },
+        { symbols: [], position: 0, targetPosition: 0, speed: 0, stopping: false }
+    ],
+    animationId: null,
+    spinStartTime: 0
+};
+
+let slotsAutoSpinTimer = null;
+
+function generateReelStripLegendary() {
+    const strip = [];
+    const totalWeight = SLOTS_SYMBOLS_DATA.reduce((s, item) => s + item.weight, 0);
+    
+    for (let i = 0; i < 100; i++) {
+        let random = Math.random() * totalWeight;
+        for (const item of SLOTS_SYMBOLS_DATA) {
+            random -= item.weight;
+            if (random <= 0) {
+                strip.push({ ...item });
+                break;
+            }
+        }
+    }
+    return strip;
+}
+
+function initSlotsLegendary() {
+    const container = document.getElementById('slotsReelsLegendary');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    for (let i = 0; i < 3; i++) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'slot-reel-wrapper-legendary';
+        
+        const reel = document.createElement('div');
+        reel.className = 'slot-reel-legendary';
+        reel.id = `slot-reel-${i}`;
+        
+        const strip = generateReelStripLegendary();
+        slotsGameState.reels[i].symbols = strip;
+        slotsGameState.reels[i].position = Math.floor(Math.random() * 50);
+        
+        strip.forEach((item) => {
+            const symbolEl = document.createElement('div');
+            symbolEl.className = 'slot-symbol-legendary';
+            symbolEl.textContent = item.symbol;
+            symbolEl.style.color = item.color;
+            reel.appendChild(symbolEl);
+        });
+        
+        wrapper.appendChild(reel);
+        container.appendChild(wrapper);
+        updateReelPositionLegendary(i);
+    }
+}
+
+function updateReelPositionLegendary(reelIndex) {
+    const reel = document.getElementById(`slot-reel-${reelIndex}`);
+    if (!reel) return;
+    
+    const symbolHeight = 90;
+    const position = slotsGameState.reels[reelIndex].position;
+    
+    reel.style.transform = `translateY(-${position * symbolHeight}px)`;
+}
+
+function animateReelsLegendary() {
+    if (!slotsGameState.isSpinning) return;
+    
+    const now = Date.now();
+    const elapsed = now - slotsGameState.spinStartTime;
+    
+    let allStopped = true;
+    
+    for (let i = 0; i < 3; i++) {
+        const reel = slotsGameState.reels[i];
+        const reelWrapper = document.querySelectorAll('.slot-reel-wrapper-legendary')[i];
+        
+        if (!reel.stopping) {
+            if (elapsed < 300) {
+                reel.speed = Math.min(reel.speed + 2, 30 + i * 5);
+            } else if (elapsed < 1500 + i * 400) {
+                reel.speed = 30 + i * 5;
+                if (reelWrapper) reelWrapper.classList.add('spinning');
+            } else {
+                reel.stopping = true;
+                const targetIndex = Math.floor(Math.random() * reel.symbols.length);
+                reel.targetPosition = targetIndex + Math.floor(reel.position / reel.symbols.length) * reel.symbols.length;
+            }
+            allStopped = false;
+        } else {
+            const distanceToTarget = reel.targetPosition - reel.position;
+            
+            if (Math.abs(distanceToTarget) < 0.3) {
+                reel.position = reel.targetPosition;
+                reel.speed = 0;
+                if (reelWrapper) {
+                    reelWrapper.classList.remove('spinning');
+                }
+                hapticFeedback(i === 2 ? 'medium' : 'light');
+            } else {
+                reel.speed *= 0.92;
+                if (reel.speed < 0.3) reel.speed = 0.3;
+                
+                const direction = distanceToTarget > 0 ? 1 : -1;
+                reel.position += reel.speed * direction * 0.15;
+                allStopped = false;
+            }
+        }
+        
+        if (reel.speed > 0 && !reel.stopping) {
+            reel.position += reel.speed * 0.1;
+            if (reel.position >= reel.symbols.length * 100) {
+                reel.position -= reel.symbols.length;
+            }
+        }
+        
+        updateReelPositionLegendary(i);
+    }
+    
+    if (allStopped && slotsGameState.isSpinning) {
+        slotsGameState.isSpinning = false;
+        cancelAnimationFrame(slotsGameState.animationId);
+        setTimeout(checkSlotsWinLegendary, 300);
+        return;
+    }
+    
+    slotsGameState.animationId = requestAnimationFrame(animateReelsLegendary);
+}
+
+function showSlotsWinMessage(message, type = 'normal') {
+    const winMessage = document.getElementById('slotsWinMessage');
+    const winText = document.getElementById('slotsWinText');
+    
+    if (!winMessage || !winText) return;
+    
+    winText.textContent = message;
+    winMessage.className = 'game-win-message';
+    winMessage.classList.add(type);
+    winMessage.classList.remove('hidden');
+    
+    setTimeout(() => {
+        winMessage.classList.add('hidden');
+    }, 3000);
+}
+
+function checkSlotsWinLegendary() {
+    const visibleSymbols = [];
+    for (let i = 0; i < 3; i++) {
+        const reel = slotsGameState.reels[i];
+        const centerIndex = Math.floor(reel.position) % reel.symbols.length;
+        visibleSymbols.push(reel.symbols[centerIndex]);
+    }
+    
+    // Highlight visible symbols
+    for (let i = 0; i < 3; i++) {
+        const reel = document.getElementById(`slot-reel-${i}`);
+        if (!reel) continue;
+        
+        const symbols = reel.querySelectorAll('.slot-symbol-legendary');
+        const centerIndex = Math.floor(slotsGameState.reels[i].position) % slotsGameState.reels[i].symbols.length;
+        
+        symbols.forEach((sym, idx) => {
+            if (idx === centerIndex) {
+                sym.style.filter = 'brightness(1.2)';
+            } else {
+                sym.style.filter = 'brightness(0.7)';
+            }
+        });
+    }
+    
+    const allMatch = visibleSymbols[0].symbol === visibleSymbols[1].symbol && 
+                     visibleSymbols[1].symbol === visibleSymbols[2].symbol;
+    
+    const twoMatch = visibleSymbols[0].symbol === visibleSymbols[1].symbol || 
+                     visibleSymbols[1].symbol === visibleSymbols[2].symbol ||
+                     visibleSymbols[0].symbol === visibleSymbols[2].symbol;
+    
+    if (allMatch) {
+        const winData = visibleSymbols[0];
+        const winAmount = winData.value;
+        
+        document.getElementById('winLine').classList.add('active');
+        
+        if (winData.type === 'TON') {
+            userData.balances.TON += winAmount;
+            userData.balance = userData.balances.TON;
+        } else {
+            userData.balances.USDT += winAmount;
+        }
+        userData.totalEarned += winAmount;
+        
+        if (winData.jackpot) {
+            showSlotsWinMessage(`JACKPOT! ${winAmount} TON`, 'jackpot');
+            hapticFeedback('heavy');
+            createSlotsWinParticles();
+        } else if (winAmount >= 10) {
+            showSlotsWinMessage(`BIG WIN! ${winAmount} ${winData.type}`, 'big');
+            hapticFeedback('medium');
+        } else {
+            showSlotsWinMessage(`YOU WON ${winAmount} ${winData.type}!`, 'normal');
+            hapticFeedback('light');
+        }
+        
+        highlightWinningSymbolsLegendary();
+        
+        addTransaction('slots', winAmount, { 
+            currency: winData.type,
+            symbols: visibleSymbols.map(s => s.symbol).join('')
+        });
+        
+    } else if (twoMatch) {
+        showSlotsWinMessage('Two matching symbols!', 'normal');
+        hapticFeedback('light');
+    } else {
+        showSlotsWinMessage('Try again!', 'normal');
+    }
+    
+    saveUserToCache();
+    updateUI();
+    updateGameHeaderBalance();
+    
+    // Auto spin
+    if (userData.slots.autoSpin && !isFree) {
+        setTimeout(() => spinSlotsGame(false, false), 2000);
+    }
+}
+
+function highlightWinningSymbolsLegendary() {
+    for (let i = 0; i < 3; i++) {
+        const reel = document.getElementById(`slot-reel-${i}`);
+        if (!reel) continue;
+        
+        const symbols = reel.querySelectorAll('.slot-symbol-legendary');
+        const centerIndex = Math.floor(slotsGameState.reels[i].position) % slotsGameState.reels[i].symbols.length;
+        
+        symbols.forEach((sym, idx) => {
+            if (idx === centerIndex) {
+                sym.classList.add('winning-symbol');
+                setTimeout(() => sym.classList.remove('winning-symbol'), 2000);
+            }
+        });
+    }
+}
+
+function createSlotsWinParticles() {
+    const container = document.querySelector('.slots-game-container');
+    if (!container) return;
+    
+    const particlesContainer = document.createElement('div');
+    particlesContainer.className = 'particles-container';
+    container.appendChild(particlesContainer);
+    
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle-win';
+        particle.style.cssText = `
+            position: absolute;
+            width: ${6 + Math.random() * 10}px;
+            height: ${6 + Math.random() * 10}px;
+            background: ${['#ffdd00', '#ff6600', '#00f2ff', '#ff00ff'][Math.floor(Math.random() * 4)]};
+            border-radius: 50%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px currentColor;
+            animation: particleExplode 1s ease-out forwards;
+            --tx: ${(Math.random() - 0.5) * 200}px;
+            --ty: ${(Math.random() - 0.5) * 200}px;
+        `;
+        particlesContainer.appendChild(particle);
+    }
+    
+    setTimeout(() => particlesContainer.remove(), 1500);
+}
+
+async function spinSlotsGame(isFree = false, isTurbo = false) {
+    if (slotsGameState.isSpinning) return;
+    
+    const price = isTurbo ? CONFIG.ECONOMY.SLOTS_TURBO_PRICE : CONFIG.ECONOMY.SLOTS_SPIN_PRICE;
+    
+    if (isFree) {
+        const now = Date.now();
+        if (now < userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL) {
+            const left = (userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL) - now;
+            const h = Math.floor(left / 3600000);
+            const m = Math.floor((left % 3600000) / 60000);
+            showToast(`⏰ Wait ${h}h ${m}m for free spin`, 'warning');
+            return;
+        }
+        userData.slots.lastFreeSpin = now;
+    } else {
+        if (userData.slots.purchasedSpins > 0) {
+            userData.slots.purchasedSpins--;
+        } else if (userData.balances.TON >= price) {
+            userData.balances.TON -= price;
+            userData.balance = userData.balances.TON;
+        } else {
+            showToast(t('error.insufficient', { amount: price }), 'error');
+            return;
+        }
+    }
+    
+    // Initialize spin
+    slotsGameState.isSpinning = true;
+    slotsGameState.spinStartTime = Date.now();
+    
+    for (let i = 0; i < 3; i++) {
+        slotsGameState.reels[i].stopping = false;
+        slotsGameState.reels[i].speed = 5;
+        slotsGameState.reels[i].targetPosition = 0;
+    }
+    
+    document.getElementById('winLine').classList.remove('active');
+    document.getElementById('slotsWinMessage')?.classList.add('hidden');
+    
+    slotsGameState.animationId = requestAnimationFrame(animateReelsLegendary);
+    
+    userData.slots.totalSpins++;
+    userData.slots.spinHistory.push({ timestamp: Date.now(), isFree, isTurbo });
+    
+    saveUserToCache();
+    updateGameHeaderBalance();
+    updateSlotsGameUI();
+}
+
+function updateSlotsGameUI() {
+    // Update streak
+    const streakEl = document.getElementById('slotsGameStreak');
+    if (streakEl) {
+        streakEl.textContent = `${userData.streak} DAYS | BEST: ${userData.longestStreak}`;
+    }
+    
+    // Update spins
+    const spinsEl = document.getElementById('slotsGameSpins');
+    if (spinsEl) {
+        spinsEl.textContent = userData.slots.purchasedSpins || 0;
+    }
+    
+    // Update free timer
+    const freeTimerEl = document.getElementById('slotsGameFreeTimer');
+    const freeBtn = document.getElementById('slotsFreeSpinBtn');
+    const freeTimer = document.getElementById('slotsFreeTimer');
+    
+    if (freeTimerEl && freeBtn && freeTimer) {
+        const now = Date.now();
+        const next = userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
+        
+        if (now < next) {
+            const left = next - now;
+            const h = Math.floor(left / 3600000);
+            const m = Math.floor((left % 3600000) / 60000);
+            const timeText = `${h}h ${m}m`;
+            freeTimerEl.textContent = `Free in: ${timeText}`;
+            freeTimer.textContent = timeText;
+            freeBtn.disabled = true;
+        } else {
+            freeTimerEl.textContent = 'Free spin available!';
+            freeTimer.textContent = 'READY';
+            freeBtn.disabled = false;
+        }
+    }
+    
+    // Update auto spin checkbox
+    const autoSpinCheck = document.getElementById('slotsAutoSpinToggle');
+    if (autoSpinCheck) {
+        autoSpinCheck.checked = userData.slots.autoSpin || false;
+    }
+}
+
+function toggleSlotsPanel() {
+    const panel = document.getElementById('slotsPanelContent');
+    const chevron = document.getElementById('slotsPanelChevron');
+    const header = document.querySelectorAll('.panel-header')[1];
+    
+    if (panel.style.display === 'none') {
+        panel.style.display = 'block';
+        chevron.style.transform = 'rotate(0deg)';
+        header.classList.remove('collapsed');
+    } else {
+        panel.style.display = 'none';
+        chevron.style.transform = 'rotate(-90deg)';
+        header.classList.add('collapsed');
+    }
+}
+
+function toggleSlotsAutoSpin() {
+    const checkbox = document.getElementById('slotsAutoSpinToggle');
+    if (checkbox) {
+        userData.slots.autoSpin = checkbox.checked;
+        saveUserToCache();
+        
+        if (userData.slots.autoSpin) {
+            document.getElementById('slotsAutoSpinOptions').style.display = 'flex';
+        } else {
+            document.getElementById('slotsAutoSpinOptions').style.display = 'none';
+            stopSlotsAutoSpin();
+        }
+    }
+}
+
+function setSlotsAutoSpins(count) {
+    userData.slots.autoSpinCount = count;
+    saveUserToCache();
+    
+    if (count === 0) {
+        showToast('Auto Spin will run until stopped', 'info');
+    } else {
+        showToast(`Auto Spin set to ${count} spins`, 'success');
+    }
+    
+    if (!slotsAutoSpinTimer) {
+        startSlotsAutoSpin();
+    }
+}
+
+function startSlotsAutoSpin() {
+    if (slotsAutoSpinTimer) clearInterval(slotsAutoSpinTimer);
+    
+    slotsAutoSpinTimer = setInterval(() => {
+        if (!userData.slots.autoSpin) {
+            stopSlotsAutoSpin();
+            return;
+        }
+        
+        if (userData.slots.purchasedSpins > 0 || userData.balances.TON >= CONFIG.ECONOMY.SLOTS_SPIN_PRICE) {
+            spinSlotsGame(false, false);
+            
+            if (userData.slots.autoSpinCount > 0) {
+                userData.slots.autoSpinCount--;
+                if (userData.slots.autoSpinCount <= 0) {
+                    userData.slots.autoSpin = false;
+                    document.getElementById('slotsAutoSpinToggle').checked = false;
+                    document.getElementById('slotsAutoSpinOptions').style.display = 'none';
+                    stopSlotsAutoSpin();
+                    showToast('Auto Spin completed', 'info');
+                }
+            }
+        } else {
+            userData.slots.autoSpin = false;
+            document.getElementById('slotsAutoSpinToggle').checked = false;
+            document.getElementById('slotsAutoSpinOptions').style.display = 'none';
+            stopSlotsAutoSpin();
+            showToast('Auto Spin stopped: No spins left', 'info');
+        }
+    }, 3000);
+}
+
+function stopSlotsAutoSpin() {
+    if (slotsAutoSpinTimer) {
+        clearInterval(slotsAutoSpinTimer);
+        slotsAutoSpinTimer = null;
+    }
+}
+
+// ====== 20. SLOTS PACKS ======
+async function buySlotsPack(pack) {
+    let spins, price, bonus;
+    switch(pack) {
+        case 'p5': spins = 5; price = CONFIG.ECONOMY.SLOTS_PACK_5.price; bonus = 0; break;
+        case 'p10': spins = 10; price = CONFIG.ECONOMY.SLOTS_PACK_10.price; bonus = 1; break;
+        case 'p50': spins = 50; price = CONFIG.ECONOMY.SLOTS_PACK_50.price; bonus = 5; break;
+        case 'p100': spins = 100; price = CONFIG.ECONOMY.SLOTS_PACK_100.price; bonus = 10; break;
+        default: return;
+    }
+    
+    const totalSpins = spins + bonus;
+    
+    if (!confirm(t('pack.confirm', { spins: totalSpins, price }))) {
+        return;
+    }
+    
+    if (!tonConnectUI || !tonWallet) {
+        showToast('Please connect your TON wallet first', 'error');
+        return;
+    }
+    
+    try {
+        showToast('Opening wallet...', 'info');
+        
+        const tx = {
+            validUntil: Date.now() + 600000,
+            messages: [{
+                address: CONFIG.TON.WALLET,
+                amount: (price * 1e9).toString()
+            }]
+        };
+        
+        const result = await tonConnectUI.sendTransaction(tx);
+        
+        showToast('Payment sent! Waiting for confirmation...', 'info');
+        
+        setTimeout(() => {
+            if (!userData.slots.purchasedSpins) userData.slots.purchasedSpins = 0;
+            userData.slots.purchasedSpins += totalSpins;
+            
+            addTransaction('slots_pack', price, { 
+                currency: 'TON', 
+                details: `Bought ${pack} pack: ${spins} spins + ${bonus} bonus` 
+            });
+            
+            saveUserToCache();
+            showToast(t('pack.success', { spins: totalSpins }), 'success');
+            updateSlotsGameUI();
+            updateGameHeaderBalance();
+        }, 3000);
+        
+    } catch (e) {
+        console.error("Payment error:", e);
+        showToast(t('error.payment'), 'error');
+    }
+}
+
+// ====== 21. LOAD USER DATA ======
 async function loadUserData(force = false) {
     try {
         console.log("📂 Loading user data for:", userId);
@@ -929,7 +2081,6 @@ async function loadUserData(force = false) {
             } catch (e) {}
         }
         
-        // التأكد من وجود referralCode
         if (!userData.referralCode) {
             userData.referralCode = generateReferralCode();
         }
@@ -993,13 +2144,11 @@ async function loadUserData(force = false) {
     }
 }
 
-// دالة تحديث عرض المستخدم
 function updateUserDisplay() {
     const usernameEl = document.getElementById('username');
     const userIdEl = document.getElementById('userId');
     
     if (usernameEl) {
-        // استخدام بيانات تليجرام الحقيقية
         usernameEl.textContent = tg?.initDataUnsafe?.user?.first_name || 
                                 userFirstName || 
                                 'Crypto Miner';
@@ -1015,7 +2164,7 @@ function updateUserDisplay() {
     }
 }
 
-// ====== 18. REFERRAL SYSTEM ======
+// ====== 22. REFERRAL SYSTEM ======
 function generateReferralCode() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     return userId.slice(-4) + Array.from({length:6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
@@ -1112,7 +2261,7 @@ async function processReferralMiningBonus(referralId, miningAmount) {
     addLocalNotification(t('notif.referralMiningBonus', { amount: bonus.toFixed(4) }), 'success');
 }
 
-// ====== 19. REFERRAL MILESTONES ======
+// ====== 23. REFERRAL MILESTONES ======
 async function checkReferralMilestones() {
     if (!userData.referralMilestonesClaimed) userData.referralMilestonesClaimed = [];
     
@@ -1140,7 +2289,7 @@ async function checkReferralMilestones() {
     saveUserToCache();
 }
 
-// ====== 20. DAILY LOGIN BONUS ======
+// ====== 24. DAILY LOGIN BONUS ======
 function checkDailyLogin() {
     const today = new Date().toDateString();
     if (!userData.dailyLogin) userData.dailyLogin = { lastLogin: null, streak: 0 };
@@ -1166,7 +2315,7 @@ function checkDailyLogin() {
     }
 }
 
-// ====== 21. NOTIFICATION SYSTEM ======
+// ====== 25. NOTIFICATION SYSTEM ======
 let unreadCount = 0;
 
 function addLocalNotification(message, type = 'info') {
@@ -1296,7 +2445,7 @@ function showNotifications() {
     }
 }
 
-// ====== 22. FLOATING NOTIFICATIONS ======
+// ====== 26. FLOATING NOTIFICATIONS ======
 let floatingTimeouts = [];
 
 function showFloatingToast(message, type = 'info') {
@@ -1334,7 +2483,7 @@ function stopFloatingNotifications() {
     floatingTimeouts = [];
 }
 
-// ====== 23. WELCOME STICKER ======
+// ====== 27. WELCOME STICKER ======
 const WELCOME_STICKERS = ['🤝', '🫣', '🥰', '🥳', '💲', '💰', '💸', '💵', '🤪', '😱', '😎', '🤑', '💯', '💖', '✨', '🌟', '⭐', '🔥', '⚡', '💎', '🎁', '🎈', '🎉', '👑', '🚀', '💫'];
 let lastStickerTime = 0;
 const STICKER_COOLDOWN = 12 * 60 * 1000;
@@ -1360,7 +2509,7 @@ function showRandomSticker() {
     lastStickerTime = now;
 }
 
-// ====== 24. PRICES ======
+// ====== 28. PRICES ======
 let livePrices = {};
 
 async function loadPrices(force = false) {
@@ -1404,7 +2553,7 @@ function refreshPrices() {
     loadPrices(true);
 }
 
-// ====== 25. UTILITIES ======
+// ====== 29. UTILITIES ======
 function formatAddress(addr) { return addr?.length > 10 ? addr.slice(0,6) + '...' + addr.slice(-4) : addr || ''; }
 function formatTON(amount) { return amount.toFixed(4); }
 function formatNumber(num) {
@@ -1505,36 +2654,7 @@ function hapticFeedback(type = 'light') {
     }
 }
 
-// ====== 26. JACKPOT POPUP ======
-function showJackpotPopup(amount, currency = 'TON') {
-    const popup = document.getElementById('jackpotPopup');
-    const amountEl = document.getElementById('jackpotAmount');
-    
-    if (!popup || !amountEl) return;
-    
-    amountEl.textContent = `${amount} ${currency}`;
-    popup.classList.remove('hidden');
-    popup.classList.add('show');
-    
-    hapticFeedback('heavy');
-    
-    document.body.style.animation = 'shakeIntense 0.5s';
-    setTimeout(() => {
-        document.body.style.animation = '';
-    }, 500);
-}
-
-function closeJackpotPopup() {
-    const popup = document.getElementById('jackpotPopup');
-    if (popup) {
-        popup.classList.remove('show');
-        setTimeout(() => {
-            popup.classList.add('hidden');
-        }, 300);
-    }
-}
-
-// ====== 27. MINING MANAGER ======
+// ====== 30. MINING MANAGER ======
 let miningTimer = null, autoClickerTimer = null;
 
 function startMining() {
@@ -1689,7 +2809,7 @@ function addTransaction(type, amount, details = {}) {
     return tx;
 }
 
-// ====== 28. AUTO CLICKER ======
+// ====== 31. AUTO CLICKER ======
 function startAutoClicker() {
     if (autoClickerTimer) clearInterval(autoClickerTimer);
     autoClickerTimer = setInterval(async () => {
@@ -1731,7 +2851,7 @@ function buyAutoClicker() {
     updateUI();
 }
 
-// ====== 29. TON CONNECT ======
+// ====== 32. TON CONNECT ======
 let tonConnectUI = null, tonWallet = null;
 
 async function initTonConnect() {
@@ -1815,7 +2935,7 @@ async function connectWallet() {
 
 async function disconnectWallet() { if (tonConnectUI) { await tonConnectUI.disconnect(); showToast('Wallet disconnected', 'info'); } }
 
-// ====== 30. UI UPDATE ======
+// ====== 33. UI UPDATE ======
 function updateUI() {
     updateBalance();
     updateMiningStats();
@@ -1828,9 +2948,6 @@ function updateUI() {
     updateWalletUI();
     updateLeaderboard();
     updateAutoClickerUI();
-    updateWheelUI();
-    updateSlotsUI();
-    updateUserDisplay();
 }
 
 function updateBalance() {
@@ -1845,6 +2962,10 @@ function updateBalance() {
     const totalUsd = calculateTotalUsd();
     if (profileUsd) profileUsd.textContent = '≈ $' + totalUsd.toFixed(2);
     if (modalUserBalance) modalUserBalance.textContent = formatTON(userData.balances.TON) + ' TON';
+    
+    // Update game header if visible
+    const gameBalance = document.getElementById('gameHeaderBalance');
+    if (gameBalance) gameBalance.textContent = formatTON(userData.balances.TON) + ' TON';
 }
 
 function calculateTotalUsd() {
@@ -2005,1207 +3126,7 @@ function updateAutoClickerUI() {
     }
 }
 
-// ====== 31. WHEEL SYSTEM المحسّن ======
-let wheelState = {
-    isSpinning: false,
-    currentRotation: 0,
-    targetRotation: 0,
-    velocity: 0,
-    spinStartTime: 0,
-    spinDuration: 0,
-    selectedPrize: null,
-    animationId: null,
-    phase: 'idle'
-};
-
-let wheelAutoSpinTimer = null;
-
-function showWheelModal() {
-    const modal = document.getElementById('wheelModal');
-    if (modal) {
-        initWheel(); // استخدام الدالة الجديدة
-        updateWheelUI();
-        modal.classList.add('show');
-        updatePurchasedSpinsDisplay();
-        document.getElementById('wheelBalanceError')?.classList.add('hidden');
-    }
-}
-
-// تهيئة العجلة المحسّنة
-function initWheel() {
-    const wheel = document.getElementById('wheelCasino');
-    const container = document.querySelector('.wheel-casino-container');
-    if (!wheel || !container) return;
-    
-    wheel.innerHTML = '';
-    
-    const totalSegments = WHEEL_PRIZES.length;
-    const anglePerSegment = 360 / totalSegments;
-    
-    // إنشاء القطاعات
-    WHEEL_PRIZES.forEach((prize, index) => {
-        const segment = document.createElement('div');
-        segment.className = 'wheel-segment-pro';
-        segment.dataset.index = index;
-        segment.dataset.type = prize.type.toLowerCase();
-        
-        const gradient = getGradientForPrize(prize);
-        const rotation = index * anglePerSegment;
-        
-        segment.style.cssText = `
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            top: 0;
-            left: 50%;
-            transform-origin: 0% 100%;
-            transform: rotate(${rotation}deg);
-            background: ${gradient};
-            clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding-top: 20px;
-            color: white;
-            font-weight: 800;
-            font-size: 0.85rem;
-            text-shadow: 0 0 10px rgba(0,0,0,0.9);
-            border-right: 3px solid rgba(255,255,255,0.4);
-            box-shadow: inset 0 0 15px rgba(255,255,255,0.1);
-            z-index: 5;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        `;
-        
-        // الأيقونة
-        const icon = document.createElement('span');
-        icon.textContent = prize.icon;
-        icon.style.cssText = `
-            font-size: ${prize.jackpot ? '2.2rem' : '1.6rem'};
-            filter: drop-shadow(0 0 8px ${prize.color});
-            margin-bottom: 4px;
-            animation: ${prize.jackpot ? 'jackpotPulse 0.8s infinite alternate' : 'none'};
-            display: block;
-        `;
-        
-        // التسمية
-        const label = document.createElement('span');
-        label.textContent = prize.label;
-        label.style.cssText = `
-            font-size: ${prize.jackpot ? '0.8rem' : '0.7rem'};
-            background: rgba(0,0,0,0.5);
-            padding: 3px 10px;
-            border-radius: 12px;
-            border: 1px solid ${prize.color};
-            box-shadow: 0 0 8px ${prize.color};
-            font-weight: ${prize.jackpot ? '900' : '700'};
-            color: ${prize.jackpot ? '#ffd700' : 'white'};
-            text-shadow: ${prize.jackpot ? '0 0 10px gold' : 'none'};
-            white-space: nowrap;
-        `;
-        
-        segment.appendChild(icon);
-        segment.appendChild(label);
-        wheel.appendChild(segment);
-    });
-    
-    // المركز المضيء
-    const center = document.createElement('div');
-    center.className = 'wheel-center-pro';
-    center.innerHTML = '★';
-    center.style.cssText = `
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 60px;
-        height: 60px;
-        background: radial-gradient(circle, #2a2a3a 0%, #1a1a2a 100%);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        color: gold;
-        border: 4px solid gold;
-        box-shadow: 0 0 30px gold, inset 0 0 20px rgba(255,215,0,0.3);
-        z-index: 20;
-        text-shadow: 0 0 10px orange;
-    `;
-    wheel.appendChild(center);
-    
-    // إضافة المؤشر والعداد إذا لم يوجدا
-    if (!document.getElementById('wheelSpeedometer')) {
-        // المؤشر المتحرك
-        const pointer = document.createElement('div');
-        pointer.className = 'wheel-pointer-pro';
-        pointer.innerHTML = '▼';
-        pointer.style.cssText = `
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2.5rem;
-            color: #ffd700;
-            filter: drop-shadow(0 0 10px orange) drop-shadow(0 0 20px red);
-            z-index: 30;
-            animation: pointerBounce 1s infinite alternate;
-            text-shadow: 0 0 10px rgba(0,0,0,0.8);
-        `;
-        container.appendChild(pointer);
-        
-        // عداد السرعة
-        const speedometer = document.createElement('div');
-        speedometer.id = 'wheelSpeedometer';
-        speedometer.style.cssText = `
-            position: absolute;
-            bottom: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            text-align: center;
-            z-index: 25;
-        `;
-        speedometer.innerHTML = `
-            <div style="
-                height: 8px;
-                background: rgba(0,0,0,0.5);
-                border-radius: 4px;
-                overflow: hidden;
-                border: 1px solid rgba(255,255,255,0.2);
-                margin-bottom: 4px;
-            ">
-                <div id="speedFill" style="
-                    height: 100%;
-                    width: 0%;
-                    background: linear-gradient(90deg, #22c55e, #fbbf24, #ef4444);
-                    transition: width 0.1s ease;
-                    box-shadow: 0 0 10px currentColor;
-                "></div>
-            </div>
-            <span style="
-                font-size: 0.7rem;
-                color: var(--text-secondary);
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                font-weight: 700;
-            ">SPEED</span>
-        `;
-        container.appendChild(speedometer);
-    }
-    
-    wheelState.currentRotation = 0;
-    wheel.style.transform = 'rotate(0deg)';
-}
-
-// التدرجات اللونية
-function getGradientForPrize(prize) {
-    if (prize.jackpot) {
-        return `conic-gradient(from 0deg at 0% 100%, #ff4444 0deg, #ff8800 60deg, #ff4444 120deg)`;
-    }
-    if (prize.type === 'TON') {
-        return `linear-gradient(135deg, ${prize.color} 0%, #0066aa 50%, ${prize.color} 100%)`;
-    }
-    if (prize.type === 'USDT') {
-        return `linear-gradient(135deg, ${prize.color} 0%, #1a8c4a 50%, ${prize.color} 100%)`;
-    }
-    return `linear-gradient(135deg, ${prize.color} 0%, #4a5568 100%)`;
-}
-
-// دوال التسارع
-function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-function easeInCubic(t) { return t * t * t; }
-
-// الرسوم المتحركة الرئيسية
-function animateWheel() {
-    if (!wheelState.isSpinning) return;
-    
-    const now = Date.now();
-    const elapsed = now - wheelState.spinStartTime;
-    const wheel = document.getElementById('wheelCasino');
-    const speedFill = document.getElementById('speedFill');
-    
-    let velocity = 0;
-    
-    if (elapsed < 800) {
-        // تسارع
-        wheelState.phase = 'accelerating';
-        velocity = easeOutCubic(elapsed / 800) * 22;
-        
-    } else if (elapsed < wheelState.spinDuration - 2500) {
-        // سرعة قصوى مع تذبذب
-        wheelState.phase = 'spinning';
-        velocity = 20 + Math.sin(elapsed * 0.008) * 3;
-        
-        // تأثير الضباب
-        wheel.classList.add('spinning-fast');
-        
-    } else if (elapsed < wheelState.spinDuration) {
-        // تباطؤ
-        wheelState.phase = 'decelerating';
-        wheel.classList.remove('spinning-fast');
-        
-        const remaining = wheelState.spinDuration - elapsed;
-        velocity = easeInCubic(remaining / 2500) * 20;
-        
-        // حساب الهدف
-        if (!wheelState.selectedPrize) {
-            wheelState.selectedPrize = selectWheelPrize();
-            const segmentAngle = 360 / WHEEL_PRIZES.length;
-            const prizeIndex = WHEEL_PRIZES.indexOf(wheelState.selectedPrize);
-            
-            // المؤشر في الأعلى (270 درجة) + offset
-            const targetAngle = 270 - (prizeIndex * segmentAngle + segmentAngle / 2);
-            const extraSpins = 5 + Math.floor(Math.random() * 4);
-            
-            wheelState.targetRotation = wheelState.currentRotation + 
-                (extraSpins * 360) + 
-                ((targetAngle - (wheelState.currentRotation % 360) + 360) % 360);
-        }
-        
-    } else {
-        // توقف
-        wheelState.phase = 'stopping';
-        velocity = 0;
-        wheelState.isSpinning = false;
-        
-        // اهتزاز نهائي
-        wheel.style.animation = 'wheelBounce 0.4s ease';
-        setTimeout(() => wheel.style.animation = '', 400);
-        
-        highlightWinningSegment();
-        
-        setTimeout(() => {
-            awardWheelPrizePro(wheelState.selectedPrize);
-        }, 600);
-        
-        cancelAnimationFrame(wheelState.animationId);
-        if (speedFill) speedFill.style.width = '0%';
-        return;
-    }
-    
-    // تحديث
-    wheelState.currentRotation += velocity;
-    wheel.style.transform = `rotate(${wheelState.currentRotation}deg)`;
-    
-    // تحديث العداد
-    if (speedFill) {
-        const pct = Math.min((velocity / 22) * 100, 100);
-        speedFill.style.width = `${pct}%`;
-    }
-    
-    wheelState.animationId = requestAnimationFrame(animateWheel);
-}
-
-// اختيار الجائزة
-function selectWheelPrize() {
-    const isJackpot = userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY === 0;
-    const eligible = isJackpot ? WHEEL_PRIZES.filter(p => p.jackpot) : WHEEL_PRIZES;
-    
-    const totalWeight = eligible.reduce((s, p) => s + p.weight, 0);
-    let rand = Math.random() * totalWeight;
-    
-    for (const prize of eligible) {
-        rand -= prize.weight;
-        if (rand <= 0) return prize;
-    }
-    return eligible[0];
-}
-
-// تسليط الضوء على الفائز
-function highlightWinningSegment() {
-    const segments = document.querySelectorAll('.wheel-segment-pro');
-    const prizeIndex = WHEEL_PRIZES.indexOf(wheelState.selectedPrize);
-    
-    segments.forEach((seg, idx) => {
-        if (idx === prizeIndex) {
-            seg.style.filter = 'brightness(1.8) drop-shadow(0 0 30px gold)';
-            seg.style.transform = seg.style.transform + ' scale(1.08)';
-            seg.style.zIndex = '15';
-            seg.style.transition = 'all 0.5s ease';
-            
-            // نبض
-            seg.animate([
-                { filter: 'brightness(1.8) drop-shadow(0 0 30px gold)' },
-                { filter: 'brightness(2.5) drop-shadow(0 0 50px gold)' },
-                { filter: 'brightness(1.8) drop-shadow(0 0 30px gold)' }
-            ], {
-                duration: 600,
-                iterations: 3
-            });
-        } else {
-            seg.style.filter = 'brightness(0.4) saturate(0.5)';
-            seg.style.opacity = '0.6';
-        }
-    });
-    
-    // خط توهج
-    const glow = document.createElement('div');
-    glow.style.cssText = `
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 200%;
-        height: 4px;
-        background: linear-gradient(90deg, transparent, gold, transparent);
-        transform: translate(-50%, -50%) rotate(${wheelState.currentRotation}deg);
-        z-index: 12;
-        pointer-events: none;
-        animation: glowPulse 0.5s ease 3;
-    `;
-    document.getElementById('wheelCasino').appendChild(glow);
-    
-    setTimeout(() => {
-        segments.forEach(seg => {
-            seg.style.filter = '';
-            seg.style.opacity = '';
-            seg.style.transform = seg.style.transform.replace(' scale(1.08)', '');
-            seg.style.zIndex = '5';
-        });
-        glow.remove();
-    }, 2500);
-}
-
-// منح الجائزة
-function awardWheelPrizePro(prize) {
-    userData.wheel.lastWin = { prize, timestamp: Date.now() };
-    userData.wheel.jackpotCounter++;
-    
-    let prizeText = '';
-    let winType = 'normal';
-    
-    if (prize.type === 'TON') {
-        userData.balances.TON += prize.amount;
-        userData.balance = userData.balances.TON;
-        userData.totalEarned += prize.amount;
-        addTransaction('wheel', prize.amount, { currency: 'TON' });
-        prizeText = `${prize.amount} TON`;
-        if (prize.amount >= 5) winType = 'big';
-        if (prize.amount >= 50) winType = 'jackpot';
-        
-    } else if (prize.type === 'USDT') {
-        userData.balances.USDT += prize.amount;
-        addTransaction('wheel', prize.amount, { currency: 'USDT' });
-        prizeText = `${prize.amount} USDT`;
-        if (prize.amount >= 10) winType = 'big';
-        if (prize.amount >= 100) winType = 'jackpot';
-        
-    } else if (prize.jackpot) {
-        const currency = prize.currency || 'TON';
-        if (currency === 'TON') {
-            userData.balances.TON += prize.amount;
-            userData.balance = userData.balances.TON;
-        } else {
-            userData.balances.USDT += prize.amount;
-        }
-        userData.totalEarned += prize.amount;
-        addTransaction('wheel', prize.amount, { currency, jackpot: true });
-        prizeText = `${prize.amount} ${currency} JACKPOT!`;
-        winType = 'jackpot';
-        userData.wheel.jackpotWon++;
-        createJackpotExplosion();
-        
-    } else if (prize.type === 'GOODLUCK') {
-        showToast('🍀 Good Luck! Try again!', 'info');
-        hapticFeedback('light');
-        saveUserToCache();
-        updateUI();
-        return;
-    }
-    
-    // عرض النتيجة
-    if (winType === 'jackpot') {
-        showJackpotPopup(prize.amount, prize.currency || 'TON');
-    } else {
-        showWinPopup(prizeText, winType);
-    }
-    
-    showToast(`🎡 ${winType === 'jackpot' ? '🎰🎰🎰' : winType === 'big' ? '🎡🎡' : '🎡'} ${prizeText}!`, 'success');
-    hapticFeedback(winType === 'jackpot' ? 'heavy' : winType === 'big' ? 'medium' : 'light');
-    
-    saveUserToCache();
-    updateUI();
-    updateWheelUI();
-}
-
-// انفجار الجاكبوت
-function createJackpotExplosion() {
-    const container = document.querySelector('.wheel-casino-container');
-    const colors = ['#ffd700', '#ff8800', '#ff4444', '#00f2ff', '#ffffff'];
-    
-    for (let i = 0; i < 40; i++) {
-        const p = document.createElement('div');
-        p.style.cssText = `
-            position: absolute;
-            width: ${6 + Math.random() * 10}px;
-            height: ${6 + Math.random() * 10}px;
-            background: ${colors[Math.floor(Math.random() * colors.length)]};
-            border-radius: 50%;
-            left: 50%;
-            top: 50%;
-            pointer-events: none;
-            z-index: 100;
-            box-shadow: 0 0 10px currentColor;
-        `;
-        
-        const angle = (Math.PI * 2 * i) / 40 + Math.random() * 0.5;
-        const velocity = 80 + Math.random() * 200;
-        const tx = Math.cos(angle) * velocity;
-        const ty = Math.sin(angle) * velocity;
-        const rot = Math.random() * 720 - 360;
-        
-        p.animate([
-            { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-            { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) rotate(${rot}deg) scale(0)`, opacity: 0 }
-        ], {
-            duration: 800 + Math.random() * 400,
-            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-            fill: 'forwards'
-        });
-        
-        container.appendChild(p);
-        setTimeout(() => p.remove(), 1200);
-    }
-}
-
-// بدء اللفة
-async function spinWheelPro(isFree = false) {
-    if (wheelState.isSpinning) return;
-    
-    const errorEl = document.getElementById('wheelBalanceError');
-    if (errorEl) errorEl.classList.add('hidden');
-    
-    // التحقق من الرصيد
-    if (isFree) {
-        const now = Date.now();
-        const nextFree = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
-        if (now < nextFree) {
-            const left = nextFree - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            showToast(`⏰ Wait ${h}h ${m}m for free spin`, 'warning');
-            return;
-        }
-        userData.wheel.lastFreeSpin = now;
-    } else {
-        if (userData.wheel.purchasedSpins > 0) {
-            userData.wheel.purchasedSpins--;
-        } else if (userData.balances.TON >= CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
-            userData.balances.TON -= CONFIG.ECONOMY.WHEEL_SPIN_PRICE;
-            userData.balance = userData.balances.TON;
-        } else {
-            if (errorEl) errorEl.classList.remove('hidden');
-            showToast(`❌ Need ${CONFIG.ECONOMY.WHEEL_SPIN_PRICE} TON`, 'error');
-            return;
-        }
-    }
-    
-    // إعادة التعيير
-    wheelState.isSpinning = true;
-    wheelState.spinStartTime = Date.now();
-    wheelState.spinDuration = 5500 + Math.random() * 1500;
-    wheelState.selectedPrize = null;
-    wheelState.phase = 'accelerating';
-    
-    // تنظيف
-    document.querySelectorAll('.wheel-win-glow').forEach(el => el.remove());
-    document.querySelectorAll('.wheel-segment-pro').forEach(seg => {
-        seg.style.filter = '';
-        seg.style.opacity = '';
-        seg.style.transform = seg.style.transform.replace(/ scale\([^)]+\)/, '');
-    });
-    
-    wheelState.animationId = requestAnimationFrame(animateWheel);
-    
-    userData.wheel.totalSpins++;
-    userData.wheel.spinHistory.push({ timestamp: Date.now(), isFree });
-    
-    saveUserToCache();
-    updateWheelUI();
-    updateUI();
-    hapticFeedback('light');
-}
-
-// الدالة القديمة للتوافق
-async function spinWheel(isFree = false) {
-    return spinWheelPro(isFree);
-}
-
-function updateWheelUI() {
-    const spinsLeftEl = document.getElementById('wheelSpinsLeft');
-    const freeSpinEl = document.getElementById('wheelFreeSpin');
-    const jackpotCounterEl = document.getElementById('wheelJackpotCounter');
-    const streakDisplay = document.getElementById('wheelStreakDisplay');
-    const purchasedSpinsEl = document.getElementById('wheelModalPurchasedSpins');
-    
-    if (spinsLeftEl) {
-        const left = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - (userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY);
-        spinsLeftEl.textContent = t('wheel.spinsLeft', { count: left });
-    }
-    
-    if (jackpotCounterEl) {
-        jackpotCounterEl.textContent = t('wheel.jackpotTimer', { 
-            count: userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY,
-            total: CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY
-        });
-    }
-    
-    if (streakDisplay) {
-        streakDisplay.textContent = t('wheel.streak', { 
-            days: userData.streak, 
-            best: userData.longestStreak 
-        });
-    }
-    
-    if (freeSpinEl) {
-        const now = Date.now();
-        const next = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
-        if (now < next) {
-            const left = next - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${h}h ${m}m`;
-            freeSpinEl.classList.add('disabled');
-        } else {
-            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> ${t('wheel.free')}`;
-            freeSpinEl.classList.remove('disabled');
-        }
-    }
-    
-    if (purchasedSpinsEl) {
-        const spinCount = purchasedSpinsEl.querySelector('.spin-count');
-        if (spinCount) spinCount.textContent = userData.wheel.purchasedSpins || 0;
-    }
-    
-    const autoSpinCheckbox = document.getElementById('wheelModalAutoSpin');
-    if (autoSpinCheckbox) {
-        autoSpinCheckbox.checked = userData.wheel.autoSpin || false;
-    }
-    
-    const wheelPurchasedSpins = document.getElementById('wheelPurchasedSpins');
-    if (wheelPurchasedSpins) {
-        wheelPurchasedSpins.innerHTML = `Your spins: <span class="spin-count">${userData.wheel.purchasedSpins || 0}</span>`;
-    }
-}
-
-function updatePurchasedSpinsDisplay() {
-    const wheelSpins = document.getElementById('wheelPurchasedSpins');
-    const wheelModalSpins = document.getElementById('wheelModalPurchasedSpins');
-    const slotsSpins = document.getElementById('slotsPurchasedSpins');
-    const slotsModalSpins = document.getElementById('slotsModalPurchasedSpins');
-    
-    if (wheelSpins) {
-        wheelSpins.innerHTML = `Your spins: <span class="spin-count">${userData.wheel.purchasedSpins || 0}</span>`;
-    }
-    if (wheelModalSpins) {
-        const spinCount = wheelModalSpins.querySelector('.spin-count');
-        if (spinCount) spinCount.textContent = userData.wheel.purchasedSpins || 0;
-    }
-    if (slotsSpins) {
-        slotsSpins.innerHTML = `Your spins: <span class="spin-count">${userData.slots.purchasedSpins || 0}</span>`;
-    }
-    if (slotsModalSpins) {
-        const spinCount = slotsModalSpins.querySelector('.spin-count');
-        if (spinCount) spinCount.textContent = userData.slots.purchasedSpins || 0;
-    }
-}
-
-function toggleWheelAutoSpin() {
-    const checkbox = document.getElementById('wheelModalAutoSpin');
-    if (checkbox) {
-        userData.wheel.autoSpin = checkbox.checked;
-        saveUserToCache();
-        
-        if (userData.wheel.autoSpin) {
-            startWheelAutoSpin();
-        } else {
-            stopWheelAutoSpin();
-        }
-    }
-}
-
-function startWheelAutoSpin() {
-    if (wheelAutoSpinTimer) clearInterval(wheelAutoSpinTimer);
-    
-    wheelAutoSpinTimer = setInterval(() => {
-        if (!userData.wheel.autoSpin) {
-            stopWheelAutoSpin();
-            return;
-        }
-        
-        if (userData.wheel.purchasedSpins > 0) {
-            spinWheelPro(false);
-        } else {
-            userData.wheel.autoSpin = false;
-            const checkbox = document.getElementById('wheelModalAutoSpin');
-            if (checkbox) checkbox.checked = false;
-            stopWheelAutoSpin();
-            showToast('Auto Spin stopped: No spins left', 'info');
-        }
-    }, 4000);
-}
-
-function stopWheelAutoSpin() {
-    if (wheelAutoSpinTimer) {
-        clearInterval(wheelAutoSpinTimer);
-        wheelAutoSpinTimer = null;
-    }
-}
-
-// ====== 32. WHEEL PACKS ======
-async function buyWheelPack(pack) {
-    let spins, price, bonus;
-    switch(pack) {
-        case 'p5': spins = 5; price = CONFIG.ECONOMY.WHEEL_PACK_5.price; bonus = 0; break;
-        case 'p10': spins = 10; price = CONFIG.ECONOMY.WHEEL_PACK_10.price; bonus = 1; break;
-        case 'p50': spins = 50; price = CONFIG.ECONOMY.WHEEL_PACK_50.price; bonus = 5; break;
-        case 'p100': spins = 100; price = CONFIG.ECONOMY.WHEEL_PACK_100.price; bonus = 10; break;
-        default: return;
-    }
-    
-    const totalSpins = spins + bonus;
-    
-    if (!confirm(t('pack.confirm', { spins: totalSpins, price }))) {
-        return;
-    }
-    
-    if (!tonConnectUI || !tonWallet) {
-        showToast('Please connect your TON wallet first', 'error');
-        return;
-    }
-    
-    try {
-        showToast('Opening wallet...', 'info');
-        
-        const tx = {
-            validUntil: Date.now() + 600000,
-            messages: [{
-                address: CONFIG.TON.WALLET,
-                amount: (price * 1e9).toString()
-            }]
-        };
-        
-        const result = await tonConnectUI.sendTransaction(tx);
-        
-        showToast('Payment sent! Waiting for confirmation...', 'info');
-        
-        setTimeout(() => {
-            if (!userData.wheel.purchasedSpins) userData.wheel.purchasedSpins = 0;
-            userData.wheel.purchasedSpins += totalSpins;
-            
-            addTransaction('wheel_pack', price, { 
-                currency: 'TON', 
-                details: `Bought ${pack} pack: ${spins} spins + ${bonus} bonus` 
-            });
-            
-            saveUserToCache();
-            showToast(t('pack.success', { spins: totalSpins }), 'success');
-            updatePurchasedSpinsDisplay();
-            updateUI();
-        }, 3000);
-        
-    } catch (e) {
-        console.error("Payment error:", e);
-        showToast(t('error.payment'), 'error');
-    }
-}
-
-// ====== 33. SLOTS SYSTEM المحسّن ======
-let slotsState = {
-    isSpinning: false,
-    reels: [
-        { symbols: [], position: 0, targetPosition: 0, speed: 0, stopping: false },
-        { symbols: [], position: 0, targetPosition: 0, speed: 0, stopping: false },
-        { symbols: [], position: 0, targetPosition: 0, speed: 0, stopping: false }
-    ],
-    animationId: null,
-    spinStartTime: 0
-};
-
-let slotsAutoSpinTimer = null;
-
-function showSlotsModal() {
-    const modal = document.getElementById('slotsModal');
-    if (modal) {
-        initReels(); // استخدام الدالة الجديدة
-        updateSlotsUI();
-        modal.classList.add('show');
-        updatePurchasedSpinsDisplay();
-        document.getElementById('slotsBalanceError')?.classList.add('hidden');
-    }
-}
-
-// توليد شريط الرموز
-function generateReelStrip() {
-    const strip = [];
-    const totalWeight = SLOTS_SYMBOLS_DATA.reduce((s, item) => s + item.weight, 0);
-    
-    for (let i = 0; i < 100; i++) {
-        let random = Math.random() * totalWeight;
-        for (const item of SLOTS_SYMBOLS_DATA) {
-            random -= item.weight;
-            if (random <= 0) {
-                strip.push({ ...item });
-                break;
-            }
-        }
-    }
-    return strip;
-}
-
-// تهيئة البكرات
-function initReels() {
-    const reelsContainer = document.getElementById('slotReels');
-    if (!reelsContainer) return;
-    
-    reelsContainer.innerHTML = '';
-    
-    for (let i = 0; i < 3; i++) {
-        const reelWrapper = document.createElement('div');
-        reelWrapper.className = 'slot-reel-wrapper';
-        
-        const reel = document.createElement('div');
-        reel.className = 'slot-reel-pro';
-        reel.id = `reel-${i}`;
-        
-        const strip = generateReelStrip();
-        slotsState.reels[i].symbols = strip;
-        slotsState.reels[i].position = Math.floor(Math.random() * 50);
-        
-        strip.forEach((item, idx) => {
-            const symbolEl = document.createElement('div');
-            symbolEl.className = 'slot-symbol-pro';
-            symbolEl.textContent = item.symbol;
-            symbolEl.style.color = item.color;
-            symbolEl.dataset.index = idx;
-            reel.appendChild(symbolEl);
-        });
-        
-        // خط الفوز
-        const winLine = document.createElement('div');
-        winLine.className = 'win-line';
-        winLine.id = `winline-${i}`;
-        reelWrapper.appendChild(reel);
-        reelWrapper.appendChild(winLine);
-        
-        reelsContainer.appendChild(reelWrapper);
-        updateReelPosition(i);
-    }
-}
-
-function updateReelPosition(reelIndex) {
-    const reel = document.getElementById(`reel-${reelIndex}`);
-    if (!reel) return;
-    
-    const symbolHeight = 100;
-    const position = slotsState.reels[reelIndex].position;
-    
-    reel.style.transform = `translateY(-${position * symbolHeight}px)`;
-}
-
-function animateReels() {
-    if (!slotsState.isSpinning) return;
-    
-    const now = Date.now();
-    const elapsed = now - slotsState.spinStartTime;
-    
-    let allStopped = true;
-    
-    for (let i = 0; i < 3; i++) {
-        const reel = slotsState.reels[i];
-        const reelEl = document.getElementById(`reel-${i}`);
-        
-        if (!reel.stopping) {
-            // مرحلة التسارع (0-300ms)
-            if (elapsed < 300) {
-                reel.speed = Math.min(reel.speed + 2, 30 + i * 5);
-            }
-            // مرحلة السرعة القصوى (300ms - 1500ms + تأخير البكرة)
-            else if (elapsed < 1500 + i * 400) {
-                reel.speed = 30 + i * 5;
-                if (reelEl) reelEl.parentElement.classList.add('spinning');
-            }
-            // بدء التوقف
-            else {
-                reel.stopping = true;
-                // اختيار رمز الهدف بناءً على الاحتمالات
-                const targetIndex = Math.floor(Math.random() * reel.symbols.length);
-                reel.targetPosition = targetIndex + Math.floor(reel.position / reel.symbols.length) * reel.symbols.length;
-            }
-            allStopped = false;
-        } else {
-            // مرحلة التباطؤ
-            const distanceToTarget = reel.targetPosition - reel.position;
-            
-            if (Math.abs(distanceToTarget) < 0.3) {
-                reel.position = reel.targetPosition;
-                reel.speed = 0;
-                if (reelEl) {
-                    reelEl.parentElement.classList.remove('spinning');
-                    reelEl.classList.add('reel-stop-bounce');
-                    setTimeout(() => reelEl.classList.remove('reel-stop-bounce'), 300);
-                }
-                
-                // تشغيل صوت "تق"
-                hapticFeedback(i === 2 ? 'medium' : 'light');
-            } else {
-                // تباطؤ تدريجي
-                reel.speed *= 0.92;
-                if (reel.speed < 0.3) reel.speed = 0.3;
-                
-                const direction = distanceToTarget > 0 ? 1 : -1;
-                reel.position += reel.speed * direction * 0.15;
-                allStopped = false;
-            }
-        }
-        
-        if (reel.speed > 0) {
-            reel.position += reel.speed * 0.1;
-            if (reel.position >= reel.symbols.length * 100) {
-                reel.position -= reel.symbols.length;
-            }
-        }
-        
-        updateReelPosition(i);
-    }
-    
-    if (allStopped && slotsState.isSpinning) {
-        slotsState.isSpinning = false;
-        cancelAnimationFrame(slotsState.animationId);
-        setTimeout(checkWin, 300);
-        return;
-    }
-    
-    slotsState.animationId = requestAnimationFrame(animateReels);
-}
-
-async function spinSlots(isFree = false, isTurbo = false) {
-    if (slotsState.isSpinning) return;
-    
-    const errorEl = document.getElementById('slotsBalanceError');
-    if (errorEl) errorEl.classList.add('hidden');
-    
-    const price = isTurbo ? CONFIG.ECONOMY.SLOTS_TURBO_PRICE : CONFIG.ECONOMY.SLOTS_SPIN_PRICE;
-    
-    if (isFree) {
-        const now = Date.now();
-        if (now < userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL) {
-            const left = (userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL) - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            showToast(t('slots.wait', { time: `${h}h ${m}m` }), 'warning');
-            return;
-        }
-        userData.slots.lastFreeSpin = now;
-    } else {
-        if (userData.slots.purchasedSpins > 0) {
-            userData.slots.purchasedSpins--;
-        } else if (userData.balances.TON >= price) {
-            userData.balances.TON -= price;
-            userData.balance = userData.balances.TON;
-        } else {
-            if (errorEl) {
-                errorEl.classList.remove('hidden');
-                errorEl.style.zIndex = '5000';
-            }
-            showToast(t('error.insufficient', { amount: price }), 'error');
-            return;
-        }
-    }
-    
-    // تهيئة اللفة
-    slotsState.isSpinning = true;
-    slotsState.spinStartTime = Date.now();
-    
-    for (let i = 0; i < 3; i++) {
-        slotsState.reels[i].stopping = false;
-        slotsState.reels[i].speed = 5;
-        slotsState.reels[i].targetPosition = 0;
-    }
-    
-    // إخفاء خط الفوز
-    document.querySelectorAll('.win-line').forEach(line => line.classList.remove('active'));
-    
-    slotsState.animationId = requestAnimationFrame(animateReels);
-    
-    userData.slots.totalSpins++;
-    userData.slots.spinHistory.push({ timestamp: Date.now(), isFree, isTurbo });
-    
-    saveUserToCache();
-    updateSlotsUI();
-    updateUI();
-}
-
-function checkWin() {
-    const visibleSymbols = [];
-    for (let i = 0; i < 3; i++) {
-        const reel = slotsState.reels[i];
-        const centerIndex = Math.floor(reel.position) % reel.symbols.length;
-        visibleSymbols.push(reel.symbols[centerIndex]);
-    }
-    
-    // تسليط الضوء على الرموز المرئية
-    for (let i = 0; i < 3; i++) {
-        const reel = document.getElementById(`reel-${i}`);
-        if (!reel) continue;
-        
-        const symbols = reel.querySelectorAll('.slot-symbol-pro');
-        const centerIndex = Math.floor(slotsState.reels[i].position) % slotsState.reels[i].symbols.length;
-        
-        symbols.forEach((sym, idx) => {
-            if (idx === centerIndex) {
-                sym.style.filter = 'brightness(1.2)';
-            } else {
-                sym.style.filter = 'brightness(0.7)';
-            }
-        });
-    }
-    
-    // التحقق من الفوز
-    const allMatch = visibleSymbols[0].symbol === visibleSymbols[1].symbol && 
-                     visibleSymbols[1].symbol === visibleSymbols[2].symbol;
-    
-    const twoMatch = visibleSymbols[0].symbol === visibleSymbols[1].symbol || 
-                     visibleSymbols[1].symbol === visibleSymbols[2].symbol ||
-                     visibleSymbols[0].symbol === visibleSymbols[2].symbol;
-    
-    if (allMatch) {
-        // فوز كبير!
-        const winData = visibleSymbols[0];
-        const winAmount = winData.value;
-        
-        // إظهار خط الفوز
-        document.querySelectorAll('.win-line').forEach(line => line.classList.add('active'));
-        
-        // إضافة الرصيد
-        if (winData.type === 'TON') {
-            userData.balances.TON += winAmount;
-            userData.balance = userData.balances.TON;
-        } else {
-            userData.balances.USDT += winAmount;
-        }
-        userData.totalEarned += winAmount;
-        
-        // تأثيرات الفوز
-        if (winData.jackpot) {
-            showJackpotPopup(winAmount, 'TON');
-            hapticFeedback('heavy');
-            createWinParticles();
-        } else if (winAmount >= 10) {
-            showWinPopup(`${winAmount} ${winData.type}`, 'big');
-            hapticFeedback('medium');
-        } else {
-            showWinPopup(`${winAmount} ${winData.type}`, 'normal');
-            hapticFeedback('light');
-        }
-        
-        // تسليط الضوء على الرموز الفائزة
-        highlightWinningSymbols();
-        
-        addTransaction('slots', winAmount, { 
-            currency: winData.type,
-            symbols: visibleSymbols.map(s => s.symbol).join('')
-        });
-        
-        showToast(`🎰 ${visibleSymbols.map(s => s.symbol).join('')} - You won ${winAmount} ${winData.type}!`, 'success');
-        
-    } else if (twoMatch) {
-        showToast('🎰 Nice! Two matching symbols!', 'info');
-        hapticFeedback('light');
-    } else {
-        showToast('🎰 Try again!', 'info');
-    }
-    
-    saveUserToCache();
-    updateUI();
-    
-    // Auto spin
-    if (userData.slots.autoSpin && !isFree) {
-        setTimeout(() => spinSlots(false, false), 2000);
-    }
-}
-
-function highlightWinningSymbols() {
-    for (let i = 0; i < 3; i++) {
-        const reel = document.getElementById(`reel-${i}`);
-        if (!reel) continue;
-        
-        const symbols = reel.querySelectorAll('.slot-symbol-pro');
-        const centerIndex = Math.floor(slotsState.reels[i].position) % slotsState.reels[i].symbols.length;
-        
-        symbols.forEach((sym, idx) => {
-            if (idx === centerIndex) {
-                sym.classList.add('winning-symbol');
-                setTimeout(() => sym.classList.remove('winning-symbol'), 2000);
-            }
-        });
-    }
-}
-
-function createWinParticles() {
-    const container = document.querySelector('.slots-container-pro');
-    if (!container) return;
-    
-    const particlesContainer = document.createElement('div');
-    particlesContainer.className = 'particles-container';
-    container.appendChild(particlesContainer);
-    
-    for (let i = 0; i < 20; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle-win';
-        particle.style.left = '50%';
-        particle.style.top = '50%';
-        particle.style.setProperty('--tx', `${(Math.random() - 0.5) * 200}px`);
-        particle.style.setProperty('--ty', `${(Math.random() - 0.5) * 200}px`);
-        particle.style.background = ['#ffdd00', '#ff6600', '#00f2ff', '#ff00ff'][Math.floor(Math.random() * 4)];
-        particlesContainer.appendChild(particle);
-    }
-    
-    setTimeout(() => particlesContainer.remove(), 1000);
-}
-
-function renderSlots() {
-    // الدالة القديمة - نحتفظ بها للتوافق
-    initReels();
-}
-
-function updateSlotsUI() {
-    const freeSpinEl = document.getElementById('slotsFreeSpin');
-    const purchasedSpinsEl = document.getElementById('slotsModalPurchasedSpins');
-    
-    if (freeSpinEl) {
-        const now = Date.now();
-        const next = userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
-        if (now < next) {
-            const left = next - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${h}h ${m}m`;
-            freeSpinEl.classList.add('disabled');
-        } else {
-            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> FREE`;
-            freeSpinEl.classList.remove('disabled');
-        }
-    }
-    
-    if (purchasedSpinsEl) {
-        const spinCount = purchasedSpinsEl.querySelector('.spin-count');
-        if (spinCount) spinCount.textContent = userData.slots.purchasedSpins || 0;
-    }
-    
-    const autoSpinCheckbox = document.getElementById('slotsModalAutoSpin');
-    if (autoSpinCheckbox) {
-        autoSpinCheckbox.checked = userData.slots.autoSpin || false;
-    }
-    
-    const slotsPurchasedSpins = document.getElementById('slotsPurchasedSpins');
-    if (slotsPurchasedSpins) {
-        slotsPurchasedSpins.innerHTML = `Your spins: <span class="spin-count">${userData.slots.purchasedSpins || 0}</span>`;
-    }
-}
-
-function toggleSlotsAutoSpin() {
-    const checkbox = document.getElementById('slotsModalAutoSpin');
-    if (checkbox) {
-        userData.slots.autoSpin = checkbox.checked;
-        saveUserToCache();
-        
-        if (userData.slots.autoSpin) {
-            startSlotsAutoSpin();
-        } else {
-            stopSlotsAutoSpin();
-        }
-    }
-}
-
-function startSlotsAutoSpin() {
-    if (slotsAutoSpinTimer) clearInterval(slotsAutoSpinTimer);
-    
-    slotsAutoSpinTimer = setInterval(() => {
-        if (!userData.slots.autoSpin) {
-            stopSlotsAutoSpin();
-            return;
-        }
-        
-        if (userData.slots.purchasedSpins > 0) {
-            spinSlots(false, false);
-        } else {
-            userData.slots.autoSpin = false;
-            const checkbox = document.getElementById('slotsModalAutoSpin');
-            if (checkbox) checkbox.checked = false;
-            stopSlotsAutoSpin();
-            showToast('Auto Spin stopped: No spins left', 'info');
-        }
-    }, 3000);
-}
-
-function stopSlotsAutoSpin() {
-    if (slotsAutoSpinTimer) {
-        clearInterval(slotsAutoSpinTimer);
-        slotsAutoSpinTimer = null;
-    }
-}
-
-// ====== 34. SLOTS PACKS ======
-async function buySlotsPack(pack) {
-    let spins, price, bonus;
-    switch(pack) {
-        case 'p5': spins = 5; price = CONFIG.ECONOMY.SLOTS_PACK_5.price; bonus = 0; break;
-        case 'p10': spins = 10; price = CONFIG.ECONOMY.SLOTS_PACK_10.price; bonus = 1; break;
-        case 'p50': spins = 50; price = CONFIG.ECONOMY.SLOTS_PACK_50.price; bonus = 5; break;
-        case 'p100': spins = 100; price = CONFIG.ECONOMY.SLOTS_PACK_100.price; bonus = 10; break;
-        default: return;
-    }
-    
-    const totalSpins = spins + bonus;
-    
-    if (!confirm(t('pack.confirm', { spins: totalSpins, price }))) {
-        return;
-    }
-    
-    if (!tonConnectUI || !tonWallet) {
-        showToast('Please connect your TON wallet first', 'error');
-        return;
-    }
-    
-    try {
-        showToast('Opening wallet...', 'info');
-        
-        const tx = {
-            validUntil: Date.now() + 600000,
-            messages: [{
-                address: CONFIG.TON.WALLET,
-                amount: (price * 1e9).toString()
-            }]
-        };
-        
-        const result = await tonConnectUI.sendTransaction(tx);
-        
-        showToast('Payment sent! Waiting for confirmation...', 'info');
-        
-        setTimeout(() => {
-            if (!userData.slots.purchasedSpins) userData.slots.purchasedSpins = 0;
-            userData.slots.purchasedSpins += totalSpins;
-            
-            addTransaction('slots_pack', price, { 
-                currency: 'TON', 
-                details: `Bought ${pack} pack: ${spins} spins + ${bonus} bonus` 
-            });
-            
-            saveUserToCache();
-            showToast(t('pack.success', { spins: totalSpins }), 'success');
-            updatePurchasedSpinsDisplay();
-            updateUI();
-        }, 3000);
-        
-    } catch (e) {
-        console.error("Payment error:", e);
-        showToast(t('error.payment'), 'error');
-    }
-}
-
-// ====== 35. WIN POPUP ======
+// ====== 34. WIN POPUP (للصفحات الرئيسية) ======
 function showWinPopup(prize, type = 'normal') {
     const existing = document.querySelector('.win-popup');
     if (existing) existing.remove();
@@ -3214,15 +3135,15 @@ function showWinPopup(prize, type = 'normal') {
     popup.className = `win-popup ${type}`;
     
     let icon = '🎉';
-    let title = t('win.normal');
+    let title = 'YOU WON!';
     let amount = prize;
     
     if (type === 'big') {
         icon = '🌟🌟';
-        title = t('win.big');
+        title = 'BIG WIN!';
     } else if (type === 'jackpot') {
         icon = '🎰🎰🎰';
-        title = t('win.jackpot');
+        title = 'JACKPOT!';
     }
     
     popup.innerHTML = `
@@ -3251,7 +3172,7 @@ function showWinPopup(prize, type = 'normal') {
     }, 2500);
 }
 
-// ====== 36. MARKET FUNCTIONS ======
+// ====== 35. MARKET FUNCTIONS ======
 function renderMarket() {
     const showcase = document.getElementById('machinesShowcase');
     if (!showcase) return;
@@ -3294,7 +3215,7 @@ function checkRequirements(m) {
     return true;
 }
 
-// ====== 37. PAYMENT SYSTEM ======
+// ====== 36. PAYMENT SYSTEM ======
 let currentPaymentMethod = 'balance', currentPayment = null;
 
 function switchPaymentMethod(method) {
@@ -3409,7 +3330,7 @@ async function confirmWalletPayment() {
     } catch (e) { showToast('Payment failed', 'error'); }
 }
 
-// ====== 38. SWAP SYSTEM ======
+// ====== 37. SWAP SYSTEM ======
 let swapMode = 'from', swapFromCurrency = 'TON', swapToCurrency = 'USDT';
 
 function showSwapModal() {
@@ -3519,7 +3440,7 @@ function confirmSwap() {
     renderAssets();
 }
 
-// ====== 39. DEPOSIT FUNCTIONS ======
+// ====== 38. DEPOSIT FUNCTIONS ======
 let selectedDepositCurrency = 'TON';
 
 function showDepositModal() {
@@ -3669,7 +3590,7 @@ async function submitDeposit() {
     addTransaction('deposit', amt, { currency: cur, txHash: hash, status: 'pending' });
 }
 
-// ====== 40. WITHDRAW FUNCTIONS ======
+// ====== 39. WITHDRAW FUNCTIONS ======
 let selectedWithdrawNetwork = 'BEP20';
 
 function showWithdrawModal() {
@@ -3857,7 +3778,7 @@ async function submitWithdraw() {
     addTransaction('withdraw', amt, { currency: 'USDT', address: addr, network: netValue, fee, feeCurrency, status: 'pending' });
 }
 
-// ====== 41. HISTORY FUNCTIONS ======
+// ====== 40. HISTORY FUNCTIONS ======
 let currentHistoryFilter = 'all';
 
 function showHistory() {
@@ -4014,7 +3935,7 @@ function refreshHistory() {
     checkPendingTransactions().then(() => renderHistory(currentHistoryFilter)); 
 }
 
-// ====== 42. LEADERBOARD ======
+// ====== 41. LEADERBOARD ======
 let leaderboardCache = { data: null, timestamp: 0 };
 
 async function updateLeaderboard() {
@@ -4072,7 +3993,7 @@ function renderLeaderboard(data) {
     el.innerHTML = html;
 }
 
-// ====== 43. REFERRAL DETAILS ======
+// ====== 42. REFERRAL DETAILS ======
 function showReferralDetails() { showPage('profile'); }
 
 function renderReferralMilestones() {
@@ -4110,10 +4031,16 @@ function copyReferralLink() {
     showToast('Referral link copied', 'success');
 }
 
-// ====== 44. PAGE NAVIGATION ======
+// ====== 43. PAGE NAVIGATION ======
 let currentPage = 'mining';
 
 function showPage(page) {
+    // Don't show pages if we're in a game
+    if (document.getElementById('wheelGamePage').style.display === 'block' ||
+        document.getElementById('slotsGamePage').style.display === 'block') {
+        return;
+    }
+    
     currentPage = page;
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(page + 'Page').classList.add('active');
@@ -4127,12 +4054,12 @@ function showPage(page) {
         renderReferralTree(); 
         updateChart(); 
     }
-    if (page === 'casino') { 
-        updateWheelUI(); 
-        updateSlotsUI(); 
-    }
     
     showRandomSticker();
+}
+
+function showWallet() {
+    showPage('profile');
 }
 
 function updateChart() {
@@ -4159,7 +4086,7 @@ function updateChart() {
     ).join('');
 }
 
-// ====== 45. SAVE TO FIREBASE ======
+// ====== 44. SAVE TO FIREBASE ======
 async function saveToFirebase() {
     if (!db) return;
     try {
@@ -4190,7 +4117,7 @@ async function saveToFirebase() {
     } catch (e) {}
 }
 
-// ====== 46. MODAL FUNCTIONS ======
+// ====== 45. MODAL FUNCTIONS ======
 function closeModal(id) {
     const modal = document.getElementById(id);
     if (!modal) return;
@@ -4206,22 +4133,16 @@ function closeModal(id) {
         document.getElementById('withdrawAmount').value = ''; 
         document.getElementById('withdrawAddress').value = ''; 
     }
-    if (id === 'wheelModal') { 
-        const w = document.getElementById('wheelCasino'); 
-        if (w) { w.style.transition = ''; w.style.transform = 'rotate(0deg)'; } 
-    }
-    if (id === 'slotsModal') { initReels(); }
-    if (id === 'jackpotPopup') { closeJackpotPopup(); }
 }
 
 function hideAllModals() {
-    ['paymentModal','depositModal','withdrawModal','historyModal','notificationsModal','adminModal','swapModal','currencySelectorModal','wheelModal','slotsModal','rejectModal','jackpotPopup'].forEach(id => {
+    ['paymentModal','depositModal','withdrawModal','historyModal','notificationsModal','adminModal','swapModal','currencySelectorModal','rejectModal'].forEach(id => {
         const m = document.getElementById(id);
         if (m) m.classList.remove('show');
     });
 }
 
-// ====== 47. FILTER MARKET ======
+// ====== 46. FILTER MARKET ======
 function filterMarket(filter) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     event.target.classList.add('active');
@@ -4232,7 +4153,7 @@ function filterMarket(filter) {
     });
 }
 
-// ====== 48. ADMIN FUNCTIONS (معدلة للتعامل مع المجموعات غير الموجودة) ======
+// ====== 47. ADMIN FUNCTIONS ======
 let currentAdminTab = 'withdrawals';
 
 function showAdminPanel() {
@@ -4259,7 +4180,6 @@ function switchAdminTab(tab) {
 async function loadAdminCounts() {
     if (!db) return;
     try {
-        // محاولة جلب withdrawals - إذا فشلت، نعتبرها فارغة
         let withdrawalsSnap;
         try {
             withdrawalsSnap = await db.collection(CONFIG.COLLECTIONS.WITHDRAWALS).where('status', '==', 'pending').get();
@@ -4268,7 +4188,6 @@ async function loadAdminCounts() {
             withdrawalsSnap = { empty: true, size: 0 };
         }
         
-        // محاولة جلب deposits
         let depositsSnap;
         try {
             depositsSnap = await db.collection(CONFIG.COLLECTIONS.DEPOSITS).where('status', '==', 'pending').get();
@@ -4277,8 +4196,8 @@ async function loadAdminCounts() {
             depositsSnap = { empty: true, size: 0 };
         }
         
-        document.getElementById('pendingDepositsCount').textContent = depositsSnap.size;
         document.getElementById('pendingWithdrawalsCount').textContent = withdrawalsSnap.size;
+        document.getElementById('pendingDepositsCount').textContent = depositsSnap.size;
     } catch (e) {
         console.error("Error loading counts:", e);
     }
@@ -4297,7 +4216,6 @@ async function refreshAdminPanel() {
     try {
         const col = currentAdminTab === 'withdrawals' ? CONFIG.COLLECTIONS.WITHDRAWALS : CONFIG.COLLECTIONS.DEPOSITS;
         
-        // محاولة جلب البيانات - إذا فشلت، نعرض رسالة مناسبة
         let snap;
         try {
             snap = await db.collection(col).where('status', '==', 'pending').orderBy('timestamp', 'desc').get();
@@ -4457,7 +4375,7 @@ function copyToClipboard(text) {
     showToast('Copied!', 'success'); 
 }
 
-// ====== 49. INITIALIZATION ======
+// ====== 48. INITIALIZATION ======
 document.addEventListener('DOMContentLoaded', async () => {
     hideAllModals();
     
@@ -4479,8 +4397,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderMarket();
     updateChart();
     renderReferralMilestones();
-    initWheel(); // استخدام الدالة الجديدة
-    initReels(); // استخدام الدالة الجديدة
+    initWheelLegendary();
+    initSlotsLegendary();
     setupScrollListener();
     
     setInterval(() => {
@@ -4501,21 +4419,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     
-    document.getElementById('wheelModalAutoSpin')?.addEventListener('change', toggleWheelAutoSpin);
-    document.getElementById('slotsModalAutoSpin')?.addEventListener('change', toggleSlotsAutoSpin);
+    // Initialize panels as collapsed
+    document.getElementById('wheelPanelContent').style.display = 'none';
+    document.getElementById('slotsPanelContent').style.display = 'none';
+    document.getElementById('wheelPanelChevron').style.transform = 'rotate(-90deg)';
+    document.getElementById('slotsPanelChevron').style.transform = 'rotate(-90deg)';
+    document.querySelectorAll('.panel-header').forEach(header => header.classList.add('collapsed'));
     
     updateUserDisplay();
     
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v3000.0");
-    console.log("✅ جميع الميزات القديمة محفوظة");
-    console.log("✅ عجلة الحظ: 18 قطاع (TON:6, USDT:8, JACKPOT:3, GOOD LUCK:1)");
-    console.log("✅ جاكبوت: كل 15 لفة");
-    console.log("✅ أمان المشرف: userId + password");
-    console.log("✅ لوحة المشرف: تتعامل مع المجموعات غير الموجودة");
-    console.log("✅ رابط الإحالة: احترافي مع كود فريد");
-    console.log("✅ اسم المستخدم والمعرف: يظهران بشكل صحيح");
-    console.log("✅ نظام العجلة المحسّن: جاهز!");
-    console.log("✅ نظام السلوت المحسّن: جاهز!");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v6000.0");
+    console.log("✅ مع صفحات الألعاب المستقلة وتجربة المستخدم المحسّنة!");
+    console.log("✅ عجلة الحظ: 18 قطاع مع تأثيرات سحرية");
+    console.log("✅ السلوتس: بكرات ثلاثية الأبعاد مع خط فوز متوهج");
+    console.log("✅ رسائل الفوز داخل الصفحة (وليس في الخلفية)");
+    console.log("✅ لوحة تحكم جانبية قابلة للطي");
+    console.log("✅ نظام Auto Spin المتطور");
     console.log("✅ All systems ready! 🚀");
 });
 
@@ -4547,26 +4466,26 @@ document.addEventListener('visibilitychange', () => {
     }
 });
 
-// ====== 50. EXPORT FUNCTIONS ======
+// ====== 49. EXPORT FUNCTIONS ======
 window.showPage = showPage;
 window.showMarket = ()=>showPage('market');
-window.showWallet = ()=>showPage('profile');
+window.showWallet = showWallet;
 window.showHistory = showHistory;
 window.showNotifications = showNotifications;
 window.showDepositModal = showDepositModal;
 window.showWithdrawModal = showWithdrawModal;
 window.showSwapModal = showSwapModal;
-window.showWheelModal = showWheelModal;
-window.showSlotsModal = showSlotsModal;
-window.spinWheel = spinWheelPro; // استخدام الدالة الجديدة
-window.spinSlots = spinSlots;
+window.showWheelGame = showWheelGame;
+window.showSlotsGame = showSlotsGame;
+window.exitGame = exitGame;
+window.spinWheelGame = spinWheelGame;
+window.spinSlotsGame = spinSlotsGame;
 window.buyWheelPack = buyWheelPack;
 window.buySlotsPack = buySlotsPack;
 window.buyAutoClicker = buyAutoClicker;
 window.showReferralDetails = showReferralDetails;
 window.showAdminPanel = showAdminPanel;
 window.closeModal = closeModal;
-window.closeJackpotPopup = closeJackpotPopup;
 window.toggleLanguage = toggleLanguage;
 window.copyReferralLink = copyReferralLink;
 window.copyDepositAddress = copyDepositAddress;
@@ -4604,3 +4523,9 @@ window.copyToClipboard = copyToClipboard;
 window.handleAvatarClick = handleAvatarClick;
 window.refreshPrices = refreshPrices;
 window.restoreFromBackup = restoreFromBackup;
+window.toggleWheelPanel = toggleWheelPanel;
+window.toggleSlotsPanel = toggleSlotsPanel;
+window.toggleWheelAutoSpin = toggleWheelAutoSpin;
+window.toggleSlotsAutoSpin = toggleSlotsAutoSpin;
+window.setWheelAutoSpins = setWheelAutoSpins;
+window.setSlotsAutoSpins = setSlotsAutoSpins;
