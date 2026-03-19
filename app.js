@@ -961,6 +961,16 @@ function showPage(page) {
     document.querySelector(`[data-page="${page}"]`).classList.add('active');
     currentPage = page;
     
+    // إظهار/إخفاء الهيدر
+    const header = document.getElementById('mainHeader');
+    if (header) {
+        if (page === 'wheelGame' || page === 'slotsGame') {
+            header.style.display = 'none';
+        } else {
+            header.style.display = 'flex';
+        }
+    }
+    
     if (page === 'market') renderMarket();
     if (page === 'profile') { 
         updateLeaderboard(); 
@@ -1749,7 +1759,7 @@ function selectPlan(machineId, planIndex) {
 
 function openPaymentModal(machine, planIndex) {
     const plan = machine.plans[planIndex];
-    document.getElementById('paymentMachineIcon').innerHTML = `<i class="fas ${machine.icon}" style="color: ${m.color};"></i>`;
+    document.getElementById('paymentMachineIcon').innerHTML = `<i class="fas ${machine.icon}" style="color: ${machine.color};"></i>`;
     document.getElementById('paymentMachineName').textContent = machine.name;
     document.getElementById('paymentDuration').textContent = plan.durationText || plan.duration + ' days';
     document.getElementById('paymentPrice').textContent = plan.price + ' TON';
@@ -3891,7 +3901,7 @@ function initWheelVegas() {
     wheel.innerHTML = '';
     wheel.style.transform = 'rotate(0deg)';
     
-    // 18 قطاع من WHEEL_PRIZES
+    // 32 قطاع من WHEEL_PRIZES
     const totalSegments = WHEEL_PRIZES.length;
     const anglePerSegment = 360 / totalSegments;
     
@@ -4606,90 +4616,6 @@ function showToastPro(message, type = 'info', duration = 3000) {
     }, duration);
 }
 
-// ====== 50. INITIALIZATION ======
-document.addEventListener('DOMContentLoaded', async () => {
-    hideAllModals();
-    
-    if (currentLanguage === 'ar') { 
-        document.body.classList.add('rtl'); 
-        document.documentElement.dir = 'rtl'; 
-    }
-    
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        el.textContent = t(el.getAttribute('data-i18n'));
-    });
-    
-    await loadUserData();
-    await loadPrices();
-    await initTonConnect();
-    
-    startMining();
-    updateUI();
-    renderMarket();
-    updateChart();
-    renderReferralMilestones();
-    
-    setupScrollListener();
-    
-    setInterval(() => {
-        if (!userData.autoClicker?.active) {
-            const btn = document.getElementById('autoClickerTurbine');
-            if (btn) { 
-                btn.classList.add('show'); 
-                setTimeout(() => btn.classList.remove('show'), 10000); 
-            }
-        }
-    }, 300000);
-    
-    setTimeout(() => { 
-        document.getElementById('loading').style.opacity = '0'; 
-        setTimeout(() => document.getElementById('loading').style.display = 'none', 500); 
-    }, 2000);
-    
-    startFloatingNotifications();
-    setTimeout(showRandomSticker, 1000);
-    
-    updateUserDisplay();
-    
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v9000.0");
-    console.log("✅ مع تحسينات Vegas Elite - جميع الميزات محفوظة!");
-    console.log("✅ All systems ready! 🚀");
-});
-
-function setupScrollListener() {
-    const btn = document.getElementById('scrollTopBtn');
-    const container = document.querySelector('.main-content');
-    container?.addEventListener('scroll', () => {
-        btn?.classList.toggle('show', container.scrollTop > 300);
-    });
-}
-
-setInterval(() => { if (userData) saveUserToCache(); }, 60000);
-setInterval(() => { if (userData && db) saveToFirebase(); }, 300000);
-
-window.addEventListener('beforeunload', () => { 
-    stopMining(); 
-    stopFloatingNotifications(); 
-    stopAllListeners(); 
-    saveUserToCache(); 
-});
-
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { 
-        stopMining(); 
-        stopFloatingNotifications(); 
-    } else { 
-        startMining(); 
-        if (currentPage === 'mining') startFloatingNotifications(); 
-    }
-});
-
-document.addEventListener('click', () => {
-    if (!VegasAudio.isInitialized) {
-        VegasAudio.init();
-    }
-}, { once: true });
-
 // ====== دوال فتح المودالات من أي صفحة (حل مشكلة المحفظة) ======
 function openProfileFromAnywhere() {
     console.log("📱 openProfileFromAnywhere called");
@@ -4780,6 +4706,90 @@ function openHistoryModal() {
         }
     }
 }
+
+// ====== 50. INITIALIZATION ======
+document.addEventListener('DOMContentLoaded', async () => {
+    hideAllModals();
+    
+    if (currentLanguage === 'ar') { 
+        document.body.classList.add('rtl'); 
+        document.documentElement.dir = 'rtl'; 
+    }
+    
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        el.textContent = t(el.getAttribute('data-i18n'));
+    });
+    
+    await loadUserData();
+    await loadPrices();
+    await initTonConnect();
+    
+    startMining();
+    updateUI();
+    renderMarket();
+    updateChart();
+    renderReferralMilestones();
+    
+    setupScrollListener();
+    
+    setInterval(() => {
+        if (!userData.autoClicker?.active) {
+            const btn = document.getElementById('autoClickerTurbine');
+            if (btn) { 
+                btn.classList.add('show'); 
+                setTimeout(() => btn.classList.remove('show'), 10000); 
+            }
+        }
+    }, 300000);
+    
+    setTimeout(() => { 
+        document.getElementById('loading').style.opacity = '0'; 
+        setTimeout(() => document.getElementById('loading').style.display = 'none', 500); 
+    }, 2000);
+    
+    startFloatingNotifications();
+    setTimeout(showRandomSticker, 1000);
+    
+    updateUserDisplay();
+    
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v9000.0");
+    console.log("✅ مع تحسينات Vegas Elite - جميع الميزات محفوظة!");
+    console.log("✅ All systems ready! 🚀");
+});
+
+function setupScrollListener() {
+    const btn = document.getElementById('scrollTopBtn');
+    const container = document.querySelector('.main-content');
+    container?.addEventListener('scroll', () => {
+        btn?.classList.toggle('show', container.scrollTop > 300);
+    });
+}
+
+setInterval(() => { if (userData) saveUserToCache(); }, 60000);
+setInterval(() => { if (userData && db) saveToFirebase(); }, 300000);
+
+window.addEventListener('beforeunload', () => { 
+    stopMining(); 
+    stopFloatingNotifications(); 
+    stopAllListeners(); 
+    saveUserToCache(); 
+});
+
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { 
+        stopMining(); 
+        stopFloatingNotifications(); 
+    } else { 
+        startMining(); 
+        if (currentPage === 'mining') startFloatingNotifications(); 
+    }
+});
+
+document.addEventListener('click', () => {
+    if (!VegasAudio.isInitialized) {
+        VegasAudio.init();
+    }
+}, { once: true });
 
 // ====== 51. EXPORT FUNCTIONS ======
 window.showPage = showPage;
