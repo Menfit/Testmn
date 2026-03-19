@@ -93,7 +93,7 @@ const CONFIG = {
         
         WHEEL_SPIN_PRICE: 0.25,
         WHEEL_FREE_SPIN_INTERVAL: 24 * 60 * 60 * 1000,
-        WHEEL_JACKPOT_EVERY: 20,
+        WHEEL_JACKPOT_EVERY: 15,
         WHEEL_BIG_WIN_EVERY: 15,
         WHEEL_MEGA_WIN_EVERY: 30,
         WHEEL_MEGA_JACKPOT_EVERY: 40,
@@ -976,30 +976,31 @@ function showPage(page) {
 }
 
 function openWheelGame() {
-    // إخفاء الهيدر للحصول على مساحة أكبر
+    console.log("🎡 Opening Wheel Game");
     const header = document.getElementById('mainHeader');
     if (header) header.style.display = 'none';
-    
     showPage('wheelGame');
-    initWheelVegas();
-    updateWheelVegasUI();
+    setTimeout(() => {
+        initWheelVegas();
+        updateWheelVegasUI();
+    }, 100);
 }
 
 function openSlotsGame() {
-    // إخفاء الهيدر للحصول على مساحة أكبر
+    console.log("🎰 Opening Slots Game");
     const header = document.getElementById('mainHeader');
     if (header) header.style.display = 'none';
-    
     showPage('slotsGame');
-    initSlotsVegas();
-    updateSlotsVegasUI();
+    setTimeout(() => {
+        initSlotsVegas();
+        updateSlotsVegasUI();
+    }, 100);
 }
 
 function exitGame() {
-    // إظهار الهيدر مرة أخرى
+    console.log("🔙 Exiting game");
     const header = document.getElementById('mainHeader');
     if (header) header.style.display = 'flex';
-    
     showPage('casino');
 }
 
@@ -1748,7 +1749,7 @@ function selectPlan(machineId, planIndex) {
 
 function openPaymentModal(machine, planIndex) {
     const plan = machine.plans[planIndex];
-    document.getElementById('paymentMachineIcon').innerHTML = `<i class="fas ${machine.icon}" style="color: ${machine.color};"></i>`;
+    document.getElementById('paymentMachineIcon').innerHTML = `<i class="fas ${machine.icon}" style="color: ${m.color};"></i>`;
     document.getElementById('paymentMachineName').textContent = machine.name;
     document.getElementById('paymentDuration').textContent = plan.durationText || plan.duration + ' days';
     document.getElementById('paymentPrice').textContent = plan.price + ' TON';
@@ -3878,45 +3879,35 @@ let wheelVegasState = {
 };
 
 function initWheelVegas() {
+    console.log("🎡 initWheelVegas started");
     const wheel = document.getElementById('wheelCasinoPro');
-    if (!wheel) return;
+    if (!wheel) {
+        console.error("❌ wheelCasinoPro not found, retrying...");
+        setTimeout(initWheelVegas, 200);
+        return;
+    }
     
+    console.log("✅ wheelCasinoPro found, drawing wheel...");
     wheel.innerHTML = '';
     wheel.style.transform = 'rotate(0deg)';
     
-    // نختار 12 قطاع كبير (بدل 32) عشان تكون واضحة
-    const segments = [
-        { prize: { type: 'GOODLUCK', icon: '🍀', label: '🍀 GOOD LUCK', color: '#94a3b8', multiplier: 1 } },
-        { prize: { type: 'TON', amount: 0.25, icon: '💰', label: '0.25 TON', color: '#0088cc' } },
-        { prize: { type: 'FREESPIN', icon: '🆓', label: '🆓 FREE', color: '#aa44ff' } },
-        { prize: { type: 'TON', amount: 0.5, icon: '💰', label: '0.5 TON', color: '#0088cc' } },
-        { prize: { type: 'TON', amount: 1, icon: '💰', label: '1 TON', color: '#0088cc' } },
-        { prize: { type: 'USDT', amount: 1, icon: '💵', label: '1 USDT', color: '#22c55e' } },
-        { prize: { type: 'TON', amount: 2, icon: '💰', label: '2 TON', color: '#0088cc' } },
-        { prize: { type: 'TON', amount: 5, icon: '🔥', label: '5 TON', color: '#ff9900', bigwin: true } },
-        { prize: { type: 'USDT', amount: 5, icon: '🔥', label: '5 USDT', color: '#ff9900', bigwin: true } },
-        { prize: { type: 'TON', amount: 10, icon: '🔥', label: '10 TON', color: '#ff9900', bigwin: true } },
-        { prize: { type: 'USDT', amount: 10, icon: '🔥', label: '10 USDT', color: '#ff9900', bigwin: true } },
-        { prize: { type: 'TON', amount: 25, icon: '💎', label: '25 TON', color: '#fbbf24', nicewin: true } },
-        { prize: { type: 'USDT', amount: 25, icon: '💎', label: '25 USDT', color: '#fbbf24', nicewin: true } },
-        { prize: { type: 'TON', amount: 50, icon: '💎', label: '50 TON', color: '#fbbf24', nicewin: true } },
-        { prize: { type: 'USDT', amount: 50, icon: '💎', label: '50 USDT', color: '#fbbf24', nicewin: true } },
-        { prize: { type: 'JACKPOT', amount: 100, currency: 'TON', icon: '👑', label: '100 TON', color: '#ef4444', jackpot: true } },
-        { prize: { type: 'JACKPOT', amount: 250, currency: 'USDT', icon: '👑', label: '250 USDT', color: '#ef4444', jackpot: true } },
-        { prize: { type: 'JACKPOT', amount: 500, currency: 'USDT', icon: '👑', label: '500 USDT', color: '#ef4444', megajackpot: true } }
-    ];
-    
-    const totalSegments = segments.length;
+    // 18 قطاع من WHEEL_PRIZES
+    const totalSegments = WHEEL_PRIZES.length;
     const anglePerSegment = 360 / totalSegments;
     
-    segments.forEach((segment, index) => {
+    WHEEL_PRIZES.forEach((prize, index) => {
         const segDiv = document.createElement('div');
         segDiv.className = 'wheel-segment-vegas';
         segDiv.dataset.index = index;
-        segDiv.dataset.type = segment.prize.type;
-        if (segment.prize.amount) segDiv.dataset.amount = segment.prize.amount;
+        segDiv.dataset.type = prize.type;
+        if (prize.amount) segDiv.dataset.amount = prize.amount;
         
         const rotation = index * anglePerSegment;
+        
+        let bgColor = prize.color;
+        if (prize.jackpot) {
+            bgColor = 'linear-gradient(45deg, #ef4444, #ff8800, #ef4444)';
+        }
         
         segDiv.style.cssText = `
             position: absolute;
@@ -3926,7 +3917,7 @@ function initWheelVegas() {
             left: 50%;
             transform-origin: 0% 100%;
             transform: rotate(${rotation}deg) skewY(${90 - anglePerSegment}deg);
-            background: ${segment.prize.color};
+            background: ${bgColor};
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -3937,27 +3928,28 @@ function initWheelVegas() {
             color: white;
             font-weight: bold;
             text-shadow: 0 0 5px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
         `;
         
         const icon = document.createElement('span');
         icon.className = 'vegas-segment-icon';
-        icon.style.fontSize = '1.8rem';
-        icon.textContent = segment.prize.icon;
+        icon.style.fontSize = prize.jackpot ? '2.2rem' : '1.8rem';
+        icon.textContent = prize.icon;
         
         const label = document.createElement('span');
         label.className = 'vegas-segment-label';
-        label.style.fontSize = '0.8rem';
-        label.style.background = 'rgba(0,0,0,0.6)';
+        label.style.fontSize = '0.75rem';
+        label.style.background = 'rgba(0,0,0,0.7)';
         label.style.padding = '2px 6px';
         label.style.borderRadius = '10px';
-        label.textContent = segment.prize.label;
+        label.textContent = prize.label;
         
         segDiv.appendChild(icon);
         segDiv.appendChild(label);
         wheel.appendChild(segDiv);
     });
     
-    // إضافة توهج دائم للقطاعات حسب قيمتها
+    // إضافة توهج دائم للقطاعات
     document.querySelectorAll('.wheel-segment-vegas').forEach(seg => {
         const type = seg.dataset.type;
         if (type === 'JACKPOT') {
@@ -3969,6 +3961,7 @@ function initWheelVegas() {
         }
     });
     
+    // تحديث العدادات
     updateWheelVegasUI();
 }
 
@@ -3986,7 +3979,6 @@ function getGuaranteedPrize() {
     // كل 20 لفة - جاكبوت
     if (spinsSinceJackpot >= CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - 1) {
         userData.wheel.jackpotCounter = 0;
-        // تدوير الجواكبوت بين 100 TON و 250 USDT
         const jackpots = WHEEL_PRIZES.filter(p => p.jackpot && p.amount !== 500);
         return jackpots[Math.floor(Math.random() * jackpots.length)];
     }
@@ -4002,11 +3994,9 @@ function getGuaranteedPrize() {
 }
 
 function selectVegasPrize() {
-    // أولاً نتحقق من الجوائز المضمونة
     const guaranteed = getGuaranteedPrize();
     if (guaranteed) return guaranteed;
     
-    // توزيع عشوائي حسب الوزن
     const totalWeight = WHEEL_PRIZES.reduce((s, p) => s + p.weight, 0);
     let rand = Math.random() * totalWeight;
     
@@ -4026,24 +4016,19 @@ function animateWheelVegas() {
     
     let velocity = 0;
     
-    // مرحلة التسارع
     if (elapsed < 600) {
         velocity = (elapsed / 600) * 25;
         wheel?.classList.add('spinning-fast');
     }
-    // مرحلة السرعة الثابتة
     else if (elapsed < 1800) {
         velocity = 25 + Math.sin(elapsed * 0.02) * 2;
     }
-    // مرحلة التباطؤ
     else if (elapsed < 2800) {
         velocity = 25 * ((2800 - elapsed) / 1000);
         
-        // تحديد الجائزة في بداية التباطؤ
         if (!wheelVegasState.selectedPrize) {
             wheelVegasState.selectedPrize = selectVegasPrize();
             
-            // تحديث العدادات
             if (wheelVegasState.selectedPrize.category === 'bigwin' || wheelVegasState.selectedPrize.category === 'nicewin') {
                 userData.wheel.bigWinCounter = (userData.wheel.bigWinCounter || 0) + 1;
             } else if (wheelVegasState.selectedPrize.jackpot) {
@@ -4057,7 +4042,6 @@ function animateWheelVegas() {
                 userData.wheel.megaJackpotCounter = (userData.wheel.megaJackpotCounter || 0) + 1;
             }
             
-            // حساب الزاوية المستهدفة
             const prizeIndex = WHEEL_PRIZES.indexOf(wheelVegasState.selectedPrize);
             if (prizeIndex !== -1) {
                 const segmentAngle = 360 / WHEEL_PRIZES.length;
@@ -4070,7 +4054,6 @@ function animateWheelVegas() {
             }
         }
     } else {
-        // انتهى الدوران
         wheelVegasState.isSpinning = false;
         wheel?.classList.remove('spinning-fast');
         wheel?.classList.add('wheel-bounce');
@@ -4087,7 +4070,6 @@ function animateWheelVegas() {
     wheelVegasState.currentRotation += velocity;
     if (wheel) wheel.style.transform = `rotate(${wheelVegasState.currentRotation}deg)`;
     
-    // تحديث مؤشر السرعة
     const speedFill = document.getElementById('wheelSpeedFill');
     if (speedFill) {
         const speedPercent = Math.min(velocity / 30 * 100, 100);
@@ -4100,7 +4082,6 @@ function animateWheelVegas() {
 function spinWheelVegas(isFree = false) {
     if (wheelVegasState.isSpinning) return;
     
-    // التحقق من الرصيد
     if (isFree) {
         const now = Date.now();
         const nextFree = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
@@ -4113,15 +4094,12 @@ function spinWheelVegas(isFree = false) {
         }
         userData.wheel.lastFreeSpin = now;
     } else {
-        // استخدام اللفات المشتراة أولاً
         if (userData.wheel.purchasedSpins > 0) {
             userData.wheel.purchasedSpins--;
         } 
-        // ثم اللفات المجانية المخزنة
         else if (userData.wheel.freeSpins > 0) {
             userData.wheel.freeSpins--;
         }
-        // ثم الدفع من الرصيد
         else if (userData.balances.TON >= CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
             userData.balances.TON -= CONFIG.ECONOMY.WHEEL_SPIN_PRICE;
             userData.balance = userData.balances.TON;
@@ -4135,22 +4113,17 @@ function spinWheelVegas(isFree = false) {
     wheelVegasState.spinStartTime = Date.now();
     wheelVegasState.selectedPrize = null;
     
-    // المؤثرات الصوتية
     VegasAudio.click();
     setTimeout(() => VegasAudio.whoosh(), 50);
     
-    // تشغيل الطقطقة
     TickSequencer.playWheelTicks(2500, () => {
         VegasAudio.clunk();
     });
     
-    // إزالة التوهج القديم
     document.querySelectorAll('.wheel-segment-vegas').forEach(seg => {
         seg.classList.remove('winner-segment', 'near-miss');
-        seg.style.transform = seg.style.transform.replace('scale', '');
     });
     
-    // بدء الأنيميشن
     wheelVegasState.animationId = requestAnimationFrame(animateWheelVegas);
     
     userData.wheel.totalSpins++;
@@ -4161,19 +4134,15 @@ function spinWheelVegas(isFree = false) {
 function awardVegasPrize(prize) {
     userData.wheel.lastWin = { prize, timestamp: Date.now() };
     
-    // GOOD LUCK - إعادة اللفة
     if (prize.goodluck) {
         showToastPro('🍀 GOOD LUCK! Try again!', 'info');
         VegasAudio.coin();
-        
-        // إضافة لفة مجانية
         userData.wheel.freeSpins = (userData.wheel.freeSpins || 0) + 1;
         saveUserToCache();
         updateWheelVegasUI();
         return;
     }
     
-    // FREE SPIN - تخزين لفة مجانية
     if (prize.freespin) {
         showToastPro('🆓 FREE SPIN STORED!', 'success');
         VegasAudio.coin();
@@ -4183,7 +4152,6 @@ function awardVegasPrize(prize) {
         return;
     }
     
-    // جاكبوت
     if (prize.jackpot) {
         const currency = prize.currency || prize.type;
         const amount = prize.amount;
@@ -4197,7 +4165,6 @@ function awardVegasPrize(prize) {
         userData.totalEarned += amount;
         addTransaction('wheel', amount, { currency, jackpot: true });
         
-        // اختيار نوع الاحتفال
         if (prize.amount === 500) {
             JackpotTheater.play(amount, currency, 'mega');
             showWinPopup(`${amount} ${currency}`, 'mega');
@@ -4206,16 +4173,13 @@ function awardVegasPrize(prize) {
             showWinPopup(`${amount} ${currency}`, 'jackpot');
         }
         
-        // تحديث عداد الجاكبوت
         userData.wheel.jackpotWon++;
-        
         saveUserToCache();
         updateUI();
         updateWheelVegasUI();
         return;
     }
     
-    // فوز عادي
     const currency = prize.type;
     const amount = prize.amount;
     
@@ -4224,7 +4188,6 @@ function awardVegasPrize(prize) {
     userData.totalEarned += amount;
     addTransaction('wheel', amount, { currency });
     
-    // تحديد نوع الفوز للاحتفال
     if (amount >= 50) {
         showWinPopup(`${amount} ${currency}`, 'nice');
         VegasAudio.bigWin();
@@ -4236,7 +4199,6 @@ function awardVegasPrize(prize) {
         VegasAudio.coin();
     }
     
-    // Near Miss Effect - لو كانت قريبة من الجاكبوت
     const jackpotPrizes = WHEEL_PRIZES.filter(p => p.jackpot);
     const isNearJackpot = jackpotPrizes.some(jp => 
         Math.abs(jp.amount - amount) < 10 && jp.currency === currency
@@ -4261,8 +4223,6 @@ function updateWheelVegasUI() {
     const jackpotEl = document.getElementById('wheelJackpotCounter');
     const freeSpinBtn = document.getElementById('wheelFreeSpin');
     const bigWinCounter = document.getElementById('wheelBigWinCounter');
-    const jackpotCounter = document.getElementById('wheelJackpotCounter');
-    const megaCounter = document.getElementById('wheelMegaCounter');
     
     if (spinsEl) {
         const totalSpins = (userData.wheel.purchasedSpins || 0) + (userData.wheel.freeSpins || 0);
@@ -4277,11 +4237,6 @@ function updateWheelVegasUI() {
     if (bigWinCounter) {
         const nextBigWin = CONFIG.ECONOMY.WHEEL_BIG_WIN_EVERY - ((userData.wheel.bigWinCounter || 0) % CONFIG.ECONOMY.WHEEL_BIG_WIN_EVERY);
         bigWinCounter.textContent = nextBigWin;
-    }
-    
-    if (megaCounter) {
-        const nextMega = CONFIG.ECONOMY.WHEEL_MEGA_JACKPOT_EVERY - ((userData.wheel.megaJackpotCounter || 0) % CONFIG.ECONOMY.WHEEL_MEGA_JACKPOT_EVERY);
-        megaCounter.textContent = nextMega;
     }
     
     if (freeSpinBtn) {
@@ -4299,7 +4254,6 @@ function updateWheelVegasUI() {
         }
     }
     
-    // تحديث مؤشرات الحرارة
     updateVegasHeat();
 }
 
@@ -4333,9 +4287,15 @@ let slotsVegasState = {
 };
 
 function initSlotsVegas() {
+    console.log("🎰 initSlotsVegas started");
     const container = document.getElementById('slotReelsPro');
-    if (!container) return;
+    if (!container) {
+        console.error("❌ slotReelsPro not found, retrying...");
+        setTimeout(initSlotsVegas, 200);
+        return;
+    }
     
+    console.log("✅ slotReelsPro found, drawing slots...");
     container.innerHTML = '';
     
     for (let i = 0; i < 3; i++) {
@@ -4347,7 +4307,6 @@ function initSlotsVegas() {
         reel.className = 'vegas-slot-reel';
         reel.id = `vegas-reel-${i}`;
         
-        // توليد شريط طويل من الرموز
         const strip = generateVegasStrip();
         slotsVegasState.reels[i] = strip;
         
@@ -4364,7 +4323,6 @@ function initSlotsVegas() {
         wrapper.appendChild(reel);
         container.appendChild(wrapper);
         
-        // وضعية عشوائية في البداية
         const startPos = Math.floor(Math.random() * 50) + 20;
         updateVegasReelPosition(i, startPos);
     }
@@ -4372,13 +4330,12 @@ function initSlotsVegas() {
 
 function generateVegasStrip() {
     const strip = [];
-    // نكرر الرموز 50 مرة عشان يكون الشريط طويل
     for (let i = 0; i < 50; i++) {
         const random = Math.random();
         let accumulated = 0;
         
         for (const symbol of SLOTS_SYMBOLS_DATA) {
-            accumulated += symbol.weight / 100; // تحويل الوزن إلى نسبة
+            accumulated += symbol.weight / 100;
             if (random <= accumulated) {
                 strip.push({ ...symbol });
                 break;
@@ -4392,7 +4349,7 @@ function updateVegasReelPosition(reelIndex, position) {
     const reel = document.getElementById(`vegas-reel-${reelIndex}`);
     if (!reel) return;
     
-    const symbolHeight = 110; // ارتفاع الرمز بالبكسل
+    const symbolHeight = 110;
     reel.style.transform = `translateY(-${position * symbolHeight}px)`;
     slotsVegasState.positions[reelIndex] = position;
 }
@@ -4402,7 +4359,6 @@ function spinSlotsVegas(isFree = false, isTurbo = false) {
     
     const price = isTurbo ? CONFIG.ECONOMY.SLOTS_TURBO_PRICE : CONFIG.ECONOMY.SLOTS_SPIN_PRICE;
     
-    // التحقق من الرصيد
     if (isFree) {
         const now = Date.now();
         const nextFree = (userData.slots.lastFreeSpin || 0) + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
@@ -4415,15 +4371,12 @@ function spinSlotsVegas(isFree = false, isTurbo = false) {
         }
         userData.slots.lastFreeSpin = now;
     } else {
-        // استخدام اللفات المشتراة أولاً
         if (userData.slots.purchasedSpins > 0) {
             userData.slots.purchasedSpins--;
         }
-        // ثم اللفات المجانية المخزنة
         else if (userData.slots.freeSpins > 0) {
             userData.slots.freeSpins--;
         }
-        // ثم الدفع من الرصيد
         else if (userData.balances.TON >= price) {
             userData.balances.TON -= price;
             userData.balance = userData.balances.TON;
@@ -4435,7 +4388,6 @@ function spinSlotsVegas(isFree = false, isTurbo = false) {
     
     slotsVegasState.isSpinning = true;
     
-    // تحديد النتائج
     const results = [
         Math.floor(Math.random() * 100),
         Math.floor(Math.random() * 100),
@@ -4443,11 +4395,9 @@ function spinSlotsVegas(isFree = false, isTurbo = false) {
     ];
     slotsVegasState.results = results;
     
-    // مؤثرات صوتية
     VegasAudio.click();
     setTimeout(() => VegasAudio.whoosh(), 50);
     
-    // تشغيل البكرات الواحدة تلو الأخرى
     spinVegasReel(0, results[0], isTurbo ? 800 : 1500, () => {
         spinVegasReel(1, results[1], isTurbo ? 800 : 1800, () => {
             spinVegasReel(2, results[2], isTurbo ? 800 : 2100, () => {
@@ -4467,11 +4417,10 @@ function spinVegasReel(index, targetResult, duration, onComplete) {
     
     wrapper?.classList.add('spinning');
     
-    // طقطقة خاصة بكل بكرة
     TickSequencer.playSlotsTicks(index, null);
     
     const startPos = slotsVegasState.positions[index];
-    const extraSpins = 5 + index * 2; // البكرة الثالثة تدور أكثر
+    const extraSpins = 5 + index * 2;
     const targetPos = targetResult + (extraSpins * 100);
     
     const startTime = Date.now();
@@ -4479,7 +4428,6 @@ function spinVegasReel(index, targetResult, duration, onComplete) {
     const animate = () => {
         const elapsed = Date.now() - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        // Easing function - يبدأ سريعاً ويبطئ في النهاية
         const easeOut = 1 - Math.pow(1 - progress, 4);
         const currentPos = startPos + (targetPos - startPos) * easeOut;
         
@@ -4499,18 +4447,15 @@ function spinVegasReel(index, targetResult, duration, onComplete) {
 }
 
 function checkVegasWin(results) {
-    // استخراج الرموز الفائزة
     const symbols = [
         slotsVegasState.reels[0][results[0] % slotsVegasState.reels[0].length],
         slotsVegasState.reels[1][results[1] % slotsVegasState.reels[1].length],
         slotsVegasState.reels[2][results[2] % slotsVegasState.reels[2].length]
     ];
     
-    // التحقق من الفوز
     const allMatch = symbols[0].symbol === symbols[1].symbol && 
                      symbols[1].symbol === symbols[2].symbol;
     
-    // تفعيل خط الفوز
     const winLine = document.getElementById('slotsWinLine');
     if (winLine) winLine.classList.add('active');
     
@@ -4518,17 +4463,14 @@ function checkVegasWin(results) {
         const winData = symbols[0];
         let winAmount = winData.value;
         
-        // مضاعف إن وجد
         if (userData.slots.multiplier && userData.slots.multiplier > 1) {
             winAmount *= userData.slots.multiplier;
-            userData.slots.multiplier = 1; // استهلاك المضاعف
+            userData.slots.multiplier = 1;
         }
         
         const currency = winData.type === 'TON' ? 'TON' : 'USDT';
         
-        // إضافة توهج للرموز الفائزة
         document.querySelectorAll('.vegas-slot-symbol').forEach((sym, idx) => {
-            // تحديد الرموز في منتصف البكرات
             const centerPositions = [
                 results[0] % 100 + 1,
                 results[1] % 100 + 101,
@@ -4539,7 +4481,6 @@ function checkVegasWin(results) {
             }
         });
         
-        // صرف الجائزة
         if (currency === 'TON') {
             userData.balances.TON += winAmount;
             userData.balance = userData.balances.TON;
@@ -4548,7 +4489,6 @@ function checkVegasWin(results) {
         }
         userData.totalEarned += winAmount;
         
-        // احتفال حسب حجم الجائزة
         if (winData.jackpot || winAmount >= 100) {
             JackpotTheater.play(winAmount, currency, 'mega');
             showWinPopup(`${winAmount} ${currency}`, 'mega');
@@ -4565,12 +4505,10 @@ function checkVegasWin(results) {
         
         addTransaction('slots', winAmount, { currency, symbol: winData.symbol });
         
-        // إظهار المبلغ في شاشة الفوز
         const winDisplay = document.getElementById('slotsWinAmount');
         if (winDisplay) winDisplay.textContent = `${winAmount} ${currency}`;
         
     } else {
-        // التحقق من فوز صغير (رمزين متطابقين)
         const matchCount = 
             (symbols[0].symbol === symbols[1].symbol ? 1 : 0) +
             (symbols[1].symbol === symbols[2].symbol ? 1 : 0) +
@@ -4587,7 +4525,6 @@ function checkVegasWin(results) {
         if (winDisplay) winDisplay.textContent = '0.00';
     }
     
-    // إزالة التوهج بعد فترة
     setTimeout(() => {
         document.querySelectorAll('.vegas-slot-symbol').forEach(s => s.classList.remove('winning-symbol'));
         if (winLine) winLine.classList.remove('active');
@@ -4636,7 +4573,6 @@ function showToastPro(message, type = 'info', duration = 3000) {
     const container = document.getElementById('toastContainer');
     if (!container) return;
     
-    // إزالة التوست القديم إن وجد
     const existingToast = container.querySelector('.toast-pro');
     if (existingToast) {
         existingToast.classList.add('closing');
@@ -4658,14 +4594,12 @@ function showToastPro(message, type = 'info', duration = 3000) {
     
     container.appendChild(toast);
     
-    // هابتيك فيدباك حسب نوع التوست
     if (type === 'error') {
         hapticFeedback('error');
     } else if (type === 'success') {
         hapticFeedback('success');
     }
     
-    // إزالة التوست بعد المدة
     setTimeout(() => {
         toast.classList.add('closing');
         setTimeout(() => toast.remove(), 300);
@@ -4750,12 +4684,102 @@ document.addEventListener('visibilitychange', () => {
     }
 });
 
-// تهيئة الصوت عند أول تفاعل
 document.addEventListener('click', () => {
     if (!VegasAudio.isInitialized) {
         VegasAudio.init();
     }
 }, { once: true });
+
+// ====== دوال فتح المودالات من أي صفحة (حل مشكلة المحفظة) ======
+function openProfileFromAnywhere() {
+    console.log("📱 openProfileFromAnywhere called");
+    if (currentPage === 'wheelGame' || currentPage === 'slotsGame') {
+        exitGame();
+        setTimeout(() => showPage('profile'), 300);
+    } else {
+        showPage('profile');
+    }
+}
+
+function openWithdrawModal() {
+    console.log("💰 openWithdrawModal called");
+    if (currentPage !== 'profile') {
+        openProfileFromAnywhere();
+        setTimeout(() => {
+            if (typeof showWithdrawModal === 'function') {
+                showWithdrawModal();
+            } else {
+                document.getElementById('withdrawModal')?.classList.add('show');
+            }
+        }, 400);
+    } else {
+        if (typeof showWithdrawModal === 'function') {
+            showWithdrawModal();
+        } else {
+            document.getElementById('withdrawModal')?.classList.add('show');
+        }
+    }
+}
+
+function openDepositModal() {
+    console.log("💵 openDepositModal called");
+    if (currentPage !== 'profile') {
+        openProfileFromAnywhere();
+        setTimeout(() => {
+            if (typeof showDepositModal === 'function') {
+                showDepositModal();
+            } else {
+                document.getElementById('depositModal')?.classList.add('show');
+            }
+        }, 400);
+    } else {
+        if (typeof showDepositModal === 'function') {
+            showDepositModal();
+        } else {
+            document.getElementById('depositModal')?.classList.add('show');
+        }
+    }
+}
+
+function openSwapModal() {
+    console.log("🔄 openSwapModal called");
+    if (currentPage !== 'profile') {
+        openProfileFromAnywhere();
+        setTimeout(() => {
+            if (typeof showSwapModal === 'function') {
+                showSwapModal();
+            } else {
+                document.getElementById('swapModal')?.classList.add('show');
+            }
+        }, 400);
+    } else {
+        if (typeof showSwapModal === 'function') {
+            showSwapModal();
+        } else {
+            document.getElementById('swapModal')?.classList.add('show');
+        }
+    }
+}
+
+function openHistoryModal() {
+    console.log("📜 openHistoryModal called");
+    if (currentPage !== 'profile') {
+        openProfileFromAnywhere();
+        setTimeout(() => {
+            if (typeof showHistory === 'function') {
+                showHistory();
+            } else {
+                document.getElementById('historyModal')?.classList.add('show');
+            }
+        }, 400);
+    } else {
+        if (typeof showHistory === 'function') {
+            showHistory();
+        } else {
+            document.getElementById('historyModal')?.classList.add('show');
+        }
+    }
+}
 
 // ====== 51. EXPORT FUNCTIONS ======
 window.showPage = showPage;
@@ -4821,3 +4845,10 @@ window.showToastPro = showToastPro;
 window.VegasAudio = VegasAudio;
 window.TickSequencer = TickSequencer;
 window.JackpotTheater = JackpotTheater;
+
+// دوال المحفظة الجديدة
+window.openProfileFromAnywhere = openProfileFromAnywhere;
+window.openWithdrawModal = openWithdrawModal;
+window.openDepositModal = openDepositModal;
+window.openSwapModal = openSwapModal;
+window.openHistoryModal = openHistoryModal;
