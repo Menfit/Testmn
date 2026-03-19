@@ -292,6 +292,22 @@
     50% { opacity: 0.6; transform: scale(1.05); }
 }
 
+/* شعاع كوني متحرك */
+@keyframes cosmicRay {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translate(-50%, -50%) rotate(180deg) scale(1.2);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg) scale(1);
+        opacity: 0.3;
+    }
+}
+
 /* ====== 4. JACKPOT POPUP ANIMATIONS - تأثيرات الجاكبوت الأسطورية ====== */
 
 @keyframes jackpotPopIn {
@@ -990,7 +1006,7 @@ body.near-miss-shake {
 
 .page.active { display: block; }
 
-/* ====== 18. CASINO HEADER (جديد) ====== */
+/* ====== 18. CASINO HEADER ====== */
 .casino-header {
     display: flex;
     align-items: center;
@@ -1253,6 +1269,20 @@ body.near-miss-shake {
     animation: cosmicPulse 10s infinite;
 }
 
+/* شعاع كوني متحرك */
+.cosmic-ray {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0,242,255,0.1) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    animation: cosmicRay 20s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
 /* نظام الحرارة */
 .heat-low::after {
     content: '';
@@ -1432,17 +1462,6 @@ body.near-miss-shake {
     filter: drop-shadow(0 0 15px orange) drop-shadow(0 0 30px red);
     z-index: 30;
     animation: pointerBounce 1s infinite alternate;
-}
-
-@keyframes pointerBounce {
-    0%, 100% { 
-        transform: translateX(-50%) translateY(0);
-        filter: drop-shadow(0 0 15px orange);
-    }
-    50% { 
-        transform: translateX(-50%) translateY(-10px);
-        filter: drop-shadow(0 0 25px orange) drop-shadow(0 0 40px red);
-    }
 }
 
 /* مركز العجلة */
@@ -5460,3 +5479,44 @@ body.near-miss-shake {
 
 /* ====== 70. SELECTION ====== */
 ::selection { background: var(--ton-cyan); color: var(--bg-primary); }
+
+/* ====== 71. VEGAS COSMIC RAYS ====== */
+.wheel-game-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.wheel-game-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(0,242,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(255,215,0,0.1) 0%, transparent 50%),
+                conic-gradient(from 0deg, transparent, rgba(0,242,255,0.05), transparent, rgba(255,215,0,0.05), transparent);
+    animation: cosmicRay 20s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.slots-game-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.slots-game-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,68,204,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(0,242,255,0.1) 0%, transparent 50%),
+                conic-gradient(from 0deg, transparent, rgba(255,68,204,0.05), transparent, rgba(0,242,255,0.05), transparent);
+    animation: cosmicRay 15s linear infinite reverse;
+    pointer-events: none;
+    z-index: 0;
+}
