@@ -1711,20 +1711,17 @@ async function confirmWalletPayment() {
     } catch (e) { showToast('Payment failed', 'error'); }
 }
 
-// ====== 25. SWAP SYSTEM (محدث) ======
+// ====== 25. SWAP SYSTEM ======
 let swapMode = 'from', swapFromCurrency = 'TON', swapToCurrency = 'USDT';
 
 function showSwapModal() {
-    const modal = document.getElementById('swapModal');
-    if (!modal) return;
-    
     document.getElementById('swapFromCurrency').textContent = swapFromCurrency;
     document.getElementById('swapToCurrency').textContent = swapToCurrency;
     document.getElementById('swapFromIcon').src = CONFIG.CMC_ICONS[swapFromCurrency];
     document.getElementById('swapToIcon').src = CONFIG.CMC_ICONS[swapToCurrency];
     updateSwapBalances();
     calculateSwap();
-    modal.classList.add('show');
+    document.getElementById('swapModal').classList.add('show');
 }
 
 function updateSwapBalances() {
@@ -1824,19 +1821,16 @@ function confirmSwap() {
     renderAssets();
 }
 
-// ====== 26. DEPOSIT FUNCTIONS (محدث) ======
+// ====== 26. DEPOSIT FUNCTIONS ======
 let selectedDepositCurrency = 'TON';
 
 function showDepositModal() {
-    const modal = document.getElementById('depositModal');
-    if (!modal) return;
-    
     const select = document.getElementById('depositCurrencySelect');
     select.innerHTML = CONFIG.ALL_ASSETS.map(a => 
         `<option value="${a.symbol}" ${a.symbol === selectedDepositCurrency ? 'selected' : ''}>${a.name} (${a.symbol})</option>`
     ).join('');
     updateDepositInfo();
-    modal.classList.add('show');
+    document.getElementById('depositModal').classList.add('show');
     updateWalletUI();
 }
 
@@ -1977,13 +1971,10 @@ async function submitDeposit() {
     addTransaction('deposit', amt, { currency: cur, txHash: hash, status: 'pending' });
 }
 
-// ====== 27. WITHDRAW FUNCTIONS (محدث) ======
+// ====== 27. WITHDRAW FUNCTIONS ======
 let selectedWithdrawNetwork = 'BEP20';
 
 function showWithdrawModal() {
-    const modal = document.getElementById('withdrawModal');
-    if (!modal) return;
-    
     const select = document.getElementById('withdrawNetworkSelect');
     if (select) {
         select.innerHTML = CONFIG.WITHDRAW_NETWORKS.USDT.map(net => 
@@ -1991,7 +1982,7 @@ function showWithdrawModal() {
         ).join('');
     }
     updateWithdrawInfo();
-    modal.classList.add('show');
+    document.getElementById('withdrawModal').classList.add('show');
 }
 
 function updateWithdrawInfo() {
@@ -2168,14 +2159,11 @@ async function submitWithdraw() {
     addTransaction('withdraw', amt, { currency: 'USDT', address: addr, network: netValue, fee, feeCurrency, status: 'pending' });
 }
 
-// ====== 28. HISTORY FUNCTIONS (محدث) ======
+// ====== 28. HISTORY FUNCTIONS ======
 let currentHistoryFilter = 'all';
 
 function showHistory() {
-    const modal = document.getElementById('historyModal');
-    if (!modal) return;
-    
-    modal.classList.add('show');
+    document.getElementById('historyModal').classList.add('show');
     renderHistory('all');
     checkPendingTransactions();
 }
@@ -4327,7 +4315,6 @@ function spinVegasReel(index, targetResult, duration, onComplete) {
     requestAnimationFrame(animate);
 }
 
-// ====== دالة checkVegasWin المحدثة (مكانها الأصلي) ======
 function checkVegasWin(results) {
     const reels = [
         SLOTS_SYMBOLS_DATA[results[0] % SLOTS_SYMBOLS_DATA.length],
