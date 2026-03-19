@@ -575,7 +575,7 @@ const WHEEL_PRIZES = [
     { id: 18, type: 'GOODLUCK', amount: 0, color: '#94a3b8', weight: 15, icon: '🍀', label: 'GOOD LUCK', goodluck: true }
 ];
 
-// ====== 8. SLOTS SYMBOLS ======
+// ====== 8. SLOTS SYMBOLS DATA ======
 const SLOTS_SYMBOLS_DATA = [
     { symbol: '🍒', weight: 30, value: 0.25, type: 'USDT', color: '#ff4444' },
     { symbol: '🍋', weight: 25, value: 0.25, type: 'USDT', color: '#ffdd00' },
