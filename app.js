@@ -444,37 +444,16 @@ function t(key, params = {}) {
     return text;
 }
 
-// دالة تحديث جميع النصوص في الصفحة
-function updateAllTexts() {
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        el.textContent = t(key);
-    });
-    
-    // تحديث attributes الخاصة بالـ placeholders
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        el.placeholder = t(key);
-    });
-    
-    // تحديث عنوان الصفحة
-    document.title = t('app.name');
-}
-
 function toggleLanguage() {
     currentLanguage = currentLanguage === 'en' ? 'ar' : 'en';
     localStorage.setItem('preferred_language', currentLanguage);
     document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
     document.body.classList.toggle('rtl', currentLanguage === 'ar');
-    
-    // تحديث جميع النصوص
-    updateAllTexts();
-    
-    // تحديث أيقونة اللغة
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        el.textContent = t(el.getAttribute('data-i18n'));
+    });
     const langIcon = document.getElementById('langIcon');
     if (langIcon) langIcon.textContent = currentLanguage === 'en' ? '🇬🇧' : '🇸🇦';
-    
-    // إظهار إشعار النجاح
     showToast(t('messages.success'), 'success');
 }
 
@@ -937,18 +916,21 @@ function showPage(page) {
 }
 
 function showWheelGamePage() {
+    document.body.classList.add('game-page-active');
     showPage('wheelGame');
     initWheelVegas();
     updateWheelVegasUI();
 }
 
 function showSlotsGamePage() {
+    document.body.classList.add('game-page-active');
     showPage('slotsGame');
     initSlotsVegas();
     updateSlotsVegasUI();
 }
 
 function exitGame() {
+    document.body.classList.remove('game-page-active');
     showPage('casino');
 }
 
@@ -1729,17 +1711,20 @@ async function confirmWalletPayment() {
     } catch (e) { showToast('Payment failed', 'error'); }
 }
 
-// ====== 25. SWAP SYSTEM ======
+// ====== 25. SWAP SYSTEM (محدث) ======
 let swapMode = 'from', swapFromCurrency = 'TON', swapToCurrency = 'USDT';
 
 function showSwapModal() {
+    const modal = document.getElementById('swapModal');
+    if (!modal) return;
+    
     document.getElementById('swapFromCurrency').textContent = swapFromCurrency;
     document.getElementById('swapToCurrency').textContent = swapToCurrency;
     document.getElementById('swapFromIcon').src = CONFIG.CMC_ICONS[swapFromCurrency];
     document.getElementById('swapToIcon').src = CONFIG.CMC_ICONS[swapToCurrency];
     updateSwapBalances();
     calculateSwap();
-    document.getElementById('swapModal').classList.add('show');
+    modal.classList.add('show');
 }
 
 function updateSwapBalances() {
@@ -1839,16 +1824,19 @@ function confirmSwap() {
     renderAssets();
 }
 
-// ====== 26. DEPOSIT FUNCTIONS ======
+// ====== 26. DEPOSIT FUNCTIONS (محدث) ======
 let selectedDepositCurrency = 'TON';
 
 function showDepositModal() {
+    const modal = document.getElementById('depositModal');
+    if (!modal) return;
+    
     const select = document.getElementById('depositCurrencySelect');
     select.innerHTML = CONFIG.ALL_ASSETS.map(a => 
         `<option value="${a.symbol}" ${a.symbol === selectedDepositCurrency ? 'selected' : ''}>${a.name} (${a.symbol})</option>`
     ).join('');
     updateDepositInfo();
-    document.getElementById('depositModal').classList.add('show');
+    modal.classList.add('show');
     updateWalletUI();
 }
 
@@ -1989,10 +1977,13 @@ async function submitDeposit() {
     addTransaction('deposit', amt, { currency: cur, txHash: hash, status: 'pending' });
 }
 
-// ====== 27. WITHDRAW FUNCTIONS ======
+// ====== 27. WITHDRAW FUNCTIONS (محدث) ======
 let selectedWithdrawNetwork = 'BEP20';
 
 function showWithdrawModal() {
+    const modal = document.getElementById('withdrawModal');
+    if (!modal) return;
+    
     const select = document.getElementById('withdrawNetworkSelect');
     if (select) {
         select.innerHTML = CONFIG.WITHDRAW_NETWORKS.USDT.map(net => 
@@ -2000,7 +1991,7 @@ function showWithdrawModal() {
         ).join('');
     }
     updateWithdrawInfo();
-    document.getElementById('withdrawModal').classList.add('show');
+    modal.classList.add('show');
 }
 
 function updateWithdrawInfo() {
@@ -2177,11 +2168,14 @@ async function submitWithdraw() {
     addTransaction('withdraw', amt, { currency: 'USDT', address: addr, network: netValue, fee, feeCurrency, status: 'pending' });
 }
 
-// ====== 28. HISTORY FUNCTIONS ======
+// ====== 28. HISTORY FUNCTIONS (محدث) ======
 let currentHistoryFilter = 'all';
 
 function showHistory() {
-    document.getElementById('historyModal').classList.add('show');
+    const modal = document.getElementById('historyModal');
+    if (!modal) return;
+    
+    modal.classList.add('show');
     renderHistory('all');
     checkPendingTransactions();
 }
@@ -2570,191 +2564,118 @@ function updatePurchasedSpinsDisplay() {
     }
 }
 
-// ====== 35. WHEEL PACKS - شراء باقات عجلة الحظ ======
+// ====== 35. WHEEL PACKS ======
 async function buyWheelPack(pack) {
     let spins, price, bonus;
     switch(pack) {
-        case 'p5': 
-            spins = 5; 
-            price = CONFIG.ECONOMY.WHEEL_PACK_5.price; 
-            bonus = CONFIG.ECONOMY.WHEEL_PACK_5.bonus; 
-            break;
-        case 'p10': 
-            spins = 10; 
-            price = CONFIG.ECONOMY.WHEEL_PACK_10.price; 
-            bonus = CONFIG.ECONOMY.WHEEL_PACK_10.bonus; 
-            break;
-        case 'p50': 
-            spins = 50; 
-            price = CONFIG.ECONOMY.WHEEL_PACK_50.price; 
-            bonus = CONFIG.ECONOMY.WHEEL_PACK_50.bonus; 
-            break;
-        case 'p100': 
-            spins = 100; 
-            price = CONFIG.ECONOMY.WHEEL_PACK_100.price; 
-            bonus = CONFIG.ECONOMY.WHEEL_PACK_100.bonus; 
-            break;
+        case 'p5': spins = 5; price = CONFIG.ECONOMY.WHEEL_PACK_5.price; bonus = 0; break;
+        case 'p10': spins = 10; price = CONFIG.ECONOMY.WHEEL_PACK_10.price; bonus = 1; break;
+        case 'p50': spins = 50; price = CONFIG.ECONOMY.WHEEL_PACK_50.price; bonus = 5; break;
+        case 'p100': spins = 100; price = CONFIG.ECONOMY.WHEEL_PACK_100.price; bonus = 10; break;
         default: return;
     }
     
     const totalSpins = spins + bonus;
-    const totalPrice = price;
     
-    // تأكيد الشراء
-    if (!confirm(t('pack.confirm', { spins: totalSpins, price: totalPrice }))) {
+    if (!confirm(t('pack.confirm', { spins: totalSpins, price }))) {
         return;
     }
     
-    // التحقق من وجود محفظة متصلة
     if (!tonConnectUI || !tonWallet) {
-        showToast(t('error.pack.connectWallet'), 'error');
+        showToast('Please connect your TON wallet first', 'error');
         return;
     }
     
     try {
-        showToast(t('pack.opening'), 'info');
+        showToast('Opening wallet...', 'info');
         
-        // إنشاء معاملة الدفع
-        const tx = {
-            validUntil: Date.now() + 600000, // 10 دقائق
-            messages: [{
-                address: CONFIG.TON.WALLET, // عنوان المستلم
-                amount: (totalPrice * 1e9).toString() // المبلغ بـ nanoTON
-            }]
-        };
-        
-        // إرسال المعاملة
-        const result = await tonConnectUI.sendTransaction(tx);
-        
-        showToast(t('pack.sent'), 'success');
-        
-        // في التطبيق الحقيقي، ننتظر تأكيد من Firebase
-        // هنا نستخدم setTimeout كمحاكاة
-        setTimeout(() => {
-            // إضافة اللفات إلى رصيد المستخدم
-            if (!userData.wheel.purchasedSpins) userData.wheel.purchasedSpins = 0;
-            userData.wheel.purchasedSpins += totalSpins;
-            
-            // تسجيل المعاملة
-            addTransaction('wheel_pack', totalPrice, { 
-                currency: 'TON', 
-                details: t('pack.details', { spins, bonus }),
-                spins: totalSpins
-            });
-            
-            // حفظ البيانات
-            saveUserToCache();
-            
-            // تحديث الواجهة
-            updatePurchasedSpinsDisplay();
-            updateUI();
-            
-            // إظهار رسالة النجاح مع تأثير صوتي
-            VegasAudio.coin();
-            showToast(t('pack.success', { spins: totalSpins }), 'success');
-            
-            // إذا كان المستخدم في صفحة العجلة، تحديث العرض
-            if (document.getElementById('wheelGameSpins')) {
-                updateWheelVegasUI();
-            }
-        }, 3000);
-        
-    } catch (e) {
-        console.error("❌ Payment error:", e);
-        showToast(t('error.payment'), 'error');
-    }
-}
-
-// ====== 36. SLOTS PACKS - شراء باقات السلوتس ======
-async function buySlotsPack(pack) {
-    let spins, price, bonus;
-    switch(pack) {
-        case 'p5': 
-            spins = 5; 
-            price = CONFIG.ECONOMY.SLOTS_PACK_5.price; 
-            bonus = CONFIG.ECONOMY.SLOTS_PACK_5.bonus; 
-            break;
-        case 'p10': 
-            spins = 10; 
-            price = CONFIG.ECONOMY.SLOTS_PACK_10.price; 
-            bonus = CONFIG.ECONOMY.SLOTS_PACK_10.bonus; 
-            break;
-        case 'p50': 
-            spins = 50; 
-            price = CONFIG.ECONOMY.SLOTS_PACK_50.price; 
-            bonus = CONFIG.ECONOMY.SLOTS_PACK_50.bonus; 
-            break;
-        case 'p100': 
-            spins = 100; 
-            price = CONFIG.ECONOMY.SLOTS_PACK_100.price; 
-            bonus = CONFIG.ECONOMY.SLOTS_PACK_100.bonus; 
-            break;
-        default: return;
-    }
-    
-    const totalSpins = spins + bonus;
-    const totalPrice = price;
-    
-    // تأكيد الشراء
-    if (!confirm(t('pack.confirm', { spins: totalSpins, price: totalPrice }))) {
-        return;
-    }
-    
-    // التحقق من وجود محفظة متصلة
-    if (!tonConnectUI || !tonWallet) {
-        showToast(t('error.pack.connectWallet'), 'error');
-        return;
-    }
-    
-    try {
-        showToast(t('pack.opening'), 'info');
-        
-        // إنشاء معاملة الدفع
         const tx = {
             validUntil: Date.now() + 600000,
             messages: [{
                 address: CONFIG.TON.WALLET,
-                amount: (totalPrice * 1e9).toString()
+                amount: (price * 1e9).toString()
             }]
         };
         
-        // إرسال المعاملة
         const result = await tonConnectUI.sendTransaction(tx);
         
-        showToast(t('pack.sent'), 'success');
+        showToast('Payment sent! Waiting for confirmation...', 'info');
         
-        // محاكاة التأكيد
         setTimeout(() => {
-            // إضافة اللفات إلى رصيد المستخدم
-            if (!userData.slots.purchasedSpins) userData.slots.purchasedSpins = 0;
-            userData.slots.purchasedSpins += totalSpins;
+            if (!userData.wheel.purchasedSpins) userData.wheel.purchasedSpins = 0;
+            userData.wheel.purchasedSpins += totalSpins;
             
-            // تسجيل المعاملة
-            addTransaction('slots_pack', totalPrice, { 
+            addTransaction('wheel_pack', price, { 
                 currency: 'TON', 
-                details: t('pack.details', { spins, bonus }),
-                spins: totalSpins
+                details: `Bought ${pack} pack: ${spins} spins + ${bonus} bonus` 
             });
             
-            // حفظ البيانات
             saveUserToCache();
-            
-            // تحديث الواجهة
+            showToast(t('pack.success', { spins: totalSpins }), 'success');
             updatePurchasedSpinsDisplay();
             updateUI();
-            
-            // إظهار رسالة النجاح
-            VegasAudio.coin();
-            showToast(t('pack.success', { spins: totalSpins }), 'success');
-            
-            // إذا كان المستخدم في صفحة السلوت، تحديث العرض
-            if (document.getElementById('slotsGameSpins')) {
-                updateSlotsVegasUI();
-            }
         }, 3000);
         
     } catch (e) {
-        console.error("❌ Payment error:", e);
+        console.error("Payment error:", e);
+        showToast(t('error.payment'), 'error');
+    }
+}
+
+// ====== 36. SLOTS PACKS ======
+async function buySlotsPack(pack) {
+    let spins, price, bonus;
+    switch(pack) {
+        case 'p5': spins = 5; price = CONFIG.ECONOMY.SLOTS_PACK_5.price; bonus = 0; break;
+        case 'p10': spins = 10; price = CONFIG.ECONOMY.SLOTS_PACK_10.price; bonus = 1; break;
+        case 'p50': spins = 50; price = CONFIG.ECONOMY.SLOTS_PACK_50.price; bonus = 5; break;
+        case 'p100': spins = 100; price = CONFIG.ECONOMY.SLOTS_PACK_100.price; bonus = 10; break;
+        default: return;
+    }
+    
+    const totalSpins = spins + bonus;
+    
+    if (!confirm(t('pack.confirm', { spins: totalSpins, price }))) {
+        return;
+    }
+    
+    if (!tonConnectUI || !tonWallet) {
+        showToast('Please connect your TON wallet first', 'error');
+        return;
+    }
+    
+    try {
+        showToast('Opening wallet...', 'info');
+        
+        const tx = {
+            validUntil: Date.now() + 600000,
+            messages: [{
+                address: CONFIG.TON.WALLET,
+                amount: (price * 1e9).toString()
+            }]
+        };
+        
+        const result = await tonConnectUI.sendTransaction(tx);
+        
+        showToast('Payment sent! Waiting for confirmation...', 'info');
+        
+        setTimeout(() => {
+            if (!userData.slots.purchasedSpins) userData.slots.purchasedSpins = 0;
+            userData.slots.purchasedSpins += totalSpins;
+            
+            addTransaction('slots_pack', price, { 
+                currency: 'TON', 
+                details: `Bought ${pack} pack: ${spins} spins + ${bonus} bonus` 
+            });
+            
+            saveUserToCache();
+            showToast(t('pack.success', { spins: totalSpins }), 'success');
+            updatePurchasedSpinsDisplay();
+            updateUI();
+        }, 3000);
+        
+    } catch (e) {
+        console.error("Payment error:", e);
         showToast(t('error.payment'), 'error');
     }
 }
@@ -4371,9 +4292,8 @@ function spinSlotsVegas(isFree = false, isTurbo = false) {
 function spinVegasReel(index, targetResult, duration, onComplete) {
     const reel = document.getElementById(`vegas-reel-${index}`);
     const wrapper = document.querySelector(`.vegas-slot-reel-wrapper[data-reel="${index}"]`);
-    if (!reel || !wrapper) return;
     
-    wrapper.classList.add('vegas-reel-spinning');
+    wrapper?.classList.add('vegas-reel-spinning');
     
     const tickInterval = setInterval(() => {
         VegasAudio.tick(0.8 + Math.random() * 0.4);
@@ -4397,7 +4317,7 @@ function spinVegasReel(index, targetResult, duration, onComplete) {
             requestAnimationFrame(animate);
         } else {
             clearInterval(tickInterval);
-            wrapper.classList.remove('vegas-reel-spinning');
+            wrapper?.classList.remove('vegas-reel-spinning');
             VegasAudio.clunk();
             updateVegasReelPosition(index, targetResult);
             if (onComplete) onComplete();
@@ -4407,6 +4327,7 @@ function spinVegasReel(index, targetResult, duration, onComplete) {
     requestAnimationFrame(animate);
 }
 
+// ====== دالة checkVegasWin المحدثة (مكانها الأصلي) ======
 function checkVegasWin(results) {
     const reels = [
         SLOTS_SYMBOLS_DATA[results[0] % SLOTS_SYMBOLS_DATA.length],
@@ -4419,19 +4340,6 @@ function checkVegasWin(results) {
     if (allMatch) {
         const winData = reels[0];
         
-        // إضافة الجائزة إلى رصيد المستخدم
-        const winAmount = winData.value;
-        const currency = winData.type;
-        
-        if (currency === 'TON') {
-            userData.balances.TON += winAmount;
-            userData.balance = userData.balances.TON;
-        } else {
-            userData.balances.USDT += winAmount;
-        }
-        userData.totalEarned += winAmount;
-        
-        // تسليط الضوء على الرموز الفائزة
         document.querySelectorAll('.vegas-slot-symbol').forEach((sym, idx) => {
             const centerIndices = [
                 results[0] % 100,
@@ -4445,11 +4353,19 @@ function checkVegasWin(results) {
             document.querySelectorAll('.vegas-slot-symbol').forEach(s => s.classList.remove('vegas-win-glow'));
         }, 2000);
         
-        // عرض تأثير الفوز
+        const winAmount = winData.value;
+        const currency = winData.type;
+        
+        if (currency === 'TON') {
+            userData.balances.TON += winAmount;
+            userData.balance = userData.balances.TON;
+        } else {
+            userData.balances.USDT += winAmount;
+        }
+        userData.totalEarned += winAmount;
+        
         if (winData.jackpot) {
             JackpotTheater.play(winAmount, currency);
-            showWinPopupPro(`${winAmount} ${currency}`, 'jackpot');
-            for (let i = 0; i < 10; i++) setTimeout(() => VegasAudio.jackpotCoins(), i * 100);
         } else if (winAmount >= 10) {
             showWinPopupPro(`${winAmount} ${currency}`, 'big');
             for (let i = 0; i < 5; i++) setTimeout(() => VegasAudio.coin(), i * 150);
@@ -4458,21 +4374,15 @@ function checkVegasWin(results) {
             VegasAudio.coin();
         }
         
-        // تسجيل المعاملة
         addTransaction('slots', winAmount, { currency, symbol: winData.symbol });
-        
-        // تحديث الواجهة
-        updateUI();
-        saveUserToCache();
-        
-        // إظهار رسالة الفوز
-        showToast(t('slots.win', { amount: winAmount, currency }), 'success');
         
     } else {
         showToastPro('🎰 Try again!', 'info');
     }
     
     slotsVegasState.isSpinning = false;
+    saveUserToCache();
+    updateUI();
 }
 
 function updateSlotsVegasUI() {
@@ -4579,8 +4489,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.documentElement.dir = 'rtl'; 
     }
     
-    // تحديث جميع النصوص المترجمة
-    updateAllTexts();
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        el.textContent = t(el.getAttribute('data-i18n'));
+    });
     
     await loadUserData();
     await loadPrices();
@@ -4618,6 +4529,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     updateUserDisplay();
     
+    // تفعيل الصوت عند أول تفاعل
+    document.addEventListener('click', () => {
+        if (!VegasAudio.isInitialized) {
+            VegasAudio.init();
+        }
+    }, { once: true });
+    
     console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v9000.0");
     console.log("✅ مع تحسينات Vegas Elite - جميع الميزات محفوظة!");
     console.log("✅ All systems ready! 🚀");
@@ -4650,13 +4568,6 @@ document.addEventListener('visibilitychange', () => {
         if (currentPage === 'mining') startFloatingNotifications(); 
     }
 });
-
-// تهيئة الصوت عند أول تفاعل
-document.addEventListener('click', () => {
-    if (!VegasAudio.isInitialized) {
-        VegasAudio.init();
-    }
-}, { once: true });
 
 // ====== 51. EXPORT FUNCTIONS ======
 window.showPage = showPage;
