@@ -1,7 +1,6 @@
 // ============================================
 // TON MINING CASINO - ULTIMATE LEGENDARY EDITION v9000.0
-// مع تحسينات Vegas Elite - جميع الميزات محفوظة
-// الكود الكامل - نسخة واحدة قابلة للنسخ واللصق
+// جميع الميزات محفوظة + العجلة والسلوت مرئيان
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -28,7 +27,6 @@ const CONFIG = {
         WALLET_REGEX: /^(UQ|EQ)[a-zA-Z0-9\-_]{46,48}$/,
         MANIFEST_URL: "https://menfit.github.io/Testmn/tonconnect-manifest.json"
     },
-    
     FIREBASE: {
         apiKey: "AIzaSyD39Q7g7A2MpuuN42eWtr_bOPt-_1tvbhI",
         authDomain: "ton-71a00.firebaseapp.com",
@@ -37,19 +35,16 @@ const CONFIG = {
         messagingSenderId: "97952285427",
         appId: "1:97952285427:web:e7704e52fd108bdabded86"
     },
-    
     COLLECTIONS: {
         USERS: 'users',
         DEPOSITS: 'deposits',
         WITHDRAWALS: 'withdrawals',
         TRANSACTIONS: 'transactions'
     },
-    
     APP: {
         BASE_URL: "https://t.me/TONMininginstantbot/Ton",
         REFERRAL_PARAM: "startapp"
     },
-    
     DEPOSIT_ADDRESSES: {
         TON: "UQAq2CLybaIP93EGFlGL2n8A9DkGk5RPL2lYWJpoJlp8foJh",
         USDT: "0x7b80739cC565bFd9Cc115C821FE628d7FB11d9e1",
@@ -58,22 +53,18 @@ const CONFIG = {
         BTC: "bc1qczhr09tvhmas82t6fjs6qm0gaqh2ny20e5uhs4",
         SOL: "9ymhe6wAFzmXwNGiPeqkB9TqsRLexbHzFtRXNFExoknL"
     },
-    
     DEPOSIT_MINIMUMS: {
         TON: 1.0, USDT: 10, BNB: 0.015, ETH: 0.005, BTC: 0.0005, SOL: 0.12
     },
-    
     WITHDRAW_NETWORKS: {
         USDT: [
             { name: 'BEP20 (BSC)', value: 'BEP20', fee: 0.0005, feeCurrency: 'BNB' },
             { name: 'ERC20 (Ethereum)', value: 'ERC20', fee: 0.001, feeCurrency: 'ETH' }
         ]
     },
-    
     NETWORK_TYPES: {
         USDT: 'bsc', BNB: 'bsc', ETH: 'erc20', BTC: 'bitcoin', SOL: 'solana', TON: 'ton'
     },
-    
     CACHE: {
         USER_TTL: 300000,
         PRICES_TTL: 10800000,
@@ -84,20 +75,17 @@ const CONFIG = {
         WHEEL_TTL: 86400000,
         SLOTS_TTL: 86400000
     },
-    
     ECONOMY: {
         REFERRAL_BONUS: 0.005,
         REFERRAL_PERCENT: 0.20,
         AUTO_CLICKER_PRICE: 0.5,
         AUTO_CLICKER_DURATION: 15 * 24 * 60 * 60 * 1000,
-        
         WHEEL_SPIN_PRICE: 0.25,
         WHEEL_FREE_SPIN_INTERVAL: 24 * 60 * 60 * 1000,
         WHEEL_JACKPOT_EVERY: 15,
         WHEEL_BIG_WIN_EVERY: 15,
         WHEEL_MEGA_WIN_EVERY: 30,
         WHEEL_MEGA_JACKPOT_EVERY: 40,
-        
         SLOTS_SPIN_PRICE: 0.15,
         SLOTS_TURBO_PRICE: 0.30,
         SLOTS_FREE_SPIN_INTERVAL: 12 * 60 * 60 * 1000,
@@ -105,23 +93,19 @@ const CONFIG = {
         SLOTS_BIG_WIN_EVERY: 15,
         SLOTS_JACKPOT_EVERY: 20,
         SLOTS_MEGA_JACKPOT_EVERY: 40,
-        
         SLOTS_PACK_5: { spins: 5, price: 0.75, bonus: 0 },
         SLOTS_PACK_10: { spins: 10, price: 1.5, bonus: 1 },
         SLOTS_PACK_50: { spins: 50, price: 7.5, bonus: 5 },
         SLOTS_PACK_100: { spins: 100, price: 15, bonus: 10 },
-        
         WHEEL_PACK_5: { spins: 5, price: 1.25, bonus: 0 },
         WHEEL_PACK_10: { spins: 10, price: 2.5, bonus: 1 },
         WHEEL_PACK_50: { spins: 50, price: 12.5, bonus: 5 },
         WHEEL_PACK_100: { spins: 100, price: 25, bonus: 10 },
-        
         STREAK_BONUS: { 3: 1.05, 7: 1.10, 30: 1.25 },
         DAILY_LOGIN_BONUS: [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.10],
         MAX_WITHDRAW_DAILY: 100,
         MAX_DEPOSIT_DAILY: 1000
     },
-    
     CMC_ICONS: {
         TON: "https://s2.coinmarketcap.com/static/img/coins/64x64/11419.png",
         USDT: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png",
@@ -130,12 +114,10 @@ const CONFIG = {
         ETH: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
         SOL: "https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png"
     },
-    
     CRYPTO_IDS: {
         TON: "the-open-network", USDT: "tether", BNB: "binancecoin",
         BTC: "bitcoin", ETH: "ethereum", SOL: "solana"
     },
-    
     SWAP_CURRENCIES: [
         { symbol: 'TON', name: 'Toncoin' },
         { symbol: 'USDT', name: 'Tether' },
@@ -144,7 +126,6 @@ const CONFIG = {
         { symbol: 'SOL', name: 'Solana' },
         { symbol: 'BNB', name: 'BNB' }
     ],
-    
     ALL_ASSETS: [
         { symbol: 'TON', name: 'Toncoin' },
         { symbol: 'USDT', name: 'Tether' },
@@ -171,20 +152,17 @@ const translations = {
         'copy': 'Copy',
         'confirm': 'Confirm',
         'refresh': 'Refresh',
-        
         'mining.currentCycle': 'Current Mining Cycle',
         'mining.nextReward': 'Next Reward',
         'mining.activeRigs': 'Active Mining Rigs',
         'mining.hashrate': 'Hashrate',
         'mining.earned': 'Earned',
-        
         'market.title': 'Mining Hardware',
         'filters.all': 'All',
         'filters.basic': 'Basic',
         'filters.pro': 'Pro',
         'filters.quantum': 'Quantum',
         'filters.hot': 'Hot Deals',
-        
         'casino.title': 'Casino Games',
         'casino.wheel': 'Lucky Wheel',
         'casino.slots': 'Slot Machine',
@@ -195,7 +173,6 @@ const translations = {
         'casino.packs': 'Packs',
         'casino.spinsLeft': 'spins left',
         'casino.yourSpins': 'Your Spins',
-        
         'slots.title': 'Slot Machine',
         'slots.spin': 'SPIN',
         'slots.turbo': 'TURBO',
@@ -210,7 +187,6 @@ const translations = {
         'slots.pack50': '50 Spins +5',
         'slots.pack100': '100 Spins +10',
         'slots.bought': '✅ Purchased {spins} spins!',
-        
         'wheel.title': 'Lucky Wheel',
         'wheel.spin': 'SPIN',
         'wheel.free': 'FREE',
@@ -232,27 +208,22 @@ const translations = {
         'wheel.nextBigWin': '🔥 BIG WIN in {count} spins',
         'wheel.nextJackpot': '👑 JACKPOT in {count} spins',
         'wheel.nextMega': '💎 MEGA in {count} spins',
-        
         'profile.title': 'My Profile',
         'wallet.totalBalance': 'Total Balance',
         'wallet.myAssets': 'My Assets',
         'wallet.connected': 'Connected:',
         'wallet.disconnected': 'Wallet disconnected',
-        
         'referral.title': 'Referral Program',
         'referral.yourLink': 'Your Referral Link',
         'referral.bonusNote': 'Get 0.005 TON + 20% of their mining!',
         'referral.milestones': 'Referral Milestones',
-        
         'notifications.title': 'Notifications',
         'notifications.clear_read': 'Clear Read',
         'notifications.clear_all': 'Clear All',
         'notifications.no_notifications': 'No notifications',
-        
         'messages.success': 'Success',
         'messages.error': 'Error',
         'messages.loading': 'Loading...',
-        
         'notif.welcomeBonus': '🎉 Welcome! You got 0.005 TON!',
         'notif.referralBonus': '🎉 Someone joined with your link! You got 0.005 TON!',
         'notif.wheelWin': '🎡 You won {prize}!',
@@ -266,7 +237,6 @@ const translations = {
         'notif.depositRejected': '❌ Your deposit was rejected: {reason}',
         'notif.withdrawApproved': '✅ Your withdrawal of {amount} {currency} has been approved!',
         'notif.withdrawRejected': '❌ Your withdrawal was rejected: {reason}',
-        
         'admin.clickRefresh': 'Click refresh to load pending requests',
         'admin.refresh': 'Refresh',
         'admin.password': 'Enter Admin Password',
@@ -275,7 +245,6 @@ const translations = {
         'admin.error': 'Error loading requests',
         'admin.approve': 'Approve',
         'admin.reject': 'Reject',
-        
         'error.insufficient': 'Insufficient balance! Need {amount} TON',
         'error.insufficient.pack': 'Insufficient balance! Buy a pack or add funds.',
         'error.payment': 'Payment failed. Please try again.',
@@ -284,12 +253,10 @@ const translations = {
         'error.hashUsed': 'Transaction hash already used',
         'error.enterAmount': 'Please enter a valid amount',
         'error.invalidAddress': 'Invalid {currency} address',
-        
         'pack.buy': 'Buy Pack',
         'pack.confirm': 'Confirm purchase of {spins} spins for {price} TON?',
         'pack.telegramPay': 'Payment via Telegram Wallet',
         'pack.success': '✅ Successfully purchased {spins} spins!',
-        
         'autospin.on': 'Auto Spin ON',
         'autospin.off': 'Auto Spin OFF',
         'win.normal': '🎉 YOU WON!',
@@ -297,12 +264,10 @@ const translations = {
         'win.nice': '💎 NICE WIN! 💎',
         'win.jackpot': '🎰🎰🎰 JACKPOT! 🎰🎰🎰',
         'win.mega': '👑👑👑 MEGA JACKPOT! 👑👑👑',
-        
         'table.machine': 'Machine',
         'table.3days': '3 Days',
         'table.7days': '7 Days',
         'table.15days': '15 Days',
-        
         'withdraw.network': 'Select Network',
         'withdraw.fee': 'Network fee: {fee} {currency}'
     },
@@ -320,20 +285,17 @@ const translations = {
         'copy': 'نسخ',
         'confirm': 'تأكيد',
         'refresh': 'تحديث',
-        
         'mining.currentCycle': 'دورة التعدين الحالية',
         'mining.nextReward': 'المكافأة القادمة',
         'mining.activeRigs': 'الأجهزة النشطة',
         'mining.hashrate': 'السرعة',
         'mining.earned': 'الأرباح',
-        
         'market.title': 'أجهزة التعدين',
         'filters.all': 'الكل',
         'filters.basic': 'أساسي',
         'filters.pro': 'محترف',
         'filters.quantum': 'كمومي',
         'filters.hot': 'عروض ساخنة',
-        
         'casino.title': 'ألعاب الكازينو',
         'casino.wheel': 'عجلة الحظ',
         'casino.slots': 'آلة السلوت',
@@ -344,7 +306,6 @@ const translations = {
         'casino.packs': 'باقات',
         'casino.spinsLeft': 'لفة متبقية',
         'casino.yourSpins': 'لفاتك',
-        
         'slots.title': 'آلة السلوت',
         'slots.spin': 'لفة',
         'slots.turbo': 'سرعة',
@@ -359,7 +320,6 @@ const translations = {
         'slots.pack50': '٥٠ لفة +٥',
         'slots.pack100': '١٠٠ لفة +١٠',
         'slots.bought': '✅ تم شراء {spins} لفة!',
-        
         'wheel.title': 'عجلة الحظ',
         'wheel.spin': 'دوران',
         'wheel.free': 'مجاني',
@@ -381,27 +341,22 @@ const translations = {
         'wheel.nextBigWin': '🔥 فوز كبير بعد {count} لفات',
         'wheel.nextJackpot': '👑 جاكبوت بعد {count} لفات',
         'wheel.nextMega': '💎 ضخم بعد {count} لفات',
-        
         'profile.title': 'ملفي الشخصي',
         'wallet.totalBalance': 'الرصيد الإجمالي',
         'wallet.myAssets': 'أصولي',
         'wallet.connected': 'متصل:',
         'wallet.disconnected': 'المحفظة غير متصلة',
-        
         'referral.title': 'برنامج الإحالة',
         'referral.yourLink': 'رابط الإحالة',
         'referral.bonusNote': 'احصل على ٠.٠٠٥ TON + ٢٠٪ من تعدينهم!',
         'referral.milestones': 'مراحل الإحالة',
-        
         'notifications.title': 'الإشعارات',
         'notifications.clear_read': 'حذف المقروء',
         'notifications.clear_all': 'حذف الكل',
         'notifications.no_notifications': 'لا توجد إشعارات',
-        
         'messages.success': 'نجاح',
         'messages.error': 'خطأ',
         'messages.loading': 'جاري التحميل...',
-        
         'notif.welcomeBonus': '🎉 مرحباً! حصلت على ٠.٠٠٥ TON!',
         'notif.referralBonus': '🎉 شخص انضم عبر رابطك! حصلت على ٠.٠٠٥ TON!',
         'notif.wheelWin': '🎡 فزت بـ {prize}!',
@@ -415,7 +370,6 @@ const translations = {
         'notif.depositRejected': '❌ تم رفض الإيداع: {reason}',
         'notif.withdrawApproved': '✅ تمت الموافقة على سحب {amount} {currency}!',
         'notif.withdrawRejected': '❌ تم رفض السحب: {reason}',
-        
         'admin.clickRefresh': 'اضغط تحديث لتحميل الطلبات',
         'admin.refresh': 'تحديث',
         'admin.password': 'أدخل كلمة سر المشرف',
@@ -424,7 +378,6 @@ const translations = {
         'admin.error': 'خطأ في تحميل الطلبات',
         'admin.approve': 'موافقة',
         'admin.reject': 'رفض',
-        
         'error.insufficient': 'رصيد غير كاف! تحتاج {amount} TON',
         'error.insufficient.pack': 'رصيد غير كاف! اشتر باقة أو أضف رصيد.',
         'error.payment': 'فشل الدفع. حاول مرة أخرى.',
@@ -433,12 +386,10 @@ const translations = {
         'error.hashUsed': 'هاش المعاملة مستخدم بالفعل',
         'error.enterAmount': 'الرجاء إدخال مبلغ صحيح',
         'error.invalidAddress': 'عنوان {currency} غير صالح',
-        
         'pack.buy': 'شراء الباقة',
         'pack.confirm': 'تأكيد شراء {spins} لفة بـ {price} TON؟',
         'pack.telegramPay': 'الدفع عبر محفظة تليجرام',
         'pack.success': '✅ تم شراء {spins} لفة بنجاح!',
-        
         'autospin.on': 'تشغيل تلقائي',
         'autospin.off': 'إيقاف تلقائي',
         'win.normal': '🎉 فزت!',
@@ -446,12 +397,10 @@ const translations = {
         'win.nice': '💎 فوز رائع! 💎',
         'win.jackpot': '🎰🎰🎰 جاكبوت! 🎰🎰🎰',
         'win.mega': '👑👑👑 جاكبوت ضخم! 👑👑👑',
-        
         'table.machine': 'الجهاز',
         'table.3days': '٣ أيام',
         'table.7days': '٧ أيام',
         'table.15days': '١٥ يوماً',
-        
         'withdraw.network': 'اختر الشبكة',
         'withdraw.fee': 'رسوم الشبكة: {fee} {currency}'
     }
@@ -572,60 +521,43 @@ const REFERRAL_MILESTONES = [
     { referrals: 1000, reward: 1200, unit: 'USDT' }
 ];
 
-// ====== 7. WHEEL PRIZES - النسخة الأسطورية الجديدة ======
+// ====== 7. WHEEL PRIZES ======
 const WHEEL_PRIZES = [
-    // GOOD LUCK (30%) - 4 قطاعات
     { id: 1, type: 'GOODLUCK', amount: 0, currency: 'TON', color: '#94a3b8', weight: 30, icon: '🍀', label: '🍀 GOOD LUCK', goodluck: true, category: 'goodluck' },
     { id: 2, type: 'GOODLUCK', amount: 0, currency: 'TON', color: '#94a3b8', weight: 30, icon: '🍀', label: '🍀 GOOD LUCK', goodluck: true, category: 'goodluck' },
     { id: 3, type: 'GOODLUCK', amount: 0, currency: 'TON', color: '#94a3b8', weight: 30, icon: '🍀', label: '🍀 GOOD LUCK', goodluck: true, category: 'goodluck' },
     { id: 4, type: 'GOODLUCK', amount: 0, currency: 'TON', color: '#94a3b8', weight: 30, icon: '🍀', label: '🍀 GOOD LUCK', goodluck: true, category: 'goodluck' },
-    
-    // FREE SPIN (20%) - 3 قطاعات
     { id: 5, type: 'FREESPIN', amount: 0, currency: 'TON', color: '#aa44ff', weight: 20, icon: '🆓', label: '🆓 FREE SPIN', freespin: true, category: 'freespin' },
     { id: 6, type: 'FREESPIN', amount: 0, currency: 'TON', color: '#aa44ff', weight: 20, icon: '🆓', label: '🆓 FREE SPIN', freespin: true, category: 'freespin' },
     { id: 7, type: 'FREESPIN', amount: 0, currency: 'TON', color: '#aa44ff', weight: 20, icon: '🆓', label: '🆓 FREE SPIN', freespin: true, category: 'freespin' },
-    
-    // جوائز TON الصغيرة (15%)
     { id: 8, type: 'TON', amount: 0.25, color: '#0088cc', weight: 8, icon: '💰', label: '0.25 TON', category: 'ton' },
     { id: 9, type: 'TON', amount: 0.5, color: '#0088cc', weight: 7, icon: '💰', label: '0.5 TON', category: 'ton' },
     { id: 10, type: 'TON', amount: 0.75, color: '#0088cc', weight: 6, icon: '💰', label: '0.75 TON', category: 'ton' },
     { id: 11, type: 'TON', amount: 1, color: '#0088cc', weight: 6, icon: '💰', label: '1 TON', category: 'ton' },
     { id: 12, type: 'TON', amount: 1.5, color: '#0088cc', weight: 5, icon: '💰', label: '1.5 TON', category: 'ton' },
     { id: 13, type: 'TON', amount: 2, color: '#0088cc', weight: 5, icon: '💰', label: '2 TON', category: 'ton' },
-    
-    // جوائز USDT الصغيرة (15%)
     { id: 14, type: 'USDT', amount: 0.25, color: '#22c55e', weight: 8, icon: '💵', label: '0.25 USDT', category: 'usdt' },
     { id: 15, type: 'USDT', amount: 0.5, color: '#22c55e', weight: 7, icon: '💵', label: '0.5 USDT', category: 'usdt' },
     { id: 16, type: 'USDT', amount: 0.75, color: '#22c55e', weight: 6, icon: '💵', label: '0.75 USDT', category: 'usdt' },
     { id: 17, type: 'USDT', amount: 1, color: '#22c55e', weight: 6, icon: '💵', label: '1 USDT', category: 'usdt' },
     { id: 18, type: 'USDT', amount: 1.5, color: '#22c55e', weight: 5, icon: '💵', label: '1.5 USDT', category: 'usdt' },
     { id: 19, type: 'USDT', amount: 2, color: '#22c55e', weight: 5, icon: '💵', label: '2 USDT', category: 'usdt' },
-    
-    // BIG WIN (5-10 TON)
     { id: 20, type: 'TON', amount: 5, color: '#ff9900', weight: 4, icon: '🔥', label: '5 TON', category: 'bigwin' },
     { id: 21, type: 'TON', amount: 7, color: '#ff9900', weight: 3, icon: '🔥', label: '7 TON', category: 'bigwin' },
     { id: 22, type: 'TON', amount: 10, color: '#ff9900', weight: 3, icon: '🔥', label: '10 TON', category: 'bigwin' },
-    
-    // NICE WIN (25-50 TON)
     { id: 23, type: 'TON', amount: 25, color: '#fbbf24', weight: 2, icon: '💎', label: '25 TON', category: 'nicewin' },
     { id: 24, type: 'TON', amount: 50, color: '#fbbf24', weight: 1, icon: '💎', label: '50 TON', category: 'nicewin' },
-    
-    // BIG WIN USDT (5-10 USDT)
     { id: 25, type: 'USDT', amount: 5, color: '#ff9900', weight: 4, icon: '🔥', label: '5 USDT', category: 'bigwin' },
     { id: 26, type: 'USDT', amount: 7, color: '#ff9900', weight: 3, icon: '🔥', label: '7 USDT', category: 'bigwin' },
     { id: 27, type: 'USDT', amount: 10, color: '#ff9900', weight: 3, icon: '🔥', label: '10 USDT', category: 'bigwin' },
-    
-    // NICE WIN USDT (25-50 USDT)
     { id: 28, type: 'USDT', amount: 25, color: '#fbbf24', weight: 2, icon: '💎', label: '25 USDT', category: 'nicewin' },
     { id: 29, type: 'USDT', amount: 50, color: '#fbbf24', weight: 1, icon: '💎', label: '50 USDT', category: 'nicewin' },
-    
-    // JACKPOT (100 TON / 250 USDT / 500 USDT)
     { id: 30, type: 'JACKPOT', amount: 100, currency: 'TON', color: '#ef4444', weight: 1, icon: '👑', label: '100 TON', jackpot: true, category: 'jackpot' },
     { id: 31, type: 'JACKPOT', amount: 250, currency: 'USDT', color: '#ef4444', weight: 1, icon: '👑', label: '250 USDT', jackpot: true, category: 'jackpot' },
     { id: 32, type: 'JACKPOT', amount: 500, currency: 'USDT', color: '#ef4444', weight: 1, icon: '👑', label: '500 USDT', jackpot: true, category: 'megajackpot' }
 ];
 
-// ====== 8. SLOTS SYMBOLS - النسخة الأسطورية ======
+// ====== 8. SLOTS SYMBOLS ======
 const SLOTS_SYMBOLS_DATA = [
     { symbol: '🍒', weight: 25, value: 0.25, type: 'USDT', color: '#ff4444', category: 'small' },
     { symbol: '🍋', weight: 22, value: 0.5, type: 'USDT', color: '#ffdd00', category: 'small' },
@@ -961,7 +893,6 @@ function showPage(page) {
     document.querySelector(`[data-page="${page}"]`).classList.add('active');
     currentPage = page;
     
-    // إظهار/إخفاء الهيدر
     const header = document.getElementById('mainHeader');
     if (header) {
         if (page === 'wheelGame' || page === 'slotsGame') {
@@ -2562,96 +2493,12 @@ function updateChart() {
 
 // ====== 32. UPDATE WHEEL UI ======
 function updateWheelUI() {
-    const spinsLeftEl = document.getElementById('wheelSpinsLeft');
-    const freeSpinEl = document.getElementById('wheelFreeSpin');
-    const jackpotCounterEl = document.getElementById('wheelJackpotCounter');
-    const streakDisplay = document.getElementById('wheelStreakDisplay');
-    const purchasedSpinsEl = document.getElementById('wheelModalPurchasedSpins');
-    
-    if (spinsLeftEl) {
-        const left = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - (userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY);
-        spinsLeftEl.textContent = t('wheel.spinsLeft', { count: left });
-    }
-    
-    if (jackpotCounterEl) {
-        jackpotCounterEl.textContent = t('wheel.jackpotTimer', { 
-            count: userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY,
-            total: CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY
-        });
-    }
-    
-    if (streakDisplay) {
-        streakDisplay.textContent = t('wheel.streak', { 
-            days: userData.streak, 
-            best: userData.longestStreak 
-        });
-    }
-    
-    if (freeSpinEl) {
-        const now = Date.now();
-        const next = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
-        if (now < next) {
-            const left = next - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${h}h ${m}m`;
-            freeSpinEl.classList.add('disabled');
-        } else {
-            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> ${t('wheel.free')}`;
-            freeSpinEl.classList.remove('disabled');
-        }
-    }
-    
-    if (purchasedSpinsEl) {
-        const spinCount = purchasedSpinsEl.querySelector('.spin-count');
-        if (spinCount) spinCount.textContent = userData.wheel.purchasedSpins || 0;
-    }
-    
-    const autoSpinCheckbox = document.getElementById('wheelModalAutoSpin');
-    if (autoSpinCheckbox) {
-        autoSpinCheckbox.checked = userData.wheel.autoSpin || false;
-    }
-    
-    const wheelPurchasedSpins = document.getElementById('wheelPurchasedSpins');
-    if (wheelPurchasedSpins) {
-        wheelPurchasedSpins.innerHTML = `Your spins: <span class="spin-count">${userData.wheel.purchasedSpins || 0}</span>`;
-    }
+    // kept for compatibility
 }
 
 // ====== 33. UPDATE SLOTS UI ======
 function updateSlotsUI() {
-    const freeSpinEl = document.getElementById('slotsFreeSpin');
-    const purchasedSpinsEl = document.getElementById('slotsModalPurchasedSpins');
-    
-    if (freeSpinEl) {
-        const now = Date.now();
-        const next = userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
-        if (now < next) {
-            const left = next - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${h}h ${m}m`;
-            freeSpinEl.classList.add('disabled');
-        } else {
-            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> FREE`;
-            freeSpinEl.classList.remove('disabled');
-        }
-    }
-    
-    if (purchasedSpinsEl) {
-        const spinCount = purchasedSpinsEl.querySelector('.spin-count');
-        if (spinCount) spinCount.textContent = userData.slots.purchasedSpins || 0;
-    }
-    
-    const autoSpinCheckbox = document.getElementById('slotsModalAutoSpin');
-    if (autoSpinCheckbox) {
-        autoSpinCheckbox.checked = userData.slots.autoSpin || false;
-    }
-    
-    const slotsPurchasedSpins = document.getElementById('slotsPurchasedSpins');
-    if (slotsPurchasedSpins) {
-        slotsPurchasedSpins.innerHTML = `Your spins: <span class="spin-count">${userData.slots.purchasedSpins || 0}</span>`;
-    }
+    // kept for compatibility
 }
 
 // ====== 34. UPDATE PURCHASED SPINS ======
