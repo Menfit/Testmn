@@ -1,6 +1,6 @@
 // ============================================
 // TON MINING CASINO - ULTIMATE LEGENDARY EDITION v10.0
-// نسخة نهائية أسطورية - جميع الميزات محفوظة
+// نسخة محسنة نهائية - جميع الميزات محفوظة
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -187,8 +187,10 @@ const translations = {
         'wheel.free': 'FREE',
         'wheel.price': '0.25 TON',
         'wheel.win': '🎡 YOU WON {prize}!',
-        'wheel.bigwin': '🎡🎡 BIG WIN! {prize}!',
-        'wheel.jackpot': '🎡🎡🎡 JACKPOT! {amount} {currency}!',
+        'wheel.bigwin': '🔥🔥 BIG WIN! {prize}!',
+        'wheel.nicewin': '💎 NICE WIN! {prize}!',
+        'wheel.jackpot': '🎰🎰🎰 JACKPOT! {amount} {currency}!',
+        'wheel.megajackpot': '👑👑👑 MEGA JACKPOT! {amount} {currency}!',
         'wheel.pack5': '5 Spins',
         'wheel.pack10': '10 Spins +1',
         'wheel.pack50': '50 Spins +5',
@@ -196,7 +198,11 @@ const translations = {
         'wheel.spinsLeft': '{count} spins until jackpot',
         'wheel.jackpotTimer': '{count}/{total}',
         'wheel.streak': '{days} DAYS | BEST: {best}',
-        'wheel.goodLuck': 'Good Luck!',
+        'wheel.goodLuck': '🍀 GOOD LUCK! Try again!',
+        'wheel.freeSpinStored': '🆓 FREE SPIN STORED!',
+        'wheel.nextBigWin': '🔥 BIG WIN in {count} spins',
+        'wheel.nextJackpot': '👑 JACKPOT in {count} spins',
+        'wheel.nextMega': '💎 MEGA in {count} spins',
         'profile.title': 'My Profile',
         'wallet.totalBalance': 'Total Balance',
         'wallet.myAssets': 'My Assets',
@@ -249,8 +255,10 @@ const translations = {
         'autospin.on': 'Auto Spin ON',
         'autospin.off': 'Auto Spin OFF',
         'win.normal': '🎉 YOU WON!',
-        'win.big': '🌟🌟 BIG WIN! 🌟🌟',
+        'win.big': '🔥🔥 BIG WIN! 🔥🔥',
+        'win.nice': '💎 NICE WIN! 💎',
         'win.jackpot': '🎰🎰🎰 JACKPOT! 🎰🎰🎰',
+        'win.mega': '👑👑👑 MEGA JACKPOT! 👑👑👑',
         'table.machine': 'Machine',
         'table.3days': '3 Days',
         'table.7days': '7 Days',
@@ -312,8 +320,10 @@ const translations = {
         'wheel.free': 'مجاني',
         'wheel.price': '0.25 TON',
         'wheel.win': '🎡 فزت بـ {prize}!',
-        'wheel.bigwin': '🎡🎡 فوز كبير! {prize}!',
-        'wheel.jackpot': '🎡🎡🎡 جاكبوت! {amount} {currency}!',
+        'wheel.bigwin': '🔥🔥 فوز كبير! {prize}!',
+        'wheel.nicewin': '💎 فوز رائع! {prize}!',
+        'wheel.jackpot': '🎰🎰🎰 جاكبوت! {amount} {currency}!',
+        'wheel.megajackpot': '👑👑👑 جاكبوت ضخم! {amount} {currency}!',
         'wheel.pack5': '5 لفات',
         'wheel.pack10': '10 لفات +1',
         'wheel.pack50': '50 لفة +5',
@@ -321,7 +331,11 @@ const translations = {
         'wheel.spinsLeft': '{count} لفة حتى الجاكبوت',
         'wheel.jackpotTimer': '{count}/{total}',
         'wheel.streak': '{days} يوم | الأفضل: {best}',
-        'wheel.goodLuck': 'حظ سعيد!',
+        'wheel.goodLuck': '🍀 حظ سعيد! حاول مرة أخرى!',
+        'wheel.freeSpinStored': '🆓 تم تخزين لفة مجانية!',
+        'wheel.nextBigWin': '🔥 فوز كبير بعد {count} لفات',
+        'wheel.nextJackpot': '👑 جاكبوت بعد {count} لفات',
+        'wheel.nextMega': '💎 ضخم بعد {count} لفات',
         'profile.title': 'ملفي الشخصي',
         'wallet.totalBalance': 'الرصيد الإجمالي',
         'wallet.myAssets': 'أصولي',
@@ -374,8 +388,10 @@ const translations = {
         'autospin.on': 'تشغيل تلقائي',
         'autospin.off': 'إيقاف تلقائي',
         'win.normal': '🎉 فزت!',
-        'win.big': '🌟🌟 فوز كبير! 🌟🌟',
+        'win.big': '🔥🔥 فوز كبير! 🔥🔥',
+        'win.nice': '💎 فوز رائع! 💎',
         'win.jackpot': '🎰🎰🎰 جاكبوت! 🎰🎰🎰',
+        'win.mega': '👑👑👑 جاكبوت ضخم! 👑👑👑',
         'table.machine': 'الجهاز',
         'table.3days': '٣ أيام',
         'table.7days': '٧ أيام',
@@ -502,18 +518,20 @@ const REFERRAL_MILESTONES = [
 
 // ====== 7. WHEEL PRIZES (مبسطة لتخفيف الحمل) ======
 const WHEEL_PRIZES = [
-    { type: 'TON', amount: 0.25, color: '#0088cc', weight: 10, icon: '💰', label: '0.25 TON' },
-    { type: 'TON', amount: 0.5, color: '#0088cc', weight: 9, icon: '💰', label: '0.5 TON' },
-    { type: 'TON', amount: 1, color: '#0088cc', weight: 8, icon: '💰', label: '1 TON' },
-    { type: 'USDT', amount: 0.25, color: '#22c55e', weight: 10, icon: '💵', label: '0.25 USDT' },
-    { type: 'USDT', amount: 0.5, color: '#22c55e', weight: 9, icon: '💵', label: '0.5 USDT' },
-    { type: 'USDT', amount: 1, color: '#22c55e', weight: 8, icon: '💵', label: '1 USDT' },
-    { type: 'TON', amount: 5, color: '#ff9900', weight: 5, icon: '🔥', label: '5 TON' },
-    { type: 'TON', amount: 10, color: '#ff9900', weight: 4, icon: '🔥', label: '10 TON' },
-    { type: 'GOODLUCK', amount: 0, color: '#94a3b8', weight: 15, icon: '🍀', label: 'GOOD LUCK', goodluck: true },
-    { type: 'FREESPIN', amount: 0, color: '#aa44ff', weight: 10, icon: '🆓', label: 'FREE SPIN', freespin: true },
-    { type: 'JACKPOT', amount: 50, currency: 'TON', color: '#ef4444', weight: 2, icon: '👑', label: '50 TON', jackpot: true },
-    { type: 'JACKPOT', amount: 100, currency: 'USDT', color: '#ef4444', weight: 1, icon: '👑', label: '100 USDT', jackpot: true }
+    { type: 'TON', amount: 0.25, color: '#0088cc', weight: 10, icon: '💰', label: '0.25 TON', category: 'ton' },
+    { type: 'TON', amount: 0.5, color: '#0088cc', weight: 9, icon: '💰', label: '0.5 TON', category: 'ton' },
+    { type: 'TON', amount: 1, color: '#0088cc', weight: 8, icon: '💰', label: '1 TON', category: 'ton' },
+    { type: 'USDT', amount: 0.25, color: '#22c55e', weight: 10, icon: '💵', label: '0.25 USDT', category: 'usdt' },
+    { type: 'USDT', amount: 0.5, color: '#22c55e', weight: 9, icon: '💵', label: '0.5 USDT', category: 'usdt' },
+    { type: 'USDT', amount: 1, color: '#22c55e', weight: 8, icon: '💵', label: '1 USDT', category: 'usdt' },
+    { type: 'TON', amount: 5, color: '#ff9900', weight: 5, icon: '🔥', label: '5 TON', category: 'bigwin' },
+    { type: 'TON', amount: 10, color: '#ff9900', weight: 4, icon: '🔥', label: '10 TON', category: 'bigwin' },
+    { type: 'USDT', amount: 5, color: '#ff9900', weight: 5, icon: '🔥', label: '5 USDT', category: 'bigwin' },
+    { type: 'USDT', amount: 10, color: '#ff9900', weight: 4, icon: '🔥', label: '10 USDT', category: 'bigwin' },
+    { type: 'GOODLUCK', amount: 0, color: '#94a3b8', weight: 15, icon: '🍀', label: 'GOOD LUCK', goodluck: true, category: 'goodluck' },
+    { type: 'FREESPIN', amount: 0, color: '#aa44ff', weight: 10, icon: '🆓', label: 'FREE SPIN', freespin: true, category: 'freespin' },
+    { type: 'JACKPOT', amount: 50, currency: 'TON', color: '#ef4444', weight: 2, icon: '👑', label: '50 TON', jackpot: true, category: 'jackpot' },
+    { type: 'JACKPOT', amount: 100, currency: 'USDT', color: '#ef4444', weight: 1, icon: '👑', label: '100 USDT', jackpot: true, category: 'jackpot' }
 ];
 
 // ====== 8. SLOTS SYMBOLS ======
@@ -522,11 +540,11 @@ const SLOTS_SYMBOLS_DATA = [
     { symbol: '🍋', weight: 25, value: 0.25, type: 'USDT', color: '#ffdd00' },
     { symbol: '🍇', weight: 20, value: 0.5, type: 'USDT', color: '#aa44ff' },
     { symbol: '💎', weight: 15, value: 1.0, type: 'USDT', color: '#00f2ff' },
-    { symbol: '💰', weight: 8, value: 2.0, type: 'TON', color: '#ffaa00' },
-    { symbol: '⭐', weight: 5, value: 5.0, type: 'TON', color: '#ffff00' },
-    { symbol: '👑', weight: 3, value: 10.0, type: 'TON', color: '#ffdd00' },
-    { symbol: '7️⃣', weight: 2, value: 25.0, type: 'TON', color: '#ff4444' },
-    { symbol: '🎰', weight: 0.5, value: 100, type: 'TON', color: '#ff00ff', jackpot: true }
+    { symbol: '💰', weight: 10, value: 2.0, type: 'TON', color: '#ffaa00' },
+    { symbol: '⭐', weight: 8, value: 5.0, type: 'TON', color: '#ffff00' },
+    { symbol: '👑', weight: 5, value: 10.0, type: 'TON', color: '#ffdd00' },
+    { symbol: '7️⃣', weight: 3, value: 25.0, type: 'TON', color: '#ff4444' },
+    { symbol: '🎰', weight: 1, value: 100, type: 'TON', color: '#ff00ff', jackpot: true }
 ];
 
 // ====== 9. FIREBASE ======
@@ -857,7 +875,7 @@ function showPage(page) {
     showRandomSticker();
 }
 
-// ====== دوال فتح الألعاب (إضافة مهمة جداً) ======
+// ====== دوال فتح الألعاب (مهمة جداً) ======
 function openWheelGame() {
     console.log("🎡 Opening Wheel Game");
     const header = document.getElementById('mainHeader');
@@ -3461,33 +3479,64 @@ function initWheelVegas() {
     if (!wheel) { setTimeout(initWheelVegas, 200); return; }
     wheel.innerHTML = '';
     wheel.style.transform = 'rotate(0deg)';
-    const totalSegments = WHEEL_PRIZES.length;
+    
+    // استخدام 14 قطاع فقط لتخفيف الحمل
+    const lightPrizes = WHEEL_PRIZES;
+    const totalSegments = lightPrizes.length;
     const anglePerSegment = 360 / totalSegments;
-    WHEEL_PRIZES.forEach((prize, index) => {
+    
+    lightPrizes.forEach((prize, index) => {
         const segDiv = document.createElement('div');
         segDiv.className = 'wheel-segment-vegas';
         segDiv.dataset.type = prize.type;
+        
         const rotation = index * anglePerSegment;
         let bgColor = prize.color;
         if (prize.jackpot) bgColor = '#ef4444';
         else if (prize.type === 'TON') bgColor = '#0088cc';
         else if (prize.type === 'USDT') bgColor = '#22c55e';
         else if (prize.type === 'GOODLUCK') bgColor = '#94a3b8';
-        segDiv.style.cssText = `position:absolute; width:50%; height:50%; top:0; left:50%; transform-origin:0% 100%; transform:rotate(${rotation}deg); background:${bgColor}; display:flex; flex-direction:column; align-items:center; justify-content:center; color:white; font-weight:bold; text-shadow:0 0 3px black; border-right:1px solid rgba(255,255,255,0.3); font-size:0.7rem; z-index:5;`;
+        else if (prize.type === 'FREESPIN') bgColor = '#aa44ff';
+        
+        segDiv.style.cssText = `
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            top: 0;
+            left: 50%;
+            transform-origin: 0% 100%;
+            transform: rotate(${rotation}deg);
+            background: ${bgColor};
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 0 3px black;
+            border-right: 1px solid rgba(255,255,255,0.3);
+            font-size: 0.75rem;
+            z-index: 5;
+        `;
+        
         const iconSpan = document.createElement('span');
-        iconSpan.style.fontSize = '1.3rem';
-        iconSpan.style.marginBottom = '2px';
+        iconSpan.style.fontSize = prize.jackpot ? '1.8rem' : '1.3rem';
+        iconSpan.style.marginBottom = '4px';
         iconSpan.textContent = prize.icon;
+        
         const labelSpan = document.createElement('span');
-        labelSpan.style.fontSize = '0.6rem';
-        labelSpan.style.background = 'rgba(0,0,0,0.6)';
-        labelSpan.style.padding = '2px 6px';
-        labelSpan.style.borderRadius = '10px';
+        labelSpan.style.fontSize = '0.7rem';
+        labelSpan.style.background = 'rgba(0,0,0,0.7)';
+        labelSpan.style.padding = '3px 8px';
+        labelSpan.style.borderRadius = '15px';
+        labelSpan.style.whiteSpace = 'nowrap';
         labelSpan.textContent = prize.label;
+        
         segDiv.appendChild(iconSpan);
         segDiv.appendChild(labelSpan);
         wheel.appendChild(segDiv);
     });
+    
     updateWheelVegasUI();
 }
 
@@ -3496,9 +3545,11 @@ function updateWheelVegasUI() {
     const jackpotEl = document.getElementById('wheelJackpotCounter');
     const freeSpinEl = document.getElementById('wheelFreeSpin');
     const bigWinEl = document.getElementById('wheelBigWinCounter');
+    
     if (spinsEl) spinsEl.textContent = (userData.wheel.purchasedSpins || 0) + (userData.wheel.freeSpins || 0);
     if (jackpotEl) jackpotEl.textContent = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - ((userData.wheel.jackpotCounter || 0) % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY);
     if (bigWinEl) bigWinEl.textContent = CONFIG.ECONOMY.WHEEL_BIG_WIN_EVERY - ((userData.wheel.bigWinCounter || 0) % CONFIG.ECONOMY.WHEEL_BIG_WIN_EVERY);
+    
     if (freeSpinEl) {
         const now = Date.now();
         const nextFree = (userData.wheel.lastFreeSpin || 0) + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
@@ -3736,6 +3787,12 @@ function spinSlotsVegas(isFree = false, isTurbo = false) {
     const reels = document.querySelectorAll('.vegas-slot-reel');
     const duration = isTurbo ? 600 : 1000;
     const results = [];
+    
+    // إضافة تأثير blur أثناء الدوران
+    document.querySelectorAll('.vegas-slot-reel-wrapper').forEach(w => {
+        w.classList.add('spinning');
+    });
+    
     reels.forEach((reel, idx) => {
         const spinDistance = 1500 + Math.random() * 1000;
         const startY = parseFloat(reel.style.transform?.replace('translateY(', '').replace('px)', '')) || 0;
@@ -3752,6 +3809,10 @@ function spinSlotsVegas(isFree = false, isTurbo = false) {
         }, duration - 150);
     });
     setTimeout(() => {
+        // إزالة تأثير blur
+        document.querySelectorAll('.vegas-slot-reel-wrapper').forEach(w => {
+            w.classList.remove('spinning');
+        });
         const allSame = results[0] === results[1] && results[1] === results[2];
         let winAmount = 0, winCurrency = 'TON';
         if (allSame) {
@@ -3817,7 +3878,7 @@ function showToastPro(message, type = 'info', duration = 3000) {
     }, duration);
 }
 
-// ====== 48. OPEN FUNCTIONS (المحفظة من أي مكان) ======
+// ====== 48. OPEN FUNCTIONS ======
 function openProfileFromAnywhere() {
     if (currentPage === 'wheelGame' || currentPage === 'slotsGame') exitGame();
     setTimeout(() => showPage('profile'), 300);
