@@ -1,6 +1,7 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v9000.0
-// جميع الميزات محفوظة + العجلة والسلوتس مرئيان + إصلاح شامل
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v10.0
+// نسخة محسنة نهائية مع عجلة حظ وسلوتس أسطورية
+// جميع الميزات الأصلية محفوظة
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -27,6 +28,7 @@ const CONFIG = {
         WALLET_REGEX: /^(UQ|EQ)[a-zA-Z0-9\-_]{46,48}$/,
         MANIFEST_URL: "https://menfit.github.io/Testmn/tonconnect-manifest.json"
     },
+    
     FIREBASE: {
         apiKey: "AIzaSyD39Q7g7A2MpuuN42eWtr_bOPt-_1tvbhI",
         authDomain: "ton-71a00.firebaseapp.com",
@@ -35,16 +37,19 @@ const CONFIG = {
         messagingSenderId: "97952285427",
         appId: "1:97952285427:web:e7704e52fd108bdabded86"
     },
+    
     COLLECTIONS: {
         USERS: 'users',
         DEPOSITS: 'deposits',
         WITHDRAWALS: 'withdrawals',
         TRANSACTIONS: 'transactions'
     },
+    
     APP: {
         BASE_URL: "https://t.me/TONMininginstantbot/Ton",
         REFERRAL_PARAM: "startapp"
     },
+    
     DEPOSIT_ADDRESSES: {
         TON: "UQAq2CLybaIP93EGFlGL2n8A9DkGk5RPL2lYWJpoJlp8foJh",
         USDT: "0x7b80739cC565bFd9Cc115C821FE628d7FB11d9e1",
@@ -53,18 +58,22 @@ const CONFIG = {
         BTC: "bc1qczhr09tvhmas82t6fjs6qm0gaqh2ny20e5uhs4",
         SOL: "9ymhe6wAFzmXwNGiPeqkB9TqsRLexbHzFtRXNFExoknL"
     },
+    
     DEPOSIT_MINIMUMS: {
         TON: 1.0, USDT: 10, BNB: 0.015, ETH: 0.005, BTC: 0.0005, SOL: 0.12
     },
+    
     WITHDRAW_NETWORKS: {
         USDT: [
             { name: 'BEP20 (BSC)', value: 'BEP20', fee: 0.0005, feeCurrency: 'BNB' },
             { name: 'ERC20 (Ethereum)', value: 'ERC20', fee: 0.001, feeCurrency: 'ETH' }
         ]
     },
+    
     NETWORK_TYPES: {
         USDT: 'bsc', BNB: 'bsc', ETH: 'erc20', BTC: 'bitcoin', SOL: 'solana', TON: 'ton'
     },
+    
     CACHE: {
         USER_TTL: 300000,
         PRICES_TTL: 10800000,
@@ -75,37 +84,38 @@ const CONFIG = {
         WHEEL_TTL: 86400000,
         SLOTS_TTL: 86400000
     },
+    
     ECONOMY: {
         REFERRAL_BONUS: 0.005,
         REFERRAL_PERCENT: 0.20,
         AUTO_CLICKER_PRICE: 0.5,
         AUTO_CLICKER_DURATION: 15 * 24 * 60 * 60 * 1000,
+        
         WHEEL_SPIN_PRICE: 0.25,
         WHEEL_FREE_SPIN_INTERVAL: 24 * 60 * 60 * 1000,
         WHEEL_JACKPOT_EVERY: 15,
-        WHEEL_BIG_WIN_EVERY: 15,
-        WHEEL_MEGA_WIN_EVERY: 30,
-        WHEEL_MEGA_JACKPOT_EVERY: 40,
+        
         SLOTS_SPIN_PRICE: 0.15,
         SLOTS_TURBO_PRICE: 0.30,
         SLOTS_FREE_SPIN_INTERVAL: 12 * 60 * 60 * 1000,
         SLOTS_WIN_RATE: 0.70,
-        SLOTS_BIG_WIN_EVERY: 15,
-        SLOTS_JACKPOT_EVERY: 20,
-        SLOTS_MEGA_JACKPOT_EVERY: 40,
+        
         SLOTS_PACK_5: { spins: 5, price: 0.75, bonus: 0 },
         SLOTS_PACK_10: { spins: 10, price: 1.5, bonus: 1 },
         SLOTS_PACK_50: { spins: 50, price: 7.5, bonus: 5 },
         SLOTS_PACK_100: { spins: 100, price: 15, bonus: 10 },
+        
         WHEEL_PACK_5: { spins: 5, price: 1.25, bonus: 0 },
         WHEEL_PACK_10: { spins: 10, price: 2.5, bonus: 1 },
         WHEEL_PACK_50: { spins: 50, price: 12.5, bonus: 5 },
         WHEEL_PACK_100: { spins: 100, price: 25, bonus: 10 },
+        
         STREAK_BONUS: { 3: 1.05, 7: 1.10, 30: 1.25 },
         DAILY_LOGIN_BONUS: [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.10],
         MAX_WITHDRAW_DAILY: 100,
         MAX_DEPOSIT_DAILY: 1000
     },
+    
     CMC_ICONS: {
         TON: "https://s2.coinmarketcap.com/static/img/coins/64x64/11419.png",
         USDT: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png",
@@ -114,10 +124,12 @@ const CONFIG = {
         ETH: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
         SOL: "https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png"
     },
+    
     CRYPTO_IDS: {
         TON: "the-open-network", USDT: "tether", BNB: "binancecoin",
         BTC: "bitcoin", ETH: "ethereum", SOL: "solana"
     },
+    
     SWAP_CURRENCIES: [
         { symbol: 'TON', name: 'Toncoin' },
         { symbol: 'USDT', name: 'Tether' },
@@ -126,6 +138,7 @@ const CONFIG = {
         { symbol: 'SOL', name: 'Solana' },
         { symbol: 'BNB', name: 'BNB' }
     ],
+    
     ALL_ASSETS: [
         { symbol: 'TON', name: 'Toncoin' },
         { symbol: 'USDT', name: 'Tether' },
@@ -152,17 +165,20 @@ const translations = {
         'copy': 'Copy',
         'confirm': 'Confirm',
         'refresh': 'Refresh',
+        
         'mining.currentCycle': 'Current Mining Cycle',
         'mining.nextReward': 'Next Reward',
         'mining.activeRigs': 'Active Mining Rigs',
         'mining.hashrate': 'Hashrate',
         'mining.earned': 'Earned',
+        
         'market.title': 'Mining Hardware',
         'filters.all': 'All',
         'filters.basic': 'Basic',
         'filters.pro': 'Pro',
         'filters.quantum': 'Quantum',
         'filters.hot': 'Hot Deals',
+        
         'casino.title': 'Casino Games',
         'casino.wheel': 'Lucky Wheel',
         'casino.slots': 'Slot Machine',
@@ -173,6 +189,7 @@ const translations = {
         'casino.packs': 'Packs',
         'casino.spinsLeft': 'spins left',
         'casino.yourSpins': 'Your Spins',
+        
         'slots.title': 'Slot Machine',
         'slots.spin': 'SPIN',
         'slots.turbo': 'TURBO',
@@ -187,15 +204,14 @@ const translations = {
         'slots.pack50': '50 Spins +5',
         'slots.pack100': '100 Spins +10',
         'slots.bought': '✅ Purchased {spins} spins!',
+        
         'wheel.title': 'Lucky Wheel',
         'wheel.spin': 'SPIN',
         'wheel.free': 'FREE',
         'wheel.price': '0.25 TON',
         'wheel.win': '🎡 YOU WON {prize}!',
-        'wheel.bigwin': '🔥🔥 BIG WIN! {prize}!',
-        'wheel.nicewin': '💎 NICE WIN! {prize}!',
-        'wheel.jackpot': '🎰🎰🎰 JACKPOT! {amount} {currency}!',
-        'wheel.megajackpot': '👑👑👑 MEGA JACKPOT! {amount} {currency}!',
+        'wheel.bigwin': '🎡🎡 BIG WIN! {prize}!',
+        'wheel.jackpot': '🎡🎡🎡 JACKPOT! {amount} {currency}!',
         'wheel.pack5': '5 Spins',
         'wheel.pack10': '10 Spins +1',
         'wheel.pack50': '50 Spins +5',
@@ -203,27 +219,28 @@ const translations = {
         'wheel.spinsLeft': '{count} spins until jackpot',
         'wheel.jackpotTimer': '{count}/{total}',
         'wheel.streak': '{days} DAYS | BEST: {best}',
-        'wheel.goodLuck': '🍀 GOOD LUCK! Try again!',
-        'wheel.freeSpinStored': '🆓 FREE SPIN STORED!',
-        'wheel.nextBigWin': '🔥 BIG WIN in {count} spins',
-        'wheel.nextJackpot': '👑 JACKPOT in {count} spins',
-        'wheel.nextMega': '💎 MEGA in {count} spins',
+        'wheel.goodLuck': 'Good Luck!',
+        
         'profile.title': 'My Profile',
         'wallet.totalBalance': 'Total Balance',
         'wallet.myAssets': 'My Assets',
         'wallet.connected': 'Connected:',
         'wallet.disconnected': 'Wallet disconnected',
+        
         'referral.title': 'Referral Program',
         'referral.yourLink': 'Your Referral Link',
         'referral.bonusNote': 'Get 0.005 TON + 20% of their mining!',
         'referral.milestones': 'Referral Milestones',
+        
         'notifications.title': 'Notifications',
         'notifications.clear_read': 'Clear Read',
         'notifications.clear_all': 'Clear All',
         'notifications.no_notifications': 'No notifications',
+        
         'messages.success': 'Success',
         'messages.error': 'Error',
         'messages.loading': 'Loading...',
+        
         'notif.welcomeBonus': '🎉 Welcome! You got 0.005 TON!',
         'notif.referralBonus': '🎉 Someone joined with your link! You got 0.005 TON!',
         'notif.wheelWin': '🎡 You won {prize}!',
@@ -237,6 +254,7 @@ const translations = {
         'notif.depositRejected': '❌ Your deposit was rejected: {reason}',
         'notif.withdrawApproved': '✅ Your withdrawal of {amount} {currency} has been approved!',
         'notif.withdrawRejected': '❌ Your withdrawal was rejected: {reason}',
+        
         'admin.clickRefresh': 'Click refresh to load pending requests',
         'admin.refresh': 'Refresh',
         'admin.password': 'Enter Admin Password',
@@ -245,6 +263,7 @@ const translations = {
         'admin.error': 'Error loading requests',
         'admin.approve': 'Approve',
         'admin.reject': 'Reject',
+        
         'error.insufficient': 'Insufficient balance! Need {amount} TON',
         'error.insufficient.pack': 'Insufficient balance! Buy a pack or add funds.',
         'error.payment': 'Payment failed. Please try again.',
@@ -253,21 +272,23 @@ const translations = {
         'error.hashUsed': 'Transaction hash already used',
         'error.enterAmount': 'Please enter a valid amount',
         'error.invalidAddress': 'Invalid {currency} address',
+        
         'pack.buy': 'Buy Pack',
         'pack.confirm': 'Confirm purchase of {spins} spins for {price} TON?',
         'pack.telegramPay': 'Payment via Telegram Wallet',
         'pack.success': '✅ Successfully purchased {spins} spins!',
+        
         'autospin.on': 'Auto Spin ON',
         'autospin.off': 'Auto Spin OFF',
         'win.normal': '🎉 YOU WON!',
-        'win.big': '🔥🔥 BIG WIN! 🔥🔥',
-        'win.nice': '💎 NICE WIN! 💎',
+        'win.big': '🌟🌟 BIG WIN! 🌟🌟',
         'win.jackpot': '🎰🎰🎰 JACKPOT! 🎰🎰🎰',
-        'win.mega': '👑👑👑 MEGA JACKPOT! 👑👑👑',
+        
         'table.machine': 'Machine',
         'table.3days': '3 Days',
         'table.7days': '7 Days',
         'table.15days': '15 Days',
+        
         'withdraw.network': 'Select Network',
         'withdraw.fee': 'Network fee: {fee} {currency}'
     },
@@ -285,17 +306,20 @@ const translations = {
         'copy': 'نسخ',
         'confirm': 'تأكيد',
         'refresh': 'تحديث',
+        
         'mining.currentCycle': 'دورة التعدين الحالية',
         'mining.nextReward': 'المكافأة القادمة',
         'mining.activeRigs': 'الأجهزة النشطة',
         'mining.hashrate': 'السرعة',
         'mining.earned': 'الأرباح',
+        
         'market.title': 'أجهزة التعدين',
         'filters.all': 'الكل',
         'filters.basic': 'أساسي',
         'filters.pro': 'محترف',
         'filters.quantum': 'كمومي',
         'filters.hot': 'عروض ساخنة',
+        
         'casino.title': 'ألعاب الكازينو',
         'casino.wheel': 'عجلة الحظ',
         'casino.slots': 'آلة السلوت',
@@ -306,59 +330,60 @@ const translations = {
         'casino.packs': 'باقات',
         'casino.spinsLeft': 'لفة متبقية',
         'casino.yourSpins': 'لفاتك',
+        
         'slots.title': 'آلة السلوت',
         'slots.spin': 'لفة',
         'slots.turbo': 'سرعة',
         'slots.free': 'مجاني',
-        'slots.price': '٠.١٥ TON',
-        'slots.turboPrice': '٠.٣٠ TON',
+        'slots.price': '0.15 TON',
+        'slots.turboPrice': '0.30 TON',
         'slots.win': '🎰 فزت بـ {amount} {currency}!',
         'slots.bigwin': '🎰🎰 فوز كبير! {amount} {currency}!',
         'slots.jackpot': '🎰🎰🎰 جاكبوت! {amount} {currency}!',
-        'slots.pack5': '٥ لفات',
-        'slots.pack10': '١٠ لفات +١',
-        'slots.pack50': '٥٠ لفة +٥',
-        'slots.pack100': '١٠٠ لفة +١٠',
+        'slots.pack5': '5 لفات',
+        'slots.pack10': '10 لفات +1',
+        'slots.pack50': '50 لفة +5',
+        'slots.pack100': '100 لفة +10',
         'slots.bought': '✅ تم شراء {spins} لفة!',
+        
         'wheel.title': 'عجلة الحظ',
         'wheel.spin': 'دوران',
         'wheel.free': 'مجاني',
-        'wheel.price': '٠.٢٥ TON',
+        'wheel.price': '0.25 TON',
         'wheel.win': '🎡 فزت بـ {prize}!',
-        'wheel.bigwin': '🔥🔥 فوز كبير! {prize}!',
-        'wheel.nicewin': '💎 فوز رائع! {prize}!',
-        'wheel.jackpot': '🎰🎰🎰 جاكبوت! {amount} {currency}!',
-        'wheel.megajackpot': '👑👑👑 جاكبوت ضخم! {amount} {currency}!',
-        'wheel.pack5': '٥ لفات',
-        'wheel.pack10': '١٠ لفات +١',
-        'wheel.pack50': '٥٠ لفة +٥',
-        'wheel.pack100': '١٠٠ لفة +١٠',
+        'wheel.bigwin': '🎡🎡 فوز كبير! {prize}!',
+        'wheel.jackpot': '🎡🎡🎡 جاكبوت! {amount} {currency}!',
+        'wheel.pack5': '5 لفات',
+        'wheel.pack10': '10 لفات +1',
+        'wheel.pack50': '50 لفة +5',
+        'wheel.pack100': '100 لفة +10',
         'wheel.spinsLeft': '{count} لفة حتى الجاكبوت',
         'wheel.jackpotTimer': '{count}/{total}',
         'wheel.streak': '{days} يوم | الأفضل: {best}',
-        'wheel.goodLuck': '🍀 حظ سعيد! حاول مرة أخرى!',
-        'wheel.freeSpinStored': '🆓 تم تخزين لفة مجانية!',
-        'wheel.nextBigWin': '🔥 فوز كبير بعد {count} لفات',
-        'wheel.nextJackpot': '👑 جاكبوت بعد {count} لفات',
-        'wheel.nextMega': '💎 ضخم بعد {count} لفات',
+        'wheel.goodLuck': 'حظ سعيد!',
+        
         'profile.title': 'ملفي الشخصي',
         'wallet.totalBalance': 'الرصيد الإجمالي',
         'wallet.myAssets': 'أصولي',
         'wallet.connected': 'متصل:',
         'wallet.disconnected': 'المحفظة غير متصلة',
+        
         'referral.title': 'برنامج الإحالة',
         'referral.yourLink': 'رابط الإحالة',
-        'referral.bonusNote': 'احصل على ٠.٠٠٥ TON + ٢٠٪ من تعدينهم!',
+        'referral.bonusNote': 'احصل على 0.005 TON + 20% من تعدينهم!',
         'referral.milestones': 'مراحل الإحالة',
+        
         'notifications.title': 'الإشعارات',
         'notifications.clear_read': 'حذف المقروء',
         'notifications.clear_all': 'حذف الكل',
         'notifications.no_notifications': 'لا توجد إشعارات',
+        
         'messages.success': 'نجاح',
         'messages.error': 'خطأ',
         'messages.loading': 'جاري التحميل...',
-        'notif.welcomeBonus': '🎉 مرحباً! حصلت على ٠.٠٠٥ TON!',
-        'notif.referralBonus': '🎉 شخص انضم عبر رابطك! حصلت على ٠.٠٠٥ TON!',
+        
+        'notif.welcomeBonus': '🎉 مرحباً! حصلت على 0.005 TON!',
+        'notif.referralBonus': '🎉 شخص انضم عبر رابطك! حصلت على 0.005 TON!',
         'notif.wheelWin': '🎡 فزت بـ {prize}!',
         'notif.wheelJackpot': '🎡🎡🎡 جاكبوت! فزت بـ {amount} {currency}!',
         'notif.slotsWin': '🎰 فزت بـ {amount} {currency}!',
@@ -370,6 +395,7 @@ const translations = {
         'notif.depositRejected': '❌ تم رفض الإيداع: {reason}',
         'notif.withdrawApproved': '✅ تمت الموافقة على سحب {amount} {currency}!',
         'notif.withdrawRejected': '❌ تم رفض السحب: {reason}',
+        
         'admin.clickRefresh': 'اضغط تحديث لتحميل الطلبات',
         'admin.refresh': 'تحديث',
         'admin.password': 'أدخل كلمة سر المشرف',
@@ -378,6 +404,7 @@ const translations = {
         'admin.error': 'خطأ في تحميل الطلبات',
         'admin.approve': 'موافقة',
         'admin.reject': 'رفض',
+        
         'error.insufficient': 'رصيد غير كاف! تحتاج {amount} TON',
         'error.insufficient.pack': 'رصيد غير كاف! اشتر باقة أو أضف رصيد.',
         'error.payment': 'فشل الدفع. حاول مرة أخرى.',
@@ -386,21 +413,23 @@ const translations = {
         'error.hashUsed': 'هاش المعاملة مستخدم بالفعل',
         'error.enterAmount': 'الرجاء إدخال مبلغ صحيح',
         'error.invalidAddress': 'عنوان {currency} غير صالح',
+        
         'pack.buy': 'شراء الباقة',
         'pack.confirm': 'تأكيد شراء {spins} لفة بـ {price} TON؟',
         'pack.telegramPay': 'الدفع عبر محفظة تليجرام',
         'pack.success': '✅ تم شراء {spins} لفة بنجاح!',
+        
         'autospin.on': 'تشغيل تلقائي',
         'autospin.off': 'إيقاف تلقائي',
         'win.normal': '🎉 فزت!',
-        'win.big': '🔥🔥 فوز كبير! 🔥🔥',
-        'win.nice': '💎 فوز رائع! 💎',
+        'win.big': '🌟🌟 فوز كبير! 🌟🌟',
         'win.jackpot': '🎰🎰🎰 جاكبوت! 🎰🎰🎰',
-        'win.mega': '👑👑👑 جاكبوت ضخم! 👑👑👑',
+        
         'table.machine': 'الجهاز',
         'table.3days': '٣ أيام',
         'table.7days': '٧ أيام',
         'table.15days': '١٥ يوماً',
+        
         'withdraw.network': 'اختر الشبكة',
         'withdraw.fee': 'رسوم الشبكة: {fee} {currency}'
     }
@@ -523,54 +552,40 @@ const REFERRAL_MILESTONES = [
 
 // ====== 7. WHEEL PRIZES ======
 const WHEEL_PRIZES = [
-    { id: 1, type: 'GOODLUCK', amount: 0, currency: 'TON', color: '#94a3b8', weight: 30, icon: '🍀', label: '🍀 GOOD LUCK', goodluck: true, category: 'goodluck' },
-    { id: 2, type: 'GOODLUCK', amount: 0, currency: 'TON', color: '#94a3b8', weight: 30, icon: '🍀', label: '🍀 GOOD LUCK', goodluck: true, category: 'goodluck' },
-    { id: 3, type: 'GOODLUCK', amount: 0, currency: 'TON', color: '#94a3b8', weight: 30, icon: '🍀', label: '🍀 GOOD LUCK', goodluck: true, category: 'goodluck' },
-    { id: 4, type: 'GOODLUCK', amount: 0, currency: 'TON', color: '#94a3b8', weight: 30, icon: '🍀', label: '🍀 GOOD LUCK', goodluck: true, category: 'goodluck' },
-    { id: 5, type: 'FREESPIN', amount: 0, currency: 'TON', color: '#aa44ff', weight: 20, icon: '🆓', label: '🆓 FREE SPIN', freespin: true, category: 'freespin' },
-    { id: 6, type: 'FREESPIN', amount: 0, currency: 'TON', color: '#aa44ff', weight: 20, icon: '🆓', label: '🆓 FREE SPIN', freespin: true, category: 'freespin' },
-    { id: 7, type: 'FREESPIN', amount: 0, currency: 'TON', color: '#aa44ff', weight: 20, icon: '🆓', label: '🆓 FREE SPIN', freespin: true, category: 'freespin' },
-    { id: 8, type: 'TON', amount: 0.25, color: '#0088cc', weight: 8, icon: '💰', label: '0.25 TON', category: 'ton' },
-    { id: 9, type: 'TON', amount: 0.5, color: '#0088cc', weight: 7, icon: '💰', label: '0.5 TON', category: 'ton' },
-    { id: 10, type: 'TON', amount: 0.75, color: '#0088cc', weight: 6, icon: '💰', label: '0.75 TON', category: 'ton' },
-    { id: 11, type: 'TON', amount: 1, color: '#0088cc', weight: 6, icon: '💰', label: '1 TON', category: 'ton' },
-    { id: 12, type: 'TON', amount: 1.5, color: '#0088cc', weight: 5, icon: '💰', label: '1.5 TON', category: 'ton' },
-    { id: 13, type: 'TON', amount: 2, color: '#0088cc', weight: 5, icon: '💰', label: '2 TON', category: 'ton' },
-    { id: 14, type: 'USDT', amount: 0.25, color: '#22c55e', weight: 8, icon: '💵', label: '0.25 USDT', category: 'usdt' },
-    { id: 15, type: 'USDT', amount: 0.5, color: '#22c55e', weight: 7, icon: '💵', label: '0.5 USDT', category: 'usdt' },
-    { id: 16, type: 'USDT', amount: 0.75, color: '#22c55e', weight: 6, icon: '💵', label: '0.75 USDT', category: 'usdt' },
-    { id: 17, type: 'USDT', amount: 1, color: '#22c55e', weight: 6, icon: '💵', label: '1 USDT', category: 'usdt' },
-    { id: 18, type: 'USDT', amount: 1.5, color: '#22c55e', weight: 5, icon: '💵', label: '1.5 USDT', category: 'usdt' },
-    { id: 19, type: 'USDT', amount: 2, color: '#22c55e', weight: 5, icon: '💵', label: '2 USDT', category: 'usdt' },
-    { id: 20, type: 'TON', amount: 5, color: '#ff9900', weight: 4, icon: '🔥', label: '5 TON', category: 'bigwin' },
-    { id: 21, type: 'TON', amount: 7, color: '#ff9900', weight: 3, icon: '🔥', label: '7 TON', category: 'bigwin' },
-    { id: 22, type: 'TON', amount: 10, color: '#ff9900', weight: 3, icon: '🔥', label: '10 TON', category: 'bigwin' },
-    { id: 23, type: 'TON', amount: 25, color: '#fbbf24', weight: 2, icon: '💎', label: '25 TON', category: 'nicewin' },
-    { id: 24, type: 'TON', amount: 50, color: '#fbbf24', weight: 1, icon: '💎', label: '50 TON', category: 'nicewin' },
-    { id: 25, type: 'USDT', amount: 5, color: '#ff9900', weight: 4, icon: '🔥', label: '5 USDT', category: 'bigwin' },
-    { id: 26, type: 'USDT', amount: 7, color: '#ff9900', weight: 3, icon: '🔥', label: '7 USDT', category: 'bigwin' },
-    { id: 27, type: 'USDT', amount: 10, color: '#ff9900', weight: 3, icon: '🔥', label: '10 USDT', category: 'bigwin' },
-    { id: 28, type: 'USDT', amount: 25, color: '#fbbf24', weight: 2, icon: '💎', label: '25 USDT', category: 'nicewin' },
-    { id: 29, type: 'USDT', amount: 50, color: '#fbbf24', weight: 1, icon: '💎', label: '50 USDT', category: 'nicewin' },
-    { id: 30, type: 'JACKPOT', amount: 100, currency: 'TON', color: '#ef4444', weight: 1, icon: '👑', label: '100 TON', jackpot: true, category: 'jackpot' },
-    { id: 31, type: 'JACKPOT', amount: 250, currency: 'USDT', color: '#ef4444', weight: 1, icon: '👑', label: '250 USDT', jackpot: true, category: 'jackpot' },
-    { id: 32, type: 'JACKPOT', amount: 500, currency: 'USDT', color: '#ef4444', weight: 1, icon: '👑', label: '500 USDT', jackpot: true, category: 'megajackpot' }
+    { id: 1, type: 'TON', amount: 0.25, color: '#0088cc', weight: 8, icon: '💰', label: '0.25' },
+    { id: 2, type: 'TON', amount: 0.5, color: '#0088cc', weight: 7, icon: '💰', label: '0.5' },
+    { id: 3, type: 'TON', amount: 1, color: '#0088cc', weight: 6, icon: '💰', label: '1' },
+    { id: 4, type: 'TON', amount: 2, color: '#0088cc', weight: 5, icon: '💰', label: '2' },
+    { id: 5, type: 'TON', amount: 5, color: '#0088cc', weight: 4, icon: '💰', label: '5' },
+    { id: 6, type: 'TON', amount: 10, color: '#0088cc', weight: 3, icon: '💰', label: '10' },
+    
+    { id: 7, type: 'USDT', amount: 0.25, color: '#22c55e', weight: 8, icon: '💵', label: '0.25' },
+    { id: 8, type: 'USDT', amount: 0.5, color: '#22c55e', weight: 7, icon: '💵', label: '0.5' },
+    { id: 9, type: 'USDT', amount: 1, color: '#22c55e', weight: 6, icon: '💵', label: '1' },
+    { id: 10, type: 'USDT', amount: 2, color: '#22c55e', weight: 5, icon: '💵', label: '2' },
+    { id: 11, type: 'USDT', amount: 5, color: '#22c55e', weight: 4, icon: '💵', label: '5' },
+    { id: 12, type: 'USDT', amount: 10, color: '#22c55e', weight: 3, icon: '💵', label: '10' },
+    { id: 13, type: 'USDT', amount: 250, color: '#22c55e', weight: 2, icon: '💎', label: '250' },
+    { id: 14, type: 'USDT', amount: 500, color: '#22c55e', weight: 1, icon: '💎', label: '500' },
+    
+    { id: 15, type: 'JACKPOT', amount: 100, currency: 'TON', color: '#ef4444', weight: 1, icon: '👑', label: '100 TON', jackpot: true },
+    { id: 16, type: 'JACKPOT', amount: 250, currency: 'USDT', color: '#ef4444', weight: 1, icon: '👑', label: '250 USDT', jackpot: true },
+    { id: 17, type: 'JACKPOT', amount: 500, currency: 'USDT', color: '#ef4444', weight: 1, icon: '👑', label: '500 USDT', jackpot: true },
+    
+    { id: 18, type: 'GOODLUCK', amount: 0, color: '#94a3b8', weight: 15, icon: '🍀', label: 'GOOD LUCK', goodluck: true }
 ];
 
 // ====== 8. SLOTS SYMBOLS ======
 const SLOTS_SYMBOLS_DATA = [
-    { symbol: '🍒', weight: 25, value: 0.25, type: 'USDT', color: '#ff4444', category: 'small' },
-    { symbol: '🍋', weight: 22, value: 0.5, type: 'USDT', color: '#ffdd00', category: 'small' },
-    { symbol: '🍇', weight: 20, value: 1.0, type: 'USDT', color: '#aa44ff', category: 'medium' },
-    { symbol: '💎', weight: 18, value: 2.0, type: 'TON', color: '#00f2ff', category: 'medium' },
-    { symbol: '💰', weight: 15, value: 5.0, type: 'TON', color: '#ffaa00', category: 'bigwin' },
-    { symbol: '⭐', weight: 12, value: 10.0, type: 'TON', color: '#ffff00', category: 'bigwin' },
-    { symbol: '👑', weight: 10, value: 25.0, type: 'TON', color: '#ffdd00', category: 'nicewin' },
-    { symbol: '7️⃣', weight: 8, value: 50.0, type: 'TON', color: '#ff4444', category: 'nicewin' },
-    { symbol: '🎰', weight: 5, value: 100, type: 'TON', color: '#ff00ff', jackpot: true, category: 'jackpot' },
-    { symbol: '🆓', weight: 15, value: 0, type: 'FREESPIN', color: '#aa44ff', freespin: true, category: 'special' },
-    { symbol: '🍀', weight: 20, value: 0, type: 'GOODLUCK', color: '#94a3b8', goodluck: true, category: 'special' },
-    { symbol: '⭐', weight: 10, value: 2, type: 'MULTIPLIER', color: '#ffaa00', multiplier: true, category: 'special' }
+    { symbol: '🍒', weight: 30, value: 0.25, type: 'USDT', color: '#ff4444' },
+    { symbol: '🍋', weight: 25, value: 0.25, type: 'USDT', color: '#ffdd00' },
+    { symbol: '🍇', weight: 20, value: 0.5, type: 'USDT', color: '#aa44ff' },
+    { symbol: '💎', weight: 15, value: 1.0, type: 'USDT', color: '#00f2ff' },
+    { symbol: '💰', weight: 8, value: 2.0, type: 'TON', color: '#ffaa00' },
+    { symbol: '⭐', weight: 5, value: 5.0, type: 'TON', color: '#ffff00' },
+    { symbol: '👑', weight: 3, value: 10.0, type: 'TON', color: '#ffdd00' },
+    { symbol: '7️⃣', weight: 2, value: 25.0, type: 'TON', color: '#ff4444' },
+    { symbol: '🎰', weight: 0.5, value: 100, type: 'TON', color: '#ff00ff', jackpot: true }
 ];
 
 // ====== 9. FIREBASE ======
@@ -681,20 +696,14 @@ let userData = {
         spinsToday: 0, 
         lastFreeSpin: 0, 
         totalSpins: 0, 
-        jackpotCounter: 0,
-        bigWinCounter: 0,
-        megaWinCounter: 0,
-        megaJackpotCounter: 0,
+        jackpotCounter: 0, 
         jackpotWon: 0, 
         lastWin: null, 
         spinHistory: [],
         purchasedSpins: 0,
-        freeSpins: 0,
         autoSpin: false,
         autoSpinCount: 0,
-        packs: { p5: 0, p10: 0, p50: 0, p100: 0 },
-        lastJackpotType: 'TON',
-        lastJackpotCycle: 0
+        packs: { p5: 0, p10: 0, p50: 0, p100: 0 }
     },
     
     slots: { 
@@ -704,8 +713,6 @@ let userData = {
         lastWin: null, 
         spinHistory: [],
         purchasedSpins: 0,
-        freeSpins: 0,
-        multiplier: 1,
         autoSpin: false,
         autoSpinCount: 0,
         packs: { p5: 0, p10: 0, p50: 0, p100: 0 }
@@ -888,21 +895,10 @@ let currentPage = 'mining';
 
 function showPage(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    const targetPage = document.getElementById(page + 'Page');
-    if (targetPage) targetPage.classList.add('active');
+    document.getElementById(page + 'Page').classList.add('active');
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-    const navItem = document.querySelector(`[data-page="${page}"]`);
-    if (navItem) navItem.classList.add('active');
+    document.querySelector(`[data-page="${page}"]`).classList.add('active');
     currentPage = page;
-    
-    const header = document.getElementById('mainHeader');
-    if (header) {
-        if (page === 'wheelGame' || page === 'slotsGame') {
-            header.style.display = 'none';
-        } else {
-            header.style.display = 'flex';
-        }
-    }
     
     if (page === 'market') renderMarket();
     if (page === 'profile') { 
@@ -912,38 +908,26 @@ function showPage(page) {
         updateChart(); 
     }
     if (page === 'casino') { 
-        updateCasinoUI(); 
+        updateWheelUI(); 
+        updateSlotsUI(); 
     }
     
     showRandomSticker();
 }
 
-function openWheelGame() {
-    console.log("🎡 Opening Wheel Game");
-    const header = document.getElementById('mainHeader');
-    if (header) header.style.display = 'none';
+function showWheelGamePage() {
     showPage('wheelGame');
-    setTimeout(() => {
-        initWheelVegas();
-        updateWheelVegasUI();
-    }, 100);
+    initWheelVegas();
+    updateWheelVegasUI();
 }
 
-function openSlotsGame() {
-    console.log("🎰 Opening Slots Game");
-    const header = document.getElementById('mainHeader');
-    if (header) header.style.display = 'none';
+function showSlotsGamePage() {
     showPage('slotsGame');
-    setTimeout(() => {
-        initSlotsVegas();
-        updateSlotsVegasUI();
-    }, 100);
+    initSlotsVegas();
+    updateSlotsVegasUI();
 }
 
 function exitGame() {
-    console.log("🔙 Exiting game");
-    const header = document.getElementById('mainHeader');
-    if (header) header.style.display = 'flex';
     showPage('casino');
 }
 
@@ -1287,12 +1271,14 @@ function updateWalletUI() {
     const depositBtn = document.getElementById('confirmDepositBtn');
     const modalInfo = document.getElementById('paymentWalletInfo');
     const modalAddress = document.getElementById('modalConnectedAddress');
+    const paymentStatus = document.getElementById('paymentWalletStatus');
     const modalUserBalance = document.getElementById('modalUserBalance');
     
     if (modalUserBalance) modalUserBalance.textContent = formatBalance(userData.balances.TON || 0, 'TON') + ' TON';
     
     if (tonWallet) {
         if (statusEl) statusEl.innerHTML = `<div class="status-indicator online"></div><span>Connected</span>`;
+        if (paymentStatus) paymentStatus.innerHTML = `<div class="status online"><i class="fas fa-circle"></i><span>Connected</span></div>`;
         if (infoEl) infoEl.style.display = 'flex';
         if (addressEl) addressEl.textContent = formatAddress(tonWallet.account.address);
         if (modalInfo) modalInfo.style.display = 'flex';
@@ -1301,6 +1287,7 @@ function updateWalletUI() {
         if (depositBtn) depositBtn.disabled = false;
     } else {
         if (statusEl) statusEl.innerHTML = `<div class="status-indicator offline"></div><span>Disconnected</span>`;
+        if (paymentStatus) paymentStatus.innerHTML = `<div class="status offline"><i class="fas fa-circle"></i><span>Not connected</span></div>`;
         if (infoEl) infoEl.style.display = 'none';
         if (modalInfo) modalInfo.style.display = 'none';
         if (payBtn) payBtn.disabled = currentPaymentMethod === 'wallet';
@@ -1343,43 +1330,6 @@ function updateUI() {
     updateWalletUI();
     updateLeaderboard();
     updateAutoClickerUI();
-    updateCasinoUI();
-}
-
-function updateCasinoUI() {
-    const wheelSpinsEl = document.getElementById('wheelSpinsCount');
-    const slotsSpinsEl = document.getElementById('slotsSpinsCount');
-    const wheelFreeTimer = document.getElementById('wheelFreeTimer');
-    const slotsFreeTimer = document.getElementById('slotsFreeTimer');
-    
-    if (wheelSpinsEl) wheelSpinsEl.textContent = (userData.wheel.purchasedSpins || 0) + (userData.wheel.freeSpins || 0);
-    if (slotsSpinsEl) slotsSpinsEl.textContent = (userData.slots.purchasedSpins || 0) + (userData.slots.freeSpins || 0);
-    
-    if (wheelFreeTimer) {
-        const now = Date.now();
-        const nextFree = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
-        if (now < nextFree) {
-            const left = nextFree - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            wheelFreeTimer.textContent = `${h}h ${m}m`;
-        } else {
-            wheelFreeTimer.textContent = 'Ready!';
-        }
-    }
-    
-    if (slotsFreeTimer) {
-        const now = Date.now();
-        const nextFree = userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
-        if (now < nextFree) {
-            const left = nextFree - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            slotsFreeTimer.textContent = `${h}h ${m}m`;
-        } else {
-            slotsFreeTimer.textContent = 'Ready!';
-        }
-    }
 }
 
 function updateBalance() {
@@ -1387,11 +1337,9 @@ function updateBalance() {
     const profileBalance = document.getElementById('profileBalance');
     const profileUsd = document.getElementById('profileUsd');
     const modalUserBalance = document.getElementById('modalUserBalance');
-    const casinoHeaderBalance = document.getElementById('casinoHeaderBalance');
     
     if (headerBalance) headerBalance.textContent = formatTON(userData.balances.TON);
     if (profileBalance) profileBalance.textContent = formatTON(userData.balances.TON) + ' TON';
-    if (casinoHeaderBalance) casinoHeaderBalance.textContent = formatTON(userData.balances.TON);
     
     const totalUsd = calculateTotalUsd();
     if (profileUsd) profileUsd.textContent = '≈ $' + totalUsd.toFixed(2);
@@ -1413,6 +1361,7 @@ function updateMiningStats() {
     const totalEarned = document.getElementById('totalEarned');
     const bestStreak = document.getElementById('bestStreak');
     const miningDays = document.getElementById('miningDays');
+    const yourEarnings = document.getElementById('yourEarnings');
     const totalReferralsStats = document.getElementById('totalReferralsStats');
     const machine = getActiveMachine();
     
@@ -1422,6 +1371,7 @@ function updateMiningStats() {
     if (bestStreak) bestStreak.textContent = userData.longestStreak;
     if (miningDays) miningDays.textContent = Math.floor(userData.claims / 6) || 1;
     if (totalReferralsStats) totalReferralsStats.textContent = userData.referrals?.length || 0;
+    if (yourEarnings) yourEarnings.textContent = formatTON(userData.totalEarned) + ' TON';
 }
 
 function updateStreakDisplay() {
@@ -1567,17 +1517,11 @@ function showWinPopup(prize, type = 'normal') {
     let amount = prize;
     
     if (type === 'big') {
-        icon = '🔥🔥';
+        icon = '🌟🌟';
         title = 'BIG WIN!';
-    } else if (type === 'nice') {
-        icon = '💎💎';
-        title = 'NICE WIN!';
     } else if (type === 'jackpot') {
         icon = '🎰🎰🎰';
         title = 'JACKPOT!';
-    } else if (type === 'mega') {
-        icon = '👑👑👑';
-        title = 'MEGA JACKPOT!';
     }
     
     popup.innerHTML = `
@@ -1592,9 +1536,9 @@ function showWinPopup(prize, type = 'normal') {
     
     setTimeout(() => popup.classList.add('show'), 10);
     
-    if (type === 'mega' || type === 'jackpot') {
+    if (type === 'jackpot') {
         hapticFeedback('heavy');
-    } else if (type === 'big' || type === 'nice') {
+    } else if (type === 'big') {
         hapticFeedback('medium');
     } else {
         hapticFeedback('light');
@@ -1677,46 +1621,26 @@ function switchPaymentMethod(method) {
 }
 
 function selectPlan(machineId, planIndex) {
-    console.log("🛒 selectPlan called:", machineId, planIndex);
     const machine = MACHINES.find(m => m.id === machineId);
-    if (!machine) {
-        console.error("Machine not found:", machineId);
-        return;
-    }
+    if (!machine) return;
     const plan = machine.plans[planIndex];
-    if (!checkRequirements(machine)) { 
-        showToast('You do not meet the requirements', 'error'); 
-        return; 
-    }
-    if (plan.price === 0) {
-        activateMachine(machineId, planIndex);
-    } else {
-        openPaymentModal(machine, planIndex);
-    }
+    if (!checkRequirements(machine)) { showToast('You do not meet the requirements', 'error'); return; }
+    if (plan.price === 0) activateMachine(machineId, planIndex);
+    else openPaymentModal(machine, planIndex);
 }
 
 function openPaymentModal(machine, planIndex) {
     const plan = machine.plans[planIndex];
-    const machineIcon = document.getElementById('paymentMachineIcon');
-    const machineName = document.getElementById('paymentMachineName');
-    const duration = document.getElementById('paymentDuration');
-    const price = document.getElementById('paymentPrice');
-    const returnEl = document.getElementById('paymentReturn');
-    const total = document.getElementById('paymentTotal');
-    
-    if (machineIcon) machineIcon.innerHTML = `<i class="fas ${machine.icon}" style="color: ${machine.color};"></i>`;
-    if (machineName) machineName.textContent = machine.name;
-    if (duration) duration.textContent = plan.durationText || plan.duration + ' days';
-    if (price) price.textContent = plan.price + ' TON';
-    if (returnEl) returnEl.textContent = `${plan.returnAmount} TON (${plan.returnPercent}%)`;
-    if (total) total.textContent = plan.total + ' TON';
-    
+    document.getElementById('paymentMachineIcon').innerHTML = `<i class="fas ${machine.icon}" style="color: ${machine.color};"></i>`;
+    document.getElementById('paymentMachineName').textContent = machine.name;
+    document.getElementById('paymentDuration').textContent = plan.durationText || plan.duration + ' days';
+    document.getElementById('paymentPrice').textContent = plan.price + ' TON';
+    document.getElementById('paymentReturn').textContent = `${plan.returnAmount} TON (${plan.returnPercent}%)`;
+    document.getElementById('paymentTotal').textContent = plan.total + ' TON';
     currentPayment = { machine, planIndex, plan };
     currentPaymentMethod = 'balance';
     switchPaymentMethod('balance');
-    
-    const modal = document.getElementById('paymentModal');
-    if (modal) modal.classList.add('show');
+    document.getElementById('paymentModal').classList.add('show');
     updateWalletUI();
 }
 
@@ -1739,7 +1663,7 @@ function rentWithBalance(machineId, planIndex) {
     const machine = MACHINES.find(m => m.id === machineId);
     const plan = machine.plans[planIndex];
     if (userData.balances.TON < plan.price) { 
-        showToast(`Insufficient balance! Need ${plan.price} TON`, 'error'); 
+        showToast(t('error.insufficientBalance', { currency: 'TON' }), 'error'); 
         return false; 
     }
     userData.balances.TON -= plan.price;
@@ -1788,22 +1712,13 @@ async function confirmWalletPayment() {
 let swapMode = 'from', swapFromCurrency = 'TON', swapToCurrency = 'USDT';
 
 function showSwapModal() {
-    console.log("🔄 showSwapModal called");
-    const fromCurrency = document.getElementById('swapFromCurrency');
-    const toCurrency = document.getElementById('swapToCurrency');
-    const fromIcon = document.getElementById('swapFromIcon');
-    const toIcon = document.getElementById('swapToIcon');
-    
-    if (fromCurrency) fromCurrency.textContent = swapFromCurrency;
-    if (toCurrency) toCurrency.textContent = swapToCurrency;
-    if (fromIcon) fromIcon.src = CONFIG.CMC_ICONS[swapFromCurrency];
-    if (toIcon) toIcon.src = CONFIG.CMC_ICONS[swapToCurrency];
-    
+    document.getElementById('swapFromCurrency').textContent = swapFromCurrency;
+    document.getElementById('swapToCurrency').textContent = swapToCurrency;
+    document.getElementById('swapFromIcon').src = CONFIG.CMC_ICONS[swapFromCurrency];
+    document.getElementById('swapToIcon').src = CONFIG.CMC_ICONS[swapToCurrency];
     updateSwapBalances();
     calculateSwap();
-    
-    const modal = document.getElementById('swapModal');
-    if (modal) modal.classList.add('show');
+    document.getElementById('swapModal').classList.add('show');
 }
 
 function updateSwapBalances() {
@@ -1816,30 +1731,24 @@ function updateSwapBalances() {
 function showCurrencySelector(type) {
     swapMode = type;
     const list = document.getElementById('currencyList');
-    if (!list) return;
     list.innerHTML = CONFIG.SWAP_CURRENCIES.map(a => 
         `<div class="currency-list-item" onclick="selectCurrency('${a.symbol}')">
             <img src="${CONFIG.CMC_ICONS[a.symbol]}" alt="${a.symbol}">
             <div class="currency-info"><h4>${a.name}</h4><p>${a.symbol}</p></div>
         </div>`
     ).join('');
-    const modal = document.getElementById('currencySelectorModal');
-    if (modal) modal.classList.add('show');
+    document.getElementById('currencySelectorModal').classList.add('show');
 }
 
 function selectCurrency(symbol) {
     if (swapMode === 'from') { 
         swapFromCurrency = symbol; 
-        const fromCurrency = document.getElementById('swapFromCurrency');
-        const fromIcon = document.getElementById('swapFromIcon');
-        if (fromCurrency) fromCurrency.textContent = symbol; 
-        if (fromIcon) fromIcon.src = CONFIG.CMC_ICONS[symbol]; 
+        document.getElementById('swapFromCurrency').textContent = symbol; 
+        document.getElementById('swapFromIcon').src = CONFIG.CMC_ICONS[symbol]; 
     } else { 
         swapToCurrency = symbol; 
-        const toCurrency = document.getElementById('swapToCurrency');
-        const toIcon = document.getElementById('swapToIcon');
-        if (toCurrency) toCurrency.textContent = symbol; 
-        if (toIcon) toIcon.src = CONFIG.CMC_ICONS[symbol]; 
+        document.getElementById('swapToCurrency').textContent = symbol; 
+        document.getElementById('swapToIcon').src = CONFIG.CMC_ICONS[symbol]; 
     }
     closeModal('currencySelectorModal');
     updateSwapBalances();
@@ -1847,7 +1756,7 @@ function selectCurrency(symbol) {
 }
 
 function filterCurrencies() {
-    const term = document.getElementById('currencySearch')?.value.toLowerCase() || '';
+    const term = document.getElementById('currencySearch').value.toLowerCase();
     document.querySelectorAll('.currency-list-item').forEach(i => {
         i.style.display = i.textContent.toLowerCase().includes(term) ? 'flex' : 'none';
     });
@@ -1855,50 +1764,41 @@ function filterCurrencies() {
 
 function flipSwap() {
     [swapFromCurrency, swapToCurrency] = [swapToCurrency, swapFromCurrency];
-    const fromCurrency = document.getElementById('swapFromCurrency');
-    const toCurrency = document.getElementById('swapToCurrency');
-    const fromIcon = document.getElementById('swapFromIcon');
-    const toIcon = document.getElementById('swapToIcon');
-    
-    if (fromCurrency) fromCurrency.textContent = swapFromCurrency;
-    if (toCurrency) toCurrency.textContent = swapToCurrency;
-    if (fromIcon) fromIcon.src = CONFIG.CMC_ICONS[swapFromCurrency];
-    if (toIcon) toIcon.src = CONFIG.CMC_ICONS[swapToCurrency];
-    
+    document.getElementById('swapFromCurrency').textContent = swapFromCurrency;
+    document.getElementById('swapToCurrency').textContent = swapToCurrency;
+    document.getElementById('swapFromIcon').src = CONFIG.CMC_ICONS[swapFromCurrency];
+    document.getElementById('swapToIcon').src = CONFIG.CMC_ICONS[swapToCurrency];
     updateSwapBalances();
     calculateSwap();
     animateElement('.swap-switch i', 'pop');
 }
 
 function calculateSwap() {
-    const fromInput = document.getElementById('swapFromAmount');
+    const from = parseFloat(document.getElementById('swapFromAmount').value) || 0;
     const toEl = document.getElementById('swapToAmount');
     const rateEl = document.getElementById('swapRate');
-    
-    const from = parseFloat(fromInput?.value) || 0;
     
     const fromPrice = swapFromCurrency === 'USDT' ? 1 : (livePrices[swapFromCurrency]?.price || 0);
     const toPrice = swapToCurrency === 'USDT' ? 1 : (livePrices[swapToCurrency]?.price || 0);
     
-    if (fromPrice > 0 && toPrice > 0 && toEl) {
+    if (fromPrice > 0 && toPrice > 0) {
         const rate = fromPrice / toPrice;
         toEl.value = (from * rate).toFixed(6);
-        if (rateEl) rateEl.textContent = `1 ${swapFromCurrency} = ${rate.toFixed(6)} ${swapToCurrency}`;
-    } else if (toEl) {
+        rateEl.textContent = `1 ${swapFromCurrency} = ${rate.toFixed(6)} ${swapToCurrency}`;
+    } else {
         toEl.value = '0';
-        if (rateEl) rateEl.textContent = 'Rate unavailable';
+        rateEl.textContent = 'Rate unavailable';
     }
 }
 
 function confirmSwap() {
-    const fromInput = document.getElementById('swapFromAmount');
-    const from = parseFloat(fromInput?.value);
+    const from = parseFloat(document.getElementById('swapFromAmount').value);
     const fromBal = userData.balances[swapFromCurrency] || 0;
-    const toEl = document.getElementById('swapToAmount');
-    const to = parseFloat(toEl?.value);
     
     if (!from || from <= 0) { showToast(t('error.enterAmount'), 'error'); return; }
-    if (from > fromBal) { showToast(`Insufficient ${swapFromCurrency} balance`, 'error'); return; }
+    if (from > fromBal) { showToast(t('error.insufficientBalance', { currency: swapFromCurrency }), 'error'); return; }
+    
+    const to = parseFloat(document.getElementById('swapToAmount').value);
     
     userData.balances[swapFromCurrency] -= from;
     userData.balances[swapToCurrency] += to;
@@ -1922,32 +1822,21 @@ function confirmSwap() {
 let selectedDepositCurrency = 'TON';
 
 function showDepositModal() {
-    console.log("💰 showDepositModal called");
     const select = document.getElementById('depositCurrencySelect');
-    if (select) {
-        select.innerHTML = CONFIG.ALL_ASSETS.map(a => 
-            `<option value="${a.symbol}" ${a.symbol === selectedDepositCurrency ? 'selected' : ''}>${a.name} (${a.symbol})</option>`
-        ).join('');
-    }
+    select.innerHTML = CONFIG.ALL_ASSETS.map(a => 
+        `<option value="${a.symbol}" ${a.symbol === selectedDepositCurrency ? 'selected' : ''}>${a.name} (${a.symbol})</option>`
+    ).join('');
     updateDepositInfo();
-    const modal = document.getElementById('depositModal');
-    if (modal) modal.classList.add('show');
+    document.getElementById('depositModal').classList.add('show');
     updateWalletUI();
 }
 
 function updateDepositInfo() {
-    const select = document.getElementById('depositCurrencySelect');
-    const cur = select?.value || selectedDepositCurrency;
+    const cur = document.getElementById('depositCurrencySelect')?.value || selectedDepositCurrency;
     selectedDepositCurrency = cur;
-    
-    const addressEl = document.getElementById('depositAddress');
-    const iconEl = document.getElementById('depositIcon');
-    const minEl = document.getElementById('depositMinAmount');
-    const hintEl = document.getElementById('depositNetworkHint');
-    
-    if (addressEl) addressEl.textContent = CONFIG.DEPOSIT_ADDRESSES[cur] || 'Address not configured';
-    if (iconEl) iconEl.src = CONFIG.CMC_ICONS[cur];
-    if (minEl) minEl.textContent = `${CONFIG.DEPOSIT_MINIMUMS[cur] || 1} ${cur}`;
+    document.getElementById('depositAddress').textContent = CONFIG.DEPOSIT_ADDRESSES[cur] || 'Address not configured';
+    document.getElementById('depositIcon').src = CONFIG.CMC_ICONS[cur];
+    document.getElementById('depositMinAmount').textContent = `${CONFIG.DEPOSIT_MINIMUMS[cur] || 1} ${cur}`;
     
     const net = CONFIG.NETWORK_TYPES[cur] || 'bsc';
     let hint = '';
@@ -1955,64 +1844,59 @@ function updateDepositInfo() {
     else if (net === 'solana') hint = 'Solana - 32-44 characters';
     else if (net === 'bitcoin') hint = 'Bitcoin - starts with 1, 3, or bc1';
     else if (net === 'ton') hint = 'TON - starts with UQ or EQ';
-    if (hintEl) hintEl.textContent = hint;
-    
-    const confirmBtn = document.getElementById('confirmDepositBtn');
-    if (confirmBtn) confirmBtn.disabled = true;
+    document.getElementById('depositNetworkHint').textContent = hint;
+    document.getElementById('confirmDepositBtn').disabled = true;
 }
 
 function validateDepositInput() {
     const cur = selectedDepositCurrency;
-    const amountEl = document.getElementById('depositAmount');
-    const hashEl = document.getElementById('depositTxHash');
-    const amt = parseFloat(amountEl?.value);
-    const hash = hashEl?.value.trim();
+    const amt = parseFloat(document.getElementById('depositAmount').value);
+    const hash = document.getElementById('depositTxHash').value.trim();
     const hint = document.getElementById('depositHashHint');
     const btn = document.getElementById('confirmDepositBtn');
     
     if (!amt || amt <= 0 || !hash) { 
         if (hint) { hint.textContent = 'Enter amount and hash'; hint.className = 'validation-hint invalid'; } 
-        if (btn) btn.disabled = true; 
+        btn.disabled = true; 
         return; 
     }
     
     const min = CONFIG.DEPOSIT_MINIMUMS[cur] || 1;
     if (amt < min) { 
-        if (hint) { hint.textContent = `Minimum is ${min} ${cur}`; hint.className = 'validation-hint invalid'; } 
-        if (btn) btn.disabled = true; 
+        hint.textContent = `Minimum is ${min} ${cur}`; 
+        hint.className = 'validation-hint invalid'; 
+        btn.disabled = true; 
         return; 
     }
     
     if (!validateTransactionHash(hash, cur)) { 
-        if (hint) { hint.textContent = `Invalid ${cur} hash`; hint.className = 'validation-hint invalid'; } 
-        if (btn) btn.disabled = true; 
+        hint.textContent = `Invalid ${cur} hash`; 
+        hint.className = 'validation-hint invalid'; 
+        btn.disabled = true; 
         return; 
     }
     
     if (userData.usedHashes?.includes(hash.toLowerCase())) { 
-        if (hint) { hint.textContent = 'Hash already used'; hint.className = 'validation-hint invalid'; } 
-        if (btn) btn.disabled = true; 
+        hint.textContent = 'Hash already used'; 
+        hint.className = 'validation-hint invalid'; 
+        btn.disabled = true; 
         return; 
     }
     
-    if (hint) { hint.textContent = '✓ Valid'; hint.className = 'validation-hint valid'; }
-    if (btn) btn.disabled = false;
+    hint.textContent = '✓ Valid'; 
+    hint.className = 'validation-hint valid';
+    btn.disabled = false;
 }
 
 function copyDepositAddress() {
-    const addressEl = document.getElementById('depositAddress');
-    if (addressEl) {
-        navigator.clipboard.writeText(addressEl.textContent);
-        showToast('Address copied', 'success');
-    }
+    navigator.clipboard.writeText(document.getElementById('depositAddress').textContent);
+    showToast('Address copied', 'success');
 }
 
 async function submitDeposit() {
     const cur = selectedDepositCurrency;
-    const amountEl = document.getElementById('depositAmount');
-    const hashEl = document.getElementById('depositTxHash');
-    const amt = parseFloat(amountEl?.value);
-    const hash = hashEl?.value.trim();
+    const amt = parseFloat(document.getElementById('depositAmount').value);
+    const hash = document.getElementById('depositTxHash').value.trim();
     
     const deposit = { 
         id: 'dep_' + Date.now() + '_' + randomId(), 
@@ -2039,6 +1923,13 @@ async function submitDeposit() {
             });
             deposit.firebaseId = docRef.id;
             
+            const allTxs = loadLocalTransactions();
+            const txIndex = allTxs.findIndex(t => t.id === deposit.id);
+            if (txIndex !== -1) {
+                allTxs[txIndex].firebaseId = docRef.id;
+                saveLocalTransactions(allTxs);
+            }
+            
             startOnDemandListener(CONFIG.COLLECTIONS.DEPOSITS, docRef.id, (data) => {
                 if (data.status === 'approved') {
                     userData.balances[cur] = (userData.balances[cur] || 0) + amt;
@@ -2050,11 +1941,14 @@ async function submitDeposit() {
                     saveUserToCache();
                     showToast(t('notif.depositApproved', { amount: amt, currency: cur }), 'success');
                     updateUI();
+                    
                     addLocalNotification(t('notif.depositApproved', { amount: amt, currency: cur }), 'success');
+                    
                 } else if (data.status === 'rejected') {
                     userData.pendingDeposits = userData.pendingDeposits.filter(d => d.id !== deposit.id);
                     saveUserToCache();
                     showToast(t('notif.depositRejected', { reason: data.reason || 'Unknown' }), 'error');
+                    
                     addLocalNotification(t('notif.depositRejected', { reason: data.reason || 'Unknown' }), 'error');
                 }
             }, CONFIG.CACHE.LISTENER_TTL);
@@ -2068,8 +1962,8 @@ async function submitDeposit() {
     
     closeModal('depositModal');
     showToast(t('notif.depositSubmitted'), 'success');
-    if (amountEl) amountEl.value = '';
-    if (hashEl) hashEl.value = '';
+    document.getElementById('depositAmount').value = '';
+    document.getElementById('depositTxHash').value = '';
     
     addTransaction('deposit', amt, { currency: cur, txHash: hash, status: 'pending' });
 }
@@ -2078,7 +1972,6 @@ async function submitDeposit() {
 let selectedWithdrawNetwork = 'BEP20';
 
 function showWithdrawModal() {
-    console.log("💸 showWithdrawModal called");
     const select = document.getElementById('withdrawNetworkSelect');
     if (select) {
         select.innerHTML = CONFIG.WITHDRAW_NETWORKS.USDT.map(net => 
@@ -2086,13 +1979,11 @@ function showWithdrawModal() {
         ).join('');
     }
     updateWithdrawInfo();
-    const modal = document.getElementById('withdrawModal');
-    if (modal) modal.classList.add('show');
+    document.getElementById('withdrawModal').classList.add('show');
 }
 
 function updateWithdrawInfo() {
-    const select = document.getElementById('withdrawNetworkSelect');
-    const netValue = select?.value || selectedWithdrawNetwork;
+    const netValue = document.getElementById('withdrawNetworkSelect')?.value || selectedWithdrawNetwork;
     selectedWithdrawNetwork = netValue;
     
     const network = CONFIG.WITHDRAW_NETWORKS.USDT.find(n => n.value === netValue);
@@ -2100,16 +1991,14 @@ function updateWithdrawInfo() {
     const feeCurrency = network ? network.feeCurrency : 'BNB';
     
     const bal = userData.balances.USDT || 0;
-    const balanceEl = document.getElementById('withdrawBalance');
-    const iconEl = document.getElementById('withdrawIcon');
-    const feeEl = document.getElementById('withdrawFeeInfo');
-    const feeBalanceEl = document.getElementById('withdrawFeeCurrencyBalance');
+    document.getElementById('withdrawBalance').textContent = `${formatBalance(bal, 'USDT')} USDT`;
+    document.getElementById('withdrawIcon').src = CONFIG.CMC_ICONS.USDT;
     
-    if (balanceEl) balanceEl.textContent = `${formatBalance(bal, 'USDT')} USDT`;
-    if (iconEl) iconEl.src = CONFIG.CMC_ICONS.USDT;
+    const feeEl = document.getElementById('withdrawFeeInfo');
     if (feeEl) feeEl.innerHTML = t('withdraw.fee', { fee, currency: feeCurrency });
     
     const feeCurrencyBalance = userData.balances[feeCurrency] || 0;
+    const feeBalanceEl = document.getElementById('withdrawFeeCurrencyBalance');
     if (feeBalanceEl) {
         feeBalanceEl.textContent = `Your ${feeCurrency} balance: ${formatBalance(feeCurrencyBalance, feeCurrency)} ${feeCurrency}`;
     }
@@ -2118,10 +2007,8 @@ function updateWithdrawInfo() {
 }
 
 function validateWithdrawInput() {
-    const amountEl = document.getElementById('withdrawAmount');
-    const addressEl = document.getElementById('withdrawAddress');
-    const amt = parseFloat(amountEl?.value);
-    const addr = addressEl?.value.trim();
+    const amt = parseFloat(document.getElementById('withdrawAmount').value);
+    const addr = document.getElementById('withdrawAddress').value.trim();
     const netValue = selectedWithdrawNetwork;
     const network = CONFIG.WITHDRAW_NETWORKS.USDT.find(n => n.value === netValue);
     const fee = network ? network.fee : 0.0005;
@@ -2132,38 +2019,41 @@ function validateWithdrawInput() {
     
     if (!amt || amt <= 0 || !addr) { 
         if (hint) { hint.textContent = 'Enter amount and address'; hint.className = 'validation-hint invalid'; } 
-        if (btn) btn.disabled = true; 
+        btn.disabled = true; 
         return; 
     }
     
     const bal = userData.balances.USDT || 0;
     if (amt > bal) { 
-        if (hint) { hint.textContent = 'Insufficient USDT balance'; hint.className = 'validation-hint invalid'; } 
-        if (btn) btn.disabled = true; 
+        hint.textContent = 'Insufficient USDT balance'; 
+        hint.className = 'validation-hint invalid'; 
+        btn.disabled = true; 
         return; 
     }
     
     const feeCurrencyBalance = userData.balances[feeCurrency] || 0;
     if (feeCurrencyBalance < fee) {
-        if (hint) { hint.textContent = `Insufficient ${feeCurrency} for fee. Need ${fee} ${feeCurrency}`; hint.className = 'validation-hint invalid'; } 
-        if (btn) btn.disabled = true; 
+        hint.textContent = `Insufficient ${feeCurrency} for fee. Need ${fee} ${feeCurrency}`; 
+        hint.className = 'validation-hint invalid'; 
+        btn.disabled = true; 
         return;
     }
     
     if (!addr.startsWith('0x') || addr.length !== 42) {
-        if (hint) { hint.textContent = `Invalid address format. Must start with 0x and be 42 characters`; hint.className = 'validation-hint invalid'; } 
-        if (btn) btn.disabled = true; 
+        hint.textContent = `Invalid address format. Must start with 0x and be 42 characters`; 
+        hint.className = 'validation-hint invalid'; 
+        btn.disabled = true; 
         return;
     }
     
-    if (hint) { hint.textContent = '✓ Valid'; hint.className = 'validation-hint valid'; }
-    if (btn) btn.disabled = false;
+    hint.textContent = '✓ Valid'; 
+    hint.className = 'validation-hint valid';
+    btn.disabled = false;
 }
 
 function updateWithdrawAmount() {
-    const amountEl = document.getElementById('withdrawAmount');
-    const amt = parseFloat(amountEl?.value) || 0;
-    const netValue = selectedWithdrawNetwork;
+    const amt = parseFloat(document.getElementById('withdrawAmount').value) || 0;
+    const netValue = document.getElementById('withdrawNetworkSelect')?.value || selectedWithdrawNetwork;
     const network = CONFIG.WITHDRAW_NETWORKS.USDT.find(n => n.value === netValue);
     const fee = network ? network.fee : 0.0005;
     
@@ -2175,10 +2065,8 @@ function updateWithdrawAmount() {
 }
 
 async function submitWithdraw() {
-    const amountEl = document.getElementById('withdrawAmount');
-    const addressEl = document.getElementById('withdrawAddress');
-    const amt = parseFloat(amountEl?.value);
-    const addr = addressEl?.value.trim();
+    const amt = parseFloat(document.getElementById('withdrawAmount').value);
+    const addr = document.getElementById('withdrawAddress').value.trim();
     const netValue = selectedWithdrawNetwork;
     const network = CONFIG.WITHDRAW_NETWORKS.USDT.find(n => n.value === netValue);
     const fee = network ? network.fee : 0.0005;
@@ -2236,7 +2124,9 @@ async function submitWithdraw() {
                     userData.completedWithdrawals.push({ ...withdraw, status: 'approved' });
                     saveUserToCache();
                     showToast(t('notif.withdrawApproved', { amount: amt, currency: 'USDT' }), 'success');
+                    
                     addLocalNotification(t('notif.withdrawApproved', { amount: amt, currency: 'USDT' }), 'success');
+                    
                 } else if (data.status === 'rejected') {
                     userData.balances.USDT += amt;
                     userData.balances[feeCurrency] += fee;
@@ -2244,6 +2134,7 @@ async function submitWithdraw() {
                     userData.pendingWithdrawals = userData.pendingWithdrawals.filter(w => w.id !== withdraw.id);
                     saveUserToCache();
                     showToast(t('notif.withdrawRejected', { reason: data.reason || 'Unknown' }), 'error');
+                    
                     addLocalNotification(t('notif.withdrawRejected', { reason: data.reason || 'Unknown' }), 'error');
                     updateUI();
                 }
@@ -2259,8 +2150,8 @@ async function submitWithdraw() {
     closeModal('withdrawModal');
     showToast(t('notif.withdrawSubmitted'), 'success');
     updateUI();
-    if (amountEl) amountEl.value = '';
-    if (addressEl) addressEl.value = '';
+    document.getElementById('withdrawAmount').value = '';
+    document.getElementById('withdrawAddress').value = '';
     
     addTransaction('withdraw', amt, { currency: 'USDT', address: addr, network: netValue, fee, feeCurrency, status: 'pending' });
 }
@@ -2269,13 +2160,9 @@ async function submitWithdraw() {
 let currentHistoryFilter = 'all';
 
 function showHistory() {
-    console.log("📜 showHistory called");
-    const modal = document.getElementById('historyModal');
-    if (modal) {
-        modal.classList.add('show');
-        renderHistory('all');
-        checkPendingTransactions();
-    }
+    document.getElementById('historyModal').classList.add('show');
+    renderHistory('all');
+    checkPendingTransactions();
 }
 
 function renderHistory(filter = 'all') {
@@ -2337,7 +2224,7 @@ function renderHistory(filter = 'all') {
 
 function filterHistory(filter) {
     document.querySelectorAll('.history-filter').forEach(t => t.classList.remove('active'));
-    if (event && event.target) event.target.classList.add('active');
+    event.target.classList.add('active');
     renderHistory(filter);
 }
 
@@ -2365,6 +2252,13 @@ async function checkPendingTransactions() {
                     userData.balances[d.currency] = (userData.balances[d.currency] || 0) + d.amount;
                     if (d.currency === 'TON') userData.balance = userData.balances.TON;
                     showToast(t('notif.depositApproved', { amount: d.amount, currency: d.currency }), 'success');
+                    
+                    const allTxs = loadLocalTransactions();
+                    const txIndex = allTxs.findIndex(t => t.id === d.id);
+                    if (txIndex !== -1) {
+                        allTxs[txIndex].status = 'approved';
+                        saveLocalTransactions(allTxs);
+                    }
                 }
             }
         } catch (e) {}
@@ -2380,13 +2274,30 @@ async function checkPendingTransactions() {
                     if (!userData.completedWithdrawals) userData.completedWithdrawals = [];
                     userData.completedWithdrawals.push({ ...w, status: 'approved' });
                     showToast(t('notif.withdrawApproved', { amount: w.amount, currency: w.currency }), 'success');
+                    
+                    const allTxs = loadLocalTransactions();
+                    const txIndex = allTxs.findIndex(t => t.id === w.id);
+                    if (txIndex !== -1) {
+                        allTxs[txIndex].status = 'approved';
+                        saveLocalTransactions(allTxs);
+                    }
+                    
                 } else if (data.status === 'rejected') {
                     userData.balances[w.currency] += w.amount;
                     if (w.fee && w.feeCurrency) {
                         userData.balances[w.feeCurrency] += w.fee;
                     }
                     userData.totalWithdrawn -= w.amount;
+                    
                     showToast(t('notif.withdrawRejected', { reason: data.reason || 'Unknown' }), 'error');
+                    
+                    const allTxs = loadLocalTransactions();
+                    const txIndex = allTxs.findIndex(t => t.id === w.id);
+                    if (txIndex !== -1) {
+                        allTxs[txIndex].status = 'rejected';
+                        allTxs[txIndex].reason = data.reason;
+                        saveLocalTransactions(allTxs);
+                    }
                 }
             }
         } catch (e) {}
@@ -2521,20 +2432,124 @@ function updateChart() {
     ).join('');
 }
 
-// ====== 32. UPDATE PURCHASED SPINS ======
+// ====== 32. UPDATE WHEEL UI ======
+function updateWheelUI() {
+    const spinsLeftEl = document.getElementById('wheelSpinsLeft');
+    const freeSpinEl = document.getElementById('wheelFreeSpin');
+    const jackpotCounterEl = document.getElementById('wheelJackpotCounter');
+    const streakDisplay = document.getElementById('wheelStreakDisplay');
+    const purchasedSpinsEl = document.getElementById('wheelModalPurchasedSpins');
+    
+    if (spinsLeftEl) {
+        const left = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - (userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY);
+        spinsLeftEl.textContent = t('wheel.spinsLeft', { count: left });
+    }
+    
+    if (jackpotCounterEl) {
+        jackpotCounterEl.textContent = t('wheel.jackpotTimer', { 
+            count: userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY,
+            total: CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY
+        });
+    }
+    
+    if (streakDisplay) {
+        streakDisplay.textContent = t('wheel.streak', { 
+            days: userData.streak, 
+            best: userData.longestStreak 
+        });
+    }
+    
+    if (freeSpinEl) {
+        const now = Date.now();
+        const next = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
+        if (now < next) {
+            const left = next - now;
+            const h = Math.floor(left / 3600000);
+            const m = Math.floor((left % 3600000) / 60000);
+            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${h}h ${m}m`;
+            freeSpinEl.classList.add('disabled');
+        } else {
+            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> ${t('wheel.free')}`;
+            freeSpinEl.classList.remove('disabled');
+        }
+    }
+    
+    if (purchasedSpinsEl) {
+        const spinCount = purchasedSpinsEl.querySelector('.spin-count');
+        if (spinCount) spinCount.textContent = userData.wheel.purchasedSpins || 0;
+    }
+    
+    const autoSpinCheckbox = document.getElementById('wheelModalAutoSpin');
+    if (autoSpinCheckbox) {
+        autoSpinCheckbox.checked = userData.wheel.autoSpin || false;
+    }
+    
+    const wheelPurchasedSpins = document.getElementById('wheelPurchasedSpins');
+    if (wheelPurchasedSpins) {
+        wheelPurchasedSpins.innerHTML = `Your spins: <span class="spin-count">${userData.wheel.purchasedSpins || 0}</span>`;
+    }
+}
+
+// ====== 33. UPDATE SLOTS UI ======
+function updateSlotsUI() {
+    const freeSpinEl = document.getElementById('slotsFreeSpin');
+    const purchasedSpinsEl = document.getElementById('slotsModalPurchasedSpins');
+    
+    if (freeSpinEl) {
+        const now = Date.now();
+        const next = userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
+        if (now < next) {
+            const left = next - now;
+            const h = Math.floor(left / 3600000);
+            const m = Math.floor((left % 3600000) / 60000);
+            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${h}h ${m}m`;
+            freeSpinEl.classList.add('disabled');
+        } else {
+            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> FREE`;
+            freeSpinEl.classList.remove('disabled');
+        }
+    }
+    
+    if (purchasedSpinsEl) {
+        const spinCount = purchasedSpinsEl.querySelector('.spin-count');
+        if (spinCount) spinCount.textContent = userData.slots.purchasedSpins || 0;
+    }
+    
+    const autoSpinCheckbox = document.getElementById('slotsModalAutoSpin');
+    if (autoSpinCheckbox) {
+        autoSpinCheckbox.checked = userData.slots.autoSpin || false;
+    }
+    
+    const slotsPurchasedSpins = document.getElementById('slotsPurchasedSpins');
+    if (slotsPurchasedSpins) {
+        slotsPurchasedSpins.innerHTML = `Your spins: <span class="spin-count">${userData.slots.purchasedSpins || 0}</span>`;
+    }
+}
+
+// ====== 34. UPDATE PURCHASED SPINS ======
 function updatePurchasedSpinsDisplay() {
     const wheelSpins = document.getElementById('wheelPurchasedSpins');
+    const wheelModalSpins = document.getElementById('wheelModalPurchasedSpins');
     const slotsSpins = document.getElementById('slotsPurchasedSpins');
+    const slotsModalSpins = document.getElementById('slotsModalPurchasedSpins');
     
     if (wheelSpins) {
         wheelSpins.innerHTML = `Your spins: <span class="spin-count">${userData.wheel.purchasedSpins || 0}</span>`;
     }
+    if (wheelModalSpins) {
+        const spinCount = wheelModalSpins.querySelector('.spin-count');
+        if (spinCount) spinCount.textContent = userData.wheel.purchasedSpins || 0;
+    }
     if (slotsSpins) {
         slotsSpins.innerHTML = `Your spins: <span class="spin-count">${userData.slots.purchasedSpins || 0}</span>`;
     }
+    if (slotsModalSpins) {
+        const spinCount = slotsModalSpins.querySelector('.spin-count');
+        if (spinCount) spinCount.textContent = userData.slots.purchasedSpins || 0;
+    }
 }
 
-// ====== 33. WHEEL PACKS ======
+// ====== 35. WHEEL PACKS ======
 async function buyWheelPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -2567,7 +2582,7 @@ async function buyWheelPack(pack) {
             }]
         };
         
-        await tonConnectUI.sendTransaction(tx);
+        const result = await tonConnectUI.sendTransaction(tx);
         
         showToast('Payment sent! Waiting for confirmation...', 'info');
         
@@ -2592,7 +2607,7 @@ async function buyWheelPack(pack) {
     }
 }
 
-// ====== 34. SLOTS PACKS ======
+// ====== 36. SLOTS PACKS ======
 async function buySlotsPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -2625,7 +2640,7 @@ async function buySlotsPack(pack) {
             }]
         };
         
-        await tonConnectUI.sendTransaction(tx);
+        const result = await tonConnectUI.sendTransaction(tx);
         
         showToast('Payment sent! Waiting for confirmation...', 'info');
         
@@ -2650,7 +2665,7 @@ async function buySlotsPack(pack) {
     }
 }
 
-// ====== 35. SAVE TO FIREBASE ======
+// ====== 37. SAVE TO FIREBASE ======
 async function saveToFirebase() {
     if (!db) return;
     try {
@@ -2681,28 +2696,21 @@ async function saveToFirebase() {
     } catch (e) {}
 }
 
-// ====== 36. MODAL FUNCTIONS ======
+// ====== 38. MODAL FUNCTIONS ======
 function closeModal(id) {
     const modal = document.getElementById(id);
     if (!modal) return;
     modal.classList.remove('show');
     
     if (id === 'paymentModal') currentPayment = null;
-    if (id === 'swapModal') {
-        const fromInput = document.getElementById('swapFromAmount');
-        if (fromInput) fromInput.value = '1';
-    }
+    if (id === 'swapModal') document.getElementById('swapFromAmount').value = '1';
     if (id === 'depositModal') { 
-        const amountEl = document.getElementById('depositAmount');
-        const hashEl = document.getElementById('depositTxHash');
-        if (amountEl) amountEl.value = ''; 
-        if (hashEl) hashEl.value = ''; 
+        document.getElementById('depositAmount').value = ''; 
+        document.getElementById('depositTxHash').value = ''; 
     }
     if (id === 'withdrawModal') { 
-        const amountEl = document.getElementById('withdrawAmount');
-        const addressEl = document.getElementById('withdrawAddress');
-        if (amountEl) amountEl.value = ''; 
-        if (addressEl) addressEl.value = ''; 
+        document.getElementById('withdrawAmount').value = ''; 
+        document.getElementById('withdrawAddress').value = ''; 
     }
 }
 
@@ -2713,43 +2721,39 @@ function hideAllModals() {
     });
 }
 
-// ====== 37. FILTER MARKET ======
+// ====== 39. FILTER MARKET ======
 function filterMarket(filter) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    if (event && event.target) event.target.classList.add('active');
+    event.target.classList.add('active');
     document.querySelectorAll('.showcase-card-legendary').forEach(c => {
-        const name = c.querySelector('h3')?.textContent || '';
+        const name = c.querySelector('h3').textContent;
         const m = MACHINES.find(m => m.name === name || m.nameAr === name);
         c.style.display = filter === 'all' || m?.filter === filter ? 'flex' : 'none';
     });
 }
 
-// ====== 38. ADMIN FUNCTIONS ======
+// ====== 40. ADMIN FUNCTIONS ======
 let currentAdminTab = 'withdrawals';
 
 function showAdminPanel() {
     if (!isAdmin) { showToast('Access denied', 'error'); return; }
-    const modal = document.getElementById('adminModal');
-    if (modal) modal.classList.add('show');
+    document.getElementById('adminModal').classList.add('show');
     loadAdminCounts();
 }
 
 function switchAdminTab(tab) {
     currentAdminTab = tab;
     document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-    if (event && event.target) event.target.classList.add('active');
-    const content = document.getElementById('adminContent');
-    if (content) {
-        content.innerHTML = `
-            <div class="admin-refresh-message">
-                <i class="fas fa-hand-pointer"></i>
-                <p>${t('admin.clickRefresh')}</p>
-                <button class="admin-refresh-btn" onclick="refreshAdminPanel()">
-                    <i class="fas fa-rotate-right"></i> <span>${t('admin.refresh')}</span>
-                </button>
-            </div>
-        `;
-    }
+    event.target.classList.add('active');
+    document.getElementById('adminContent').innerHTML = `
+        <div class="admin-refresh-message">
+            <i class="fas fa-hand-pointer"></i>
+            <p>${t('admin.clickRefresh')}</p>
+            <button class="admin-refresh-btn" onclick="refreshAdminPanel()">
+                <i class="fas fa-rotate-right"></i> <span>${t('admin.refresh')}</span>
+            </button>
+        </div>
+    `;
 }
 
 async function loadAdminCounts() {
@@ -2759,6 +2763,7 @@ async function loadAdminCounts() {
         try {
             withdrawalsSnap = await db.collection(CONFIG.COLLECTIONS.WITHDRAWALS).where('status', '==', 'pending').get();
         } catch (e) {
+            console.log("ℹ️ No withdrawals collection yet - this is normal");
             withdrawalsSnap = { empty: true, size: 0 };
         }
         
@@ -2766,13 +2771,12 @@ async function loadAdminCounts() {
         try {
             depositsSnap = await db.collection(CONFIG.COLLECTIONS.DEPOSITS).where('status', '==', 'pending').get();
         } catch (e) {
+            console.log("ℹ️ No deposits collection yet - this is normal");
             depositsSnap = { empty: true, size: 0 };
         }
         
-        const withdrawCount = document.getElementById('pendingWithdrawalsCount');
-        const depositCount = document.getElementById('pendingDepositsCount');
-        if (withdrawCount) withdrawCount.textContent = withdrawalsSnap.size;
-        if (depositCount) depositCount.textContent = depositsSnap.size;
+        document.getElementById('pendingWithdrawalsCount').textContent = withdrawalsSnap.size;
+        document.getElementById('pendingDepositsCount').textContent = depositsSnap.size;
     } catch (e) {
         console.error("Error loading counts:", e);
     }
@@ -2781,12 +2785,12 @@ async function loadAdminCounts() {
 async function refreshAdminPanel() {
     if (!isAdmin || !db) return;
     
-    const btn = event?.currentTarget;
-    const icon = btn?.querySelector('i');
+    const btn = event.currentTarget;
+    const icon = btn.querySelector('i');
     if (icon) icon.classList.add('fa-spin');
     
     const content = document.getElementById('adminContent');
-    if (content) content.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+    content.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
     
     try {
         const col = currentAdminTab === 'withdrawals' ? CONFIG.COLLECTIONS.WITHDRAWALS : CONFIG.COLLECTIONS.DEPOSITS;
@@ -2795,13 +2799,14 @@ async function refreshAdminPanel() {
         try {
             snap = await db.collection(col).where('status', '==', 'pending').orderBy('timestamp', 'desc').get();
         } catch (e) {
-            if (content) content.innerHTML = `<div class="empty-state">${t('admin.noPending')}</div>`;
+            console.log(`ℹ️ ${col} collection not found yet`);
+            content.innerHTML = `<div class="empty-state">${t('admin.noPending')}</div>`;
             if (icon) setTimeout(() => icon.classList.remove('fa-spin'), 500);
             return;
         }
         
         if (snap.empty) { 
-            if (content) content.innerHTML = `<div class="empty-state">${t('admin.noPending')}</div>`; 
+            content.innerHTML = `<div class="empty-state">${t('admin.noPending')}</div>`; 
             if (icon) setTimeout(() => icon.classList.remove('fa-spin'), 500);
             return; 
         }
@@ -2857,10 +2862,10 @@ async function refreshAdminPanel() {
                 </div>`;
             }
         });
-        if (content) content.innerHTML = html;
+        content.innerHTML = html;
     } catch (e) { 
         console.error("Error refreshing admin:", e);
-        if (content) content.innerHTML = `<div class="empty-state">${t('admin.error')}</div>`; 
+        content.innerHTML = `<div class="empty-state">${t('admin.error')}</div>`; 
     }
     
     if (icon) setTimeout(() => icon.classList.remove('fa-spin'), 500);
@@ -2870,13 +2875,11 @@ function openRejectModal(id, type, targetUserId, currency, amount) {
     currentRejectId = id;
     currentRejectType = type;
     currentRejectData = { targetUserId, currency, amount };
-    const modal = document.getElementById('rejectModal');
-    if (modal) modal.classList.add('show');
+    document.getElementById('rejectModal').classList.add('show');
 }
 
 async function submitRejection() {
-    const reasonEl = document.getElementById('rejectReason');
-    const reason = reasonEl?.value.trim();
+    const reason = document.getElementById('rejectReason').value.trim();
     if (!reason) {
         showToast('Please enter a reason', 'error');
         return;
@@ -2906,7 +2909,7 @@ async function submitRejection() {
             'error');
         
         closeModal('rejectModal');
-        if (reasonEl) reasonEl.value = '';
+        document.getElementById('rejectReason').value = '';
         refreshAdminPanel();
         
     } catch (e) { 
@@ -2951,7 +2954,7 @@ function copyToClipboard(text) {
     showToast('Copied!', 'success'); 
 }
 
-// ====== 39. CLOSE JACKPOT POPUP ======
+// ====== 41. CLOSE JACKPOT POPUP ======
 function closeJackpotPopup() {
     const popup = document.getElementById('jackpotPopup');
     if (popup) {
@@ -2962,7 +2965,7 @@ function closeJackpotPopup() {
     }
 }
 
-// ====== 40. PRICES ======
+// ====== 42. PRICES ======
 let livePrices = {};
 
 async function loadPrices(force = false) {
@@ -2998,7 +3001,7 @@ async function loadPrices(force = false) {
 
 function updatePrices() {
     renderAssets();
-    updateBalance();
+    updateTotalBalance();
 }
 
 function refreshPrices() {
@@ -3006,7 +3009,7 @@ function refreshPrices() {
     loadPrices(true);
 }
 
-// ====== 41. REFERRAL SYSTEM ======
+// ====== 43. REFERRAL SYSTEM ======
 function generateReferralCode() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     return userId.slice(-4) + Array.from({length:6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
@@ -3081,6 +3084,28 @@ async function processReferral() {
     }
 }
 
+async function processReferralMiningBonus(referralId, miningAmount) {
+    if (!db || !userData.referrals?.includes(referralId)) return;
+    const bonus = miningAmount * CONFIG.ECONOMY.REFERRAL_PERCENT;
+    userData.referralMiningTrack = userData.referralMiningTrack || {};
+    userData.referralMiningTrack[referralId] = (userData.referralMiningTrack[referralId] || 0) + miningAmount;
+    userData.balances.TON += bonus;
+    userData.balance = userData.balances.TON;
+    userData.totalEarned += bonus;
+    userData.referralEarnings += bonus;
+    saveUserToCache();
+    
+    try {
+        await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).update({
+            'balances.TON': userData.balances.TON,
+            totalEarned: userData.totalEarned,
+            referralEarnings: userData.referralEarnings
+        });
+    } catch (e) {}
+    
+    addLocalNotification(t('notif.referralMiningBonus', { amount: bonus.toFixed(4) }), 'success');
+}
+
 async function checkReferralMilestones() {
     if (!userData.referralMilestonesClaimed) userData.referralMilestonesClaimed = [];
     
@@ -3108,7 +3133,7 @@ async function checkReferralMilestones() {
     saveUserToCache();
 }
 
-// ====== 42. DAILY LOGIN BONUS ======
+// ====== 44. DAILY LOGIN BONUS ======
 function checkDailyLogin() {
     const today = new Date().toDateString();
     if (!userData.dailyLogin) userData.dailyLogin = { lastLogin: null, streak: 0 };
@@ -3134,7 +3159,7 @@ function checkDailyLogin() {
     }
 }
 
-// ====== 43. NOTIFICATION SYSTEM ======
+// ====== 45. NOTIFICATION SYSTEM ======
 let unreadCount = 0;
 
 function addLocalNotification(message, type = 'info') {
@@ -3264,7 +3289,7 @@ function showNotifications() {
     }
 }
 
-// ====== 44. FLOATING NOTIFICATIONS ======
+// ====== 46. FLOATING NOTIFICATIONS ======
 let floatingTimeouts = [];
 
 function showFloatingToast(message, type = 'info') {
@@ -3302,7 +3327,7 @@ function stopFloatingNotifications() {
     floatingTimeouts = [];
 }
 
-// ====== 45. WELCOME STICKER ======
+// ====== 47. WELCOME STICKER ======
 const WELCOME_STICKERS = ['🤝', '🫣', '🥰', '🥳', '💲', '💰', '💸', '💵', '🤪', '😱', '😎', '🤑', '💯', '💖', '✨', '🌟', '⭐', '🔥', '⚡', '💎', '🎁', '🎈', '🎉', '👑', '🚀', '💫'];
 let lastStickerTime = 0;
 const STICKER_COOLDOWN = 12 * 60 * 1000;
@@ -3328,7 +3353,7 @@ function showRandomSticker() {
     lastStickerTime = now;
 }
 
-// ====== 46. LOAD USER DATA ======
+// ====== 48. LOAD USER DATA ======
 async function loadUserData(force = false) {
     try {
         console.log("📂 Loading user data for:", userId);
@@ -3427,9 +3452,9 @@ function updateUserDisplay() {
     }
 }
 
-// ====== 47. VEGAS ELITE - تحسينات الكازينو الأسطورية ======
+// ====== 49. VEGAS ELITE - تحسينات الكازينو الأسطورية (محسنة) ======
 
-// نظام الصوت المتكامل
+// محرك الصوت
 const VegasAudio = {
     ctx: null,
     isInitialized: false,
@@ -3440,9 +3465,7 @@ const VegasAudio = {
             this.ctx = new (window.AudioContext || window.webkitAudioContext)();
             this.isInitialized = true;
             console.log("🎧 Vegas Audio initialized");
-        } catch(e) {
-            console.log("ℹ️ Audio not supported");
-        }
+        } catch(e) { console.log("ℹ️ Audio not supported"); }
     },
     
     click() {
@@ -3606,20 +3629,14 @@ const TickSequencer = {
         this.clear();
         const tickCount = 20;
         const baseInterval = duration / tickCount;
-        
         for (let i = 0; i < tickCount; i++) {
             const slowdownFactor = 1 + (i / tickCount) * 0.8;
             const delay = baseInterval * i * slowdownFactor;
-            
             const timeout = setTimeout(() => {
                 const pitch = 1 + (i / tickCount) * 0.5;
                 VegasAudio.tick(pitch);
-                
-                if (i === tickCount - 1 && onComplete) {
-                    setTimeout(onComplete, 150);
-                }
+                if (i === tickCount - 1 && onComplete) setTimeout(onComplete, 150);
             }, delay);
-            
             this.timeouts.push(timeout);
         }
     },
@@ -3628,16 +3645,11 @@ const TickSequencer = {
         this.clear();
         const delays = reelIndex === 0 ? 10 : reelIndex === 1 ? 15 : 20;
         const baseDelay = 70;
-        
         for (let i = 0; i < delays; i++) {
             const timeout = setTimeout(() => {
                 VegasAudio.tick(1 + (i / delays) * 0.3);
-                
-                if (i === delays - 1 && onComplete) {
-                    setTimeout(onComplete, 50);
-                }
+                if (i === delays - 1 && onComplete) setTimeout(onComplete, 50);
             }, i * baseDelay * (1 + i * 0.1));
-            
             this.timeouts.push(timeout);
         }
     },
@@ -3655,7 +3667,6 @@ const JackpotTheater = {
     play(amount, currency = 'TON', type = 'jackpot') {
         if (this.isPlaying) return;
         this.isPlaying = true;
-        
         const container = document.querySelector('.wheel-game-container, .slots-game-container') || document.body;
         
         setTimeout(() => {
@@ -3673,9 +3684,7 @@ const JackpotTheater = {
             this.createGoldParticles(container);
         }, 1000);
         
-        setTimeout(() => {
-            this.isPlaying = false;
-        }, 4000);
+        setTimeout(() => { this.isPlaying = false; }, 4000);
     },
     
     createLightBurst(container) {
@@ -3694,15 +3703,9 @@ const JackpotTheater = {
     showJackpotText(container, amount, currency, type) {
         const text = document.createElement('div');
         text.className = `vegas-jackpot-text ${type}`;
-        
-        if (type === 'mega') {
-            text.innerHTML = `👑 MEGA JACKPOT! ${amount} ${currency} 👑`;
-        } else if (type === 'jackpot') {
-            text.innerHTML = `🎰 JACKPOT! ${amount} ${currency} 🎰`;
-        } else {
-            text.innerHTML = `🔥 BIG WIN! ${amount} ${currency} 🔥`;
-        }
-        
+        if (type === 'mega') text.innerHTML = `👑 MEGA JACKPOT! ${amount} ${currency} 👑`;
+        else if (type === 'jackpot') text.innerHTML = `🎰 JACKPOT! ${amount} ${currency} 🎰`;
+        else text.innerHTML = `🔥 BIG WIN! ${amount} ${currency} 🔥`;
         document.body.appendChild(text);
         document.body.classList.add('vegas-shake');
         setTimeout(() => document.body.classList.remove('vegas-shake'), 500);
@@ -3732,19 +3735,12 @@ let wheelVegasState = {
     selectedPrize: null,
     animationId: null,
     spinStartTime: 0,
-    spinDuration: 3000
+    spinDuration: 2800
 };
 
 function initWheelVegas() {
-    console.log("🎡 initWheelVegas started");
     const wheel = document.getElementById('wheelCasinoPro');
-    if (!wheel) {
-        console.error("❌ wheelCasinoPro not found, retrying...");
-        setTimeout(initWheelVegas, 200);
-        return;
-    }
-    
-    console.log("✅ wheelCasinoPro found, drawing wheel...");
+    if (!wheel) { setTimeout(initWheelVegas, 200); return; }
     wheel.innerHTML = '';
     wheel.style.transform = 'rotate(0deg)';
     
@@ -3761,17 +3757,10 @@ function initWheelVegas() {
         const rotation = index * anglePerSegment;
         
         let bgColor = prize.color;
-        if (prize.jackpot) {
-            bgColor = `linear-gradient(45deg, #ef4444, #ff8800)`;
-        } else if (prize.type === 'TON') {
-            bgColor = '#0088cc';
-        } else if (prize.type === 'USDT') {
-            bgColor = '#22c55e';
-        } else if (prize.type === 'GOODLUCK') {
-            bgColor = '#94a3b8';
-        } else if (prize.type === 'FREESPIN') {
-            bgColor = '#aa44ff';
-        }
+        if (prize.jackpot) bgColor = `linear-gradient(45deg, #ef4444, #ff8800)`;
+        else if (prize.type === 'TON') bgColor = `linear-gradient(135deg, #0088cc, #00f2ff)`;
+        else if (prize.type === 'USDT') bgColor = `linear-gradient(135deg, #22c55e, #4ade80)`;
+        else if (prize.type === 'GOODLUCK') bgColor = `linear-gradient(135deg, #94a3b8, #cbd5e1)`;
         
         segDiv.style.cssText = `
             position: absolute;
@@ -3788,68 +3777,82 @@ function initWheelVegas() {
             justify-content: center;
             color: white;
             font-weight: bold;
-            text-shadow: 0 0 5px black;
+            text-shadow: 0 0 3px black;
             border-right: 2px solid rgba(255,255,255,0.3);
             box-shadow: inset 0 0 10px rgba(255,255,255,0.2);
             font-size: 0.8rem;
             z-index: 5;
         `;
         
-        const icon = document.createElement('span');
-        icon.style.fontSize = prize.jackpot ? '2rem' : '1.5rem';
-        icon.style.marginBottom = '4px';
-        icon.textContent = prize.icon;
+        const iconSpan = document.createElement('span');
+        iconSpan.className = 'vegas-segment-icon';
+        iconSpan.style.fontSize = prize.jackpot ? '1.8rem' : '1.4rem';
+        iconSpan.style.marginBottom = '4px';
+        iconSpan.textContent = prize.icon;
         
-        const label = document.createElement('span');
-        label.style.fontSize = '0.65rem';
-        label.style.background = 'rgba(0,0,0,0.6)';
-        label.style.padding = '2px 6px';
-        label.style.borderRadius = '10px';
-        label.style.border = '1px solid rgba(255,255,255,0.3)';
-        label.textContent = prize.label;
+        const labelSpan = document.createElement('span');
+        labelSpan.className = 'vegas-segment-label';
+        labelSpan.style.fontSize = '0.65rem';
+        labelSpan.style.background = 'rgba(0,0,0,0.6)';
+        labelSpan.style.padding = '3px 8px';
+        labelSpan.style.borderRadius = '12px';
+        labelSpan.style.whiteSpace = 'nowrap';
+        labelSpan.textContent = prize.label;
         
-        segDiv.appendChild(icon);
-        segDiv.appendChild(label);
+        segDiv.appendChild(iconSpan);
+        segDiv.appendChild(labelSpan);
         wheel.appendChild(segDiv);
     });
     
-    console.log("✅ Wheel drawn with", totalSegments, "segments");
     updateWheelVegasUI();
+    renderVegasPrizeLegend();
+}
+
+function renderVegasPrizeLegend() {
+    const legend = document.getElementById('wheelPrizeLegend');
+    if (!legend) return;
+    
+    const jackpot = WHEEL_PRIZES.filter(p => p.jackpot);
+    const tonPrizes = WHEEL_PRIZES.filter(p => p.type === 'TON' && !p.jackpot);
+    const usdtPrizes = WHEEL_PRIZES.filter(p => p.type === 'USDT' && !p.jackpot);
+    
+    legend.innerHTML = `
+        <div class="vegas-legend-group">
+            <h4>👑 JACKPOT</h4>
+            ${jackpot.map(p => `<span>${p.icon} ${p.label}</span>`).join('')}
+        </div>
+        <div class="vegas-legend-group">
+            <h4>💰 TON</h4>
+            ${tonPrizes.slice(0,6).map(p => `<span>${p.icon} ${p.label}</span>`).join('')}
+        </div>
+        <div class="vegas-legend-group">
+            <h4>💵 USDT</h4>
+            ${usdtPrizes.slice(0,6).map(p => `<span>${p.icon} ${p.label}</span>`).join('')}
+        </div>
+    `;
 }
 
 function updateWheelVegasUI() {
     const spinsEl = document.getElementById('wheelGameSpins');
     const jackpotEl = document.getElementById('wheelJackpotCounter');
-    const freeSpinBtn = document.getElementById('wheelFreeSpin');
-    const bigWinCounter = document.getElementById('wheelBigWinCounter');
+    const freeSpinEl = document.getElementById('wheelFreeSpin');
+    const bigWinEl = document.getElementById('wheelBigWinCounter');
+    const speedFill = document.getElementById('wheelSpeedFill');
     
-    if (spinsEl) {
-        const totalSpins = (userData.wheel.purchasedSpins || 0) + (userData.wheel.freeSpins || 0);
-        spinsEl.textContent = totalSpins;
-    }
+    if (spinsEl) spinsEl.textContent = (userData.wheel.purchasedSpins || 0) + (userData.wheel.freeSpins || 0);
+    if (jackpotEl) jackpotEl.textContent = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - ((userData.wheel.jackpotCounter || 0) % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY);
+    if (bigWinEl) bigWinEl.textContent = CONFIG.ECONOMY.WHEEL_BIG_WIN_EVERY - ((userData.wheel.bigWinCounter || 0) % CONFIG.ECONOMY.WHEEL_BIG_WIN_EVERY);
     
-    if (jackpotEl) {
-        const nextJackpot = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - ((userData.wheel.jackpotCounter || 0) % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY);
-        jackpotEl.textContent = `${nextJackpot}`;
-    }
-    
-    if (bigWinCounter) {
-        const nextBigWin = CONFIG.ECONOMY.WHEEL_BIG_WIN_EVERY - ((userData.wheel.bigWinCounter || 0) % CONFIG.ECONOMY.WHEEL_BIG_WIN_EVERY);
-        bigWinCounter.textContent = nextBigWin;
-    }
-    
-    if (freeSpinBtn) {
+    if (freeSpinEl) {
         const now = Date.now();
         const nextFree = (userData.wheel.lastFreeSpin || 0) + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
         if (now < nextFree) {
             const left = nextFree - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            freeSpinBtn.innerHTML = `<i class="fas fa-clock"></i><span>${h}h ${m}m</span>`;
-            freeSpinBtn.disabled = true;
+            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i><span>${Math.floor(left/3600000)}h ${Math.floor((left%3600000)/60000)}m</span>`;
+            freeSpinEl.disabled = true;
         } else {
-            freeSpinBtn.innerHTML = `<i class="fas fa-gift"></i><span>FREE</span>`;
-            freeSpinBtn.disabled = false;
+            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i><span>FREE</span>`;
+            freeSpinEl.disabled = false;
         }
     }
     
@@ -3859,26 +3862,17 @@ function updateWheelVegasUI() {
 function updateVegasHeat() {
     const container = document.querySelector('.wheel-game-container');
     if (!container) return;
-    
     const spinsToJackpot = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - ((userData.wheel.jackpotCounter || 0) % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY);
-    
     container.classList.remove('heat-low', 'heat-medium', 'heat-high', 'heat-jackpot');
-    
-    if (spinsToJackpot === 1) {
-        container.classList.add('heat-jackpot');
-    } else if (spinsToJackpot <= 3) {
-        container.classList.add('heat-high');
-    } else if (spinsToJackpot <= 7) {
-        container.classList.add('heat-medium');
-    } else if (spinsToJackpot <= 10) {
-        container.classList.add('heat-low');
-    }
+    if (spinsToJackpot === 1) container.classList.add('heat-jackpot');
+    else if (spinsToJackpot <= 3) container.classList.add('heat-high');
+    else if (spinsToJackpot <= 7) container.classList.add('heat-medium');
+    else if (spinsToJackpot <= 10) container.classList.add('heat-low');
 }
 
 function selectVegasPrize() {
     const totalWeight = WHEEL_PRIZES.reduce((s, p) => s + p.weight, 0);
     let rand = Math.random() * totalWeight;
-    
     for (const prize of WHEEL_PRIZES) {
         rand -= prize.weight;
         if (rand <= 0) return prize;
@@ -3898,7 +3892,7 @@ function awardVegasPrize(prize) {
         return;
     }
     
-    if (prize.freespin) {
+    if (prize.type === 'FREESPIN') {
         showToastPro('🆓 FREE SPIN STORED!', 'success');
         VegasAudio.coin();
         userData.wheel.freeSpins = (userData.wheel.freeSpins || 0) + 1;
@@ -3909,25 +3903,12 @@ function awardVegasPrize(prize) {
     
     if (prize.jackpot) {
         const currency = prize.currency || prize.type;
-        const amount = prize.amount;
-        
-        if (currency === 'TON') {
-            userData.balances.TON += amount;
-            userData.balance = userData.balances.TON;
-        } else {
-            userData.balances[currency] = (userData.balances[currency] || 0) + amount;
-        }
-        userData.totalEarned += amount;
-        addTransaction('wheel', amount, { currency, jackpot: true });
-        
-        if (prize.amount === 500) {
-            JackpotTheater.play(amount, currency, 'mega');
-            showWinPopup(`${amount} ${currency}`, 'mega');
-        } else {
-            JackpotTheater.play(amount, currency, 'jackpot');
-            showWinPopup(`${amount} ${currency}`, 'jackpot');
-        }
-        
+        userData.balances[currency] += prize.amount;
+        if (currency === 'TON') userData.balance = userData.balances.TON;
+        userData.totalEarned += prize.amount;
+        addTransaction('wheel', prize.amount, { currency, jackpot: true });
+        JackpotTheater.play(prize.amount, currency, prize.amount >= 500 ? 'mega' : 'jackpot');
+        showWinPopup(`${prize.amount} ${currency}`, prize.amount >= 500 ? 'mega' : 'jackpot');
         userData.wheel.jackpotWon++;
         saveUserToCache();
         updateUI();
@@ -3936,79 +3917,27 @@ function awardVegasPrize(prize) {
     }
     
     const currency = prize.type;
-    const amount = prize.amount;
-    
-    userData.balances[currency] += amount;
+    userData.balances[currency] += prize.amount;
     if (currency === 'TON') userData.balance = userData.balances.TON;
-    userData.totalEarned += amount;
-    addTransaction('wheel', amount, { currency });
+    userData.totalEarned += prize.amount;
+    addTransaction('wheel', prize.amount, { currency });
     
-    if (amount >= 50) {
-        showWinPopup(`${amount} ${currency}`, 'nice');
+    if (prize.amount >= 50) {
+        showWinPopup(`${prize.amount} ${currency}`, 'nice');
         VegasAudio.bigWin();
-    } else if (amount >= 10) {
-        showWinPopup(`${amount} ${currency}`, 'big');
+    } else if (prize.amount >= 10) {
+        showWinPopup(`${prize.amount} ${currency}`, 'big');
         VegasAudio.win();
     } else {
-        showWinPopup(`${amount} ${currency}`, 'normal');
+        showWinPopup(`${prize.amount} ${currency}`, 'normal');
         VegasAudio.coin();
     }
     
-    hapticFeedback(amount >= 10 ? 'medium' : 'light');
+    hapticFeedback(prize.amount >= 10 ? 'medium' : 'light');
+    userData.wheel.bigWinCounter = (userData.wheel.bigWinCounter || 0) + 1;
+    userData.wheel.jackpotCounter = (userData.wheel.jackpotCounter || 0) + 1;
     saveUserToCache();
     updateUI();
-    updateWheelVegasUI();
-}
-
-function spinWheelVegas(isFree = false) {
-    if (wheelVegasState.isSpinning) return;
-    
-    if (isFree) {
-        const now = Date.now();
-        const nextFree = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
-        if (now < nextFree) {
-            const left = nextFree - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            showToastPro(`⏰ Wait ${h}h ${m}m for free spin`, 'warning');
-            return;
-        }
-        userData.wheel.lastFreeSpin = now;
-    } else {
-        if (userData.wheel.purchasedSpins > 0) {
-            userData.wheel.purchasedSpins--;
-        } 
-        else if (userData.wheel.freeSpins > 0) {
-            userData.wheel.freeSpins--;
-        }
-        else if (userData.balances.TON >= CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
-            userData.balances.TON -= CONFIG.ECONOMY.WHEEL_SPIN_PRICE;
-            userData.balance = userData.balances.TON;
-        } else {
-            showToastPro(`❌ Need ${CONFIG.ECONOMY.WHEEL_SPIN_PRICE} TON`, 'error');
-            return;
-        }
-    }
-    
-    wheelVegasState.isSpinning = true;
-    wheelVegasState.spinStartTime = Date.now();
-    wheelVegasState.selectedPrize = null;
-    
-    VegasAudio.click();
-    setTimeout(() => VegasAudio.whoosh(), 50);
-    
-    TickSequencer.playWheelTicks(2500, () => {
-        VegasAudio.clunk();
-    });
-    
-    document.querySelectorAll('.wheel-segment-vegas').forEach(seg => {
-        seg.classList.remove('winner-segment', 'near-miss');
-    });
-    
-    wheelVegasState.animationId = requestAnimationFrame(animateWheelVegas);
-    
-    userData.wheel.totalSpins++;
-    saveUserToCache();
     updateWheelVegasUI();
 }
 
@@ -4020,39 +3949,20 @@ function animateWheelVegas() {
     const wheel = document.getElementById('wheelCasinoPro');
     
     let velocity = 0;
-    
     if (elapsed < 600) {
         velocity = (elapsed / 600) * 25;
         wheel?.classList.add('spinning-fast');
-    }
-    else if (elapsed < 1800) {
+    } else if (elapsed < 1800) {
         velocity = 25 + Math.sin(elapsed * 0.02) * 2;
-    }
-    else if (elapsed < 2800) {
-        velocity = 25 * ((2800 - elapsed) / 1000);
-        
+    } else if (elapsed < 2600) {
+        velocity = 25 * ((2600 - elapsed) / 800);
         if (!wheelVegasState.selectedPrize) {
             wheelVegasState.selectedPrize = selectVegasPrize();
-            
-            if (wheelVegasState.selectedPrize.category === 'bigwin' || wheelVegasState.selectedPrize.category === 'nicewin') {
-                userData.wheel.bigWinCounter = (userData.wheel.bigWinCounter || 0) + 1;
-            } else if (wheelVegasState.selectedPrize.jackpot) {
-                userData.wheel.jackpotCounter = (userData.wheel.jackpotCounter || 0) + 1;
-                if (wheelVegasState.selectedPrize.amount === 500) {
-                    userData.wheel.megaJackpotCounter = (userData.wheel.megaJackpotCounter || 0) + 1;
-                }
-            } else {
-                userData.wheel.bigWinCounter = (userData.wheel.bigWinCounter || 0) + 1;
-                userData.wheel.jackpotCounter = (userData.wheel.jackpotCounter || 0) + 1;
-                userData.wheel.megaJackpotCounter = (userData.wheel.megaJackpotCounter || 0) + 1;
-            }
-            
             const prizeIndex = WHEEL_PRIZES.indexOf(wheelVegasState.selectedPrize);
             if (prizeIndex !== -1) {
                 const segmentAngle = 360 / WHEEL_PRIZES.length;
                 const targetAngle = 270 - (prizeIndex * segmentAngle + segmentAngle / 2);
                 const extraSpins = 5;
-                
                 wheelVegasState.targetRotation = wheelVegasState.currentRotation + 
                     (extraSpins * 360) + 
                     ((targetAngle - (wheelVegasState.currentRotation % 360) + 360) % 360);
@@ -4062,12 +3972,10 @@ function animateWheelVegas() {
         wheelVegasState.isSpinning = false;
         wheel?.classList.remove('spinning-fast');
         wheel?.classList.add('wheel-bounce');
-        
         setTimeout(() => {
             wheel?.classList.remove('wheel-bounce');
             awardVegasPrize(wheelVegasState.selectedPrize);
         }, 300);
-        
         cancelAnimationFrame(wheelVegasState.animationId);
         return;
     }
@@ -4084,93 +3992,128 @@ function animateWheelVegas() {
     wheelVegasState.animationId = requestAnimationFrame(animateWheelVegas);
 }
 
+function spinWheelVegas(isFree = false) {
+    if (wheelVegasState.isSpinning) return;
+    
+    if (isFree) {
+        const now = Date.now();
+        const nextFree = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
+        if (now < nextFree) {
+            const left = nextFree - now;
+            showToastPro(`⏰ Wait ${Math.floor(left/3600000)}h ${Math.floor((left%3600000)/60000)}m`, 'warning');
+            return;
+        }
+        userData.wheel.lastFreeSpin = now;
+    } else {
+        if (userData.wheel.purchasedSpins > 0) {
+            userData.wheel.purchasedSpins--;
+        } else if (userData.wheel.freeSpins > 0) {
+            userData.wheel.freeSpins--;
+        } else if (userData.balances.TON >= CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
+            userData.balances.TON -= CONFIG.ECONOMY.WHEEL_SPIN_PRICE;
+            userData.balance = userData.balances.TON;
+        } else {
+            showToastPro(`❌ Need ${CONFIG.ECONOMY.WHEEL_SPIN_PRICE} TON`, 'error');
+            return;
+        }
+    }
+    
+    wheelVegasState.isSpinning = true;
+    wheelVegasState.spinStartTime = Date.now();
+    wheelVegasState.selectedPrize = null;
+    
+    VegasAudio.click();
+    setTimeout(() => VegasAudio.whoosh(), 50);
+    TickSequencer.playWheelTicks(2500, () => VegasAudio.clunk());
+    
+    document.querySelectorAll('.wheel-segment-vegas').forEach(seg => {
+        seg.classList.remove('winner-segment', 'near-miss');
+    });
+    
+    wheelVegasState.animationId = requestAnimationFrame(animateWheelVegas);
+    userData.wheel.totalSpins++;
+    saveUserToCache();
+    updateWheelVegasUI();
+}
+
 // آلة السلوتس المحسنة
 let slotsVegasState = {
     isSpinning: false,
     reels: [[], [], []],
     positions: [0, 0, 0],
     targetPositions: [0, 0, 0],
-    animationId: null,
-    results: []
+    animationId: null
 };
 
 function initSlotsVegas() {
-    console.log("🎰 initSlotsVegas started");
     const container = document.getElementById('slotReelsPro');
-    if (!container) {
-        console.error("❌ slotReelsPro not found, retrying...");
-        setTimeout(initSlotsVegas, 200);
-        return;
-    }
-    
-    console.log("✅ slotReelsPro found, drawing slots...");
+    if (!container) { setTimeout(initSlotsVegas, 200); return; }
     container.innerHTML = '';
-    
-    const symbols = ['🍒', '🍋', '🍇', '💎', '7️⃣', '💰', '👑', '🎰'];
-    const colors = ['#ff4444', '#ffdd00', '#aa44ff', '#00f2ff', '#ff4444', '#ffaa00', '#ffdd00', '#ff00ff'];
     
     for (let i = 0; i < 3; i++) {
         const wrapper = document.createElement('div');
         wrapper.className = 'vegas-slot-reel-wrapper';
         wrapper.dataset.reel = i;
-        
         const reel = document.createElement('div');
         reel.className = 'vegas-slot-reel';
         reel.id = `vegas-reel-${i}`;
         
         for (let j = 0; j < 20; j++) {
-            const randomIndex = Math.floor(Math.random() * symbols.length);
-            const symbol = document.createElement('div');
-            symbol.className = 'vegas-slot-symbol';
-            symbol.textContent = symbols[randomIndex];
-            symbol.style.color = colors[randomIndex];
-            symbol.style.fontSize = '3.5rem';
-            symbol.style.height = '110px';
-            symbol.style.display = 'flex';
-            symbol.style.alignItems = 'center';
-            symbol.style.justifyContent = 'center';
-            symbol.style.background = '#2a2a3a';
-            symbol.style.borderBottom = '1px solid #3a3a4a';
-            reel.appendChild(symbol);
+            const randomIndex = Math.floor(Math.random() * SLOTS_SYMBOLS_DATA.length);
+            const sym = document.createElement('div');
+            sym.className = 'vegas-slot-symbol';
+            sym.textContent = SLOTS_SYMBOLS_DATA[randomIndex].symbol;
+            sym.style.color = SLOTS_SYMBOLS_DATA[randomIndex].color;
+            sym.style.height = '110px';
+            sym.style.display = 'flex';
+            sym.style.alignItems = 'center';
+            sym.style.justifyContent = 'center';
+            sym.style.fontSize = '3.5rem';
+            sym.style.background = '#2a2a3a';
+            sym.style.borderBottom = '1px solid #3a3a4a';
+            reel.appendChild(sym);
         }
-        
         wrapper.appendChild(reel);
         container.appendChild(wrapper);
-        
         reel.style.transform = `translateY(-${Math.floor(Math.random() * 500)}px)`;
     }
-    
-    console.log("✅ Slots drawn");
+    updateSlotsVegasUI();
+    renderVegasSlotsLegend();
+}
+
+function renderVegasSlotsLegend() {
+    const grid = document.getElementById('slotsPayoutGrid');
+    if (!grid) return;
+    const sorted = [...SLOTS_SYMBOLS_DATA].sort((a,b) => b.value - a.value);
+    grid.innerHTML = sorted.map(item => `
+        <div class="vegas-payout-item ${item.jackpot ? 'jackpot' : ''}">
+            <span class="symbol">${item.symbol}</span>
+            <span class="value">${item.value} ${item.type}</span>
+            ${item.jackpot ? '<span class="badge">JACKPOT</span>' : ''}
+        </div>
+    `).join('');
 }
 
 function updateSlotsVegasUI() {
     const spinsEl = document.getElementById('slotsGameSpins');
-    const freeSpinBtn = document.getElementById('slotsFreeSpin');
-    
-    if (spinsEl) {
-        const totalSpins = (userData.slots.purchasedSpins || 0) + (userData.slots.freeSpins || 0);
-        spinsEl.textContent = totalSpins;
-    }
-    
-    if (freeSpinBtn) {
+    const freeSpinEl = document.getElementById('slotsFreeSpin');
+    if (spinsEl) spinsEl.textContent = (userData.slots.purchasedSpins || 0) + (userData.slots.freeSpins || 0);
+    if (freeSpinEl) {
         const now = Date.now();
         const nextFree = (userData.slots.lastFreeSpin || 0) + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
         if (now < nextFree) {
             const left = nextFree - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            freeSpinBtn.innerHTML = `<i class="fas fa-clock"></i><span>${h}h ${m}m</span>`;
-            freeSpinBtn.disabled = true;
+            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i><span>${Math.floor(left/3600000)}h ${Math.floor((left%3600000)/60000)}m</span>`;
+            freeSpinEl.disabled = true;
         } else {
-            freeSpinBtn.innerHTML = `<i class="fas fa-gift"></i><span>FREE</span>`;
-            freeSpinBtn.disabled = false;
+            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i><span>FREE</span>`;
+            freeSpinEl.disabled = false;
         }
     }
 }
 
 function spinSlotsVegas(isFree = false, isTurbo = false) {
     if (slotsVegasState.isSpinning) return;
-    
     const price = isTurbo ? CONFIG.ECONOMY.SLOTS_TURBO_PRICE : CONFIG.ECONOMY.SLOTS_SPIN_PRICE;
     
     if (isFree) {
@@ -4178,20 +4121,16 @@ function spinSlotsVegas(isFree = false, isTurbo = false) {
         const nextFree = (userData.slots.lastFreeSpin || 0) + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
         if (now < nextFree) {
             const left = nextFree - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            showToastPro(`⏰ Wait ${h}h ${m}m`, 'warning');
+            showToastPro(`⏰ Wait ${Math.floor(left/3600000)}h`, 'warning');
             return;
         }
         userData.slots.lastFreeSpin = now;
     } else {
         if (userData.slots.purchasedSpins > 0) {
             userData.slots.purchasedSpins--;
-        }
-        else if (userData.slots.freeSpins > 0) {
+        } else if (userData.slots.freeSpins > 0) {
             userData.slots.freeSpins--;
-        }
-        else if (userData.balances.TON >= price) {
+        } else if (userData.balances.TON >= price) {
             userData.balances.TON -= price;
             userData.balance = userData.balances.TON;
         } else {
@@ -4201,299 +4140,143 @@ function spinSlotsVegas(isFree = false, isTurbo = false) {
     }
     
     slotsVegasState.isSpinning = true;
-    
     VegasAudio.click();
     setTimeout(() => VegasAudio.whoosh(), 50);
     
-    // Spin animation - move reels
     const reels = document.querySelectorAll('.vegas-slot-reel');
-    const spinDuration = isTurbo ? 800 : 1200;
-    const spinDistance = 2000; // pixels to move
+    const duration = isTurbo ? 600 : 1000;
+    const results = [];
     
-    reels.forEach((reel, index) => {
-        const currentY = parseFloat(reel.style.transform?.replace('translateY(', '').replace('px)', '')) || 0;
-        const targetY = currentY - spinDistance;
-        
-        reel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.2, 0.9, 0.4, 1.1)`;
+    reels.forEach((reel, idx) => {
+        const spinDistance = 1500 + Math.random() * 1000;
+        const startY = parseFloat(reel.style.transform?.replace('translateY(', '').replace('px)', '')) || 0;
+        const targetY = startY - spinDistance;
+        reel.style.transition = `transform ${duration}ms cubic-bezier(0.2, 0.9, 0.4, 1.1)`;
         reel.style.transform = `translateY(${targetY}px)`;
+        
+        setTimeout(() => {
+            const finalOffset = Math.floor(Math.random() * 20) * 110;
+            reel.style.transition = `transform 200ms ease-out`;
+            reel.style.transform = `translateY(-${finalOffset}px)`;
+            const symbolIndex = Math.floor(finalOffset / 110) % 20;
+            const symbolsList = reel.querySelectorAll('.vegas-slot-symbol');
+            results[idx] = symbolsList[symbolIndex]?.textContent || '🍒';
+        }, duration - 150);
     });
     
     setTimeout(() => {
-        // Stop reels at random positions
-        const symbolsPerReel = 20;
-        const symbolHeight = 110;
+        const allSame = results[0] === results[1] && results[1] === results[2];
+        let winAmount = 0, winCurrency = 'TON';
         
-        const results = [];
-        
-        reels.forEach((reel, index) => {
-            const finalOffset = Math.floor(Math.random() * symbolsPerReel) * symbolHeight;
-            reel.style.transition = `transform 200ms cubic-bezier(0.3, 1, 0.5, 1)`;
-            reel.style.transform = `translateY(-${finalOffset}px)`;
-            
-            const symbolIndex = Math.floor(finalOffset / symbolHeight) % symbolsPerReel;
-            const symbolsList = reel.querySelectorAll('.vegas-slot-symbol');
-            const winSymbol = symbolsList[symbolIndex];
-            results.push(winSymbol?.textContent || '🍒');
-        });
-        
-        setTimeout(() => {
-            // Calculate win
-            const allSame = results[0] === results[1] && results[1] === results[2];
-            const jackpotSymbols = results.filter(s => s === '🎰').length;
-            
-            let winAmount = 0;
-            let winCurrency = 'TON';
-            let winType = 'normal';
-            
-            if (jackpotSymbols === 3) {
-                winAmount = 100;
-                winCurrency = 'TON';
-                winType = 'jackpot';
-                JackpotTheater.play(100, 'TON', 'jackpot');
-            } else if (allSame) {
-                const symbol = results[0];
-                const prize = SLOTS_SYMBOLS_DATA.find(p => p.symbol === symbol);
-                if (prize) {
-                    winAmount = prize.value;
-                    winCurrency = prize.type === 'TON' ? 'TON' : 'USDT';
-                    if (prize.value >= 50) winType = 'nice';
-                    else if (prize.value >= 10) winType = 'big';
-                    else winType = 'normal';
-                }
-            } else if (results[0] === results[1] || results[1] === results[2] || results[0] === results[2]) {
+        if (allSame) {
+            const prize = SLOTS_SYMBOLS_DATA.find(p => p.symbol === results[0]);
+            if (prize && prize.value > 0) {
+                winAmount = prize.value;
+                winCurrency = prize.type === 'TON' ? 'TON' : 'USDT';
+            }
+        } else {
+            const matchCount = (results[0] === results[1] ? 1 : 0) + (results[1] === results[2] ? 1 : 0) + (results[0] === results[2] ? 1 : 0);
+            if (matchCount >= 1) {
                 const matchSymbol = results[0] === results[1] ? results[0] : results[1];
                 const prize = SLOTS_SYMBOLS_DATA.find(p => p.symbol === matchSymbol);
-                if (prize) {
+                if (prize && prize.value > 0) {
                     winAmount = prize.value / 2;
                     winCurrency = prize.type === 'TON' ? 'TON' : 'USDT';
-                    winType = 'small';
                 }
             }
-            
-            if (winAmount > 0) {
-                if (winCurrency === 'TON') {
-                    userData.balances.TON += winAmount;
-                    userData.balance = userData.balances.TON;
-                } else {
-                    userData.balances.USDT += winAmount;
-                }
-                userData.totalEarned += winAmount;
-                
-                addTransaction('slots', winAmount, { currency: winCurrency });
-                showToastPro(`🎰 You won ${winAmount.toFixed(2)} ${winCurrency}!`, 'success');
-                
-                if (winType === 'jackpot') {
-                    showWinPopup(`${winAmount} ${winCurrency}`, 'jackpot');
-                } else if (winType === 'nice') {
-                    showWinPopup(`${winAmount} ${winCurrency}`, 'nice');
-                } else if (winType === 'big') {
-                    showWinPopup(`${winAmount} ${winCurrency}`, 'big');
-                } else {
-                    showWinPopup(`${winAmount} ${winCurrency}`, 'normal');
-                }
-                
-                VegasAudio.win();
-                
-                const winDisplay = document.getElementById('slotsWinAmount');
-                if (winDisplay) winDisplay.textContent = `${winAmount.toFixed(2)} ${winCurrency}`;
-            } else {
-                showToastPro('🍀 Good luck next time!', 'info');
-                VegasAudio.tick(0.8);
-            }
-            
-            slotsVegasState.isSpinning = false;
-            saveUserToCache();
-            updateUI();
-            
-        }, 200);
+        }
         
-    }, spinDuration);
+        if (winAmount > 0) {
+            userData.balances[winCurrency] += winAmount;
+            if (winCurrency === 'TON') userData.balance = userData.balances.TON;
+            userData.totalEarned += winAmount;
+            addTransaction('slots', winAmount, { currency: winCurrency });
+            showToastPro(`🎰 You won ${winAmount} ${winCurrency}!`, 'success');
+            document.getElementById('slotsWinAmount').textContent = `${winAmount} ${winCurrency}`;
+            if (winAmount >= 50) showWinPopup(`${winAmount} ${winCurrency}`, 'nice');
+            else if (winAmount >= 10) showWinPopup(`${winAmount} ${winCurrency}`, 'big');
+            else showWinPopup(`${winAmount} ${winCurrency}`, 'normal');
+            VegasAudio.win();
+            if (winAmount >= 10) for (let i=0;i<3;i++) setTimeout(() => VegasAudio.coin(), i*200);
+        } else {
+            showToastPro('🍀 Try again!', 'info');
+            VegasAudio.tick(0.8);
+        }
+        
+        slotsVegasState.isSpinning = false;
+        saveUserToCache();
+        updateUI();
+    }, duration + 100);
 }
 
 function showToastPro(message, type = 'info', duration = 3000) {
     const container = document.getElementById('toastContainer');
     if (!container) return;
-    
     const existingToast = container.querySelector('.toast-pro');
     if (existingToast) {
         existingToast.classList.add('closing');
         setTimeout(() => existingToast.remove(), 300);
     }
-    
     const toast = document.createElement('div');
     toast.className = `toast-pro ${type}`;
-    
     let icon = 'fa-circle-info';
     if (type === 'success') icon = 'fa-circle-check';
     else if (type === 'error') icon = 'fa-circle-xmark';
     else if (type === 'warning') icon = 'fa-circle-exclamation';
-    
-    toast.innerHTML = `
-        <i class="fa-regular ${icon}"></i>
-        <span class="message">${message}</span>
-    `;
-    
+    toast.innerHTML = `<i class="fa-regular ${icon}"></i><span class="message">${message}</span>`;
     container.appendChild(toast);
-    
-    if (type === 'error') {
-        hapticFeedback('error');
-    } else if (type === 'success') {
-        hapticFeedback('success');
-    }
-    
+    if (type === 'error') hapticFeedback('error');
+    else if (type === 'success') hapticFeedback('success');
     setTimeout(() => {
         toast.classList.add('closing');
         setTimeout(() => toast.remove(), 300);
     }, duration);
 }
 
-// ====== دوال فتح المودالات من أي صفحة ======
-function openProfileFromAnywhere() {
-    console.log("📱 openProfileFromAnywhere called");
-    if (currentPage === 'wheelGame' || currentPage === 'slotsGame') {
-        exitGame();
-        setTimeout(() => showPage('profile'), 300);
-    } else {
-        showPage('profile');
-    }
-}
-
-function openWithdrawModal() {
-    console.log("💰 openWithdrawModal called");
-    if (currentPage !== 'profile') {
-        openProfileFromAnywhere();
-        setTimeout(() => {
-            showWithdrawModal();
-        }, 400);
-    } else {
-        showWithdrawModal();
-    }
-}
-
-function openDepositModal() {
-    console.log("💵 openDepositModal called");
-    if (currentPage !== 'profile') {
-        openProfileFromAnywhere();
-        setTimeout(() => {
-            showDepositModal();
-        }, 400);
-    } else {
-        showDepositModal();
-    }
-}
-
-function openSwapModal() {
-    console.log("🔄 openSwapModal called");
-    if (currentPage !== 'profile') {
-        openProfileFromAnywhere();
-        setTimeout(() => {
-            showSwapModal();
-        }, 400);
-    } else {
-        showSwapModal();
-    }
-}
-
-function openHistoryModal() {
-    console.log("📜 openHistoryModal called");
-    if (currentPage !== 'profile') {
-        openProfileFromAnywhere();
-        setTimeout(() => {
-            showHistory();
-        }, 400);
-    } else {
-        showHistory();
-    }
-}
-
-// ====== 48. INITIALIZATION ======
+// ====== 50. INITIALIZATION ======
 document.addEventListener('DOMContentLoaded', async () => {
     hideAllModals();
-    
-    if (currentLanguage === 'ar') { 
-        document.body.classList.add('rtl'); 
-        document.documentElement.dir = 'rtl'; 
-    }
-    
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        el.textContent = t(el.getAttribute('data-i18n'));
-    });
-    
+    if (currentLanguage === 'ar') { document.body.classList.add('rtl'); document.documentElement.dir = 'rtl'; }
+    document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.getAttribute('data-i18n')); });
     await loadUserData();
     await loadPrices();
     await initTonConnect();
-    
     startMining();
     updateUI();
     renderMarket();
     updateChart();
     renderReferralMilestones();
-    
     setupScrollListener();
-    
     setInterval(() => {
         if (!userData.autoClicker?.active) {
             const btn = document.getElementById('autoClickerTurbine');
-            if (btn) { 
-                btn.classList.add('show'); 
-                setTimeout(() => btn.classList.remove('show'), 10000); 
-            }
+            if (btn) { btn.classList.add('show'); setTimeout(() => btn.classList.remove('show'), 10000); }
         }
     }, 300000);
-    
-    setTimeout(() => { 
-        const loading = document.getElementById('loading');
-        if (loading) {
-            loading.style.opacity = '0'; 
-            setTimeout(() => loading.style.display = 'none', 500); 
-        }
-    }, 2000);
-    
+    setTimeout(() => { const loading = document.getElementById('loading'); if (loading) { loading.style.opacity = '0'; setTimeout(() => loading.style.display = 'none', 500); } }, 2000);
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
-    
     updateUserDisplay();
-    
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v9000.0");
-    console.log("✅ مع تحسينات Vegas Elite - جميع الميزات محفوظة!");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v10.0");
     console.log("✅ All systems ready! 🚀");
 });
 
 function setupScrollListener() {
     const btn = document.getElementById('scrollTopBtn');
     const container = document.querySelector('.main-content');
-    container?.addEventListener('scroll', () => {
-        btn?.classList.toggle('show', container.scrollTop > 300);
-    });
+    container?.addEventListener('scroll', () => { btn?.classList.toggle('show', container.scrollTop > 300); });
 }
 
 setInterval(() => { if (userData) saveUserToCache(); }, 60000);
 setInterval(() => { if (userData && db) saveToFirebase(); }, 300000);
-
-window.addEventListener('beforeunload', () => { 
-    stopMining(); 
-    stopFloatingNotifications(); 
-    stopAllListeners(); 
-    saveUserToCache(); 
-});
-
+window.addEventListener('beforeunload', () => { stopMining(); stopFloatingNotifications(); stopAllListeners(); saveUserToCache(); });
 document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { 
-        stopMining(); 
-        stopFloatingNotifications(); 
-    } else { 
-        startMining(); 
-        if (currentPage === 'mining') startFloatingNotifications(); 
-    }
+    if (document.hidden) { stopMining(); stopFloatingNotifications(); }
+    else { startMining(); if (currentPage === 'mining') startFloatingNotifications(); }
 });
+document.addEventListener('click', () => { if (!VegasAudio.isInitialized) VegasAudio.init(); }, { once: true });
 
-document.addEventListener('click', () => {
-    if (!VegasAudio.isInitialized) {
-        VegasAudio.init();
-    }
-}, { once: true });
-
-// ====== 49. EXPORT FUNCTIONS ======
+// ====== 51. EXPORT FUNCTIONS ======
 window.showPage = showPage;
 window.showMarket = ()=>showPage('market');
 window.showWallet = showWallet;
@@ -4546,21 +4329,31 @@ window.restoreFromBackup = restoreFromBackup;
 window.claim = claim;
 window.buyWheelPack = buyWheelPack;
 window.buySlotsPack = buySlotsPack;
-
-// دوال Vegas الجديدة
-window.openWheelGame = openWheelGame;
-window.openSlotsGame = openSlotsGame;
-window.exitGame = exitGame;
+window.showWheelGamePage = showWheelGamePage;
+window.showSlotsGamePage = showSlotsGamePage;
 window.spinWheelVegas = spinWheelVegas;
 window.spinSlotsVegas = spinSlotsVegas;
 window.showToastPro = showToastPro;
 window.VegasAudio = VegasAudio;
 window.TickSequencer = TickSequencer;
 window.JackpotTheater = JackpotTheater;
-
-// دوال المحفظة الجديدة
-window.openProfileFromAnywhere = openProfileFromAnywhere;
-window.openWithdrawModal = openWithdrawModal;
-window.openDepositModal = openDepositModal;
-window.openSwapModal = openSwapModal;
-window.openHistoryModal = openHistoryModal;
+window.openProfileFromAnywhere = function() {
+    if (currentPage === 'wheelGame' || currentPage === 'slotsGame') exitGame();
+    setTimeout(() => showPage('profile'), 300);
+};
+window.openWithdrawModal = function() {
+    if (currentPage !== 'profile') openProfileFromAnywhere();
+    setTimeout(() => showWithdrawModal(), 400);
+};
+window.openDepositModal = function() {
+    if (currentPage !== 'profile') openProfileFromAnywhere();
+    setTimeout(() => showDepositModal(), 400);
+};
+window.openSwapModal = function() {
+    if (currentPage !== 'profile') openProfileFromAnywhere();
+    setTimeout(() => showSwapModal(), 400);
+};
+window.openHistoryModal = function() {
+    if (currentPage !== 'profile') openProfileFromAnywhere();
+    setTimeout(() => showHistory(), 400);
+};
