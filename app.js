@@ -1,6 +1,6 @@
 // ============================================
 // TON MINING CASINO - ULTIMATE LEGENDARY EDITION v9000.0
-// جميع الميزات محفوظة + العجلة والسلوتس مرئيان
+// جميع الميزات محفوظة + العجلة والسلوتس مرئيان + إصلاح شامل
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -888,9 +888,11 @@ let currentPage = 'mining';
 
 function showPage(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(page + 'Page').classList.add('active');
+    const targetPage = document.getElementById(page + 'Page');
+    if (targetPage) targetPage.classList.add('active');
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-    document.querySelector(`[data-page="${page}"]`).classList.add('active');
+    const navItem = document.querySelector(`[data-page="${page}"]`);
+    if (navItem) navItem.classList.add('active');
     currentPage = page;
     
     const header = document.getElementById('mainHeader');
@@ -1285,14 +1287,12 @@ function updateWalletUI() {
     const depositBtn = document.getElementById('confirmDepositBtn');
     const modalInfo = document.getElementById('paymentWalletInfo');
     const modalAddress = document.getElementById('modalConnectedAddress');
-    const paymentStatus = document.getElementById('paymentWalletStatus');
     const modalUserBalance = document.getElementById('modalUserBalance');
     
     if (modalUserBalance) modalUserBalance.textContent = formatBalance(userData.balances.TON || 0, 'TON') + ' TON';
     
     if (tonWallet) {
         if (statusEl) statusEl.innerHTML = `<div class="status-indicator online"></div><span>Connected</span>`;
-        if (paymentStatus) paymentStatus.innerHTML = `<div class="status online"><i class="fas fa-circle"></i><span>Connected</span></div>`;
         if (infoEl) infoEl.style.display = 'flex';
         if (addressEl) addressEl.textContent = formatAddress(tonWallet.account.address);
         if (modalInfo) modalInfo.style.display = 'flex';
@@ -1301,7 +1301,6 @@ function updateWalletUI() {
         if (depositBtn) depositBtn.disabled = false;
     } else {
         if (statusEl) statusEl.innerHTML = `<div class="status-indicator offline"></div><span>Disconnected</span>`;
-        if (paymentStatus) paymentStatus.innerHTML = `<div class="status offline"><i class="fas fa-circle"></i><span>Not connected</span></div>`;
         if (infoEl) infoEl.style.display = 'none';
         if (modalInfo) modalInfo.style.display = 'none';
         if (payBtn) payBtn.disabled = currentPaymentMethod === 'wallet';
@@ -1414,7 +1413,6 @@ function updateMiningStats() {
     const totalEarned = document.getElementById('totalEarned');
     const bestStreak = document.getElementById('bestStreak');
     const miningDays = document.getElementById('miningDays');
-    const yourEarnings = document.getElementById('yourEarnings');
     const totalReferralsStats = document.getElementById('totalReferralsStats');
     const machine = getActiveMachine();
     
@@ -1424,7 +1422,6 @@ function updateMiningStats() {
     if (bestStreak) bestStreak.textContent = userData.longestStreak;
     if (miningDays) miningDays.textContent = Math.floor(userData.claims / 6) || 1;
     if (totalReferralsStats) totalReferralsStats.textContent = userData.referrals?.length || 0;
-    if (yourEarnings) yourEarnings.textContent = formatTON(userData.totalEarned) + ' TON';
 }
 
 function updateStreakDisplay() {
@@ -1680,26 +1677,46 @@ function switchPaymentMethod(method) {
 }
 
 function selectPlan(machineId, planIndex) {
+    console.log("🛒 selectPlan called:", machineId, planIndex);
     const machine = MACHINES.find(m => m.id === machineId);
-    if (!machine) return;
+    if (!machine) {
+        console.error("Machine not found:", machineId);
+        return;
+    }
     const plan = machine.plans[planIndex];
-    if (!checkRequirements(machine)) { showToast('You do not meet the requirements', 'error'); return; }
-    if (plan.price === 0) activateMachine(machineId, planIndex);
-    else openPaymentModal(machine, planIndex);
+    if (!checkRequirements(machine)) { 
+        showToast('You do not meet the requirements', 'error'); 
+        return; 
+    }
+    if (plan.price === 0) {
+        activateMachine(machineId, planIndex);
+    } else {
+        openPaymentModal(machine, planIndex);
+    }
 }
 
 function openPaymentModal(machine, planIndex) {
     const plan = machine.plans[planIndex];
-    document.getElementById('paymentMachineIcon').innerHTML = `<i class="fas ${machine.icon}" style="color: ${machine.color};"></i>`;
-    document.getElementById('paymentMachineName').textContent = machine.name;
-    document.getElementById('paymentDuration').textContent = plan.durationText || plan.duration + ' days';
-    document.getElementById('paymentPrice').textContent = plan.price + ' TON';
-    document.getElementById('paymentReturn').textContent = `${plan.returnAmount} TON (${plan.returnPercent}%)`;
-    document.getElementById('paymentTotal').textContent = plan.total + ' TON';
+    const machineIcon = document.getElementById('paymentMachineIcon');
+    const machineName = document.getElementById('paymentMachineName');
+    const duration = document.getElementById('paymentDuration');
+    const price = document.getElementById('paymentPrice');
+    const returnEl = document.getElementById('paymentReturn');
+    const total = document.getElementById('paymentTotal');
+    
+    if (machineIcon) machineIcon.innerHTML = `<i class="fas ${machine.icon}" style="color: ${machine.color};"></i>`;
+    if (machineName) machineName.textContent = machine.name;
+    if (duration) duration.textContent = plan.durationText || plan.duration + ' days';
+    if (price) price.textContent = plan.price + ' TON';
+    if (returnEl) returnEl.textContent = `${plan.returnAmount} TON (${plan.returnPercent}%)`;
+    if (total) total.textContent = plan.total + ' TON';
+    
     currentPayment = { machine, planIndex, plan };
     currentPaymentMethod = 'balance';
     switchPaymentMethod('balance');
-    document.getElementById('paymentModal').classList.add('show');
+    
+    const modal = document.getElementById('paymentModal');
+    if (modal) modal.classList.add('show');
     updateWalletUI();
 }
 
@@ -1722,7 +1739,7 @@ function rentWithBalance(machineId, planIndex) {
     const machine = MACHINES.find(m => m.id === machineId);
     const plan = machine.plans[planIndex];
     if (userData.balances.TON < plan.price) { 
-        showToast(t('error.insufficientBalance', { currency: 'TON' }), 'error'); 
+        showToast(`Insufficient balance! Need ${plan.price} TON`, 'error'); 
         return false; 
     }
     userData.balances.TON -= plan.price;
@@ -1771,13 +1788,22 @@ async function confirmWalletPayment() {
 let swapMode = 'from', swapFromCurrency = 'TON', swapToCurrency = 'USDT';
 
 function showSwapModal() {
-    document.getElementById('swapFromCurrency').textContent = swapFromCurrency;
-    document.getElementById('swapToCurrency').textContent = swapToCurrency;
-    document.getElementById('swapFromIcon').src = CONFIG.CMC_ICONS[swapFromCurrency];
-    document.getElementById('swapToIcon').src = CONFIG.CMC_ICONS[swapToCurrency];
+    console.log("🔄 showSwapModal called");
+    const fromCurrency = document.getElementById('swapFromCurrency');
+    const toCurrency = document.getElementById('swapToCurrency');
+    const fromIcon = document.getElementById('swapFromIcon');
+    const toIcon = document.getElementById('swapToIcon');
+    
+    if (fromCurrency) fromCurrency.textContent = swapFromCurrency;
+    if (toCurrency) toCurrency.textContent = swapToCurrency;
+    if (fromIcon) fromIcon.src = CONFIG.CMC_ICONS[swapFromCurrency];
+    if (toIcon) toIcon.src = CONFIG.CMC_ICONS[swapToCurrency];
+    
     updateSwapBalances();
     calculateSwap();
-    document.getElementById('swapModal').classList.add('show');
+    
+    const modal = document.getElementById('swapModal');
+    if (modal) modal.classList.add('show');
 }
 
 function updateSwapBalances() {
@@ -1790,24 +1816,30 @@ function updateSwapBalances() {
 function showCurrencySelector(type) {
     swapMode = type;
     const list = document.getElementById('currencyList');
+    if (!list) return;
     list.innerHTML = CONFIG.SWAP_CURRENCIES.map(a => 
         `<div class="currency-list-item" onclick="selectCurrency('${a.symbol}')">
             <img src="${CONFIG.CMC_ICONS[a.symbol]}" alt="${a.symbol}">
             <div class="currency-info"><h4>${a.name}</h4><p>${a.symbol}</p></div>
         </div>`
     ).join('');
-    document.getElementById('currencySelectorModal').classList.add('show');
+    const modal = document.getElementById('currencySelectorModal');
+    if (modal) modal.classList.add('show');
 }
 
 function selectCurrency(symbol) {
     if (swapMode === 'from') { 
         swapFromCurrency = symbol; 
-        document.getElementById('swapFromCurrency').textContent = symbol; 
-        document.getElementById('swapFromIcon').src = CONFIG.CMC_ICONS[symbol]; 
+        const fromCurrency = document.getElementById('swapFromCurrency');
+        const fromIcon = document.getElementById('swapFromIcon');
+        if (fromCurrency) fromCurrency.textContent = symbol; 
+        if (fromIcon) fromIcon.src = CONFIG.CMC_ICONS[symbol]; 
     } else { 
         swapToCurrency = symbol; 
-        document.getElementById('swapToCurrency').textContent = symbol; 
-        document.getElementById('swapToIcon').src = CONFIG.CMC_ICONS[symbol]; 
+        const toCurrency = document.getElementById('swapToCurrency');
+        const toIcon = document.getElementById('swapToIcon');
+        if (toCurrency) toCurrency.textContent = symbol; 
+        if (toIcon) toIcon.src = CONFIG.CMC_ICONS[symbol]; 
     }
     closeModal('currencySelectorModal');
     updateSwapBalances();
@@ -1815,7 +1847,7 @@ function selectCurrency(symbol) {
 }
 
 function filterCurrencies() {
-    const term = document.getElementById('currencySearch').value.toLowerCase();
+    const term = document.getElementById('currencySearch')?.value.toLowerCase() || '';
     document.querySelectorAll('.currency-list-item').forEach(i => {
         i.style.display = i.textContent.toLowerCase().includes(term) ? 'flex' : 'none';
     });
@@ -1823,41 +1855,50 @@ function filterCurrencies() {
 
 function flipSwap() {
     [swapFromCurrency, swapToCurrency] = [swapToCurrency, swapFromCurrency];
-    document.getElementById('swapFromCurrency').textContent = swapFromCurrency;
-    document.getElementById('swapToCurrency').textContent = swapToCurrency;
-    document.getElementById('swapFromIcon').src = CONFIG.CMC_ICONS[swapFromCurrency];
-    document.getElementById('swapToIcon').src = CONFIG.CMC_ICONS[swapToCurrency];
+    const fromCurrency = document.getElementById('swapFromCurrency');
+    const toCurrency = document.getElementById('swapToCurrency');
+    const fromIcon = document.getElementById('swapFromIcon');
+    const toIcon = document.getElementById('swapToIcon');
+    
+    if (fromCurrency) fromCurrency.textContent = swapFromCurrency;
+    if (toCurrency) toCurrency.textContent = swapToCurrency;
+    if (fromIcon) fromIcon.src = CONFIG.CMC_ICONS[swapFromCurrency];
+    if (toIcon) toIcon.src = CONFIG.CMC_ICONS[swapToCurrency];
+    
     updateSwapBalances();
     calculateSwap();
     animateElement('.swap-switch i', 'pop');
 }
 
 function calculateSwap() {
-    const from = parseFloat(document.getElementById('swapFromAmount').value) || 0;
+    const fromInput = document.getElementById('swapFromAmount');
     const toEl = document.getElementById('swapToAmount');
     const rateEl = document.getElementById('swapRate');
+    
+    const from = parseFloat(fromInput?.value) || 0;
     
     const fromPrice = swapFromCurrency === 'USDT' ? 1 : (livePrices[swapFromCurrency]?.price || 0);
     const toPrice = swapToCurrency === 'USDT' ? 1 : (livePrices[swapToCurrency]?.price || 0);
     
-    if (fromPrice > 0 && toPrice > 0) {
+    if (fromPrice > 0 && toPrice > 0 && toEl) {
         const rate = fromPrice / toPrice;
         toEl.value = (from * rate).toFixed(6);
-        rateEl.textContent = `1 ${swapFromCurrency} = ${rate.toFixed(6)} ${swapToCurrency}`;
-    } else {
+        if (rateEl) rateEl.textContent = `1 ${swapFromCurrency} = ${rate.toFixed(6)} ${swapToCurrency}`;
+    } else if (toEl) {
         toEl.value = '0';
-        rateEl.textContent = 'Rate unavailable';
+        if (rateEl) rateEl.textContent = 'Rate unavailable';
     }
 }
 
 function confirmSwap() {
-    const from = parseFloat(document.getElementById('swapFromAmount').value);
+    const fromInput = document.getElementById('swapFromAmount');
+    const from = parseFloat(fromInput?.value);
     const fromBal = userData.balances[swapFromCurrency] || 0;
+    const toEl = document.getElementById('swapToAmount');
+    const to = parseFloat(toEl?.value);
     
     if (!from || from <= 0) { showToast(t('error.enterAmount'), 'error'); return; }
-    if (from > fromBal) { showToast(t('error.insufficientBalance', { currency: swapFromCurrency }), 'error'); return; }
-    
-    const to = parseFloat(document.getElementById('swapToAmount').value);
+    if (from > fromBal) { showToast(`Insufficient ${swapFromCurrency} balance`, 'error'); return; }
     
     userData.balances[swapFromCurrency] -= from;
     userData.balances[swapToCurrency] += to;
@@ -1881,21 +1922,32 @@ function confirmSwap() {
 let selectedDepositCurrency = 'TON';
 
 function showDepositModal() {
+    console.log("💰 showDepositModal called");
     const select = document.getElementById('depositCurrencySelect');
-    select.innerHTML = CONFIG.ALL_ASSETS.map(a => 
-        `<option value="${a.symbol}" ${a.symbol === selectedDepositCurrency ? 'selected' : ''}>${a.name} (${a.symbol})</option>`
-    ).join('');
+    if (select) {
+        select.innerHTML = CONFIG.ALL_ASSETS.map(a => 
+            `<option value="${a.symbol}" ${a.symbol === selectedDepositCurrency ? 'selected' : ''}>${a.name} (${a.symbol})</option>`
+        ).join('');
+    }
     updateDepositInfo();
-    document.getElementById('depositModal').classList.add('show');
+    const modal = document.getElementById('depositModal');
+    if (modal) modal.classList.add('show');
     updateWalletUI();
 }
 
 function updateDepositInfo() {
-    const cur = document.getElementById('depositCurrencySelect')?.value || selectedDepositCurrency;
+    const select = document.getElementById('depositCurrencySelect');
+    const cur = select?.value || selectedDepositCurrency;
     selectedDepositCurrency = cur;
-    document.getElementById('depositAddress').textContent = CONFIG.DEPOSIT_ADDRESSES[cur] || 'Address not configured';
-    document.getElementById('depositIcon').src = CONFIG.CMC_ICONS[cur];
-    document.getElementById('depositMinAmount').textContent = `${CONFIG.DEPOSIT_MINIMUMS[cur] || 1} ${cur}`;
+    
+    const addressEl = document.getElementById('depositAddress');
+    const iconEl = document.getElementById('depositIcon');
+    const minEl = document.getElementById('depositMinAmount');
+    const hintEl = document.getElementById('depositNetworkHint');
+    
+    if (addressEl) addressEl.textContent = CONFIG.DEPOSIT_ADDRESSES[cur] || 'Address not configured';
+    if (iconEl) iconEl.src = CONFIG.CMC_ICONS[cur];
+    if (minEl) minEl.textContent = `${CONFIG.DEPOSIT_MINIMUMS[cur] || 1} ${cur}`;
     
     const net = CONFIG.NETWORK_TYPES[cur] || 'bsc';
     let hint = '';
@@ -1903,59 +1955,64 @@ function updateDepositInfo() {
     else if (net === 'solana') hint = 'Solana - 32-44 characters';
     else if (net === 'bitcoin') hint = 'Bitcoin - starts with 1, 3, or bc1';
     else if (net === 'ton') hint = 'TON - starts with UQ or EQ';
-    document.getElementById('depositNetworkHint').textContent = hint;
-    document.getElementById('confirmDepositBtn').disabled = true;
+    if (hintEl) hintEl.textContent = hint;
+    
+    const confirmBtn = document.getElementById('confirmDepositBtn');
+    if (confirmBtn) confirmBtn.disabled = true;
 }
 
 function validateDepositInput() {
     const cur = selectedDepositCurrency;
-    const amt = parseFloat(document.getElementById('depositAmount').value);
-    const hash = document.getElementById('depositTxHash').value.trim();
+    const amountEl = document.getElementById('depositAmount');
+    const hashEl = document.getElementById('depositTxHash');
+    const amt = parseFloat(amountEl?.value);
+    const hash = hashEl?.value.trim();
     const hint = document.getElementById('depositHashHint');
     const btn = document.getElementById('confirmDepositBtn');
     
     if (!amt || amt <= 0 || !hash) { 
         if (hint) { hint.textContent = 'Enter amount and hash'; hint.className = 'validation-hint invalid'; } 
-        btn.disabled = true; 
+        if (btn) btn.disabled = true; 
         return; 
     }
     
     const min = CONFIG.DEPOSIT_MINIMUMS[cur] || 1;
     if (amt < min) { 
-        hint.textContent = `Minimum is ${min} ${cur}`; 
-        hint.className = 'validation-hint invalid'; 
-        btn.disabled = true; 
+        if (hint) { hint.textContent = `Minimum is ${min} ${cur}`; hint.className = 'validation-hint invalid'; } 
+        if (btn) btn.disabled = true; 
         return; 
     }
     
     if (!validateTransactionHash(hash, cur)) { 
-        hint.textContent = `Invalid ${cur} hash`; 
-        hint.className = 'validation-hint invalid'; 
-        btn.disabled = true; 
+        if (hint) { hint.textContent = `Invalid ${cur} hash`; hint.className = 'validation-hint invalid'; } 
+        if (btn) btn.disabled = true; 
         return; 
     }
     
     if (userData.usedHashes?.includes(hash.toLowerCase())) { 
-        hint.textContent = 'Hash already used'; 
-        hint.className = 'validation-hint invalid'; 
-        btn.disabled = true; 
+        if (hint) { hint.textContent = 'Hash already used'; hint.className = 'validation-hint invalid'; } 
+        if (btn) btn.disabled = true; 
         return; 
     }
     
-    hint.textContent = '✓ Valid'; 
-    hint.className = 'validation-hint valid';
-    btn.disabled = false;
+    if (hint) { hint.textContent = '✓ Valid'; hint.className = 'validation-hint valid'; }
+    if (btn) btn.disabled = false;
 }
 
 function copyDepositAddress() {
-    navigator.clipboard.writeText(document.getElementById('depositAddress').textContent);
-    showToast('Address copied', 'success');
+    const addressEl = document.getElementById('depositAddress');
+    if (addressEl) {
+        navigator.clipboard.writeText(addressEl.textContent);
+        showToast('Address copied', 'success');
+    }
 }
 
 async function submitDeposit() {
     const cur = selectedDepositCurrency;
-    const amt = parseFloat(document.getElementById('depositAmount').value);
-    const hash = document.getElementById('depositTxHash').value.trim();
+    const amountEl = document.getElementById('depositAmount');
+    const hashEl = document.getElementById('depositTxHash');
+    const amt = parseFloat(amountEl?.value);
+    const hash = hashEl?.value.trim();
     
     const deposit = { 
         id: 'dep_' + Date.now() + '_' + randomId(), 
@@ -1982,13 +2039,6 @@ async function submitDeposit() {
             });
             deposit.firebaseId = docRef.id;
             
-            const allTxs = loadLocalTransactions();
-            const txIndex = allTxs.findIndex(t => t.id === deposit.id);
-            if (txIndex !== -1) {
-                allTxs[txIndex].firebaseId = docRef.id;
-                saveLocalTransactions(allTxs);
-            }
-            
             startOnDemandListener(CONFIG.COLLECTIONS.DEPOSITS, docRef.id, (data) => {
                 if (data.status === 'approved') {
                     userData.balances[cur] = (userData.balances[cur] || 0) + amt;
@@ -2000,14 +2050,11 @@ async function submitDeposit() {
                     saveUserToCache();
                     showToast(t('notif.depositApproved', { amount: amt, currency: cur }), 'success');
                     updateUI();
-                    
                     addLocalNotification(t('notif.depositApproved', { amount: amt, currency: cur }), 'success');
-                    
                 } else if (data.status === 'rejected') {
                     userData.pendingDeposits = userData.pendingDeposits.filter(d => d.id !== deposit.id);
                     saveUserToCache();
                     showToast(t('notif.depositRejected', { reason: data.reason || 'Unknown' }), 'error');
-                    
                     addLocalNotification(t('notif.depositRejected', { reason: data.reason || 'Unknown' }), 'error');
                 }
             }, CONFIG.CACHE.LISTENER_TTL);
@@ -2021,8 +2068,8 @@ async function submitDeposit() {
     
     closeModal('depositModal');
     showToast(t('notif.depositSubmitted'), 'success');
-    document.getElementById('depositAmount').value = '';
-    document.getElementById('depositTxHash').value = '';
+    if (amountEl) amountEl.value = '';
+    if (hashEl) hashEl.value = '';
     
     addTransaction('deposit', amt, { currency: cur, txHash: hash, status: 'pending' });
 }
@@ -2031,6 +2078,7 @@ async function submitDeposit() {
 let selectedWithdrawNetwork = 'BEP20';
 
 function showWithdrawModal() {
+    console.log("💸 showWithdrawModal called");
     const select = document.getElementById('withdrawNetworkSelect');
     if (select) {
         select.innerHTML = CONFIG.WITHDRAW_NETWORKS.USDT.map(net => 
@@ -2038,11 +2086,13 @@ function showWithdrawModal() {
         ).join('');
     }
     updateWithdrawInfo();
-    document.getElementById('withdrawModal').classList.add('show');
+    const modal = document.getElementById('withdrawModal');
+    if (modal) modal.classList.add('show');
 }
 
 function updateWithdrawInfo() {
-    const netValue = document.getElementById('withdrawNetworkSelect')?.value || selectedWithdrawNetwork;
+    const select = document.getElementById('withdrawNetworkSelect');
+    const netValue = select?.value || selectedWithdrawNetwork;
     selectedWithdrawNetwork = netValue;
     
     const network = CONFIG.WITHDRAW_NETWORKS.USDT.find(n => n.value === netValue);
@@ -2050,14 +2100,16 @@ function updateWithdrawInfo() {
     const feeCurrency = network ? network.feeCurrency : 'BNB';
     
     const bal = userData.balances.USDT || 0;
-    document.getElementById('withdrawBalance').textContent = `${formatBalance(bal, 'USDT')} USDT`;
-    document.getElementById('withdrawIcon').src = CONFIG.CMC_ICONS.USDT;
-    
+    const balanceEl = document.getElementById('withdrawBalance');
+    const iconEl = document.getElementById('withdrawIcon');
     const feeEl = document.getElementById('withdrawFeeInfo');
+    const feeBalanceEl = document.getElementById('withdrawFeeCurrencyBalance');
+    
+    if (balanceEl) balanceEl.textContent = `${formatBalance(bal, 'USDT')} USDT`;
+    if (iconEl) iconEl.src = CONFIG.CMC_ICONS.USDT;
     if (feeEl) feeEl.innerHTML = t('withdraw.fee', { fee, currency: feeCurrency });
     
     const feeCurrencyBalance = userData.balances[feeCurrency] || 0;
-    const feeBalanceEl = document.getElementById('withdrawFeeCurrencyBalance');
     if (feeBalanceEl) {
         feeBalanceEl.textContent = `Your ${feeCurrency} balance: ${formatBalance(feeCurrencyBalance, feeCurrency)} ${feeCurrency}`;
     }
@@ -2066,8 +2118,10 @@ function updateWithdrawInfo() {
 }
 
 function validateWithdrawInput() {
-    const amt = parseFloat(document.getElementById('withdrawAmount').value);
-    const addr = document.getElementById('withdrawAddress').value.trim();
+    const amountEl = document.getElementById('withdrawAmount');
+    const addressEl = document.getElementById('withdrawAddress');
+    const amt = parseFloat(amountEl?.value);
+    const addr = addressEl?.value.trim();
     const netValue = selectedWithdrawNetwork;
     const network = CONFIG.WITHDRAW_NETWORKS.USDT.find(n => n.value === netValue);
     const fee = network ? network.fee : 0.0005;
@@ -2078,41 +2132,38 @@ function validateWithdrawInput() {
     
     if (!amt || amt <= 0 || !addr) { 
         if (hint) { hint.textContent = 'Enter amount and address'; hint.className = 'validation-hint invalid'; } 
-        btn.disabled = true; 
+        if (btn) btn.disabled = true; 
         return; 
     }
     
     const bal = userData.balances.USDT || 0;
     if (amt > bal) { 
-        hint.textContent = 'Insufficient USDT balance'; 
-        hint.className = 'validation-hint invalid'; 
-        btn.disabled = true; 
+        if (hint) { hint.textContent = 'Insufficient USDT balance'; hint.className = 'validation-hint invalid'; } 
+        if (btn) btn.disabled = true; 
         return; 
     }
     
     const feeCurrencyBalance = userData.balances[feeCurrency] || 0;
     if (feeCurrencyBalance < fee) {
-        hint.textContent = `Insufficient ${feeCurrency} for fee. Need ${fee} ${feeCurrency}`; 
-        hint.className = 'validation-hint invalid'; 
-        btn.disabled = true; 
+        if (hint) { hint.textContent = `Insufficient ${feeCurrency} for fee. Need ${fee} ${feeCurrency}`; hint.className = 'validation-hint invalid'; } 
+        if (btn) btn.disabled = true; 
         return;
     }
     
     if (!addr.startsWith('0x') || addr.length !== 42) {
-        hint.textContent = `Invalid address format. Must start with 0x and be 42 characters`; 
-        hint.className = 'validation-hint invalid'; 
-        btn.disabled = true; 
+        if (hint) { hint.textContent = `Invalid address format. Must start with 0x and be 42 characters`; hint.className = 'validation-hint invalid'; } 
+        if (btn) btn.disabled = true; 
         return;
     }
     
-    hint.textContent = '✓ Valid'; 
-    hint.className = 'validation-hint valid';
-    btn.disabled = false;
+    if (hint) { hint.textContent = '✓ Valid'; hint.className = 'validation-hint valid'; }
+    if (btn) btn.disabled = false;
 }
 
 function updateWithdrawAmount() {
-    const amt = parseFloat(document.getElementById('withdrawAmount').value) || 0;
-    const netValue = document.getElementById('withdrawNetworkSelect')?.value || selectedWithdrawNetwork;
+    const amountEl = document.getElementById('withdrawAmount');
+    const amt = parseFloat(amountEl?.value) || 0;
+    const netValue = selectedWithdrawNetwork;
     const network = CONFIG.WITHDRAW_NETWORKS.USDT.find(n => n.value === netValue);
     const fee = network ? network.fee : 0.0005;
     
@@ -2124,8 +2175,10 @@ function updateWithdrawAmount() {
 }
 
 async function submitWithdraw() {
-    const amt = parseFloat(document.getElementById('withdrawAmount').value);
-    const addr = document.getElementById('withdrawAddress').value.trim();
+    const amountEl = document.getElementById('withdrawAmount');
+    const addressEl = document.getElementById('withdrawAddress');
+    const amt = parseFloat(amountEl?.value);
+    const addr = addressEl?.value.trim();
     const netValue = selectedWithdrawNetwork;
     const network = CONFIG.WITHDRAW_NETWORKS.USDT.find(n => n.value === netValue);
     const fee = network ? network.fee : 0.0005;
@@ -2183,9 +2236,7 @@ async function submitWithdraw() {
                     userData.completedWithdrawals.push({ ...withdraw, status: 'approved' });
                     saveUserToCache();
                     showToast(t('notif.withdrawApproved', { amount: amt, currency: 'USDT' }), 'success');
-                    
                     addLocalNotification(t('notif.withdrawApproved', { amount: amt, currency: 'USDT' }), 'success');
-                    
                 } else if (data.status === 'rejected') {
                     userData.balances.USDT += amt;
                     userData.balances[feeCurrency] += fee;
@@ -2193,7 +2244,6 @@ async function submitWithdraw() {
                     userData.pendingWithdrawals = userData.pendingWithdrawals.filter(w => w.id !== withdraw.id);
                     saveUserToCache();
                     showToast(t('notif.withdrawRejected', { reason: data.reason || 'Unknown' }), 'error');
-                    
                     addLocalNotification(t('notif.withdrawRejected', { reason: data.reason || 'Unknown' }), 'error');
                     updateUI();
                 }
@@ -2209,8 +2259,8 @@ async function submitWithdraw() {
     closeModal('withdrawModal');
     showToast(t('notif.withdrawSubmitted'), 'success');
     updateUI();
-    document.getElementById('withdrawAmount').value = '';
-    document.getElementById('withdrawAddress').value = '';
+    if (amountEl) amountEl.value = '';
+    if (addressEl) addressEl.value = '';
     
     addTransaction('withdraw', amt, { currency: 'USDT', address: addr, network: netValue, fee, feeCurrency, status: 'pending' });
 }
@@ -2219,9 +2269,13 @@ async function submitWithdraw() {
 let currentHistoryFilter = 'all';
 
 function showHistory() {
-    document.getElementById('historyModal').classList.add('show');
-    renderHistory('all');
-    checkPendingTransactions();
+    console.log("📜 showHistory called");
+    const modal = document.getElementById('historyModal');
+    if (modal) {
+        modal.classList.add('show');
+        renderHistory('all');
+        checkPendingTransactions();
+    }
 }
 
 function renderHistory(filter = 'all') {
@@ -2283,7 +2337,7 @@ function renderHistory(filter = 'all') {
 
 function filterHistory(filter) {
     document.querySelectorAll('.history-filter').forEach(t => t.classList.remove('active'));
-    event.target.classList.add('active');
+    if (event && event.target) event.target.classList.add('active');
     renderHistory(filter);
 }
 
@@ -2311,13 +2365,6 @@ async function checkPendingTransactions() {
                     userData.balances[d.currency] = (userData.balances[d.currency] || 0) + d.amount;
                     if (d.currency === 'TON') userData.balance = userData.balances.TON;
                     showToast(t('notif.depositApproved', { amount: d.amount, currency: d.currency }), 'success');
-                    
-                    const allTxs = loadLocalTransactions();
-                    const txIndex = allTxs.findIndex(t => t.id === d.id);
-                    if (txIndex !== -1) {
-                        allTxs[txIndex].status = 'approved';
-                        saveLocalTransactions(allTxs);
-                    }
                 }
             }
         } catch (e) {}
@@ -2333,30 +2380,13 @@ async function checkPendingTransactions() {
                     if (!userData.completedWithdrawals) userData.completedWithdrawals = [];
                     userData.completedWithdrawals.push({ ...w, status: 'approved' });
                     showToast(t('notif.withdrawApproved', { amount: w.amount, currency: w.currency }), 'success');
-                    
-                    const allTxs = loadLocalTransactions();
-                    const txIndex = allTxs.findIndex(t => t.id === w.id);
-                    if (txIndex !== -1) {
-                        allTxs[txIndex].status = 'approved';
-                        saveLocalTransactions(allTxs);
-                    }
-                    
                 } else if (data.status === 'rejected') {
                     userData.balances[w.currency] += w.amount;
                     if (w.fee && w.feeCurrency) {
                         userData.balances[w.feeCurrency] += w.fee;
                     }
                     userData.totalWithdrawn -= w.amount;
-                    
                     showToast(t('notif.withdrawRejected', { reason: data.reason || 'Unknown' }), 'error');
-                    
-                    const allTxs = loadLocalTransactions();
-                    const txIndex = allTxs.findIndex(t => t.id === w.id);
-                    if (txIndex !== -1) {
-                        allTxs[txIndex].status = 'rejected';
-                        allTxs[txIndex].reason = data.reason;
-                        saveLocalTransactions(allTxs);
-                    }
                 }
             }
         } catch (e) {}
@@ -2491,40 +2521,20 @@ function updateChart() {
     ).join('');
 }
 
-// ====== 32. UPDATE WHEEL UI ======
-function updateWheelUI() {
-    // kept for compatibility
-}
-
-// ====== 33. UPDATE SLOTS UI ======
-function updateSlotsUI() {
-    // kept for compatibility
-}
-
-// ====== 34. UPDATE PURCHASED SPINS ======
+// ====== 32. UPDATE PURCHASED SPINS ======
 function updatePurchasedSpinsDisplay() {
     const wheelSpins = document.getElementById('wheelPurchasedSpins');
-    const wheelModalSpins = document.getElementById('wheelModalPurchasedSpins');
     const slotsSpins = document.getElementById('slotsPurchasedSpins');
-    const slotsModalSpins = document.getElementById('slotsModalPurchasedSpins');
     
     if (wheelSpins) {
         wheelSpins.innerHTML = `Your spins: <span class="spin-count">${userData.wheel.purchasedSpins || 0}</span>`;
     }
-    if (wheelModalSpins) {
-        const spinCount = wheelModalSpins.querySelector('.spin-count');
-        if (spinCount) spinCount.textContent = userData.wheel.purchasedSpins || 0;
-    }
     if (slotsSpins) {
         slotsSpins.innerHTML = `Your spins: <span class="spin-count">${userData.slots.purchasedSpins || 0}</span>`;
     }
-    if (slotsModalSpins) {
-        const spinCount = slotsModalSpins.querySelector('.spin-count');
-        if (spinCount) spinCount.textContent = userData.slots.purchasedSpins || 0;
-    }
 }
 
-// ====== 35. WHEEL PACKS ======
+// ====== 33. WHEEL PACKS ======
 async function buyWheelPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -2557,7 +2567,7 @@ async function buyWheelPack(pack) {
             }]
         };
         
-        const result = await tonConnectUI.sendTransaction(tx);
+        await tonConnectUI.sendTransaction(tx);
         
         showToast('Payment sent! Waiting for confirmation...', 'info');
         
@@ -2582,7 +2592,7 @@ async function buyWheelPack(pack) {
     }
 }
 
-// ====== 36. SLOTS PACKS ======
+// ====== 34. SLOTS PACKS ======
 async function buySlotsPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -2615,7 +2625,7 @@ async function buySlotsPack(pack) {
             }]
         };
         
-        const result = await tonConnectUI.sendTransaction(tx);
+        await tonConnectUI.sendTransaction(tx);
         
         showToast('Payment sent! Waiting for confirmation...', 'info');
         
@@ -2640,7 +2650,7 @@ async function buySlotsPack(pack) {
     }
 }
 
-// ====== 37. SAVE TO FIREBASE ======
+// ====== 35. SAVE TO FIREBASE ======
 async function saveToFirebase() {
     if (!db) return;
     try {
@@ -2671,21 +2681,28 @@ async function saveToFirebase() {
     } catch (e) {}
 }
 
-// ====== 38. MODAL FUNCTIONS ======
+// ====== 36. MODAL FUNCTIONS ======
 function closeModal(id) {
     const modal = document.getElementById(id);
     if (!modal) return;
     modal.classList.remove('show');
     
     if (id === 'paymentModal') currentPayment = null;
-    if (id === 'swapModal') document.getElementById('swapFromAmount').value = '1';
+    if (id === 'swapModal') {
+        const fromInput = document.getElementById('swapFromAmount');
+        if (fromInput) fromInput.value = '1';
+    }
     if (id === 'depositModal') { 
-        document.getElementById('depositAmount').value = ''; 
-        document.getElementById('depositTxHash').value = ''; 
+        const amountEl = document.getElementById('depositAmount');
+        const hashEl = document.getElementById('depositTxHash');
+        if (amountEl) amountEl.value = ''; 
+        if (hashEl) hashEl.value = ''; 
     }
     if (id === 'withdrawModal') { 
-        document.getElementById('withdrawAmount').value = ''; 
-        document.getElementById('withdrawAddress').value = ''; 
+        const amountEl = document.getElementById('withdrawAmount');
+        const addressEl = document.getElementById('withdrawAddress');
+        if (amountEl) amountEl.value = ''; 
+        if (addressEl) addressEl.value = ''; 
     }
 }
 
@@ -2696,39 +2713,43 @@ function hideAllModals() {
     });
 }
 
-// ====== 39. FILTER MARKET ======
+// ====== 37. FILTER MARKET ======
 function filterMarket(filter) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
+    if (event && event.target) event.target.classList.add('active');
     document.querySelectorAll('.showcase-card-legendary').forEach(c => {
-        const name = c.querySelector('h3').textContent;
+        const name = c.querySelector('h3')?.textContent || '';
         const m = MACHINES.find(m => m.name === name || m.nameAr === name);
         c.style.display = filter === 'all' || m?.filter === filter ? 'flex' : 'none';
     });
 }
 
-// ====== 40. ADMIN FUNCTIONS ======
+// ====== 38. ADMIN FUNCTIONS ======
 let currentAdminTab = 'withdrawals';
 
 function showAdminPanel() {
     if (!isAdmin) { showToast('Access denied', 'error'); return; }
-    document.getElementById('adminModal').classList.add('show');
+    const modal = document.getElementById('adminModal');
+    if (modal) modal.classList.add('show');
     loadAdminCounts();
 }
 
 function switchAdminTab(tab) {
     currentAdminTab = tab;
     document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-    event.target.classList.add('active');
-    document.getElementById('adminContent').innerHTML = `
-        <div class="admin-refresh-message">
-            <i class="fas fa-hand-pointer"></i>
-            <p>${t('admin.clickRefresh')}</p>
-            <button class="admin-refresh-btn" onclick="refreshAdminPanel()">
-                <i class="fas fa-rotate-right"></i> <span>${t('admin.refresh')}</span>
-            </button>
-        </div>
-    `;
+    if (event && event.target) event.target.classList.add('active');
+    const content = document.getElementById('adminContent');
+    if (content) {
+        content.innerHTML = `
+            <div class="admin-refresh-message">
+                <i class="fas fa-hand-pointer"></i>
+                <p>${t('admin.clickRefresh')}</p>
+                <button class="admin-refresh-btn" onclick="refreshAdminPanel()">
+                    <i class="fas fa-rotate-right"></i> <span>${t('admin.refresh')}</span>
+                </button>
+            </div>
+        `;
+    }
 }
 
 async function loadAdminCounts() {
@@ -2738,7 +2759,6 @@ async function loadAdminCounts() {
         try {
             withdrawalsSnap = await db.collection(CONFIG.COLLECTIONS.WITHDRAWALS).where('status', '==', 'pending').get();
         } catch (e) {
-            console.log("ℹ️ No withdrawals collection yet - this is normal");
             withdrawalsSnap = { empty: true, size: 0 };
         }
         
@@ -2746,12 +2766,13 @@ async function loadAdminCounts() {
         try {
             depositsSnap = await db.collection(CONFIG.COLLECTIONS.DEPOSITS).where('status', '==', 'pending').get();
         } catch (e) {
-            console.log("ℹ️ No deposits collection yet - this is normal");
             depositsSnap = { empty: true, size: 0 };
         }
         
-        document.getElementById('pendingWithdrawalsCount').textContent = withdrawalsSnap.size;
-        document.getElementById('pendingDepositsCount').textContent = depositsSnap.size;
+        const withdrawCount = document.getElementById('pendingWithdrawalsCount');
+        const depositCount = document.getElementById('pendingDepositsCount');
+        if (withdrawCount) withdrawCount.textContent = withdrawalsSnap.size;
+        if (depositCount) depositCount.textContent = depositsSnap.size;
     } catch (e) {
         console.error("Error loading counts:", e);
     }
@@ -2760,12 +2781,12 @@ async function loadAdminCounts() {
 async function refreshAdminPanel() {
     if (!isAdmin || !db) return;
     
-    const btn = event.currentTarget;
-    const icon = btn.querySelector('i');
+    const btn = event?.currentTarget;
+    const icon = btn?.querySelector('i');
     if (icon) icon.classList.add('fa-spin');
     
     const content = document.getElementById('adminContent');
-    content.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+    if (content) content.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
     
     try {
         const col = currentAdminTab === 'withdrawals' ? CONFIG.COLLECTIONS.WITHDRAWALS : CONFIG.COLLECTIONS.DEPOSITS;
@@ -2774,14 +2795,13 @@ async function refreshAdminPanel() {
         try {
             snap = await db.collection(col).where('status', '==', 'pending').orderBy('timestamp', 'desc').get();
         } catch (e) {
-            console.log(`ℹ️ ${col} collection not found yet`);
-            content.innerHTML = `<div class="empty-state">${t('admin.noPending')}</div>`;
+            if (content) content.innerHTML = `<div class="empty-state">${t('admin.noPending')}</div>`;
             if (icon) setTimeout(() => icon.classList.remove('fa-spin'), 500);
             return;
         }
         
         if (snap.empty) { 
-            content.innerHTML = `<div class="empty-state">${t('admin.noPending')}</div>`; 
+            if (content) content.innerHTML = `<div class="empty-state">${t('admin.noPending')}</div>`; 
             if (icon) setTimeout(() => icon.classList.remove('fa-spin'), 500);
             return; 
         }
@@ -2837,10 +2857,10 @@ async function refreshAdminPanel() {
                 </div>`;
             }
         });
-        content.innerHTML = html;
+        if (content) content.innerHTML = html;
     } catch (e) { 
         console.error("Error refreshing admin:", e);
-        content.innerHTML = `<div class="empty-state">${t('admin.error')}</div>`; 
+        if (content) content.innerHTML = `<div class="empty-state">${t('admin.error')}</div>`; 
     }
     
     if (icon) setTimeout(() => icon.classList.remove('fa-spin'), 500);
@@ -2850,11 +2870,13 @@ function openRejectModal(id, type, targetUserId, currency, amount) {
     currentRejectId = id;
     currentRejectType = type;
     currentRejectData = { targetUserId, currency, amount };
-    document.getElementById('rejectModal').classList.add('show');
+    const modal = document.getElementById('rejectModal');
+    if (modal) modal.classList.add('show');
 }
 
 async function submitRejection() {
-    const reason = document.getElementById('rejectReason').value.trim();
+    const reasonEl = document.getElementById('rejectReason');
+    const reason = reasonEl?.value.trim();
     if (!reason) {
         showToast('Please enter a reason', 'error');
         return;
@@ -2884,7 +2906,7 @@ async function submitRejection() {
             'error');
         
         closeModal('rejectModal');
-        document.getElementById('rejectReason').value = '';
+        if (reasonEl) reasonEl.value = '';
         refreshAdminPanel();
         
     } catch (e) { 
@@ -2929,7 +2951,7 @@ function copyToClipboard(text) {
     showToast('Copied!', 'success'); 
 }
 
-// ====== 41. CLOSE JACKPOT POPUP ======
+// ====== 39. CLOSE JACKPOT POPUP ======
 function closeJackpotPopup() {
     const popup = document.getElementById('jackpotPopup');
     if (popup) {
@@ -2940,7 +2962,7 @@ function closeJackpotPopup() {
     }
 }
 
-// ====== 42. PRICES ======
+// ====== 40. PRICES ======
 let livePrices = {};
 
 async function loadPrices(force = false) {
@@ -2976,7 +2998,7 @@ async function loadPrices(force = false) {
 
 function updatePrices() {
     renderAssets();
-    updateTotalBalance();
+    updateBalance();
 }
 
 function refreshPrices() {
@@ -2984,7 +3006,7 @@ function refreshPrices() {
     loadPrices(true);
 }
 
-// ====== 43. REFERRAL SYSTEM ======
+// ====== 41. REFERRAL SYSTEM ======
 function generateReferralCode() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     return userId.slice(-4) + Array.from({length:6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
@@ -3059,28 +3081,6 @@ async function processReferral() {
     }
 }
 
-async function processReferralMiningBonus(referralId, miningAmount) {
-    if (!db || !userData.referrals?.includes(referralId)) return;
-    const bonus = miningAmount * CONFIG.ECONOMY.REFERRAL_PERCENT;
-    userData.referralMiningTrack = userData.referralMiningTrack || {};
-    userData.referralMiningTrack[referralId] = (userData.referralMiningTrack[referralId] || 0) + miningAmount;
-    userData.balances.TON += bonus;
-    userData.balance = userData.balances.TON;
-    userData.totalEarned += bonus;
-    userData.referralEarnings += bonus;
-    saveUserToCache();
-    
-    try {
-        await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).update({
-            'balances.TON': userData.balances.TON,
-            totalEarned: userData.totalEarned,
-            referralEarnings: userData.referralEarnings
-        });
-    } catch (e) {}
-    
-    addLocalNotification(t('notif.referralMiningBonus', { amount: bonus.toFixed(4) }), 'success');
-}
-
 async function checkReferralMilestones() {
     if (!userData.referralMilestonesClaimed) userData.referralMilestonesClaimed = [];
     
@@ -3108,7 +3108,7 @@ async function checkReferralMilestones() {
     saveUserToCache();
 }
 
-// ====== 44. DAILY LOGIN BONUS ======
+// ====== 42. DAILY LOGIN BONUS ======
 function checkDailyLogin() {
     const today = new Date().toDateString();
     if (!userData.dailyLogin) userData.dailyLogin = { lastLogin: null, streak: 0 };
@@ -3134,7 +3134,7 @@ function checkDailyLogin() {
     }
 }
 
-// ====== 45. NOTIFICATION SYSTEM ======
+// ====== 43. NOTIFICATION SYSTEM ======
 let unreadCount = 0;
 
 function addLocalNotification(message, type = 'info') {
@@ -3264,7 +3264,7 @@ function showNotifications() {
     }
 }
 
-// ====== 46. FLOATING NOTIFICATIONS ======
+// ====== 44. FLOATING NOTIFICATIONS ======
 let floatingTimeouts = [];
 
 function showFloatingToast(message, type = 'info') {
@@ -3302,7 +3302,7 @@ function stopFloatingNotifications() {
     floatingTimeouts = [];
 }
 
-// ====== 47. WELCOME STICKER ======
+// ====== 45. WELCOME STICKER ======
 const WELCOME_STICKERS = ['🤝', '🫣', '🥰', '🥳', '💲', '💰', '💸', '💵', '🤪', '😱', '😎', '🤑', '💯', '💖', '✨', '🌟', '⭐', '🔥', '⚡', '💎', '🎁', '🎈', '🎉', '👑', '🚀', '💫'];
 let lastStickerTime = 0;
 const STICKER_COOLDOWN = 12 * 60 * 1000;
@@ -3328,7 +3328,7 @@ function showRandomSticker() {
     lastStickerTime = now;
 }
 
-// ====== 48. LOAD USER DATA ======
+// ====== 46. LOAD USER DATA ======
 async function loadUserData(force = false) {
     try {
         console.log("📂 Loading user data for:", userId);
@@ -3427,7 +3427,7 @@ function updateUserDisplay() {
     }
 }
 
-// ====== 49. VEGAS ELITE - تحسينات الكازينو الأسطورية ======
+// ====== 47. VEGAS ELITE - تحسينات الكازينو الأسطورية ======
 
 // نظام الصوت المتكامل
 const VegasAudio = {
@@ -4363,18 +4363,10 @@ function openWithdrawModal() {
     if (currentPage !== 'profile') {
         openProfileFromAnywhere();
         setTimeout(() => {
-            if (typeof showWithdrawModal === 'function') {
-                showWithdrawModal();
-            } else {
-                document.getElementById('withdrawModal')?.classList.add('show');
-            }
+            showWithdrawModal();
         }, 400);
     } else {
-        if (typeof showWithdrawModal === 'function') {
-            showWithdrawModal();
-        } else {
-            document.getElementById('withdrawModal')?.classList.add('show');
-        }
+        showWithdrawModal();
     }
 }
 
@@ -4383,18 +4375,10 @@ function openDepositModal() {
     if (currentPage !== 'profile') {
         openProfileFromAnywhere();
         setTimeout(() => {
-            if (typeof showDepositModal === 'function') {
-                showDepositModal();
-            } else {
-                document.getElementById('depositModal')?.classList.add('show');
-            }
+            showDepositModal();
         }, 400);
     } else {
-        if (typeof showDepositModal === 'function') {
-            showDepositModal();
-        } else {
-            document.getElementById('depositModal')?.classList.add('show');
-        }
+        showDepositModal();
     }
 }
 
@@ -4403,18 +4387,10 @@ function openSwapModal() {
     if (currentPage !== 'profile') {
         openProfileFromAnywhere();
         setTimeout(() => {
-            if (typeof showSwapModal === 'function') {
-                showSwapModal();
-            } else {
-                document.getElementById('swapModal')?.classList.add('show');
-            }
+            showSwapModal();
         }, 400);
     } else {
-        if (typeof showSwapModal === 'function') {
-            showSwapModal();
-        } else {
-            document.getElementById('swapModal')?.classList.add('show');
-        }
+        showSwapModal();
     }
 }
 
@@ -4423,22 +4399,14 @@ function openHistoryModal() {
     if (currentPage !== 'profile') {
         openProfileFromAnywhere();
         setTimeout(() => {
-            if (typeof showHistory === 'function') {
-                showHistory();
-            } else {
-                document.getElementById('historyModal')?.classList.add('show');
-            }
+            showHistory();
         }, 400);
     } else {
-        if (typeof showHistory === 'function') {
-            showHistory();
-        } else {
-            document.getElementById('historyModal')?.classList.add('show');
-        }
+        showHistory();
     }
 }
 
-// ====== 50. INITIALIZATION ======
+// ====== 48. INITIALIZATION ======
 document.addEventListener('DOMContentLoaded', async () => {
     hideAllModals();
     
@@ -4474,8 +4442,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, 300000);
     
     setTimeout(() => { 
-        document.getElementById('loading').style.opacity = '0'; 
-        setTimeout(() => document.getElementById('loading').style.display = 'none', 500); 
+        const loading = document.getElementById('loading');
+        if (loading) {
+            loading.style.opacity = '0'; 
+            setTimeout(() => loading.style.display = 'none', 500); 
+        }
     }, 2000);
     
     startFloatingNotifications();
@@ -4522,7 +4493,7 @@ document.addEventListener('click', () => {
     }
 }, { once: true });
 
-// ====== 51. EXPORT FUNCTIONS ======
+// ====== 49. EXPORT FUNCTIONS ======
 window.showPage = showPage;
 window.showMarket = ()=>showPage('market');
 window.showWallet = showWallet;
