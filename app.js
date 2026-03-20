@@ -4028,63 +4028,89 @@ function updateVegasHeat() {
     }
 }
 
-// آلة السلوتس المحسنة
-let slotsVegasState = {
-    isSpinning: false,
-    reels: [[], [], []],
-    positions: [0, 0, 0],
-    targetPositions: [0, 0, 0],
-    animationId: null,
-    results: []
-};
+function selectVegasPrize() {
+    const totalWeight = WHEEL_PRIZES.reduce((s, p) => s + p.weight, 0);
+    let rand = Math.random() * totalWeight;
+    
+    for (const prize of WHEEL_PRIZES) {
+        rand -= prize.weight;
+        if (rand <= 0) return prize;
+    }
+    return WHEEL_PRIZES[0];
+}
 
-function initSlotsVegas() {
-    console.log("🎰 initSlotsVegas started");
-    const container = document.getElementById('slotReelsPro');
-    if (!container) {
-        console.error("❌ slotReelsPro not found, retrying...");
-        setTimeout(initSlotsVegas, 200);
+function awardVegasPrize(prize) {
+    userData.wheel.lastWin = { prize, timestamp: Date.now() };
+    
+    if (prize.goodluck) {
+        showToastPro('🍀 GOOD LUCK! Try again!', 'info');
+        VegasAudio.coin();
+        userData.wheel.freeSpins = (userData.wheel.freeSpins || 0) + 1;
+        saveUserToCache();
+        updateWheelVegasUI();
         return;
     }
     
-    console.log("✅ slotReelsPro found, drawing slots...");
-    container.innerHTML = '';
-    
-    const symbols = ['🍒', '🍋', '🍇', '💎', '7️⃣', '💰', '👑', '🎰'];
-    const colors = ['#ff4444', '#ffdd00', '#aa44ff', '#00f2ff', '#ff4444', '#ffaa00', '#ffdd00', '#ff00ff'];
-    
-    for (let i = 0; i < 3; i++) {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'vegas-slot-reel-wrapper';
-        wrapper.dataset.reel = i;
-        
-        const reel = document.createElement('div');
-        reel.className = 'vegas-slot-reel';
-        reel.id = `vegas-reel-${i}`;
-        
-        for (let j = 0; j < 20; j++) {
-            const randomIndex = Math.floor(Math.random() * symbols.length);
-            const symbol = document.createElement('div');
-            symbol.className = 'vegas-slot-symbol';
-            symbol.textContent = symbols[randomIndex];
-            symbol.style.color = colors[randomIndex];
-            symbol.style.fontSize = '3.5rem';
-            symbol.style.height = '110px';
-            symbol.style.display = 'flex';
-            symbol.style.alignItems = 'center';
-            symbol.style.justifyContent = 'center';
-            symbol.style.background = '#2a2a3a';
-            symbol.style.borderBottom = '1px solid #3a3a4a';
-            reel.appendChild(symbol);
-        }
-        
-        wrapper.appendChild(reel);
-        container.appendChild(wrapper);
-        
-        reel.style.transform = `translateY(-${Math.floor(Math.random() * 500)}px)`;
+    if (prize.freespin) {
+        showToastPro('🆓 FREE SPIN STORED!', 'success');
+        VegasAudio.coin();
+        userData.wheel.freeSpins = (userData.wheel.freeSpins || 0) + 1;
+        saveUserToCache();
+        updateWheelVegasUI();
+        return;
     }
     
-    console.log("✅ Slots drawn");
+    if (prize.jackpot) {
+        const currency = prize.currency || prize.type;
+        const amount = prize.amount;
+        
+        if (currency === 'TON') {
+            userData.balances.TON += amount;
+            userData.balance = userData.balances.TON;
+        } else {
+            userData.balances[currency] = (userData.balances[currency] || 0) + amount;
+        }
+        userData.totalEarned += amount;
+        addTransaction('wheel', amount, { currency, jackpot: true });
+        
+        if (prize.amount === 500) {
+            JackpotTheater.play(amount, currency, 'mega');
+            showWinPopup(`${amount} ${currency}`, 'mega');
+        } else {
+            JackpotTheater.play(amount, currency, 'jackpot');
+            showWinPopup(`${amount} ${currency}`, 'jackpot');
+        }
+        
+        userData.wheel.jackpotWon++;
+        saveUserToCache();
+        updateUI();
+        updateWheelVegasUI();
+        return;
+    }
+    
+    const currency = prize.type;
+    const amount = prize.amount;
+    
+    userData.balances[currency] += amount;
+    if (currency === 'TON') userData.balance = userData.balances.TON;
+    userData.totalEarned += amount;
+    addTransaction('wheel', amount, { currency });
+    
+    if (amount >= 50) {
+        showWinPopup(`${amount} ${currency}`, 'nice');
+        VegasAudio.bigWin();
+    } else if (amount >= 10) {
+        showWinPopup(`${amount} ${currency}`, 'big');
+        VegasAudio.win();
+    } else {
+        showWinPopup(`${amount} ${currency}`, 'normal');
+        VegasAudio.coin();
+    }
+    
+    hapticFeedback(amount >= 10 ? 'medium' : 'light');
+    saveUserToCache();
+    updateUI();
+    updateWheelVegasUI();
 }
 
 function spinWheelVegas(isFree = false) {
@@ -4211,89 +4237,88 @@ function animateWheelVegas() {
     wheelVegasState.animationId = requestAnimationFrame(animateWheelVegas);
 }
 
-function selectVegasPrize() {
-    const totalWeight = WHEEL_PRIZES.reduce((s, p) => s + p.weight, 0);
-    let rand = Math.random() * totalWeight;
-    
-    for (const prize of WHEEL_PRIZES) {
-        rand -= prize.weight;
-        if (rand <= 0) return prize;
+// آلة السلوتس المحسنة
+let slotsVegasState = {
+    isSpinning: false,
+    reels: [[], [], []],
+    positions: [0, 0, 0],
+    targetPositions: [0, 0, 0],
+    animationId: null,
+    results: []
+};
+
+function initSlotsVegas() {
+    console.log("🎰 initSlotsVegas started");
+    const container = document.getElementById('slotReelsPro');
+    if (!container) {
+        console.error("❌ slotReelsPro not found, retrying...");
+        setTimeout(initSlotsVegas, 200);
+        return;
     }
-    return WHEEL_PRIZES[0];
+    
+    console.log("✅ slotReelsPro found, drawing slots...");
+    container.innerHTML = '';
+    
+    const symbols = ['🍒', '🍋', '🍇', '💎', '7️⃣', '💰', '👑', '🎰'];
+    const colors = ['#ff4444', '#ffdd00', '#aa44ff', '#00f2ff', '#ff4444', '#ffaa00', '#ffdd00', '#ff00ff'];
+    
+    for (let i = 0; i < 3; i++) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'vegas-slot-reel-wrapper';
+        wrapper.dataset.reel = i;
+        
+        const reel = document.createElement('div');
+        reel.className = 'vegas-slot-reel';
+        reel.id = `vegas-reel-${i}`;
+        
+        for (let j = 0; j < 20; j++) {
+            const randomIndex = Math.floor(Math.random() * symbols.length);
+            const symbol = document.createElement('div');
+            symbol.className = 'vegas-slot-symbol';
+            symbol.textContent = symbols[randomIndex];
+            symbol.style.color = colors[randomIndex];
+            symbol.style.fontSize = '3.5rem';
+            symbol.style.height = '110px';
+            symbol.style.display = 'flex';
+            symbol.style.alignItems = 'center';
+            symbol.style.justifyContent = 'center';
+            symbol.style.background = '#2a2a3a';
+            symbol.style.borderBottom = '1px solid #3a3a4a';
+            reel.appendChild(symbol);
+        }
+        
+        wrapper.appendChild(reel);
+        container.appendChild(wrapper);
+        
+        reel.style.transform = `translateY(-${Math.floor(Math.random() * 500)}px)`;
+    }
+    
+    console.log("✅ Slots drawn");
 }
 
-function awardVegasPrize(prize) {
-    userData.wheel.lastWin = { prize, timestamp: Date.now() };
+function updateSlotsVegasUI() {
+    const spinsEl = document.getElementById('slotsGameSpins');
+    const freeSpinBtn = document.getElementById('slotsFreeSpin');
     
-    if (prize.goodluck) {
-        showToastPro('🍀 GOOD LUCK! Try again!', 'info');
-        VegasAudio.coin();
-        userData.wheel.freeSpins = (userData.wheel.freeSpins || 0) + 1;
-        saveUserToCache();
-        updateWheelVegasUI();
-        return;
+    if (spinsEl) {
+        const totalSpins = (userData.slots.purchasedSpins || 0) + (userData.slots.freeSpins || 0);
+        spinsEl.textContent = totalSpins;
     }
     
-    if (prize.freespin) {
-        showToastPro('🆓 FREE SPIN STORED!', 'success');
-        VegasAudio.coin();
-        userData.wheel.freeSpins = (userData.wheel.freeSpins || 0) + 1;
-        saveUserToCache();
-        updateWheelVegasUI();
-        return;
-    }
-    
-    if (prize.jackpot) {
-        const currency = prize.currency || prize.type;
-        const amount = prize.amount;
-        
-        if (currency === 'TON') {
-            userData.balances.TON += amount;
-            userData.balance = userData.balances.TON;
+    if (freeSpinBtn) {
+        const now = Date.now();
+        const nextFree = (userData.slots.lastFreeSpin || 0) + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
+        if (now < nextFree) {
+            const left = nextFree - now;
+            const h = Math.floor(left / 3600000);
+            const m = Math.floor((left % 3600000) / 60000);
+            freeSpinBtn.innerHTML = `<i class="fas fa-clock"></i><span>${h}h ${m}m</span>`;
+            freeSpinBtn.disabled = true;
         } else {
-            userData.balances[currency] = (userData.balances[currency] || 0) + amount;
+            freeSpinBtn.innerHTML = `<i class="fas fa-gift"></i><span>FREE</span>`;
+            freeSpinBtn.disabled = false;
         }
-        userData.totalEarned += amount;
-        addTransaction('wheel', amount, { currency, jackpot: true });
-        
-        if (prize.amount === 500) {
-            JackpotTheater.play(amount, currency, 'mega');
-            showWinPopup(`${amount} ${currency}`, 'mega');
-        } else {
-            JackpotTheater.play(amount, currency, 'jackpot');
-            showWinPopup(`${amount} ${currency}`, 'jackpot');
-        }
-        
-        userData.wheel.jackpotWon++;
-        saveUserToCache();
-        updateUI();
-        updateWheelVegasUI();
-        return;
     }
-    
-    const currency = prize.type;
-    const amount = prize.amount;
-    
-    userData.balances[currency] += amount;
-    if (currency === 'TON') userData.balance = userData.balances.TON;
-    userData.totalEarned += amount;
-    addTransaction('wheel', amount, { currency });
-    
-    if (amount >= 50) {
-        showWinPopup(`${amount} ${currency}`, 'nice');
-        VegasAudio.bigWin();
-    } else if (amount >= 10) {
-        showWinPopup(`${amount} ${currency}`, 'big');
-        VegasAudio.win();
-    } else {
-        showWinPopup(`${amount} ${currency}`, 'normal');
-        VegasAudio.coin();
-    }
-    
-    hapticFeedback(amount >= 10 ? 'medium' : 'light');
-    saveUserToCache();
-    updateUI();
-    updateWheelVegasUI();
 }
 
 function spinSlotsVegas(isFree = false, isTurbo = false) {
@@ -4355,31 +4380,6 @@ function spinSlotsVegas(isFree = false, isTurbo = false) {
         const winDisplay = document.getElementById('slotsWinAmount');
         if (winDisplay) winDisplay.textContent = `${winAmount.toFixed(2)} ${currency}`;
     }, 1000);
-}
-
-function updateSlotsVegasUI() {
-    const spinsEl = document.getElementById('slotsGameSpins');
-    const freeSpinBtn = document.getElementById('slotsFreeSpin');
-    
-    if (spinsEl) {
-        const totalSpins = (userData.slots.purchasedSpins || 0) + (userData.slots.freeSpins || 0);
-        spinsEl.textContent = totalSpins;
-    }
-    
-    if (freeSpinBtn) {
-        const now = Date.now();
-        const nextFree = (userData.slots.lastFreeSpin || 0) + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
-        if (now < nextFree) {
-            const left = nextFree - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            freeSpinBtn.innerHTML = `<i class="fas fa-clock"></i><span>${h}h ${m}m</span>`;
-            freeSpinBtn.disabled = true;
-        } else {
-            freeSpinBtn.innerHTML = `<i class="fas fa-gift"></i><span>FREE</span>`;
-            freeSpinBtn.disabled = false;
-        }
-    }
 }
 
 function showToastPro(message, type = 'info', duration = 3000) {
