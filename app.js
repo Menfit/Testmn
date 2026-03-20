@@ -1,6 +1,6 @@
 // ============================================
 // TON MINING CASINO - ULTIMATE LEGENDARY EDITION v9000.0
-// جميع الميزات محفوظة + العجلة والسلوت مرئيان
+// جميع الميزات محفوظة + العجلة والسلوتس مرئيان
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -4205,28 +4205,109 @@ function spinSlotsVegas(isFree = false, isTurbo = false) {
     VegasAudio.click();
     setTimeout(() => VegasAudio.whoosh(), 50);
     
+    // Spin animation - move reels
+    const reels = document.querySelectorAll('.vegas-slot-reel');
+    const spinDuration = isTurbo ? 800 : 1200;
+    const spinDistance = 2000; // pixels to move
+    
+    reels.forEach((reel, index) => {
+        const currentY = parseFloat(reel.style.transform?.replace('translateY(', '').replace('px)', '')) || 0;
+        const targetY = currentY - spinDistance;
+        
+        reel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.2, 0.9, 0.4, 1.1)`;
+        reel.style.transform = `translateY(${targetY}px)`;
+    });
+    
     setTimeout(() => {
-        const winAmount = Math.random() * 10;
-        const currency = Math.random() > 0.5 ? 'TON' : 'USDT';
+        // Stop reels at random positions
+        const symbolsPerReel = 20;
+        const symbolHeight = 110;
         
-        if (currency === 'TON') {
-            userData.balances.TON += winAmount;
-            userData.balance = userData.balances.TON;
-        } else {
-            userData.balances.USDT += winAmount;
-        }
-        userData.totalEarned += winAmount;
+        const results = [];
         
-        showToastPro(`🎰 You won ${winAmount.toFixed(2)} ${currency}!`, 'success');
-        addTransaction('slots', winAmount, { currency });
+        reels.forEach((reel, index) => {
+            const finalOffset = Math.floor(Math.random() * symbolsPerReel) * symbolHeight;
+            reel.style.transition = `transform 200ms cubic-bezier(0.3, 1, 0.5, 1)`;
+            reel.style.transform = `translateY(-${finalOffset}px)`;
+            
+            const symbolIndex = Math.floor(finalOffset / symbolHeight) % symbolsPerReel;
+            const symbolsList = reel.querySelectorAll('.vegas-slot-symbol');
+            const winSymbol = symbolsList[symbolIndex];
+            results.push(winSymbol?.textContent || '🍒');
+        });
         
-        slotsVegasState.isSpinning = false;
-        saveUserToCache();
-        updateUI();
+        setTimeout(() => {
+            // Calculate win
+            const allSame = results[0] === results[1] && results[1] === results[2];
+            const jackpotSymbols = results.filter(s => s === '🎰').length;
+            
+            let winAmount = 0;
+            let winCurrency = 'TON';
+            let winType = 'normal';
+            
+            if (jackpotSymbols === 3) {
+                winAmount = 100;
+                winCurrency = 'TON';
+                winType = 'jackpot';
+                JackpotTheater.play(100, 'TON', 'jackpot');
+            } else if (allSame) {
+                const symbol = results[0];
+                const prize = SLOTS_SYMBOLS_DATA.find(p => p.symbol === symbol);
+                if (prize) {
+                    winAmount = prize.value;
+                    winCurrency = prize.type === 'TON' ? 'TON' : 'USDT';
+                    if (prize.value >= 50) winType = 'nice';
+                    else if (prize.value >= 10) winType = 'big';
+                    else winType = 'normal';
+                }
+            } else if (results[0] === results[1] || results[1] === results[2] || results[0] === results[2]) {
+                const matchSymbol = results[0] === results[1] ? results[0] : results[1];
+                const prize = SLOTS_SYMBOLS_DATA.find(p => p.symbol === matchSymbol);
+                if (prize) {
+                    winAmount = prize.value / 2;
+                    winCurrency = prize.type === 'TON' ? 'TON' : 'USDT';
+                    winType = 'small';
+                }
+            }
+            
+            if (winAmount > 0) {
+                if (winCurrency === 'TON') {
+                    userData.balances.TON += winAmount;
+                    userData.balance = userData.balances.TON;
+                } else {
+                    userData.balances.USDT += winAmount;
+                }
+                userData.totalEarned += winAmount;
+                
+                addTransaction('slots', winAmount, { currency: winCurrency });
+                showToastPro(`🎰 You won ${winAmount.toFixed(2)} ${winCurrency}!`, 'success');
+                
+                if (winType === 'jackpot') {
+                    showWinPopup(`${winAmount} ${winCurrency}`, 'jackpot');
+                } else if (winType === 'nice') {
+                    showWinPopup(`${winAmount} ${winCurrency}`, 'nice');
+                } else if (winType === 'big') {
+                    showWinPopup(`${winAmount} ${winCurrency}`, 'big');
+                } else {
+                    showWinPopup(`${winAmount} ${winCurrency}`, 'normal');
+                }
+                
+                VegasAudio.win();
+                
+                const winDisplay = document.getElementById('slotsWinAmount');
+                if (winDisplay) winDisplay.textContent = `${winAmount.toFixed(2)} ${winCurrency}`;
+            } else {
+                showToastPro('🍀 Good luck next time!', 'info');
+                VegasAudio.tick(0.8);
+            }
+            
+            slotsVegasState.isSpinning = false;
+            saveUserToCache();
+            updateUI();
+            
+        }, 200);
         
-        const winDisplay = document.getElementById('slotsWinAmount');
-        if (winDisplay) winDisplay.textContent = `${winAmount.toFixed(2)} ${currency}`;
-    }, 1000);
+    }, spinDuration);
 }
 
 function showToastPro(message, type = 'info', duration = 3000) {
@@ -4266,7 +4347,7 @@ function showToastPro(message, type = 'info', duration = 3000) {
     }, duration);
 }
 
-// ====== دوال فتح المودالات من أي صفحة (حل مشكلة المحفظة) ======
+// ====== دوال فتح المودالات من أي صفحة ======
 function openProfileFromAnywhere() {
     console.log("📱 openProfileFromAnywhere called");
     if (currentPage === 'wheelGame' || currentPage === 'slotsGame') {
