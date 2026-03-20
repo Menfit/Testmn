@@ -5520,6 +5520,7 @@ body.near-miss-shake {
     pointer-events: none;
     z-index: 0;
 }
+
 /* ====== FIX FOR WHEEL AND SLOTS - إصلاح العجلة والسلوت ====== */
 
 /* === WHEEL SEGMENTS - تقسيمات العجلة === */
