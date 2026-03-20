@@ -5796,3 +5796,544 @@ body.near-miss-shake {
 .vegas-slot-symbol[data-type="USDT"] { color: #22c55e; }
 .vegas-slot-symbol[data-type="JACKPOT"] { color: #ff4444; }
 .vegas-slot-symbol[data-type="FREESPIN"] { color: #aa44ff; }
+/* ============================================
+   FIX: WHEEL & SLOTS VEGAS ELITE - الإصلاح النهائي
+   أضف هذا الكود في نهاية ملف style.css
+   ============================================ */
+
+/* ====== إصلاح العجلة (Wheel) ====== */
+.wheel-game-container {
+    position: relative;
+    min-height: 550px;
+    padding-bottom: 20px;
+    overflow: visible;
+}
+
+.wheel-casino-container-pro {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    margin: 20px auto;
+    filter: drop-shadow(0 0 25px rgba(0,242,255,0.5));
+}
+
+.wheel-casino-pro {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: relative;
+    background: radial-gradient(circle at 30% 30%, #2a2a3a, #0a0b0f);
+    box-shadow: 0 0 0 6px #ffd70033, 0 0 0 10px #ffaa0033, 0 0 60px rgba(0,242,255,0.4), inset 0 0 40px rgba(0,0,0,0.5);
+    overflow: hidden;
+    transition: transform 0.1s ease;
+}
+
+.wheel-segment-vegas {
+    position: absolute !important;
+    width: 50% !important;
+    height: 50% !important;
+    top: 0 !important;
+    left: 50% !important;
+    transform-origin: 0% 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: white !important;
+    font-weight: bold !important;
+    text-shadow: 0 0 5px rgba(0,0,0,0.8) !important;
+    border-right: 2px solid rgba(255,255,255,0.4) !important;
+    border-top: 1px solid rgba(255,255,255,0.2) !important;
+    font-size: 0.85rem !important;
+    z-index: 5 !important;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.wheel-segment-vegas:hover {
+    filter: brightness(1.2);
+    transform: scale(1.02);
+}
+
+/* ألوان قطاعات العجلة */
+.wheel-segment-vegas[data-type="TON"] { 
+    background: linear-gradient(135deg, #0088cc, #0066aa) !important; 
+}
+.wheel-segment-vegas[data-type="USDT"] { 
+    background: linear-gradient(135deg, #22c55e, #16a34a) !important; 
+}
+.wheel-segment-vegas[data-type="JACKPOT"] { 
+    background: linear-gradient(135deg, #ef4444, #dc2626, #f97316) !important; 
+    animation: jackpotSegmentPulse 1.5s infinite;
+}
+.wheel-segment-vegas[data-type="GOODLUCK"] { 
+    background: linear-gradient(135deg, #6b7280, #4b5563) !important; 
+}
+.wheel-segment-vegas[data-type="FREESPIN"] { 
+    background: linear-gradient(135deg, #a855f7, #7c3aed) !important; 
+}
+
+/* أيقونات القطاعات */
+.vegas-segment-icon {
+    font-size: 1.6rem !important;
+    margin-bottom: 4px !important;
+    display: block !important;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.vegas-segment-label {
+    font-size: 0.7rem !important;
+    background: rgba(0,0,0,0.75) !important;
+    padding: 4px 10px !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(255,255,255,0.4) !important;
+    white-space: nowrap !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+}
+
+/* مؤشر العجلة */
+.wheel-pointer-pro {
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3.2rem;
+    color: #ffd966;
+    filter: drop-shadow(0 0 12px #ffaa00) drop-shadow(0 0 20px #ff6600);
+    z-index: 30;
+    animation: pointerGlow 1s infinite alternate;
+    text-shadow: 0 0 10px rgba(255,215,0,0.8);
+}
+
+/* مركز العجلة */
+.wheel-center-pro {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    background: radial-gradient(circle, #3a3a4a, #1a1a2a);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    color: #ffd700;
+    border: 4px solid #ffd700;
+    box-shadow: 0 0 35px rgba(255,215,0,0.6), inset 0 0 15px rgba(255,215,0,0.3);
+    z-index: 20;
+    animation: centerPulse 1.5s infinite alternate;
+}
+
+/* ====== إصلاح آلة السلوتس (Slots) ====== */
+.slots-game-container {
+    position: relative;
+    min-height: 550px;
+    padding: 20px 15px 100px;
+    background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 100%);
+}
+
+.slots-machine-pro {
+    max-width: 420px;
+    margin: 20px auto;
+}
+
+.machine-frame {
+    background: linear-gradient(145deg, #2a2a3a, #1a1a2a);
+    border-radius: 35px;
+    padding: 30px 25px;
+    border: 3px solid rgba(255,215,0,0.4);
+    box-shadow: 0 0 50px rgba(0,242,255,0.25), inset 0 0 30px rgba(0,0,0,0.4);
+    position: relative;
+}
+
+.machine-lights {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 25px;
+}
+
+.machine-lights .light {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffdd88, #ffaa33);
+    box-shadow: 0 0 15px #ffaa33;
+    animation: lightBlink 0.6s infinite alternate;
+}
+
+.reels-container-pro {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    perspective: 1000px;
+    margin-bottom: 25px;
+}
+
+/* بكرات السلوتس */
+.vegas-slot-reel-wrapper {
+    width: 105px !important;
+    height: 340px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    border-radius: 20px !important;
+    background: linear-gradient(180deg, #0a0a12, #15151f) !important;
+    border: 3px solid #ffd700 !important;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.6), 0 0 20px rgba(255,215,0,0.3) !important;
+    transition: all 0.2s ease;
+}
+
+.vegas-slot-reel-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+    z-index: 10;
+    pointer-events: none;
+    border-radius: 20px 20px 0 0;
+}
+
+.vegas-slot-reel-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    z-index: 10;
+    pointer-events: none;
+    border-radius: 0 0 20px 20px;
+}
+
+.vegas-slot-reel {
+    display: flex !important;
+    flex-direction: column !important;
+    transition: transform 0.05s linear !important;
+}
+
+.vegas-slot-symbol {
+    height: 113px !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 3.8rem !important;
+    background: linear-gradient(145deg, #2a2a3a, #1f1f2a) !important;
+    border-bottom: 2px solid #3a3a4a !important;
+    color: white !important;
+    text-shadow: 0 0 12px currentColor !important;
+    transition: all 0.15s ease;
+}
+
+.vegas-slot-symbol.winning {
+    animation: symbolWinFlash 0.4s ease-in-out 3;
+    background: linear-gradient(145deg, #3a3a5a, #2a2a4a) !important;
+}
+
+/* خط الفوز */
+.win-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #ffdd44, #ffaa00, #ffdd44, transparent);
+    transform: translateY(-50%);
+    z-index: 20;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    border-radius: 4px;
+    box-shadow: 0 0 20px #ffaa00, 0 0 40px #ff6600;
+    pointer-events: none;
+}
+
+.win-line.active {
+    opacity: 1;
+    animation: winLineFlash 0.4s infinite alternate;
+}
+
+/* شاشة الفوز */
+.win-display {
+    background: linear-gradient(135deg, #1a1f2a, #0f121a);
+    border: 2px solid #ffd700;
+    border-radius: 20px;
+    padding: 15px 20px;
+    margin-top: 20px;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(255,215,0,0.3);
+}
+
+.win-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+}
+
+.win-amount {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(255,215,0,0.5);
+}
+
+/* ====== الرسوم المتحركة ====== */
+@keyframes jackpotSegmentPulse {
+    0%, 100% {
+        filter: brightness(1);
+        text-shadow: 0 0 5px gold;
+    }
+    50% {
+        filter: brightness(1.3);
+        text-shadow: 0 0 15px gold, 0 0 25px orange;
+    }
+}
+
+@keyframes pointerGlow {
+    0% {
+        filter: drop-shadow(0 0 8px #ffaa00);
+        transform: translateX(-50%) translateY(0);
+    }
+    100% {
+        filter: drop-shadow(0 0 20px #ff6600) drop-shadow(0 0 30px #ff3300);
+        transform: translateX(-50%) translateY(-5px);
+    }
+}
+
+@keyframes centerPulse {
+    0% {
+        box-shadow: 0 0 20px rgba(255,215,0,0.4);
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        box-shadow: 0 0 45px rgba(255,215,0,0.8);
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+}
+
+@keyframes lightBlink {
+    0% {
+        opacity: 0.4;
+        transform: scale(0.9);
+        box-shadow: 0 0 5px #ffaa33;
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1.2);
+        box-shadow: 0 0 20px #ffaa33, 0 0 30px #ff8833;
+    }
+}
+
+@keyframes symbolWinFlash {
+    0% {
+        filter: brightness(1);
+        transform: scale(1);
+    }
+    50% {
+        filter: brightness(1.6);
+        transform: scale(1.1);
+        text-shadow: 0 0 25px gold;
+    }
+    100% {
+        filter: brightness(1);
+        transform: scale(1);
+    }
+}
+
+@keyframes winLineFlash {
+    0% {
+        opacity: 0.7;
+        box-shadow: 0 0 15px #ffaa00;
+    }
+    100% {
+        opacity: 1;
+        box-shadow: 0 0 35px #ffaa00, 0 0 55px #ff6600;
+    }
+}
+
+/* ====== تأثيرات الحرارة والتوهج ====== */
+.wheel-game-container.heat-low::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(0,242,255,0.1) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+    animation: heatPulse 3s infinite;
+}
+
+.wheel-game-container.heat-medium::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255,165,0,0.2) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+    animation: heatPulse 2s infinite;
+}
+
+.wheel-game-container.heat-high::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255,0,0,0.3) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+    animation: heatPulse 1s infinite;
+}
+
+.wheel-game-container.heat-jackpot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255,215,0,0.5) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+    animation: jackpotGlow 0.5s infinite alternate;
+}
+
+@keyframes heatPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes jackpotGlow {
+    0% { opacity: 0.5; background: radial-gradient(circle at center, rgba(255,215,0,0.3) 0%, transparent 70%); }
+    100% { opacity: 1; background: radial-gradient(circle at center, rgba(255,215,0,0.8) 0%, transparent 70%); }
+}
+
+/* ====== تأثير الدوران ====== */
+.wheel-casino-pro.spinning-fast {
+    filter: blur(1.5px);
+    transition: filter 0.1s ease;
+}
+
+.wheel-casino-pro.wheel-bounce {
+    animation: wheelBounce 0.3s ease;
+}
+
+@keyframes wheelBounce {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(3deg); }
+    75% { transform: rotate(-3deg); }
+}
+
+/* ====== تأثيرات الفوز ====== */
+.vegas-jackpot-text {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 900;
+    color: gold;
+    text-shadow: 0 0 20px rgba(255,215,0,0.8), 0 0 40px rgba(255,68,68,0.6);
+    z-index: 10000;
+    animation: jackpotTextPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    pointer-events: none;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.vegas-jackpot-text.mega {
+    font-size: clamp(2.5rem, 7vw, 4rem);
+    text-shadow: 0 0 30px gold, 0 0 60px orange, 0 0 90px red;
+}
+
+@keyframes jackpotTextPop {
+    0% {
+        transform: translate(-50%, -50%) scale(0) rotate(-15deg);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2) rotate(5deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.vegas-shake {
+    animation: screenShake 0.5s ease-in-out;
+}
+
+@keyframes screenShake {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-3px, -3px); }
+    20% { transform: translate(3px, 3px); }
+    30% { transform: translate(-3px, 3px); }
+    40% { transform: translate(3px, -3px); }
+    50% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    70% { transform: translate(-2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+}
+
+.vegas-particle {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, gold 0%, orange 50%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particleExplode 1.5s ease-out forwards;
+    box-shadow: 0 0 15px gold;
+    z-index: 9999;
+}
+
+@keyframes particleExplode {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0);
+        opacity: 0;
+    }
+}
+
+.vegas-burst {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 100;
+}
+
+.burst-ray {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 50%;
+    background: linear-gradient(to top, gold, transparent);
+    transform-origin: bottom center;
+    animation: burstExpand 0.8s ease-out forwards;
+}
+
+@keyframes burstExpand {
+    0% {
+        height: 0;
+        opacity: 1;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        height: 100%;
+        opacity: 0;
+    }
+}
