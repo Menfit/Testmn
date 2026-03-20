@@ -961,7 +961,6 @@ function showPage(page) {
     document.querySelector(`[data-page="${page}"]`).classList.add('active');
     currentPage = page;
     
-    // إظهار/إخفاء الهيدر
     const header = document.getElementById('mainHeader');
     if (header) {
         if (page === 'wheelGame' || page === 'slotsGame') {
@@ -2561,98 +2560,10 @@ function updateChart() {
 }
 
 // ====== 32. UPDATE WHEEL UI ======
-function updateWheelUI() {
-    const spinsLeftEl = document.getElementById('wheelSpinsLeft');
-    const freeSpinEl = document.getElementById('wheelFreeSpin');
-    const jackpotCounterEl = document.getElementById('wheelJackpotCounter');
-    const streakDisplay = document.getElementById('wheelStreakDisplay');
-    const purchasedSpinsEl = document.getElementById('wheelModalPurchasedSpins');
-    
-    if (spinsLeftEl) {
-        const left = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - (userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY);
-        spinsLeftEl.textContent = t('wheel.spinsLeft', { count: left });
-    }
-    
-    if (jackpotCounterEl) {
-        jackpotCounterEl.textContent = t('wheel.jackpotTimer', { 
-            count: userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY,
-            total: CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY
-        });
-    }
-    
-    if (streakDisplay) {
-        streakDisplay.textContent = t('wheel.streak', { 
-            days: userData.streak, 
-            best: userData.longestStreak 
-        });
-    }
-    
-    if (freeSpinEl) {
-        const now = Date.now();
-        const next = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
-        if (now < next) {
-            const left = next - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${h}h ${m}m`;
-            freeSpinEl.classList.add('disabled');
-        } else {
-            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> ${t('wheel.free')}`;
-            freeSpinEl.classList.remove('disabled');
-        }
-    }
-    
-    if (purchasedSpinsEl) {
-        const spinCount = purchasedSpinsEl.querySelector('.spin-count');
-        if (spinCount) spinCount.textContent = userData.wheel.purchasedSpins || 0;
-    }
-    
-    const autoSpinCheckbox = document.getElementById('wheelModalAutoSpin');
-    if (autoSpinCheckbox) {
-        autoSpinCheckbox.checked = userData.wheel.autoSpin || false;
-    }
-    
-    const wheelPurchasedSpins = document.getElementById('wheelPurchasedSpins');
-    if (wheelPurchasedSpins) {
-        wheelPurchasedSpins.innerHTML = `Your spins: <span class="spin-count">${userData.wheel.purchasedSpins || 0}</span>`;
-    }
-}
+function updateWheelUI() { /* kept for compatibility */ }
 
 // ====== 33. UPDATE SLOTS UI ======
-function updateSlotsUI() {
-    const freeSpinEl = document.getElementById('slotsFreeSpin');
-    const purchasedSpinsEl = document.getElementById('slotsModalPurchasedSpins');
-    
-    if (freeSpinEl) {
-        const now = Date.now();
-        const next = userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
-        if (now < next) {
-            const left = next - now;
-            const h = Math.floor(left / 3600000);
-            const m = Math.floor((left % 3600000) / 60000);
-            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${h}h ${m}m`;
-            freeSpinEl.classList.add('disabled');
-        } else {
-            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> FREE`;
-            freeSpinEl.classList.remove('disabled');
-        }
-    }
-    
-    if (purchasedSpinsEl) {
-        const spinCount = purchasedSpinsEl.querySelector('.spin-count');
-        if (spinCount) spinCount.textContent = userData.slots.purchasedSpins || 0;
-    }
-    
-    const autoSpinCheckbox = document.getElementById('slotsModalAutoSpin');
-    if (autoSpinCheckbox) {
-        autoSpinCheckbox.checked = userData.slots.autoSpin || false;
-    }
-    
-    const slotsPurchasedSpins = document.getElementById('slotsPurchasedSpins');
-    if (slotsPurchasedSpins) {
-        slotsPurchasedSpins.innerHTML = `Your spins: <span class="spin-count">${userData.slots.purchasedSpins || 0}</span>`;
-    }
-}
+function updateSlotsUI() { /* kept for compatibility */ }
 
 // ====== 34. UPDATE PURCHASED SPINS ======
 function updatePurchasedSpinsDisplay() {
@@ -4031,7 +3942,6 @@ function updateVegasHeat() {
 function selectVegasPrize() {
     const totalWeight = WHEEL_PRIZES.reduce((s, p) => s + p.weight, 0);
     let rand = Math.random() * totalWeight;
-    
     for (const prize of WHEEL_PRIZES) {
         rand -= prize.weight;
         if (rand <= 0) return prize;
@@ -4665,3 +4575,87 @@ window.openWithdrawModal = openWithdrawModal;
 window.openDepositModal = openDepositModal;
 window.openSwapModal = openSwapModal;
 window.openHistoryModal = openHistoryModal;
+
+// ====== 52. FORCE CSS INJECTION (حل نهائي للعجلة والسلوت) ======
+(function forceWheelAndSlotsStyles() {
+    const style = document.createElement('style');
+    style.id = 'dynamic-casino-styles';
+    style.textContent = `
+        /* تثبيت ألوان العجلة */
+        .wheel-segment-vegas {
+            position: absolute !important;
+            width: 50% !important;
+            height: 50% !important;
+            top: 0 !important;
+            left: 50% !important;
+            transform-origin: 0% 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            color: white !important;
+            font-weight: bold !important;
+            text-shadow: 0 0 5px black !important;
+            border-right: 2px solid rgba(255,255,255,0.3) !important;
+            font-size: 0.9rem !important;
+            z-index: 5 !important;
+        }
+        .wheel-segment-vegas[data-type="TON"] { background: #0088cc !important; }
+        .wheel-segment-vegas[data-type="USDT"] { background: #22c55e !important; }
+        .wheel-segment-vegas[data-type="JACKPOT"] { background: linear-gradient(45deg, #ef4444, #ff8800) !important; }
+        .wheel-segment-vegas[data-type="GOODLUCK"] { background: #94a3b8 !important; }
+        .wheel-segment-vegas[data-type="FREESPIN"] { background: #aa44ff !important; }
+        
+        .vegas-segment-icon { font-size: 1.8rem !important; margin-bottom: 4px !important; display: block !important; }
+        .vegas-segment-label { font-size: 0.7rem !important; background: rgba(0,0,0,0.7) !important; padding: 3px 8px !important; border-radius: 12px !important; border: 1px solid rgba(255,255,255,0.3) !important; white-space: nowrap !important; }
+        
+        /* إصلاح السلوت */
+        .vegas-slot-reel-wrapper {
+            width: 100px !important;
+            height: 330px !important;
+            overflow: hidden !important;
+            position: relative !important;
+            border-radius: 15px !important;
+            background: #1a1a2a !important;
+            border: 2px solid #00f2ff !important;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5) !important;
+        }
+        .vegas-slot-reel {
+            display: flex !important;
+            flex-direction: column !important;
+            transition: transform 0.05s linear !important;
+        }
+        .vegas-slot-symbol {
+            height: 110px !important;
+            width: 100% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 3.5rem !important;
+            background: #2a2a3a !important;
+            border-bottom: 1px solid #3a3a4a !important;
+            color: white !important;
+            text-shadow: 0 0 10px currentColor !important;
+        }
+        .vegas-slot-symbol[data-type="TON"] { color: #00f2ff !important; }
+        .vegas-slot-symbol[data-type="USDT"] { color: #22c55e !important; }
+        
+        .winning-symbol {
+            animation: winGlow 0.5s infinite alternate !important;
+            filter: brightness(1.3) drop-shadow(0 0 15px gold) !important;
+            transform: scale(1.1) !important;
+            z-index: 10 !important;
+        }
+        @keyframes winGlow {
+            from { filter: brightness(1.3) drop-shadow(0 0 15px gold); }
+            to { filter: brightness(1.8) drop-shadow(0 0 30px gold); }
+        }
+        
+        #wheelSpeedFill {
+            height: 100%;
+            background: linear-gradient(90deg, #22c55e, #fbbf24, #ef4444);
+            transition: width 0.1s ease;
+        }
+    `;
+    document.head.appendChild(style);
+})();
