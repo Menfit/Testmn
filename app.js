@@ -1,6 +1,6 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v10.0
-// نسخة نهائية تجمع كل الميزات الأصلية + تحسينات Vegas Elite
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v11.0
+// نسخة نهائية مع إعادة كتابة كازينو احترافية باستخدام Canvas
 // جميع الوظائف تعمل – جاهز للنسخ واللصق
 // ============================================
 
@@ -517,7 +517,7 @@ const REFERRAL_MILESTONES = [
     { referrals: 1000, reward: 1200, unit: 'USDT' }
 ];
 
-// ====== 7. WHEEL PRIZES (مبسطة لتخفيف الحمل) ======
+// ====== 7. WHEEL PRIZES ======
 const WHEEL_PRIZES = [
     { type: 'TON', amount: 0.25, color: '#0088cc', weight: 10, icon: '💰', label: '0.25 TON', category: 'ton' },
     { type: 'TON', amount: 0.5, color: '#0088cc', weight: 9, icon: '💰', label: '0.5 TON', category: 'ton' },
@@ -873,8 +873,8 @@ function openWheelGame() {
     if (header) header.style.display = 'none';
     showPage('wheelGame');
     setTimeout(() => {
-        initWheelVegas();
-        updateWheelVegasUI();
+        initWheelCanvas();
+        updateWheelUI();
     }, 100);
 }
 
@@ -884,8 +884,8 @@ function openSlotsGame() {
     if (header) header.style.display = 'none';
     showPage('slotsGame');
     setTimeout(() => {
-        initSlotsVegas();
-        updateSlotsVegasUI();
+        initSlotsCanvas();
+        updateSlotsUI();
     }, 100);
 }
 
@@ -1366,7 +1366,7 @@ function renderPlansTable() {
     if (!tbody) return;
     tbody.innerHTML = MACHINES.map(m => {
         const name = currentLanguage === 'ar' ? m.nameAr : m.name;
-        return `   <tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
+        return `<tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
             m.plans.map(p => p.price === 0 ? '<td>FREE</td>' : `<td>${p.price} TON<br><small>+${p.returnAmount} TON</small></td>`).join('')
         }</tr>`;
     }).join('');
@@ -3374,292 +3374,306 @@ function updateUserDisplay() {
     }
 }
 
-// ====== 47. VEGAS ELITE - عجلة الحظ والسلوتس المحسنة ======
+// ====== 47. VEGAS ELITE - عجلة الحظ والسلوتس المحسنة (Canvas) ======
 
-// محرك الصوت
-const VegasAudio = {
-    ctx: null,
-    isInitialized: false,
-    init() {
-        if (this.isInitialized) return;
-        try {
-            this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-            this.isInitialized = true;
-        } catch(e) {}
-    },
-    click() { if (!this.ctx) return; const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain(); osc.type='square'; osc.frequency.setValueAtTime(800,this.ctx.currentTime); osc.frequency.exponentialRampToValueAtTime(400,this.ctx.currentTime+0.05); gain.gain.setValueAtTime(0.2,this.ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01,this.ctx.currentTime+0.05); osc.connect(gain); gain.connect(this.ctx.destination); osc.start(); osc.stop(this.ctx.currentTime+0.05); },
-    whoosh() { if (!this.ctx) return; const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain(); const filter = this.ctx.createBiquadFilter(); osc.type='sawtooth'; osc.frequency.setValueAtTime(200,this.ctx.currentTime); osc.frequency.exponentialRampToValueAtTime(600,this.ctx.currentTime+0.3); filter.type='lowpass'; filter.frequency.setValueAtTime(400,this.ctx.currentTime); filter.frequency.exponentialRampToValueAtTime(2000,this.ctx.currentTime+0.3); gain.gain.setValueAtTime(0.2,this.ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01,this.ctx.currentTime+0.3); osc.connect(filter); filter.connect(gain); gain.connect(this.ctx.destination); osc.start(); osc.stop(this.ctx.currentTime+0.3); },
-    tick(pitch=1) { if (!this.ctx) return; const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain(); osc.type='triangle'; osc.frequency.setValueAtTime(1200*pitch,this.ctx.currentTime); gain.gain.setValueAtTime(0.15,this.ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01,this.ctx.currentTime+0.03); osc.connect(gain); gain.connect(this.ctx.destination); osc.start(); osc.stop(this.ctx.currentTime+0.03); },
-    clunk() { if (!this.ctx) return; const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain(); osc.type='sine'; osc.frequency.setValueAtTime(150,this.ctx.currentTime); osc.frequency.exponentialRampToValueAtTime(50,this.ctx.currentTime+0.15); gain.gain.setValueAtTime(0.4,this.ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01,this.ctx.currentTime+0.15); osc.connect(gain); gain.connect(this.ctx.destination); osc.start(); osc.stop(this.ctx.currentTime+0.15); },
-    coin() { if (!this.ctx) return; const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain(); osc.type='sine'; osc.frequency.setValueAtTime(1800,this.ctx.currentTime); osc.frequency.exponentialRampToValueAtTime(2200,this.ctx.currentTime+0.1); gain.gain.setValueAtTime(0.25,this.ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01,this.ctx.currentTime+0.3); osc.connect(gain); gain.connect(this.ctx.destination); osc.start(); osc.stop(this.ctx.currentTime+0.3); },
-    win() { if (!this.ctx) return; const now = this.ctx.currentTime; for(let i=0;i<5;i++){ const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain(); osc.type='triangle'; osc.frequency.setValueAtTime(600+i*100,now+i*0.1); gain.gain.setValueAtTime(0.2,now+i*0.1); gain.gain.exponentialRampToValueAtTime(0.01,now+i*0.1+0.2); osc.connect(gain); gain.connect(this.ctx.destination); osc.start(now+i*0.1); osc.stop(now+i*0.1+0.2); } },
-    bigWin() { if (!this.ctx) return; const now = this.ctx.currentTime; for(let i=0;i<8;i++){ const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain(); osc.type='sawtooth'; osc.frequency.setValueAtTime(400+i*150,now+i*0.15); gain.gain.setValueAtTime(0.3,now+i*0.15); gain.gain.exponentialRampToValueAtTime(0.01,now+i*0.15+0.3); osc.connect(gain); gain.connect(this.ctx.destination); osc.start(now+i*0.15); osc.stop(now+i*0.15+0.3); } },
-    jackpot() { if (!this.ctx) return; const now = this.ctx.currentTime; for(let i=0;i<15;i++){ const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain(); osc.type='sawtooth'; osc.frequency.setValueAtTime(200+i*50,now+i*0.08); gain.gain.setValueAtTime(0.3,now+i*0.08); gain.gain.exponentialRampToValueAtTime(0.01,now+i*0.08+0.3); osc.connect(gain); gain.connect(this.ctx.destination); osc.start(now+i*0.08); osc.stop(now+i*0.08+0.3); } },
-    crowdCheer() { if (!this.ctx) return; const bufferSize = this.ctx.sampleRate * 2; const buffer = this.ctx.createBuffer(1,bufferSize,this.ctx.sampleRate); const data = buffer.getChannelData(0); for(let i=0;i<bufferSize;i++) data[i]=Math.random()*2-1; const noise = this.ctx.createBufferSource(); noise.buffer = buffer; const filter = this.ctx.createBiquadFilter(); filter.type='bandpass'; filter.frequency.setValueAtTime(1000,this.ctx.currentTime); const gain = this.ctx.createGain(); gain.gain.setValueAtTime(0.2,this.ctx.currentTime); gain.gain.linearRampToValueAtTime(0,this.ctx.currentTime+2); noise.connect(filter); filter.connect(gain); gain.connect(this.ctx.destination); noise.start(); }
-};
-
-// نظام الطقطقة المتدرج
-const TickSequencer = {
-    timeouts: [],
-    playWheelTicks(duration=2000,onComplete=null){
-        this.clear();
-        const tickCount=20;
-        const baseInterval=duration/tickCount;
-        for(let i=0;i<tickCount;i++){
-            const slowdownFactor=1+(i/tickCount)*0.8;
-            const delay=baseInterval*i*slowdownFactor;
-            const timeout=setTimeout(()=>{
-                const pitch=1+(i/tickCount)*0.5;
-                VegasAudio.tick(pitch);
-                if(i===tickCount-1&&onComplete) setTimeout(onComplete,150);
-            },delay);
-            this.timeouts.push(timeout);
+// ---------- Wheel Game Class ----------
+class WheelGame {
+    constructor(canvasId, segments) {
+        this.canvas = document.getElementById(canvasId);
+        this.ctx = this.canvas.getContext('2d');
+        this.width = this.canvas.width;
+        this.height = this.canvas.height;
+        this.centerX = this.width / 2;
+        this.centerY = this.height / 2;
+        this.radius = this.width / 2 - 15;
+        
+        this.segments = segments;
+        this.segmentAngle = (2 * Math.PI) / this.segments.length;
+        
+        this.rotation = 0; // radians
+        this.isSpinning = false;
+        this.spinStartTime = 0;
+        this.spinDuration = 2500; // ms
+        this.targetRotation = 0;
+        this.animationId = null;
+        this.selectedPrize = null;
+        
+        this.draw();
+    }
+    
+    draw() {
+        const ctx = this.ctx;
+        ctx.clearRect(0, 0, this.width, this.height);
+        
+        // Draw segments
+        for (let i = 0; i < this.segments.length; i++) {
+            const seg = this.segments[i];
+            const startAngle = i * this.segmentAngle + this.rotation;
+            const endAngle = (i + 1) * this.segmentAngle + this.rotation;
+            
+            // Draw segment shape
+            ctx.beginPath();
+            ctx.moveTo(this.centerX, this.centerY);
+            ctx.arc(this.centerX, this.centerY, this.radius, startAngle, endAngle);
+            ctx.closePath();
+            
+            // Fill with gradient
+            let grad = ctx.createLinearGradient(
+                this.centerX + Math.cos(startAngle) * 20,
+                this.centerY + Math.sin(startAngle) * 20,
+                this.centerX + Math.cos(endAngle) * 20,
+                this.centerY + Math.sin(endAngle) * 20
+            );
+            grad.addColorStop(0, seg.color);
+            grad.addColorStop(1, this.adjustBrightness(seg.color, -30));
+            ctx.fillStyle = grad;
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Draw text and icon
+            const midAngle = startAngle + this.segmentAngle / 2;
+            const textRadius = this.radius * 0.7;
+            const x = this.centerX + Math.cos(midAngle) * textRadius;
+            const y = this.centerY + Math.sin(midAngle) * textRadius;
+            
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(midAngle + Math.PI / 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 18px "Segoe UI", "Outfit"';
+            ctx.shadowBlur = 0;
+            ctx.fillText(seg.icon || '', 0, -10);
+            ctx.font = 'bold 12px "Segoe UI", "Outfit"';
+            ctx.fillStyle = 'white';
+            ctx.shadowColor = 'black';
+            ctx.shadowBlur = 4;
+            ctx.fillText(seg.label, 0, 12);
+            ctx.restore();
         }
-    },
-    playSlotsTicks(reelIndex,onComplete=null){
-        this.clear();
-        const delays=reelIndex===0?10:reelIndex===1?15:20;
-        const baseDelay=70;
-        for(let i=0;i<delays;i++){
-            const timeout=setTimeout(()=>{
-                VegasAudio.tick(1+(i/delays)*0.3);
-                if(i===delays-1&&onComplete) setTimeout(onComplete,50);
-            },i*baseDelay*(1+i*0.1));
-            this.timeouts.push(timeout);
+        
+        // Draw inner circle
+        ctx.beginPath();
+        ctx.arc(this.centerX, this.centerY, this.radius * 0.2, 0, 2 * Math.PI);
+        ctx.fillStyle = '#ffd700';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+    }
+    
+    adjustBrightness(hex, percent) {
+        // simple brightness adjustment for gradient
+        return hex;
+    }
+    
+    spin(callback) {
+        if (this.isSpinning) return;
+        
+        // Select prize based on weights
+        this.selectedPrize = this.selectPrize();
+        const prizeIndex = this.segments.indexOf(this.selectedPrize);
+        
+        // Calculate target rotation to land on that segment
+        const segmentMidAngle = prizeIndex * this.segmentAngle + this.segmentAngle / 2;
+        const currentAngle = this.rotation % (2 * Math.PI);
+        let delta = (segmentMidAngle - currentAngle + 2 * Math.PI) % (2 * Math.PI);
+        // Add extra rotations
+        const extraRotations = 5;
+        this.targetRotation = this.rotation + extraRotations * 2 * Math.PI + delta;
+        
+        this.isSpinning = true;
+        this.spinStartTime = performance.now();
+        this.callback = callback;
+        
+        const animate = (now) => {
+            const elapsed = now - this.spinStartTime;
+            let t = Math.min(1, elapsed / this.spinDuration);
+            // Easing: easeOutCubic
+            const easeOut = 1 - Math.pow(1 - t, 3);
+            const currentRot = this.rotation + (this.targetRotation - this.rotation) * easeOut;
+            this.rotation = currentRot;
+            this.draw();
+            
+            // Update speed meter
+            const speedFill = document.getElementById('wheelSpeedFill');
+            if (speedFill) {
+                const speed = (1 - easeOut) * 100;
+                speedFill.style.width = `${speed}%`;
+            }
+            
+            if (t < 1) {
+                this.animationId = requestAnimationFrame(animate);
+            } else {
+                // Spin finished
+                this.rotation = this.targetRotation % (2 * Math.PI);
+                this.draw();
+                this.isSpinning = false;
+                cancelAnimationFrame(this.animationId);
+                if (this.callback) this.callback(this.selectedPrize);
+                // Reset speed meter
+                if (speedFill) speedFill.style.width = '0%';
+            }
+        };
+        
+        this.animationId = requestAnimationFrame(animate);
+    }
+    
+    selectPrize() {
+        const totalWeight = this.segments.reduce((s, p) => s + (p.weight || 1), 0);
+        let rand = Math.random() * totalWeight;
+        for (const prize of this.segments) {
+            rand -= (prize.weight || 1);
+            if (rand <= 0) return prize;
         }
-    },
-    clear(){ this.timeouts.forEach(t=>clearTimeout(t)); this.timeouts=[]; }
-};
-
-// مسرحية الجاكبوت
-const JackpotTheater = {
-    isPlaying: false,
-    play(amount,currency='TON',type='jackpot'){
-        if(this.isPlaying) return;
-        this.isPlaying=true;
-        const container=document.querySelector('.wheel-game-container, .slots-game-container')||document.body;
-        setTimeout(()=>{ this.createLightBurst(container); if(type==='mega') VegasAudio.jackpot(); else VegasAudio.bigWin(); },200);
-        setTimeout(()=>{ this.showJackpotText(container,amount,currency,type); VegasAudio.crowdCheer(); },500);
-        setTimeout(()=>{ this.createGoldParticles(container); },1000);
-        setTimeout(()=>{ this.isPlaying=false; },4000);
-    },
-    createLightBurst(container){
-        const burst=document.createElement('div'); burst.className='vegas-burst';
-        for(let i=0;i<12;i++){ const ray=document.createElement('div'); ray.className='burst-ray'; ray.style.transform=`translate(-50%, -100%) rotate(${i*30}deg)`; burst.appendChild(ray); }
-        container.appendChild(burst); setTimeout(()=>burst.remove(),1000);
-    },
-    showJackpotText(container,amount,currency,type){
-        const text=document.createElement('div'); text.className=`vegas-jackpot-text ${type}`;
-        if(type==='mega') text.innerHTML=`👑 MEGA JACKPOT! ${amount} ${currency} 👑`;
-        else if(type==='jackpot') text.innerHTML=`🎰 JACKPOT! ${amount} ${currency} 🎰`;
-        else text.innerHTML=`🔥 BIG WIN! ${amount} ${currency} 🔥`;
-        document.body.appendChild(text); document.body.classList.add('vegas-shake');
-        setTimeout(()=>document.body.classList.remove('vegas-shake'),500);
-        setTimeout(()=>text.remove(),3500);
-    },
-    createGoldParticles(container){
-        for(let i=0;i<30;i++){ const p=document.createElement('div'); p.className='vegas-particle'; p.style.left='50%'; p.style.top='50%'; p.style.setProperty('--tx',`${(Math.random()-0.5)*400}px`); p.style.setProperty('--ty',`${(Math.random()-0.5)*400}px`); p.style.animationDelay=`${Math.random()*0.5}s`; container.appendChild(p); setTimeout(()=>p.remove(),2000); }
-    }
-};
-
-// عجلة الحظ المحسنة (خفيفة)
-let wheelVegasState = { isSpinning: false, currentRotation: 0, targetRotation: 0, selectedPrize: null, animationId: null, spinStartTime: 0, spinDuration: 2800 };
-
-function initWheelVegas() {
-    const wheel = document.getElementById('wheelCasinoPro');
-    if (!wheel) { setTimeout(initWheelVegas, 200); return; }
-    wheel.innerHTML = '';
-    wheel.style.transform = 'rotate(0deg)';
-    
-    const totalSegments = WHEEL_PRIZES.length;
-    const anglePerSegment = 360 / totalSegments;
-    
-    WHEEL_PRIZES.forEach((prize, index) => {
-        const segDiv = document.createElement('div');
-        segDiv.className = 'wheel-segment-vegas';
-        segDiv.dataset.type = prize.type;
-        
-        const rotation = index * anglePerSegment;
-        let bgColor = prize.color;
-        if (prize.jackpot) bgColor = '#ef4444';
-        else if (prize.type === 'TON') bgColor = '#0088cc';
-        else if (prize.type === 'USDT') bgColor = '#22c55e';
-        else if (prize.type === 'GOODLUCK') bgColor = '#94a3b8';
-        else if (prize.type === 'FREESPIN') bgColor = '#aa44ff';
-        
-        segDiv.style.cssText = `
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            top: 0;
-            left: 50%;
-            transform-origin: 0% 100%;
-            transform: rotate(${rotation}deg);
-            background: ${bgColor};
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            text-shadow: 0 0 3px black;
-            border-right: 1px solid rgba(255,255,255,0.3);
-            font-size: 0.8rem;
-            z-index: 5;
-        `;
-        
-        const iconSpan = document.createElement('span');
-        iconSpan.style.fontSize = prize.jackpot ? '1.8rem' : '1.3rem';
-        iconSpan.style.marginBottom = '4px';
-        iconSpan.textContent = prize.icon;
-        
-        const labelSpan = document.createElement('span');
-        labelSpan.style.fontSize = '0.75rem';
-        labelSpan.style.background = 'rgba(0,0,0,0.7)';
-        labelSpan.style.padding = '4px 8px';
-        labelSpan.style.borderRadius = '15px';
-        labelSpan.style.whiteSpace = 'nowrap';
-        labelSpan.textContent = prize.label;
-        
-        segDiv.appendChild(iconSpan);
-        segDiv.appendChild(labelSpan);
-        wheel.appendChild(segDiv);
-    });
-    
-    updateWheelVegasUI();
-}
-
-function updateWheelVegasUI() {
-    const spinsEl = document.getElementById('wheelGameSpins');
-    const jackpotEl = document.getElementById('wheelJackpotCounter');
-    const freeSpinEl = document.getElementById('wheelFreeSpin');
-    const bigWinEl = document.getElementById('wheelBigWinCounter');
-    
-    if (spinsEl) spinsEl.textContent = (userData.wheel.purchasedSpins || 0) + (userData.wheel.freeSpins || 0);
-    if (jackpotEl) jackpotEl.textContent = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - ((userData.wheel.jackpotCounter || 0) % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY);
-    if (bigWinEl) bigWinEl.textContent = CONFIG.ECONOMY.WHEEL_BIG_WIN_EVERY - ((userData.wheel.bigWinCounter || 0) % CONFIG.ECONOMY.WHEEL_BIG_WIN_EVERY);
-    
-    if (freeSpinEl) {
-        const now = Date.now();
-        const nextFree = (userData.wheel.lastFreeSpin || 0) + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
-        if (now < nextFree) {
-            const left = nextFree - now;
-            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i><span>${Math.floor(left/3600000)}h ${Math.floor((left%3600000)/60000)}m</span>`;
-            freeSpinEl.disabled = true;
-        } else {
-            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i><span>FREE</span>`;
-            freeSpinEl.disabled = false;
-        }
+        return this.segments[0];
     }
 }
 
-function selectVegasPrize() {
-    const totalWeight = WHEEL_PRIZES.reduce((s, p) => s + p.weight, 0);
-    let rand = Math.random() * totalWeight;
-    for (const prize of WHEEL_PRIZES) {
-        rand -= prize.weight;
-        if (rand <= 0) return prize;
+// ---------- Slots Game Class ----------
+class SlotsGame {
+    constructor(canvasIds, symbolsData) {
+        this.canvases = canvasIds.map(id => document.getElementById(id));
+        this.ctxs = this.canvases.map(c => c.getContext('2d'));
+        this.symbolsData = symbolsData;
+        this.symbols = symbolsData.map(s => s.symbol);
+        this.values = symbolsData.map(s => ({ value: s.value, type: s.type }));
+        
+        this.reelPositions = [0, 0, 0]; // index of top symbol in each reel (0-19)
+        this.isSpinning = false;
+        this.spinStartTime = 0;
+        this.durations = [1000, 1200, 1400]; // different durations for each reel
+        this.targetPositions = [0, 0, 0];
+        this.animationId = null;
+        
+        this.draw();
     }
-    return WHEEL_PRIZES[0];
-}
-
-function awardVegasPrize(prize) {
-    if (prize.goodluck) {
-        showToastPro('🍀 GOOD LUCK! Try again!', 'info');
-        VegasAudio.coin();
-        userData.wheel.freeSpins = (userData.wheel.freeSpins || 0) + 1;
-        saveUserToCache();
-        updateWheelVegasUI();
-        return;
-    }
-    if (prize.freespin) {
-        showToastPro('🆓 FREE SPIN STORED!', 'success');
-        VegasAudio.coin();
-        userData.wheel.freeSpins = (userData.wheel.freeSpins || 0) + 1;
-        saveUserToCache();
-        updateWheelVegasUI();
-        return;
-    }
-    if (prize.jackpot) {
-        const currency = prize.currency || prize.type;
-        userData.balances[currency] += prize.amount;
-        if (currency === 'TON') userData.balance = userData.balances.TON;
-        userData.totalEarned += prize.amount;
-        addTransaction('wheel', prize.amount, { currency, jackpot: true });
-        JackpotTheater.play(prize.amount, currency, prize.amount >= 100 ? 'mega' : 'jackpot');
-        showWinPopup(`${prize.amount} ${currency}`, prize.amount >= 100 ? 'mega' : 'jackpot');
-        userData.wheel.jackpotWon++;
-        saveUserToCache();
-        updateUI();
-        updateWheelVegasUI();
-        return;
-    }
-    const currency = prize.type;
-    userData.balances[currency] += prize.amount;
-    if (currency === 'TON') userData.balance = userData.balances.TON;
-    userData.totalEarned += prize.amount;
-    addTransaction('wheel', prize.amount, { currency });
-    if (prize.amount >= 10) {
-        showWinPopup(`${prize.amount} ${currency}`, 'big');
-        VegasAudio.win();
-    } else {
-        showWinPopup(`${prize.amount} ${currency}`, 'normal');
-        VegasAudio.coin();
-    }
-    hapticFeedback(prize.amount >= 10 ? 'medium' : 'light');
-    userData.wheel.bigWinCounter = (userData.wheel.bigWinCounter || 0) + 1;
-    userData.wheel.jackpotCounter = (userData.wheel.jackpotCounter || 0) + 1;
-    saveUserToCache();
-    updateUI();
-    updateWheelVegasUI();
-}
-
-function animateWheelVegas() {
-    if (!wheelVegasState.isSpinning) return;
-    const now = Date.now();
-    const elapsed = now - wheelVegasState.spinStartTime;
-    const wheel = document.getElementById('wheelCasinoPro');
-    let velocity = 0;
-    if (elapsed < 600) {
-        velocity = (elapsed / 600) * 25;
-        wheel?.classList.add('spinning-fast');
-    } else if (elapsed < 1800) {
-        velocity = 25 + Math.sin(elapsed * 0.02) * 2;
-    } else if (elapsed < 2600) {
-        velocity = 25 * ((2600 - elapsed) / 800);
-        if (!wheelVegasState.selectedPrize) {
-            wheelVegasState.selectedPrize = selectVegasPrize();
-            const prizeIndex = WHEEL_PRIZES.indexOf(wheelVegasState.selectedPrize);
-            if (prizeIndex !== -1) {
-                const segmentAngle = 360 / WHEEL_PRIZES.length;
-                const targetAngle = 270 - (prizeIndex * segmentAngle + segmentAngle / 2);
-                const extraSpins = 5;
-                wheelVegasState.targetRotation = wheelVegasState.currentRotation + (extraSpins * 360) + ((targetAngle - (wheelVegasState.currentRotation % 360) + 360) % 360);
+    
+    draw() {
+        const symbolHeight = 110; // pixels per symbol
+        for (let r = 0; r < this.canvases.length; r++) {
+            const ctx = this.ctxs[r];
+            const canvas = this.canvases[r];
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw 3 symbols (top, middle, bottom) based on reel position
+            const pos = this.reelPositions[r];
+            for (let i = -1; i <= 1; i++) {
+                const idx = (pos + i + this.symbols.length) % this.symbols.length;
+                const y = canvas.height / 2 + i * symbolHeight;
+                const symbol = this.symbols[idx];
+                ctx.font = `48px "Segoe UI", "Outfit"`;
+                ctx.fillStyle = '#fff';
+                ctx.shadowBlur = 0;
+                ctx.fillText(symbol, canvas.width/2 - 30, y + 15);
             }
         }
-    } else {
-        wheelVegasState.isSpinning = false;
-        wheel?.classList.remove('spinning-fast');
-        wheel?.classList.add('wheel-bounce');
-        setTimeout(() => {
-            wheel?.classList.remove('wheel-bounce');
-            awardVegasPrize(wheelVegasState.selectedPrize);
-        }, 300);
-        cancelAnimationFrame(wheelVegasState.animationId);
-        return;
     }
-    wheelVegasState.currentRotation += velocity;
-    if (wheel) wheel.style.transform = `rotate(${wheelVegasState.currentRotation}deg)`;
-    const speedFill = document.getElementById('wheelSpeedFill');
-    if (speedFill) {
-        const speedPercent = Math.min(velocity / 30 * 100, 100);
-        speedFill.style.width = `${speedPercent}%`;
+    
+    spin(callback, turbo = false) {
+        if (this.isSpinning) return;
+        
+        const durationMultiplier = turbo ? 0.5 : 1;
+        this.durations = this.durations.map(d => d * durationMultiplier);
+        
+        // Generate random target positions for each reel
+        for (let i = 0; i < 3; i++) {
+            this.targetPositions[i] = (this.reelPositions[i] + Math.floor(Math.random() * 20) + 10) % this.symbols.length;
+        }
+        
+        this.isSpinning = true;
+        this.spinStartTime = performance.now();
+        this.callback = callback;
+        
+        const animate = (now) => {
+            const elapsed = now - this.spinStartTime;
+            let allStopped = true;
+            
+            for (let i = 0; i < 3; i++) {
+                const duration = this.durations[i];
+                let t = Math.min(1, elapsed / duration);
+                if (t < 1) {
+                    allStopped = false;
+                    // Animate: change position rapidly
+                    const step = Math.floor(t * 30) % 20;
+                    this.reelPositions[i] = (this.targetPositions[i] + step) % this.symbols.length;
+                } else {
+                    this.reelPositions[i] = this.targetPositions[i];
+                }
+            }
+            
+            this.draw();
+            
+            if (!allStopped) {
+                this.animationId = requestAnimationFrame(animate);
+            } else {
+                this.isSpinning = false;
+                cancelAnimationFrame(this.animationId);
+                if (this.callback) {
+                    const result = this.getResult();
+                    this.callback(result);
+                }
+            }
+        };
+        
+        this.animationId = requestAnimationFrame(animate);
     }
-    wheelVegasState.animationId = requestAnimationFrame(animateWheelVegas);
+    
+    getResult() {
+        const symbols = this.targetPositions.map(idx => this.symbols[idx]);
+        const values = this.targetPositions.map(idx => this.values[idx]);
+        // Check win: all same
+        const allSame = symbols[0] === symbols[1] && symbols[1] === symbols[2];
+        if (allSame) {
+            const prize = values[0];
+            return { win: true, amount: prize.value, currency: prize.type };
+        }
+        // Check two same
+        const matchCount = (symbols[0] === symbols[1] ? 1 : 0) + (symbols[1] === symbols[2] ? 1 : 0) + (symbols[0] === symbols[2] ? 1 : 0);
+        if (matchCount >= 1) {
+            const matchSymbol = symbols[0] === symbols[1] ? symbols[0] : symbols[1];
+            const prize = this.symbolsData.find(s => s.symbol === matchSymbol);
+            if (prize && prize.value > 0) {
+                return { win: true, amount: prize.value / 2, currency: prize.type };
+            }
+        }
+        return { win: false, amount: 0, currency: 'TON' };
+    }
 }
 
-function spinWheelVegas(isFree = false) {
-    if (wheelVegasState.isSpinning) return;
+// Instantiate wheel and slots globally after DOM load
+let wheelGame = null;
+let slotsGame = null;
+
+function initWheelCanvas() {
+    if (wheelGame) return;
+    // Ensure canvas exists
+    const canvas = document.getElementById('wheelCanvas');
+    if (!canvas) {
+        console.warn("Wheel canvas not found yet, retrying...");
+        setTimeout(initWheelCanvas, 200);
+        return;
+    }
+    wheelGame = new WheelGame('wheelCanvas', WHEEL_PRIZES);
+}
+
+function initSlotsCanvas() {
+    if (slotsGame) return;
+    const canvases = ['reel1Canvas', 'reel2Canvas', 'reel3Canvas'];
+    const allExist = canvases.every(id => document.getElementById(id));
+    if (!allExist) {
+        console.warn("Slots canvases not found yet, retrying...");
+        setTimeout(initSlotsCanvas, 200);
+        return;
+    }
+    slotsGame = new SlotsGame(canvases, SLOTS_SYMBOLS_DATA);
+}
+
+// Functions called from HTML
+function spinWheelVegas(isFree) {
+    if (!wheelGame) initWheelCanvas();
+    if (wheelGame.isSpinning) return;
+    
+    // Payment logic
     if (isFree) {
         const now = Date.now();
         const nextFree = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
@@ -3682,75 +3696,27 @@ function spinWheelVegas(isFree = false) {
             return;
         }
     }
-    wheelVegasState.isSpinning = true;
-    wheelVegasState.spinStartTime = Date.now();
-    wheelVegasState.selectedPrize = null;
-    VegasAudio.click();
-    setTimeout(() => VegasAudio.whoosh(), 50);
-    TickSequencer.playWheelTicks(2500, () => VegasAudio.clunk());
-    document.querySelectorAll('.wheel-segment-vegas').forEach(seg => seg.classList.remove('winner-segment', 'near-miss'));
-    wheelVegasState.animationId = requestAnimationFrame(animateWheelVegas);
-    userData.wheel.totalSpins++;
-    saveUserToCache();
-    updateWheelVegasUI();
+    
+    wheelGame.spin((prize) => {
+        // Award prize
+        awardVegasPrize(prize);
+        userData.wheel.totalSpins++;
+        userData.wheel.jackpotCounter++;
+        userData.wheel.bigWinCounter++;
+        saveUserToCache();
+        updateWheelUI();
+        updateUI();
+    });
 }
 
-// آلة السلوتس المحسنة (خفيفة)
-let slotsVegasState = { isSpinning: false };
-
-function initSlotsVegas() {
-    const container = document.getElementById('slotReelsPro');
-    if (!container) { setTimeout(initSlotsVegas, 200); return; }
-    container.innerHTML = '';
-    const symbols = ['🍒','🍋','🍇','💎','7️⃣','💰','👑','🎰'];
-    const colors = ['#ff4444','#ffdd00','#aa44ff','#00f2ff','#ff4444','#ffaa00','#ffdd00','#ff00ff'];
-    for (let i = 0; i < 3; i++) {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'vegas-slot-reel-wrapper';
-        wrapper.style.cssText = 'width:100px; height:330px; overflow:hidden; border-radius:15px; background:#1a1a2a; border:2px solid #00f2ff;';
-        const reel = document.createElement('div');
-        reel.className = 'vegas-slot-reel';
-        reel.style.cssText = 'display:flex; flex-direction:column; transition:transform 0.05s linear;';
-        for (let j = 0; j < 20; j++) {
-            const randomIndex = Math.floor(Math.random() * symbols.length);
-            const sym = document.createElement('div');
-            sym.className = 'vegas-slot-symbol';
-            sym.textContent = symbols[randomIndex];
-            sym.style.color = colors[randomIndex];
-            sym.style.cssText = 'height:110px; display:flex; align-items:center; justify-content:center; font-size:3.5rem; background:#2a2a3a; border-bottom:1px solid #3a3a4a;';
-            reel.appendChild(sym);
-        }
-        wrapper.appendChild(reel);
-        container.appendChild(wrapper);
-        reel.style.transform = `translateY(-${Math.floor(Math.random() * 500)}px)`;
-    }
-    updateSlotsVegasUI();
-}
-
-function updateSlotsVegasUI() {
-    const spinsEl = document.getElementById('slotsGameSpins');
-    const freeSpinEl = document.getElementById('slotsFreeSpin');
-    if (spinsEl) spinsEl.textContent = (userData.slots.purchasedSpins || 0) + (userData.slots.freeSpins || 0);
-    if (freeSpinEl) {
-        const now = Date.now();
-        const nextFree = (userData.slots.lastFreeSpin || 0) + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
-        if (now < nextFree) {
-            const left = nextFree - now;
-            freeSpinEl.innerHTML = `<i class="fas fa-clock"></i><span>${Math.floor(left/3600000)}h ${Math.floor((left%3600000)/60000)}m</span>`;
-            freeSpinEl.disabled = true;
-        } else {
-            freeSpinEl.innerHTML = `<i class="fas fa-gift"></i><span>FREE</span>`;
-            freeSpinEl.disabled = false;
-        }
-    }
-}
-
-function spinSlotsVegas(isFree = false, isTurbo = false) {
-    if (slotsVegasState.isSpinning) return;
+function spinSlotsVegas(isFree, isTurbo) {
+    if (!slotsGame) initSlotsCanvas();
+    if (slotsGame.isSpinning) return;
+    
     const price = isTurbo ? CONFIG.ECONOMY.SLOTS_TURBO_PRICE : CONFIG.ECONOMY.SLOTS_SPIN_PRICE;
     if (isFree) {
         const now = Date.now();
-        const nextFree = (userData.slots.lastFreeSpin || 0) + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
+        const nextFree = userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
         if (now < nextFree) {
             const left = nextFree - now;
             showToastPro(`⏰ Wait ${Math.floor(left/3600000)}h`, 'warning');
@@ -3770,77 +3736,90 @@ function spinSlotsVegas(isFree = false, isTurbo = false) {
             return;
         }
     }
-    slotsVegasState.isSpinning = true;
-    VegasAudio.click();
-    setTimeout(() => VegasAudio.whoosh(), 50);
-    const reels = document.querySelectorAll('.vegas-slot-reel');
-    const duration = isTurbo ? 600 : 1000;
-    const results = [];
     
-    document.querySelectorAll('.vegas-slot-reel-wrapper').forEach(w => {
-        w.classList.add('spinning');
-    });
-    
-    reels.forEach((reel, idx) => {
-        const spinDistance = 1500 + Math.random() * 1000;
-        const startY = parseFloat(reel.style.transform?.replace('translateY(', '').replace('px)', '')) || 0;
-        const targetY = startY - spinDistance;
-        reel.style.transition = `transform ${duration}ms cubic-bezier(0.2, 0.9, 0.4, 1.1)`;
-        reel.style.transform = `translateY(${targetY}px)`;
-        setTimeout(() => {
-            const finalOffset = Math.floor(Math.random() * 20) * 110;
-            reel.style.transition = `transform 200ms ease-out`;
-            reel.style.transform = `translateY(-${finalOffset}px)`;
-            const symbolIndex = Math.floor(finalOffset / 110) % 20;
-            const symbolsList = reel.querySelectorAll('.vegas-slot-symbol');
-            results[idx] = symbolsList[symbolIndex]?.textContent || '🍒';
-        }, duration - 150);
-    });
-    setTimeout(() => {
-        document.querySelectorAll('.vegas-slot-reel-wrapper').forEach(w => {
-            w.classList.remove('spinning');
-        });
-        const allSame = results[0] === results[1] && results[1] === results[2];
-        let winAmount = 0, winCurrency = 'TON';
-        if (allSame) {
-            const prize = SLOTS_SYMBOLS_DATA.find(p => p.symbol === results[0]);
-            if (prize && prize.value > 0) {
-                winAmount = prize.value;
-                winCurrency = prize.type === 'TON' ? 'TON' : 'USDT';
+    slotsGame.spin((result) => {
+        if (result.win) {
+            // Add winnings
+            userData.balances[result.currency] += result.amount;
+            if (result.currency === 'TON') userData.balance = userData.balances.TON;
+            userData.totalEarned += result.amount;
+            addTransaction('slots', result.amount, { currency: result.currency });
+            showToastPro(`🎰 You won ${result.amount} ${result.currency}!`, 'success');
+            // Update win display
+            const winAmountEl = document.getElementById('slotsWinAmount');
+            if (winAmountEl) winAmountEl.textContent = `${result.amount} ${result.currency}`;
+            showWinPopup(`${result.amount} ${result.currency}`, result.amount >= 25 ? 'jackpot' : (result.amount >= 10 ? 'big' : 'normal'));
+            // Audio
+            if (typeof VegasAudio !== 'undefined') {
+                if (result.amount >= 25) VegasAudio.jackpot();
+                else if (result.amount >= 10) VegasAudio.win();
+                else VegasAudio.coin();
             }
-        } else {
-            const matchCount = (results[0] === results[1] ? 1 : 0) + (results[1] === results[2] ? 1 : 0) + (results[0] === results[2] ? 1 : 0);
-            if (matchCount >= 1) {
-                const matchSymbol = results[0] === results[1] ? results[0] : results[1];
-                const prize = SLOTS_SYMBOLS_DATA.find(p => p.symbol === matchSymbol);
-                if (prize && prize.value > 0) {
-                    winAmount = prize.value / 2;
-                    winCurrency = prize.type === 'TON' ? 'TON' : 'USDT';
-                }
-            }
-        }
-        if (winAmount > 0) {
-            userData.balances[winCurrency] += winAmount;
-            if (winCurrency === 'TON') userData.balance = userData.balances.TON;
-            userData.totalEarned += winAmount;
-            addTransaction('slots', winAmount, { currency: winCurrency });
-            showToastPro(`🎰 You won ${winAmount} ${winCurrency}!`, 'success');
-            document.getElementById('slotsWinAmount').textContent = `${winAmount} ${winCurrency}`;
-            if (winAmount >= 25) showWinPopup(`${winAmount} ${winCurrency}`, 'jackpot');
-            else if (winAmount >= 10) showWinPopup(`${winAmount} ${winCurrency}`, 'big');
-            else showWinPopup(`${winAmount} ${winCurrency}`, 'normal');
-            VegasAudio.win();
-            if (winAmount >= 10) for (let i=0;i<3;i++) setTimeout(() => VegasAudio.coin(), i*200);
         } else {
             showToastPro('🍀 Try again!', 'info');
-            VegasAudio.tick(0.8);
+            if (typeof VegasAudio !== 'undefined') VegasAudio.tick(0.8);
         }
-        slotsVegasState.isSpinning = false;
+        userData.slots.totalSpins++;
         saveUserToCache();
+        updateSlotsUI();
         updateUI();
-    }, duration + 100);
+    }, isTurbo);
 }
 
+// Helper function to award wheel prize (copied from original)
+function awardVegasPrize(prize) {
+    if (prize.goodluck) {
+        showToastPro('🍀 GOOD LUCK! Try again!', 'info');
+        if (typeof VegasAudio !== 'undefined') VegasAudio.coin();
+        userData.wheel.freeSpins = (userData.wheel.freeSpins || 0) + 1;
+        saveUserToCache();
+        updateWheelUI();
+        return;
+    }
+    if (prize.freespin) {
+        showToastPro('🆓 FREE SPIN STORED!', 'success');
+        if (typeof VegasAudio !== 'undefined') VegasAudio.coin();
+        userData.wheel.freeSpins = (userData.wheel.freeSpins || 0) + 1;
+        saveUserToCache();
+        updateWheelUI();
+        return;
+    }
+    if (prize.jackpot) {
+        const currency = prize.currency || prize.type;
+        userData.balances[currency] += prize.amount;
+        if (currency === 'TON') userData.balance = userData.balances.TON;
+        userData.totalEarned += prize.amount;
+        addTransaction('wheel', prize.amount, { currency, jackpot: true });
+        // Jackpot theater
+        if (typeof JackpotTheater !== 'undefined') {
+            JackpotTheater.play(prize.amount, currency, prize.amount >= 100 ? 'mega' : 'jackpot');
+        }
+        showWinPopup(`${prize.amount} ${currency}`, prize.amount >= 100 ? 'mega' : 'jackpot');
+        userData.wheel.jackpotWon = (userData.wheel.jackpotWon || 0) + 1;
+        saveUserToCache();
+        updateUI();
+        updateWheelUI();
+        return;
+    }
+    const currency = prize.type;
+    userData.balances[currency] += prize.amount;
+    if (currency === 'TON') userData.balance = userData.balances.TON;
+    userData.totalEarned += prize.amount;
+    addTransaction('wheel', prize.amount, { currency });
+    if (prize.amount >= 10) {
+        showWinPopup(`${prize.amount} ${currency}`, 'big');
+        if (typeof VegasAudio !== 'undefined') VegasAudio.win();
+    } else {
+        showWinPopup(`${prize.amount} ${currency}`, 'normal');
+        if (typeof VegasAudio !== 'undefined') VegasAudio.coin();
+    }
+    hapticFeedback(prize.amount >= 10 ? 'medium' : 'light');
+    saveUserToCache();
+    updateUI();
+    updateWheelUI();
+}
+
+// Toast pro
 function showToastPro(message, type = 'info', duration = 3000) {
     const container = document.getElementById('toastContainer');
     if (!container) return;
@@ -3899,7 +3878,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     updateUserDisplay();
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v10.0");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v11.0");
     console.log("✅ All systems ready! 🚀");
 });
 
@@ -3916,7 +3895,9 @@ document.addEventListener('visibilitychange', () => {
     if (document.hidden) { stopMining(); stopFloatingNotifications(); }
     else { startMining(); if (currentPage === 'mining') startFloatingNotifications(); }
 });
-document.addEventListener('click', () => { if (!VegasAudio.isInitialized) VegasAudio.init(); }, { once: true });
+document.addEventListener('click', () => { 
+    if (typeof VegasAudio !== 'undefined' && !VegasAudio.isInitialized) VegasAudio.init(); 
+}, { once: true });
 
 // ====== 50. EXPORT FUNCTIONS ======
 window.showPage = showPage;
@@ -3977,9 +3958,6 @@ window.exitGame = exitGame;
 window.spinWheelVegas = spinWheelVegas;
 window.spinSlotsVegas = spinSlotsVegas;
 window.showToastPro = showToastPro;
-window.VegasAudio = VegasAudio;
-window.TickSequencer = TickSequencer;
-window.JackpotTheater = JackpotTheater;
 window.openProfileFromAnywhere = openProfileFromAnywhere;
 window.openWithdrawModal = openWithdrawModal;
 window.openDepositModal = openDepositModal;
