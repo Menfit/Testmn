@@ -1,5 +1,5 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v13.0
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v14.0
 // نسخة نهائية مع كازينو احترافي بالكامل
 // جميع الوظائف تعمل – جاهز للنسخ واللصق
 // ============================================
@@ -1373,7 +1373,7 @@ function renderPlansTable() {
     if (!tbody) return;
     tbody.innerHTML = MACHINES.map(m => {
         const name = currentLanguage === 'ar' ? m.nameAr : m.name;
-        return `<tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
+        return `      <tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
             m.plans.map(p => p.price === 0 ? '<td>FREE</td>' : `<td>${p.price} TON<br><small>+${p.returnAmount} TON</small></td>`).join('')
         }</tr>`;
     }).join('');
@@ -3714,7 +3714,7 @@ const JackpotTheater = {
     }
 };
 
-// ====== 46.4 WHEEL GAME - عجلة الحظ المحسنة ======
+// ====== 46.4 WHEEL GAME - عجلة الحظ المحسنة (نص شعاعي من القلب للحافة) ======
 class WheelGame {
     constructor(canvasId, segments) {
         this.canvas = document.getElementById(canvasId);
@@ -3764,6 +3764,7 @@ class WheelGame {
             const startAngle = i * this.segmentAngle + this.rotation;
             const endAngle = (i + 1) * this.segmentAngle + this.rotation;
             
+            // رسم القطاع
             ctx.beginPath();
             ctx.moveTo(centerX, centerY);
             ctx.arc(centerX, centerY, radius, startAngle, endAngle);
@@ -3780,6 +3781,7 @@ class WheelGame {
             ctx.fillStyle = grad;
             ctx.fill();
             
+            // حدود بين القطاعات
             ctx.beginPath();
             ctx.moveTo(centerX, centerY);
             ctx.arc(centerX, centerY, radius, startAngle, endAngle);
@@ -3790,7 +3792,7 @@ class WheelGame {
             
             const midAngle = startAngle + this.segmentAngle / 2;
             
-            // رسم الأيقونة في المنتصف (من القلب إلى منتصف القطاع)
+            // رسم الأيقونة في منتصف القطاع (على نصف القطر 40% من المركز)
             const iconRadius = radius * 0.38;
             const iconX = centerX + Math.cos(midAngle) * iconRadius;
             const iconY = centerY + Math.sin(midAngle) * iconRadius;
@@ -3804,7 +3806,10 @@ class WheelGame {
             ctx.fillText(seg.icon, -12, 8);
             ctx.restore();
             
-            // رسم النص في الجزء الخارجي (من منتصف القطاع إلى الحافة)
+            // رسم النص على طول نصف القطر من 60% إلى 85% (شعاعي)
+            const textStart = radius * 0.6;
+            const textEnd = radius * 0.85;
+            // نرسم النص على مسافة 72% من المركز (وسط بين البداية والنهاية)
             const textRadius = radius * 0.72;
             const textX = centerX + Math.cos(midAngle) * textRadius;
             const textY = centerY + Math.sin(midAngle) * textRadius;
@@ -4279,7 +4284,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     updateUserDisplay();
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v13.0");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v14.0");
     console.log("✅ All systems ready! 🚀");
 });
 
