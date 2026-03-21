@@ -1,6 +1,6 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v16.0
-// جميع التحسينات النهائية: كتابة شعاعية، سلوتس مستجيبة، رسالة فوز علوية واحدة، أصوات محسنة
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v17.0
+// جميع الميزات محفوظة + تحسينات كازينو أسطورية
 // جاهز للنسخ واللصق
 // ============================================
 
@@ -517,29 +517,29 @@ const REFERRAL_MILESTONES = [
     { referrals: 1000, reward: 1200, unit: 'USDT' }
 ];
 
-// ====== 7. WHEEL PRIZES ======
+// ====== 7. WHEEL PRIZES (ألوان داكنة متناسقة) ======
 const WHEEL_PRIZES = [
-    { type: 'TON', amount: 0.25, color: '#1e5f7f', weight: 8, icon: '💰', label: '0.25 TON', category: 'ton' },
-    { type: 'TON', amount: 0.5, color: '#1e6f8f', weight: 8, icon: '💰', label: '0.5 TON', category: 'ton' },
-    { type: 'TON', amount: 1, color: '#1e7f9f', weight: 7, icon: '💰', label: '1 TON', category: 'ton' },
-    { type: 'TON', amount: 2, color: '#1e8faf', weight: 6, icon: '💰', label: '2 TON', category: 'ton' },
-    { type: 'USDT', amount: 0.25, color: '#1f6f3f', weight: 8, icon: '💵', label: '0.25 USDT', category: 'usdt' },
-    { type: 'USDT', amount: 0.5, color: '#1f7f4f', weight: 8, icon: '💵', label: '0.5 USDT', category: 'usdt' },
-    { type: 'USDT', amount: 1, color: '#1f8f5f', weight: 7, icon: '💵', label: '1 USDT', category: 'usdt' },
-    { type: 'USDT', amount: 2, color: '#1f9f6f', weight: 6, icon: '💵', label: '2 USDT', category: 'usdt' },
-    { type: 'TON', amount: 5, color: '#bf6f2f', weight: 4, icon: '🔥', label: '5 TON', category: 'bigwin' },
-    { type: 'TON', amount: 10, color: '#cf7f3f', weight: 3, icon: '🔥', label: '10 TON', category: 'bigwin' },
-    { type: 'USDT', amount: 5, color: '#bf6f2f', weight: 4, icon: '🔥', label: '5 USDT', category: 'bigwin' },
-    { type: 'USDT', amount: 10, color: '#cf7f3f', weight: 3, icon: '🔥', label: '10 USDT', category: 'bigwin' },
-    { type: 'TON', amount: 25, color: '#bf4f1f', weight: 2, icon: '⭐', label: '25 TON', category: 'nicewin' },
-    { type: 'USDT', amount: 25, color: '#cf5f2f', weight: 2, icon: '⭐', label: '25 USDT', category: 'nicewin' },
-    { type: 'TON', amount: 50, color: '#bf2f1f', weight: 1, icon: '👑', label: '50 TON', category: 'jackpot' },
-    { type: 'USDT', amount: 50, color: '#cf3f2f', weight: 1, icon: '👑', label: '50 USDT', category: 'jackpot' },
+    { type: 'TON', amount: 0.25, color: '#1e3a5f', weight: 8, icon: '💰', label: '0.25 TON', category: 'ton' },
+    { type: 'TON', amount: 0.5, color: '#1e4a6f', weight: 8, icon: '💰', label: '0.5 TON', category: 'ton' },
+    { type: 'TON', amount: 1, color: '#1e5a7f', weight: 7, icon: '💰', label: '1 TON', category: 'ton' },
+    { type: 'TON', amount: 2, color: '#1e6a8f', weight: 6, icon: '💰', label: '2 TON', category: 'ton' },
+    { type: 'USDT', amount: 0.25, color: '#1f5f3f', weight: 8, icon: '💵', label: '0.25 USDT', category: 'usdt' },
+    { type: 'USDT', amount: 0.5, color: '#1f6f4f', weight: 8, icon: '💵', label: '0.5 USDT', category: 'usdt' },
+    { type: 'USDT', amount: 1, color: '#1f7f5f', weight: 7, icon: '💵', label: '1 USDT', category: 'usdt' },
+    { type: 'USDT', amount: 2, color: '#1f8f6f', weight: 6, icon: '💵', label: '2 USDT', category: 'usdt' },
+    { type: 'TON', amount: 5, color: '#bf7f2f', weight: 4, icon: '🔥', label: '5 TON', category: 'bigwin' },
+    { type: 'TON', amount: 10, color: '#cf8f3f', weight: 3, icon: '🔥', label: '10 TON', category: 'bigwin' },
+    { type: 'USDT', amount: 5, color: '#bf7f2f', weight: 4, icon: '🔥', label: '5 USDT', category: 'bigwin' },
+    { type: 'USDT', amount: 10, color: '#cf8f3f', weight: 3, icon: '🔥', label: '10 USDT', category: 'bigwin' },
+    { type: 'TON', amount: 25, color: '#bf6f1f', weight: 2, icon: '⭐', label: '25 TON', category: 'nicewin' },
+    { type: 'USDT', amount: 25, color: '#cf7f2f', weight: 2, icon: '⭐', label: '25 USDT', category: 'nicewin' },
+    { type: 'TON', amount: 50, color: '#bf3f1f', weight: 1, icon: '👑', label: '50 TON', category: 'jackpot' },
+    { type: 'USDT', amount: 50, color: '#cf4f2f', weight: 1, icon: '👑', label: '50 USDT', category: 'jackpot' },
     { type: 'GOODLUCK', amount: 0, color: '#4a5568', weight: 10, icon: '🍀', label: 'GOOD LUCK', goodluck: true, category: 'goodluck' },
-    { type: 'FREESPIN', amount: 0, color: '#8b5fcf', weight: 8, icon: '🆓', label: 'FREE SPIN', freespin: true, category: 'freespin' },
-    { type: 'JACKPOT', amount: 100, currency: 'TON', color: '#bf1f1f', weight: 1, icon: '👑', label: '100 TON', jackpot: true, category: 'jackpot' },
-    { type: 'JACKPOT', amount: 200, currency: 'USDT', color: '#cf2f2f', weight: 1, icon: '👑', label: '200 USDT', jackpot: true, category: 'jackpot' },
-    { type: 'MEGA', amount: 500, currency: 'TON', color: '#df3f1f', weight: 0.5, icon: '💎', label: '500 TON', mega: true, category: 'mega' }
+    { type: 'FREESPIN', amount: 0, color: '#8b6fcf', weight: 8, icon: '🆓', label: 'FREE SPIN', freespin: true, category: 'freespin' },
+    { type: 'JACKPOT', amount: 100, currency: 'TON', color: '#bf2f1f', weight: 1, icon: '👑', label: '100 TON', jackpot: true, category: 'jackpot' },
+    { type: 'JACKPOT', amount: 200, currency: 'USDT', color: '#cf3f2f', weight: 1, icon: '👑', label: '200 USDT', jackpot: true, category: 'jackpot' },
+    { type: 'MEGA', amount: 500, currency: 'TON', color: '#df4f1f', weight: 0.5, icon: '💎', label: '500 TON', mega: true, category: 'mega' }
 ];
 
 // ====== 8. SLOTS SYMBOLS ======
@@ -1373,7 +1373,7 @@ function renderPlansTable() {
     if (!tbody) return;
     tbody.innerHTML = MACHINES.map(m => {
         const name = currentLanguage === 'ar' ? m.nameAr : m.name;
-        return `       <tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
+        return `        <tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
             m.plans.map(p => p.price === 0 ? '<td>FREE</td>' : `<td>${p.price} TON<br><small>+${p.returnAmount} TON</small></td>`).join('')
         }</tr>`;
     }).join('');
@@ -1469,10 +1469,9 @@ function updateAutoClickerUI() {
     }
 }
 
-// ====== 22. WIN POPUP ======
-// REMOVED: replaced by top message only. Keeping function for compatibility but won't be used.
+// ====== 22. WIN POPUP (تم استبدالها برسالة علوية، لكن نحتفظ بالدالة للتوافق) ======
 function showWinPopup(prize, type = 'normal') {
-    // Deprecated – using top message instead
+    // لم تعد مستخدمة – يتم عرض الرسائل العلوية فقط
 }
 
 // ====== 23. MARKET FUNCTIONS ======
@@ -3518,45 +3517,44 @@ const VegasAudio = {
     }
 };
 
-// ====== 46.2 TICK SEQUENCER - نظام الطقطقة المتدرج (متزامن مع سرعة العجلة) ======
+// ====== 46.2 TICK SEQUENCER - نظام الطقطقة المتدرج (فيزياء الدوران الحقيقية) ======
 const TickSequencer = {
     timeouts: [],
     isActive: false,
     
-    // توليد طقطقات بناءً على منحنى السرعة الحقيقي
-    playWheelTicks(duration = 2500, onComplete = null) {
+    // توليد طقطقات بناءً على منحنى السرعة: تسارع → سرعة ثابتة → تباطؤ
+    playWheelTicks(duration = 2800, onComplete = null) {
         this.clear();
         this.isActive = true;
         
-        // جدول زمني للأصوات بناءً على منحنى السرعة: يبدأ بطيئاً، يتسارع، ثم يتباطأ قبل التوقف
+        // تقسيم الوقت إلى مراحل: 0-0.3 تسارع، 0.3-0.7 سرعة ثابتة، 0.7-1 تباطؤ
+        const totalTicks = 36;
         const intervals = [];
-        const totalTicks = 32;
         for (let i = 0; i < totalTicks; i++) {
             const t = i / totalTicks; // 0..1
             let speedFactor;
             if (t < 0.3) {
-                // تسارع
-                speedFactor = 0.3 + (t / 0.3) * 1.2;
+                // تسارع خطي
+                speedFactor = 0.4 + (t / 0.3) * 1.2;
             } else if (t < 0.7) {
                 // سرعة قصوى ثابتة
-                speedFactor = 1.5;
+                speedFactor = 1.6;
             } else {
-                // تباطؤ
-                speedFactor = 1.5 - ((t - 0.7) / 0.3) * 1.2;
+                // تباطؤ خطي
+                speedFactor = 1.6 - ((t - 0.7) / 0.3) * 1.2;
             }
             // المسافة الزمنية بين النقرات تتناسب عكسياً مع سرعة الدوران
-            const delay = 50 / Math.max(0.3, speedFactor);
+            const delay = 55 / Math.max(0.4, speedFactor);
             intervals.push(delay);
         }
         
-        let cumulativeTime = 0;
+        let cumulative = 0;
         const tickTimes = [];
         for (let i = 0; i < intervals.length; i++) {
-            cumulativeTime += intervals[i];
-            tickTimes.push(cumulativeTime);
+            cumulative += intervals[i];
+            tickTimes.push(cumulative);
         }
         
-        // جدولة الأصوات
         for (let i = 0; i < tickTimes.length; i++) {
             const timeout = setTimeout(() => {
                 if (!this.isActive) return;
@@ -3584,18 +3582,15 @@ const TickSequencer = {
                 this.isActive = false;
                 return;
             }
-            
             const t = currentTick / tickCount;
             const pitch = 0.7 + (reelIndex * 0.2) + (t * 0.5);
             const volume = 0.1 - (t * 0.05);
             VegasAudio.tick(pitch, volume);
-            
             currentTick++;
             const nextDelay = 25 + (currentTick * 2);
             const timeout = setTimeout(scheduleTick, nextDelay);
             this.timeouts.push(timeout);
         };
-        
         scheduleTick();
     },
     
@@ -3660,7 +3655,6 @@ const JackpotTheater = {
         } else {
             text.innerHTML = `🔥 BIG WIN! ${amount} ${currency} 🔥`;
         }
-        // إضافة النص أعلى الصفحة مباشرة (بين الهيدر والعجلة)
         text.style.position = 'absolute';
         text.style.top = '70px';
         text.style.left = '50%';
@@ -3696,7 +3690,7 @@ const JackpotTheater = {
     }
 };
 
-// ====== 46.4 WHEEL GAME - عجلة الحظ المحسنة (نص شعاعي من القلب للحافة) ======
+// ====== 46.4 WHEEL GAME - عجلة الحظ المحسنة (نص شعاعي من القلب للحافة، خلفية سوداء، توهج نيون) ======
 class WheelGame {
     constructor(canvasId, segments) {
         this.canvas = document.getElementById(canvasId);
@@ -3734,12 +3728,21 @@ class WheelGame {
         
         ctx.clearRect(0, 0, this.width, this.height);
         
-        // خلفية داكنة
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius + 8, 0, 2 * Math.PI);
-        ctx.fillStyle = '#0a0a0f';
-        ctx.fill();
+        // خلفية سوداء داكنة مع توهج نيون
         ctx.shadowBlur = 0;
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius + 6, 0, 2 * Math.PI);
+        ctx.fillStyle = '#000000';
+        ctx.fill();
+        
+        // حلقة خارجية متوهجة
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius + 4, 0, 2 * Math.PI);
+        ctx.strokeStyle = '#00f2ff';
+        ctx.lineWidth = 2;
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = '#00f2ff';
+        ctx.stroke();
         
         for (let i = 0; i < this.segments.length; i++) {
             const seg = this.segments[i];
@@ -3752,6 +3755,7 @@ class WheelGame {
             ctx.arc(centerX, centerY, radius, startAngle, endAngle);
             ctx.closePath();
             
+            // تدرج داكن مع لون القطاع
             const grad = ctx.createLinearGradient(
                 centerX + Math.cos(startAngle) * 15,
                 centerY + Math.sin(startAngle) * 15,
@@ -3759,23 +3763,25 @@ class WheelGame {
                 centerY + Math.sin(endAngle) * 15
             );
             grad.addColorStop(0, seg.color);
-            grad.addColorStop(1, this.adjustColor(seg.color, -20));
+            grad.addColorStop(1, this.adjustColor(seg.color, -30));
             ctx.fillStyle = grad;
             ctx.fill();
             
-            // حدود بين القطاعات
+            // حدود بين القطاعات متوهجة
             ctx.beginPath();
             ctx.moveTo(centerX, centerY);
             ctx.arc(centerX, centerY, radius, startAngle, endAngle);
             ctx.lineTo(centerX, centerY);
-            ctx.strokeStyle = 'rgba(255,215,0,0.3)';
-            ctx.lineWidth = 2;
+            ctx.strokeStyle = 'rgba(0,242,255,0.6)';
+            ctx.lineWidth = 1.5;
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = '#00f2ff';
             ctx.stroke();
             
             const midAngle = startAngle + this.segmentAngle / 2;
             
-            // رسم الأيقونة في منتصف القطاع (على نصف القطر 40% من المركز)
-            const iconRadius = radius * 0.38;
+            // رسم الأيقونة (ستيكر) في منتصف القطاع (على نصف القطر 40% من المركز)
+            const iconRadius = radius * 0.4;
             const iconX = centerX + Math.cos(midAngle) * iconRadius;
             const iconY = centerY + Math.sin(midAngle) * iconRadius;
             ctx.save();
@@ -3783,46 +3789,45 @@ class WheelGame {
             ctx.rotate(midAngle);
             ctx.font = `bold ${Math.floor(radius * 0.12)}px "Segoe UI", "Outfit"`;
             ctx.fillStyle = '#ffffff';
-            ctx.shadowColor = 'rgba(0,0,0,0.5)';
-            ctx.shadowBlur = 4;
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = 'rgba(0,242,255,0.8)';
             ctx.fillText(seg.icon, -12, 8);
             ctx.restore();
             
-            // رسم النص على طول نصف القطر من 60% إلى 85% (شعاعي) – مع دوران النص ليكون موازياً للشعاع
+            // رسم النص على طول نصف القطر من 60% إلى 85% (شعاعي) مع تأثير ستيكر
             const textRadius = radius * 0.72;
             const textX = centerX + Math.cos(midAngle) * textRadius;
             const textY = centerY + Math.sin(midAngle) * textRadius;
             ctx.save();
             ctx.translate(textX, textY);
-            // هنا نريد أن يكون النص موازياً للشعاع (أي أن قاعدته تمتد على طول الخط الشعاعي)
-            // لهذا ندور بزاوية midAngle (بدون إضافة PI/2) ليكون اتجاه النص من المركز للخارج
-            // لكن لجعل النص مقروءاً من الخارج، نضيف 180 درجة إذا كانت الزاوية في النصف السفلي.
+            // ضبط دوران النص ليكون موازياً للشعاع
             let angle = midAngle;
-            // نضبط الاتجاه بحيث لا يكون النص مقلوباً
             if (angle > Math.PI / 2 && angle < 3 * Math.PI / 2) {
-                angle += Math.PI; // نقلب النص إذا كان في النصف السفلي
+                angle += Math.PI;
             }
             ctx.rotate(angle);
-            ctx.font = `bold ${Math.floor(radius * 0.08)}px "Outfit", "Segoe UI"`;
-            ctx.fillStyle = '#ffffff';
-            ctx.shadowColor = 'rgba(0,0,0,0.6)';
-            ctx.shadowBlur = 6;
+            ctx.font = `bold ${Math.floor(radius * 0.09)}px "Outfit", "Segoe UI"`;
+            ctx.fillStyle = '#fff';
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = '#00f2ff';
             ctx.fillText(seg.label, -20, 6);
             ctx.restore();
         }
         
         // المركز الداخلي المتألق
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = '#ffaa00';
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius * 0.18, 0, 2 * Math.PI);
         const centerGrad = ctx.createRadialGradient(centerX - 5, centerY - 5, 5, centerX, centerY, radius * 0.2);
-        centerGrad.addColorStop(0, '#ffd700');
-        centerGrad.addColorStop(1, '#b87c2c');
+        centerGrad.addColorStop(0, '#ffdd88');
+        centerGrad.addColorStop(1, '#ffaa33');
         ctx.fillStyle = centerGrad;
         ctx.fill();
         
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius * 0.12, 0, 2 * Math.PI);
-        ctx.fillStyle = '#f5b042';
+        ctx.fillStyle = '#ffcc66';
         ctx.fill();
         
         ctx.shadowBlur = 0;
@@ -3835,9 +3840,11 @@ class WheelGame {
     spin(callback) {
         if (this.isSpinning) return;
         
+        // اختيار الجائزة بناءً على الأوزان
         this.selectedPrize = this.selectPrize();
         const prizeIndex = this.segments.indexOf(this.selectedPrize);
         
+        // حساب الزاوية المستهدفة لتتوقف العجلة عند منتصف هذا القطاع
         const segmentMidAngle = prizeIndex * this.segmentAngle + this.segmentAngle / 2;
         const currentAngle = this.rotation % (2 * Math.PI);
         let delta = (segmentMidAngle - currentAngle + 2 * Math.PI) % (2 * Math.PI);
@@ -3857,7 +3864,21 @@ class WheelGame {
         const animate = (now) => {
             const elapsed = now - this.spinStartTime;
             let t = Math.min(1, elapsed / this.spinDuration);
-            const easeOut = 1 - Math.pow(1 - t, 3.5);
+            // منحنى الحركة: تسارع ثم سرعة ثابتة ثم تباطؤ
+            let easeOut;
+            if (t < 0.3) {
+                // تسارع
+                const t2 = t / 0.3;
+                easeOut = 0.5 * t2 * t2;
+            } else if (t < 0.7) {
+                // سرعة ثابتة
+                const t2 = (t - 0.3) / 0.4;
+                easeOut = 0.5 + 0.5 * t2;
+            } else {
+                // تباطؤ
+                const t2 = (t - 0.7) / 0.3;
+                easeOut = 1 - (1 - t2) * (1 - t2);
+            }
             const currentRot = this.rotation + (this.targetRotation - this.rotation) * easeOut;
             this.rotation = currentRot;
             this.draw();
@@ -3894,7 +3915,7 @@ class WheelGame {
     }
 }
 
-// ====== 46.5 SLOTS GAME - آلة السلوتس المحسنة ======
+// ====== 46.5 SLOTS GAME - آلة السلوتس المحسنة (إصلاح شامل) ======
 class SlotsGame {
     constructor(canvasIds, symbolsData) {
         this.canvases = canvasIds.map(id => document.getElementById(id));
@@ -3913,7 +3934,7 @@ class SlotsGame {
         
         // تأكد من وجود الكانفاسات
         if (this.canvases.some(c => !c)) {
-            console.warn("Slots canvases not found, retrying...");
+            console.warn("Slots canvases not found, retrying in 200ms");
             setTimeout(() => this.constructor(canvasIds, symbolsData), 200);
             return;
         }
@@ -3945,11 +3966,15 @@ class SlotsGame {
     }
     
     spin(callback, turbo = false) {
-        if (this.isSpinning) return;
+        if (this.isSpinning) {
+            console.warn("Spin already in progress");
+            return;
+        }
         
         const durationMultiplier = turbo ? 0.55 : 1;
         this.durations = this.durations.map(d => d * durationMultiplier);
         
+        // توليد مواقع عشوائية للهدف
         for (let i = 0; i < 3; i++) {
             this.targetPositions[i] = (this.reelPositions[i] + Math.floor(Math.random() * 25) + 12) % this.symbols.length;
         }
@@ -3985,6 +4010,7 @@ class SlotsGame {
                     const step = Math.floor(t * 35) % 25;
                     this.reelPositions[i] = (this.targetPositions[i] + step) % this.symbols.length;
                     
+                    // تشغيل صوت الطقطقة عند بدء توقف كل بكرة (مرة واحدة)
                     if (Math.floor(t * 10) === 0 && i === this.currentReel && t < 0.3) {
                         startReelTick(i);
                         this.currentReel++;
@@ -4103,7 +4129,10 @@ function spinWheelVegas(isFree) {
 
 function spinSlotsVegas(isFree, isTurbo) {
     if (!slotsGame) initSlotsCanvas();
-    if (slotsGame.isSpinning) return;
+    if (slotsGame.isSpinning) {
+        console.log("Slots already spinning");
+        return;
+    }
     
     VegasAudio.click();
     
@@ -4206,7 +4235,6 @@ function awardVegasPrize(prize) {
     userData.totalEarned += prize.amount;
     addTransaction('wheel', prize.amount, { currency });
     
-    // عرض رسالة الفوز في الجزء العلوي
     let winType = 'normal';
     if (prize.amount >= 25) winType = 'jackpot';
     else if (prize.amount >= 10) winType = 'big';
@@ -4227,7 +4255,6 @@ function awardVegasPrize(prize) {
 
 // ====== 46.9 عرض رسائل الفوز أعلى الصفحة (محسنة) ======
 function showGameWinMessage(amount, currency, type) {
-    // إزالة أي رسالة سابقة
     const existing = document.querySelector('.game-win-message');
     if (existing) existing.remove();
     
@@ -4280,7 +4307,6 @@ function showGameWinMessage(amount, currency, type) {
     messageDiv.style.animation = 'slideDownFadeOut 3s ease forwards';
     document.body.appendChild(messageDiv);
     
-    // إضافة تعريف الأنيميشن إذا لم يكن موجوداً
     if (!document.querySelector('#winMessageStyle')) {
         const style = document.createElement('style');
         style.id = 'winMessageStyle';
@@ -4294,7 +4320,6 @@ function showGameWinMessage(amount, currency, type) {
         `;
         document.head.appendChild(style);
     }
-    
     setTimeout(() => messageDiv.remove(), 3000);
 }
 
@@ -4357,7 +4382,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     updateUserDisplay();
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v16.0");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v17.0");
     console.log("✅ All systems ready! 🚀");
 });
 
