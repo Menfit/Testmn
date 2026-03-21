@@ -1,6 +1,6 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v11.0
-// نسخة نهائية مع إعادة كتابة كازينو احترافية باستخدام Canvas
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v12.0
+// نسخة نهائية مع تحسينات كازينو أسطورية
 // جميع الوظائف تعمل – جاهز للنسخ واللصق
 // ============================================
 
@@ -519,20 +519,33 @@ const REFERRAL_MILESTONES = [
 
 // ====== 7. WHEEL PRIZES ======
 const WHEEL_PRIZES = [
-    { type: 'TON', amount: 0.25, color: '#0088cc', weight: 10, icon: '💰', label: '0.25 TON', category: 'ton' },
-    { type: 'TON', amount: 0.5, color: '#0088cc', weight: 9, icon: '💰', label: '0.5 TON', category: 'ton' },
-    { type: 'TON', amount: 1, color: '#0088cc', weight: 8, icon: '💰', label: '1 TON', category: 'ton' },
-    { type: 'USDT', amount: 0.25, color: '#22c55e', weight: 10, icon: '💵', label: '0.25 USDT', category: 'usdt' },
-    { type: 'USDT', amount: 0.5, color: '#22c55e', weight: 9, icon: '💵', label: '0.5 USDT', category: 'usdt' },
-    { type: 'USDT', amount: 1, color: '#22c55e', weight: 8, icon: '💵', label: '1 USDT', category: 'usdt' },
-    { type: 'TON', amount: 5, color: '#ff9900', weight: 5, icon: '🔥', label: '5 TON', category: 'bigwin' },
-    { type: 'TON', amount: 10, color: '#ff9900', weight: 4, icon: '🔥', label: '10 TON', category: 'bigwin' },
-    { type: 'USDT', amount: 5, color: '#ff9900', weight: 5, icon: '🔥', label: '5 USDT', category: 'bigwin' },
-    { type: 'USDT', amount: 10, color: '#ff9900', weight: 4, icon: '🔥', label: '10 USDT', category: 'bigwin' },
-    { type: 'GOODLUCK', amount: 0, color: '#94a3b8', weight: 15, icon: '🍀', label: 'GOOD LUCK', goodluck: true, category: 'goodluck' },
-    { type: 'FREESPIN', amount: 0, color: '#aa44ff', weight: 10, icon: '🆓', label: 'FREE SPIN', freespin: true, category: 'freespin' },
-    { type: 'JACKPOT', amount: 50, currency: 'TON', color: '#ef4444', weight: 2, icon: '👑', label: '50 TON', jackpot: true, category: 'jackpot' },
-    { type: 'JACKPOT', amount: 100, currency: 'USDT', color: '#ef4444', weight: 1, icon: '👑', label: '100 USDT', jackpot: true, category: 'jackpot' }
+    // جوائز TON صغيرة
+    { type: 'TON', amount: 0.25, color: '#1e3a5f', weight: 8, icon: '💰', label: '0.25 TON', category: 'ton' },
+    { type: 'TON', amount: 0.5, color: '#1e4a6f', weight: 8, icon: '💰', label: '0.5 TON', category: 'ton' },
+    { type: 'TON', amount: 1, color: '#1e5a7f', weight: 7, icon: '💰', label: '1 TON', category: 'ton' },
+    { type: 'TON', amount: 2, color: '#1e6a8f', weight: 6, icon: '💰', label: '2 TON', category: 'ton' },
+    // جوائز USDT صغيرة
+    { type: 'USDT', amount: 0.25, color: '#1e5f3a', weight: 8, icon: '💵', label: '0.25 USDT', category: 'usdt' },
+    { type: 'USDT', amount: 0.5, color: '#1e6f4a', weight: 8, icon: '💵', label: '0.5 USDT', category: 'usdt' },
+    { type: 'USDT', amount: 1, color: '#1e7f5a', weight: 7, icon: '💵', label: '1 USDT', category: 'usdt' },
+    { type: 'USDT', amount: 2, color: '#1e8f6a', weight: 6, icon: '💵', label: '2 USDT', category: 'usdt' },
+    // جوائز متوسطة
+    { type: 'TON', amount: 5, color: '#2a6a3a', weight: 4, icon: '🔥', label: '5 TON', category: 'bigwin' },
+    { type: 'TON', amount: 10, color: '#3a7a4a', weight: 3, icon: '🔥', label: '10 TON', category: 'bigwin' },
+    { type: 'USDT', amount: 5, color: '#2a6a3a', weight: 4, icon: '🔥', label: '5 USDT', category: 'bigwin' },
+    { type: 'USDT', amount: 10, color: '#3a7a4a', weight: 3, icon: '🔥', label: '10 USDT', category: 'bigwin' },
+    // جوائز كبيرة
+    { type: 'TON', amount: 25, color: '#8b5a2b', weight: 2, icon: '⭐', label: '25 TON', category: 'nicewin' },
+    { type: 'USDT', amount: 25, color: '#8b6a3b', weight: 2, icon: '⭐', label: '25 USDT', category: 'nicewin' },
+    { type: 'TON', amount: 50, color: '#b87c2c', weight: 1, icon: '👑', label: '50 TON', category: 'jackpot' },
+    { type: 'USDT', amount: 50, color: '#c88c3c', weight: 1, icon: '👑', label: '50 USDT', category: 'jackpot' },
+    // جوائز مميزة
+    { type: 'GOODLUCK', amount: 0, color: '#4a5568', weight: 10, icon: '🍀', label: 'GOOD LUCK', goodluck: true, category: 'goodluck' },
+    { type: 'FREESPIN', amount: 0, color: '#6b4c9b', weight: 8, icon: '🆓', label: 'FREE SPIN', freespin: true, category: 'freespin' },
+    // جاكبوت
+    { type: 'JACKPOT', amount: 100, currency: 'TON', color: '#9b2c2c', weight: 1, icon: '👑', label: '100 TON', jackpot: true, category: 'jackpot' },
+    { type: 'JACKPOT', amount: 200, currency: 'USDT', color: '#ac3c3c', weight: 1, icon: '👑', label: '200 USDT', jackpot: true, category: 'jackpot' },
+    { type: 'MEGA', amount: 500, currency: 'TON', color: '#d43c1c', weight: 0.5, icon: '💎', label: '500 TON', mega: true, category: 'mega' }
 ];
 
 // ====== 8. SLOTS SYMBOLS ======
@@ -1366,7 +1379,7 @@ function renderPlansTable() {
     if (!tbody) return;
     tbody.innerHTML = MACHINES.map(m => {
         const name = currentLanguage === 'ar' ? m.nameAr : m.name;
-        return `<tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
+        return `     <tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
             m.plans.map(p => p.price === 0 ? '<td>FREE</td>' : `<td>${p.price} TON<br><small>+${p.returnAmount} TON</small></td>`).join('')
         }</tr>`;
     }).join('');
@@ -1480,6 +1493,9 @@ function showWinPopup(prize, type = 'normal') {
     } else if (type === 'jackpot') {
         icon = '🎰🎰🎰';
         title = 'JACKPOT!';
+    } else if (type === 'mega') {
+        icon = '👑👑👑';
+        title = 'MEGA JACKPOT!';
     }
     
     popup.innerHTML = `
@@ -1494,7 +1510,7 @@ function showWinPopup(prize, type = 'normal') {
     
     setTimeout(() => popup.classList.add('show'), 10);
     
-    if (type === 'jackpot') {
+    if (type === 'mega' || type === 'jackpot') {
         hapticFeedback('heavy');
     } else if (type === 'big') {
         hapticFeedback('medium');
@@ -2421,6 +2437,11 @@ function updateChart() {
 function updateWheelUI() {
     const freeSpinEl = document.getElementById('wheelFreeSpin');
     const jackpotCounterEl = document.getElementById('wheelJackpotCounter');
+    const wheelSpinsEl = document.getElementById('wheelGameSpins');
+    
+    if (wheelSpinsEl) {
+        wheelSpinsEl.textContent = (userData.wheel.purchasedSpins || 0) + (userData.wheel.freeSpins || 0);
+    }
     
     if (jackpotCounterEl) {
         const left = CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY - (userData.wheel.jackpotCounter % CONFIG.ECONOMY.WHEEL_JACKPOT_EVERY);
@@ -2435,21 +2456,21 @@ function updateWheelUI() {
             const h = Math.floor(left / 3600000);
             const m = Math.floor((left % 3600000) / 60000);
             freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${h}h ${m}m`;
-            freeSpinEl.classList.add('disabled');
+            freeSpinEl.disabled = true;
         } else {
             freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> FREE`;
-            freeSpinEl.classList.remove('disabled');
+            freeSpinEl.disabled = false;
         }
-    }
-    
-    const wheelPurchasedSpins = document.getElementById('wheelPurchasedSpins');
-    if (wheelPurchasedSpins) {
-        wheelPurchasedSpins.innerHTML = `Your spins: <span class="spin-count">${userData.wheel.purchasedSpins || 0}</span>`;
     }
 }
 
 function updateSlotsUI() {
     const freeSpinEl = document.getElementById('slotsFreeSpin');
+    const slotsSpinsEl = document.getElementById('slotsGameSpins');
+    
+    if (slotsSpinsEl) {
+        slotsSpinsEl.textContent = (userData.slots.purchasedSpins || 0) + (userData.slots.freeSpins || 0);
+    }
     
     if (freeSpinEl) {
         const now = Date.now();
@@ -2459,32 +2480,27 @@ function updateSlotsUI() {
             const h = Math.floor(left / 3600000);
             const m = Math.floor((left % 3600000) / 60000);
             freeSpinEl.innerHTML = `<i class="fas fa-clock"></i> ${h}h ${m}m`;
-            freeSpinEl.classList.add('disabled');
+            freeSpinEl.disabled = true;
         } else {
             freeSpinEl.innerHTML = `<i class="fas fa-gift"></i> FREE`;
-            freeSpinEl.classList.remove('disabled');
+            freeSpinEl.disabled = false;
         }
-    }
-    
-    const slotsPurchasedSpins = document.getElementById('slotsPurchasedSpins');
-    if (slotsPurchasedSpins) {
-        slotsPurchasedSpins.innerHTML = `Your spins: <span class="spin-count">${userData.slots.purchasedSpins || 0}</span>`;
     }
 }
 
 function updatePurchasedSpinsDisplay() {
-    const wheelSpins = document.getElementById('wheelPurchasedSpins');
-    const slotsSpins = document.getElementById('slotsPurchasedSpins');
+    const wheelSpins = document.getElementById('wheelGameSpins');
+    const slotsSpins = document.getElementById('slotsGameSpins');
     
     if (wheelSpins) {
-        wheelSpins.innerHTML = `Your spins: <span class="spin-count">${userData.wheel.purchasedSpins || 0}</span>`;
+        wheelSpins.textContent = (userData.wheel.purchasedSpins || 0) + (userData.wheel.freeSpins || 0);
     }
     if (slotsSpins) {
-        slotsSpins.innerHTML = `Your spins: <span class="spin-count">${userData.slots.purchasedSpins || 0}</span>`;
+        slotsSpins.textContent = (userData.slots.purchasedSpins || 0) + (userData.slots.freeSpins || 0);
     }
 }
 
-// ====== 33. WHEEL PACKS ======
+// ====== 33. WHEEL PACKS (شراء الباقات من محفظة تليجرام) ======
 async function buyWheelPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -2507,7 +2523,7 @@ async function buyWheelPack(pack) {
     }
     
     try {
-        showToast('Opening wallet...', 'info');
+        showToastPro('Opening wallet...', 'info');
         
         const tx = {
             validUntil: Date.now() + 600000,
@@ -2519,7 +2535,8 @@ async function buyWheelPack(pack) {
         
         await tonConnectUI.sendTransaction(tx);
         
-        showToast('Payment sent! Waiting for confirmation...', 'info');
+        showToastPro('Payment sent! Waiting for confirmation...', 'info');
+        if (typeof VegasAudio !== 'undefined') VegasAudio.purchase();
         
         setTimeout(() => {
             if (!userData.wheel.purchasedSpins) userData.wheel.purchasedSpins = 0;
@@ -2531,18 +2548,17 @@ async function buyWheelPack(pack) {
             });
             
             saveUserToCache();
-            showToast(t('pack.success', { spins: totalSpins }), 'success');
+            showToastPro(t('pack.success', { spins: totalSpins }), 'success');
             updatePurchasedSpinsDisplay();
             updateUI();
         }, 3000);
         
     } catch (e) {
         console.error("Payment error:", e);
-        showToast(t('error.payment'), 'error');
+        showToastPro(t('error.payment'), 'error');
     }
 }
 
-// ====== 34. SLOTS PACKS ======
 async function buySlotsPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -2565,7 +2581,7 @@ async function buySlotsPack(pack) {
     }
     
     try {
-        showToast('Opening wallet...', 'info');
+        showToastPro('Opening wallet...', 'info');
         
         const tx = {
             validUntil: Date.now() + 600000,
@@ -2577,7 +2593,8 @@ async function buySlotsPack(pack) {
         
         await tonConnectUI.sendTransaction(tx);
         
-        showToast('Payment sent! Waiting for confirmation...', 'info');
+        showToastPro('Payment sent! Waiting for confirmation...', 'info');
+        if (typeof VegasAudio !== 'undefined') VegasAudio.purchase();
         
         setTimeout(() => {
             if (!userData.slots.purchasedSpins) userData.slots.purchasedSpins = 0;
@@ -2589,18 +2606,18 @@ async function buySlotsPack(pack) {
             });
             
             saveUserToCache();
-            showToast(t('pack.success', { spins: totalSpins }), 'success');
+            showToastPro(t('pack.success', { spins: totalSpins }), 'success');
             updatePurchasedSpinsDisplay();
             updateUI();
         }, 3000);
         
     } catch (e) {
         console.error("Payment error:", e);
-        showToast(t('error.payment'), 'error');
+        showToastPro(t('error.payment'), 'error');
     }
 }
 
-// ====== 35. SAVE TO FIREBASE ======
+// ====== 34. SAVE TO FIREBASE ======
 async function saveToFirebase() {
     if (!db) return;
     try {
@@ -2631,7 +2648,7 @@ async function saveToFirebase() {
     } catch (e) {}
 }
 
-// ====== 36. MODAL FUNCTIONS ======
+// ====== 35. MODAL FUNCTIONS ======
 function closeModal(id) {
     const modal = document.getElementById(id);
     if (!modal) return;
@@ -2663,7 +2680,7 @@ function hideAllModals() {
     });
 }
 
-// ====== 37. FILTER MARKET ======
+// ====== 36. FILTER MARKET ======
 function filterMarket(filter) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     if (event && event.target) event.target.classList.add('active');
@@ -2674,7 +2691,7 @@ function filterMarket(filter) {
     });
 }
 
-// ====== 38. ADMIN FUNCTIONS ======
+// ====== 37. ADMIN FUNCTIONS ======
 let currentAdminTab = 'withdrawals';
 
 function showAdminPanel() {
@@ -2901,7 +2918,7 @@ function copyToClipboard(text) {
     showToast('Copied!', 'success'); 
 }
 
-// ====== 39. CLOSE JACKPOT POPUP ======
+// ====== 38. CLOSE JACKPOT POPUP ======
 function closeJackpotPopup() {
     const popup = document.getElementById('jackpotPopup');
     if (popup) {
@@ -2912,7 +2929,7 @@ function closeJackpotPopup() {
     }
 }
 
-// ====== 40. PRICES ======
+// ====== 39. PRICES ======
 let livePrices = {};
 
 async function loadPrices(force = false) {
@@ -2956,7 +2973,7 @@ function refreshPrices() {
     loadPrices(true);
 }
 
-// ====== 41. REFERRAL SYSTEM ======
+// ====== 40. REFERRAL SYSTEM ======
 function generateReferralCode() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     return userId.slice(-4) + Array.from({length:6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
@@ -3058,7 +3075,7 @@ async function checkReferralMilestones() {
     saveUserToCache();
 }
 
-// ====== 42. DAILY LOGIN BONUS ======
+// ====== 41. DAILY LOGIN BONUS ======
 function checkDailyLogin() {
     const today = new Date().toDateString();
     if (!userData.dailyLogin) userData.dailyLogin = { lastLogin: null, streak: 0 };
@@ -3084,7 +3101,7 @@ function checkDailyLogin() {
     }
 }
 
-// ====== 43. NOTIFICATION SYSTEM ======
+// ====== 42. NOTIFICATION SYSTEM ======
 let unreadCount = 0;
 
 function addLocalNotification(message, type = 'info') {
@@ -3214,7 +3231,7 @@ function showNotifications() {
     }
 }
 
-// ====== 44. FLOATING NOTIFICATIONS ======
+// ====== 43. FLOATING NOTIFICATIONS ======
 let floatingTimeouts = [];
 
 function showFloatingToast(message, type = 'info') {
@@ -3249,7 +3266,7 @@ function stopFloatingNotifications() {
     floatingTimeouts = [];
 }
 
-// ====== 45. WELCOME STICKER ======
+// ====== 44. WELCOME STICKER ======
 const WELCOME_STICKERS = ['🤝','🫣','🥰','🥳','💲','💰','💸','💵','🤪','😱','😎','🤑','💯','💖','✨','🌟','⭐','🔥','⚡','💎','🎁','🎈','🎉','👑','🚀','💫'];
 let lastStickerTime = 0;
 const STICKER_COOLDOWN = 12 * 60 * 1000;
@@ -3275,7 +3292,7 @@ function showRandomSticker() {
     lastStickerTime = now;
 }
 
-// ====== 46. LOAD USER DATA ======
+// ====== 45. LOAD USER DATA ======
 async function loadUserData(force = false) {
     try {
         console.log("📂 Loading user data for:", userId);
@@ -3374,26 +3391,358 @@ function updateUserDisplay() {
     }
 }
 
-// ====== 47. VEGAS ELITE - عجلة الحظ والسلوتس المحسنة (Canvas) ======
+// ====== 46. VEGAS ELITE - عجلة الحظ والسلوتس المحسنة (Canvas) ======
 
-// ---------- Wheel Game Class ----------
+// ====== 46.1 VEGAS AUDIO ENGINE - محرك الصوت المتطور ======
+const VegasAudio = {
+    ctx: null,
+    isInitialized: false,
+    
+    init() {
+        if (this.isInitialized) return;
+        try {
+            this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+            this.isInitialized = true;
+            console.log("🎵 Vegas Audio initialized");
+        } catch(e) { console.warn("Audio not supported"); }
+    },
+    
+    click() {
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(880, now);
+        osc.frequency.exponentialRampToValueAtTime(440, now + 0.08);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(now + 0.1);
+    },
+    
+    whoosh() {
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        const filter = this.ctx.createBiquadFilter();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(200, now);
+        osc.frequency.exponentialRampToValueAtTime(800, now + 0.4);
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(400, now);
+        filter.frequency.exponentialRampToValueAtTime(2000, now + 0.4);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(now + 0.4);
+    },
+    
+    tick(pitch = 1, volume = 0.12) {
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(1200 * pitch, now);
+        gain.gain.setValueAtTime(volume, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.04);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(now + 0.04);
+    },
+    
+    clunk() {
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(150, now);
+        osc.frequency.exponentialRampToValueAtTime(50, now + 0.2);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(now + 0.2);
+    },
+    
+    coin() {
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(1800, now);
+        osc.frequency.exponentialRampToValueAtTime(2200, now + 0.1);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(now + 0.3);
+    },
+    
+    win() {
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        for (let i = 0; i < 6; i++) {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(600 + i * 120, now + i * 0.12);
+            gain.gain.setValueAtTime(0.2, now + i * 0.12);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.12 + 0.25);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + i * 0.12);
+            osc.stop(now + i * 0.12 + 0.25);
+        }
+    },
+    
+    jackpot() {
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        for (let i = 0; i < 12; i++) {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(200 + i * 70, now + i * 0.1);
+            gain.gain.setValueAtTime(0.25, now + i * 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.35);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + i * 0.1);
+            osc.stop(now + i * 0.1 + 0.35);
+        }
+        setTimeout(() => this.crowdCheer(), 400);
+    },
+    
+    crowdCheer() {
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const bufferSize = this.ctx.sampleRate * 2;
+        const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+            data[i] = Math.random() * 2 - 1;
+        }
+        const noise = this.ctx.createBufferSource();
+        noise.buffer = buffer;
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1200, now);
+        const gain = this.ctx.createGain();
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.linearRampToValueAtTime(0, now + 2);
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.ctx.destination);
+        noise.start();
+    },
+    
+    purchase() {
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        for (let i = 0; i < 4; i++) {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(800 + i * 150, now + i * 0.08);
+            gain.gain.setValueAtTime(0.2, now + i * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.08 + 0.2);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + i * 0.08);
+            osc.stop(now + i * 0.08 + 0.2);
+        }
+    }
+};
+
+// ====== 46.2 TICK SEQUENCER - نظام الطقطقة المتدرج ======
+const TickSequencer = {
+    timeouts: [],
+    isActive: false,
+    
+    playWheelTicks(duration = 2500, onComplete = null) {
+        this.clear();
+        this.isActive = true;
+        const tickCount = 28;
+        const startTime = performance.now();
+        
+        const scheduleTick = (index) => {
+            if (!this.isActive) return;
+            const elapsed = performance.now() - startTime;
+            if (elapsed > duration) {
+                if (onComplete) setTimeout(onComplete, 50);
+                this.isActive = false;
+                return;
+            }
+            
+            const t = elapsed / duration;
+            let speedFactor;
+            if (t < 0.4) {
+                speedFactor = 0.5 + (t / 0.4) * 1.5;
+            } else if (t < 0.7) {
+                speedFactor = 2.0;
+            } else {
+                speedFactor = 2.0 - ((t - 0.7) / 0.3) * 1.5;
+            }
+            
+            const pitch = 0.8 + (t * 1.2);
+            const volume = 0.08 + (t * 0.08);
+            VegasAudio.tick(pitch, volume);
+            
+            const nextDelay = Math.max(25, 80 - (speedFactor * 25));
+            const timeout = setTimeout(() => scheduleTick(index + 1), nextDelay);
+            this.timeouts.push(timeout);
+        };
+        
+        scheduleTick(0);
+    },
+    
+    playSlotsTicks(reelIndex, duration = 800, onComplete = null) {
+        this.clear();
+        this.isActive = true;
+        const tickCount = Math.floor(duration / 35);
+        let currentTick = 0;
+        
+        const scheduleTick = () => {
+            if (!this.isActive || currentTick >= tickCount) {
+                if (onComplete) setTimeout(onComplete, 50);
+                this.isActive = false;
+                return;
+            }
+            
+            const t = currentTick / tickCount;
+            const pitch = 0.7 + (reelIndex * 0.2) + (t * 0.5);
+            const volume = 0.1 - (t * 0.05);
+            VegasAudio.tick(pitch, volume);
+            
+            currentTick++;
+            const nextDelay = 25 + (currentTick * 2);
+            const timeout = setTimeout(scheduleTick, nextDelay);
+            this.timeouts.push(timeout);
+        };
+        
+        scheduleTick();
+    },
+    
+    clear() {
+        this.isActive = false;
+        this.timeouts.forEach(t => clearTimeout(t));
+        this.timeouts = [];
+    }
+};
+
+// ====== 46.3 JACKPOT THEATER - مسرحية الجاكبوت ======
+const JackpotTheater = {
+    isPlaying: false,
+    
+    play(amount, currency = 'TON', type = 'jackpot') {
+        if (this.isPlaying) return;
+        this.isPlaying = true;
+        
+        const container = document.querySelector('.wheel-game-container, .slots-game-container') || document.body;
+        
+        setTimeout(() => {
+            this.createLightBurst(container);
+            if (type === 'mega') VegasAudio.jackpot();
+            else if (type === 'jackpot') VegasAudio.jackpot();
+            else VegasAudio.win();
+        }, 100);
+        
+        setTimeout(() => {
+            this.showJackpotText(container, amount, currency, type);
+            VegasAudio.crowdCheer();
+        }, 400);
+        
+        setTimeout(() => {
+            this.createGoldParticles(container);
+        }, 800);
+        
+        setTimeout(() => {
+            this.isPlaying = false;
+        }, 3500);
+    },
+    
+    createLightBurst(container) {
+        const burst = document.createElement('div');
+        burst.className = 'vegas-burst';
+        for (let i = 0; i < 16; i++) {
+            const ray = document.createElement('div');
+            ray.className = 'burst-ray';
+            ray.style.transform = `translate(-50%, -100%) rotate(${i * 22.5}deg)`;
+            burst.appendChild(ray);
+        }
+        container.appendChild(burst);
+        setTimeout(() => burst.remove(), 900);
+    },
+    
+    showJackpotText(container, amount, currency, type) {
+        const text = document.createElement('div');
+        text.className = `vegas-jackpot-text ${type}`;
+        if (type === 'mega') {
+            text.innerHTML = `👑 MEGA JACKPOT! ${amount} ${currency} 👑`;
+        } else if (type === 'jackpot') {
+            text.innerHTML = `🎰 JACKPOT! ${amount} ${currency} 🎰`;
+        } else {
+            text.innerHTML = `🔥 BIG WIN! ${amount} ${currency} 🔥`;
+        }
+        document.body.appendChild(text);
+        document.body.classList.add('vegas-shake');
+        setTimeout(() => document.body.classList.remove('vegas-shake'), 500);
+        setTimeout(() => text.remove(), 3200);
+    },
+    
+    createGoldParticles(container) {
+        for (let i = 0; i < 40; i++) {
+            const p = document.createElement('div');
+            p.className = 'vegas-particle';
+            p.style.left = '50%';
+            p.style.top = '50%';
+            const angle = (i * 9) * Math.PI / 180;
+            const distance = 150 + Math.random() * 100;
+            p.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
+            p.style.setProperty('--ty', `${Math.sin(angle) * distance}px`);
+            p.style.animationDelay = `${Math.random() * 0.5}s`;
+            container.appendChild(p);
+            setTimeout(() => p.remove(), 1800);
+        }
+    }
+};
+
+// ====== 46.4 WHEEL GAME - عجلة الحظ المحسنة ======
 class WheelGame {
     constructor(canvasId, segments) {
         this.canvas = document.getElementById(canvasId);
+        if (!this.canvas) {
+            console.warn("Canvas not found, retrying...");
+            setTimeout(() => this.constructor(canvasId, segments), 100);
+            return;
+        }
         this.ctx = this.canvas.getContext('2d');
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         this.centerX = this.width / 2;
         this.centerY = this.height / 2;
-        this.radius = this.width / 2 - 15;
+        this.radius = this.width / 2 - 12;
         
         this.segments = segments;
         this.segmentAngle = (2 * Math.PI) / this.segments.length;
         
-        this.rotation = 0; // radians
+        this.rotation = 0;
         this.isSpinning = false;
         this.spinStartTime = 0;
-        this.spinDuration = 2500; // ms
+        this.spinDuration = 2800;
         this.targetRotation = 0;
         this.animationId = null;
         this.selectedPrize = null;
@@ -3403,98 +3752,136 @@ class WheelGame {
     
     draw() {
         const ctx = this.ctx;
+        const centerX = this.centerX;
+        const centerY = this.centerY;
+        const radius = this.radius;
+        
         ctx.clearRect(0, 0, this.width, this.height);
         
-        // Draw segments
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius + 8, 0, 2 * Math.PI);
+        ctx.fillStyle = '#0a0a0f';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        
         for (let i = 0; i < this.segments.length; i++) {
             const seg = this.segments[i];
             const startAngle = i * this.segmentAngle + this.rotation;
             const endAngle = (i + 1) * this.segmentAngle + this.rotation;
             
-            // Draw segment shape
             ctx.beginPath();
-            ctx.moveTo(this.centerX, this.centerY);
-            ctx.arc(this.centerX, this.centerY, this.radius, startAngle, endAngle);
+            ctx.moveTo(centerX, centerY);
+            ctx.arc(centerX, centerY, radius, startAngle, endAngle);
             ctx.closePath();
             
-            // Fill with gradient
-            let grad = ctx.createLinearGradient(
-                this.centerX + Math.cos(startAngle) * 20,
-                this.centerY + Math.sin(startAngle) * 20,
-                this.centerX + Math.cos(endAngle) * 20,
-                this.centerY + Math.sin(endAngle) * 20
+            const grad = ctx.createLinearGradient(
+                centerX + Math.cos(startAngle) * 15,
+                centerY + Math.sin(startAngle) * 15,
+                centerX + Math.cos(endAngle) * 15,
+                centerY + Math.sin(endAngle) * 15
             );
             grad.addColorStop(0, seg.color);
-            grad.addColorStop(1, this.adjustBrightness(seg.color, -30));
+            grad.addColorStop(1, this.adjustColor(seg.color, -20));
             ctx.fillStyle = grad;
             ctx.fill();
-            ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+            
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+            ctx.lineTo(centerX, centerY);
+            ctx.strokeStyle = 'rgba(255,215,0,0.3)';
             ctx.lineWidth = 2;
             ctx.stroke();
             
-            // Draw text and icon
             const midAngle = startAngle + this.segmentAngle / 2;
-            const textRadius = this.radius * 0.7;
-            const x = this.centerX + Math.cos(midAngle) * textRadius;
-            const y = this.centerY + Math.sin(midAngle) * textRadius;
+            const textStartRadius = radius * 0.25;
+            const textEndRadius = radius * 0.85;
             
+            for (let r = textStartRadius; r <= textEndRadius; r += 15) {
+                const x = centerX + Math.cos(midAngle) * r;
+                const y = centerY + Math.sin(midAngle) * r;
+                ctx.beginPath();
+                ctx.arc(x, y, 2, 0, 2 * Math.PI);
+                ctx.fillStyle = 'rgba(255,215,0,0.15)';
+                ctx.fill();
+            }
+            
+            const iconRadius = radius * 0.45;
+            const iconX = centerX + Math.cos(midAngle) * iconRadius;
+            const iconY = centerY + Math.sin(midAngle) * iconRadius;
             ctx.save();
-            ctx.translate(x, y);
-            ctx.rotate(midAngle + Math.PI / 2);
+            ctx.translate(iconX, iconY);
+            ctx.rotate(midAngle);
+            ctx.font = `bold ${Math.floor(radius * 0.12)}px "Segoe UI", "Outfit"`;
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 18px "Segoe UI", "Outfit"';
-            ctx.shadowBlur = 0;
-            ctx.fillText(seg.icon || '', 0, -10);
-            ctx.font = 'bold 12px "Segoe UI", "Outfit"';
-            ctx.fillStyle = 'white';
-            ctx.shadowColor = 'black';
+            ctx.shadowColor = 'rgba(0,0,0,0.5)';
             ctx.shadowBlur = 4;
-            ctx.fillText(seg.label, 0, 12);
+            ctx.fillText(seg.icon, -12, 8);
+            ctx.restore();
+            
+            const textRadius = radius * 0.72;
+            const textX = centerX + Math.cos(midAngle) * textRadius;
+            const textY = centerY + Math.sin(midAngle) * textRadius;
+            ctx.save();
+            ctx.translate(textX, textY);
+            ctx.rotate(midAngle + Math.PI / 2);
+            ctx.font = `bold ${Math.floor(radius * 0.08)}px "Outfit", "Segoe UI"`;
+            ctx.fillStyle = '#ffffff';
+            ctx.shadowColor = 'rgba(0,0,0,0.6)';
+            ctx.shadowBlur = 6;
+            ctx.fillText(seg.label, -20, 6);
             ctx.restore();
         }
         
-        // Draw inner circle
         ctx.beginPath();
-        ctx.arc(this.centerX, this.centerY, this.radius * 0.2, 0, 2 * Math.PI);
-        ctx.fillStyle = '#ffd700';
+        ctx.arc(centerX, centerY, radius * 0.18, 0, 2 * Math.PI);
+        const centerGrad = ctx.createRadialGradient(centerX - 5, centerY - 5, 5, centerX, centerY, radius * 0.2);
+        centerGrad.addColorStop(0, '#ffd700');
+        centerGrad.addColorStop(1, '#b87c2c');
+        ctx.fillStyle = centerGrad;
         ctx.fill();
+        
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius * 0.12, 0, 2 * Math.PI);
+        ctx.fillStyle = '#f5b042';
+        ctx.fill();
+        
         ctx.shadowBlur = 0;
     }
     
-    adjustBrightness(hex, percent) {
-        // simple brightness adjustment for gradient
+    adjustColor(hex, percent) {
         return hex;
     }
     
     spin(callback) {
         if (this.isSpinning) return;
         
-        // Select prize based on weights
         this.selectedPrize = this.selectPrize();
         const prizeIndex = this.segments.indexOf(this.selectedPrize);
         
-        // Calculate target rotation to land on that segment
         const segmentMidAngle = prizeIndex * this.segmentAngle + this.segmentAngle / 2;
         const currentAngle = this.rotation % (2 * Math.PI);
         let delta = (segmentMidAngle - currentAngle + 2 * Math.PI) % (2 * Math.PI);
-        // Add extra rotations
-        const extraRotations = 5;
+        const extraRotations = 6;
         this.targetRotation = this.rotation + extraRotations * 2 * Math.PI + delta;
         
         this.isSpinning = true;
         this.spinStartTime = performance.now();
         this.callback = callback;
         
+        TickSequencer.playWheelTicks(this.spinDuration, () => {
+            VegasAudio.clunk();
+        });
+        VegasAudio.whoosh();
+        
         const animate = (now) => {
             const elapsed = now - this.spinStartTime;
             let t = Math.min(1, elapsed / this.spinDuration);
-            // Easing: easeOutCubic
-            const easeOut = 1 - Math.pow(1 - t, 3);
+            const easeOut = 1 - Math.pow(1 - t, 3.5);
             const currentRot = this.rotation + (this.targetRotation - this.rotation) * easeOut;
             this.rotation = currentRot;
             this.draw();
             
-            // Update speed meter
             const speedFill = document.getElementById('wheelSpeedFill');
             if (speedFill) {
                 const speed = (1 - easeOut) * 100;
@@ -3504,13 +3891,11 @@ class WheelGame {
             if (t < 1) {
                 this.animationId = requestAnimationFrame(animate);
             } else {
-                // Spin finished
                 this.rotation = this.targetRotation % (2 * Math.PI);
                 this.draw();
                 this.isSpinning = false;
                 cancelAnimationFrame(this.animationId);
                 if (this.callback) this.callback(this.selectedPrize);
-                // Reset speed meter
                 if (speedFill) speedFill.style.width = '0%';
             }
         };
@@ -3529,60 +3914,77 @@ class WheelGame {
     }
 }
 
-// ---------- Slots Game Class ----------
+// ====== 46.5 SLOTS GAME - آلة السلوتس المحسنة ======
 class SlotsGame {
     constructor(canvasIds, symbolsData) {
         this.canvases = canvasIds.map(id => document.getElementById(id));
-        this.ctxs = this.canvases.map(c => c.getContext('2d'));
+        this.ctxs = this.canvases.map(c => c?.getContext('2d'));
         this.symbolsData = symbolsData;
         this.symbols = symbolsData.map(s => s.symbol);
-        this.values = symbolsData.map(s => ({ value: s.value, type: s.type }));
+        this.values = symbolsData.map(s => ({ value: s.value, type: s.type, color: s.color }));
         
-        this.reelPositions = [0, 0, 0]; // index of top symbol in each reel (0-19)
+        this.reelPositions = [0, 0, 0];
         this.isSpinning = false;
         this.spinStartTime = 0;
-        this.durations = [1000, 1200, 1400]; // different durations for each reel
+        this.durations = [1100, 1300, 1500];
         this.targetPositions = [0, 0, 0];
+        this.currentReel = 0;
         this.animationId = null;
         
         this.draw();
     }
     
     draw() {
-        const symbolHeight = 110; // pixels per symbol
+        const symbolHeight = 110;
         for (let r = 0; r < this.canvases.length; r++) {
             const ctx = this.ctxs[r];
             const canvas = this.canvases[r];
+            if (!ctx || !canvas) continue;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // Draw 3 symbols (top, middle, bottom) based on reel position
             const pos = this.reelPositions[r];
             for (let i = -1; i <= 1; i++) {
                 const idx = (pos + i + this.symbols.length) % this.symbols.length;
                 const y = canvas.height / 2 + i * symbolHeight;
                 const symbol = this.symbols[idx];
-                ctx.font = `48px "Segoe UI", "Outfit"`;
-                ctx.fillStyle = '#fff';
-                ctx.shadowBlur = 0;
-                ctx.fillText(symbol, canvas.width/2 - 30, y + 15);
+                const color = this.values[idx]?.color || '#ffffff';
+                ctx.font = `bold 52px "Segoe UI", "Outfit"`;
+                ctx.fillStyle = color;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = color;
+                ctx.fillText(symbol, canvas.width / 2 - 30, y + 20);
             }
         }
+        ctx.shadowBlur = 0;
     }
     
     spin(callback, turbo = false) {
         if (this.isSpinning) return;
         
-        const durationMultiplier = turbo ? 0.5 : 1;
+        const durationMultiplier = turbo ? 0.55 : 1;
         this.durations = this.durations.map(d => d * durationMultiplier);
         
-        // Generate random target positions for each reel
         for (let i = 0; i < 3; i++) {
-            this.targetPositions[i] = (this.reelPositions[i] + Math.floor(Math.random() * 20) + 10) % this.symbols.length;
+            this.targetPositions[i] = (this.reelPositions[i] + Math.floor(Math.random() * 25) + 12) % this.symbols.length;
         }
         
         this.isSpinning = true;
         this.spinStartTime = performance.now();
         this.callback = callback;
+        this.currentReel = 0;
+        
+        VegasAudio.whoosh();
+        
+        const startReelTick = (reelIndex) => {
+            TickSequencer.playSlotsTicks(reelIndex, this.durations[reelIndex] * 0.7, () => {
+                if (reelIndex === 2 && this.callback) {
+                    const result = this.getResult();
+                    setTimeout(() => {
+                        if (this.callback) this.callback(result);
+                    }, 100);
+                }
+            });
+        };
         
         const animate = (now) => {
             const elapsed = now - this.spinStartTime;
@@ -3591,11 +3993,16 @@ class SlotsGame {
             for (let i = 0; i < 3; i++) {
                 const duration = this.durations[i];
                 let t = Math.min(1, elapsed / duration);
+                
                 if (t < 1) {
                     allStopped = false;
-                    // Animate: change position rapidly
-                    const step = Math.floor(t * 30) % 20;
+                    const step = Math.floor(t * 35) % 25;
                     this.reelPositions[i] = (this.targetPositions[i] + step) % this.symbols.length;
+                    
+                    if (Math.floor(t * 10) === 0 && i === this.currentReel && t < 0.3) {
+                        startReelTick(i);
+                        this.currentReel++;
+                    }
                 } else {
                     this.reelPositions[i] = this.targetPositions[i];
                 }
@@ -3621,35 +4028,35 @@ class SlotsGame {
     getResult() {
         const symbols = this.targetPositions.map(idx => this.symbols[idx]);
         const values = this.targetPositions.map(idx => this.values[idx]);
-        // Check win: all same
+        
         const allSame = symbols[0] === symbols[1] && symbols[1] === symbols[2];
         if (allSame) {
             const prize = values[0];
-            return { win: true, amount: prize.value, currency: prize.type };
+            return { win: true, amount: prize.value, currency: prize.type, isJackpot: prize.value >= 100 };
         }
-        // Check two same
-        const matchCount = (symbols[0] === symbols[1] ? 1 : 0) + (symbols[1] === symbols[2] ? 1 : 0) + (symbols[0] === symbols[2] ? 1 : 0);
+        
+        const matchCount = (symbols[0] === symbols[1] ? 1 : 0) + 
+                          (symbols[1] === symbols[2] ? 1 : 0) + 
+                          (symbols[0] === symbols[2] ? 1 : 0);
         if (matchCount >= 1) {
             const matchSymbol = symbols[0] === symbols[1] ? symbols[0] : symbols[1];
             const prize = this.symbolsData.find(s => s.symbol === matchSymbol);
             if (prize && prize.value > 0) {
-                return { win: true, amount: prize.value / 2, currency: prize.type };
+                return { win: true, amount: prize.value / 2, currency: prize.type, isJackpot: false };
             }
         }
-        return { win: false, amount: 0, currency: 'TON' };
+        return { win: false, amount: 0, currency: 'TON', isJackpot: false };
     }
 }
 
-// Instantiate wheel and slots globally after DOM load
+// ====== 46.6 INITIALIZATION AND GLOBALS ======
 let wheelGame = null;
 let slotsGame = null;
 
 function initWheelCanvas() {
     if (wheelGame) return;
-    // Ensure canvas exists
     const canvas = document.getElementById('wheelCanvas');
     if (!canvas) {
-        console.warn("Wheel canvas not found yet, retrying...");
         setTimeout(initWheelCanvas, 200);
         return;
     }
@@ -3661,19 +4068,19 @@ function initSlotsCanvas() {
     const canvases = ['reel1Canvas', 'reel2Canvas', 'reel3Canvas'];
     const allExist = canvases.every(id => document.getElementById(id));
     if (!allExist) {
-        console.warn("Slots canvases not found yet, retrying...");
         setTimeout(initSlotsCanvas, 200);
         return;
     }
     slotsGame = new SlotsGame(canvases, SLOTS_SYMBOLS_DATA);
 }
 
-// Functions called from HTML
+// ====== 46.7 SPIN FUNCTIONS ======
 function spinWheelVegas(isFree) {
     if (!wheelGame) initWheelCanvas();
     if (wheelGame.isSpinning) return;
     
-    // Payment logic
+    VegasAudio.click();
+    
     if (isFree) {
         const now = Date.now();
         const nextFree = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
@@ -3698,11 +4105,10 @@ function spinWheelVegas(isFree) {
     }
     
     wheelGame.spin((prize) => {
-        // Award prize
         awardVegasPrize(prize);
         userData.wheel.totalSpins++;
-        userData.wheel.jackpotCounter++;
-        userData.wheel.bigWinCounter++;
+        userData.wheel.jackpotCounter = (userData.wheel.jackpotCounter || 0) + 1;
+        userData.wheel.bigWinCounter = (userData.wheel.bigWinCounter || 0) + 1;
         saveUserToCache();
         updateWheelUI();
         updateUI();
@@ -3712,6 +4118,8 @@ function spinWheelVegas(isFree) {
 function spinSlotsVegas(isFree, isTurbo) {
     if (!slotsGame) initSlotsCanvas();
     if (slotsGame.isSpinning) return;
+    
+    VegasAudio.click();
     
     const price = isTurbo ? CONFIG.ECONOMY.SLOTS_TURBO_PRICE : CONFIG.ECONOMY.SLOTS_SPIN_PRICE;
     if (isFree) {
@@ -3739,25 +4147,31 @@ function spinSlotsVegas(isFree, isTurbo) {
     
     slotsGame.spin((result) => {
         if (result.win) {
-            // Add winnings
             userData.balances[result.currency] += result.amount;
             if (result.currency === 'TON') userData.balance = userData.balances.TON;
             userData.totalEarned += result.amount;
             addTransaction('slots', result.amount, { currency: result.currency });
             showToastPro(`🎰 You won ${result.amount} ${result.currency}!`, 'success');
-            // Update win display
+            
             const winAmountEl = document.getElementById('slotsWinAmount');
             if (winAmountEl) winAmountEl.textContent = `${result.amount} ${result.currency}`;
-            showWinPopup(`${result.amount} ${result.currency}`, result.amount >= 25 ? 'jackpot' : (result.amount >= 10 ? 'big' : 'normal'));
-            // Audio
-            if (typeof VegasAudio !== 'undefined') {
-                if (result.amount >= 25) VegasAudio.jackpot();
-                else if (result.amount >= 10) VegasAudio.win();
-                else VegasAudio.coin();
+            
+            if (result.isJackpot) {
+                JackpotTheater.play(result.amount, result.currency, 'jackpot');
+                showWinPopup(`${result.amount} ${result.currency}`, 'jackpot');
+            } else if (result.amount >= 25) {
+                JackpotTheater.play(result.amount, result.currency, 'big');
+                showWinPopup(`${result.amount} ${result.currency}`, 'jackpot');
+            } else if (result.amount >= 10) {
+                VegasAudio.win();
+                showWinPopup(`${result.amount} ${result.currency}`, 'big');
+            } else if (result.amount > 0) {
+                VegasAudio.coin();
+                showWinPopup(`${result.amount} ${result.currency}`, 'normal');
             }
         } else {
             showToastPro('🍀 Try again!', 'info');
-            if (typeof VegasAudio !== 'undefined') VegasAudio.tick(0.8);
+            VegasAudio.tick(0.7, 0.08);
         }
         userData.slots.totalSpins++;
         saveUserToCache();
@@ -3766,11 +4180,11 @@ function spinSlotsVegas(isFree, isTurbo) {
     }, isTurbo);
 }
 
-// Helper function to award wheel prize (copied from original)
+// ====== 46.8 AWARD PRIZE FUNCTION ======
 function awardVegasPrize(prize) {
     if (prize.goodluck) {
         showToastPro('🍀 GOOD LUCK! Try again!', 'info');
-        if (typeof VegasAudio !== 'undefined') VegasAudio.coin();
+        VegasAudio.coin();
         userData.wheel.freeSpins = (userData.wheel.freeSpins || 0) + 1;
         saveUserToCache();
         updateWheelUI();
@@ -3778,23 +4192,20 @@ function awardVegasPrize(prize) {
     }
     if (prize.freespin) {
         showToastPro('🆓 FREE SPIN STORED!', 'success');
-        if (typeof VegasAudio !== 'undefined') VegasAudio.coin();
+        VegasAudio.coin();
         userData.wheel.freeSpins = (userData.wheel.freeSpins || 0) + 1;
         saveUserToCache();
         updateWheelUI();
         return;
     }
-    if (prize.jackpot) {
+    if (prize.jackpot || prize.mega) {
         const currency = prize.currency || prize.type;
         userData.balances[currency] += prize.amount;
         if (currency === 'TON') userData.balance = userData.balances.TON;
         userData.totalEarned += prize.amount;
         addTransaction('wheel', prize.amount, { currency, jackpot: true });
-        // Jackpot theater
-        if (typeof JackpotTheater !== 'undefined') {
-            JackpotTheater.play(prize.amount, currency, prize.amount >= 100 ? 'mega' : 'jackpot');
-        }
-        showWinPopup(`${prize.amount} ${currency}`, prize.amount >= 100 ? 'mega' : 'jackpot');
+        JackpotTheater.play(prize.amount, currency, prize.mega ? 'mega' : 'jackpot');
+        showWinPopup(`${prize.amount} ${currency}`, prize.mega ? 'mega' : 'jackpot');
         userData.wheel.jackpotWon = (userData.wheel.jackpotWon || 0) + 1;
         saveUserToCache();
         updateUI();
@@ -3806,12 +4217,15 @@ function awardVegasPrize(prize) {
     if (currency === 'TON') userData.balance = userData.balances.TON;
     userData.totalEarned += prize.amount;
     addTransaction('wheel', prize.amount, { currency });
-    if (prize.amount >= 10) {
+    if (prize.amount >= 25) {
+        JackpotTheater.play(prize.amount, currency, 'big');
+        showWinPopup(`${prize.amount} ${currency}`, 'jackpot');
+    } else if (prize.amount >= 10) {
+        VegasAudio.win();
         showWinPopup(`${prize.amount} ${currency}`, 'big');
-        if (typeof VegasAudio !== 'undefined') VegasAudio.win();
-    } else {
+    } else if (prize.amount > 0) {
+        VegasAudio.coin();
         showWinPopup(`${prize.amount} ${currency}`, 'normal');
-        if (typeof VegasAudio !== 'undefined') VegasAudio.coin();
     }
     hapticFeedback(prize.amount >= 10 ? 'medium' : 'light');
     saveUserToCache();
@@ -3819,7 +4233,7 @@ function awardVegasPrize(prize) {
     updateWheelUI();
 }
 
-// Toast pro
+// ====== 46.9 TOAST PRO ======
 function showToastPro(message, type = 'info', duration = 3000) {
     const container = document.getElementById('toastContainer');
     if (!container) return;
@@ -3844,7 +4258,7 @@ function showToastPro(message, type = 'info', duration = 3000) {
     }, duration);
 }
 
-// ====== 48. OPEN FUNCTIONS ======
+// ====== 47. OPEN FUNCTIONS ======
 function openProfileFromAnywhere() {
     if (currentPage === 'wheelGame' || currentPage === 'slotsGame') exitGame();
     setTimeout(() => showPage('profile'), 300);
@@ -3854,7 +4268,7 @@ function openDepositModal() { if (currentPage !== 'profile') openProfileFromAnyw
 function openSwapModal() { if (currentPage !== 'profile') openProfileFromAnywhere(); setTimeout(() => showSwapModal(), 400); }
 function openHistoryModal() { if (currentPage !== 'profile') openProfileFromAnywhere(); setTimeout(() => showHistory(), 400); }
 
-// ====== 49. INITIALIZATION ======
+// ====== 48. INITIALIZATION ======
 document.addEventListener('DOMContentLoaded', async () => {
     hideAllModals();
     if (currentLanguage === 'ar') { document.body.classList.add('rtl'); document.documentElement.dir = 'rtl'; }
@@ -3878,7 +4292,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     updateUserDisplay();
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v11.0");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v12.0");
     console.log("✅ All systems ready! 🚀");
 });
 
@@ -3899,7 +4313,7 @@ document.addEventListener('click', () => {
     if (typeof VegasAudio !== 'undefined' && !VegasAudio.isInitialized) VegasAudio.init(); 
 }, { once: true });
 
-// ====== 50. EXPORT FUNCTIONS ======
+// ====== 49. EXPORT FUNCTIONS ======
 window.showPage = showPage;
 window.showMarket = ()=>showPage('market');
 window.showWallet = showWallet;
