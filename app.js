@@ -1,7 +1,7 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v14.0
-// نسخة نهائية مع كازينو احترافي بالكامل
-// جميع الوظائف تعمل – جاهز للنسخ واللصق
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v15.0
+// جميع التحسينات المطلوبة: عجلة احترافية، صوت متزامن، سلوتس مستجيبة، رسائل الفوز العلوية
+// جاهز للنسخ واللصق
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -3561,46 +3561,58 @@ const VegasAudio = {
     }
 };
 
-// ====== 46.2 TICK SEQUENCER - نظام الطقطقة المتدرج ======
+// ====== 46.2 TICK SEQUENCER - نظام الطقطقة المتدرج (متزامن مع سرعة العجلة) ======
 const TickSequencer = {
     timeouts: [],
     isActive: false,
     
+    // توليد طقطقات بناءً على منحنى السرعة الحقيقي
     playWheelTicks(duration = 2500, onComplete = null) {
         this.clear();
         this.isActive = true;
-        const tickCount = 28;
-        const startTime = performance.now();
         
-        const scheduleTick = (index) => {
-            if (!this.isActive) return;
-            const elapsed = performance.now() - startTime;
-            if (elapsed > duration) {
-                if (onComplete) setTimeout(onComplete, 50);
-                this.isActive = false;
-                return;
-            }
-            
-            const t = elapsed / duration;
+        // جدول زمني للأصوات بناءً على منحنى السرعة: يبدأ بطيئاً، يتسارع، ثم يتباطأ قبل التوقف
+        const intervals = [];
+        const totalTicks = 32;
+        for (let i = 0; i < totalTicks; i++) {
+            const t = i / totalTicks; // 0..1
             let speedFactor;
-            if (t < 0.4) {
-                speedFactor = 0.5 + (t / 0.4) * 1.5;
+            if (t < 0.3) {
+                // تسارع
+                speedFactor = 0.3 + (t / 0.3) * 1.2;
             } else if (t < 0.7) {
-                speedFactor = 2.0;
+                // سرعة قصوى ثابتة
+                speedFactor = 1.5;
             } else {
-                speedFactor = 2.0 - ((t - 0.7) / 0.3) * 1.5;
+                // تباطؤ
+                speedFactor = 1.5 - ((t - 0.7) / 0.3) * 1.2;
             }
-            
-            const pitch = 0.8 + (t * 1.2);
-            const volume = 0.08 + (t * 0.08);
-            VegasAudio.tick(pitch, volume);
-            
-            const nextDelay = Math.max(25, 80 - (speedFactor * 25));
-            const timeout = setTimeout(() => scheduleTick(index + 1), nextDelay);
-            this.timeouts.push(timeout);
-        };
+            // المسافة الزمنية بين النقرات تتناسب عكسياً مع سرعة الدوران
+            const delay = 50 / Math.max(0.3, speedFactor);
+            intervals.push(delay);
+        }
         
-        scheduleTick(0);
+        let cumulativeTime = 0;
+        const tickTimes = [];
+        for (let i = 0; i < intervals.length; i++) {
+            cumulativeTime += intervals[i];
+            tickTimes.push(cumulativeTime);
+        }
+        
+        // جدولة الأصوات
+        for (let i = 0; i < tickTimes.length; i++) {
+            const timeout = setTimeout(() => {
+                if (!this.isActive) return;
+                const t = tickTimes[i] / duration;
+                const pitch = 0.7 + t * 1.0;
+                const volume = 0.08 + (t * 0.1);
+                VegasAudio.tick(pitch, volume);
+                if (i === tickTimes.length - 1 && onComplete) {
+                    setTimeout(onComplete, 50);
+                }
+            }, tickTimes[i]);
+            this.timeouts.push(timeout);
+        }
     },
     
     playSlotsTicks(reelIndex, duration = 800, onComplete = null) {
@@ -3691,6 +3703,19 @@ const JackpotTheater = {
         } else {
             text.innerHTML = `🔥 BIG WIN! ${amount} ${currency} 🔥`;
         }
+        // إضافة النص أعلى الصفحة مباشرة (بين الهيدر والعجلة)
+        text.style.position = 'absolute';
+        text.style.top = '70px';
+        text.style.left = '50%';
+        text.style.transform = 'translateX(-50%)';
+        text.style.zIndex = '200';
+        text.style.fontSize = '1.5rem';
+        text.style.padding = '8px 16px';
+        text.style.background = 'rgba(0,0,0,0.8)';
+        text.style.borderRadius = '30px';
+        text.style.border = '2px solid gold';
+        text.style.boxShadow = '0 0 20px gold';
+        text.style.whiteSpace = 'nowrap';
         document.body.appendChild(text);
         document.body.classList.add('vegas-shake');
         setTimeout(() => document.body.classList.remove('vegas-shake'), 500);
@@ -3807,9 +3832,6 @@ class WheelGame {
             ctx.restore();
             
             // رسم النص على طول نصف القطر من 60% إلى 85% (شعاعي)
-            const textStart = radius * 0.6;
-            const textEnd = radius * 0.85;
-            // نرسم النص على مسافة 72% من المركز (وسط بين البداية والنهاية)
             const textRadius = radius * 0.72;
             const textX = centerX + Math.cos(midAngle) * textRadius;
             const textY = centerY + Math.sin(midAngle) * textRadius;
@@ -3861,6 +3883,7 @@ class WheelGame {
         this.spinStartTime = performance.now();
         this.callback = callback;
         
+        // تشغيل الطقطقة المتزامنة مع الحركة
         TickSequencer.playWheelTicks(this.spinDuration, () => {
             VegasAudio.clunk();
         });
@@ -4148,6 +4171,9 @@ function spinSlotsVegas(isFree, isTurbo) {
             const winAmountEl = document.getElementById('slotsWinAmount');
             if (winAmountEl) winAmountEl.textContent = `${result.amount} ${result.currency}`;
             
+            // إظهار رسالة الفوز في الجزء العلوي
+            showGameWinMessage(result.amount, result.currency, result.isJackpot ? 'jackpot' : (result.amount >= 10 ? 'big' : 'normal'));
+            
             if (result.isJackpot) {
                 JackpotTheater.play(result.amount, result.currency, 'jackpot');
                 showWinPopup(`${result.amount} ${result.currency}`, 'jackpot');
@@ -4197,6 +4223,7 @@ function awardVegasPrize(prize) {
         userData.totalEarned += prize.amount;
         addTransaction('wheel', prize.amount, { currency, jackpot: true });
         JackpotTheater.play(prize.amount, currency, prize.mega ? 'mega' : 'jackpot');
+        showGameWinMessage(prize.amount, currency, prize.mega ? 'mega' : 'jackpot');
         showWinPopup(`${prize.amount} ${currency}`, prize.mega ? 'mega' : 'jackpot');
         userData.wheel.jackpotWon = (userData.wheel.jackpotWon || 0) + 1;
         saveUserToCache();
@@ -4209,6 +4236,13 @@ function awardVegasPrize(prize) {
     if (currency === 'TON') userData.balance = userData.balances.TON;
     userData.totalEarned += prize.amount;
     addTransaction('wheel', prize.amount, { currency });
+    
+    // عرض رسالة الفوز في الجزء العلوي
+    let winType = 'normal';
+    if (prize.amount >= 25) winType = 'jackpot';
+    else if (prize.amount >= 10) winType = 'big';
+    showGameWinMessage(prize.amount, currency, winType);
+    
     if (prize.amount >= 25) {
         JackpotTheater.play(prize.amount, currency, 'big');
         showWinPopup(`${prize.amount} ${currency}`, 'jackpot');
@@ -4225,7 +4259,68 @@ function awardVegasPrize(prize) {
     updateWheelUI();
 }
 
-// ====== 46.9 TOAST PRO ======
+// ====== 46.9 عرض رسائل الفوز أعلى الصفحة ======
+function showGameWinMessage(amount, currency, type) {
+    // إزالة أي رسالة سابقة
+    const existing = document.querySelector('.game-win-message');
+    if (existing) existing.remove();
+    
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `game-win-message ${type}`;
+    let text = '';
+    let icon = '';
+    if (type === 'jackpot') {
+        icon = '🎰🎰🎰';
+        text = `JACKPOT! ${amount} ${currency}`;
+    } else if (type === 'big') {
+        icon = '🔥🔥';
+        text = `BIG WIN! ${amount} ${currency}`;
+    } else if (type === 'mega') {
+        icon = '👑👑👑';
+        text = `MEGA JACKPOT! ${amount} ${currency}`;
+    } else {
+        icon = '🎉';
+        text = `YOU WON! ${amount} ${currency}`;
+    }
+    messageDiv.innerHTML = `<span class="win-icon">${icon}</span><span class="win-text">${text}</span>`;
+    messageDiv.style.position = 'absolute';
+    messageDiv.style.top = '70px';
+    messageDiv.style.left = '50%';
+    messageDiv.style.transform = 'translateX(-50%)';
+    messageDiv.style.zIndex = '200';
+    messageDiv.style.backgroundColor = 'rgba(0,0,0,0.85)';
+    messageDiv.style.color = '#ffd966';
+    messageDiv.style.padding = '8px 20px';
+    messageDiv.style.borderRadius = '40px';
+    messageDiv.style.border = '2px solid #ffd966';
+    messageDiv.style.boxShadow = '0 0 20px rgba(255,215,0,0.5)';
+    messageDiv.style.fontWeight = 'bold';
+    messageDiv.style.fontSize = '1.2rem';
+    messageDiv.style.whiteSpace = 'nowrap';
+    messageDiv.style.backdropFilter = 'blur(8px)';
+    messageDiv.style.display = 'flex';
+    messageDiv.style.alignItems = 'center';
+    messageDiv.style.gap = '10px';
+    document.body.appendChild(messageDiv);
+    
+    // تأثير الظهور والاختفاء
+    messageDiv.style.animation = 'fadeInOut 2.5s ease forwards';
+    setTimeout(() => messageDiv.remove(), 2500);
+}
+
+// إضافة تعريف للأنيميشن
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeInOut {
+        0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+        15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+    }
+`;
+document.head.appendChild(style);
+
+// ====== 46.10 TOAST PRO ======
 function showToastPro(message, type = 'info', duration = 3000) {
     const container = document.getElementById('toastContainer');
     if (!container) return;
@@ -4284,7 +4379,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     updateUserDisplay();
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v14.0");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v15.0");
     console.log("✅ All systems ready! 🚀");
 });
 
