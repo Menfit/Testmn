@@ -1,6 +1,6 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v17.0
-// جميع الميزات محفوظة + تحسينات كازينو أسطورية
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v18.0
+// جميع الميزات محفوظة + كازينو احترافي 3D
 // جاهز للنسخ واللصق
 // ============================================
 
@@ -517,7 +517,7 @@ const REFERRAL_MILESTONES = [
     { referrals: 1000, reward: 1200, unit: 'USDT' }
 ];
 
-// ====== 7. WHEEL PRIZES (ألوان داكنة متناسقة) ======
+// ====== 7. WHEEL PRIZES ======
 const WHEEL_PRIZES = [
     { type: 'TON', amount: 0.25, color: '#1e3a5f', weight: 8, icon: '💰', label: '0.25 TON', category: 'ton' },
     { type: 'TON', amount: 0.5, color: '#1e4a6f', weight: 8, icon: '💰', label: '0.5 TON', category: 'ton' },
@@ -1469,9 +1469,10 @@ function updateAutoClickerUI() {
     }
 }
 
-// ====== 22. WIN POPUP (تم استبدالها برسالة علوية، لكن نحتفظ بالدالة للتوافق) ======
+// ====== 22. WIN POPUP (محسنة للرسالة العلوية) ======
 function showWinPopup(prize, type = 'normal') {
-    // لم تعد مستخدمة – يتم عرض الرسائل العلوية فقط
+    // هذه الدالة محتفظ بها للتوافق، لكننا نستخدم showGameWinMessage بدلاً منها
+    showGameWinMessage(prize, 'TON', type);
 }
 
 // ====== 23. MARKET FUNCTIONS ======
@@ -2450,7 +2451,7 @@ function updatePurchasedSpinsDisplay() {
     }
 }
 
-// ====== 33. WHEEL PACKS (شراء الباقات من محفظة تليجرام) ======
+// ====== 33. WHEEL PACKS ======
 async function buyWheelPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -3522,28 +3523,22 @@ const TickSequencer = {
     timeouts: [],
     isActive: false,
     
-    // توليد طقطقات بناءً على منحنى السرعة: تسارع → سرعة ثابتة → تباطؤ
     playWheelTicks(duration = 2800, onComplete = null) {
         this.clear();
         this.isActive = true;
         
-        // تقسيم الوقت إلى مراحل: 0-0.3 تسارع، 0.3-0.7 سرعة ثابتة، 0.7-1 تباطؤ
         const totalTicks = 36;
         const intervals = [];
         for (let i = 0; i < totalTicks; i++) {
-            const t = i / totalTicks; // 0..1
+            const t = i / totalTicks;
             let speedFactor;
             if (t < 0.3) {
-                // تسارع خطي
                 speedFactor = 0.4 + (t / 0.3) * 1.2;
             } else if (t < 0.7) {
-                // سرعة قصوى ثابتة
                 speedFactor = 1.6;
             } else {
-                // تباطؤ خطي
                 speedFactor = 1.6 - ((t - 0.7) / 0.3) * 1.2;
             }
-            // المسافة الزمنية بين النقرات تتناسب عكسياً مع سرعة الدوران
             const delay = 55 / Math.max(0.4, speedFactor);
             intervals.push(delay);
         }
@@ -3610,6 +3605,10 @@ const JackpotTheater = {
         this.isPlaying = true;
         
         const container = document.querySelector('.wheel-game-container, .slots-game-container') || document.body;
+        
+        // إضافة اهتزاز قوي للصفحة عند الجاكبوت
+        document.body.classList.add('screen-shake');
+        setTimeout(() => document.body.classList.remove('screen-shake'), 500);
         
         setTimeout(() => {
             this.createLightBurst(container);
@@ -3690,7 +3689,7 @@ const JackpotTheater = {
     }
 };
 
-// ====== 46.4 WHEEL GAME - عجلة الحظ المحسنة (نص شعاعي من القلب للحافة، خلفية سوداء، توهج نيون) ======
+// ====== 46.4 WHEEL GAME - عجلة الحظ المحسنة (3D، نص شعاعي) ======
 class WheelGame {
     constructor(canvasId, segments) {
         this.canvas = document.getElementById(canvasId);
@@ -3728,8 +3727,7 @@ class WheelGame {
         
         ctx.clearRect(0, 0, this.width, this.height);
         
-        // خلفية سوداء داكنة مع توهج نيون
-        ctx.shadowBlur = 0;
+        // خلفية سوداء داكنة
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius + 6, 0, 2 * Math.PI);
         ctx.fillStyle = '#000000';
@@ -3755,7 +3753,6 @@ class WheelGame {
             ctx.arc(centerX, centerY, radius, startAngle, endAngle);
             ctx.closePath();
             
-            // تدرج داكن مع لون القطاع
             const grad = ctx.createLinearGradient(
                 centerX + Math.cos(startAngle) * 15,
                 centerY + Math.sin(startAngle) * 15,
@@ -3794,7 +3791,7 @@ class WheelGame {
             ctx.fillText(seg.icon, -12, 8);
             ctx.restore();
             
-            // رسم النص على طول نصف القطر من 60% إلى 85% (شعاعي) مع تأثير ستيكر
+            // رسم النص على طول نصف القطر من 60% إلى 85% (شعاعي)
             const textRadius = radius * 0.72;
             const textX = centerX + Math.cos(midAngle) * textRadius;
             const textY = centerY + Math.sin(midAngle) * textRadius;
@@ -4127,7 +4124,7 @@ function spinWheelVegas(isFree) {
     });
 }
 
-function spinSlotsVegas(isFree, isTurbo) {
+function spinSlotsGame(isFree, isTurbo) {
     if (!slotsGame) initSlotsCanvas();
     if (slotsGame.isSpinning) {
         console.log("Slots already spinning");
@@ -4253,7 +4250,7 @@ function awardVegasPrize(prize) {
     updateWheelUI();
 }
 
-// ====== 46.9 عرض رسائل الفوز أعلى الصفحة (محسنة) ======
+// ====== 46.9 عرض رسائل الفوز أعلى الصفحة ======
 function showGameWinMessage(amount, currency, type) {
     const existing = document.querySelector('.game-win-message');
     if (existing) existing.remove();
@@ -4382,7 +4379,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     updateUserDisplay();
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v17.0");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v18.0");
     console.log("✅ All systems ready! 🚀");
 });
 
@@ -4460,7 +4457,7 @@ window.openWheelGame = openWheelGame;
 window.openSlotsGame = openSlotsGame;
 window.exitGame = exitGame;
 window.spinWheelVegas = spinWheelVegas;
-window.spinSlotsVegas = spinSlotsVegas;
+window.spinSlotsGame = spinSlotsGame;
 window.showToastPro = showToastPro;
 window.openProfileFromAnywhere = openProfileFromAnywhere;
 window.openWithdrawModal = openWithdrawModal;
