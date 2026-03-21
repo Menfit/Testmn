@@ -1,6 +1,6 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v15.0
-// جميع التحسينات المطلوبة: عجلة احترافية، صوت متزامن، سلوتس مستجيبة، رسائل الفوز العلوية
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v16.0
+// جميع التحسينات النهائية: كتابة شعاعية، سلوتس مستجيبة، رسالة فوز علوية واحدة، أصوات محسنة
 // جاهز للنسخ واللصق
 // ============================================
 
@@ -1373,7 +1373,7 @@ function renderPlansTable() {
     if (!tbody) return;
     tbody.innerHTML = MACHINES.map(m => {
         const name = currentLanguage === 'ar' ? m.nameAr : m.name;
-        return `      <tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
+        return `       <tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
             m.plans.map(p => p.price === 0 ? '<td>FREE</td>' : `<td>${p.price} TON<br><small>+${p.returnAmount} TON</small></td>`).join('')
         }</tr>`;
     }).join('');
@@ -1470,52 +1470,9 @@ function updateAutoClickerUI() {
 }
 
 // ====== 22. WIN POPUP ======
+// REMOVED: replaced by top message only. Keeping function for compatibility but won't be used.
 function showWinPopup(prize, type = 'normal') {
-    const existing = document.querySelector('.win-popup');
-    if (existing) existing.remove();
-    
-    const popup = document.createElement('div');
-    popup.className = `win-popup ${type}`;
-    
-    let icon = '🎉';
-    let title = 'YOU WON!';
-    let amount = prize;
-    
-    if (type === 'big') {
-        icon = '🌟🌟';
-        title = 'BIG WIN!';
-    } else if (type === 'jackpot') {
-        icon = '🎰🎰🎰';
-        title = 'JACKPOT!';
-    } else if (type === 'mega') {
-        icon = '👑👑👑';
-        title = 'MEGA JACKPOT!';
-    }
-    
-    popup.innerHTML = `
-        <div class="win-icon">${icon}</div>
-        <div class="win-title">${title}</div>
-        <div class="win-amount">${amount}</div>
-        <div class="win-confetti"></div>
-    `;
-    
-    document.body.appendChild(popup);
-    popup.style.zIndex = '10000';
-    
-    setTimeout(() => popup.classList.add('show'), 10);
-    
-    if (type === 'mega' || type === 'jackpot') {
-        hapticFeedback('heavy');
-    } else if (type === 'big') {
-        hapticFeedback('medium');
-    } else {
-        hapticFeedback('light');
-    }
-    
-    setTimeout(() => {
-        popup.classList.remove('show');
-        setTimeout(() => popup.remove(), 300);
-    }, 2500);
+    // Deprecated – using top message instead
 }
 
 // ====== 23. MARKET FUNCTIONS ======
@@ -3831,13 +3788,21 @@ class WheelGame {
             ctx.fillText(seg.icon, -12, 8);
             ctx.restore();
             
-            // رسم النص على طول نصف القطر من 60% إلى 85% (شعاعي)
+            // رسم النص على طول نصف القطر من 60% إلى 85% (شعاعي) – مع دوران النص ليكون موازياً للشعاع
             const textRadius = radius * 0.72;
             const textX = centerX + Math.cos(midAngle) * textRadius;
             const textY = centerY + Math.sin(midAngle) * textRadius;
             ctx.save();
             ctx.translate(textX, textY);
-            ctx.rotate(midAngle + Math.PI / 2);
+            // هنا نريد أن يكون النص موازياً للشعاع (أي أن قاعدته تمتد على طول الخط الشعاعي)
+            // لهذا ندور بزاوية midAngle (بدون إضافة PI/2) ليكون اتجاه النص من المركز للخارج
+            // لكن لجعل النص مقروءاً من الخارج، نضيف 180 درجة إذا كانت الزاوية في النصف السفلي.
+            let angle = midAngle;
+            // نضبط الاتجاه بحيث لا يكون النص مقلوباً
+            if (angle > Math.PI / 2 && angle < 3 * Math.PI / 2) {
+                angle += Math.PI; // نقلب النص إذا كان في النصف السفلي
+            }
+            ctx.rotate(angle);
             ctx.font = `bold ${Math.floor(radius * 0.08)}px "Outfit", "Segoe UI"`;
             ctx.fillStyle = '#ffffff';
             ctx.shadowColor = 'rgba(0,0,0,0.6)';
@@ -3946,6 +3911,12 @@ class SlotsGame {
         this.currentReel = 0;
         this.animationId = null;
         
+        // تأكد من وجود الكانفاسات
+        if (this.canvases.some(c => !c)) {
+            console.warn("Slots canvases not found, retrying...");
+            setTimeout(() => this.constructor(canvasIds, symbolsData), 200);
+            return;
+        }
         this.draw();
     }
     
@@ -4172,20 +4143,19 @@ function spinSlotsVegas(isFree, isTurbo) {
             if (winAmountEl) winAmountEl.textContent = `${result.amount} ${result.currency}`;
             
             // إظهار رسالة الفوز في الجزء العلوي
-            showGameWinMessage(result.amount, result.currency, result.isJackpot ? 'jackpot' : (result.amount >= 10 ? 'big' : 'normal'));
+            let winType = 'normal';
+            if (result.isJackpot) winType = 'jackpot';
+            else if (result.amount >= 25) winType = 'big';
+            showGameWinMessage(result.amount, result.currency, winType);
             
             if (result.isJackpot) {
                 JackpotTheater.play(result.amount, result.currency, 'jackpot');
-                showWinPopup(`${result.amount} ${result.currency}`, 'jackpot');
             } else if (result.amount >= 25) {
                 JackpotTheater.play(result.amount, result.currency, 'big');
-                showWinPopup(`${result.amount} ${result.currency}`, 'jackpot');
             } else if (result.amount >= 10) {
                 VegasAudio.win();
-                showWinPopup(`${result.amount} ${result.currency}`, 'big');
             } else if (result.amount > 0) {
                 VegasAudio.coin();
-                showWinPopup(`${result.amount} ${result.currency}`, 'normal');
             }
         } else {
             showToastPro('🍀 Try again!', 'info');
@@ -4224,7 +4194,6 @@ function awardVegasPrize(prize) {
         addTransaction('wheel', prize.amount, { currency, jackpot: true });
         JackpotTheater.play(prize.amount, currency, prize.mega ? 'mega' : 'jackpot');
         showGameWinMessage(prize.amount, currency, prize.mega ? 'mega' : 'jackpot');
-        showWinPopup(`${prize.amount} ${currency}`, prize.mega ? 'mega' : 'jackpot');
         userData.wheel.jackpotWon = (userData.wheel.jackpotWon || 0) + 1;
         saveUserToCache();
         updateUI();
@@ -4245,13 +4214,10 @@ function awardVegasPrize(prize) {
     
     if (prize.amount >= 25) {
         JackpotTheater.play(prize.amount, currency, 'big');
-        showWinPopup(`${prize.amount} ${currency}`, 'jackpot');
     } else if (prize.amount >= 10) {
         VegasAudio.win();
-        showWinPopup(`${prize.amount} ${currency}`, 'big');
     } else if (prize.amount > 0) {
         VegasAudio.coin();
-        showWinPopup(`${prize.amount} ${currency}`, 'normal');
     }
     hapticFeedback(prize.amount >= 10 ? 'medium' : 'light');
     saveUserToCache();
@@ -4259,7 +4225,7 @@ function awardVegasPrize(prize) {
     updateWheelUI();
 }
 
-// ====== 46.9 عرض رسائل الفوز أعلى الصفحة ======
+// ====== 46.9 عرض رسائل الفوز أعلى الصفحة (محسنة) ======
 function showGameWinMessage(amount, currency, type) {
     // إزالة أي رسالة سابقة
     const existing = document.querySelector('.game-win-message');
@@ -4269,18 +4235,28 @@ function showGameWinMessage(amount, currency, type) {
     messageDiv.className = `game-win-message ${type}`;
     let text = '';
     let icon = '';
+    let bgColor = '#000000aa';
+    let borderColor = '#ffd966';
     if (type === 'jackpot') {
         icon = '🎰🎰🎰';
         text = `JACKPOT! ${amount} ${currency}`;
+        bgColor = '#ff4444cc';
+        borderColor = '#ffaa00';
     } else if (type === 'big') {
         icon = '🔥🔥';
         text = `BIG WIN! ${amount} ${currency}`;
+        bgColor = '#ff8800cc';
+        borderColor = '#ffdd00';
     } else if (type === 'mega') {
         icon = '👑👑👑';
         text = `MEGA JACKPOT! ${amount} ${currency}`;
+        bgColor = '#ff44cccc';
+        borderColor = '#ffff00';
     } else {
         icon = '🎉';
         text = `YOU WON! ${amount} ${currency}`;
+        bgColor = '#00aaffcc';
+        borderColor = '#88ff88';
     }
     messageDiv.innerHTML = `<span class="win-icon">${icon}</span><span class="win-text">${text}</span>`;
     messageDiv.style.position = 'absolute';
@@ -4288,37 +4264,39 @@ function showGameWinMessage(amount, currency, type) {
     messageDiv.style.left = '50%';
     messageDiv.style.transform = 'translateX(-50%)';
     messageDiv.style.zIndex = '200';
-    messageDiv.style.backgroundColor = 'rgba(0,0,0,0.85)';
-    messageDiv.style.color = '#ffd966';
-    messageDiv.style.padding = '8px 20px';
-    messageDiv.style.borderRadius = '40px';
-    messageDiv.style.border = '2px solid #ffd966';
-    messageDiv.style.boxShadow = '0 0 20px rgba(255,215,0,0.5)';
+    messageDiv.style.backgroundColor = bgColor;
+    messageDiv.style.color = '#fff';
+    messageDiv.style.padding = '10px 24px';
+    messageDiv.style.borderRadius = '50px';
+    messageDiv.style.border = `2px solid ${borderColor}`;
+    messageDiv.style.boxShadow = '0 0 30px rgba(0,0,0,0.5)';
     messageDiv.style.fontWeight = 'bold';
-    messageDiv.style.fontSize = '1.2rem';
+    messageDiv.style.fontSize = '1.3rem';
     messageDiv.style.whiteSpace = 'nowrap';
     messageDiv.style.backdropFilter = 'blur(8px)';
     messageDiv.style.display = 'flex';
     messageDiv.style.alignItems = 'center';
-    messageDiv.style.gap = '10px';
+    messageDiv.style.gap = '12px';
+    messageDiv.style.animation = 'slideDownFadeOut 3s ease forwards';
     document.body.appendChild(messageDiv);
     
-    // تأثير الظهور والاختفاء
-    messageDiv.style.animation = 'fadeInOut 2.5s ease forwards';
-    setTimeout(() => messageDiv.remove(), 2500);
-}
-
-// إضافة تعريف للأنيميشن
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeInOut {
-        0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-        15% { opacity: 1; transform: translateX(-50%) translateY(0); }
-        85% { opacity: 1; transform: translateX(-50%) translateY(0); }
-        100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+    // إضافة تعريف الأنيميشن إذا لم يكن موجوداً
+    if (!document.querySelector('#winMessageStyle')) {
+        const style = document.createElement('style');
+        style.id = 'winMessageStyle';
+        style.textContent = `
+            @keyframes slideDownFadeOut {
+                0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            }
+        `;
+        document.head.appendChild(style);
     }
-`;
-document.head.appendChild(style);
+    
+    setTimeout(() => messageDiv.remove(), 3000);
+}
 
 // ====== 46.10 TOAST PRO ======
 function showToastPro(message, type = 'info', duration = 3000) {
@@ -4379,7 +4357,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     updateUserDisplay();
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v15.0");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v16.0");
     console.log("✅ All systems ready! 🚀");
 });
 
