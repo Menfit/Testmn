@@ -1,6 +1,6 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v12.0
-// نسخة نهائية مع تحسينات كازينو أسطورية
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v13.0
+// نسخة نهائية مع كازينو احترافي بالكامل
 // جميع الوظائف تعمل – جاهز للنسخ واللصق
 // ============================================
 
@@ -519,33 +519,27 @@ const REFERRAL_MILESTONES = [
 
 // ====== 7. WHEEL PRIZES ======
 const WHEEL_PRIZES = [
-    // جوائز TON صغيرة
-    { type: 'TON', amount: 0.25, color: '#1e3a5f', weight: 8, icon: '💰', label: '0.25 TON', category: 'ton' },
-    { type: 'TON', amount: 0.5, color: '#1e4a6f', weight: 8, icon: '💰', label: '0.5 TON', category: 'ton' },
-    { type: 'TON', amount: 1, color: '#1e5a7f', weight: 7, icon: '💰', label: '1 TON', category: 'ton' },
-    { type: 'TON', amount: 2, color: '#1e6a8f', weight: 6, icon: '💰', label: '2 TON', category: 'ton' },
-    // جوائز USDT صغيرة
-    { type: 'USDT', amount: 0.25, color: '#1e5f3a', weight: 8, icon: '💵', label: '0.25 USDT', category: 'usdt' },
-    { type: 'USDT', amount: 0.5, color: '#1e6f4a', weight: 8, icon: '💵', label: '0.5 USDT', category: 'usdt' },
-    { type: 'USDT', amount: 1, color: '#1e7f5a', weight: 7, icon: '💵', label: '1 USDT', category: 'usdt' },
-    { type: 'USDT', amount: 2, color: '#1e8f6a', weight: 6, icon: '💵', label: '2 USDT', category: 'usdt' },
-    // جوائز متوسطة
-    { type: 'TON', amount: 5, color: '#2a6a3a', weight: 4, icon: '🔥', label: '5 TON', category: 'bigwin' },
-    { type: 'TON', amount: 10, color: '#3a7a4a', weight: 3, icon: '🔥', label: '10 TON', category: 'bigwin' },
-    { type: 'USDT', amount: 5, color: '#2a6a3a', weight: 4, icon: '🔥', label: '5 USDT', category: 'bigwin' },
-    { type: 'USDT', amount: 10, color: '#3a7a4a', weight: 3, icon: '🔥', label: '10 USDT', category: 'bigwin' },
-    // جوائز كبيرة
-    { type: 'TON', amount: 25, color: '#8b5a2b', weight: 2, icon: '⭐', label: '25 TON', category: 'nicewin' },
-    { type: 'USDT', amount: 25, color: '#8b6a3b', weight: 2, icon: '⭐', label: '25 USDT', category: 'nicewin' },
-    { type: 'TON', amount: 50, color: '#b87c2c', weight: 1, icon: '👑', label: '50 TON', category: 'jackpot' },
-    { type: 'USDT', amount: 50, color: '#c88c3c', weight: 1, icon: '👑', label: '50 USDT', category: 'jackpot' },
-    // جوائز مميزة
+    { type: 'TON', amount: 0.25, color: '#1e5f7f', weight: 8, icon: '💰', label: '0.25 TON', category: 'ton' },
+    { type: 'TON', amount: 0.5, color: '#1e6f8f', weight: 8, icon: '💰', label: '0.5 TON', category: 'ton' },
+    { type: 'TON', amount: 1, color: '#1e7f9f', weight: 7, icon: '💰', label: '1 TON', category: 'ton' },
+    { type: 'TON', amount: 2, color: '#1e8faf', weight: 6, icon: '💰', label: '2 TON', category: 'ton' },
+    { type: 'USDT', amount: 0.25, color: '#1f6f3f', weight: 8, icon: '💵', label: '0.25 USDT', category: 'usdt' },
+    { type: 'USDT', amount: 0.5, color: '#1f7f4f', weight: 8, icon: '💵', label: '0.5 USDT', category: 'usdt' },
+    { type: 'USDT', amount: 1, color: '#1f8f5f', weight: 7, icon: '💵', label: '1 USDT', category: 'usdt' },
+    { type: 'USDT', amount: 2, color: '#1f9f6f', weight: 6, icon: '💵', label: '2 USDT', category: 'usdt' },
+    { type: 'TON', amount: 5, color: '#bf6f2f', weight: 4, icon: '🔥', label: '5 TON', category: 'bigwin' },
+    { type: 'TON', amount: 10, color: '#cf7f3f', weight: 3, icon: '🔥', label: '10 TON', category: 'bigwin' },
+    { type: 'USDT', amount: 5, color: '#bf6f2f', weight: 4, icon: '🔥', label: '5 USDT', category: 'bigwin' },
+    { type: 'USDT', amount: 10, color: '#cf7f3f', weight: 3, icon: '🔥', label: '10 USDT', category: 'bigwin' },
+    { type: 'TON', amount: 25, color: '#bf4f1f', weight: 2, icon: '⭐', label: '25 TON', category: 'nicewin' },
+    { type: 'USDT', amount: 25, color: '#cf5f2f', weight: 2, icon: '⭐', label: '25 USDT', category: 'nicewin' },
+    { type: 'TON', amount: 50, color: '#bf2f1f', weight: 1, icon: '👑', label: '50 TON', category: 'jackpot' },
+    { type: 'USDT', amount: 50, color: '#cf3f2f', weight: 1, icon: '👑', label: '50 USDT', category: 'jackpot' },
     { type: 'GOODLUCK', amount: 0, color: '#4a5568', weight: 10, icon: '🍀', label: 'GOOD LUCK', goodluck: true, category: 'goodluck' },
-    { type: 'FREESPIN', amount: 0, color: '#6b4c9b', weight: 8, icon: '🆓', label: 'FREE SPIN', freespin: true, category: 'freespin' },
-    // جاكبوت
-    { type: 'JACKPOT', amount: 100, currency: 'TON', color: '#9b2c2c', weight: 1, icon: '👑', label: '100 TON', jackpot: true, category: 'jackpot' },
-    { type: 'JACKPOT', amount: 200, currency: 'USDT', color: '#ac3c3c', weight: 1, icon: '👑', label: '200 USDT', jackpot: true, category: 'jackpot' },
-    { type: 'MEGA', amount: 500, currency: 'TON', color: '#d43c1c', weight: 0.5, icon: '💎', label: '500 TON', mega: true, category: 'mega' }
+    { type: 'FREESPIN', amount: 0, color: '#8b5fcf', weight: 8, icon: '🆓', label: 'FREE SPIN', freespin: true, category: 'freespin' },
+    { type: 'JACKPOT', amount: 100, currency: 'TON', color: '#bf1f1f', weight: 1, icon: '👑', label: '100 TON', jackpot: true, category: 'jackpot' },
+    { type: 'JACKPOT', amount: 200, currency: 'USDT', color: '#cf2f2f', weight: 1, icon: '👑', label: '200 USDT', jackpot: true, category: 'jackpot' },
+    { type: 'MEGA', amount: 500, currency: 'TON', color: '#df3f1f', weight: 0.5, icon: '💎', label: '500 TON', mega: true, category: 'mega' }
 ];
 
 // ====== 8. SLOTS SYMBOLS ======
@@ -1379,7 +1373,7 @@ function renderPlansTable() {
     if (!tbody) return;
     tbody.innerHTML = MACHINES.map(m => {
         const name = currentLanguage === 'ar' ? m.nameAr : m.name;
-        return `     <tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
+        return `<tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
             m.plans.map(p => p.price === 0 ? '<td>FREE</td>' : `<td>${p.price} TON<br><small>+${p.returnAmount} TON</small></td>`).join('')
         }</tr>`;
     }).join('');
@@ -3758,6 +3752,7 @@ class WheelGame {
         
         ctx.clearRect(0, 0, this.width, this.height);
         
+        // خلفية داكنة
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius + 8, 0, 2 * Math.PI);
         ctx.fillStyle = '#0a0a0f';
@@ -3794,19 +3789,9 @@ class WheelGame {
             ctx.stroke();
             
             const midAngle = startAngle + this.segmentAngle / 2;
-            const textStartRadius = radius * 0.25;
-            const textEndRadius = radius * 0.85;
             
-            for (let r = textStartRadius; r <= textEndRadius; r += 15) {
-                const x = centerX + Math.cos(midAngle) * r;
-                const y = centerY + Math.sin(midAngle) * r;
-                ctx.beginPath();
-                ctx.arc(x, y, 2, 0, 2 * Math.PI);
-                ctx.fillStyle = 'rgba(255,215,0,0.15)';
-                ctx.fill();
-            }
-            
-            const iconRadius = radius * 0.45;
+            // رسم الأيقونة في المنتصف (من القلب إلى منتصف القطاع)
+            const iconRadius = radius * 0.38;
             const iconX = centerX + Math.cos(midAngle) * iconRadius;
             const iconY = centerY + Math.sin(midAngle) * iconRadius;
             ctx.save();
@@ -3819,6 +3804,7 @@ class WheelGame {
             ctx.fillText(seg.icon, -12, 8);
             ctx.restore();
             
+            // رسم النص في الجزء الخارجي (من منتصف القطاع إلى الحافة)
             const textRadius = radius * 0.72;
             const textX = centerX + Math.cos(midAngle) * textRadius;
             const textY = centerY + Math.sin(midAngle) * textRadius;
@@ -3833,6 +3819,7 @@ class WheelGame {
             ctx.restore();
         }
         
+        // المركز الداخلي المتألق
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius * 0.18, 0, 2 * Math.PI);
         const centerGrad = ctx.createRadialGradient(centerX - 5, centerY - 5, 5, centerX, centerY, radius * 0.2);
@@ -4292,7 +4279,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     updateUserDisplay();
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v12.0");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v13.0");
     console.log("✅ All systems ready! 🚀");
 });
 
