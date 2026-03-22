@@ -18,7 +18,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     
-    <!-- CSS -->
+    <!-- Main CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -38,6 +38,9 @@
         
         <!-- Welcome Sticker -->
         <div class="welcome-sticker" id="welcomeSticker"></div>
+
+        <!-- Toast Container -->
+        <div class="toast-container" id="toastContainer"></div>
 
         <!-- Auto-Clicker Turbine Button -->
         <div class="auto-clicker-turbine" id="autoClickerTurbine" onclick="buyAutoClicker()">
@@ -111,7 +114,16 @@
                                 <div class="turbine-generator"></div>
                             </div>
                         </div>
-                        <div class="energy-particles" id="energyParticles"></div>
+                        <div class="energy-particles" id="energyParticles">
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                        </div>
                         <div class="turbine-glow"></div>
                     </div>
                     <div class="machine-status-badge" id="machineStatusBadge">
@@ -151,7 +163,7 @@
                     <div class="progress-header">
                         <div class="progress-title">
                             <i class="fas fa-bolt"></i>
-                            <span>Current Mining Cycle</span>
+                            <span data-i18n="mining.currentCycle">Current Mining Cycle</span>
                         </div>
                         <div class="progress-timer" id="miningTimer">03:59:46</div>
                     </div>
@@ -171,12 +183,12 @@
                     </div>
                     <div class="progress-footer">
                         <div class="next-reward">
-                            <span class="label">Next Reward</span>
+                            <span class="label" data-i18n="mining.nextReward">Next Reward</span>
                             <span class="value" id="nextReward">0.0100 TON</span>
                         </div>
                         <button class="claim-btn-legendary" id="claimBtn" disabled onclick="claim()">
                             <i class="fas fa-bolt"></i>
-                            <span>CLAIM</span>
+                            <span data-i18n="claim">CLAIM</span>
                         </button>
                     </div>
                 </div>
@@ -189,7 +201,7 @@
 
                 <div class="section legendary-section">
                     <div class="section-header">
-                        <h3><i class="fas fa-microchip"></i> <span>Active Mining Rigs</span></h3>
+                        <h3><i class="fas fa-microchip"></i> <span data-i18n="mining.activeRigs">Active Mining Rigs</span></h3>
                         <button class="section-action" onclick="showPage('market')">
                             <span>Manage</span>
                             <i class="fas fa-arrow-right"></i>
@@ -209,7 +221,12 @@
                     <div class="plans-table-legendary">
                         <table class="legendary-table">
                             <thead>
-                                <tr><th>Machine</th><th>3 Days</th><th>7 Days</th><th>15 Days</th></tr>
+                                <tr>
+                                    <th data-i18n="table.machine">Machine</th>
+                                    <th data-i18n="table.3days">3 Days</th>
+                                    <th data-i18n="table.7days">7 Days</th>
+                                    <th data-i18n="table.15days">15 Days</th>
+                                </tr>
                             </thead>
                             <tbody id="plansTableBody"></tbody>
                         </table>
@@ -230,26 +247,25 @@
 
             <!-- MARKET PAGE -->
             <div class="page" id="marketPage">
-                <h2><i class="fas fa-store"></i> <span>Mining Hardware</span></h2>
+                <h2><i class="fas fa-store"></i> <span data-i18n="market.title">Mining Hardware</span></h2>
                 <p class="page-subtitle">Choose your mining rig and start earning</p>
                 <div class="market-filters-legendary">
-                    <button class="filter-btn active" onclick="filterMarket('all')">All</button>
-                    <button class="filter-btn" onclick="filterMarket('basic')">Basic</button>
-                    <button class="filter-btn" onclick="filterMarket('pro')">Pro</button>
-                    <button class="filter-btn" onclick="filterMarket('quantum')">Quantum</button>
-                    <button class="filter-btn" onclick="filterMarket('hot')">Hot Deals</button>
+                    <button class="filter-btn active" onclick="filterMarket('all')" data-i18n="filters.all">All</button>
+                    <button class="filter-btn" onclick="filterMarket('basic')" data-i18n="filters.basic">Basic</button>
+                    <button class="filter-btn" onclick="filterMarket('pro')" data-i18n="filters.pro">Pro</button>
+                    <button class="filter-btn" onclick="filterMarket('quantum')" data-i18n="filters.quantum">Quantum</button>
+                    <button class="filter-btn" onclick="filterMarket('hot')" data-i18n="filters.hot">Hot Deals</button>
                 </div>
                 <div class="machines-showcase-legendary" id="machinesShowcase"></div>
             </div>
 
             <!-- CASINO LOBBY PAGE -->
             <div class="page" id="casinoPage">
-                <h2><i class="fas fa-dice"></i> <span>Casino Games</span></h2>
-                
+                <h2><i class="fas fa-dice"></i> <span data-i18n="casino.title">Casino Games</span></h2>
                 <div class="casino-card" id="wheelCard" onclick="openWheelGame()">
                     <div class="casino-card-header">
                         <span class="casino-icon">🎡</span>
-                        <span class="casino-title">Lucky Wheel</span>
+                        <span class="casino-title" data-i18n="casino.wheel">Lucky Wheel</span>
                         <span class="casino-badge">HOT</span>
                     </div>
                     <div class="casino-card-body">
@@ -263,14 +279,14 @@
                         <div class="casino-jackpot">JACKPOT 100 TON</div>
                     </div>
                     <div class="casino-card-footer">
-                        <button class="casino-play-btn" onclick="event.stopPropagation(); openWheelGame()">Play Now</button>
+                        <button class="casino-play-btn" onclick="event.stopPropagation(); openWheelGame()" data-i18n="casino.play">Play Now</button>
                     </div>
                 </div>
 
                 <div class="casino-card" id="slotsCard" onclick="openSlotsGame()">
                     <div class="casino-card-header">
                         <span class="casino-icon">🎰</span>
-                        <span class="casino-title">Slot Machine</span>
+                        <span class="casino-title" data-i18n="casino.slots">Slot Machine</span>
                         <span class="casino-badge">NEW</span>
                     </div>
                     <div class="casino-card-body">
@@ -287,7 +303,7 @@
                         <div class="casino-jackpot">JACKPOT 100 TON</div>
                     </div>
                     <div class="casino-card-footer">
-                        <button class="casino-play-btn" onclick="event.stopPropagation(); openSlotsGame()">Play Now</button>
+                        <button class="casino-play-btn" onclick="event.stopPropagation(); openSlotsGame()" data-i18n="casino.play">Play Now</button>
                     </div>
                 </div>
 
@@ -303,16 +319,16 @@
 
             <!-- PROFILE PAGE -->
             <div class="page" id="profilePage">
-                <h2><i class="fas fa-user"></i> <span>My Profile</span></h2>
+                <h2><i class="fas fa-user"></i> <span data-i18n="profile.title">My Profile</span></h2>
                 <div class="wallet-card-legendary">
-                    <div class="wallet-header"><i class="fas fa-wallet"></i><span>Total Balance</span></div>
+                    <div class="wallet-header"><i class="fas fa-wallet"></i><span data-i18n="wallet.totalBalance">Total Balance</span></div>
                     <div class="wallet-balance-large" id="profileBalance">0.00 TON</div>
                     <div class="wallet-usd" id="profileUsd">≈ $0.00</div>
                     <div class="wallet-actions">
-                        <button class="wallet-action-btn send" onclick="openWithdrawModal()"><i class="fas fa-paper-plane"></i><span>Send</span></button>
-                        <button class="wallet-action-btn receive" onclick="openDepositModal()"><i class="fas fa-arrow-down"></i><span>Receive</span></button>
-                        <button class="wallet-action-btn swap" onclick="openSwapModal()"><i class="fas fa-exchange-alt"></i><span>Swap</span></button>
-                        <button class="wallet-action-btn history" onclick="openHistoryModal()"><i class="fas fa-history"></i><span>History</span></button>
+                        <button class="wallet-action-btn send" onclick="openWithdrawModal()"><i class="fas fa-paper-plane"></i><span data-i18n="send">Send</span></button>
+                        <button class="wallet-action-btn receive" onclick="openDepositModal()"><i class="fas fa-arrow-down"></i><span data-i18n="receive">Receive</span></button>
+                        <button class="wallet-action-btn swap" onclick="openSwapModal()"><i class="fas fa-exchange-alt"></i><span data-i18n="swap">Swap</span></button>
+                        <button class="wallet-action-btn history" onclick="openHistoryModal()"><i class="fas fa-history"></i><span data-i18n="history">History</span></button>
                     </div>
                 </div>
 
@@ -320,10 +336,10 @@
                     <div id="tonConnectButton"></div>
                     <div class="wallet-status" id="profileWalletStatus">
                         <div class="status-indicator offline"></div>
-                        <span>Wallet disconnected</span>
+                        <span data-i18n="wallet.disconnected">Wallet disconnected</span>
                     </div>
                     <div class="connected-wallet-info" id="connectedWalletInfo" style="display: none;">
-                        <span class="label">Connected:</span>
+                        <span class="label" data-i18n="wallet.connected">Connected:</span>
                         <span class="address" id="profileConnectedAddress"></span>
                         <span class="balance" id="connectedWalletBalance">0 TON</span>
                     </div>
@@ -331,8 +347,8 @@
 
                 <div class="section legendary-section">
                     <div class="section-header">
-                        <h3><i class="fas fa-coins"></i> <span>My Assets</span></h3>
-                        <button class="section-action" onclick="refreshPrices()"><i class="fas fa-sync-alt"></i><span>Refresh</span></button>
+                        <h3><i class="fas fa-coins"></i> <span data-i18n="wallet.myAssets">My Assets</span></h3>
+                        <button class="section-action" onclick="refreshPrices()"><i class="fas fa-sync-alt"></i><span data-i18n="refresh">Refresh</span></button>
                     </div>
                     <div class="assets-list-legendary" id="assetsList"></div>
                 </div>
@@ -343,10 +359,12 @@
                     <div class="stat-item"><span class="stat-label">Total Referrals</span><span class="stat-value" id="totalReferralsStats">8</span></div>
                 </div>
 
-                <div class="chart-container"><div class="chart-bars" id="chartBars"></div></div>
+                <div class="chart-container">
+                    <div class="chart-bars" id="chartBars"></div>
+                </div>
 
                 <div class="referral-section prominent">
-                    <h3><i class="fas fa-users"></i> <span>Referral Program</span></h3>
+                    <h3><i class="fas fa-users"></i> <span data-i18n="referral.title">Referral Program</span></h3>
                     <div class="referral-link-box">
                         <input type="text" id="previewReferralLink" readonly value="https://t.me/TONMininginstantbot/Ton?startapp=">
                         <button class="copy-btn" onclick="copyReferralLink()"><i class="fas fa-copy"></i></button>
@@ -355,7 +373,7 @@
                         <div><span class="label">Referrals:</span> <span id="previewRefCount">0</span></div>
                         <div><span class="label">Earned:</span> <span id="previewRefEarnings">0</span> TON</div>
                     </div>
-                    <div class="referral-bonus-note">Get 0.005 TON + 20% of their mining!</div>
+                    <div class="referral-bonus-note" data-i18n="referral.bonusNote">Get 0.005 TON + 20% of their mining!</div>
                 </div>
 
                 <div class="leaderboard" id="leaderboard"></div>
@@ -366,36 +384,77 @@
             <div class="page" id="wheelGamePage">
                 <div class="game-page-header">
                     <button class="back-btn" onclick="exitGame()"><i class="fas fa-arrow-left"></i></button>
-                    <h2><i class="fas fa-ferris-wheel"></i> Lucky Wheel</h2>
-                    <div class="game-stats"><div class="stat-badge"><i class="fas fa-ticket-alt"></i><span id="wheelGameSpins">0</span></div></div>
+                    <h2><i class="fas fa-ferris-wheel"></i> <span data-i18n="wheel.title">Lucky Wheel</span></h2>
+                    <div class="game-stats">
+                        <div class="stat-badge"><i class="fas fa-ticket-alt"></i><span id="wheelGameSpins">0</span></div>
+                    </div>
                 </div>
                 <div class="wheel-game-container">
-                    <canvas id="wheelCanvas" width="400" height="400"></canvas>
-                    <div class="wheel-controls">
-                        <button id="wheelFreeSpinBtn" class="wheel-spin-btn free">
-                            <i class="fas fa-star"></i> FREE SPIN
+                    <div class="cosmic-bg"></div>
+                    <div class="wheel-casino-container-pro">
+                        <canvas id="wheelCanvas" width="320" height="320" class="wheel-canvas"></canvas>
+                        <div class="wheel-pointer-pro"><i class="fas fa-chevron-down"></i></div>
+                        <div class="wheel-center-pro"><i class="fas fa-star"></i></div>
+                    </div>
+                    <div class="wheel-effects-panel">
+                        <div class="speed-meter">
+                            <div class="meter-label">SPEED</div>
+                            <div class="meter-bar"><div class="meter-fill" id="wheelSpeedFill"></div></div>
+                        </div>
+                        <div class="jackpot-counter">
+                            <div class="counter-label">JACKPOT</div>
+                            <div class="counter-value" id="wheelJackpotCounter">4/15</div>
+                        </div>
+                    </div>
+                    <div class="game-controls-pro">
+                        <button class="game-btn free" id="wheelFreeSpin" onclick="spinWheelVegas(true)">
+                            <i class="fas fa-gift"></i>
+                            <span data-i18n="wheel.free">FREE</span>
                         </button>
-                        <button id="wheelSpinBtn" class="wheel-spin-btn paid">
-                            <i class="fas fa-play"></i> SPIN
+                        <button class="game-btn spin" id="wheelPaidSpin" onclick="spinWheelVegas(false)">
+                            <i class="fas fa-play"></i>
+                            <span data-i18n="wheel.spin">SPIN</span>
+                            <small data-i18n="wheel.price">0.25 TON</small>
                         </button>
                     </div>
-                    <div class="wheel-stats">
-                        <div class="jackpot-counter">🔥 JACKPOT: <span id="wheelJackpotCounter">0</span></div>
-                        <div class="speed-meter"><div class="meter-fill" id="wheelSpeedFill"></div></div>
+                    <div class="prize-legend">
+                        <h4>🏆 Prize Segments</h4>
+                        <div class="legend-grid" id="wheelPrizeLegend"></div>
                     </div>
-                </div>
-                <div class="packs-section">
-                    <div class="section-header"><h3><i class="fas fa-gem"></i> <span>Buy Spin Packs</span></h3></div>
-                    <div class="packs-grid">
-                        <div class="pack-card" onclick="buyWheelPack('p5')"><div class="pack-icon">🎡</div><div class="pack-spins">5 Spins</div><div class="pack-price">1.25 TON</div></div>
-                        <div class="pack-card" onclick="buyWheelPack('p10')"><div class="pack-icon">🎡+</div><div class="pack-spins">10 +1 Spins</div><div class="pack-price">2.5 TON</div></div>
-                        <div class="pack-card" onclick="buyWheelPack('p50')"><div class="pack-icon">🎡🎡</div><div class="pack-spins">50 +5 Spins</div><div class="pack-price">12.5 TON</div></div>
-                        <div class="pack-card" onclick="buyWheelPack('p100')"><div class="pack-icon">💎</div><div class="pack-spins">100 +10 Spins</div><div class="pack-price">25 TON</div></div>
+                    <div class="packs-section">
+                        <div class="section-header">
+                            <h3><i class="fas fa-gem"></i> <span data-i18n="casino.packs">Buy Spin Packs</span></h3>
+                        </div>
+                        <div class="packs-grid">
+                            <div class="pack-card" onclick="buyWheelPack('p5')">
+                                <div class="pack-icon">🎡</div>
+                                <div class="pack-spins" data-i18n="wheel.pack5">5 Spins</div>
+                                <div class="pack-price">1.25 TON</div>
+                            </div>
+                            <div class="pack-card" onclick="buyWheelPack('p10')">
+                                <div class="pack-icon">🎡+</div>
+                                <div class="pack-spins" data-i18n="wheel.pack10">10 +1 Spins</div>
+                                <div class="pack-price">2.5 TON</div>
+                            </div>
+                            <div class="pack-card" onclick="buyWheelPack('p50')">
+                                <div class="pack-icon">🎡🎡</div>
+                                <div class="pack-spins" data-i18n="wheel.pack50">50 +5 Spins</div>
+                                <div class="pack-price">12.5 TON</div>
+                            </div>
+                            <div class="pack-card" onclick="buyWheelPack('p100')">
+                                <div class="pack-icon">💎</div>
+                                <div class="pack-spins" data-i18n="wheel.pack100">100 +10 Spins</div>
+                                <div class="pack-price">25 TON</div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="auto-spin-panel">
-                    <label class="toggle-switch"><input type="checkbox" id="wheelPageAutoSpin"><span class="toggle-slider"></span></label>
-                    <span class="auto-spin-label">Auto Spin</span>
+                    <div class="auto-spin-panel">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="wheelPageAutoSpin">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span class="auto-spin-label">Auto Spin</span>
+                    </div>
                 </div>
             </div>
 
@@ -403,65 +462,114 @@
             <div class="page" id="slotsGamePage">
                 <div class="game-page-header">
                     <button class="back-btn" onclick="exitGame()"><i class="fas fa-arrow-left"></i></button>
-                    <h2><i class="fas fa-slot-machine"></i> Slot Machine</h2>
-                    <div class="game-stats"><div class="stat-badge"><i class="fas fa-ticket-alt"></i><span id="slotsGameSpins">0</span></div></div>
+                    <h2><i class="fas fa-slot-machine"></i> <span data-i18n="slots.title">Slot Machine</span></h2>
+                    <div class="game-stats">
+                        <div class="stat-badge"><i class="fas fa-ticket-alt"></i><span id="slotsGameSpins">0</span></div>
+                    </div>
                 </div>
                 <div class="slots-game-container">
-                    <div class="machine-frame">
-                        <div class="machine-lights">
-                            <div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div>
-                        </div>
-                        <div id="slotReels" class="slot-reels">
-                            <div class="slot-reel-wrapper"><div class="slot-reel-pro slot-reel-0"></div></div>
-                            <div class="slot-reel-wrapper"><div class="slot-reel-pro slot-reel-1"></div></div>
-                            <div class="slot-reel-wrapper"><div class="slot-reel-pro slot-reel-2"></div></div>
+                    <div class="neon-bg"></div>
+                    <div class="slots-machine-pro">
+                        <div class="machine-frame">
+                            <div class="machine-lights">
+                                <div class="light"></div>
+                                <div class="light"></div>
+                                <div class="light"></div>
+                                <div class="light"></div>
+                            </div>
+                            <div class="reels-container-pro" id="slotReelsContainer">
+                                <canvas id="reel1Canvas" width="100" height="330" class="slot-reel-canvas"></canvas>
+                                <canvas id="reel2Canvas" width="100" height="330" class="slot-reel-canvas"></canvas>
+                                <canvas id="reel3Canvas" width="100" height="330" class="slot-reel-canvas"></canvas>
+                            </div>
                             <div class="win-line" id="slotsWinLine"></div>
                         </div>
-                        <div class="win-display"><span class="win-label">LAST WIN</span><span class="win-amount" id="slotsWinAmount">0.00</span></div>
+                        <div class="win-display" id="slotsWinDisplay">
+                            <span class="win-label">WIN</span>
+                            <span class="win-amount" id="slotsWinAmount">0.00</span>
+                        </div>
                     </div>
-                    <div class="slots-controls">
-                        <button id="slotsFreeBtn" class="slot-btn-pro free"><i class="fas fa-star"></i> FREE</button>
-                        <button id="slotsSpinBtn" class="slot-btn-pro spin"><i class="fas fa-play"></i> SPIN</button>
-                        <button id="slotsTurboBtn" class="slot-btn-pro turbo"><i class="fas fa-bolt"></i> TURBO</button>
+                    <div class="game-controls-pro">
+                        <button class="game-btn free" id="slotsFreeSpin" onclick="spinSlotsGame(true, false)">
+                            <i class="fas fa-gift"></i>
+                            <span data-i18n="slots.free">FREE</span>
+                        </button>
+                        <button class="game-btn spin" id="slotsSpinBtn" onclick="spinSlotsGame(false, false)">
+                            <i class="fas fa-play"></i>
+                            <span data-i18n="slots.spin">SPIN</span>
+                            <small data-i18n="slots.price">0.15 TON</small>
+                        </button>
+                        <button class="game-btn turbo" id="slotsTurboBtn" onclick="spinSlotsGame(false, true)">
+                            <i class="fas fa-bolt"></i>
+                            <span data-i18n="slots.turbo">TURBO</span>
+                            <small data-i18n="slots.turboPrice">0.30 TON</small>
+                        </button>
                     </div>
                     <div class="payout-table-pro">
-                        <h4>💰 PAYOUT TABLE</h4>
+                        <h4>💰 Payout Table</h4>
                         <div class="payout-grid" id="slotsPayoutGrid"></div>
                     </div>
-                </div>
-                <div class="packs-section">
-                    <div class="section-header"><h3><i class="fas fa-gem"></i> <span>Buy Spin Packs</span></h3></div>
-                    <div class="packs-grid">
-                        <div class="pack-card" onclick="buySlotsPack('p5')"><div class="pack-icon">🎰</div><div class="pack-spins">5 Spins</div><div class="pack-price">0.75 TON</div></div>
-                        <div class="pack-card" onclick="buySlotsPack('p10')"><div class="pack-icon">🎰+</div><div class="pack-spins">10 +1 Spins</div><div class="pack-price">1.5 TON</div></div>
-                        <div class="pack-card" onclick="buySlotsPack('p50')"><div class="pack-icon">🎰🎰</div><div class="pack-spins">50 +5 Spins</div><div class="pack-price">7.5 TON</div></div>
-                        <div class="pack-card" onclick="buySlotsPack('p100')"><div class="pack-icon">💎</div><div class="pack-spins">100 +10 Spins</div><div class="pack-price">15 TON</div></div>
+                    <div class="packs-section">
+                        <div class="section-header">
+                            <h3><i class="fas fa-gem"></i> <span data-i18n="casino.packs">Buy Spin Packs</span></h3>
+                        </div>
+                        <div class="packs-grid">
+                            <div class="pack-card" onclick="buySlotsPack('p5')">
+                                <div class="pack-icon">🎰</div>
+                                <div class="pack-spins" data-i18n="slots.pack5">5 Spins</div>
+                                <div class="pack-price">0.75 TON</div>
+                            </div>
+                            <div class="pack-card" onclick="buySlotsPack('p10')">
+                                <div class="pack-icon">🎰+</div>
+                                <div class="pack-spins" data-i18n="slots.pack10">10 +1 Spins</div>
+                                <div class="pack-price">1.5 TON</div>
+                            </div>
+                            <div class="pack-card" onclick="buySlotsPack('p50')">
+                                <div class="pack-icon">🎰🎰</div>
+                                <div class="pack-spins" data-i18n="slots.pack50">50 +5 Spins</div>
+                                <div class="pack-price">7.5 TON</div>
+                            </div>
+                            <div class="pack-card" onclick="buySlotsPack('p100')">
+                                <div class="pack-icon">💎</div>
+                                <div class="pack-spins" data-i18n="slots.pack100">100 +10 Spins</div>
+                                <div class="pack-price">15 TON</div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="auto-spin-panel">
-                    <label class="toggle-switch"><input type="checkbox" id="slotsPageAutoSpin"><span class="toggle-slider"></span></label>
-                    <span class="auto-spin-label">Auto Spin</span>
+                    <div class="auto-spin-panel">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="slotsPageAutoSpin">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span class="auto-spin-label">Auto Spin</span>
+                    </div>
                 </div>
             </div>
         </main>
 
         <!-- Bottom Navigation -->
         <nav class="bottom-nav-legendary" id="bottomNav">
-            <button class="nav-item active" onclick="showPage('mining')" data-page="mining"><div class="nav-icon"><i class="fas fa-microchip"></i></div><span class="nav-label">Mining</span><div class="nav-glow"></div></button>
-            <button class="nav-item" onclick="showPage('market')" data-page="market"><div class="nav-icon"><i class="fas fa-store"></i></div><span class="nav-label">Market</span><div class="nav-glow"></div></button>
-            <button class="nav-item" onclick="showPage('casino')" data-page="casino"><div class="nav-icon"><i class="fas fa-dice"></i></div><span class="nav-label">Casino</span><div class="nav-glow"></div></button>
-            <button class="nav-item" onclick="showPage('profile')" data-page="profile"><div class="nav-icon"><i class="fas fa-user"></i></div><span class="nav-label">Profile</span><div class="nav-glow"></div></button>
+            <button class="nav-item active" onclick="showPage('mining')" data-page="mining">
+                <div class="nav-icon"><i class="fas fa-microchip"></i></div>
+                <span class="nav-label" data-i18n="nav.mining">Mining</span>
+                <div class="nav-glow"></div>
+            </button>
+            <button class="nav-item" onclick="showPage('market')" data-page="market">
+                <div class="nav-icon"><i class="fas fa-store"></i></div>
+                <span class="nav-label" data-i18n="nav.market">Market</span>
+                <div class="nav-glow"></div>
+            </button>
+            <button class="nav-item" onclick="showPage('casino')" data-page="casino">
+                <div class="nav-icon"><i class="fas fa-dice"></i></div>
+                <span class="nav-label" data-i18n="nav.casino">Casino</span>
+                <div class="nav-glow"></div>
+            </button>
+            <button class="nav-item" onclick="showPage('profile')" data-page="profile">
+                <div class="nav-icon"><i class="fas fa-user"></i></div>
+                <span class="nav-label" data-i18n="nav.profile">Profile</span>
+                <div class="nav-glow"></div>
+            </button>
         </nav>
-
-        <!-- Toast Container -->
-        <div class="toast-container" id="toastContainer"></div>
-
-        <!-- Win Popup Pro -->
-        <div class="win-popup-pro" id="winPopup">
-            <div class="win-icon">🎉</div>
-            <div class="win-title">YOU WON!</div>
-            <div class="win-amount">0.00 TON</div>
-        </div>
 
         <!-- JACKPOT POPUP -->
         <div class="jackpot-popup hidden" id="jackpotPopup">
@@ -480,12 +588,15 @@
         <div class="modal legendary-modal" id="swapModal">
             <div class="modal-content swap-modal-content">
                 <div class="modal-header">
-                    <h3><i class="fas fa-exchange-alt"></i> <span>Swap</span></h3>
+                    <h3><i class="fas fa-exchange-alt"></i> <span data-i18n="swap">Swap</span></h3>
                     <button class="close-btn" onclick="closeModal('swapModal')"><i class="fas fa-times"></i></button>
                 </div>
                 <div class="modal-body">
                     <div class="swap-field">
-                        <div class="swap-field-label"><span>From</span><span class="swap-balance" id="swapFromBalance">Balance: 0.00</span></div>
+                        <div class="swap-field-label">
+                            <span>From</span>
+                            <span class="swap-balance" id="swapFromBalance">Balance: 0.00</span>
+                        </div>
                         <div class="swap-field-input">
                             <input type="number" id="swapFromAmount" placeholder="0.0" value="1" oninput="calculateSwap()">
                             <div class="swap-currency" onclick="showCurrencySelector('from')">
@@ -497,7 +608,10 @@
                     </div>
                     <div class="swap-switch" onclick="flipSwap()"><i class="fas fa-arrow-down"></i></div>
                     <div class="swap-field">
-                        <div class="swap-field-label"><span>To</span><span class="swap-balance" id="swapToBalance">Balance: 0.00</span></div>
+                        <div class="swap-field-label">
+                            <span>To</span>
+                            <span class="swap-balance" id="swapToBalance">Balance: 0.00</span>
+                        </div>
                         <div class="swap-field-input">
                             <input type="number" id="swapToAmount" placeholder="0.0" readonly>
                             <div class="swap-currency" onclick="showCurrencySelector('to')">
@@ -507,8 +621,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="swap-info"><div class="swap-info-row"><span>Rate</span><span id="swapRate">1 TON = 2.35 USDT</span></div></div>
-                    <button class="swap-confirm-btn" onclick="confirmSwap()"><i class="fas fa-exchange-alt"></i> <span>Confirm Swap</span></button>
+                    <div class="swap-info">
+                        <div class="swap-info-row"><span>Rate</span><span id="swapRate">1 TON = 2.35 USDT</span></div>
+                    </div>
+                    <button class="swap-confirm-btn" onclick="confirmSwap()"><i class="fas fa-exchange-alt"></i> <span data-i18n="confirm">Confirm Swap</span></button>
                 </div>
             </div>
         </div>
@@ -521,7 +637,10 @@
                     <button class="close-btn" onclick="closeModal('currencySelectorModal')"><i class="fas fa-times"></i></button>
                 </div>
                 <div class="modal-body">
-                    <div class="currency-search"><i class="fas fa-search"></i><input type="text" id="currencySearch" placeholder="Search..." oninput="filterCurrencies()"></div>
+                    <div class="currency-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="currencySearch" placeholder="Search..." oninput="filterCurrencies()">
+                    </div>
                     <div class="currency-list" id="currencyList"></div>
                 </div>
             </div>
@@ -531,7 +650,7 @@
         <div class="modal legendary-modal" id="depositModal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3><i class="fas fa-arrow-down"></i> <span>Receive Funds</span></h3>
+                    <h3><i class="fas fa-arrow-down"></i> <span data-i18n="receive">Receive Funds</span></h3>
                     <button class="close-btn" onclick="closeModal('depositModal')"><i class="fas fa-times"></i></button>
                 </div>
                 <div class="modal-body">
@@ -560,7 +679,7 @@
                         <input type="text" id="depositTxHash" placeholder="0x..." oninput="validateDepositInput()">
                         <div class="validation-hint" id="depositHashHint"></div>
                     </div>
-                    <button class="confirm-btn-legendary" id="confirmDepositBtn" onclick="submitDeposit()" disabled><i class="fas fa-arrow-down"></i> <span>Submit Request</span></button>
+                    <button class="confirm-btn-legendary" id="confirmDepositBtn" onclick="submitDeposit()" disabled><i class="fas fa-arrow-down"></i> <span data-i18n="submit">Submit Request</span></button>
                 </div>
             </div>
         </div>
@@ -569,18 +688,21 @@
         <div class="modal legendary-modal" id="withdrawModal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3><i class="fas fa-paper-plane"></i> <span>Send Funds</span></h3>
+                    <h3><i class="fas fa-paper-plane"></i> <span data-i18n="send">Send Funds</span></h3>
                     <button class="close-btn" onclick="closeModal('withdrawModal')"><i class="fas fa-times"></i></button>
                 </div>
                 <div class="modal-body">
                     <div class="currency-select-wrapper">
-                        <label>Select Network</label>
+                        <label data-i18n="withdraw.network">Select Network</label>
                         <select class="currency-select" id="withdrawNetworkSelect" onchange="updateWithdrawInfo()">
                             <option value="BEP20">BEP20 (BSC)</option>
                             <option value="ERC20">ERC20 (Ethereum)</option>
                         </select>
                     </div>
-                    <div class="balance-info-legendary"><span>Available USDT:</span><span class="amount" id="withdrawBalance">0.00 USDT</span></div>
+                    <div class="balance-info-legendary">
+                        <span>Available USDT:</span>
+                        <span class="amount" id="withdrawBalance">0.00 USDT</span>
+                    </div>
                     <img id="withdrawIcon" src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png" class="withdraw-icon">
                     <div class="input-group-legendary">
                         <label>Amount (USDT)</label>
@@ -588,13 +710,16 @@
                     </div>
                     <div class="fee-info" id="withdrawFeeInfo">Network fee: 0.0005 BNB</div>
                     <div class="fee-currency-balance" id="withdrawFeeCurrencyBalance">Your BNB balance: 0.00 BNB</div>
-                    <div class="receive-amount"><span class="label">You receive:</span><span class="value" id="withdrawReceiveAmount">0.00 USDT</span></div>
+                    <div class="receive-amount">
+                        <span class="label">You receive:</span>
+                        <span class="value" id="withdrawReceiveAmount">0.00 USDT</span>
+                    </div>
                     <div class="input-group-legendary">
                         <label>Wallet Address</label>
                         <input type="text" id="withdrawAddress" placeholder="0x... (42 characters)" oninput="validateWithdrawInput()">
                         <div class="validation-hint" id="withdrawAddressHint"></div>
                     </div>
-                    <button class="confirm-btn-legendary" id="submitWithdraw" onclick="submitWithdraw()" disabled><i class="fas fa-paper-plane"></i> <span>Send Request</span></button>
+                    <button class="confirm-btn-legendary" id="submitWithdraw" onclick="submitWithdraw()" disabled><i class="fas fa-paper-plane"></i> <span data-i18n="submit">Send Request</span></button>
                 </div>
             </div>
         </div>
@@ -607,7 +732,10 @@
                     <button class="close-btn" onclick="closeModal('paymentModal')"><i class="fas fa-times"></i></button>
                 </div>
                 <div class="modal-body">
-                    <div class="machine-preview-legendary"><div class="machine-icon-large" id="paymentMachineIcon"><i class="fas fa-microchip"></i></div><h4 id="paymentMachineName">Turbo v2</h4></div>
+                    <div class="machine-preview-legendary">
+                        <div class="machine-icon-large" id="paymentMachineIcon"><i class="fas fa-microchip"></i></div>
+                        <h4 id="paymentMachineName">Turbo v2</h4>
+                    </div>
                     <div class="plan-details-legendary">
                         <div class="detail-row"><span>Duration:</span><span id="paymentDuration">3 days</span></div>
                         <div class="detail-row"><span>Price:</span><span id="paymentPrice">5 TON</span></div>
@@ -631,7 +759,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="wallet-info-legendary" id="paymentWalletInfo" style="display: none;"><span class="label">Connected:</span><span class="address" id="modalConnectedAddress"></span></div>
+                    <div class="wallet-info-legendary" id="paymentWalletInfo" style="display: none;">
+                        <span class="label">Connected:</span>
+                        <span class="address" id="modalConnectedAddress"></span>
+                    </div>
                     <button class="confirm-btn-legendary" id="confirmPaymentBtn" onclick="processPayment()"><i class="fas fa-wallet"></i> <span>Pay with Balance</span></button>
                 </div>
             </div>
@@ -641,7 +772,7 @@
         <div class="modal legendary-modal" id="historyModal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3><i class="fas fa-history"></i> <span>Transaction History</span></h3>
+                    <h3><i class="fas fa-history"></i> <span data-i18n="history">Transaction History</span></h3>
                     <div class="header-actions">
                         <button class="refresh-btn" onclick="refreshHistory()"><i class="fas fa-rotate-right"></i></button>
                         <button class="close-btn" onclick="closeModal('historyModal')"><i class="fas fa-times"></i></button>
@@ -667,10 +798,10 @@
         <div class="modal legendary-modal" id="notificationsModal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3><i class="fas fa-bell"></i> <span>Notifications</span></h3>
+                    <h3><i class="fas fa-bell"></i> <span data-i18n="notifications.title">Notifications</span></h3>
                     <div class="header-actions">
-                        <button class="clear-btn" onclick="clearReadNotifications()"><i class="fas fa-check-double"></i></button>
-                        <button class="clear-btn" onclick="clearAllNotifications()"><i class="fas fa-trash"></i></button>
+                        <button class="clear-btn" onclick="clearReadNotifications()" data-i18n="notifications.clear_read">Clear Read</button>
+                        <button class="clear-btn" onclick="clearAllNotifications()" data-i18n="notifications.clear_all">Clear All</button>
                         <button class="close-btn" onclick="closeModal('notificationsModal')"><i class="fas fa-times"></i></button>
                     </div>
                 </div>
@@ -695,8 +826,8 @@
                     <div class="admin-content" id="adminContent">
                         <div class="admin-refresh-message">
                             <i class="fas fa-hand-pointer"></i>
-                            <p>Click refresh to load pending requests</p>
-                            <button class="admin-refresh-btn" onclick="refreshAdminPanel()"><i class="fas fa-rotate-right"></i> <span>Refresh</span></button>
+                            <p data-i18n="admin.clickRefresh">Click refresh to load pending requests</p>
+                            <button class="admin-refresh-btn" onclick="refreshAdminPanel()"><i class="fas fa-rotate-right"></i> <span data-i18n="admin.refresh">Refresh</span></button>
                         </div>
                     </div>
                 </div>
@@ -721,24 +852,16 @@
         </div>
 
         <!-- TOAST NOTIFICATION -->
-        <div class="toast-notification hidden" id="toast"><i class="fa-regular fa-circle-check"></i><span id="toastMessage"></span></div>
+        <div class="toast-notification hidden" id="toast">
+            <i class="fa-regular fa-circle-check"></i>
+            <span id="toastMessage"></span>
+        </div>
 
         <!-- SCROLL TO TOP BUTTON -->
         <button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()"><i class="fas fa-arrow-up"></i></button>
     </div>
 
-    <!-- ========== JAVASCRIPT (الترتيب مهم جداً) ========== -->
-    
-    <!-- 1. نظام الصوت الاحترافي -->
-    <script src="casino-audio.js"></script>
-    
-    <!-- 2. عجلة الحظ الأسطورية -->
-    <script src="wheel.js"></script>
-    
-    <!-- 3. آلة السلوت الاحترافية -->
-    <script src="slots.js"></script>
-    
-    <!-- 4. التطبيق الرئيسي -->
+    <!-- Main JavaScript -->
     <script src="app.js"></script>
 </body>
 </html>
