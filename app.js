@@ -1,7 +1,7 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v20.0
-// تجربة كازينو أسطورية مع نظام ناري وتأثيرات احترافية
-// تم التطوير بواسطة: فريق TON Mining Casino
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v21.0
+// تجربة كازينو أسطورية متكاملة مع تأثيرات احترافية
+// متوافق مع الملفات الجديدة: wheel.js, slots.js, casino-audio.js
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -517,7 +517,7 @@ const REFERRAL_MILESTONES = [
     { referrals: 1000, reward: 1200, unit: 'USDT' }
 ];
 
-// ====== 7. WHEEL PRIZES (للتوافق مع النظام الجديد) ======
+// ====== 7. WHEEL PRIZES (للتطابق مع النظام الجديد) ======
 const WHEEL_PRIZES = [
     { amount: 0.1, currency: 'TON', color: '#ff4444', fireColor: '#ff0000', icon: '💰', label: '0.1 TON', weight: 10 },
     { amount: 0.25, currency: 'TON', color: '#ff5555', fireColor: '#ff3333', icon: '💰', label: '0.25 TON', weight: 10 },
@@ -849,7 +849,7 @@ function stopAllListeners() {
     listenerTimeouts.clear();
 }
 
-// ====== 16. GAME PAGE NAVIGATION ======
+// ====== 16. GAME PAGE NAVIGATION (محسنة لدعم الملفات الجديدة) ======
 let currentPage = 'mining';
 let legendaryWheelInstance = null;
 let slotsGameInstance = null;
@@ -879,25 +879,41 @@ function showPage(page) {
 }
 
 function openWheelGame() {
-    console.log("🎡 Opening Legendary Fire Wheel");
+    console.log("🎡 Opening Legendary Wheel Game");
     const header = document.getElementById('mainHeader');
     if (header) header.style.display = 'none';
     showPage('wheelGame');
     setTimeout(() => {
-        initLegendaryWheel();
+        // محاولة تهيئة العجلة الأسطورية إذا كانت متاحة
+        if (typeof LegendaryFireWheel !== 'undefined') {
+            initLegendaryWheel();
+        } else if (typeof WheelGame !== 'undefined') {
+            initWheelCanvas();
+        } else {
+            console.warn("No wheel game class found");
+        }
+        updateWheelUI();
         if (typeof VegasAudio !== 'undefined') VegasAudio.init();
-    }, 300);
+    }, 100);
 }
 
 function openSlotsGame() {
-    console.log("🎰 Opening Professional Slots");
+    console.log("🎰 Opening Professional Slots Game");
     const header = document.getElementById('mainHeader');
     if (header) header.style.display = 'none';
     showPage('slotsGame');
     setTimeout(() => {
-        initSlotsGame();
+        // محاولة تهيئة لعبة السلوت إذا كانت متاحة
+        if (typeof SlotsGame !== 'undefined') {
+            initSlotsGame();
+        } else if (typeof SlotsGameClass !== 'undefined') {
+            initSlotsCanvas();
+        } else {
+            console.warn("No slots game class found");
+        }
+        updateSlotsUI();
         if (typeof VegasAudio !== 'undefined') VegasAudio.init();
-    }, 300);
+    }, 100);
 }
 
 function exitGame() {
@@ -1415,7 +1431,7 @@ function renderPlansTable() {
     if (!tbody) return;
     tbody.innerHTML = MACHINES.map(m => {
         const name = currentLanguage === 'ar' ? m.nameAr : m.name;
-        return `         <tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
+        return `          <tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
             m.plans.map(p => p.price === 0 ? '<td>FREE</td>' : `<td>${p.price} TON<br><small>+${p.returnAmount} TON</small></td>`).join('')
         }</tr>`;
     }).join('');
@@ -1538,7 +1554,7 @@ function showWinPopup(prize, currency = 'TON', type = 'normal') {
         setTimeout(() => winPopup.classList.remove('show'), 3000);
     }
     
-    // عرض رسالة علوية أيضًا
+    // عرض رسالة علوية أيضاً
     showGameWinMessage(prize, currency, type);
 }
 
@@ -1574,7 +1590,6 @@ function showGameWinMessage(amount, currency, type) {
         bgColor = '#00aaffcc';
         borderColor = '#88ff88';
     }
-    
     messageDiv.innerHTML = `<span class="win-icon">${icon}</span><span class="win-text">${text}</span>`;
     messageDiv.style.position = 'fixed';
     messageDiv.style.top = '70px';
@@ -3478,9 +3493,9 @@ function updateUserDisplay() {
     }
 }
 
-// ====== 46. VEGAS ELITE - تهيئة الألعاب الأسطورية ======
+// ====== 46. VEGAS ELITE - تهيئة الألعاب الأسطورية (متوافق مع الملفات الجديدة) ======
 
-// تهيئة العجلة الأسطورية
+// تهيئة العجلة الأسطورية (للتوافق مع الملف wheel.js)
 function initLegendaryWheel() {
     if (typeof LegendaryFireWheel !== 'undefined') {
         if (legendaryWheelInstance) {
@@ -3516,10 +3531,12 @@ function initLegendaryWheel() {
         }, 100);
     } else {
         console.warn("LegendaryFireWheel not loaded, using fallback");
+        // Fallback إلى النظام القديم
+        initWheelCanvas();
     }
 }
 
-// تهيئة لعبة السلوت
+// تهيئة لعبة السلوت (للتوافق مع الملف slots.js)
 function initSlotsGame() {
     if (typeof SlotsGame !== 'undefined') {
         if (slotsGameInstance) {
@@ -3527,8 +3544,37 @@ function initSlotsGame() {
         }
         slotsGameInstance = new SlotsGame('slotsGameContainer');
         console.log("🎰 Professional Slots Game initialized");
+        
+        // تحديث جدول الجوائز
+        setTimeout(() => {
+            const payoutGrid = document.getElementById('slotsPayoutGrid');
+            if (payoutGrid) {
+                payoutGrid.innerHTML = SLOTS_SYMBOLS_DATA.slice(0, 6).map(s => `
+                    <div class="payout-item">
+                        <span class="symbol">${s.symbol}</span>
+                        <span class="value">${s.value} ${s.type}</span>
+                    </div>
+                `).join('');
+            }
+        }, 100);
     } else {
         console.warn("SlotsGame not loaded, using fallback");
+        // Fallback إلى النظام القديم
+        initSlotsCanvas();
+    }
+}
+
+// Fallback للأنظمة القديمة (للتأكد من عمل كل شيء)
+function initWheelCanvas() {
+    if (typeof WheelGame !== 'undefined' && !wheelGame) {
+        wheelGame = new WheelGame('wheelCanvas', WHEEL_PRIZES);
+    }
+}
+
+function initSlotsCanvas() {
+    if (typeof SlotsGameClass !== 'undefined' && !slotsGame) {
+        const canvases = ['reel1Canvas', 'reel2Canvas', 'reel3Canvas'];
+        slotsGame = new SlotsGameClass(canvases, SLOTS_SYMBOLS_DATA);
     }
 }
 
@@ -3566,7 +3612,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     updateUserDisplay();
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v20.0");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v21.0");
     console.log("✅ All systems ready! 🚀");
 });
 
