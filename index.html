@@ -245,6 +245,7 @@
             <!-- CASINO LOBBY PAGE -->
             <div class="page" id="casinoPage">
                 <h2><i class="fas fa-dice"></i> <span>Casino Games</span></h2>
+                
                 <div class="casino-card" id="wheelCard" onclick="openWheelGame()">
                     <div class="casino-card-header">
                         <span class="casino-icon">🎡</span>
@@ -392,7 +393,10 @@
                         <div class="pack-card" onclick="buyWheelPack('p100')"><div class="pack-icon">💎</div><div class="pack-spins">100 +10 Spins</div><div class="pack-price">25 TON</div></div>
                     </div>
                 </div>
-                <div class="auto-spin-panel"><label class="toggle-switch"><input type="checkbox" id="wheelPageAutoSpin"><span class="toggle-slider"></span></label><span class="auto-spin-label">Auto Spin</span></div>
+                <div class="auto-spin-panel">
+                    <label class="toggle-switch"><input type="checkbox" id="wheelPageAutoSpin"><span class="toggle-slider"></span></label>
+                    <span class="auto-spin-label">Auto Spin</span>
+                </div>
             </div>
 
             <!-- SLOTS GAME PAGE -->
@@ -420,7 +424,10 @@
                         <button id="slotsSpinBtn" class="slot-btn-pro spin"><i class="fas fa-play"></i> SPIN</button>
                         <button id="slotsTurboBtn" class="slot-btn-pro turbo"><i class="fas fa-bolt"></i> TURBO</button>
                     </div>
-                    <div class="payout-table-pro"><h4>💰 PAYOUT TABLE</h4><div class="payout-grid" id="slotsPayoutGrid"></div></div>
+                    <div class="payout-table-pro">
+                        <h4>💰 PAYOUT TABLE</h4>
+                        <div class="payout-grid" id="slotsPayoutGrid"></div>
+                    </div>
                 </div>
                 <div class="packs-section">
                     <div class="section-header"><h3><i class="fas fa-gem"></i> <span>Buy Spin Packs</span></h3></div>
@@ -431,7 +438,10 @@
                         <div class="pack-card" onclick="buySlotsPack('p100')"><div class="pack-icon">💎</div><div class="pack-spins">100 +10 Spins</div><div class="pack-price">15 TON</div></div>
                     </div>
                 </div>
-                <div class="auto-spin-panel"><label class="toggle-switch"><input type="checkbox" id="slotsPageAutoSpin"><span class="toggle-slider"></span></label><span class="auto-spin-label">Auto Spin</span></div>
+                <div class="auto-spin-panel">
+                    <label class="toggle-switch"><input type="checkbox" id="slotsPageAutoSpin"><span class="toggle-slider"></span></label>
+                    <span class="auto-spin-label">Auto Spin</span>
+                </div>
             </div>
         </main>
 
@@ -446,12 +456,11 @@
         <!-- Toast Container -->
         <div class="toast-container" id="toastContainer"></div>
 
-        <!-- Win Popup -->
+        <!-- Win Popup Pro -->
         <div class="win-popup-pro" id="winPopup">
             <div class="win-icon">🎉</div>
             <div class="win-title">YOU WON!</div>
             <div class="win-amount">0.00 TON</div>
-            <div class="win-confetti"></div>
         </div>
 
         <!-- JACKPOT POPUP -->
@@ -729,7 +738,7 @@
     <!-- 3. آلة السلوت الاحترافية -->
     <script src="slots.js"></script>
     
-    <!-- 4. التطبيق الرئيسي (يحتوي على كل المنطق الأساسي) -->
+    <!-- 4. التطبيق الرئيسي -->
     <script src="app.js"></script>
 </body>
 </html>
