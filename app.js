@@ -1,6 +1,6 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v18.0
-// جميع الميزات محفوظة + كازينو احترافي 3D
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v21.0
+// جميع الميزات محفوظة + كازينو احترافي 3D مع تأثيرات فيغاس
 // جاهز للنسخ واللصق
 // ============================================
 
@@ -519,27 +519,27 @@ const REFERRAL_MILESTONES = [
 
 // ====== 7. WHEEL PRIZES ======
 const WHEEL_PRIZES = [
-    { type: 'TON', amount: 0.25, color: '#1e3a5f', weight: 8, icon: '💰', label: '0.25 TON', category: 'ton' },
-    { type: 'TON', amount: 0.5, color: '#1e4a6f', weight: 8, icon: '💰', label: '0.5 TON', category: 'ton' },
-    { type: 'TON', amount: 1, color: '#1e5a7f', weight: 7, icon: '💰', label: '1 TON', category: 'ton' },
-    { type: 'TON', amount: 2, color: '#1e6a8f', weight: 6, icon: '💰', label: '2 TON', category: 'ton' },
-    { type: 'USDT', amount: 0.25, color: '#1f5f3f', weight: 8, icon: '💵', label: '0.25 USDT', category: 'usdt' },
-    { type: 'USDT', amount: 0.5, color: '#1f6f4f', weight: 8, icon: '💵', label: '0.5 USDT', category: 'usdt' },
-    { type: 'USDT', amount: 1, color: '#1f7f5f', weight: 7, icon: '💵', label: '1 USDT', category: 'usdt' },
-    { type: 'USDT', amount: 2, color: '#1f8f6f', weight: 6, icon: '💵', label: '2 USDT', category: 'usdt' },
-    { type: 'TON', amount: 5, color: '#bf7f2f', weight: 4, icon: '🔥', label: '5 TON', category: 'bigwin' },
-    { type: 'TON', amount: 10, color: '#cf8f3f', weight: 3, icon: '🔥', label: '10 TON', category: 'bigwin' },
-    { type: 'USDT', amount: 5, color: '#bf7f2f', weight: 4, icon: '🔥', label: '5 USDT', category: 'bigwin' },
-    { type: 'USDT', amount: 10, color: '#cf8f3f', weight: 3, icon: '🔥', label: '10 USDT', category: 'bigwin' },
-    { type: 'TON', amount: 25, color: '#bf6f1f', weight: 2, icon: '⭐', label: '25 TON', category: 'nicewin' },
-    { type: 'USDT', amount: 25, color: '#cf7f2f', weight: 2, icon: '⭐', label: '25 USDT', category: 'nicewin' },
-    { type: 'TON', amount: 50, color: '#bf3f1f', weight: 1, icon: '👑', label: '50 TON', category: 'jackpot' },
-    { type: 'USDT', amount: 50, color: '#cf4f2f', weight: 1, icon: '👑', label: '50 USDT', category: 'jackpot' },
-    { type: 'GOODLUCK', amount: 0, color: '#4a5568', weight: 10, icon: '🍀', label: 'GOOD LUCK', goodluck: true, category: 'goodluck' },
-    { type: 'FREESPIN', amount: 0, color: '#8b6fcf', weight: 8, icon: '🆓', label: 'FREE SPIN', freespin: true, category: 'freespin' },
-    { type: 'JACKPOT', amount: 100, currency: 'TON', color: '#bf2f1f', weight: 1, icon: '👑', label: '100 TON', jackpot: true, category: 'jackpot' },
-    { type: 'JACKPOT', amount: 200, currency: 'USDT', color: '#cf3f2f', weight: 1, icon: '👑', label: '200 USDT', jackpot: true, category: 'jackpot' },
-    { type: 'MEGA', amount: 500, currency: 'TON', color: '#df4f1f', weight: 0.5, icon: '💎', label: '500 TON', mega: true, category: 'mega' }
+    { type: 'TON', amount: 0.25, color: '#1e5f7f', weight: 8, label: '0.25 TON', icon: '💰' },
+    { type: 'TON', amount: 0.5, color: '#1e6f8f', weight: 8, label: '0.5 TON', icon: '💰' },
+    { type: 'TON', amount: 1, color: '#1e7f9f', weight: 7, label: '1 TON', icon: '💰' },
+    { type: 'TON', amount: 2, color: '#1e8faf', weight: 6, label: '2 TON', icon: '💰' },
+    { type: 'USDT', amount: 0.25, color: '#1f6f3f', weight: 8, label: '0.25 USDT', icon: '💵' },
+    { type: 'USDT', amount: 0.5, color: '#1f7f4f', weight: 8, label: '0.5 USDT', icon: '💵' },
+    { type: 'USDT', amount: 1, color: '#1f8f5f', weight: 7, label: '1 USDT', icon: '💵' },
+    { type: 'USDT', amount: 2, color: '#1f9f6f', weight: 6, label: '2 USDT', icon: '💵' },
+    { type: 'TON', amount: 5, color: '#bf7f2f', weight: 4, label: '5 TON', icon: '🔥' },
+    { type: 'TON', amount: 10, color: '#cf8f3f', weight: 3, label: '10 TON', icon: '🔥' },
+    { type: 'USDT', amount: 5, color: '#bf7f2f', weight: 4, label: '5 USDT', icon: '🔥' },
+    { type: 'USDT', amount: 10, color: '#cf8f3f', weight: 3, label: '10 USDT', icon: '🔥' },
+    { type: 'TON', amount: 25, color: '#bf6f1f', weight: 2, label: '25 TON', icon: '⭐' },
+    { type: 'USDT', amount: 25, color: '#cf7f2f', weight: 2, label: '25 USDT', icon: '⭐' },
+    { type: 'TON', amount: 50, color: '#bf3f1f', weight: 1, label: '50 TON', icon: '👑' },
+    { type: 'USDT', amount: 50, color: '#cf4f2f', weight: 1, label: '50 USDT', icon: '👑' },
+    { type: 'GOODLUCK', amount: 0, color: '#4a5568', weight: 10, label: 'GOOD LUCK', icon: '🍀', goodluck: true },
+    { type: 'FREESPIN', amount: 0, color: '#8b6fcf', weight: 8, label: 'FREE SPIN', icon: '🆓', freespin: true },
+    { type: 'JACKPOT', amount: 100, currency: 'TON', color: '#bf2f1f', weight: 1, label: '100 TON', icon: '👑', jackpot: true },
+    { type: 'JACKPOT', amount: 200, currency: 'USDT', color: '#cf3f2f', weight: 1, label: '200 USDT', icon: '👑', jackpot: true },
+    { type: 'MEGA', amount: 500, currency: 'TON', color: '#df4f1f', weight: 0.5, label: '500 TON', icon: '💎', mega: true }
 ];
 
 // ====== 8. SLOTS SYMBOLS ======
@@ -1373,7 +1373,7 @@ function renderPlansTable() {
     if (!tbody) return;
     tbody.innerHTML = MACHINES.map(m => {
         const name = currentLanguage === 'ar' ? m.nameAr : m.name;
-        return `        <tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
+        return `         <tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
             m.plans.map(p => p.price === 0 ? '<td>FREE</td>' : `<td>${p.price} TON<br><small>+${p.returnAmount} TON</small></td>`).join('')
         }</tr>`;
     }).join('');
@@ -1469,10 +1469,53 @@ function updateAutoClickerUI() {
     }
 }
 
-// ====== 22. WIN POPUP (محسنة للرسالة العلوية) ======
+// ====== 22. WIN POPUP ======
 function showWinPopup(prize, type = 'normal') {
-    // هذه الدالة محتفظ بها للتوافق، لكننا نستخدم showGameWinMessage بدلاً منها
-    showGameWinMessage(prize, 'TON', type);
+    const existing = document.querySelector('.win-popup');
+    if (existing) existing.remove();
+    
+    const popup = document.createElement('div');
+    popup.className = `win-popup ${type}`;
+    
+    let icon = '🎉';
+    let title = 'YOU WON!';
+    let amount = prize;
+    
+    if (type === 'big') {
+        icon = '🌟🌟';
+        title = 'BIG WIN!';
+    } else if (type === 'jackpot') {
+        icon = '🎰🎰🎰';
+        title = 'JACKPOT!';
+    } else if (type === 'mega') {
+        icon = '👑👑👑';
+        title = 'MEGA JACKPOT!';
+    }
+    
+    popup.innerHTML = `
+        <div class="win-icon">${icon}</div>
+        <div class="win-title">${title}</div>
+        <div class="win-amount">${amount}</div>
+        <div class="win-confetti"></div>
+    `;
+    
+    document.body.appendChild(popup);
+    popup.style.zIndex = '10000';
+    
+    setTimeout(() => popup.classList.add('show'), 10);
+    
+    if (type === 'mega' || type === 'jackpot') {
+        hapticFeedback('heavy');
+    } else if (type === 'big') {
+        hapticFeedback('medium');
+    } else {
+        hapticFeedback('light');
+    }
+    
+    setTimeout(() => {
+        popup.classList.remove('show');
+        setTimeout(() => popup.remove(), 300);
+    }, 2500);
 }
 
 // ====== 23. MARKET FUNCTIONS ======
@@ -2487,7 +2530,6 @@ async function buyWheelPack(pack) {
         await tonConnectUI.sendTransaction(tx);
         
         showToastPro('Payment sent! Waiting for confirmation...', 'info');
-        if (typeof VegasAudio !== 'undefined') VegasAudio.purchase();
         
         setTimeout(() => {
             if (!userData.wheel.purchasedSpins) userData.wheel.purchasedSpins = 0;
@@ -2545,7 +2587,6 @@ async function buySlotsPack(pack) {
         await tonConnectUI.sendTransaction(tx);
         
         showToastPro('Payment sent! Waiting for confirmation...', 'info');
-        if (typeof VegasAudio !== 'undefined') VegasAudio.purchase();
         
         setTimeout(() => {
             if (!userData.slots.purchasedSpins) userData.slots.purchasedSpins = 0;
@@ -3342,9 +3383,9 @@ function updateUserDisplay() {
     }
 }
 
-// ====== 46. VEGAS ELITE - عجلة الحظ والسلوتس المحسنة (Canvas) ======
+// ====== 46. VEGAS ELITE - KAZINO PROFESSIONAL ======
 
-// ====== 46.1 VEGAS AUDIO ENGINE - محرك الصوت المتطور ======
+// ====== 46.1 VEGAS AUDIO ENGINE ======
 const VegasAudio = {
     ctx: null,
     isInitialized: false,
@@ -3518,7 +3559,7 @@ const VegasAudio = {
     }
 };
 
-// ====== 46.2 TICK SEQUENCER - نظام الطقطقة المتدرج (فيزياء الدوران الحقيقية) ======
+// ====== 46.2 TICK SEQUENCER ======
 const TickSequencer = {
     timeouts: [],
     isActive: false,
@@ -3596,7 +3637,7 @@ const TickSequencer = {
     }
 };
 
-// ====== 46.3 JACKPOT THEATER - مسرحية الجاكبوت ======
+// ====== 46.3 JACKPOT THEATER ======
 const JackpotTheater = {
     isPlaying: false,
     
@@ -3606,9 +3647,13 @@ const JackpotTheater = {
         
         const container = document.querySelector('.wheel-game-container, .slots-game-container') || document.body;
         
-        // إضافة اهتزاز قوي للصفحة عند الجاكبوت
-        document.body.classList.add('screen-shake');
-        setTimeout(() => document.body.classList.remove('screen-shake'), 500);
+        document.body.classList.add('screen-shake-heavy');
+        setTimeout(() => document.body.classList.remove('screen-shake-heavy'), 600);
+        
+        const burst = document.createElement('div');
+        burst.className = 'win-burst';
+        document.body.appendChild(burst);
+        setTimeout(() => burst.remove(), 800);
         
         setTimeout(() => {
             this.createLightBurst(container);
@@ -3673,12 +3718,12 @@ const JackpotTheater = {
     },
     
     createGoldParticles(container) {
-        for (let i = 0; i < 40; i++) {
+        for (let i = 0; i < 50; i++) {
             const p = document.createElement('div');
             p.className = 'vegas-particle';
             p.style.left = '50%';
             p.style.top = '50%';
-            const angle = (i * 9) * Math.PI / 180;
+            const angle = (i * 7.2) * Math.PI / 180;
             const distance = 150 + Math.random() * 100;
             p.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
             p.style.setProperty('--ty', `${Math.sin(angle) * distance}px`);
@@ -3689,7 +3734,7 @@ const JackpotTheater = {
     }
 };
 
-// ====== 46.4 WHEEL GAME - عجلة الحظ المحسنة (3D، نص شعاعي) ======
+// ====== 46.4 WHEEL GAME 3D ======
 class WheelGame {
     constructor(canvasId, segments) {
         this.canvas = document.getElementById(canvasId);
@@ -3727,13 +3772,11 @@ class WheelGame {
         
         ctx.clearRect(0, 0, this.width, this.height);
         
-        // خلفية سوداء داكنة
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius + 6, 0, 2 * Math.PI);
         ctx.fillStyle = '#000000';
         ctx.fill();
         
-        // حلقة خارجية متوهجة
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius + 4, 0, 2 * Math.PI);
         ctx.strokeStyle = '#00f2ff';
@@ -3747,7 +3790,6 @@ class WheelGame {
             const startAngle = i * this.segmentAngle + this.rotation;
             const endAngle = (i + 1) * this.segmentAngle + this.rotation;
             
-            // رسم القطاع
             ctx.beginPath();
             ctx.moveTo(centerX, centerY);
             ctx.arc(centerX, centerY, radius, startAngle, endAngle);
@@ -3764,7 +3806,6 @@ class WheelGame {
             ctx.fillStyle = grad;
             ctx.fill();
             
-            // حدود بين القطاعات متوهجة
             ctx.beginPath();
             ctx.moveTo(centerX, centerY);
             ctx.arc(centerX, centerY, radius, startAngle, endAngle);
@@ -3777,27 +3818,11 @@ class WheelGame {
             
             const midAngle = startAngle + this.segmentAngle / 2;
             
-            // رسم الأيقونة (ستيكر) في منتصف القطاع (على نصف القطر 40% من المركز)
-            const iconRadius = radius * 0.4;
-            const iconX = centerX + Math.cos(midAngle) * iconRadius;
-            const iconY = centerY + Math.sin(midAngle) * iconRadius;
-            ctx.save();
-            ctx.translate(iconX, iconY);
-            ctx.rotate(midAngle);
-            ctx.font = `bold ${Math.floor(radius * 0.12)}px "Segoe UI", "Outfit"`;
-            ctx.fillStyle = '#ffffff';
-            ctx.shadowBlur = 12;
-            ctx.shadowColor = 'rgba(0,242,255,0.8)';
-            ctx.fillText(seg.icon, -12, 8);
-            ctx.restore();
-            
-            // رسم النص على طول نصف القطر من 60% إلى 85% (شعاعي)
             const textRadius = radius * 0.72;
             const textX = centerX + Math.cos(midAngle) * textRadius;
             const textY = centerY + Math.sin(midAngle) * textRadius;
             ctx.save();
             ctx.translate(textX, textY);
-            // ضبط دوران النص ليكون موازياً للشعاع
             let angle = midAngle;
             if (angle > Math.PI / 2 && angle < 3 * Math.PI / 2) {
                 angle += Math.PI;
@@ -3811,7 +3836,6 @@ class WheelGame {
             ctx.restore();
         }
         
-        // المركز الداخلي المتألق
         ctx.shadowBlur = 20;
         ctx.shadowColor = '#ffaa00';
         ctx.beginPath();
@@ -3837,11 +3861,9 @@ class WheelGame {
     spin(callback) {
         if (this.isSpinning) return;
         
-        // اختيار الجائزة بناءً على الأوزان
         this.selectedPrize = this.selectPrize();
         const prizeIndex = this.segments.indexOf(this.selectedPrize);
         
-        // حساب الزاوية المستهدفة لتتوقف العجلة عند منتصف هذا القطاع
         const segmentMidAngle = prizeIndex * this.segmentAngle + this.segmentAngle / 2;
         const currentAngle = this.rotation % (2 * Math.PI);
         let delta = (segmentMidAngle - currentAngle + 2 * Math.PI) % (2 * Math.PI);
@@ -3852,7 +3874,6 @@ class WheelGame {
         this.spinStartTime = performance.now();
         this.callback = callback;
         
-        // تشغيل الطقطقة المتزامنة مع الحركة
         TickSequencer.playWheelTicks(this.spinDuration, () => {
             VegasAudio.clunk();
         });
@@ -3861,18 +3882,14 @@ class WheelGame {
         const animate = (now) => {
             const elapsed = now - this.spinStartTime;
             let t = Math.min(1, elapsed / this.spinDuration);
-            // منحنى الحركة: تسارع ثم سرعة ثابتة ثم تباطؤ
             let easeOut;
             if (t < 0.3) {
-                // تسارع
                 const t2 = t / 0.3;
                 easeOut = 0.5 * t2 * t2;
             } else if (t < 0.7) {
-                // سرعة ثابتة
                 const t2 = (t - 0.3) / 0.4;
                 easeOut = 0.5 + 0.5 * t2;
             } else {
-                // تباطؤ
                 const t2 = (t - 0.7) / 0.3;
                 easeOut = 1 - (1 - t2) * (1 - t2);
             }
@@ -3912,7 +3929,7 @@ class WheelGame {
     }
 }
 
-// ====== 46.5 SLOTS GAME - آلة السلوتس المحسنة (إصلاح شامل) ======
+// ====== 46.5 SLOTS GAME ======
 class SlotsGame {
     constructor(canvasIds, symbolsData) {
         this.canvases = canvasIds.map(id => document.getElementById(id));
@@ -3929,7 +3946,6 @@ class SlotsGame {
         this.currentReel = 0;
         this.animationId = null;
         
-        // تأكد من وجود الكانفاسات
         if (this.canvases.some(c => !c)) {
             console.warn("Slots canvases not found, retrying in 200ms");
             setTimeout(() => this.constructor(canvasIds, symbolsData), 200);
@@ -3971,7 +3987,6 @@ class SlotsGame {
         const durationMultiplier = turbo ? 0.55 : 1;
         this.durations = this.durations.map(d => d * durationMultiplier);
         
-        // توليد مواقع عشوائية للهدف
         for (let i = 0; i < 3; i++) {
             this.targetPositions[i] = (this.reelPositions[i] + Math.floor(Math.random() * 25) + 12) % this.symbols.length;
         }
@@ -4007,7 +4022,6 @@ class SlotsGame {
                     const step = Math.floor(t * 35) % 25;
                     this.reelPositions[i] = (this.targetPositions[i] + step) % this.symbols.length;
                     
-                    // تشغيل صوت الطقطقة عند بدء توقف كل بكرة (مرة واحدة)
                     if (Math.floor(t * 10) === 0 && i === this.currentReel && t < 0.3) {
                         startReelTick(i);
                         this.currentReel++;
@@ -4058,7 +4072,7 @@ class SlotsGame {
     }
 }
 
-// ====== 46.6 INITIALIZATION AND GLOBALS ======
+// ====== 46.6 INITIALIZATION ======
 let wheelGame = null;
 let slotsGame = null;
 
@@ -4168,10 +4182,10 @@ function spinSlotsGame(isFree, isTurbo) {
             const winAmountEl = document.getElementById('slotsWinAmount');
             if (winAmountEl) winAmountEl.textContent = `${result.amount} ${result.currency}`;
             
-            // إظهار رسالة الفوز في الجزء العلوي
             let winType = 'normal';
             if (result.isJackpot) winType = 'jackpot';
             else if (result.amount >= 25) winType = 'big';
+            
             showGameWinMessage(result.amount, result.currency, winType);
             
             if (result.isJackpot) {
@@ -4194,7 +4208,6 @@ function spinSlotsGame(isFree, isTurbo) {
     }, isTurbo);
 }
 
-// ====== 46.8 AWARD PRIZE FUNCTION ======
 function awardVegasPrize(prize) {
     if (prize.goodluck) {
         showToastPro('🍀 GOOD LUCK! Try again!', 'info');
@@ -4218,8 +4231,11 @@ function awardVegasPrize(prize) {
         if (currency === 'TON') userData.balance = userData.balances.TON;
         userData.totalEarned += prize.amount;
         addTransaction('wheel', prize.amount, { currency, jackpot: true });
-        JackpotTheater.play(prize.amount, currency, prize.mega ? 'mega' : 'jackpot');
-        showGameWinMessage(prize.amount, currency, prize.mega ? 'mega' : 'jackpot');
+        
+        let winType = prize.mega ? 'mega' : 'jackpot';
+        showGameWinMessage(prize.amount, currency, winType);
+        JackpotTheater.play(prize.amount, currency, winType);
+        
         userData.wheel.jackpotWon = (userData.wheel.jackpotWon || 0) + 1;
         saveUserToCache();
         updateUI();
@@ -4235,6 +4251,7 @@ function awardVegasPrize(prize) {
     let winType = 'normal';
     if (prize.amount >= 25) winType = 'jackpot';
     else if (prize.amount >= 10) winType = 'big';
+    
     showGameWinMessage(prize.amount, currency, winType);
     
     if (prize.amount >= 25) {
@@ -4250,7 +4267,6 @@ function awardVegasPrize(prize) {
     updateWheelUI();
 }
 
-// ====== 46.9 عرض رسائل الفوز أعلى الصفحة ======
 function showGameWinMessage(amount, currency, type) {
     const existing = document.querySelector('.game-win-message');
     if (existing) existing.remove();
@@ -4261,7 +4277,13 @@ function showGameWinMessage(amount, currency, type) {
     let icon = '';
     let bgColor = '#000000aa';
     let borderColor = '#ffd966';
-    if (type === 'jackpot') {
+    
+    if (type === 'mega') {
+        icon = '👑👑👑';
+        text = `MEGA JACKPOT! ${amount} ${currency}`;
+        bgColor = '#ff44cccc';
+        borderColor = '#ffff00';
+    } else if (type === 'jackpot') {
         icon = '🎰🎰🎰';
         text = `JACKPOT! ${amount} ${currency}`;
         bgColor = '#ff4444cc';
@@ -4271,17 +4293,13 @@ function showGameWinMessage(amount, currency, type) {
         text = `BIG WIN! ${amount} ${currency}`;
         bgColor = '#ff8800cc';
         borderColor = '#ffdd00';
-    } else if (type === 'mega') {
-        icon = '👑👑👑';
-        text = `MEGA JACKPOT! ${amount} ${currency}`;
-        bgColor = '#ff44cccc';
-        borderColor = '#ffff00';
     } else {
         icon = '🎉';
         text = `YOU WON! ${amount} ${currency}`;
         bgColor = '#00aaffcc';
         borderColor = '#88ff88';
     }
+    
     messageDiv.innerHTML = `<span class="win-icon">${icon}</span><span class="win-text">${text}</span>`;
     messageDiv.style.position = 'absolute';
     messageDiv.style.top = '70px';
@@ -4295,7 +4313,7 @@ function showGameWinMessage(amount, currency, type) {
     messageDiv.style.border = `2px solid ${borderColor}`;
     messageDiv.style.boxShadow = '0 0 30px rgba(0,0,0,0.5)';
     messageDiv.style.fontWeight = 'bold';
-    messageDiv.style.fontSize = '1.3rem';
+    messageDiv.style.fontSize = '1.2rem';
     messageDiv.style.whiteSpace = 'nowrap';
     messageDiv.style.backdropFilter = 'blur(8px)';
     messageDiv.style.display = 'flex';
@@ -4314,13 +4332,36 @@ function showGameWinMessage(amount, currency, type) {
                 85% { opacity: 1; transform: translateX(-50%) translateY(0); }
                 100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
             }
+            @keyframes screenShakeHeavy {
+                0%,100% { transform: translate(0,0); }
+                10% { transform: translate(-10px,-8px); }
+                20% { transform: translate(10px,8px); }
+                30% { transform: translate(-8px,-6px); }
+                40% { transform: translate(8px,6px); }
+                50% { transform: translate(-5px,-4px); }
+                60% { transform: translate(5px,4px); }
+                70% { transform: translate(-3px,-2px); }
+                80% { transform: translate(3px,2px); }
+            }
+            .screen-shake-heavy { animation: screenShakeHeavy 0.5s cubic-bezier(0.36,0.07,0.19,0.97) forwards; }
+            .vegas-shake { animation: vegasShake 0.5s ease-in-out; }
+            @keyframes vegasShake {
+                0%,100% { transform: translate(0,0); }
+                10% { transform: translate(-5px,-5px); }
+                20% { transform: translate(5px,5px); }
+                30% { transform: translate(-5px,5px); }
+                40% { transform: translate(5px,-5px); }
+                50% { transform: translate(-3px,-3px); }
+                60% { transform: translate(3px,3px); }
+                70% { transform: translate(-3px,3px); }
+                80% { transform: translate(3px,-3px); }
+            }
         `;
         document.head.appendChild(style);
     }
     setTimeout(() => messageDiv.remove(), 3000);
 }
 
-// ====== 46.10 TOAST PRO ======
 function showToastPro(message, type = 'info', duration = 3000) {
     const container = document.getElementById('toastContainer');
     if (!container) return;
@@ -4379,7 +4420,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     updateUserDisplay();
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v18.0");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v21.0");
     console.log("✅ All systems ready! 🚀");
 });
 
