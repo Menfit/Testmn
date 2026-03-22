@@ -1,7 +1,7 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v21.0
-// جميع الميزات محفوظة + كازينو احترافي 3D مع تأثيرات فيغاس
-// جاهز للنسخ واللصق
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v22.0
+// مع تحسينات Vegas Elite 3D - عجلة حظ احترافية + سلوت متجاوب
+// جميع الميزات محفوظة - جاهز للنسخ واللصق
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -517,29 +517,30 @@ const REFERRAL_MILESTONES = [
     { referrals: 1000, reward: 1200, unit: 'USDT' }
 ];
 
-// ====== 7. WHEEL PRIZES ======
+// ====== 7. WHEEL PRIZES (محسنة مع GOOD LUCK داخل العجلة) ======
 const WHEEL_PRIZES = [
-    { type: 'TON', amount: 0.25, color: '#1e5f7f', weight: 8, label: '0.25 TON', icon: '💰' },
+    { type: 'TON', amount: 0.25, color: '#0088cc', weight: 8, label: '0.25 TON', icon: '💰' },
     { type: 'TON', amount: 0.5, color: '#1e6f8f', weight: 8, label: '0.5 TON', icon: '💰' },
     { type: 'TON', amount: 1, color: '#1e7f9f', weight: 7, label: '1 TON', icon: '💰' },
     { type: 'TON', amount: 2, color: '#1e8faf', weight: 6, label: '2 TON', icon: '💰' },
-    { type: 'USDT', amount: 0.25, color: '#1f6f3f', weight: 8, label: '0.25 USDT', icon: '💵' },
-    { type: 'USDT', amount: 0.5, color: '#1f7f4f', weight: 8, label: '0.5 USDT', icon: '💵' },
-    { type: 'USDT', amount: 1, color: '#1f8f5f', weight: 7, label: '1 USDT', icon: '💵' },
-    { type: 'USDT', amount: 2, color: '#1f9f6f', weight: 6, label: '2 USDT', icon: '💵' },
-    { type: 'TON', amount: 5, color: '#bf7f2f', weight: 4, label: '5 TON', icon: '🔥' },
-    { type: 'TON', amount: 10, color: '#cf8f3f', weight: 3, label: '10 TON', icon: '🔥' },
-    { type: 'USDT', amount: 5, color: '#bf7f2f', weight: 4, label: '5 USDT', icon: '🔥' },
-    { type: 'USDT', amount: 10, color: '#cf8f3f', weight: 3, label: '10 USDT', icon: '🔥' },
-    { type: 'TON', amount: 25, color: '#bf6f1f', weight: 2, label: '25 TON', icon: '⭐' },
-    { type: 'USDT', amount: 25, color: '#cf7f2f', weight: 2, label: '25 USDT', icon: '⭐' },
-    { type: 'TON', amount: 50, color: '#bf3f1f', weight: 1, label: '50 TON', icon: '👑' },
-    { type: 'USDT', amount: 50, color: '#cf4f2f', weight: 1, label: '50 USDT', icon: '👑' },
-    { type: 'GOODLUCK', amount: 0, color: '#4a5568', weight: 10, label: 'GOOD LUCK', icon: '🍀', goodluck: true },
+    { type: 'USDT', amount: 0.25, color: '#22c55e', weight: 8, label: '0.25 USDT', icon: '💵' },
+    { type: 'USDT', amount: 0.5, color: '#34d399', weight: 8, label: '0.5 USDT', icon: '💵' },
+    { type: 'USDT', amount: 1, color: '#4ade80', weight: 7, label: '1 USDT', icon: '💵' },
+    { type: 'USDT', amount: 2, color: '#6ee7b7', weight: 6, label: '2 USDT', icon: '💵' },
+    { type: 'TON', amount: 5, color: '#fbbf24', weight: 4, label: '5 TON', icon: '🔥' },
+    { type: 'TON', amount: 10, color: '#f59e0b', weight: 3, label: '10 TON', icon: '🔥' },
+    { type: 'USDT', amount: 5, color: '#fbbf24', weight: 4, label: '5 USDT', icon: '🔥' },
+    { type: 'USDT', amount: 10, color: '#f59e0b', weight: 3, label: '10 USDT', icon: '🔥' },
+    { type: 'TON', amount: 25, color: '#f97316', weight: 2, label: '25 TON', icon: '⭐' },
+    { type: 'USDT', amount: 25, color: '#f97316', weight: 2, label: '25 USDT', icon: '⭐' },
+    { type: 'TON', amount: 50, color: '#ef4444', weight: 1, label: '50 TON', icon: '👑' },
+    { type: 'USDT', amount: 50, color: '#ef4444', weight: 1, label: '50 USDT', icon: '👑' },
+    // GOOD LUCK قطاع داخل العجلة
+    { type: 'GOODLUCK', amount: 0, color: '#4a5568', weight: 10, label: '🍀 LUCK', icon: '🍀', goodluck: true },
     { type: 'FREESPIN', amount: 0, color: '#8b6fcf', weight: 8, label: 'FREE SPIN', icon: '🆓', freespin: true },
-    { type: 'JACKPOT', amount: 100, currency: 'TON', color: '#bf2f1f', weight: 1, label: '100 TON', icon: '👑', jackpot: true },
-    { type: 'JACKPOT', amount: 200, currency: 'USDT', color: '#cf3f2f', weight: 1, label: '200 USDT', icon: '👑', jackpot: true },
-    { type: 'MEGA', amount: 500, currency: 'TON', color: '#df4f1f', weight: 0.5, label: '500 TON', icon: '💎', mega: true }
+    { type: 'JACKPOT', amount: 100, currency: 'TON', color: '#dc2626', weight: 1, label: '100 TON', icon: '👑', jackpot: true },
+    { type: 'JACKPOT', amount: 200, currency: 'USDT', color: '#ef4444', weight: 1, label: '200 USDT', icon: '👑', jackpot: true },
+    { type: 'MEGA', amount: 500, currency: 'TON', color: '#ff4444', weight: 0.5, label: '500 TON', icon: '💎', mega: true }
 ];
 
 // ====== 8. SLOTS SYMBOLS ======
@@ -1373,7 +1374,7 @@ function renderPlansTable() {
     if (!tbody) return;
     tbody.innerHTML = MACHINES.map(m => {
         const name = currentLanguage === 'ar' ? m.nameAr : m.name;
-        return `         <tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
+        return `<tr><td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>${
             m.plans.map(p => p.price === 0 ? '<td>FREE</td>' : `<td>${p.price} TON<br><small>+${p.returnAmount} TON</small></td>`).join('')
         }</tr>`;
     }).join('');
@@ -3383,40 +3384,41 @@ function updateUserDisplay() {
     }
 }
 
-// ====== 46. VEGAS ELITE - KAZINO PROFESSIONAL ======
-
-// ====== 46.1 VEGAS AUDIO ENGINE ======
-const VegasAudio = {
+// ====== 46. VEGAS AUDIO ENGINE PRO ======
+const VegasAudioPro = {
     ctx: null,
     isInitialized: false,
+    isMuted: false,
     
     init() {
         if (this.isInitialized) return;
         try {
             this.ctx = new (window.AudioContext || window.webkitAudioContext)();
             this.isInitialized = true;
-            console.log("🎵 Vegas Audio initialized");
-        } catch(e) { console.warn("Audio not supported"); }
+            console.log("🎵 Vegas Audio Pro initialized");
+        } catch(e) { 
+            console.warn("Audio not supported:", e);
+            this.isInitialized = false;
+        }
     },
     
-    click() {
-        if (!this.ctx) return;
+    playTick(pitch = 1, volume = 0.08, duration = 0.04) {
+        if (!this.ctx || this.isMuted) return;
         const now = this.ctx.currentTime;
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(880, now);
-        osc.frequency.exponentialRampToValueAtTime(440, now + 0.08);
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(800 * pitch, now);
+        gain.gain.setValueAtTime(volume, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
         osc.connect(gain);
         gain.connect(this.ctx.destination);
         osc.start();
-        osc.stop(now + 0.1);
+        osc.stop(now + duration);
     },
     
-    whoosh() {
-        if (!this.ctx) return;
+    playWhoosh() {
+        if (!this.ctx || this.isMuted) return;
         const now = this.ctx.currentTime;
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
@@ -3436,481 +3438,356 @@ const VegasAudio = {
         osc.stop(now + 0.4);
     },
     
-    tick(pitch = 1, volume = 0.12) {
-        if (!this.ctx) return;
+    playWin(amount, currency, type = 'normal') {
+        if (!this.ctx || this.isMuted) return;
         const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(1200 * pitch, now);
-        gain.gain.setValueAtTime(volume, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.04);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start();
-        osc.stop(now + 0.04);
-    },
-    
-    clunk() {
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(150, now);
-        osc.frequency.exponentialRampToValueAtTime(50, now + 0.2);
-        gain.gain.setValueAtTime(0.3, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start();
-        osc.stop(now + 0.2);
-    },
-    
-    coin() {
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(1800, now);
-        osc.frequency.exponentialRampToValueAtTime(2200, now + 0.1);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start();
-        osc.stop(now + 0.3);
-    },
-    
-    win() {
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        for (let i = 0; i < 6; i++) {
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(600 + i * 120, now + i * 0.12);
-            gain.gain.setValueAtTime(0.2, now + i * 0.12);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.12 + 0.25);
-            osc.connect(gain);
-            gain.connect(this.ctx.destination);
-            osc.start(now + i * 0.12);
-            osc.stop(now + i * 0.12 + 0.25);
+        
+        if (type === 'jackpot' || type === 'mega') {
+            // جاكبوت - نغمات متصاعدة
+            for (let i = 0; i < 12; i++) {
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = i % 2 === 0 ? 'sawtooth' : 'square';
+                osc.frequency.setValueAtTime(200 + i * 50, now + i * 0.08);
+                osc.frequency.exponentialRampToValueAtTime(400 + i * 100, now + i * 0.08 + 0.3);
+                gain.gain.setValueAtTime(0.25, now + i * 0.08);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.08 + 0.4);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now + i * 0.08);
+                osc.stop(now + i * 0.08 + 0.5);
+            }
+        } else if (type === 'big') {
+            // فوز كبير - 5 نغمات
+            const notes = [0, 4, 7, 12, 7];
+            notes.forEach((interval, i) => {
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(220 * Math.pow(2, interval/12), now + i * 0.12);
+                gain.gain.setValueAtTime(0.2, now + i * 0.12);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.12 + 0.4);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now + i * 0.12);
+                osc.stop(now + i * 0.12 + 0.4);
+            });
+        } else {
+            // فوز عادي - صوت عملات
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    if (!this.ctx) return;
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(1200 + Math.random() * 400, this.ctx.currentTime);
+                    gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.1);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + 0.1);
+                }, i * 80);
+            }
         }
     },
     
-    jackpot() {
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        for (let i = 0; i < 12; i++) {
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(200 + i * 70, now + i * 0.1);
-            gain.gain.setValueAtTime(0.25, now + i * 0.1);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.35);
-            osc.connect(gain);
-            gain.connect(this.ctx.destination);
-            osc.start(now + i * 0.1);
-            osc.stop(now + i * 0.1 + 0.35);
-        }
-        setTimeout(() => this.crowdCheer(), 400);
+    playReelSpin(reelIndex, duration) {
+        if (!this.ctx || this.isMuted) return;
+        const startTime = this.ctx.currentTime;
+        const endTime = startTime + duration / 1000;
+        
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(100 + reelIndex * 20, startTime);
+        osc.frequency.linearRampToValueAtTime(50, endTime);
+        gain.gain.setValueAtTime(0.1, startTime);
+        gain.gain.linearRampToValueAtTime(0, endTime);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(startTime);
+        osc.stop(endTime);
     },
     
-    crowdCheer() {
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
+    playWheelSpin(duration) {
+        if (!this.ctx || this.isMuted) return;
+        const startTime = this.ctx.currentTime;
+        const endTime = startTime + duration / 1000;
+        
+        const noise = this.ctx.createBufferSource();
         const bufferSize = this.ctx.sampleRate * 2;
         const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
         const data = buffer.getChannelData(0);
         for (let i = 0; i < bufferSize; i++) {
             data[i] = Math.random() * 2 - 1;
         }
-        const noise = this.ctx.createBufferSource();
         noise.buffer = buffer;
+        
         const filter = this.ctx.createBiquadFilter();
         filter.type = 'bandpass';
-        filter.frequency.setValueAtTime(1200, now);
+        filter.frequency.setValueAtTime(200, startTime);
+        filter.frequency.linearRampToValueAtTime(100, endTime);
+        
         const gain = this.ctx.createGain();
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.linearRampToValueAtTime(0, now + 2);
+        gain.gain.setValueAtTime(0.1, startTime);
+        gain.gain.linearRampToValueAtTime(0, endTime);
+        
         noise.connect(filter);
         filter.connect(gain);
         gain.connect(this.ctx.destination);
-        noise.start();
+        noise.start(startTime);
+        noise.stop(endTime);
     },
     
-    purchase() {
-        if (!this.ctx) return;
+    playClick() {
+        if (!this.ctx || this.isMuted) return;
         const now = this.ctx.currentTime;
-        for (let i = 0; i < 4; i++) {
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(800 + i * 150, now + i * 0.08);
-            gain.gain.setValueAtTime(0.2, now + i * 0.08);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.08 + 0.2);
-            osc.connect(gain);
-            gain.connect(this.ctx.destination);
-            osc.start(now + i * 0.08);
-            osc.stop(now + i * 0.08 + 0.2);
-        }
-    }
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.exponentialRampToValueAtTime(400, now + 0.1);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(now + 0.1);
+    },
+    
+    mute() { this.isMuted = true; },
+    unmute() { this.isMuted = false; }
 };
 
-// ====== 46.2 TICK SEQUENCER ======
-const TickSequencer = {
-    timeouts: [],
-    isActive: false,
-    
-    playWheelTicks(duration = 2800, onComplete = null) {
-        this.clear();
-        this.isActive = true;
-        
-        const totalTicks = 36;
-        const intervals = [];
-        for (let i = 0; i < totalTicks; i++) {
-            const t = i / totalTicks;
-            let speedFactor;
-            if (t < 0.3) {
-                speedFactor = 0.4 + (t / 0.3) * 1.2;
-            } else if (t < 0.7) {
-                speedFactor = 1.6;
-            } else {
-                speedFactor = 1.6 - ((t - 0.7) / 0.3) * 1.2;
-            }
-            const delay = 55 / Math.max(0.4, speedFactor);
-            intervals.push(delay);
-        }
-        
-        let cumulative = 0;
-        const tickTimes = [];
-        for (let i = 0; i < intervals.length; i++) {
-            cumulative += intervals[i];
-            tickTimes.push(cumulative);
-        }
-        
-        for (let i = 0; i < tickTimes.length; i++) {
-            const timeout = setTimeout(() => {
-                if (!this.isActive) return;
-                const t = tickTimes[i] / duration;
-                const pitch = 0.7 + t * 1.0;
-                const volume = 0.08 + (t * 0.1);
-                VegasAudio.tick(pitch, volume);
-                if (i === tickTimes.length - 1 && onComplete) {
-                    setTimeout(onComplete, 50);
-                }
-            }, tickTimes[i]);
-            this.timeouts.push(timeout);
-        }
-    },
-    
-    playSlotsTicks(reelIndex, duration = 800, onComplete = null) {
-        this.clear();
-        this.isActive = true;
-        const tickCount = Math.floor(duration / 35);
-        let currentTick = 0;
-        
-        const scheduleTick = () => {
-            if (!this.isActive || currentTick >= tickCount) {
-                if (onComplete) setTimeout(onComplete, 50);
-                this.isActive = false;
-                return;
-            }
-            const t = currentTick / tickCount;
-            const pitch = 0.7 + (reelIndex * 0.2) + (t * 0.5);
-            const volume = 0.1 - (t * 0.05);
-            VegasAudio.tick(pitch, volume);
-            currentTick++;
-            const nextDelay = 25 + (currentTick * 2);
-            const timeout = setTimeout(scheduleTick, nextDelay);
-            this.timeouts.push(timeout);
-        };
-        scheduleTick();
-    },
-    
-    clear() {
-        this.isActive = false;
-        this.timeouts.forEach(t => clearTimeout(t));
-        this.timeouts = [];
-    }
-};
-
-// ====== 46.3 JACKPOT THEATER ======
-const JackpotTheater = {
-    isPlaying: false,
-    
-    play(amount, currency = 'TON', type = 'jackpot') {
-        if (this.isPlaying) return;
-        this.isPlaying = true;
-        
-        const container = document.querySelector('.wheel-game-container, .slots-game-container') || document.body;
-        
-        document.body.classList.add('screen-shake-heavy');
-        setTimeout(() => document.body.classList.remove('screen-shake-heavy'), 600);
-        
-        const burst = document.createElement('div');
-        burst.className = 'win-burst';
-        document.body.appendChild(burst);
-        setTimeout(() => burst.remove(), 800);
-        
-        setTimeout(() => {
-            this.createLightBurst(container);
-            if (type === 'mega') VegasAudio.jackpot();
-            else if (type === 'jackpot') VegasAudio.jackpot();
-            else VegasAudio.win();
-        }, 100);
-        
-        setTimeout(() => {
-            this.showJackpotText(container, amount, currency, type);
-            VegasAudio.crowdCheer();
-        }, 400);
-        
-        setTimeout(() => {
-            this.createGoldParticles(container);
-        }, 800);
-        
-        setTimeout(() => {
-            this.isPlaying = false;
-        }, 3500);
-    },
-    
-    createLightBurst(container) {
-        const burst = document.createElement('div');
-        burst.className = 'vegas-burst';
-        for (let i = 0; i < 16; i++) {
-            const ray = document.createElement('div');
-            ray.className = 'burst-ray';
-            ray.style.transform = `translate(-50%, -100%) rotate(${i * 22.5}deg)`;
-            burst.appendChild(ray);
-        }
-        container.appendChild(burst);
-        setTimeout(() => burst.remove(), 900);
-    },
-    
-    showJackpotText(container, amount, currency, type) {
-        const text = document.createElement('div');
-        text.className = `vegas-jackpot-text ${type}`;
-        if (type === 'mega') {
-            text.innerHTML = `👑 MEGA JACKPOT! ${amount} ${currency} 👑`;
-        } else if (type === 'jackpot') {
-            text.innerHTML = `🎰 JACKPOT! ${amount} ${currency} 🎰`;
-        } else {
-            text.innerHTML = `🔥 BIG WIN! ${amount} ${currency} 🔥`;
-        }
-        text.style.position = 'absolute';
-        text.style.top = '70px';
-        text.style.left = '50%';
-        text.style.transform = 'translateX(-50%)';
-        text.style.zIndex = '200';
-        text.style.fontSize = '1.5rem';
-        text.style.padding = '8px 16px';
-        text.style.background = 'rgba(0,0,0,0.8)';
-        text.style.borderRadius = '30px';
-        text.style.border = '2px solid gold';
-        text.style.boxShadow = '0 0 20px gold';
-        text.style.whiteSpace = 'nowrap';
-        document.body.appendChild(text);
-        document.body.classList.add('vegas-shake');
-        setTimeout(() => document.body.classList.remove('vegas-shake'), 500);
-        setTimeout(() => text.remove(), 3200);
-    },
-    
-    createGoldParticles(container) {
-        for (let i = 0; i < 50; i++) {
-            const p = document.createElement('div');
-            p.className = 'vegas-particle';
-            p.style.left = '50%';
-            p.style.top = '50%';
-            const angle = (i * 7.2) * Math.PI / 180;
-            const distance = 150 + Math.random() * 100;
-            p.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
-            p.style.setProperty('--ty', `${Math.sin(angle) * distance}px`);
-            p.style.animationDelay = `${Math.random() * 0.5}s`;
-            container.appendChild(p);
-            setTimeout(() => p.remove(), 1800);
-        }
-    }
-};
-
-// ====== 46.4 WHEEL GAME 3D ======
-class WheelGame {
-    constructor(canvasId, segments) {
+// ====== 47. WHEEL 3D CLASS - محسنة بالكامل ======
+class Wheel3D {
+    constructor(canvasId) {
         this.canvas = document.getElementById(canvasId);
         if (!this.canvas) {
             console.warn("Canvas not found, retrying...");
-            setTimeout(() => this.constructor(canvasId, segments), 100);
+            setTimeout(() => this.constructor(canvasId), 100);
             return;
         }
         this.ctx = this.canvas.getContext('2d');
-        this.width = this.canvas.width;
-        this.height = this.canvas.height;
-        this.centerX = this.width / 2;
-        this.centerY = this.height / 2;
-        this.radius = this.width / 2 - 12;
-        
-        this.segments = segments;
+        this.segments = WHEEL_PRIZES;
         this.segmentAngle = (2 * Math.PI) / this.segments.length;
-        
         this.rotation = 0;
         this.isSpinning = false;
-        this.spinStartTime = 0;
-        this.spinDuration = 2800;
-        this.targetRotation = 0;
         this.animationId = null;
         this.selectedPrize = null;
         
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+        this.draw();
+    }
+    
+    resize() {
+        const container = this.canvas.parentElement;
+        const size = Math.min(container.clientWidth, 320);
+        this.canvas.width = size;
+        this.canvas.height = size;
+        this.canvas.style.width = size + 'px';
+        this.canvas.style.height = size + 'px';
+        this.centerX = size / 2;
+        this.centerY = size / 2;
+        this.radius = (size / 2) - 12;
         this.draw();
     }
     
     draw() {
         const ctx = this.ctx;
-        const centerX = this.centerX;
-        const centerY = this.centerY;
-        const radius = this.radius;
+        const cx = this.centerX;
+        const cy = this.centerY;
+        const r = this.radius;
         
-        ctx.clearRect(0, 0, this.width, this.height);
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
+        // ظل خارجي
         ctx.beginPath();
-        ctx.arc(centerX, centerY, radius + 6, 0, 2 * Math.PI);
-        ctx.fillStyle = '#000000';
+        ctx.arc(cx, cy, r + 6, 0, Math.PI * 2);
+        const outerGrad = ctx.createRadialGradient(cx - 5, cy - 5, r, cx, cy, r + 8);
+        outerGrad.addColorStop(0, 'rgba(0, 242, 255, 0.4)');
+        outerGrad.addColorStop(1, 'rgba(0, 0, 0, 0.5)');
+        ctx.fillStyle = outerGrad;
         ctx.fill();
         
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius + 4, 0, 2 * Math.PI);
-        ctx.strokeStyle = '#00f2ff';
-        ctx.lineWidth = 2;
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = '#00f2ff';
-        ctx.stroke();
-        
+        // رسم القطاعات
         for (let i = 0; i < this.segments.length; i++) {
             const seg = this.segments[i];
             const startAngle = i * this.segmentAngle + this.rotation;
             const endAngle = (i + 1) * this.segmentAngle + this.rotation;
             
             ctx.beginPath();
-            ctx.moveTo(centerX, centerY);
-            ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+            ctx.moveTo(cx, cy);
+            ctx.arc(cx, cy, r, startAngle, endAngle);
             ctx.closePath();
             
-            const grad = ctx.createLinearGradient(
-                centerX + Math.cos(startAngle) * 15,
-                centerY + Math.sin(startAngle) * 15,
-                centerX + Math.cos(endAngle) * 15,
-                centerY + Math.sin(endAngle) * 15
+            // تدرج لوني 3D
+            const grad = ctx.createRadialGradient(
+                cx + Math.cos(startAngle + this.segmentAngle/2) * r * 0.3,
+                cy + Math.sin(startAngle + this.segmentAngle/2) * r * 0.3,
+                0,
+                cx, cy, r
             );
-            grad.addColorStop(0, seg.color);
-            grad.addColorStop(1, this.adjustColor(seg.color, -30));
+            grad.addColorStop(0, this.lightenColor(seg.color, 30));
+            grad.addColorStop(0.6, seg.color);
+            grad.addColorStop(1, this.darkenColor(seg.color, 20));
             ctx.fillStyle = grad;
             ctx.fill();
             
+            // حدود القطاع
             ctx.beginPath();
-            ctx.moveTo(centerX, centerY);
-            ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-            ctx.lineTo(centerX, centerY);
-            ctx.strokeStyle = 'rgba(0,242,255,0.6)';
+            ctx.moveTo(cx, cy);
+            ctx.arc(cx, cy, r, startAngle, endAngle);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
             ctx.lineWidth = 1.5;
-            ctx.shadowBlur = 8;
-            ctx.shadowColor = '#00f2ff';
             ctx.stroke();
             
+            // النص والأيقونة داخل القطاع
             const midAngle = startAngle + this.segmentAngle / 2;
+            const textR = r * 0.65;
+            const tx = cx + Math.cos(midAngle) * textR;
+            const ty = cy + Math.sin(midAngle) * textR;
             
-            const textRadius = radius * 0.72;
-            const textX = centerX + Math.cos(midAngle) * textRadius;
-            const textY = centerY + Math.sin(midAngle) * textRadius;
             ctx.save();
-            ctx.translate(textX, textY);
-            let angle = midAngle;
-            if (angle > Math.PI / 2 && angle < 3 * Math.PI / 2) {
-                angle += Math.PI;
+            ctx.translate(tx, ty);
+            
+            // تدوير النص ليكون مقروءاً
+            let rotateAngle = midAngle + Math.PI / 2;
+            if (rotateAngle > Math.PI / 2 && rotateAngle < 3 * Math.PI / 2) {
+                rotateAngle += Math.PI;
             }
-            ctx.rotate(angle);
-            ctx.font = `bold ${Math.floor(radius * 0.09)}px "Outfit", "Segoe UI"`;
+            ctx.rotate(rotateAngle);
+            
+            // الأيقونة
+            ctx.font = `bold ${Math.floor(r * 0.08)}px "Segoe UI", "Outfit"`;
             ctx.fillStyle = '#fff';
-            ctx.shadowBlur = 12;
-            ctx.shadowColor = '#00f2ff';
-            ctx.fillText(seg.label, -20, 6);
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = 'rgba(0,0,0,0.8)';
+            ctx.textAlign = 'center';
+            ctx.fillText(seg.icon, 0, -8);
+            
+            // القيمة
+            ctx.font = `bold ${Math.floor(r * 0.055)}px "Segoe UI", "Outfit"`;
+            ctx.fillStyle = '#fff';
+            ctx.fillText(seg.label, 0, 18);
+            
             ctx.restore();
         }
         
+        // المركز المضيء 3D
+        ctx.beginPath();
+        ctx.arc(cx, cy, r * 0.12, 0, Math.PI * 2);
+        const centerGrad = ctx.createRadialGradient(cx - 4, cy - 4, 3, cx, cy, r * 0.12);
+        centerGrad.addColorStop(0, '#ffdd88');
+        centerGrad.addColorStop(0.5, '#ffaa33');
+        centerGrad.addColorStop(1, '#cc8800');
+        ctx.fillStyle = centerGrad;
         ctx.shadowBlur = 20;
         ctx.shadowColor = '#ffaa00';
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius * 0.18, 0, 2 * Math.PI);
-        const centerGrad = ctx.createRadialGradient(centerX - 5, centerY - 5, 5, centerX, centerY, radius * 0.2);
-        centerGrad.addColorStop(0, '#ffdd88');
-        centerGrad.addColorStop(1, '#ffaa33');
-        ctx.fillStyle = centerGrad;
         ctx.fill();
         
         ctx.beginPath();
-        ctx.arc(centerX, centerY, radius * 0.12, 0, 2 * Math.PI);
+        ctx.arc(cx, cy, r * 0.1, 0, Math.PI * 2);
         ctx.fillStyle = '#ffcc66';
         ctx.fill();
-        
         ctx.shadowBlur = 0;
     }
     
-    adjustColor(hex, percent) {
-        return hex;
+    lightenColor(hex, percent) {
+        const num = parseInt(hex.replace('#', ''), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = Math.min(255, (num >> 16) + amt);
+        const G = Math.min(255, ((num >> 8) & 0x00FF) + amt);
+        const B = Math.min(255, (num & 0x0000FF) + amt);
+        return `#${(0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1)}`;
+    }
+    
+    darkenColor(hex, percent) {
+        const num = parseInt(hex.replace('#', ''), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = Math.max(0, (num >> 16) - amt);
+        const G = Math.max(0, ((num >> 8) & 0x00FF) - amt);
+        const B = Math.max(0, (num & 0x0000FF) - amt);
+        return `#${(0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1)}`;
+    }
+    
+    selectPrize() {
+        const totalWeight = this.segments.reduce((s, p) => s + (p.weight || 1), 0);
+        let random = Math.random() * totalWeight;
+        for (let i = 0; i < this.segments.length; i++) {
+            random -= (this.segments[i].weight || 1);
+            if (random <= 0) return i;
+        }
+        return 0;
     }
     
     spin(callback) {
         if (this.isSpinning) return;
         
-        this.selectedPrize = this.selectPrize();
-        const prizeIndex = this.segments.indexOf(this.selectedPrize);
+        // 1. اختيار الجائزة أولاً
+        const prizeIndex = this.selectPrize();
+        this.selectedPrize = this.segments[prizeIndex];
         
-        const segmentMidAngle = prizeIndex * this.segmentAngle + this.segmentAngle / 2;
-        const currentAngle = this.rotation % (2 * Math.PI);
-        let delta = (segmentMidAngle - currentAngle + 2 * Math.PI) % (2 * Math.PI);
-        const extraRotations = 6;
-        this.targetRotation = this.rotation + extraRotations * 2 * Math.PI + delta;
+        // 2. حساب الزاوية المستهدفة (المؤشر في الزاوية 0 - يمين العجلة)
+        const targetAngle = prizeIndex * this.segmentAngle + this.segmentAngle / 2;
+        
+        // 3. الزاوية الحالية
+        const currentAngle = this.rotation % (Math.PI * 2);
+        
+        // 4. إضافة دورات كاملة (5-8 دورات)
+        const fullRotations = 5 + Math.floor(Math.random() * 4);
+        
+        // 5. حساب الهدف النهائي
+        let delta = targetAngle - currentAngle;
+        while (delta < 0) delta += Math.PI * 2;
+        this.targetRotation = this.rotation + (fullRotations * Math.PI * 2) + delta;
         
         this.isSpinning = true;
-        this.spinStartTime = performance.now();
-        this.callback = callback;
+        const startTime = performance.now();
+        const duration = 3000 + Math.random() * 1000;
         
-        TickSequencer.playWheelTicks(this.spinDuration, () => {
-            VegasAudio.clunk();
-        });
-        VegasAudio.whoosh();
+        // تشغيل الصوت
+        VegasAudioPro.init();
+        VegasAudioPro.playWheelSpin(duration);
         
         const animate = (now) => {
-            const elapsed = now - this.spinStartTime;
-            let t = Math.min(1, elapsed / this.spinDuration);
-            let easeOut;
-            if (t < 0.3) {
-                const t2 = t / 0.3;
-                easeOut = 0.5 * t2 * t2;
-            } else if (t < 0.7) {
-                const t2 = (t - 0.3) / 0.4;
-                easeOut = 0.5 + 0.5 * t2;
-            } else {
-                const t2 = (t - 0.7) / 0.3;
-                easeOut = 1 - (1 - t2) * (1 - t2);
-            }
-            const currentRot = this.rotation + (this.targetRotation - this.rotation) * easeOut;
-            this.rotation = currentRot;
-            this.draw();
+            const elapsed = now - startTime;
+            let progress = Math.min(elapsed / duration, 1);
             
+            // EaseOutCubic للتباطؤ الطبيعي
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            
+            this.rotation = this.rotation + (this.targetRotation - this.rotation) * easeOut;
+            
+            // صوت tick متناسق مع السرعة
+            if (progress < 0.9 && Math.floor(elapsed / 70) !== Math.floor((elapsed - 20) / 70)) {
+                const speed = 1 - easeOut;
+                VegasAudioPro.playTick(0.7 + speed * 0.5, 0.08 + speed * 0.05);
+            }
+            
+            // تحديث عداد السرعة
             const speedFill = document.getElementById('wheelSpeedFill');
             if (speedFill) {
-                const speed = (1 - easeOut) * 100;
+                const speed = Math.max(0, 1 - easeOut) * 100;
                 speedFill.style.width = `${speed}%`;
             }
             
-            if (t < 1) {
+            this.draw();
+            
+            if (progress < 1) {
                 this.animationId = requestAnimationFrame(animate);
             } else {
-                this.rotation = this.targetRotation % (2 * Math.PI);
+                this.rotation = this.targetRotation % (Math.PI * 2);
                 this.draw();
                 this.isSpinning = false;
-                cancelAnimationFrame(this.animationId);
-                if (this.callback) this.callback(this.selectedPrize);
+                if (this.animationId) cancelAnimationFrame(this.animationId);
+                
+                // اهتزاز خفيف عند التوقف
+                this.shake();
+                
+                if (callback) callback(this.selectedPrize);
                 if (speedFill) speedFill.style.width = '0%';
             }
         };
@@ -3918,38 +3795,66 @@ class WheelGame {
         this.animationId = requestAnimationFrame(animate);
     }
     
-    selectPrize() {
-        const totalWeight = this.segments.reduce((s, p) => s + (p.weight || 1), 0);
-        let rand = Math.random() * totalWeight;
-        for (const prize of this.segments) {
-            rand -= (prize.weight || 1);
-            if (rand <= 0) return prize;
-        }
-        return this.segments[0];
+    shake() {
+        const baseRotation = this.rotation;
+        let shakeCount = 0;
+        const maxShakes = 8;
+        
+        const doShake = () => {
+            if (shakeCount >= maxShakes) {
+                this.rotation = baseRotation;
+                this.draw();
+                return;
+            }
+            const intensity = (1 - shakeCount / maxShakes) * 0.02;
+            this.rotation = baseRotation + Math.sin(shakeCount * Math.PI * 2) * intensity;
+            this.draw();
+            shakeCount++;
+            requestAnimationFrame(doShake);
+        };
+        
+        doShake();
     }
 }
 
-// ====== 46.5 SLOTS GAME ======
-class SlotsGame {
-    constructor(canvasIds, symbolsData) {
+// ====== 48. SLOTS 3D CLASS - محسنة بالكامل ======
+class Slots3D {
+    constructor(canvasIds) {
         this.canvases = canvasIds.map(id => document.getElementById(id));
         this.ctxs = this.canvases.map(c => c?.getContext('2d'));
-        this.symbolsData = symbolsData;
-        this.symbols = symbolsData.map(s => s.symbol);
-        this.values = symbolsData.map(s => ({ value: s.value, type: s.type, color: s.color }));
+        this.symbolsData = SLOTS_SYMBOLS_DATA;
+        this.symbols = this.symbolsData.map(s => s.symbol);
         
         this.reelPositions = [0, 0, 0];
         this.isSpinning = false;
         this.spinStartTime = 0;
-        this.durations = [1100, 1300, 1500];
+        this.durations = [1800, 2200, 2600];
         this.targetPositions = [0, 0, 0];
-        this.currentReel = 0;
         this.animationId = null;
+        this.results = null;
         
         if (this.canvases.some(c => !c)) {
-            console.warn("Slots canvases not found, retrying in 200ms");
-            setTimeout(() => this.constructor(canvasIds, symbolsData), 200);
+            console.warn("Slots canvases not found, retrying...");
+            setTimeout(() => this.constructor(canvasIds), 200);
             return;
+        }
+        
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+        this.draw();
+    }
+    
+    resize() {
+        for (let i = 0; i < this.canvases.length; i++) {
+            const canvas = this.canvases[i];
+            if (canvas && canvas.parentElement) {
+                const container = canvas.parentElement;
+                const width = Math.min(container.clientWidth, 100);
+                canvas.width = width;
+                canvas.height = width * 3;
+                canvas.style.width = width + 'px';
+                canvas.style.height = (width * 3) + 'px';
+            }
         }
         this.draw();
     }
@@ -3960,22 +3865,46 @@ class SlotsGame {
             const ctx = this.ctxs[r];
             const canvas = this.canvases[r];
             if (!ctx || !canvas) continue;
+            
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
             const pos = this.reelPositions[r];
-            for (let i = -1; i <= 1; i++) {
+            const visibleSymbols = 3;
+            const startOffset = -1;
+            
+            for (let i = startOffset; i < startOffset + visibleSymbols; i++) {
                 const idx = (pos + i + this.symbols.length) % this.symbols.length;
-                const y = canvas.height / 2 + i * symbolHeight;
                 const symbol = this.symbols[idx];
-                const color = this.values[idx]?.color || '#ffffff';
-                ctx.font = `bold 52px "Segoe UI", "Outfit"`;
-                ctx.fillStyle = color;
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = color;
-                ctx.fillText(symbol, canvas.width / 2 - 30, y + 20);
+                const data = this.symbolsData[idx];
+                const y = canvas.height / 2 + i * symbolHeight;
+                
+                // خلفية الرمز
+                ctx.beginPath();
+                ctx.rect(0, y - symbolHeight/2, canvas.width, symbolHeight);
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+                ctx.fill();
+                
+                // الرمز
+                ctx.font = `bold ${Math.min(52, canvas.width * 0.5)}px "Segoe UI", "Outfit"`;
+                ctx.fillStyle = data?.color || '#ffffff';
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = data?.color || '#ffffff';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(symbol, canvas.width / 2, y);
             }
         }
         ctx.shadowBlur = 0;
+    }
+    
+    selectSymbol() {
+        const totalWeight = this.symbolsData.reduce((s, d) => s + d.weight, 0);
+        let random = Math.random() * totalWeight;
+        for (let i = 0; i < this.symbolsData.length; i++) {
+            random -= this.symbolsData[i].weight;
+            if (random <= 0) return i;
+        }
+        return 0;
     }
     
     spin(callback, turbo = false) {
@@ -3984,30 +3913,31 @@ class SlotsGame {
             return;
         }
         
-        const durationMultiplier = turbo ? 0.55 : 1;
-        this.durations = this.durations.map(d => d * durationMultiplier);
+        // اختيار النتائج مسبقاً
+        this.results = [this.selectSymbol(), this.selectSymbol(), this.selectSymbol()];
         
+        // ضبط المدد حسب وضع Turbo
+        const multiplier = turbo ? 0.55 : 1;
+        this.durations = [1800, 2200, 2600].map(d => d * multiplier);
+        
+        // حساب المواقع النهائية مع إضافة دورات إضافية
+        const extraSpins = 8 + Math.floor(Math.random() * 8);
         for (let i = 0; i < 3; i++) {
-            this.targetPositions[i] = (this.reelPositions[i] + Math.floor(Math.random() * 25) + 12) % this.symbols.length;
+            this.targetPositions[i] = (this.reelPositions[i] + extraSpins + this.results[i]) % this.symbols.length;
         }
         
         this.isSpinning = true;
         this.spinStartTime = performance.now();
         this.callback = callback;
-        this.currentReel = 0;
         
-        VegasAudio.whoosh();
-        
-        const startReelTick = (reelIndex) => {
-            TickSequencer.playSlotsTicks(reelIndex, this.durations[reelIndex] * 0.7, () => {
-                if (reelIndex === 2 && this.callback) {
-                    const result = this.getResult();
-                    setTimeout(() => {
-                        if (this.callback) this.callback(result);
-                    }, 100);
-                }
-            });
-        };
+        // تشغيل الصوت
+        VegasAudioPro.init();
+        VegasAudioPro.playWhoosh();
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => {
+                VegasAudioPro.playReelSpin(i, this.durations[i]);
+            }, i * 150);
+        }
         
         const animate = (now) => {
             const elapsed = now - this.spinStartTime;
@@ -4019,13 +3949,12 @@ class SlotsGame {
                 
                 if (t < 1) {
                     allStopped = false;
-                    const step = Math.floor(t * 35) % 25;
-                    this.reelPositions[i] = (this.targetPositions[i] + step) % this.symbols.length;
-                    
-                    if (Math.floor(t * 10) === 0 && i === this.currentReel && t < 0.3) {
-                        startReelTick(i);
-                        this.currentReel++;
-                    }
+                    // دوران سلس مع تباطؤ
+                    const easeOut = 1 - Math.pow(1 - t, 2);
+                    const totalSpins = 12;
+                    const spinProgress = easeOut * totalSpins;
+                    const offset = Math.floor(spinProgress) % this.symbols.length;
+                    this.reelPositions[i] = (this.targetPositions[i] + offset) % this.symbols.length;
                 } else {
                     this.reelPositions[i] = this.targetPositions[i];
                 }
@@ -4037,42 +3966,101 @@ class SlotsGame {
                 this.animationId = requestAnimationFrame(animate);
             } else {
                 this.isSpinning = false;
-                cancelAnimationFrame(this.animationId);
-                if (this.callback) {
-                    const result = this.getResult();
-                    this.callback(result);
-                }
+                if (this.animationId) cancelAnimationFrame(this.animationId);
+                
+                // اهتزاز خفيف عند التوقف
+                this.bounce();
+                
+                // حساب النتيجة
+                const result = this.getResult();
+                if (this.callback) this.callback(result);
             }
         };
         
         this.animationId = requestAnimationFrame(animate);
     }
     
-    getResult() {
-        const symbols = this.targetPositions.map(idx => this.symbols[idx]);
-        const values = this.targetPositions.map(idx => this.values[idx]);
+    bounce() {
+        let bounces = 0;
+        const maxBounces = 6;
         
-        const allSame = symbols[0] === symbols[1] && symbols[1] === symbols[2];
-        if (allSame) {
-            const prize = values[0];
-            return { win: true, amount: prize.value, currency: prize.type, isJackpot: prize.value >= 100 };
-        }
-        
-        const matchCount = (symbols[0] === symbols[1] ? 1 : 0) + 
-                          (symbols[1] === symbols[2] ? 1 : 0) + 
-                          (symbols[0] === symbols[2] ? 1 : 0);
-        if (matchCount >= 1) {
-            const matchSymbol = symbols[0] === symbols[1] ? symbols[0] : symbols[1];
-            const prize = this.symbolsData.find(s => s.symbol === matchSymbol);
-            if (prize && prize.value > 0) {
-                return { win: true, amount: prize.value / 2, currency: prize.type, isJackpot: false };
+        const doBounce = () => {
+            if (bounces >= maxBounces) {
+                this.draw();
+                return;
             }
+            
+            const intensity = (1 - bounces / maxBounces) * 3;
+            for (let i = 0; i < this.canvases.length; i++) {
+                const canvas = this.canvases[i];
+                if (canvas) {
+                    const offset = Math.sin(bounces * Math.PI) * intensity;
+                    canvas.style.transform = `translateY(${offset}px)`;
+                }
+            }
+            
+            bounces++;
+            setTimeout(() => {
+                doBounce();
+            }, 30);
+        };
+        
+        doBounce();
+        
+        // إعادة التعيين بعد الاهتزاز
+        setTimeout(() => {
+            for (let i = 0; i < this.canvases.length; i++) {
+                if (this.canvases[i]) this.canvases[i].style.transform = '';
+            }
+        }, 200);
+    }
+    
+    getResult() {
+        const symbols = this.results.map(idx => this.symbolsData[idx]);
+        
+        // ثلاثة متشابهين
+        if (this.results[0] === this.results[1] && this.results[1] === this.results[2]) {
+            const prize = symbols[0];
+            return { 
+                win: true, 
+                amount: prize.value, 
+                currency: prize.type,
+                isJackpot: prize.jackpot === true || prize.value >= 100,
+                symbol: prize.symbol
+            };
         }
+        
+        // اثنان متشابهان
+        if (this.results[0] === this.results[1] || 
+            this.results[1] === this.results[2] || 
+            this.results[0] === this.results[2]) {
+            let matchIndex;
+            if (this.results[0] === this.results[1]) matchIndex = this.results[0];
+            else if (this.results[1] === this.results[2]) matchIndex = this.results[1];
+            else matchIndex = this.results[0];
+            const prize = this.symbolsData[matchIndex];
+            return { 
+                win: true, 
+                amount: prize.value * 0.5, 
+                currency: prize.type,
+                isJackpot: false,
+                symbol: prize.symbol
+            };
+        }
+        
         return { win: false, amount: 0, currency: 'TON', isJackpot: false };
+    }
+    
+    showWinLine() {
+        const winLine = document.getElementById('slotsWinLine');
+        if (winLine) {
+            winLine.classList.add('active');
+            setTimeout(() => winLine.classList.remove('active'), 1500);
+        }
     }
 }
 
-// ====== 46.6 INITIALIZATION ======
+// ====== 49. INITIALIZATION FUNCTIONS ======
 let wheelGame = null;
 let slotsGame = null;
 
@@ -4083,7 +4071,8 @@ function initWheelCanvas() {
         setTimeout(initWheelCanvas, 200);
         return;
     }
-    wheelGame = new WheelGame('wheelCanvas', WHEEL_PRIZES);
+    wheelGame = new Wheel3D('wheelCanvas');
+    console.log("✅ Wheel 3D initialized");
 }
 
 function initSlotsCanvas() {
@@ -4094,16 +4083,19 @@ function initSlotsCanvas() {
         setTimeout(initSlotsCanvas, 200);
         return;
     }
-    slotsGame = new SlotsGame(canvases, SLOTS_SYMBOLS_DATA);
+    slotsGame = new Slots3D(canvases);
+    console.log("✅ Slots 3D initialized");
 }
 
-// ====== 46.7 SPIN FUNCTIONS ======
+// ====== 50. SPIN FUNCTIONS المحسنة ======
 function spinWheelVegas(isFree) {
     if (!wheelGame) initWheelCanvas();
-    if (wheelGame.isSpinning) return;
+    if (!wheelGame || wheelGame.isSpinning) return;
     
-    VegasAudio.click();
+    VegasAudioPro.init();
+    VegasAudioPro.playClick();
     
+    // التحقق من الرصيد
     if (isFree) {
         const now = Date.now();
         const nextFree = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
@@ -4129,25 +4121,23 @@ function spinWheelVegas(isFree) {
     
     wheelGame.spin((prize) => {
         awardVegasPrize(prize);
-        userData.wheel.totalSpins++;
+        userData.wheel.totalSpins = (userData.wheel.totalSpins || 0) + 1;
         userData.wheel.jackpotCounter = (userData.wheel.jackpotCounter || 0) + 1;
-        userData.wheel.bigWinCounter = (userData.wheel.bigWinCounter || 0) + 1;
         saveUserToCache();
         updateWheelUI();
         updateUI();
     });
 }
 
-function spinSlotsGame(isFree, isTurbo) {
+function spinSlotsVegas(isFree, isTurbo) {
     if (!slotsGame) initSlotsCanvas();
-    if (slotsGame.isSpinning) {
-        console.log("Slots already spinning");
-        return;
-    }
+    if (!slotsGame || slotsGame.isSpinning) return;
     
-    VegasAudio.click();
+    VegasAudioPro.init();
+    VegasAudioPro.playClick();
     
     const price = isTurbo ? CONFIG.ECONOMY.SLOTS_TURBO_PRICE : CONFIG.ECONOMY.SLOTS_SPIN_PRICE;
+    
     if (isFree) {
         const now = Date.now();
         const nextFree = userData.slots.lastFreeSpin + CONFIG.ECONOMY.SLOTS_FREE_SPIN_INTERVAL;
@@ -4173,35 +4163,40 @@ function spinSlotsGame(isFree, isTurbo) {
     
     slotsGame.spin((result) => {
         if (result.win) {
-            userData.balances[result.currency] += result.amount;
+            // منح الجائزة
+            userData.balances[result.currency] = (userData.balances[result.currency] || 0) + result.amount;
             if (result.currency === 'TON') userData.balance = userData.balances.TON;
             userData.totalEarned += result.amount;
             addTransaction('slots', result.amount, { currency: result.currency });
-            showToastPro(`🎰 You won ${result.amount} ${result.currency}!`, 'success');
             
-            const winAmountEl = document.getElementById('slotsWinAmount');
-            if (winAmountEl) winAmountEl.textContent = `${result.amount} ${result.currency}`;
-            
+            // عرض رسالة الفوز
             let winType = 'normal';
-            if (result.isJackpot) winType = 'jackpot';
-            else if (result.amount >= 25) winType = 'big';
+            if (result.isJackpot) {
+                winType = 'jackpot';
+                VegasAudioPro.playWin(result.amount, result.currency, 'jackpot');
+            } else if (result.amount >= 10) {
+                winType = 'big';
+                VegasAudioPro.playWin(result.amount, result.currency, 'big');
+            } else {
+                VegasAudioPro.playWin(result.amount, result.currency, 'normal');
+            }
             
             showGameWinMessage(result.amount, result.currency, winType);
+            slotsGame.showWinLine();
             
-            if (result.isJackpot) {
-                JackpotTheater.play(result.amount, result.currency, 'jackpot');
-            } else if (result.amount >= 25) {
-                JackpotTheater.play(result.amount, result.currency, 'big');
-            } else if (result.amount >= 10) {
-                VegasAudio.win();
-            } else if (result.amount > 0) {
-                VegasAudio.coin();
+            // تأثير اهتزاز للشاشة للجائزة الكبيرة
+            if (result.isJackpot || result.amount >= 25) {
+                document.body.classList.add('vegas-shake');
+                setTimeout(() => document.body.classList.remove('vegas-shake'), 500);
             }
+            
+            showToastPro(`🎰 You won ${result.amount} ${result.currency}!`, 'success');
         } else {
+            VegasAudioPro.playTick(0.7, 0.08);
             showToastPro('🍀 Try again!', 'info');
-            VegasAudio.tick(0.7, 0.08);
         }
-        userData.slots.totalSpins++;
+        
+        userData.slots.totalSpins = (userData.slots.totalSpins || 0) + 1;
         saveUserToCache();
         updateSlotsUI();
         updateUI();
@@ -4211,57 +4206,53 @@ function spinSlotsGame(isFree, isTurbo) {
 function awardVegasPrize(prize) {
     if (prize.goodluck) {
         showToastPro('🍀 GOOD LUCK! Try again!', 'info');
-        VegasAudio.coin();
+        VegasAudioPro.playTick(0.7, 0.1);
         userData.wheel.freeSpins = (userData.wheel.freeSpins || 0) + 1;
         saveUserToCache();
         updateWheelUI();
         return;
     }
+    
     if (prize.freespin) {
         showToastPro('🆓 FREE SPIN STORED!', 'success');
-        VegasAudio.coin();
+        VegasAudioPro.playCoin();
         userData.wheel.freeSpins = (userData.wheel.freeSpins || 0) + 1;
         saveUserToCache();
         updateWheelUI();
         return;
     }
-    if (prize.jackpot || prize.mega) {
-        const currency = prize.currency || prize.type;
-        userData.balances[currency] += prize.amount;
-        if (currency === 'TON') userData.balance = userData.balances.TON;
-        userData.totalEarned += prize.amount;
-        addTransaction('wheel', prize.amount, { currency, jackpot: true });
-        
-        let winType = prize.mega ? 'mega' : 'jackpot';
-        showGameWinMessage(prize.amount, currency, winType);
-        JackpotTheater.play(prize.amount, currency, winType);
-        
-        userData.wheel.jackpotWon = (userData.wheel.jackpotWon || 0) + 1;
-        saveUserToCache();
-        updateUI();
-        updateWheelUI();
-        return;
-    }
+    
     const currency = prize.type;
-    userData.balances[currency] += prize.amount;
+    const amount = prize.amount;
+    
+    userData.balances[currency] = (userData.balances[currency] || 0) + amount;
     if (currency === 'TON') userData.balance = userData.balances.TON;
-    userData.totalEarned += prize.amount;
-    addTransaction('wheel', prize.amount, { currency });
+    userData.totalEarned += amount;
+    addTransaction('wheel', amount, { currency, jackpot: prize.jackpot || prize.mega });
     
     let winType = 'normal';
-    if (prize.amount >= 25) winType = 'jackpot';
-    else if (prize.amount >= 10) winType = 'big';
-    
-    showGameWinMessage(prize.amount, currency, winType);
-    
-    if (prize.amount >= 25) {
-        JackpotTheater.play(prize.amount, currency, 'big');
-    } else if (prize.amount >= 10) {
-        VegasAudio.win();
-    } else if (prize.amount > 0) {
-        VegasAudio.coin();
+    if (prize.mega) {
+        winType = 'mega';
+        VegasAudioPro.playWin(amount, currency, 'jackpot');
+    } else if (prize.jackpot) {
+        winType = 'jackpot';
+        VegasAudioPro.playWin(amount, currency, 'jackpot');
+    } else if (amount >= 10) {
+        winType = 'big';
+        VegasAudioPro.playWin(amount, currency, 'big');
+    } else {
+        VegasAudioPro.playWin(amount, currency, 'normal');
     }
-    hapticFeedback(prize.amount >= 10 ? 'medium' : 'light');
+    
+    showGameWinMessage(amount, currency, winType);
+    
+    // تأثير اهتزاز للشاشة
+    if (prize.jackpot || prize.mega) {
+        document.body.classList.add('vegas-shake');
+        setTimeout(() => document.body.classList.remove('vegas-shake'), 500);
+    }
+    
+    hapticFeedback(amount >= 10 ? 'heavy' : 'light');
     saveUserToCache();
     updateUI();
     updateWheelUI();
@@ -4273,120 +4264,81 @@ function showGameWinMessage(amount, currency, type) {
     
     const messageDiv = document.createElement('div');
     messageDiv.className = `game-win-message ${type}`;
-    let text = '';
+    
     let icon = '';
-    let bgColor = '#000000aa';
-    let borderColor = '#ffd966';
+    let text = '';
     
     if (type === 'mega') {
         icon = '👑👑👑';
         text = `MEGA JACKPOT! ${amount} ${currency}`;
-        bgColor = '#ff44cccc';
-        borderColor = '#ffff00';
     } else if (type === 'jackpot') {
         icon = '🎰🎰🎰';
         text = `JACKPOT! ${amount} ${currency}`;
-        bgColor = '#ff4444cc';
-        borderColor = '#ffaa00';
     } else if (type === 'big') {
         icon = '🔥🔥';
         text = `BIG WIN! ${amount} ${currency}`;
-        bgColor = '#ff8800cc';
-        borderColor = '#ffdd00';
     } else {
         icon = '🎉';
         text = `YOU WON! ${amount} ${currency}`;
-        bgColor = '#00aaffcc';
-        borderColor = '#88ff88';
     }
     
     messageDiv.innerHTML = `<span class="win-icon">${icon}</span><span class="win-text">${text}</span>`;
-    messageDiv.style.position = 'absolute';
-    messageDiv.style.top = '70px';
-    messageDiv.style.left = '50%';
-    messageDiv.style.transform = 'translateX(-50%)';
-    messageDiv.style.zIndex = '200';
-    messageDiv.style.backgroundColor = bgColor;
-    messageDiv.style.color = '#fff';
-    messageDiv.style.padding = '10px 24px';
-    messageDiv.style.borderRadius = '50px';
-    messageDiv.style.border = `2px solid ${borderColor}`;
-    messageDiv.style.boxShadow = '0 0 30px rgba(0,0,0,0.5)';
-    messageDiv.style.fontWeight = 'bold';
-    messageDiv.style.fontSize = '1.2rem';
-    messageDiv.style.whiteSpace = 'nowrap';
-    messageDiv.style.backdropFilter = 'blur(8px)';
-    messageDiv.style.display = 'flex';
-    messageDiv.style.alignItems = 'center';
-    messageDiv.style.gap = '12px';
-    messageDiv.style.animation = 'slideDownFadeOut 3s ease forwards';
-    document.body.appendChild(messageDiv);
+    messageDiv.style.cssText = `
+        position: fixed;
+        top: 70px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 200;
+        background: ${type === 'mega' ? 'rgba(255,68,68,0.9)' : type === 'jackpot' ? 'rgba(255,68,68,0.8)' : type === 'big' ? 'rgba(249,115,22,0.8)' : 'rgba(0,170,255,0.8)'};
+        color: #fff;
+        padding: 12px 24px;
+        border-radius: 50px;
+        border: 2px solid ${type === 'mega' ? '#ffd700' : type === 'jackpot' ? '#ffaa00' : '#00f2ff'};
+        box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        font-weight: bold;
+        font-size: 1.2rem;
+        white-space: nowrap;
+        backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        animation: slideDownFadeOut 3s ease forwards;
+    `;
     
-    if (!document.querySelector('#winMessageStyle')) {
-        const style = document.createElement('style');
-        style.id = 'winMessageStyle';
-        style.textContent = `
-            @keyframes slideDownFadeOut {
-                0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-                15% { opacity: 1; transform: translateX(-50%) translateY(0); }
-                85% { opacity: 1; transform: translateX(-50%) translateY(0); }
-                100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-            }
-            @keyframes screenShakeHeavy {
-                0%,100% { transform: translate(0,0); }
-                10% { transform: translate(-10px,-8px); }
-                20% { transform: translate(10px,8px); }
-                30% { transform: translate(-8px,-6px); }
-                40% { transform: translate(8px,6px); }
-                50% { transform: translate(-5px,-4px); }
-                60% { transform: translate(5px,4px); }
-                70% { transform: translate(-3px,-2px); }
-                80% { transform: translate(3px,2px); }
-            }
-            .screen-shake-heavy { animation: screenShakeHeavy 0.5s cubic-bezier(0.36,0.07,0.19,0.97) forwards; }
-            .vegas-shake { animation: vegasShake 0.5s ease-in-out; }
-            @keyframes vegasShake {
-                0%,100% { transform: translate(0,0); }
-                10% { transform: translate(-5px,-5px); }
-                20% { transform: translate(5px,5px); }
-                30% { transform: translate(-5px,5px); }
-                40% { transform: translate(5px,-5px); }
-                50% { transform: translate(-3px,-3px); }
-                60% { transform: translate(3px,3px); }
-                70% { transform: translate(-3px,3px); }
-                80% { transform: translate(3px,-3px); }
-            }
-        `;
-        document.head.appendChild(style);
-    }
+    document.body.appendChild(messageDiv);
     setTimeout(() => messageDiv.remove(), 3000);
 }
 
-function showToastPro(message, type = 'info', duration = 3000) {
+function showToastPro(message, type = 'info') {
     const container = document.getElementById('toastContainer');
     if (!container) return;
+    
     const existing = container.querySelector('.toast-pro');
     if (existing) {
         existing.classList.add('closing');
         setTimeout(() => existing.remove(), 300);
     }
+    
     const toast = document.createElement('div');
     toast.className = `toast-pro ${type}`;
     let icon = 'fa-circle-info';
     if (type === 'success') icon = 'fa-circle-check';
     else if (type === 'error') icon = 'fa-circle-xmark';
     else if (type === 'warning') icon = 'fa-circle-exclamation';
+    
     toast.innerHTML = `<i class="fa-regular ${icon}"></i><span class="message">${message}</span>`;
     container.appendChild(toast);
+    
     if (type === 'error') hapticFeedback('error');
     else if (type === 'success') hapticFeedback('success');
+    
     setTimeout(() => {
         toast.classList.add('closing');
         setTimeout(() => toast.remove(), 300);
-    }, duration);
+    }, 3000);
 }
 
-// ====== 47. OPEN FUNCTIONS ======
+// ====== 51. OPEN FUNCTIONS ======
 function openProfileFromAnywhere() {
     if (currentPage === 'wheelGame' || currentPage === 'slotsGame') exitGame();
     setTimeout(() => showPage('profile'), 300);
@@ -4396,7 +4348,7 @@ function openDepositModal() { if (currentPage !== 'profile') openProfileFromAnyw
 function openSwapModal() { if (currentPage !== 'profile') openProfileFromAnywhere(); setTimeout(() => showSwapModal(), 400); }
 function openHistoryModal() { if (currentPage !== 'profile') openProfileFromAnywhere(); setTimeout(() => showHistory(), 400); }
 
-// ====== 48. INITIALIZATION ======
+// ====== 52. INITIALIZATION ======
 document.addEventListener('DOMContentLoaded', async () => {
     hideAllModals();
     if (currentLanguage === 'ar') { document.body.classList.add('rtl'); document.documentElement.dir = 'rtl'; }
@@ -4420,7 +4372,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     startFloatingNotifications();
     setTimeout(showRandomSticker, 1000);
     updateUserDisplay();
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v21.0");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v22.0");
     console.log("✅ All systems ready! 🚀");
 });
 
@@ -4438,10 +4390,10 @@ document.addEventListener('visibilitychange', () => {
     else { startMining(); if (currentPage === 'mining') startFloatingNotifications(); }
 });
 document.addEventListener('click', () => { 
-    if (typeof VegasAudio !== 'undefined' && !VegasAudio.isInitialized) VegasAudio.init(); 
+    if (typeof VegasAudioPro !== 'undefined' && !VegasAudioPro.isInitialized) VegasAudioPro.init(); 
 }, { once: true });
 
-// ====== 49. EXPORT FUNCTIONS ======
+// ====== 53. EXPORT FUNCTIONS ======
 window.showPage = showPage;
 window.showMarket = ()=>showPage('market');
 window.showWallet = showWallet;
@@ -4498,7 +4450,7 @@ window.openWheelGame = openWheelGame;
 window.openSlotsGame = openSlotsGame;
 window.exitGame = exitGame;
 window.spinWheelVegas = spinWheelVegas;
-window.spinSlotsGame = spinSlotsGame;
+window.spinSlotsVegas = spinSlotsVegas;
 window.showToastPro = showToastPro;
 window.openProfileFromAnywhere = openProfileFromAnywhere;
 window.openWithdrawModal = openWithdrawModal;
