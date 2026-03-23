@@ -217,7 +217,7 @@
                                     <th data-i18n="table.3days">3 Days</th>
                                     <th data-i18n="table.7days">7 Days</th>
                                     <th data-i18n="table.15days">15 Days</th>
-                                 </tr>
+                                  </tr>
                             </thead>
                             <tbody id="plansTableBody"></tbody>
                         </table>
@@ -253,6 +253,16 @@
             <!-- CASINO LOBBY PAGE -->
             <div class="page" id="casinoPage">
                 <h2><i class="fas fa-dice"></i> <span data-i18n="casino.title">Casino Games</span></h2>
+                
+                <!-- Daily Challenges Section -->
+                <div class="daily-challenges-section" id="dailyChallengesSection">
+                    <div class="section-header">
+                        <h3><i class="fas fa-calendar-day"></i> Daily Challenges</h3>
+                        <span class="challenge-reward-timer" id="challengeTimer">Resets in 12:34:56</span>
+                    </div>
+                    <div class="challenges-grid" id="challengesGrid"></div>
+                </div>
+                
                 <div class="casino-card" id="wheelCard" onclick="openWheelGame()">
                     <div class="casino-card-header">
                         <span class="casino-icon">🎡</span>
@@ -261,13 +271,19 @@
                     </div>
                     <div class="casino-card-body">
                         <div class="casino-preview wheel-preview">
-                            <div class="mini-wheel-preview">🎡</div>
+                            <div class="mini-wheel" id="miniWheelPreview">
+                                <div class="mini-wheel-segment" style="transform: rotate(0deg); background: #0088cc;">🎡</div>
+                            </div>
                         </div>
                         <div class="casino-info">
                             <div class="casino-price"><i class="fas fa-coins"></i> <span data-i18n="wheel.price">0.25 TON</span></div>
                             <div class="casino-free" id="wheelFreeTimer"><i class="fas fa-clock"></i> 22h 17m</div>
                         </div>
-                        <div class="casino-jackpot">JACKPOT 100 TON</div>
+                        <div class="casino-heat-bar" id="wheelHeatBar">
+                            <div class="heat-fill" style="width: 0%;"></div>
+                            <span class="heat-text">Heat: 0%</span>
+                        </div>
+                        <div class="casino-jackpot">🔥 JACKPOT 100 TON 🔥</div>
                     </div>
                     <div class="casino-card-footer">
                         <button class="casino-play-btn" onclick="event.stopPropagation(); openWheelGame()" data-i18n="casino.play">Play Now</button>
@@ -282,16 +298,16 @@
                     </div>
                     <div class="casino-card-body">
                         <div class="casino-preview slots-preview">
-                            <div class="mini-reel-preview">🍒</div>
-                            <div class="mini-reel-preview">💎</div>
-                            <div class="mini-reel-preview">7️⃣</div>
+                            <div class="mini-reel">🍒</div>
+                            <div class="mini-reel">💎</div>
+                            <div class="mini-reel">7️⃣</div>
                         </div>
                         <div class="casino-info">
                             <div class="casino-price"><i class="fas fa-coins"></i> <span data-i18n="slots.price">0.15 TON</span></div>
                             <div class="casino-turbo"><i class="fas fa-bolt"></i> <span data-i18n="slots.turboPrice">0.30 TON</span></div>
                             <div class="casino-free" id="slotsFreeTimer"><i class="fas fa-clock"></i> 11h 23m</div>
                         </div>
-                        <div class="casino-jackpot">JACKPOT 100 TON</div>
+                        <div class="casino-jackpot">💎 JACKPOT 100 TON 💎</div>
                     </div>
                     <div class="casino-card-footer">
                         <button class="casino-play-btn" onclick="event.stopPropagation(); openSlotsGame()" data-i18n="casino.play">Play Now</button>
@@ -348,6 +364,7 @@
                     <div class="stat-item"><span class="stat-label">Mining Days</span><span class="stat-value" id="miningDays">47</span></div>
                     <div class="stat-item"><span class="stat-label">Best Streak</span><span class="stat-value" id="bestStreak">12</span></div>
                     <div class="stat-item"><span class="stat-label">Total Referrals</span><span class="stat-value" id="totalReferralsStats">8</span></div>
+                    <div class="stat-item"><span class="stat-label">Casino Winnings</span><span class="stat-value" id="casinoWinnings">0</span></div>
                 </div>
 
                 <div class="chart-container"><div class="chart-bars" id="chartBars"></div></div>
@@ -369,22 +386,32 @@
                 <div id="referralMilestonesContainer" class="referral-milestones-grid"></div>
             </div>
 
-            <!-- WHEEL GAME PAGE -->
+            <!-- WHEEL GAME PAGE - PROFESSIONAL VERSION -->
             <div class="page" id="wheelGamePage">
                 <div class="game-page-header">
                     <button class="back-btn" onclick="exitGame()"><i class="fas fa-arrow-left"></i></button>
                     <h2><i class="fas fa-ferris-wheel"></i> <span data-i18n="wheel.title">Lucky Wheel</span></h2>
                     <div class="game-stats">
                         <div class="stat-badge"><i class="fas fa-ticket-alt"></i><span id="wheelGameSpins">0</span></div>
+                        <div class="stat-badge heat-badge"><i class="fas fa-fire"></i><span id="wheelHeatDisplay">0%</span></div>
                     </div>
                 </div>
                 <div class="wheel-game-container">
                     <div class="cosmic-bg"></div>
-                    <div class="wheel-casino-container-pro">
-                        <canvas id="wheelCanvas" width="320" height="320" class="wheel-canvas"></canvas>
-                        <div class="wheel-pointer-pro"><i class="fas fa-chevron-down"></i></div>
-                        <div class="wheel-center-pro"><i class="fas fa-star"></i></div>
+                    
+                    <!-- Heat Indicator Ring -->
+                    <div class="heat-ring" id="heatRing">
+                        <div class="heat-ring-fill" id="heatRingFill"></div>
                     </div>
+                    
+                    <div class="wheel-casino-container-pro">
+                        <canvas id="wheelCanvas" width="500" height="500" class="wheel-canvas"></canvas>
+                        <div class="wheel-pointer-pro"><i class="fas fa-chevron-down"></i></div>
+                        <div class="wheel-center-pro" id="wheelCenterBtn">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    
                     <div class="wheel-effects-panel">
                         <div class="speed-meter">
                             <div class="meter-label">SPEED</div>
@@ -393,10 +420,15 @@
                             </div>
                         </div>
                         <div class="jackpot-counter">
-                            <div class="counter-label">JACKPOT</div>
-                            <div class="counter-value" id="wheelJackpotCounter">4/15</div>
+                            <div class="counter-label">NEXT BIG WIN</div>
+                            <div class="counter-value" id="wheelBigWinCounter">15</div>
+                        </div>
+                        <div class="jackpot-counter">
+                            <div class="counter-label">NEXT JACKPOT</div>
+                            <div class="counter-value" id="wheelJackpotCounter">20</div>
                         </div>
                     </div>
+                    
                     <div class="game-controls-pro">
                         <button class="game-btn free" id="wheelFreeSpin" onclick="spinWheelVegas(true)">
                             <i class="fas fa-gift"></i>
@@ -408,10 +440,12 @@
                             <small data-i18n="wheel.price">0.25 TON</small>
                         </button>
                     </div>
+                    
                     <div class="prize-legend">
                         <h4>🏆 Prize Segments</h4>
                         <div class="legend-grid" id="wheelPrizeLegend"></div>
                     </div>
+                    
                     <div class="packs-section">
                         <div class="section-header">
                             <h3><i class="fas fa-gem"></i> <span data-i18n="casino.packs">Buy Spin Packs</span></h3>
@@ -439,6 +473,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="auto-spin-panel">
                         <label class="toggle-switch">
                             <input type="checkbox" id="wheelPageAutoSpin">
@@ -449,13 +484,14 @@
                 </div>
             </div>
 
-            <!-- SLOTS GAME PAGE -->
+            <!-- SLOTS GAME PAGE - PROFESSIONAL VERSION -->
             <div class="page" id="slotsGamePage">
                 <div class="game-page-header">
                     <button class="back-btn" onclick="exitGame()"><i class="fas fa-arrow-left"></i></button>
                     <h2><i class="fas fa-slot-machine"></i> <span data-i18n="slots.title">Slot Machine</span></h2>
                     <div class="game-stats">
                         <div class="stat-badge"><i class="fas fa-ticket-alt"></i><span id="slotsGameSpins">0</span></div>
+                        <div class="stat-badge"><i class="fas fa-chart-line"></i><span id="slotsStreakCounter">0</span></div>
                     </div>
                 </div>
                 <div class="slots-game-container">
@@ -466,15 +502,28 @@
                                 <div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div>
                             </div>
                             <div class="reels-container-pro" id="slotReelsContainer">
-                                <canvas id="reel1Canvas" width="100" height="330" class="slot-reel-canvas"></canvas>
-                                <canvas id="reel2Canvas" width="100" height="330" class="slot-reel-canvas"></canvas>
-                                <canvas id="reel3Canvas" width="100" height="330" class="slot-reel-canvas"></canvas>
+                                <div class="slot-reel-wrapper" id="reel1Wrapper">
+                                    <div class="slot-reel-pro" id="reel1"></div>
+                                    <div class="reel-glow"></div>
+                                </div>
+                                <div class="slot-reel-wrapper" id="reel2Wrapper">
+                                    <div class="slot-reel-pro" id="reel2"></div>
+                                    <div class="reel-glow"></div>
+                                </div>
+                                <div class="slot-reel-wrapper" id="reel3Wrapper">
+                                    <div class="slot-reel-pro" id="reel3"></div>
+                                    <div class="reel-glow"></div>
+                                </div>
                             </div>
                             <div class="win-line" id="slotsWinLine"></div>
                         </div>
                         <div class="win-display" id="slotsWinDisplay">
-                            <span class="win-label">WIN</span>
+                            <span class="win-label">LAST WIN</span>
                             <span class="win-amount" id="slotsWinAmount">0.00</span>
+                        </div>
+                        <div class="slots-streak-info">
+                            <span>Spins without win: <strong id="slotsNoWinStreak">0</strong></span>
+                            <span>Free spin in: <strong id="slotsFreeSpinCounter">10</strong></span>
                         </div>
                     </div>
                     <div class="game-controls-pro">
