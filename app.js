@@ -1,7 +1,7 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v24.0
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v25.0
 // مع كازينو احترافي متكامل - عجلة حظ متطورة + سلوتس احترافية
-// نظام حرارة متدرج + تحديات يومية + تأثيرات صوتية وبصرية
+// نظام حرارة متدرج + تحديات يومية + تأثيرات صوتية وبصرية أسطورية
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -103,7 +103,14 @@ const CONFIG = {
         STREAK_BONUS: { 3: 1.05, 7: 1.10, 30: 1.25 },
         DAILY_LOGIN_BONUS: [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.10],
         MAX_WITHDRAW_DAILY: 100,
-        MAX_DEPOSIT_DAILY: 1000
+        MAX_DEPOSIT_DAILY: 1000,
+        // التحسينات الجديدة
+        PROGRESSIVE_JACKPOT_START: 100,
+        PROGRESSIVE_JACKPOT_INCREMENT: 0.01,
+        HEAT_INCREMENT_ON_LOSS: 12,
+        HEAT_DECREMENT_ON_SMALL_WIN: 10,
+        HEAT_RESET_ON_BIG_WIN: 0,
+        AUTO_SPIN_DELAY: 2000
     },
     CMC_ICONS: {
         TON: "https://s2.coinmarketcap.com/static/img/coins/64x64/11419.png",
@@ -310,7 +317,14 @@ const translations = {
         'withdraw.network': 'Select Network',
         'withdraw.fee': 'Network fee: {fee} {currency}',
         'challenge.completed': 'Challenge Completed!',
-        'challenge.reward': 'You earned {reward} {unit}!'
+        'challenge.reward': 'You earned {reward} {unit}!',
+        // التحسينات الجديدة
+        'heat.meter': 'HEAT METER',
+        'heat.tip': 'More losses = bigger wins!',
+        'progressive.jackpot': 'PROGRESSIVE JACKPOT',
+        'auto.spin': 'Auto Spin',
+        'spins.until.big': 'Spins until BIG WIN',
+        'spins.until.jackpot': 'Spins until JACKPOT'
     },
     ar: {
         'app.name': 'كازينو تعدين TON',
@@ -445,7 +459,14 @@ const translations = {
         'withdraw.network': 'اختر الشبكة',
         'withdraw.fee': 'رسوم الشبكة: {fee} {currency}',
         'challenge.completed': 'تم إكمال التحدي!',
-        'challenge.reward': 'لقد ربحت {reward} {unit}!'
+        'challenge.reward': 'لقد ربحت {reward} {unit}!',
+        // التحسينات الجديدة
+        'heat.meter': 'مقياس الحرارة',
+        'heat.tip': 'خسائر أكثر = أرباح أكبر!',
+        'progressive.jackpot': 'الجاكبوت التراكمي',
+        'auto.spin': 'دوران تلقائي',
+        'spins.until.big': 'لفات حتى الفوز الكبير',
+        'spins.until.jackpot': 'لفات حتى الجاكبوت'
     }
 };
 
@@ -721,7 +742,9 @@ let userData = {
         totalWon: 0,
         biggestWin: 0,
         lastWinDate: null
-    }
+    },
+    // التحسينات الجديدة
+    progressiveJackpot: CONFIG.ECONOMY.PROGRESSIVE_JACKPOT_START
 };
 
 userData.balance = userData.balances.TON;
@@ -897,6 +920,7 @@ function showPage(page) {
         updateWheelUI(); 
         updateSlotsUI(); 
         renderDailyChallenges();
+        updateProgressiveJackpotDisplay();
     }
     showRandomSticker();
 }
@@ -909,6 +933,9 @@ function openWheelGame() {
     setTimeout(() => {
         initWheelCanvas();
         updateWheelUI();
+        updateHeatMeter('wheel');
+        updateGuaranteedCounters();
+        updateProgressiveJackpotDisplay();
     }, 100);
 }
 
@@ -920,6 +947,8 @@ function openSlotsGame() {
     setTimeout(() => {
         initSlotsCanvas();
         updateSlotsUI();
+        updateHeatMeter('slots');
+        updateProgressiveJackpotDisplay();
     }, 100);
 }
 
@@ -928,6 +957,7 @@ function exitGame() {
     const header = document.getElementById('mainHeader');
     if (header) header.style.display = 'flex';
     showPage('casino');
+    stopAutoSpin();
 }
 
 function showWallet() {
@@ -1036,6 +1066,43 @@ function createParticles() {
         p.style.animationDelay = Math.random() + 's';
         container.appendChild(p);
         setTimeout(() => p.remove(), 2000);
+    }
+}
+
+// تأثيرات بصرية جديدة
+function createScreenFlash() {
+    const flash = document.createElement('div');
+    flash.className = 'screen-flash';
+    document.body.appendChild(flash);
+    setTimeout(() => flash.remove(), 300);
+}
+
+function createScreenShake() {
+    document.body.classList.add('screen-shake');
+    setTimeout(() => document.body.classList.remove('screen-shake'), 500);
+}
+
+function createGoldExplosion() {
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'gold-particle';
+        particle.style.left = Math.random() * window.innerWidth + 'px';
+        particle.style.top = Math.random() * window.innerHeight + 'px';
+        particle.style.setProperty('--tx', (Math.random() - 0.5) * 200 + 'px');
+        particle.style.setProperty('--ty', (Math.random() - 0.5) * 200 + 'px');
+        document.body.appendChild(particle);
+        setTimeout(() => particle.remove(), 1000);
+    }
+}
+
+function createConfetti() {
+    for (let i = 0; i < 80; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        document.body.appendChild(confetti);
+        confetti.animate([{ top: '-10px' }, { top: '100vh' }], { duration: 2000 + Math.random() * 2000 }).onfinish = () => confetti.remove();
     }
 }
 
@@ -2729,6 +2796,7 @@ async function saveToFirebase() {
             dailyLogin: userData.dailyLogin,
             dailyChallenges: userData.dailyChallenges,
             casinoStats: userData.casinoStats,
+            progressiveJackpot: userData.progressiveJackpot,
             lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
         }, { merge: true });
     } catch (e) {}
@@ -2745,7 +2813,6 @@ function initDailyChallenges() {
             streak: 0
         };
     } else if (userData.dailyChallenges.date !== today) {
-        // Reset challenges for new day
         const yesterday = userData.dailyChallenges.date;
         if (new Date(yesterday).toDateString() === new Date(Date.now() - 86400000).toDateString()) {
             userData.dailyChallenges.streak++;
@@ -2772,7 +2839,6 @@ function renderDailyChallenges() {
         let progress = 0;
         let currentValue = 0;
         
-        // Calculate progress based on challenge type
         if (challenge.type === 'wheel') {
             currentValue = userData.wheel.totalSpins || 0;
             if (challenge.id === 'wheel_spins') progress = Math.min(100, (currentValue / challenge.target) * 100);
@@ -2804,7 +2870,6 @@ function renderDailyChallenges() {
         </div>`;
     });
     
-    // Add streak bonus
     html += `<div class="streak-bonus-card">
         <div class="streak-icon">🔥</div>
         <div class="streak-info">
@@ -2828,7 +2893,6 @@ async function claimChallenge(challengeId, reward, unit) {
         return;
     }
     
-    // Add reward
     if (unit === 'TON') {
         userData.balances.TON += reward;
         userData.balance = userData.balances.TON;
@@ -2887,8 +2951,113 @@ function checkChallengeProgress(type, amount = 0) {
     }
 }
 
-// ====== 37. WHEEL GAME (Canvas with proper rotation) ======
+// ====== 37. WHEEL GAME (Canvas with proper rotation and enhanced effects) ======
 let wheelGame = null;
+let autoSpinInterval = null;
+let currentAutoSpinGame = null;
+
+function stopAutoSpin() {
+    if (autoSpinInterval) {
+        clearInterval(autoSpinInterval);
+        autoSpinInterval = null;
+        currentAutoSpinGame = null;
+        const autoSpinToggle = document.getElementById('autoSpinToggle');
+        if (autoSpinToggle) autoSpinToggle.checked = false;
+        showToastPro('Auto Spin stopped', 'info');
+    }
+}
+
+function toggleAutoSpin(gameType, isTurbo = false) {
+    if (autoSpinInterval && currentAutoSpinGame === gameType) {
+        stopAutoSpin();
+    } else {
+        if (autoSpinInterval) stopAutoSpin();
+        currentAutoSpinGame = gameType;
+        autoSpinInterval = setInterval(() => {
+            if (gameType === 'wheel') {
+                if ((userData.wheel.purchasedSpins + userData.wheel.freeSpins) <= 0 && userData.balances.TON < CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
+                    stopAutoSpin();
+                    showToastPro('Auto Spin stopped: No spins left', 'warning');
+                    return;
+                }
+                spinWheelVegas(false);
+            } else if (gameType === 'slots') {
+                if ((userData.slots.purchasedSpins + userData.slots.freeSpins) <= 0 && userData.balances.TON < (isTurbo ? CONFIG.ECONOMY.SLOTS_TURBO_PRICE : CONFIG.ECONOMY.SLOTS_SPIN_PRICE)) {
+                    stopAutoSpin();
+                    showToastPro('Auto Spin stopped: No spins left', 'warning');
+                    return;
+                }
+                spinSlotsGame(false, isTurbo);
+            }
+        }, CONFIG.ECONOMY.AUTO_SPIN_DELAY);
+        showToastPro('Auto Spin started', 'success');
+    }
+}
+
+function updateHeatMeter(game) {
+    const heatLevel = game === 'wheel' ? (userData.wheel.heatLevel || 0) : (userData.slots.heatLevel || 0);
+    const heatFill = document.getElementById(`${game}HeatFill`);
+    const heatPercent = document.getElementById(`${game}HeatPercent`);
+    
+    if (heatFill) {
+        heatFill.style.width = `${Math.min(100, heatLevel)}%`;
+        let color = '#22c55e';
+        if (heatLevel > 70) color = '#ef4444';
+        else if (heatLevel > 40) color = '#fbbf24';
+        heatFill.style.background = `linear-gradient(90deg, ${color}, #ffaa44)`;
+    }
+    if (heatPercent) {
+        heatPercent.textContent = `${Math.floor(heatLevel)}%`;
+    }
+}
+
+function updateGuaranteedCounters() {
+    const bigCounter = document.getElementById('wheelBigWinCounter');
+    const jackpotCounter = document.getElementById('wheelJackpotCounter');
+    
+    if (bigCounter) {
+        const left = CONFIG.ECONOMY.WHEEL_GUARANTEED_MEDIUM_EVERY - (userData.wheel.spinsSinceLastMedium || 0);
+        bigCounter.textContent = left;
+    }
+    if (jackpotCounter) {
+        const left = CONFIG.ECONOMY.WHEEL_GUARANTEED_BIG_EVERY - (userData.wheel.spinsSinceLastBig || 0);
+        jackpotCounter.textContent = left;
+    }
+}
+
+function updateProgressiveJackpotDisplay() {
+    const jackpotElements = document.querySelectorAll('.progressive-jackpot-amount');
+    jackpotElements.forEach(el => {
+        el.textContent = userData.progressiveJackpot.toFixed(2);
+    });
+}
+
+function addToProgressiveJackpot(amount) {
+    userData.progressiveJackpot += CONFIG.ECONOMY.PROGRESSIVE_JACKPOT_INCREMENT;
+    updateProgressiveJackpotDisplay();
+    saveUserToCache();
+}
+
+function awardProgressiveJackpot() {
+    const amount = userData.progressiveJackpot;
+    userData.balances.TON += amount;
+    userData.balance = userData.balances.TON;
+    userData.totalEarned += amount;
+    userData.casinoStats.totalWon += amount;
+    if (amount > (userData.casinoStats.biggestWin || 0)) userData.casinoStats.biggestWin = amount;
+    
+    addTransaction('progressive_jackpot', amount, { currency: 'TON' });
+    showToastPro(`👑 PROGRESSIVE JACKPOT! You won ${amount.toFixed(2)} TON!`, 'success');
+    createGoldExplosion();
+    createScreenFlash();
+    createScreenShake();
+    hapticFeedback('heavy');
+    VegasAudio.jackpotExtended();
+    
+    userData.progressiveJackpot = CONFIG.ECONOMY.PROGRESSIVE_JACKPOT_START;
+    updateProgressiveJackpotDisplay();
+    saveUserToCache();
+}
 
 class WheelGameClass {
     constructor(canvasId, prizes) {
@@ -2933,13 +3102,6 @@ class WheelGameClass {
         
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
-        // Outer glow
-        ctx.shadowBlur = 0;
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius + 6, 0, 2 * Math.PI);
-        ctx.fillStyle = 'rgba(0,0,0,0.3)';
-        ctx.fill();
-        
         for (let i = 0; i < this.prizes.length; i++) {
             const prize = this.prizes[i];
             const startAngle = i * this.segmentAngle + this.rotation;
@@ -2950,7 +3112,6 @@ class WheelGameClass {
             ctx.arc(centerX, centerY, radius, startAngle, endAngle);
             ctx.closePath();
             
-            // Gradient fill
             const grad = ctx.createLinearGradient(
                 centerX + Math.cos(startAngle) * radius * 0.3,
                 centerY + Math.sin(startAngle) * radius * 0.3,
@@ -2962,7 +3123,6 @@ class WheelGameClass {
             ctx.fillStyle = grad;
             ctx.fill();
             
-            // Border
             ctx.beginPath();
             ctx.moveTo(centerX, centerY);
             ctx.arc(centerX, centerY, radius, startAngle, endAngle);
@@ -2970,7 +3130,6 @@ class WheelGameClass {
             ctx.lineWidth = 1.5;
             ctx.stroke();
             
-            // Draw text/icon
             const midAngle = startAngle + this.segmentAngle / 2;
             const textRadius = radius * 0.65;
             const x = centerX + Math.cos(midAngle) * textRadius;
@@ -2996,7 +3155,6 @@ class WheelGameClass {
             ctx.restore();
         }
         
-        // Center decoration
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius * 0.12, 0, 2 * Math.PI);
         const centerGrad = ctx.createRadialGradient(centerX - 5, centerY - 5, 3, centerX, centerY, radius * 0.12);
@@ -3025,13 +3183,11 @@ class WheelGameClass {
     spin(callback, isFree = false) {
         if (this.isSpinning) return;
         
-        // Check for guaranteed wins based on heat system
         let prize = null;
         const spinsSinceLastMedium = userData.wheel.spinsSinceLastMedium || 0;
         const spinsSinceLastBig = userData.wheel.spinsSinceLastBig || 0;
         
         if (spinsSinceLastBig >= CONFIG.ECONOMY.WHEEL_GUARANTEED_BIG_EVERY) {
-            // Guaranteed big win (25+ TON)
             const bigPrizes = this.prizes.filter(p => p.effect === 'jackpot' || p.effect === 'mega' || (p.amount >= 25));
             if (bigPrizes.length) {
                 prize = bigPrizes[Math.floor(Math.random() * bigPrizes.length)];
@@ -3039,7 +3195,6 @@ class WheelGameClass {
                 userData.wheel.heatLevel = 0;
             }
         } else if (spinsSinceLastMedium >= CONFIG.ECONOMY.WHEEL_GUARANTEED_MEDIUM_EVERY) {
-            // Guaranteed medium win (5-25 TON)
             const mediumPrizes = this.prizes.filter(p => p.effect === 'big' || p.effect === 'nice' || (p.amount >= 5 && p.amount < 25));
             if (mediumPrizes.length) {
                 prize = mediumPrizes[Math.floor(Math.random() * mediumPrizes.length)];
@@ -3047,18 +3202,16 @@ class WheelGameClass {
                 userData.wheel.heatLevel = Math.max(0, userData.wheel.heatLevel - 30);
             }
         } else {
-            // Normal random selection with heat influence
             prize = this.selectPrize();
             userData.wheel.spinsSinceLastMedium = (userData.wheel.spinsSinceLastMedium || 0) + 1;
             userData.wheel.spinsSinceLastBig = (userData.wheel.spinsSinceLastBig || 0) + 1;
             
-            // Increase heat on small wins
             if (prize.amount < 2) {
-                userData.wheel.heatLevel = Math.min(100, (userData.wheel.heatLevel || 0) + 8);
+                userData.wheel.heatLevel = Math.min(100, (userData.wheel.heatLevel || 0) + CONFIG.ECONOMY.HEAT_INCREMENT_ON_LOSS);
             } else if (prize.amount < 10) {
-                userData.wheel.heatLevel = Math.max(0, (userData.wheel.heatLevel || 0) - 5);
+                userData.wheel.heatLevel = Math.max(0, (userData.wheel.heatLevel || 0) - CONFIG.ECONOMY.HEAT_DECREMENT_ON_SMALL_WIN);
             } else {
-                userData.wheel.heatLevel = Math.max(0, (userData.wheel.heatLevel || 0) - 20);
+                userData.wheel.heatLevel = Math.max(0, (userData.wheel.heatLevel || 0) - CONFIG.ECONOMY.HEAT_RESET_ON_BIG_WIN);
             }
         }
         
@@ -3076,14 +3229,32 @@ class WheelGameClass {
         this.selectedPrize = prize;
         this.callback = callback;
         
-        // Start sound effects
         VegasAudio.whoosh();
+        
+        const startTickTime = performance.now();
+        const totalTicks = 36;
+        let currentTick = 0;
+        
+        const scheduleTick = () => {
+            if (!this.isSpinning || currentTick >= totalTicks) return;
+            const elapsed = performance.now() - this.spinStartTime;
+            const t = Math.min(1, elapsed / this.spinDuration);
+            let speedFactor;
+            if (t < 0.3) speedFactor = 0.4 + (t / 0.3) * 1.2;
+            else if (t < 0.7) speedFactor = 1.6;
+            else speedFactor = 1.6 - ((t - 0.7) / 0.3) * 1.2;
+            const pitch = 0.7 + t * 1.0;
+            const volume = 0.08 + (t * 0.1);
+            VegasAudio.tick(pitch, volume);
+            currentTick++;
+            const nextDelay = 55 / Math.max(0.4, speedFactor);
+            setTimeout(scheduleTick, nextDelay);
+        };
+        scheduleTick();
         
         const animate = (now) => {
             const elapsed = now - this.spinStartTime;
             let t = Math.min(1, elapsed / this.spinDuration);
-            
-            // Custom easing: fast start, slow end with wobble
             let easeOut;
             if (t < 0.2) {
                 easeOut = 2.5 * t * t;
@@ -3096,7 +3267,6 @@ class WheelGameClass {
             
             let currentRot = this.rotation + (this.targetRotation - this.rotation) * easeOut;
             
-            // Add wobble near the end
             if (t > 0.85) {
                 const wobble = Math.sin((t - 0.85) * Math.PI * 15) * (1 - t) * 0.05;
                 currentRot += wobble;
@@ -3105,7 +3275,6 @@ class WheelGameClass {
             this.rotation = currentRot;
             this.draw();
             
-            // Update speed meter
             const speedFill = document.getElementById('wheelSpeedFill');
             if (speedFill) {
                 const speed = (1 - easeOut) * 100;
@@ -3140,7 +3309,7 @@ function initWheelCanvas() {
     console.log("✅ Wheel Game initialized");
 }
 
-// ====== 38. SLOTS GAME ======
+// ====== 38. SLOTS GAME (Enhanced) ======
 let slotsGame = null;
 
 class SlotsGameClass {
@@ -3166,10 +3335,8 @@ class SlotsGameClass {
     }
     
     buildReels() {
-        // Build the reel content with symbols
         this.reels.forEach((reel, idx) => {
             let html = '';
-            // Create 3 copies for smooth infinite scroll
             for (let copy = 0; copy < 3; copy++) {
                 this.symbols.forEach(symbol => {
                     const data = this.symbolsData.find(s => s.symbol === symbol);
@@ -3197,17 +3364,13 @@ class SlotsGameClass {
         const durationMultiplier = isTurbo ? 0.65 : 1;
         const durations = this.durations.map(d => d * durationMultiplier);
         
-        // Select results
         this.results = [this.selectRandomSymbol(), this.selectRandomSymbol(), this.selectRandomSymbol()];
         
-        // Calculate target positions
         for (let i = 0; i < 3; i++) {
             const currentPos = this.reelPositions[i];
             const targetIndex = this.results[i];
             const symbolHeight = 100;
             const totalSymbols = this.symbols.length;
-            
-            // Calculate how many symbols to scroll
             const extraSpins = 15 + Math.floor(Math.random() * 10);
             const targetY = -(targetIndex * symbolHeight) - (extraSpins * totalSymbols * symbolHeight);
             this.targetPositions[i] = targetY;
@@ -3217,7 +3380,6 @@ class SlotsGameClass {
         this.spinStartTime = performance.now();
         this.callback = callback;
         
-        // Add spinning class
         this.reels.forEach(reel => {
             reel.classList.add('vegas-reel-spinning');
         });
@@ -3234,7 +3396,6 @@ class SlotsGameClass {
                 
                 if (t < 1) {
                     allStopped = false;
-                    // Custom easing for each reel
                     let easing;
                     if (i === 0) easing = 1 - Math.pow(1 - t, 3);
                     else if (i === 1) easing = 1 - Math.pow(1 - t, 2.5);
@@ -3259,7 +3420,6 @@ class SlotsGameClass {
                 });
                 VegasAudio.click();
                 
-                // Show win line
                 const winLine = document.getElementById('slotsWinLine');
                 if (winLine) {
                     winLine.classList.add('active');
@@ -3280,17 +3440,20 @@ class SlotsGameClass {
         const symbols = this.results.map(idx => this.symbols[idx]);
         const values = this.results.map(idx => this.values[idx]);
         
-        // Three of a kind
         if (symbols[0] === symbols[1] && symbols[1] === symbols[2]) {
             const prize = values[0];
             let effect = 'normal';
             if (prize.value >= 25) effect = 'jackpot';
             else if (prize.value >= 5) effect = 'big';
             else if (prize.value >= 1) effect = 'nice';
+            
+            if (effect === 'jackpot') {
+                userData.slots.heatLevel = 0;
+            }
+            
             return { win: true, amount: prize.value * 3, currency: prize.type, effect: effect, isJackpot: prize.value >= 25 };
         }
         
-        // Two of a kind
         if (symbols[0] === symbols[1] || symbols[1] === symbols[2] || symbols[0] === symbols[2]) {
             const matchSymbol = symbols[0] === symbols[1] ? symbols[0] : symbols[1];
             const prize = this.symbolsData.find(s => s.symbol === matchSymbol);
@@ -3299,9 +3462,19 @@ class SlotsGameClass {
                 const halfValue = prize.value * 1.5;
                 if (halfValue >= 12.5) effect = 'big';
                 else if (halfValue >= 2.5) effect = 'nice';
+                
+                if (effect === 'big') {
+                    userData.slots.heatLevel = Math.max(0, (userData.slots.heatLevel || 0) - 30);
+                } else {
+                    userData.slots.heatLevel = Math.max(0, (userData.slots.heatLevel || 0) - 10);
+                }
+                
                 return { win: true, amount: halfValue, currency: prize.type, effect: effect, isJackpot: false };
             }
         }
+        
+        userData.slots.heatLevel = Math.min(100, (userData.slots.heatLevel || 0) + CONFIG.ECONOMY.HEAT_INCREMENT_ON_LOSS);
+        
         return { win: false, amount: 0, currency: 'TON', effect: 'normal', isJackpot: false };
     }
 }
@@ -3318,14 +3491,13 @@ function initSlotsCanvas() {
     console.log("✅ Slots Game initialized");
 }
 
-// ====== 39. SPIN FUNCTIONS ======
+// ====== 39. SPIN FUNCTIONS (Enhanced) ======
 function spinWheelVegas(isFree) {
     if (!wheelGame) initWheelCanvas();
     if (wheelGame.isSpinning) return;
     
     VegasAudio.click();
     
-    // Check spins availability
     if (isFree) {
         const now = Date.now();
         const nextFree = userData.wheel.lastFreeSpin + CONFIG.ECONOMY.WHEEL_FREE_SPIN_INTERVAL;
@@ -3343,6 +3515,7 @@ function spinWheelVegas(isFree) {
         } else if (userData.balances.TON >= CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
             userData.balances.TON -= CONFIG.ECONOMY.WHEEL_SPIN_PRICE;
             userData.balance = userData.balances.TON;
+            addToProgressiveJackpot(CONFIG.ECONOMY.WHEEL_SPIN_PRICE);
         } else {
             showToastPro(`❌ Need ${CONFIG.ECONOMY.WHEEL_SPIN_PRICE} TON`, 'error');
             return;
@@ -3353,12 +3526,14 @@ function spinWheelVegas(isFree) {
         awardWheelPrize(prize);
         userData.wheel.totalSpins++;
         updateWheelUI();
+        updateHeatMeter('wheel');
+        updateGuaranteedCounters();
         updateUI();
         checkChallengeProgress('wheel_spin');
         if (prize.amount >= 5) checkChallengeProgress('wheel_win', prize.amount);
         if (prize.amount >= 25) checkChallengeProgress('big_win', prize.amount);
         saveUserToCache();
-    });
+    }, isFree);
 }
 
 function awardWheelPrize(prize) {
@@ -3388,6 +3563,9 @@ function awardWheelPrize(prize) {
         let winType = prize.effect === 'mega' ? 'mega' : 'jackpot';
         showGameWinMessage(prize.amount, currency, winType);
         JackpotTheater.play(prize.amount, currency, winType);
+        createGoldExplosion();
+        createScreenFlash();
+        createScreenShake();
         
         userData.wheel.heatLevel = 0;
         userData.wheel.spinsSinceLastBig = 0;
@@ -3411,8 +3589,11 @@ function awardWheelPrize(prize) {
         
         if (prize.amount >= 25) {
             JackpotTheater.play(prize.amount, currency, 'big');
+            createGoldExplosion();
+            createScreenFlash();
         } else if (prize.amount >= 10) {
             VegasAudio.win();
+            createConfetti();
         } else if (prize.amount >= 5) {
             VegasAudio.win();
         } else if (prize.amount > 0) {
@@ -3444,22 +3625,23 @@ function spinSlotsGame(isFree, isTurbo) {
         }
         userData.slots.lastFreeSpin = now;
     } else {
-        // Check for free spin from streak
         const noWinStreak = userData.slots.spinsWithoutWin || 0;
         if (noWinStreak >= CONFIG.ECONOMY.SLOTS_FREE_SPIN_EVERY - 1) {
-            // Free spin!
             userData.slots.spinsWithoutWin = 0;
             showToastPro('🎰 FREE SPIN! (10 spins without win)', 'success');
         } else if (userData.slots.purchasedSpins > 0) {
             userData.slots.purchasedSpins--;
             userData.slots.spinsWithoutWin = (userData.slots.spinsWithoutWin || 0) + 1;
+            addToProgressiveJackpot(price);
         } else if (userData.slots.freeSpins > 0) {
             userData.slots.freeSpins--;
             userData.slots.spinsWithoutWin = (userData.slots.spinsWithoutWin || 0) + 1;
+            addToProgressiveJackpot(price);
         } else if (userData.balances.TON >= price) {
             userData.balances.TON -= price;
             userData.balance = userData.balances.TON;
             userData.slots.spinsWithoutWin = (userData.slots.spinsWithoutWin || 0) + 1;
+            addToProgressiveJackpot(price);
         } else {
             showToastPro(`❌ Need ${price} TON`, 'error');
             return;
@@ -3492,10 +3674,15 @@ function spinSlotsGame(isFree, isTurbo) {
             
             if (result.isJackpot) {
                 JackpotTheater.play(finalAmount, result.currency, 'jackpot');
+                createGoldExplosion();
+                createScreenFlash();
+                createScreenShake();
             } else if (result.effect === 'big') {
                 JackpotTheater.play(finalAmount, result.currency, 'big');
+                createGoldExplosion();
             } else if (result.effect === 'nice') {
                 VegasAudio.win();
+                createConfetti();
             } else if (finalAmount > 0) {
                 VegasAudio.coin();
             }
@@ -3507,10 +3694,8 @@ function spinSlotsGame(isFree, isTurbo) {
             showToastPro('🍀 Try again!', 'info');
             VegasAudio.tick(0.7, 0.08);
             
-            // Update no-win streak for free spin tracking
             userData.slots.spinsWithoutWin = (userData.slots.spinsWithoutWin || 0) + 1;
             
-            // Show free spin notification
             const left = CONFIG.ECONOMY.SLOTS_FREE_SPIN_EVERY - (userData.slots.spinsWithoutWin % CONFIG.ECONOMY.SLOTS_FREE_SPIN_EVERY);
             if (left === 1) {
                 showToastPro('🎰 Next spin is FREE!', 'warning');
@@ -3519,6 +3704,7 @@ function spinSlotsGame(isFree, isTurbo) {
         
         userData.slots.totalSpins++;
         updateSlotsUI();
+        updateHeatMeter('slots');
         updateUI();
         checkChallengeProgress('slots_spin');
         saveUserToCache();
@@ -3585,43 +3771,6 @@ function showGameWinMessage(amount, currency, type) {
     messageDiv.style.animation = 'slideDownFadeOut 3s ease forwards';
     document.body.appendChild(messageDiv);
     
-    if (!document.querySelector('#winMessageStyle')) {
-        const style = document.createElement('style');
-        style.id = 'winMessageStyle';
-        style.textContent = `
-            @keyframes slideDownFadeOut {
-                0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-                15% { opacity: 1; transform: translateX(-50%) translateY(0); }
-                85% { opacity: 1; transform: translateX(-50%) translateY(0); }
-                100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-            }
-            @keyframes screenShakeHeavy {
-                0%,100% { transform: translate(0,0); }
-                10% { transform: translate(-10px,-8px); }
-                20% { transform: translate(10px,8px); }
-                30% { transform: translate(-8px,-6px); }
-                40% { transform: translate(8px,6px); }
-                50% { transform: translate(-5px,-4px); }
-                60% { transform: translate(5px,4px); }
-                70% { transform: translate(-3px,-2px); }
-                80% { transform: translate(3px,2px); }
-            }
-            .screen-shake-heavy { animation: screenShakeHeavy 0.5s cubic-bezier(0.36,0.07,0.19,0.97) forwards; }
-            .vegas-shake { animation: vegasShake 0.5s ease-in-out; }
-            @keyframes vegasShake {
-                0%,100% { transform: translate(0,0); }
-                10% { transform: translate(-5px,-5px); }
-                20% { transform: translate(5px,5px); }
-                30% { transform: translate(-5px,5px); }
-                40% { transform: translate(5px,-5px); }
-                50% { transform: translate(-3px,-3px); }
-                60% { transform: translate(3px,3px); }
-                70% { transform: translate(-3px,3px); }
-                80% { transform: translate(3px,-3px); }
-            }
-        `;
-        document.head.appendChild(style);
-    }
     setTimeout(() => messageDiv.remove(), 3000);
 }
 
@@ -3855,6 +4004,24 @@ const VegasAudio = {
         setTimeout(() => this.crowdCheer(), 400);
     },
     
+    jackpotExtended() {
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        for (let i = 0; i < 12; i++) {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(200 + i * 50, now + i * 0.15);
+            gain.gain.setValueAtTime(0.3, now + i * 0.15);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.15 + 0.5);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + i * 0.15);
+            osc.stop(now + i * 0.15 + 0.5);
+        }
+        setTimeout(() => this.crowdCheer(), 600);
+    },
+    
     crowdCheer() {
         if (!this.ctx) return;
         const now = this.ctx.currentTime;
@@ -3896,52 +4063,7 @@ const VegasAudio = {
     }
 };
 
-// ====== 42. TICK SEQUENCER ======
-const TickSequencer = {
-    timeouts: [],
-    isActive: false,
-    
-    playWheelTicks(duration = 2800, onComplete = null) {
-        this.clear();
-        this.isActive = true;
-        
-        const totalTicks = 36;
-        let currentTick = 0;
-        
-        const scheduleTick = () => {
-            if (!this.isActive || currentTick >= totalTicks) {
-                if (onComplete) setTimeout(onComplete, 50);
-                this.isActive = false;
-                return;
-            }
-            const t = currentTick / totalTicks;
-            let speedFactor;
-            if (t < 0.3) {
-                speedFactor = 0.4 + (t / 0.3) * 1.2;
-            } else if (t < 0.7) {
-                speedFactor = 1.6;
-            } else {
-                speedFactor = 1.6 - ((t - 0.7) / 0.3) * 1.2;
-            }
-            const pitch = 0.7 + t * 1.0;
-            const volume = 0.08 + (t * 0.1);
-            VegasAudio.tick(pitch, volume);
-            currentTick++;
-            const nextDelay = 55 / Math.max(0.4, speedFactor);
-            const timeout = setTimeout(scheduleTick, nextDelay);
-            this.timeouts.push(timeout);
-        };
-        scheduleTick();
-    },
-    
-    clear() {
-        this.isActive = false;
-        this.timeouts.forEach(t => clearTimeout(t));
-        this.timeouts = [];
-    }
-};
-
-// ====== 43. MODAL FUNCTIONS ======
+// ====== 42. MODAL FUNCTIONS ======
 function closeModal(id) {
     const modal = document.getElementById(id);
     if (!modal) return;
@@ -3973,7 +4095,7 @@ function hideAllModals() {
     });
 }
 
-// ====== 44. FILTER MARKET ======
+// ====== 43. FILTER MARKET ======
 function filterMarket(filter) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     if (event && event.target) event.target.classList.add('active');
@@ -3984,7 +4106,7 @@ function filterMarket(filter) {
     });
 }
 
-// ====== 45. ADMIN FUNCTIONS ======
+// ====== 44. ADMIN FUNCTIONS ======
 let currentAdminTab = 'withdrawals';
 
 function showAdminPanel() {
@@ -4211,7 +4333,7 @@ function copyToClipboard(text) {
     showToast('Copied!', 'success'); 
 }
 
-// ====== 46. CLOSE JACKPOT POPUP ======
+// ====== 45. CLOSE JACKPOT POPUP ======
 function closeJackpotPopup() {
     const popup = document.getElementById('jackpotPopup');
     if (popup) {
@@ -4222,7 +4344,7 @@ function closeJackpotPopup() {
     }
 }
 
-// ====== 47. PRICES ======
+// ====== 46. PRICES ======
 let livePrices = {};
 
 async function loadPrices(force = false) {
@@ -4266,7 +4388,7 @@ function refreshPrices() {
     loadPrices(true);
 }
 
-// ====== 48. REFERRAL SYSTEM ======
+// ====== 47. REFERRAL SYSTEM ======
 function generateReferralCode() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     return userId.slice(-4) + Array.from({length:6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
@@ -4368,7 +4490,7 @@ async function checkReferralMilestones() {
     saveUserToCache();
 }
 
-// ====== 49. DAILY LOGIN BONUS ======
+// ====== 48. DAILY LOGIN BONUS ======
 function checkDailyLogin() {
     const today = new Date().toDateString();
     if (!userData.dailyLogin) userData.dailyLogin = { lastLogin: null, streak: 0 };
@@ -4394,7 +4516,7 @@ function checkDailyLogin() {
     }
 }
 
-// ====== 50. NOTIFICATION SYSTEM ======
+// ====== 49. NOTIFICATION SYSTEM ======
 let unreadCount = 0;
 
 function addLocalNotification(message, type = 'info') {
@@ -4524,7 +4646,7 @@ function showNotifications() {
     }
 }
 
-// ====== 51. FLOATING NOTIFICATIONS ======
+// ====== 50. FLOATING NOTIFICATIONS ======
 let floatingTimeouts = [];
 
 function showFloatingToast(message, type = 'info') {
@@ -4561,7 +4683,7 @@ function stopFloatingNotifications() {
     floatingTimeouts = [];
 }
 
-// ====== 52. WELCOME STICKER ======
+// ====== 51. WELCOME STICKER ======
 const WELCOME_STICKERS = ['🤝','🫣','🥰','🥳','💲','💰','💸','💵','🤪','😱','😎','🤑','💯','💖','✨','🌟','⭐','🔥','⚡','💎','🎁','🎈','🎉','👑','🚀','💫'];
 let lastStickerTime = 0;
 const STICKER_COOLDOWN = 12 * 60 * 1000;
@@ -4587,7 +4709,7 @@ function showRandomSticker() {
     lastStickerTime = now;
 }
 
-// ====== 53. LOAD USER DATA ======
+// ====== 52. LOAD USER DATA ======
 async function loadUserData(force = false) {
     try {
         console.log("📂 Loading user data for:", userId);
@@ -4688,7 +4810,7 @@ function updateUserDisplay() {
     }
 }
 
-// ====== 54. OPEN FUNCTIONS ======
+// ====== 53. OPEN FUNCTIONS ======
 function openProfileFromAnywhere() {
     if (currentPage === 'wheelGame' || currentPage === 'slotsGame') exitGame();
     setTimeout(() => showPage('profile'), 300);
@@ -4698,7 +4820,7 @@ function openDepositModal() { if (currentPage !== 'profile') openProfileFromAnyw
 function openSwapModal() { if (currentPage !== 'profile') openProfileFromAnywhere(); setTimeout(() => showSwapModal(), 400); }
 function openHistoryModal() { if (currentPage !== 'profile') openProfileFromAnywhere(); setTimeout(() => showHistory(), 400); }
 
-// ====== 55. CSS STYLES ======
+// ====== 54. CSS STYLES (Dynamic additions) ======
 const styleElement = document.createElement('style');
 styleElement.textContent = `
     @keyframes slideDownFadeOut {
@@ -4735,195 +4857,283 @@ styleElement.textContent = `
         from { opacity: 1; transform: translateY(0); }
         to { opacity: 0; transform: translateY(-20px); }
     }
-    .heat-ring {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        background: rgba(255,255,255,0.05);
-        box-shadow: 0 0 30px rgba(0,0,0,0.3);
-    }
-    .heat-ring-fill {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        clip-path: inset(0 0 0 0);
-    }
-    .challenge-card {
-        background: var(--bg-card);
-        border: 1px solid var(--glass-border-strong);
-        border-radius: var(--radius-lg);
-        padding: 12px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        transition: var(--transition-fast);
-    }
-    .challenge-card.completed {
-        border-color: #22c55e;
-        background: rgba(34,197,94,0.1);
-    }
-    .challenge-card.ready {
-        border-color: #fbbf24;
-        animation: pulse 1s infinite;
-    }
-    .challenge-icon {
-        font-size: 2rem;
-        width: 50px;
+    .heat-meter-container {
+        background: rgba(0,0,0,0.6);
+        border-radius: 20px;
+        padding: 10px 15px;
+        margin: 15px 0;
         text-align: center;
     }
-    .challenge-info {
-        flex: 1;
-    }
-    .challenge-name {
-        font-weight: 700;
-        font-size: 0.9rem;
-        margin-bottom: 4px;
-    }
-    .challenge-progress {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin: 6px 0;
-    }
-    .challenge-progress .progress-bar {
-        flex: 1;
-        height: 6px;
-        background: rgba(255,255,255,0.1);
-        border-radius: 3px;
-        overflow: hidden;
-    }
-    .challenge-progress .progress-fill {
-        height: 100%;
-        background: var(--gradient-primary);
-        border-radius: 3px;
-        transition: width 0.3s ease;
-    }
-    .challenge-reward {
-        font-size: 0.75rem;
-        color: var(--text-gold);
-    }
-    .claim-challenge-btn {
-        background: var(--gradient-success);
-        border: none;
-        border-radius: var(--radius-full);
-        padding: 6px 16px;
-        color: white;
-        font-weight: 700;
+    .heat-label {
         font-size: 0.8rem;
-        cursor: pointer;
-        transition: var(--transition-fast);
+        color: #ff8844;
+        letter-spacing: 2px;
+        margin-bottom: 5px;
     }
-    .claim-challenge-btn:hover {
-        transform: scale(1.05);
-    }
-    .streak-bonus-card {
-        background: linear-gradient(135deg, #fbbf24, #f59e0b);
-        border-radius: var(--radius-lg);
-        padding: 12px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-top: 12px;
-    }
-    .streak-icon {
-        font-size: 2rem;
-    }
-    .streak-info {
-        flex: 1;
-    }
-    .streak-title {
-        font-weight: 700;
-        color: #000;
-    }
-    .streak-value {
-        font-size: 1.2rem;
-        font-weight: 800;
-        color: #000;
-    }
-    .streak-reward {
-        font-size: 0.7rem;
-        color: rgba(0,0,0,0.7);
-    }
-    .slot-reel-wrapper {
-        position: relative;
-        width: 100px;
-        height: 300px;
+    .heat-bar {
+        height: 10px;
+        background: #333;
+        border-radius: 10px;
         overflow: hidden;
-        border-radius: 16px;
-        background: #1a1f2a;
-        border: 2px solid rgba(0,242,255,0.3);
-        box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-    }
-    .slot-reel-pro {
-        display: flex;
-        flex-direction: column;
-        will-change: transform;
-        transition: transform 0.05s linear;
-    }
-    .slot-symbol-pro {
-        height: 100px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 3rem;
-        text-shadow: 0 0 10px currentColor;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    .vegas-reel-spinning {
-        border-color: #00f2ff !important;
-        box-shadow: 0 0 30px rgba(0,242,255,0.4) !important;
-    }
-    .slots-streak-info {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 12px;
-        padding: 8px 12px;
-        background: rgba(0,0,0,0.3);
-        border-radius: var(--radius-lg);
-        font-size: 0.8rem;
-    }
-    .wheel-canvas {
-        width: 100%;
-        height: auto;
-        border-radius: 50%;
-        box-shadow: 0 0 0 8px #2a2a3a, 0 0 0 12px #1a1a2a, 0 0 50px rgba(0,242,255,0.3);
-        cursor: pointer;
-        transition: filter 0.3s ease;
-    }
-    .wheel-canvas.spinning {
-        filter: blur(1px);
-    }
-    .casino-heat-bar {
-        height: 6px;
-        background: rgba(255,255,255,0.1);
-        border-radius: 3px;
-        margin: 10px 0;
-        overflow: hidden;
-        position: relative;
     }
     .heat-fill {
         height: 100%;
+        width: 0%;
         background: linear-gradient(90deg, #22c55e, #fbbf24, #ef4444);
         transition: width 0.3s ease;
-        border-radius: 3px;
+        border-radius: 10px;
     }
-    .heat-text {
-        position: absolute;
-        right: 0;
-        top: -18px;
+    .heat-tip {
         font-size: 0.7rem;
-        color: var(--text-secondary);
+        color: #aaa;
+        margin-top: 5px;
     }
-    .heat-badge {
-        background: linear-gradient(135deg, #ef4444, #fbbf24);
-        color: #fff;
+    .progressive-jackpot-card {
+        background: linear-gradient(135deg, #fbbf24, #f59e0b);
+        border-radius: 20px;
+        padding: 15px;
+        text-align: center;
+        margin-bottom: 20px;
+        position: relative;
+        overflow: hidden;
+        animation: jackpotGlow 2s infinite;
+    }
+    .progressive-jackpot-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.3), transparent);
+        animation: spin 10s infinite linear;
+    }
+    .progressive-jackpot-title {
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+        color: #000;
+        font-weight: 700;
+    }
+    .progressive-jackpot-amount {
+        font-size: 2rem;
+        font-weight: 900;
+        color: #000;
+        text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+    .auto-spin-panel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin: 20px 0;
+        padding: 15px;
+        background: rgba(0, 242, 255, 0.05);
+        border: 1px solid rgba(0, 242, 255, 0.15);
+        border-radius: 15px;
+    }
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 48px;
+        height: 24px;
+    }
+    .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255,255,255,0.1);
+        transition: .2s;
+        border-radius: 34px;
+        border: 1px solid rgba(0,242,255,0.3);
+    }
+    .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 2px;
+        background: #94a3b8;
+        transition: .2s;
+        border-radius: 50%;
+    }
+    input:checked + .toggle-slider {
+        background: linear-gradient(135deg, #00f2ff, #0088cc);
+    }
+    input:checked + .toggle-slider:before {
+        transform: translateX(24px);
+        background: white;
+    }
+    .auto-spin-label {
+        font-size: 0.9rem;
+        color: var(--text-accent);
+        font-weight: 600;
+    }
+    .screen-flash {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        pointer-events: none;
+        z-index: 9999;
+        animation: flashFade 0.3s ease-out forwards;
+    }
+    @keyframes flashFade {
+        0% { opacity: 0.8; }
+        100% { opacity: 0; }
+    }
+    .screen-shake {
+        animation: shake 0.5s ease-in-out;
+    }
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10% { transform: translateX(-5px); }
+        20% { transform: translateX(5px); }
+        30% { transform: translateX(-5px); }
+        40% { transform: translateX(5px); }
+        50% { transform: translateX(-3px); }
+        60% { transform: translateX(3px); }
+        70% { transform: translateX(-2px); }
+        80% { transform: translateX(2px); }
+        90% { transform: translateX(0); }
+    }
+    .gold-particle {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: radial-gradient(circle, gold 0%, orange 70%);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 10000;
+        animation: particleFly 1s ease-out forwards;
+    }
+    @keyframes particleFly {
+        0% {
+            transform: translate(0, 0) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(var(--tx), var(--ty)) scale(0);
+            opacity: 0;
+        }
+    }
+    .confetti {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        background: #ffdd00;
+        top: -10px;
+        pointer-events: none;
+        z-index: 9999;
+        border-radius: 2px;
+    }
+    .win-burst {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(circle, rgba(255,215,0,0.3), transparent);
+        pointer-events: none;
+        z-index: 9998;
+        animation: burstExpand 0.8s ease-out forwards;
+    }
+    @keyframes burstExpand {
+        0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+        100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+    }
+    .vegas-burst {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 100;
+    }
+    .burst-ray {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 4px;
+        height: 50%;
+        background: linear-gradient(to top, gold, transparent);
+        transform-origin: bottom center;
+        animation: burst-expand 0.8s ease-out forwards;
+    }
+    @keyframes burst-expand {
+        0% { height: 0; opacity: 1; }
+        100% { height: 100%; opacity: 0; }
+    }
+    .vegas-jackpot-text {
+        position: fixed;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: gold;
+        text-shadow: 0 0 10px orange, 0 0 20px red;
+        z-index: 10000;
+        animation: jackpotTextPop 0.5s ease-out forwards;
+        pointer-events: none;
+        white-space: nowrap;
+    }
+    @keyframes jackpotTextPop {
+        0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+        50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+    .vegas-particle {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background: radial-gradient(circle, gold 0%, orange 50%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+        animation: particle-explode 1.5s ease-out forwards;
+        z-index: 9999;
+    }
+    @keyframes particle-explode {
+        0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0);
+            opacity: 0;
+        }
+    }
+    .vegas-shake {
+        animation: screen-shake-heavy 0.5s ease-in-out;
+    }
+    @keyframes screen-shake-heavy {
+        0%,100% { transform: translate(0,0); }
+        10% { transform: translate(-10px,-8px); }
+        20% { transform: translate(10px,8px); }
+        30% { transform: translate(-8px,-6px); }
+        40% { transform: translate(8px,6px); }
+        50% { transform: translate(-5px,-4px); }
+        60% { transform: translate(5px,4px); }
+        70% { transform: translate(-3px,-2px); }
+        80% { transform: translate(3px,2px); }
     }
 `;
 document.head.appendChild(styleElement);
 
-// ====== 56. INITIALIZATION ======
+// ====== 55. INITIALIZATION ======
 document.addEventListener('DOMContentLoaded', async () => {
     hideAllModals();
     if (currentLanguage === 'ar') { document.body.classList.add('rtl'); document.documentElement.dir = 'rtl'; }
@@ -4948,7 +5158,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setTimeout(showRandomSticker, 1000);
     updateUserDisplay();
     document.addEventListener('click', () => VegasAudio.init(), { once: true });
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v24.0");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v25.0");
     console.log("✅ All systems ready! 🚀");
 });
 
@@ -4966,7 +5176,7 @@ document.addEventListener('visibilitychange', () => {
     else { startMining(); if (currentPage === 'mining') startFloatingNotifications(); }
 });
 
-// ====== 57. EXPORT FUNCTIONS ======
+// ====== 56. EXPORT FUNCTIONS ======
 window.showPage = showPage;
 window.showMarket = ()=>showPage('market');
 window.showWallet = showWallet;
@@ -5031,3 +5241,4 @@ window.openDepositModal = openDepositModal;
 window.openSwapModal = openSwapModal;
 window.openHistoryModal = openHistoryModal;
 window.claimChallenge = claimChallenge;
+window.toggleAutoSpin = toggleAutoSpin;
