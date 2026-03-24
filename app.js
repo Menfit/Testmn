@@ -1,7 +1,9 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v25.0
-// مع كازينو احترافي متكامل - عجلة حظ متطورة + سلوتس احترافية
-// نظام حرارة متدرج + تحديات يومية + تأثيرات صوتية وبصرية أسطورية
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v26.0
+// عجلة حظ 3D مع تأثير جليد مضيء
+// سلوتس احترافية 3D مع تأثيرات بصرية
+// نظام حفظ تقدم متكامل + Heat Meter + Progressive Jackpot
+// زر عائم GET BONUS مع باقات خاصة
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -104,13 +106,20 @@ const CONFIG = {
         DAILY_LOGIN_BONUS: [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.10],
         MAX_WITHDRAW_DAILY: 100,
         MAX_DEPOSIT_DAILY: 1000,
-        // التحسينات الجديدة
         PROGRESSIVE_JACKPOT_START: 100,
         PROGRESSIVE_JACKPOT_INCREMENT: 0.01,
         HEAT_INCREMENT_ON_LOSS: 12,
         HEAT_DECREMENT_ON_SMALL_WIN: 10,
         HEAT_RESET_ON_BIG_WIN: 0,
-        AUTO_SPIN_DELAY: 2000
+        AUTO_SPIN_DELAY: 2000,
+        // Bonus Packs الجديدة
+        BONUS_PACKS: [
+            { spins: 5, price: 1.25, bonus: 1, name: "Mini" },
+            { spins: 10, price: 2.5, bonus: 2, name: "Standard" },
+            { spins: 50, price: 12.5, bonus: 15, name: "Mega" },
+            { spins: 100, price: 25, bonus: 35, name: "Ultra" },
+            { spins: 250, price: 62.5, bonus: 250, name: "Legendary" }
+        ]
     },
     CMC_ICONS: {
         TON: "https://s2.coinmarketcap.com/static/img/coins/64x64/11419.png",
@@ -142,35 +151,35 @@ const CONFIG = {
     ]
 };
 
-// ====== 3. WHEEL PRIZES (16 قطاع - تصميم احترافي) ======
+// ====== 3. WHEEL PRIZES (16 قطاع - تصميم 3D) ======
 const WHEEL_PRIZES = [
-    { label: "0.25", type: "TON", amount: 0.25, color: "#0088cc", weight: 6, icon: "💰", effect: "small", gradient: ["#0088cc", "#0066aa"] },
-    { label: "0.5", type: "TON", amount: 0.5, color: "#1e6f8f", weight: 6, icon: "💰", effect: "small", gradient: ["#1e6f8f", "#0a4a6a"] },
-    { label: "1", type: "TON", amount: 1, color: "#22c55e", weight: 5, icon: "💰", effect: "small", gradient: ["#22c55e", "#16a34a"] },
-    { label: "🆓", type: "FREE", amount: 0, color: "#8b6fcf", weight: 4, icon: "🆓", effect: "freespin", gradient: ["#8b6fcf", "#6b4faf"] },
-    { label: "2", type: "TON", amount: 2, color: "#fbbf24", weight: 5, icon: "💰", effect: "medium", gradient: ["#fbbf24", "#f59e0b"] },
-    { label: "🍀", type: "LUCK", amount: 0.1, color: "#4a5568", weight: 4, icon: "🍀", effect: "luck", gradient: ["#4a5568", "#2d3748"] },
-    { label: "3", type: "TON", amount: 3, color: "#f97316", weight: 4, icon: "💰", effect: "medium", gradient: ["#f97316", "#ea580c"] },
-    { label: "×2", type: "MULTIPLIER", amount: 0, color: "#ff44cc", weight: 3, icon: "⚡", effect: "multiplier", gradient: ["#ff44cc", "#cc33aa"] },
-    { label: "5", type: "TON", amount: 5, color: "#ef4444", weight: 3, icon: "🔥", effect: "big", gradient: ["#ef4444", "#dc2626"] },
-    { label: "🆓", type: "FREE", amount: 0, color: "#8b6fcf", weight: 4, icon: "🆓", effect: "freespin", gradient: ["#8b6fcf", "#6b4faf"] },
-    { label: "10", type: "TON", amount: 10, color: "#ff4444", weight: 2, icon: "🔥", effect: "big", gradient: ["#ff4444", "#cc3333"] },
-    { label: "🍀", type: "LUCK", amount: 0.2, color: "#4a5568", weight: 3, icon: "🍀", effect: "luck", gradient: ["#4a5568", "#2d3748"] },
-    { label: "25", type: "TON", amount: 25, color: "#ffaa44", weight: 2, icon: "💎", effect: "big", gradient: ["#ffaa44", "#ff8844"] },
-    { label: "50", type: "TON", amount: 50, color: "#ff8844", weight: 1, icon: "💎", effect: "jackpot", gradient: ["#ff8844", "#ff6644"] },
-    { label: "JACK", type: "JACKPOT", amount: 100, color: "#ff4444", weight: 1, icon: "👑", effect: "jackpot", gradient: ["#ff4444", "#cc0000"] },
-    { label: "MEGA", type: "MEGA", amount: 200, color: "#ff0000", weight: 1, icon: "👑", effect: "mega", gradient: ["#ff0000", "#aa0000"] }
+    { label: "0.25", type: "TON", amount: 0.25, color: "#0088cc", weight: 6, icon: "💰", effect: "small", gradient: ["#0088cc", "#0066aa"], icon3d: true },
+    { label: "0.5", type: "TON", amount: 0.5, color: "#1e6f8f", weight: 6, icon: "💰", effect: "small", gradient: ["#1e6f8f", "#0a4a6a"], icon3d: true },
+    { label: "1", type: "TON", amount: 1, color: "#22c55e", weight: 5, icon: "💰", effect: "small", gradient: ["#22c55e", "#16a34a"], icon3d: true },
+    { label: "🆓", type: "FREE", amount: 0, color: "#8b6fcf", weight: 4, icon: "🎁", effect: "freespin", gradient: ["#8b6fcf", "#6b4faf"], icon3d: true },
+    { label: "2", type: "TON", amount: 2, color: "#fbbf24", weight: 5, icon: "💰", effect: "medium", gradient: ["#fbbf24", "#f59e0b"], icon3d: true },
+    { label: "🍀", type: "LUCK", amount: 0.1, color: "#4a5568", weight: 4, icon: "🍀", effect: "luck", gradient: ["#4a5568", "#2d3748"], icon3d: true },
+    { label: "3", type: "TON", amount: 3, color: "#f97316", weight: 4, icon: "💰", effect: "medium", gradient: ["#f97316", "#ea580c"], icon3d: true },
+    { label: "×2", type: "MULTIPLIER", amount: 0, color: "#ff44cc", weight: 3, icon: "⚡", effect: "multiplier", gradient: ["#ff44cc", "#cc33aa"], icon3d: true },
+    { label: "5", type: "TON", amount: 5, color: "#ef4444", weight: 3, icon: "🔥", effect: "big", gradient: ["#ef4444", "#dc2626"], icon3d: true },
+    { label: "🆓", type: "FREE", amount: 0, color: "#8b6fcf", weight: 4, icon: "🎁", effect: "freespin", gradient: ["#8b6fcf", "#6b4faf"], icon3d: true },
+    { label: "10", type: "TON", amount: 10, color: "#ff4444", weight: 2, icon: "💎", effect: "big", gradient: ["#ff4444", "#cc3333"], icon3d: true },
+    { label: "🍀", type: "LUCK", amount: 0.2, color: "#4a5568", weight: 3, icon: "🍀", effect: "luck", gradient: ["#4a5568", "#2d3748"], icon3d: true },
+    { label: "25", type: "TON", amount: 25, color: "#ffaa44", weight: 2, icon: "👑", effect: "big", gradient: ["#ffaa44", "#ff8844"], icon3d: true },
+    { label: "50", type: "TON", amount: 50, color: "#ff8844", weight: 1, icon: "💎", effect: "jackpot", gradient: ["#ff8844", "#ff6644"], icon3d: true },
+    { label: "JACK", type: "JACKPOT", amount: 100, color: "#ff4444", weight: 1, icon: "👑", effect: "jackpot", gradient: ["#ff4444", "#cc0000"], icon3d: true },
+    { label: "MEGA", type: "MEGA", amount: 200, color: "#ff0000", weight: 1, icon: "🏆", effect: "mega", gradient: ["#ff0000", "#aa0000"], icon3d: true }
 ];
 
-// ====== 4. SLOTS SYMBOLS (7 رموز كلاسيكية) ======
+// ====== 4. SLOTS SYMBOLS (7 رموز 3D) ======
 const SLOTS_SYMBOLS_DATA = [
-    { symbol: '🍒', weight: 30, value: 0.25, type: 'TON', color: '#ff4444', effect: 'small' },
-    { symbol: '🍋', weight: 25, value: 0.25, type: 'TON', color: '#ffdd00', effect: 'small' },
-    { symbol: '🍇', weight: 20, value: 0.5, type: 'TON', color: '#aa44ff', effect: 'small' },
-    { symbol: '💎', weight: 15, value: 1.0, type: 'TON', color: '#00f2ff', effect: 'medium' },
-    { symbol: '⭐', weight: 10, value: 2.0, type: 'TON', color: '#ffff00', effect: 'medium' },
-    { symbol: '7️⃣', weight: 5, value: 5.0, type: 'TON', color: '#ffaa00', effect: 'big' },
-    { symbol: '🎰', weight: 2, value: 25.0, type: 'TON', color: '#ff00ff', effect: 'jackpot' }
+    { symbol: '🍒', weight: 30, value: 0.25, type: 'TON', color: '#ff4444', effect: 'small', icon3d: true },
+    { symbol: '🍋', weight: 25, value: 0.25, type: 'TON', color: '#ffdd00', effect: 'small', icon3d: true },
+    { symbol: '🍇', weight: 20, value: 0.5, type: 'TON', color: '#aa44ff', effect: 'small', icon3d: true },
+    { symbol: '💎', weight: 15, value: 1.0, type: 'TON', color: '#00f2ff', effect: 'medium', icon3d: true },
+    { symbol: '⭐', weight: 10, value: 2.0, type: 'TON', color: '#ffff00', effect: 'medium', icon3d: true },
+    { symbol: '7️⃣', weight: 5, value: 5.0, type: 'TON', color: '#ffaa00', effect: 'big', icon3d: true },
+    { symbol: '🎰', weight: 2, value: 25.0, type: 'TON', color: '#ff00ff', effect: 'jackpot', icon3d: true }
 ];
 
 // ====== 5. DAILY CHALLENGES ======
@@ -318,13 +327,15 @@ const translations = {
         'withdraw.fee': 'Network fee: {fee} {currency}',
         'challenge.completed': 'Challenge Completed!',
         'challenge.reward': 'You earned {reward} {unit}!',
-        // التحسينات الجديدة
         'heat.meter': 'HEAT METER',
         'heat.tip': 'More losses = bigger wins!',
         'progressive.jackpot': 'PROGRESSIVE JACKPOT',
         'auto.spin': 'Auto Spin',
         'spins.until.big': 'Spins until BIG WIN',
-        'spins.until.jackpot': 'Spins until JACKPOT'
+        'spins.until.jackpot': 'Spins until JACKPOT',
+        'bonus.get': 'GET BONUS',
+        'bonus.packs': 'SPECIAL BONUS PACKS',
+        'bonus.legendary': '⭐ LEGENDARY ⭐'
     },
     ar: {
         'app.name': 'كازينو تعدين TON',
@@ -460,13 +471,15 @@ const translations = {
         'withdraw.fee': 'رسوم الشبكة: {fee} {currency}',
         'challenge.completed': 'تم إكمال التحدي!',
         'challenge.reward': 'لقد ربحت {reward} {unit}!',
-        // التحسينات الجديدة
         'heat.meter': 'مقياس الحرارة',
         'heat.tip': 'خسائر أكثر = أرباح أكبر!',
         'progressive.jackpot': 'الجاكبوت التراكمي',
         'auto.spin': 'دوران تلقائي',
         'spins.until.big': 'لفات حتى الفوز الكبير',
-        'spins.until.jackpot': 'لفات حتى الجاكبوت'
+        'spins.until.jackpot': 'لفات حتى الجاكبوت',
+        'bonus.get': 'احصل على مكافأة',
+        'bonus.packs': 'باقات المكافآت الخاصة',
+        'bonus.legendary': '⭐ أسطوري ⭐'
     }
 };
 
@@ -743,7 +756,6 @@ let userData = {
         biggestWin: 0,
         lastWinDate: null
     },
-    // التحسينات الجديدة
     progressiveJackpot: CONFIG.ECONOMY.PROGRESSIVE_JACKPOT_START
 };
 
@@ -770,9 +782,15 @@ function loadUserFromCache() {
 
 function saveUserToCache() {
     try {
-        localStorage.setItem(CACHE_KEYS.USER, JSON.stringify({ ...userData, _timestamp: Date.now() }));
+        localStorage.setItem(CACHE_KEYS.USER, JSON.stringify({ 
+            ...userData, 
+            _timestamp: Date.now() 
+        }));
         backupUserData();
-    } catch (e) {}
+        console.log("💾 User data saved to cache");
+    } catch (e) {
+        console.error("Failed to save to cache:", e);
+    }
 }
 
 function loadLocalTransactions() {
@@ -1104,6 +1122,34 @@ function createConfetti() {
         document.body.appendChild(confetti);
         confetti.animate([{ top: '-10px' }, { top: '100vh' }], { duration: 2000 + Math.random() * 2000 }).onfinish = () => confetti.remove();
     }
+}
+
+// تأثيرات الجليد للعجلة
+function createIceParticles() {
+    const ring = document.querySelector('.wheel-icy-ring');
+    if (!ring) return;
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'ice-particle';
+        const angle = Math.random() * Math.PI * 2;
+        const radius = 150 + Math.random() * 30;
+        particle.style.left = 50 + Math.cos(angle) * (radius / 3.2) + '%';
+        particle.style.top = 50 + Math.sin(angle) * (radius / 3.2) + '%';
+        particle.style.setProperty('--tx', (Math.random() - 0.5) * 80 + 'px');
+        particle.style.setProperty('--ty', (Math.random() - 0.5) * 80 + 'px');
+        particle.style.animationDelay = Math.random() + 's';
+        ring.appendChild(particle);
+        setTimeout(() => particle.remove(), 2000);
+    }
+}
+
+function createIcyBurst() {
+    const container = document.querySelector('.wheel-game-container');
+    if (!container) return;
+    const burst = document.createElement('div');
+    burst.className = 'icy-burst';
+    container.appendChild(burst);
+    setTimeout(() => burst.remove(), 1000);
 }
 
 // ====== 19. MINING MANAGER ======
@@ -2699,10 +2745,10 @@ async function buyWheelPack(pack) {
                 details: `Bought ${pack} pack: ${spins} spins + ${bonus} bonus` 
             });
             
-            saveUserToCache();
-            showToastPro(t('pack.success', { spins: totalSpins }), 'success');
+            saveUserToCache(); // حفظ فوري
             updatePurchasedSpinsDisplay();
             updateUI();
+            showToastPro(t('pack.success', { spins: totalSpins }), 'success');
         }, 3000);
         
     } catch (e) {
@@ -2756,10 +2802,10 @@ async function buySlotsPack(pack) {
                 details: `Bought ${pack} pack: ${spins} spins + ${bonus} bonus` 
             });
             
-            saveUserToCache();
-            showToastPro(t('pack.success', { spins: totalSpins }), 'success');
+            saveUserToCache(); // حفظ فوري
             updatePurchasedSpinsDisplay();
             updateUI();
+            showToastPro(t('pack.success', { spins: totalSpins }), 'success');
         }, 3000);
         
     } catch (e) {
@@ -2768,7 +2814,66 @@ async function buySlotsPack(pack) {
     }
 }
 
-// ====== 35. SAVE TO FIREBASE ======
+// ====== 35. BONUS PACKS (الزر العائم) ======
+async function buyBonusPack(gameType, spins, price, bonus) {
+    const totalSpins = spins + bonus;
+    
+    if (!confirm(`✨ Buy ${totalSpins} spins for ${price} TON? ✨\n(${spins} + ${bonus} FREE!)`)) return;
+    
+    if (!tonConnectUI || !tonWallet) {
+        showToastPro('Please connect your TON wallet first', 'error');
+        return;
+    }
+    
+    try {
+        showToastPro('Opening wallet...', 'info');
+        
+        const tx = {
+            validUntil: Date.now() + 600000,
+            messages: [{
+                address: CONFIG.TON.WALLET,
+                amount: (price * 1e9).toString()
+            }]
+        };
+        
+        await tonConnectUI.sendTransaction(tx);
+        
+        showToastPro('Payment sent! Waiting for confirmation...', 'info');
+        
+        setTimeout(() => {
+            if (gameType === 'wheel') {
+                if (!userData.wheel.purchasedSpins) userData.wheel.purchasedSpins = 0;
+                userData.wheel.purchasedSpins += totalSpins;
+            } else {
+                if (!userData.slots.purchasedSpins) userData.slots.purchasedSpins = 0;
+                userData.slots.purchasedSpins += totalSpins;
+            }
+            
+            addTransaction('bonus_pack', price, { 
+                currency: 'TON', 
+                details: `Bonus pack: ${spins} + ${bonus} spins (Total: ${totalSpins})` 
+            });
+            
+            saveUserToCache(); // حفظ فوري
+            updatePurchasedSpinsDisplay();
+            updateUI();
+            
+            showToastPro(`🎉 Purchased ${totalSpins} spins! 🎉`, 'success');
+            closeModal('bonusPacksModal');
+        }, 3000);
+        
+    } catch (e) {
+        console.error("Payment error:", e);
+        showToastPro('Payment failed', 'error');
+    }
+}
+
+function showBonusPacksModal() {
+    const modal = document.getElementById('bonusPacksModal');
+    if (modal) modal.classList.add('show');
+}
+
+// ====== 36. SAVE TO FIREBASE ======
 async function saveToFirebase() {
     if (!db) return;
     try {
@@ -2799,10 +2904,13 @@ async function saveToFirebase() {
             progressiveJackpot: userData.progressiveJackpot,
             lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
         }, { merge: true });
-    } catch (e) {}
+        console.log("💾 Data saved to Firebase");
+    } catch (e) {
+        console.error("Firebase save error:", e);
+    }
 }
 
-// ====== 36. DAILY CHALLENGES ======
+// ====== 37. DAILY CHALLENGES ======
 function initDailyChallenges() {
     const today = new Date().toDateString();
     if (!userData.dailyChallenges) {
@@ -2837,15 +2945,12 @@ function renderDailyChallenges() {
         const isCompleted = userData.dailyChallenges.completed?.includes(challenge.id);
         const isClaimed = userData.dailyChallenges.claimed?.includes(challenge.id);
         let progress = 0;
-        let currentValue = 0;
         
         if (challenge.type === 'wheel') {
-            currentValue = userData.wheel.totalSpins || 0;
-            if (challenge.id === 'wheel_spins') progress = Math.min(100, (currentValue / challenge.target) * 100);
+            if (challenge.id === 'wheel_spins') progress = Math.min(100, ((userData.wheel.totalSpins || 0) / challenge.target) * 100);
             else if (challenge.id === 'wheel_win') progress = userData.wheel.biggestWin >= 5 ? 100 : 0;
         } else if (challenge.type === 'slots') {
-            currentValue = userData.slots.totalSpins || 0;
-            if (challenge.id === 'slots_spins') progress = Math.min(100, (currentValue / challenge.target) * 100);
+            if (challenge.id === 'slots_spins') progress = Math.min(100, ((userData.slots.totalSpins || 0) / challenge.target) * 100);
             else if (challenge.id === 'slots_win') progress = userData.slots.biggestWin >= 10 ? 100 : 0;
         } else if (challenge.id === 'any_big_win') {
             progress = (userData.casinoStats?.biggestWin || 0) >= 25 ? 100 : 0;
@@ -2951,49 +3056,7 @@ function checkChallengeProgress(type, amount = 0) {
     }
 }
 
-// ====== 37. WHEEL GAME (Canvas with proper rotation and enhanced effects) ======
-let wheelGame = null;
-let autoSpinInterval = null;
-let currentAutoSpinGame = null;
-
-function stopAutoSpin() {
-    if (autoSpinInterval) {
-        clearInterval(autoSpinInterval);
-        autoSpinInterval = null;
-        currentAutoSpinGame = null;
-        const autoSpinToggle = document.getElementById('autoSpinToggle');
-        if (autoSpinToggle) autoSpinToggle.checked = false;
-        showToastPro('Auto Spin stopped', 'info');
-    }
-}
-
-function toggleAutoSpin(gameType, isTurbo = false) {
-    if (autoSpinInterval && currentAutoSpinGame === gameType) {
-        stopAutoSpin();
-    } else {
-        if (autoSpinInterval) stopAutoSpin();
-        currentAutoSpinGame = gameType;
-        autoSpinInterval = setInterval(() => {
-            if (gameType === 'wheel') {
-                if ((userData.wheel.purchasedSpins + userData.wheel.freeSpins) <= 0 && userData.balances.TON < CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
-                    stopAutoSpin();
-                    showToastPro('Auto Spin stopped: No spins left', 'warning');
-                    return;
-                }
-                spinWheelVegas(false);
-            } else if (gameType === 'slots') {
-                if ((userData.slots.purchasedSpins + userData.slots.freeSpins) <= 0 && userData.balances.TON < (isTurbo ? CONFIG.ECONOMY.SLOTS_TURBO_PRICE : CONFIG.ECONOMY.SLOTS_SPIN_PRICE)) {
-                    stopAutoSpin();
-                    showToastPro('Auto Spin stopped: No spins left', 'warning');
-                    return;
-                }
-                spinSlotsGame(false, isTurbo);
-            }
-        }, CONFIG.ECONOMY.AUTO_SPIN_DELAY);
-        showToastPro('Auto Spin started', 'success');
-    }
-}
-
+// ====== 38. HEAT METER & PROGRESSIVE JACKPOT ======
 function updateHeatMeter(game) {
     const heatLevel = game === 'wheel' ? (userData.wheel.heatLevel || 0) : (userData.slots.heatLevel || 0);
     const heatFill = document.getElementById(`${game}HeatFill`);
@@ -3059,7 +3122,52 @@ function awardProgressiveJackpot() {
     saveUserToCache();
 }
 
-class WheelGameClass {
+// ====== 39. AUTO SPIN ======
+let autoSpinInterval = null;
+let currentAutoSpinGame = null;
+
+function stopAutoSpin() {
+    if (autoSpinInterval) {
+        clearInterval(autoSpinInterval);
+        autoSpinInterval = null;
+        currentAutoSpinGame = null;
+        const autoSpinToggle = document.getElementById('autoSpinToggle');
+        if (autoSpinToggle) autoSpinToggle.checked = false;
+        showToastPro('Auto Spin stopped', 'info');
+    }
+}
+
+function toggleAutoSpin(gameType, isTurbo = false) {
+    if (autoSpinInterval && currentAutoSpinGame === gameType) {
+        stopAutoSpin();
+    } else {
+        if (autoSpinInterval) stopAutoSpin();
+        currentAutoSpinGame = gameType;
+        autoSpinInterval = setInterval(() => {
+            if (gameType === 'wheel') {
+                if ((userData.wheel.purchasedSpins + userData.wheel.freeSpins) <= 0 && userData.balances.TON < CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
+                    stopAutoSpin();
+                    showToastPro('Auto Spin stopped: No spins left', 'warning');
+                    return;
+                }
+                spinWheelVegas(false);
+            } else if (gameType === 'slots') {
+                if ((userData.slots.purchasedSpins + userData.slots.freeSpins) <= 0 && userData.balances.TON < (isTurbo ? CONFIG.ECONOMY.SLOTS_TURBO_PRICE : CONFIG.ECONOMY.SLOTS_SPIN_PRICE)) {
+                    stopAutoSpin();
+                    showToastPro('Auto Spin stopped: No spins left', 'warning');
+                    return;
+                }
+                spinSlotsGame(false, isTurbo);
+            }
+        }, CONFIG.ECONOMY.AUTO_SPIN_DELAY);
+        showToastPro('Auto Spin started', 'success');
+    }
+}
+
+// ====== 40. WHEEL GAME 3D WITH ICY GLOW ======
+let wheelGame = null;
+
+class WheelGame3D {
     constructor(canvasId, prizes) {
         this.canvas = document.getElementById(canvasId);
         if (!this.canvas) {
@@ -3081,6 +3189,27 @@ class WheelGameClass {
         this.resize();
         window.addEventListener('resize', () => this.resize());
         this.draw();
+        
+        // إضافة حلقة الجليد
+        this.addIcyRing();
+    }
+    
+    addIcyRing() {
+        const container = this.canvas.parentElement;
+        const existingRing = container.querySelector('.wheel-icy-ring');
+        if (existingRing) existingRing.remove();
+        
+        const ring = document.createElement('div');
+        ring.className = 'wheel-icy-ring';
+        container.appendChild(ring);
+        
+        const sparkles = document.createElement('div');
+        sparkles.className = 'icy-sparkles';
+        ring.appendChild(sparkles);
+        
+        const glow = document.createElement('div');
+        glow.className = 'icy-glow';
+        ring.appendChild(glow);
     }
     
     resize() {
@@ -3090,80 +3219,87 @@ class WheelGameClass {
         this.canvas.height = size;
         this.centerX = size / 2;
         this.centerY = size / 2;
-        this.radius = size / 2 - 8;
+        this.radius = size / 2 - 15;
         this.draw();
     }
     
     draw() {
         const ctx = this.ctx;
-        const centerX = this.centerX;
-        const centerY = this.centerY;
-        const radius = this.radius;
+        const cx = this.centerX;
+        const cy = this.centerY;
+        const r = this.radius;
         
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
+        // رسم القطاعات بتأثير 3D
         for (let i = 0; i < this.prizes.length; i++) {
             const prize = this.prizes[i];
             const startAngle = i * this.segmentAngle + this.rotation;
             const endAngle = (i + 1) * this.segmentAngle + this.rotation;
             
             ctx.beginPath();
-            ctx.moveTo(centerX, centerY);
-            ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+            ctx.moveTo(cx, cy);
+            ctx.arc(cx, cy, r, startAngle, endAngle);
             ctx.closePath();
             
+            // تدرج 3D مع ظل
             const grad = ctx.createLinearGradient(
-                centerX + Math.cos(startAngle) * radius * 0.3,
-                centerY + Math.sin(startAngle) * radius * 0.3,
-                centerX + Math.cos(endAngle) * radius * 0.7,
-                centerY + Math.sin(endAngle) * radius * 0.7
+                cx + Math.cos(startAngle) * r * 0.3,
+                cy + Math.sin(startAngle) * r * 0.3,
+                cx + Math.cos(endAngle) * r * 0.7,
+                cy + Math.sin(endAngle) * r * 0.7
             );
             grad.addColorStop(0, prize.gradient?.[0] || prize.color);
             grad.addColorStop(1, prize.gradient?.[1] || prize.color);
             ctx.fillStyle = grad;
             ctx.fill();
             
+            // حدود ذهبية بارزة
             ctx.beginPath();
-            ctx.moveTo(centerX, centerY);
-            ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-            ctx.strokeStyle = 'rgba(255,215,0,0.4)';
-            ctx.lineWidth = 1.5;
+            ctx.moveTo(cx, cy);
+            ctx.arc(cx, cy, r, startAngle, endAngle);
+            ctx.strokeStyle = 'rgba(255,215,0,0.6)';
+            ctx.lineWidth = 2;
             ctx.stroke();
             
+            // رسم الأيقونة 3D
             const midAngle = startAngle + this.segmentAngle / 2;
-            const textRadius = radius * 0.65;
-            const x = centerX + Math.cos(midAngle) * textRadius;
-            const y = centerY + Math.sin(midAngle) * textRadius;
+            const textRadius = r * 0.65;
+            const x = cx + Math.cos(midAngle) * textRadius;
+            const y = cy + Math.sin(midAngle) * textRadius;
             
             ctx.save();
             ctx.translate(x, y);
             ctx.rotate(midAngle + Math.PI / 2);
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.font = `bold ${Math.floor(radius * 0.08)}px "Outfit", "Segoe UI"`;
+            ctx.font = `bold ${Math.floor(r * 0.1)}px "Segoe UI", "Outfit"`;
             ctx.fillStyle = '#ffffff';
-            ctx.shadowBlur = 4;
-            ctx.shadowColor = 'rgba(0,0,0,0.5)';
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = 'rgba(0,0,0,0.7)';
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
             
             if (prize.icon && prize.icon !== '💰') {
-                ctx.font = `bold ${Math.floor(radius * 0.1)}px "Segoe UI"`;
+                ctx.font = `bold ${Math.floor(r * 0.12)}px "Segoe UI"`;
                 ctx.fillText(prize.icon, 0, 0);
             } else {
-                ctx.font = `bold ${Math.floor(radius * 0.07)}px "Outfit"`;
+                ctx.font = `bold ${Math.floor(r * 0.08)}px "Outfit"`;
                 ctx.fillText(prize.label, 0, 0);
             }
             ctx.restore();
         }
         
+        // المركز 3D
         ctx.beginPath();
-        ctx.arc(centerX, centerY, radius * 0.12, 0, 2 * Math.PI);
-        const centerGrad = ctx.createRadialGradient(centerX - 5, centerY - 5, 3, centerX, centerY, radius * 0.12);
+        ctx.arc(cx, cy, r * 0.13, 0, 2 * Math.PI);
+        const centerGrad = ctx.createRadialGradient(cx - 5, cy - 5, 3, cx, cy, r * 0.13);
         centerGrad.addColorStop(0, '#ffdd99');
         centerGrad.addColorStop(1, '#ffaa44');
         ctx.fillStyle = centerGrad;
         ctx.fill();
         ctx.beginPath();
-        ctx.arc(centerX, centerY, radius * 0.08, 0, 2 * Math.PI);
+        ctx.arc(cx, cy, r * 0.09, 0, 2 * Math.PI);
         ctx.fillStyle = '#ffcc66';
         ctx.fill();
         
@@ -3187,6 +3323,7 @@ class WheelGameClass {
         const spinsSinceLastMedium = userData.wheel.spinsSinceLastMedium || 0;
         const spinsSinceLastBig = userData.wheel.spinsSinceLastBig || 0;
         
+        // نظام الضمان (محفوظ)
         if (spinsSinceLastBig >= CONFIG.ECONOMY.WHEEL_GUARANTEED_BIG_EVERY) {
             const bigPrizes = this.prizes.filter(p => p.effect === 'jackpot' || p.effect === 'mega' || (p.amount >= 25));
             if (bigPrizes.length) {
@@ -3230,7 +3367,9 @@ class WheelGameClass {
         this.callback = callback;
         
         VegasAudio.whoosh();
+        createIceParticles();
         
+        // طقطقة متقدمة حسب السرعة
         const startTickTime = performance.now();
         const totalTicks = 36;
         let currentTick = 0;
@@ -3305,14 +3444,14 @@ function initWheelCanvas() {
         setTimeout(initWheelCanvas, 200);
         return;
     }
-    wheelGame = new WheelGameClass('wheelCanvas', WHEEL_PRIZES);
-    console.log("✅ Wheel Game initialized");
+    wheelGame = new WheelGame3D('wheelCanvas', WHEEL_PRIZES);
+    console.log("✅ Wheel 3D with Icy Glow initialized");
 }
 
-// ====== 38. SLOTS GAME (Enhanced) ======
+// ====== 41. SLOTS GAME 3D ======
 let slotsGame = null;
 
-class SlotsGameClass {
+class SlotsGame3D {
     constructor(reelIds, symbolsData) {
         this.reels = reelIds.map(id => document.getElementById(id));
         this.symbolsData = symbolsData;
@@ -3323,7 +3462,6 @@ class SlotsGameClass {
         this.spinStartTime = 0;
         this.durations = [1800, 2200, 2600];
         this.targetPositions = [0, 0, 0];
-        this.currentReel = 0;
         this.animationId = null;
         
         if (this.reels.some(r => !r)) {
@@ -3340,7 +3478,7 @@ class SlotsGameClass {
             for (let copy = 0; copy < 3; copy++) {
                 this.symbols.forEach(symbol => {
                     const data = this.symbolsData.find(s => s.symbol === symbol);
-                    html += `<div class="slot-symbol-pro" style="color: ${data?.color || '#fff'};">${symbol}</div>`;
+                    html += `<div class="slot-symbol-3d" style="color: ${data?.color || '#fff'};">${symbol}</div>`;
                 });
             }
             reel.innerHTML = html;
@@ -3367,7 +3505,6 @@ class SlotsGameClass {
         this.results = [this.selectRandomSymbol(), this.selectRandomSymbol(), this.selectRandomSymbol()];
         
         for (let i = 0; i < 3; i++) {
-            const currentPos = this.reelPositions[i];
             const targetIndex = this.results[i];
             const symbolHeight = 100;
             const totalSymbols = this.symbols.length;
@@ -3487,11 +3624,11 @@ function initSlotsCanvas() {
         setTimeout(initSlotsCanvas, 200);
         return;
     }
-    slotsGame = new SlotsGameClass(reels, SLOTS_SYMBOLS_DATA);
-    console.log("✅ Slots Game initialized");
+    slotsGame = new SlotsGame3D(reels, SLOTS_SYMBOLS_DATA);
+    console.log("✅ Slots 3D initialized");
 }
 
-// ====== 39. SPIN FUNCTIONS (Enhanced) ======
+// ====== 42. SPIN FUNCTIONS ======
 function spinWheelVegas(isFree) {
     if (!wheelGame) initWheelCanvas();
     if (wheelGame.isSpinning) return;
@@ -3510,8 +3647,10 @@ function spinWheelVegas(isFree) {
     } else {
         if (userData.wheel.purchasedSpins > 0) {
             userData.wheel.purchasedSpins--;
+            addToProgressiveJackpot(CONFIG.ECONOMY.WHEEL_SPIN_PRICE);
         } else if (userData.wheel.freeSpins > 0) {
             userData.wheel.freeSpins--;
+            addToProgressiveJackpot(CONFIG.ECONOMY.WHEEL_SPIN_PRICE);
         } else if (userData.balances.TON >= CONFIG.ECONOMY.WHEEL_SPIN_PRICE) {
             userData.balances.TON -= CONFIG.ECONOMY.WHEEL_SPIN_PRICE;
             userData.balance = userData.balances.TON;
@@ -3521,6 +3660,8 @@ function spinWheelVegas(isFree) {
             return;
         }
     }
+    
+    saveUserToCache(); // حفظ قبل الدوران
     
     wheelGame.spin((prize) => {
         awardWheelPrize(prize);
@@ -3532,7 +3673,7 @@ function spinWheelVegas(isFree) {
         checkChallengeProgress('wheel_spin');
         if (prize.amount >= 5) checkChallengeProgress('wheel_win', prize.amount);
         if (prize.amount >= 25) checkChallengeProgress('big_win', prize.amount);
-        saveUserToCache();
+        saveUserToCache(); // حفظ بعد الدوران
     }, isFree);
 }
 
@@ -3566,6 +3707,7 @@ function awardWheelPrize(prize) {
         createGoldExplosion();
         createScreenFlash();
         createScreenShake();
+        createIcyBurst();
         
         userData.wheel.heatLevel = 0;
         userData.wheel.spinsSinceLastBig = 0;
@@ -3648,6 +3790,8 @@ function spinSlotsGame(isFree, isTurbo) {
         }
     }
     
+    saveUserToCache(); // حفظ قبل الدوران
+    
     slotsGame.spin((result) => {
         if (result.win) {
             const multiplier = userData.slots.multiplier || 1;
@@ -3707,7 +3851,7 @@ function spinSlotsGame(isFree, isTurbo) {
         updateHeatMeter('slots');
         updateUI();
         checkChallengeProgress('slots_spin');
-        saveUserToCache();
+        saveUserToCache(); // حفظ بعد الدوران
     }, isTurbo);
 }
 
@@ -3774,7 +3918,7 @@ function showGameWinMessage(amount, currency, type) {
     setTimeout(() => messageDiv.remove(), 3000);
 }
 
-// ====== 40. JACKPOT THEATER ======
+// ====== 43. JACKPOT THEATER ======
 const JackpotTheater = {
     isPlaying: false,
     
@@ -3871,7 +4015,7 @@ const JackpotTheater = {
     }
 };
 
-// ====== 41. VEGAS AUDIO ENGINE ======
+// ====== 44. VEGAS AUDIO ENGINE ======
 const VegasAudio = {
     ctx: null,
     isInitialized: false,
@@ -4063,7 +4207,7 @@ const VegasAudio = {
     }
 };
 
-// ====== 42. MODAL FUNCTIONS ======
+// ====== 45. MODAL FUNCTIONS ======
 function closeModal(id) {
     const modal = document.getElementById(id);
     if (!modal) return;
@@ -4089,13 +4233,13 @@ function closeModal(id) {
 }
 
 function hideAllModals() {
-    ['paymentModal','depositModal','withdrawModal','historyModal','notificationsModal','adminModal','swapModal','currencySelectorModal','rejectModal'].forEach(id => {
+    ['paymentModal','depositModal','withdrawModal','historyModal','notificationsModal','adminModal','swapModal','currencySelectorModal','rejectModal','bonusPacksModal'].forEach(id => {
         const m = document.getElementById(id);
         if (m) m.classList.remove('show');
     });
 }
 
-// ====== 43. FILTER MARKET ======
+// ====== 46. FILTER MARKET ======
 function filterMarket(filter) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     if (event && event.target) event.target.classList.add('active');
@@ -4106,7 +4250,7 @@ function filterMarket(filter) {
     });
 }
 
-// ====== 44. ADMIN FUNCTIONS ======
+// ====== 47. ADMIN FUNCTIONS ======
 let currentAdminTab = 'withdrawals';
 
 function showAdminPanel() {
@@ -4333,7 +4477,7 @@ function copyToClipboard(text) {
     showToast('Copied!', 'success'); 
 }
 
-// ====== 45. CLOSE JACKPOT POPUP ======
+// ====== 48. CLOSE JACKPOT POPUP ======
 function closeJackpotPopup() {
     const popup = document.getElementById('jackpotPopup');
     if (popup) {
@@ -4344,7 +4488,7 @@ function closeJackpotPopup() {
     }
 }
 
-// ====== 46. PRICES ======
+// ====== 49. PRICES ======
 let livePrices = {};
 
 async function loadPrices(force = false) {
@@ -4388,7 +4532,7 @@ function refreshPrices() {
     loadPrices(true);
 }
 
-// ====== 47. REFERRAL SYSTEM ======
+// ====== 50. REFERRAL SYSTEM ======
 function generateReferralCode() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     return userId.slice(-4) + Array.from({length:6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
@@ -4490,7 +4634,7 @@ async function checkReferralMilestones() {
     saveUserToCache();
 }
 
-// ====== 48. DAILY LOGIN BONUS ======
+// ====== 51. DAILY LOGIN BONUS ======
 function checkDailyLogin() {
     const today = new Date().toDateString();
     if (!userData.dailyLogin) userData.dailyLogin = { lastLogin: null, streak: 0 };
@@ -4516,7 +4660,7 @@ function checkDailyLogin() {
     }
 }
 
-// ====== 49. NOTIFICATION SYSTEM ======
+// ====== 52. NOTIFICATION SYSTEM ======
 let unreadCount = 0;
 
 function addLocalNotification(message, type = 'info') {
@@ -4646,7 +4790,7 @@ function showNotifications() {
     }
 }
 
-// ====== 50. FLOATING NOTIFICATIONS ======
+// ====== 53. FLOATING NOTIFICATIONS ======
 let floatingTimeouts = [];
 
 function showFloatingToast(message, type = 'info') {
@@ -4683,7 +4827,7 @@ function stopFloatingNotifications() {
     floatingTimeouts = [];
 }
 
-// ====== 51. WELCOME STICKER ======
+// ====== 54. WELCOME STICKER ======
 const WELCOME_STICKERS = ['🤝','🫣','🥰','🥳','💲','💰','💸','💵','🤪','😱','😎','🤑','💯','💖','✨','🌟','⭐','🔥','⚡','💎','🎁','🎈','🎉','👑','🚀','💫'];
 let lastStickerTime = 0;
 const STICKER_COOLDOWN = 12 * 60 * 1000;
@@ -4709,7 +4853,7 @@ function showRandomSticker() {
     lastStickerTime = now;
 }
 
-// ====== 52. LOAD USER DATA ======
+// ====== 55. LOAD USER DATA ======
 async function loadUserData(force = false) {
     try {
         console.log("📂 Loading user data for:", userId);
@@ -4810,7 +4954,7 @@ function updateUserDisplay() {
     }
 }
 
-// ====== 53. OPEN FUNCTIONS ======
+// ====== 56. OPEN FUNCTIONS ======
 function openProfileFromAnywhere() {
     if (currentPage === 'wheelGame' || currentPage === 'slotsGame') exitGame();
     setTimeout(() => showPage('profile'), 300);
@@ -4820,7 +4964,7 @@ function openDepositModal() { if (currentPage !== 'profile') openProfileFromAnyw
 function openSwapModal() { if (currentPage !== 'profile') openProfileFromAnywhere(); setTimeout(() => showSwapModal(), 400); }
 function openHistoryModal() { if (currentPage !== 'profile') openProfileFromAnywhere(); setTimeout(() => showHistory(), 400); }
 
-// ====== 54. CSS STYLES (Dynamic additions) ======
+// ====== 57. CSS STYLES (Dynamic additions) ======
 const styleElement = document.createElement('style');
 styleElement.textContent = `
     @keyframes slideDownFadeOut {
@@ -4857,125 +5001,184 @@ styleElement.textContent = `
         from { opacity: 1; transform: translateY(0); }
         to { opacity: 0; transform: translateY(-20px); }
     }
-    .heat-meter-container {
-        background: rgba(0,0,0,0.6);
-        border-radius: 20px;
-        padding: 10px 15px;
-        margin: 15px 0;
-        text-align: center;
-    }
-    .heat-label {
-        font-size: 0.8rem;
-        color: #ff8844;
-        letter-spacing: 2px;
-        margin-bottom: 5px;
-    }
-    .heat-bar {
-        height: 10px;
-        background: #333;
-        border-radius: 10px;
-        overflow: hidden;
-    }
-    .heat-fill {
-        height: 100%;
-        width: 0%;
-        background: linear-gradient(90deg, #22c55e, #fbbf24, #ef4444);
-        transition: width 0.3s ease;
-        border-radius: 10px;
-    }
-    .heat-tip {
-        font-size: 0.7rem;
-        color: #aaa;
-        margin-top: 5px;
-    }
-    .progressive-jackpot-card {
-        background: linear-gradient(135deg, #fbbf24, #f59e0b);
-        border-radius: 20px;
-        padding: 15px;
-        text-align: center;
-        margin-bottom: 20px;
-        position: relative;
-        overflow: hidden;
-        animation: jackpotGlow 2s infinite;
-    }
-    .progressive-jackpot-card::before {
-        content: '';
+    .wheel-icy-ring {
         position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255,255,255,0.3), transparent);
-        animation: spin 10s infinite linear;
+        top: -15px;
+        left: -15px;
+        right: -15px;
+        bottom: -15px;
+        border-radius: 50%;
+        background: radial-gradient(circle, transparent 60%, rgba(0,242,255,0.2) 70%, rgba(0,255,200,0.4) 85%, rgba(0,242,255,0.6) 95%, transparent 100%);
+        filter: blur(4px);
+        animation: icyPulse 2s ease-in-out infinite;
+        pointer-events: none;
+        z-index: 5;
     }
-    .progressive-jackpot-title {
-        font-size: 0.8rem;
-        letter-spacing: 2px;
-        color: #000;
-        font-weight: 700;
+    @keyframes icyPulse {
+        0%, 100% { opacity: 0.6; transform: scale(1); filter: blur(4px); }
+        50% { opacity: 1; transform: scale(1.02); filter: blur(6px); }
     }
-    .progressive-jackpot-amount {
-        font-size: 2rem;
-        font-weight: 900;
-        color: #000;
-        text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    .icy-sparkles {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8) 0%, rgba(0,242,255,0.4) 20%, transparent 70%);
+        mix-blend-mode: screen;
+        animation: sparkleRotate 8s linear infinite;
     }
-    .auto-spin-panel {
+    @keyframes sparkleRotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    .icy-glow {
+        position: absolute;
+        inset: -5px;
+        border-radius: 50%;
+        box-shadow: 0 0 30px rgba(0,242,255,0.5), 0 0 60px rgba(0,200,255,0.3), inset 0 0 20px rgba(0,242,255,0.3);
+        animation: icyGlowMove 3s ease-in-out infinite;
+    }
+    @keyframes icyGlowMove {
+        0%, 100% { box-shadow: 0 0 30px rgba(0,242,255,0.5), 0 0 60px rgba(0,200,255,0.3); }
+        50% { box-shadow: 0 0 50px rgba(0,242,255,0.8), 0 0 90px rgba(0,200,255,0.5); }
+    }
+    .ice-particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: radial-gradient(circle, #fff, #00f2ff);
+        border-radius: 50%;
+        opacity: 0;
+        animation: iceFloat 2s ease-out forwards;
+        filter: blur(1px);
+        pointer-events: none;
+    }
+    @keyframes iceFloat {
+        0% { transform: translate(0, 0) rotate(0deg); opacity: 0.8; width: 4px; height: 4px; }
+        50% { transform: translate(var(--tx, 20px), var(--ty, -30px)) rotate(180deg); opacity: 0.5; width: 2px; height: 2px; }
+        100% { transform: translate(var(--tx, 40px), var(--ty, -60px)) rotate(360deg); opacity: 0; width: 0; height: 0; }
+    }
+    .icy-burst {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, rgba(0,242,255,0.6) 0%, rgba(0,200,255,0.3) 30%, transparent 70%);
+        border-radius: 50%;
+        filter: blur(15px);
+        animation: icyBurst 1s ease-out forwards;
+        pointer-events: none;
+        z-index: 100;
+    }
+    @keyframes icyBurst {
+        0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+        100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+    }
+    .slot-symbol-3d {
+        height: 100px;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 12px;
-        margin: 20px 0;
-        padding: 15px;
-        background: rgba(0, 242, 255, 0.05);
-        border: 1px solid rgba(0, 242, 255, 0.15);
-        border-radius: 15px;
+        font-size: 3.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 10px currentColor;
+        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+        transition: all 0.2s ease;
     }
-    .toggle-switch {
-        position: relative;
-        display: inline-block;
-        width: 48px;
-        height: 24px;
-    }
-    .toggle-switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-    .toggle-slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(255,255,255,0.1);
-        transition: .2s;
-        border-radius: 34px;
-        border: 1px solid rgba(0,242,255,0.3);
-    }
-    .toggle-slider:before {
-        position: absolute;
-        content: "";
-        height: 18px;
-        width: 18px;
-        left: 3px;
-        bottom: 2px;
-        background: #94a3b8;
-        transition: .2s;
+    .floating-bonus-btn {
+        position: fixed;
+        bottom: 100px;
+        right: 15px;
+        width: 70px;
+        height: 70px;
         border-radius: 50%;
+        background: linear-gradient(135deg, #ff4444, #ff8800);
+        border: none;
+        box-shadow: 0 0 30px rgba(255,68,68,0.6), 0 5px 15px rgba(0,0,0,0.3);
+        cursor: pointer;
+        z-index: 150;
+        animation: bonusPulse 1.5s infinite;
+        transition: transform 0.2s ease;
     }
-    input:checked + .toggle-slider {
-        background: linear-gradient(135deg, #00f2ff, #0088cc);
+    .floating-bonus-btn:hover {
+        transform: scale(1.1);
     }
-    input:checked + .toggle-slider:before {
-        transform: translateX(24px);
-        background: white;
+    @keyframes bonusPulse {
+        0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255,68,68,0.5); }
+        50% { transform: scale(1.05); box-shadow: 0 0 40px rgba(255,68,68,0.8); }
     }
-    .auto-spin-label {
-        font-size: 0.9rem;
+    .bonus-btn-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: white;
+        font-weight: 800;
+        font-size: 0.7rem;
+    }
+    .bonus-icon { font-size: 1.5rem; }
+    .bonus-text { font-size: 0.6rem; letter-spacing: 1px; }
+    .bonus-fire { font-size: 1rem; margin-top: -5px; }
+    .bonus-packs-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .bonus-pack-card {
+        background: linear-gradient(145deg, #1e1f2a, #0f1018);
+        border: 1px solid rgba(255,215,0,0.3);
+        border-radius: 20px;
+        padding: 15px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    .bonus-pack-card:hover {
+        transform: translateY(-3px);
+        border-color: gold;
+        box-shadow: 0 0 30px rgba(255,215,0,0.3);
+    }
+    .bonus-pack-card.legendary {
+        background: linear-gradient(145deg, #2a1f2a, #1a0f1a);
+        border: 2px solid gold;
+    }
+    .pack-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: linear-gradient(135deg, #ff4444, #ff8800);
+        padding: 2px 8px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 700;
+    }
+    .bonus-pack-card .pack-spins {
+        font-size: 1.2rem;
+        font-weight: 800;
+        margin: 10px 0;
+        color: var(--text-gold);
+    }
+    .bonus-pack-card .pack-price {
+        font-size: 1rem;
+        font-weight: 700;
         color: var(--text-accent);
-        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    .buy-bonus-btn {
+        background: linear-gradient(135deg, #00f2ff, #0088cc);
+        border: none;
+        border-radius: 30px;
+        padding: 8px 20px;
+        color: white;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .buy-bonus-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(0,242,255,0.5);
     }
     .screen-flash {
         position: fixed;
@@ -4993,19 +5196,18 @@ styleElement.textContent = `
         100% { opacity: 0; }
     }
     .screen-shake {
-        animation: shake 0.5s ease-in-out;
+        animation: screen-shake-heavy 0.5s ease-in-out;
     }
-    @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        10% { transform: translateX(-5px); }
-        20% { transform: translateX(5px); }
-        30% { transform: translateX(-5px); }
-        40% { transform: translateX(5px); }
-        50% { transform: translateX(-3px); }
-        60% { transform: translateX(3px); }
-        70% { transform: translateX(-2px); }
-        80% { transform: translateX(2px); }
-        90% { transform: translateX(0); }
+    @keyframes screen-shake-heavy {
+        0%,100% { transform: translate(0,0); }
+        10% { transform: translate(-10px,-8px); }
+        20% { transform: translate(10px,8px); }
+        30% { transform: translate(-8px,-6px); }
+        40% { transform: translate(8px,6px); }
+        50% { transform: translate(-5px,-4px); }
+        60% { transform: translate(5px,4px); }
+        70% { transform: translate(-3px,-2px); }
+        80% { transform: translate(3px,2px); }
     }
     .gold-particle {
         position: fixed;
@@ -5018,14 +5220,8 @@ styleElement.textContent = `
         animation: particleFly 1s ease-out forwards;
     }
     @keyframes particleFly {
-        0% {
-            transform: translate(0, 0) scale(1);
-            opacity: 1;
-        }
-        100% {
-            transform: translate(var(--tx), var(--ty)) scale(0);
-            opacity: 0;
-        }
+        0% { transform: translate(0, 0) scale(1); opacity: 1; }
+        100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
     }
     .confetti {
         position: fixed;
@@ -5107,33 +5303,16 @@ styleElement.textContent = `
         z-index: 9999;
     }
     @keyframes particle-explode {
-        0% {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
-        }
-        100% {
-            transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0);
-            opacity: 0;
-        }
+        0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0); opacity: 0; }
     }
     .vegas-shake {
         animation: screen-shake-heavy 0.5s ease-in-out;
     }
-    @keyframes screen-shake-heavy {
-        0%,100% { transform: translate(0,0); }
-        10% { transform: translate(-10px,-8px); }
-        20% { transform: translate(10px,8px); }
-        30% { transform: translate(-8px,-6px); }
-        40% { transform: translate(8px,6px); }
-        50% { transform: translate(-5px,-4px); }
-        60% { transform: translate(5px,4px); }
-        70% { transform: translate(-3px,-2px); }
-        80% { transform: translate(3px,2px); }
-    }
 `;
 document.head.appendChild(styleElement);
 
-// ====== 55. INITIALIZATION ======
+// ====== 58. INITIALIZATION ======
 document.addEventListener('DOMContentLoaded', async () => {
     hideAllModals();
     if (currentLanguage === 'ar') { document.body.classList.add('rtl'); document.documentElement.dir = 'rtl'; }
@@ -5158,7 +5337,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setTimeout(showRandomSticker, 1000);
     updateUserDisplay();
     document.addEventListener('click', () => VegasAudio.init(), { once: true });
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v25.0");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v26.0");
     console.log("✅ All systems ready! 🚀");
 });
 
@@ -5176,7 +5355,7 @@ document.addEventListener('visibilitychange', () => {
     else { startMining(); if (currentPage === 'mining') startFloatingNotifications(); }
 });
 
-// ====== 56. EXPORT FUNCTIONS ======
+// ====== 59. EXPORT FUNCTIONS ======
 window.showPage = showPage;
 window.showMarket = ()=>showPage('market');
 window.showWallet = showWallet;
@@ -5242,3 +5421,5 @@ window.openSwapModal = openSwapModal;
 window.openHistoryModal = openHistoryModal;
 window.claimChallenge = claimChallenge;
 window.toggleAutoSpin = toggleAutoSpin;
+window.showBonusPacksModal = showBonusPacksModal;
+window.buyBonusPack = buyBonusPack;
