@@ -1,9 +1,15 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v26.0
-// عجلة حظ 3D مع تأثير جليد مضيء
-// سلوتس احترافية 3D مع تأثيرات بصرية
-// نظام حفظ تقدم متكامل + Heat Meter + Progressive Jackpot
-// زر عائم GET BONUS مع باقات خاصة
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v27.0
+// ============================================
+// تحسينات شاملة:
+// - إعادة تصميم العجلة 3D (نصوص مقوسة من المركز للحافة، تأثيرات كازينو حقيقية)
+// - إصلاح مشكلة السلوتس (الرموز تظهر بعد كل لفة)
+// - إضافة Progressive Jackpot Card مع فائزين وهميين متناوبين
+// - إضافة Referral Milestones بتصميم Grid احترافي
+// - إعادة تنظيم الأزرار (Bonus, Scroll Top, Auto Clicker)
+// - Auto Clicker يعمل بعد إغلاق التطبيق (نظام الحساب عند الفتح)
+// - إعادة ترتيب صفحة البروفيل
+// - تعديل Header (إظهار ID)
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -112,7 +118,6 @@ const CONFIG = {
         HEAT_DECREMENT_ON_SMALL_WIN: 10,
         HEAT_RESET_ON_BIG_WIN: 0,
         AUTO_SPIN_DELAY: 2000,
-        // Bonus Packs الجديدة
         BONUS_PACKS: [
             { spins: 5, price: 1.25, bonus: 1, name: "Mini" },
             { spins: 10, price: 2.5, bonus: 2, name: "Standard" },
@@ -151,24 +156,24 @@ const CONFIG = {
     ]
 };
 
-// ====== 3. WHEEL PRIZES (16 قطاع - تصميم 3D) ======
+// ====== 3. WHEEL PRIZES (16 قطاع – تصميم كازينو حقيقي) ======
 const WHEEL_PRIZES = [
-    { label: "0.25", type: "TON", amount: 0.25, color: "#0088cc", weight: 6, icon: "💰", effect: "small", gradient: ["#0088cc", "#0066aa"], icon3d: true },
-    { label: "0.5", type: "TON", amount: 0.5, color: "#1e6f8f", weight: 6, icon: "💰", effect: "small", gradient: ["#1e6f8f", "#0a4a6a"], icon3d: true },
-    { label: "1", type: "TON", amount: 1, color: "#22c55e", weight: 5, icon: "💰", effect: "small", gradient: ["#22c55e", "#16a34a"], icon3d: true },
-    { label: "🆓", type: "FREE", amount: 0, color: "#8b6fcf", weight: 4, icon: "🎁", effect: "freespin", gradient: ["#8b6fcf", "#6b4faf"], icon3d: true },
-    { label: "2", type: "TON", amount: 2, color: "#fbbf24", weight: 5, icon: "💰", effect: "medium", gradient: ["#fbbf24", "#f59e0b"], icon3d: true },
-    { label: "🍀", type: "LUCK", amount: 0.1, color: "#4a5568", weight: 4, icon: "🍀", effect: "luck", gradient: ["#4a5568", "#2d3748"], icon3d: true },
-    { label: "3", type: "TON", amount: 3, color: "#f97316", weight: 4, icon: "💰", effect: "medium", gradient: ["#f97316", "#ea580c"], icon3d: true },
-    { label: "×2", type: "MULTIPLIER", amount: 0, color: "#ff44cc", weight: 3, icon: "⚡", effect: "multiplier", gradient: ["#ff44cc", "#cc33aa"], icon3d: true },
-    { label: "5", type: "TON", amount: 5, color: "#ef4444", weight: 3, icon: "🔥", effect: "big", gradient: ["#ef4444", "#dc2626"], icon3d: true },
-    { label: "🆓", type: "FREE", amount: 0, color: "#8b6fcf", weight: 4, icon: "🎁", effect: "freespin", gradient: ["#8b6fcf", "#6b4faf"], icon3d: true },
-    { label: "10", type: "TON", amount: 10, color: "#ff4444", weight: 2, icon: "💎", effect: "big", gradient: ["#ff4444", "#cc3333"], icon3d: true },
-    { label: "🍀", type: "LUCK", amount: 0.2, color: "#4a5568", weight: 3, icon: "🍀", effect: "luck", gradient: ["#4a5568", "#2d3748"], icon3d: true },
-    { label: "25", type: "TON", amount: 25, color: "#ffaa44", weight: 2, icon: "👑", effect: "big", gradient: ["#ffaa44", "#ff8844"], icon3d: true },
-    { label: "50", type: "TON", amount: 50, color: "#ff8844", weight: 1, icon: "💎", effect: "jackpot", gradient: ["#ff8844", "#ff6644"], icon3d: true },
-    { label: "JACK", type: "JACKPOT", amount: 100, color: "#ff4444", weight: 1, icon: "👑", effect: "jackpot", gradient: ["#ff4444", "#cc0000"], icon3d: true },
-    { label: "MEGA", type: "MEGA", amount: 200, color: "#ff0000", weight: 1, icon: "🏆", effect: "mega", gradient: ["#ff0000", "#aa0000"], icon3d: true }
+    { label: "0.25", type: "TON", amount: 0.25, color: "#1e3a5f", weight: 6, icon: "💰", effect: "small", gradient: ["#1e3a5f", "#0f2a4a"], topText: "0.25", bottomText: "SMALL WIN" },
+    { label: "0.5", type: "TON", amount: 0.5, color: "#2d4a6e", weight: 6, icon: "💰", effect: "small", gradient: ["#2d4a6e", "#1a3550"], topText: "0.5", bottomText: "SMALL WIN" },
+    { label: "1", type: "TON", amount: 1, color: "#2e6b3e", weight: 5, icon: "💰", effect: "small", gradient: ["#2e6b3e", "#1e4a2e"], topText: "1", bottomText: "WIN" },
+    { label: "🆓", type: "FREE", amount: 0, color: "#5a3e8c", weight: 4, icon: "🎁", effect: "freespin", gradient: ["#5a3e8c", "#3e2a6b"], topText: "FREE", bottomText: "BONUS" },
+    { label: "2", type: "TON", amount: 2, color: "#b8860b", weight: 5, icon: "💰", effect: "medium", gradient: ["#b8860b", "#9a6a0a"], topText: "2", bottomText: "WIN" },
+    { label: "🍀", type: "LUCK", amount: 0.1, color: "#4a5568", weight: 4, icon: "🍀", effect: "luck", gradient: ["#4a5568", "#2d3748"], topText: "LUCK", bottomText: "+0.1 TON" },
+    { label: "3", type: "TON", amount: 3, color: "#cc7b2c", weight: 4, icon: "💰", effect: "medium", gradient: ["#cc7b2c", "#b85e1a"], topText: "3", bottomText: "WIN" },
+    { label: "×2", type: "MULTIPLIER", amount: 0, color: "#b23c8c", weight: 3, icon: "⚡", effect: "multiplier", gradient: ["#b23c8c", "#8e2a6b"], topText: "2X", bottomText: "NEXT WIN" },
+    { label: "5", type: "TON", amount: 5, color: "#b83b2c", weight: 3, icon: "🔥", effect: "big", gradient: ["#b83b2c", "#9a2a1a"], topText: "5", bottomText: "NICE WIN" },
+    { label: "🆓", type: "FREE", amount: 0, color: "#5a3e8c", weight: 4, icon: "🎁", effect: "freespin", gradient: ["#5a3e8c", "#3e2a6b"], topText: "FREE", bottomText: "BONUS" },
+    { label: "10", type: "TON", amount: 10, color: "#c92a2a", weight: 2, icon: "💎", effect: "big", gradient: ["#c92a2a", "#aa1a1a"], topText: "10", bottomText: "NICE WIN" },
+    { label: "🍀", type: "LUCK", amount: 0.2, color: "#4a5568", weight: 3, icon: "🍀", effect: "luck", gradient: ["#4a5568", "#2d3748"], topText: "LUCK", bottomText: "+0.2 TON" },
+    { label: "25", type: "TON", amount: 25, color: "#d45c1a", weight: 2, icon: "💎", effect: "big", gradient: ["#d45c1a", "#b8440a"], topText: "25", bottomText: "BIG WIN" },
+    { label: "50", type: "TON", amount: 50, color: "#e87c1a", weight: 1, icon: "💎", effect: "jackpot", gradient: ["#e87c1a", "#c85c0a"], topText: "50", bottomText: "BIG WIN" },
+    { label: "JACK", type: "JACKPOT", amount: 100, color: "#ff3333", weight: 1, icon: "👑", effect: "jackpot", gradient: ["#ff3333", "#cc0000"], topText: "100", bottomText: "JACKPOT" },
+    { label: "MEGA", type: "MEGA", amount: 200, color: "#cc00cc", weight: 1, icon: "👑", effect: "mega", gradient: ["#cc00cc", "#990099"], topText: "200", bottomText: "MEGA" }
 ];
 
 // ====== 4. SLOTS SYMBOLS (7 رموز 3D) ======
@@ -182,7 +187,18 @@ const SLOTS_SYMBOLS_DATA = [
     { symbol: '🎰', weight: 2, value: 25.0, type: 'TON', color: '#ff00ff', effect: 'jackpot', icon3d: true }
 ];
 
-// ====== 5. DAILY CHALLENGES ======
+// ====== 5. FAKE WINNERS (للعرض في Progressive Jackpot Card) ======
+const FAKE_WINNERS = [
+    { name: "CryptoKing", game: "wheel", amount: 50, time: "2 min ago", icon: "🎡" },
+    { name: "TonWhale", game: "slots", amount: 25, time: "5 min ago", icon: "🎰" },
+    { name: "LuckyMiner", game: "wheel", amount: 100, time: "12 min ago", icon: "🎡" },
+    { name: "JackpotHit", game: "slots", amount: 75, time: "18 min ago", icon: "🎰" },
+    { name: "GoldHunter", game: "wheel", amount: 150, time: "25 min ago", icon: "🎡" },
+    { name: "SlotMaster", game: "slots", amount: 200, time: "35 min ago", icon: "🎰" },
+    { name: "MegaWinner", game: "wheel", amount: 500, time: "1 hour ago", icon: "🎡" }
+];
+
+// ====== 6. DAILY CHALLENGES ======
 const DAILY_CHALLENGES = [
     { id: 'wheel_spins', name: 'Spin the Wheel 10 times', target: 10, reward: 1, unit: 'TON', icon: '🎡', type: 'wheel' },
     { id: 'slots_spins', name: 'Play Slots 15 times', target: 15, reward: 2, unit: 'TON', icon: '🎰', type: 'slots' },
@@ -191,7 +207,18 @@ const DAILY_CHALLENGES = [
     { id: 'any_big_win', name: 'Get a BIG WIN (25+ TON)', target: 1, reward: 10, unit: 'TON', icon: '🔥', type: 'any' }
 ];
 
-// ====== 6. TRANSLATIONS ======
+// ====== 7. REFERRAL MILESTONES ======
+const REFERRAL_MILESTONES = [
+    { referrals: 3, reward: 1, unit: 'USDT' },
+    { referrals: 10, reward: 5, unit: 'USDT' },
+    { referrals: 50, reward: 50, unit: 'USDT' },
+    { referrals: 100, reward: 150, unit: 'USDT' },
+    { referrals: 250, reward: 300, unit: 'USDT' },
+    { referrals: 500, reward: 550, unit: 'USDT' },
+    { referrals: 1000, reward: 1200, unit: 'USDT' }
+];
+
+// ====== 8. TRANSLATIONS ======
 const translations = {
     en: {
         'app.name': 'TON Mining Casino',
@@ -335,7 +362,11 @@ const translations = {
         'spins.until.jackpot': 'Spins until JACKPOT',
         'bonus.get': 'GET BONUS',
         'bonus.packs': 'SPECIAL BONUS PACKS',
-        'bonus.legendary': '⭐ LEGENDARY ⭐'
+        'bonus.legendary': '⭐ LEGENDARY ⭐',
+        'milestone.title': '🏆 REFERRAL MILESTONES',
+        'milestone.claim': 'CLAIM',
+        'milestone.locked': 'LOCKED',
+        'milestone.claimed': 'CLAIMED'
     },
     ar: {
         'app.name': 'كازينو تعدين TON',
@@ -479,11 +510,15 @@ const translations = {
         'spins.until.jackpot': 'لفات حتى الجاكبوت',
         'bonus.get': 'احصل على مكافأة',
         'bonus.packs': 'باقات المكافآت الخاصة',
-        'bonus.legendary': '⭐ أسطوري ⭐'
+        'bonus.legendary': '⭐ أسطوري ⭐',
+        'milestone.title': '🏆 إنجازات الإحالة',
+        'milestone.claim': 'استلام',
+        'milestone.locked': 'مغلق',
+        'milestone.claimed': 'تم الاستلام'
     }
 };
 
-// ====== 7. LANGUAGE MANAGEMENT ======
+// ====== 9. LANGUAGE MANAGEMENT ======
 let currentLanguage = localStorage.getItem('preferred_language') || 'en';
 
 function t(key, params = {}) {
@@ -505,7 +540,7 @@ function toggleLanguage() {
     showToast(t('messages.success'), 'success');
 }
 
-// ====== 8. MACHINES DATA ======
+// ====== 10. MACHINES DATA ======
 const MACHINES = [
     {
         id: 'm1', name: 'Free Miner', nameAr: 'منجم مجاني',
@@ -587,18 +622,7 @@ const MACHINES = [
     }
 ];
 
-// ====== 9. REFERRAL MILESTONES ======
-const REFERRAL_MILESTONES = [
-    { referrals: 3, reward: 1, unit: 'USDT' },
-    { referrals: 10, reward: 5, unit: 'USDT' },
-    { referrals: 50, reward: 50, unit: 'USDT' },
-    { referrals: 100, reward: 150, unit: 'USDT' },
-    { referrals: 250, reward: 300, unit: 'USDT' },
-    { referrals: 500, reward: 550, unit: 'USDT' },
-    { referrals: 1000, reward: 1200, unit: 'USDT' }
-];
-
-// ====== 10. FIREBASE ======
+// ====== 11. FIREBASE ======
 let firebaseApp, db;
 try {
     if (typeof firebase !== 'undefined') {
@@ -611,7 +635,7 @@ try {
     console.error("Firebase error:", error);
 }
 
-// ====== 11. USER ID ======
+// ====== 12. USER ID ======
 const userId = tg?.initDataUnsafe?.user?.id?.toString() || 
                localStorage.getItem('ton_user_id') || 
                'user_' + Math.random().toString(36).substr(2, 9);
@@ -623,7 +647,7 @@ const userPhoto = tg?.initDataUnsafe?.user?.photo_url || '';
 
 localStorage.setItem('ton_user_id', userId);
 
-// ====== 12. ADMIN ======
+// ====== 13. ADMIN ======
 let isAdmin = false;
 let adminClickCount = 0, lastAdminClick = 0;
 let currentRejectId = null, currentRejectType = null, currentRejectData = null;
@@ -663,7 +687,7 @@ function handleAvatarClick() {
     }
 }
 
-// ====== 13. CACHE KEYS ======
+// ====== 14. CACHE KEYS ======
 const CACHE_KEYS = {
     USER: `user_${userId}`,
     TRANSACTIONS: `transactions_${userId}`,
@@ -674,7 +698,7 @@ const CACHE_KEYS = {
     BACKUPS: 'user_backups'
 };
 
-// ====== 14. USER STATE ======
+// ====== 15. USER STATE ======
 let userData = {
     uid: userId,
     username: userName,
@@ -697,7 +721,7 @@ let userData = {
     longestStreak: 0,
     lastClaimDate: new Date().toDateString(),
     upgrades: 0,
-    autoClicker: { active: false, expiry: 0, lastAutoClaim: 0 },
+    autoClicker: { active: false, expiry: 0, lastAutoClaim: 0, pendingRewards: 0 },
     
     wheel: { 
         lastFreeSpin: 0, 
@@ -756,12 +780,14 @@ let userData = {
         biggestWin: 0,
         lastWinDate: null
     },
-    progressiveJackpot: CONFIG.ECONOMY.PROGRESSIVE_JACKPOT_START
+    progressiveJackpot: CONFIG.ECONOMY.PROGRESSIVE_JACKPOT_START,
+    fakeWinnerIndex: 0,
+    lastFakeWinnerUpdate: Date.now()
 };
 
 userData.balance = userData.balances.TON;
 
-// ====== 15. CACHE MANAGEMENT ======
+// ====== 16. CACHE MANAGEMENT ======
 let lastUserLoadTime = 0;
 let lastPricesLoadTime = 0;
 let lastHistoryCheckTime = 0;
@@ -850,7 +876,48 @@ function restoreFromBackup() {
     }
 }
 
-// ====== 16. ON-DEMAND LISTENERS ======
+// ====== 17. AUTO CLICKER – يعمل بعد إغلاق التطبيق ======
+function processPendingAutoClickerRewards() {
+    if (!userData.autoClicker.active) return 0;
+    
+    const now = Date.now();
+    const lastClaim = userData.autoClicker.lastAutoClaim;
+    const expiry = userData.autoClicker.expiry;
+    
+    if (now > expiry) {
+        userData.autoClicker.active = false;
+        saveUserToCache();
+        return 0;
+    }
+    
+    const timePassed = now - lastClaim;
+    const machine = getActiveMachine();
+    const cyclesPassed = Math.floor(timePassed / machine.interval);
+    
+    if (cyclesPassed <= 0) return 0;
+    
+    const rewardPerCycle = machine.yield * getStreakBonus();
+    const totalReward = rewardPerCycle * cyclesPassed;
+    
+    userData.balances.TON += totalReward;
+    userData.balance = userData.balances.TON;
+    userData.totalEarned += totalReward;
+    userData.autoClicker.lastAutoClaim = now - (timePassed % machine.interval);
+    
+    addTransaction('auto_miner', totalReward, { currency: 'TON', cycles: cyclesPassed });
+    saveUserToCache();
+    
+    return totalReward;
+}
+
+function checkAutoClickerRewardsOnStart() {
+    const reward = processPendingAutoClickerRewards();
+    if (reward > 0) {
+        showToastPro(`🤖 Auto Miner collected ${reward.toFixed(4)} TON while you were away!`, 'success');
+    }
+}
+
+// ====== 18. ON-DEMAND LISTENERS ======
 let activeListeners = new Map();
 let listenerTimeouts = new Map();
 
@@ -914,7 +981,7 @@ function stopAllListeners() {
     listenerTimeouts.clear();
 }
 
-// ====== 17. GAME PAGE NAVIGATION ======
+// ====== 19. GAME PAGE NAVIGATION ======
 let currentPage = 'mining';
 
 function showPage(page) {
@@ -939,8 +1006,15 @@ function showPage(page) {
         updateSlotsUI(); 
         renderDailyChallenges();
         updateProgressiveJackpotDisplay();
+        updateFakeWinnerDisplay();
     }
     showRandomSticker();
+    
+    // التحكم في ظهور زر Bonus (يظهر فقط في صفحة الكازينو)
+    const bonusBtn = document.getElementById('floatingBonusBtn');
+    if (bonusBtn) {
+        bonusBtn.style.display = page === 'casino' ? 'flex' : 'none';
+    }
 }
 
 function openWheelGame() {
@@ -982,7 +1056,7 @@ function showWallet() {
     showPage('profile');
 }
 
-// ====== 18. UTILITIES ======
+// ====== 20. UTILITIES ======
 function formatAddress(addr) { return addr?.length > 10 ? addr.slice(0,6)+'...'+addr.slice(-4) : addr || ''; }
 function formatTON(amount) { return amount.toFixed(4); }
 function formatNumber(num) {
@@ -1087,7 +1161,7 @@ function createParticles() {
     }
 }
 
-// تأثيرات بصرية جديدة
+// تأثيرات بصرية
 function createScreenFlash() {
     const flash = document.createElement('div');
     flash.className = 'screen-flash';
@@ -1152,7 +1226,7 @@ function createIcyBurst() {
     setTimeout(() => burst.remove(), 1000);
 }
 
-// ====== 19. MINING MANAGER ======
+// ====== 21. MINING MANAGER ======
 let miningTimer = null, autoClickerTimer = null;
 
 function startMining() {
@@ -1326,7 +1400,7 @@ function getStreakBonus() {
     return 1.0;
 }
 
-// ====== 20. AUTO CLICKER ======
+// ====== 22. AUTO CLICKER ======
 function startAutoClicker() {
     if (autoClickerTimer) clearInterval(autoClickerTimer);
     autoClickerTimer = setInterval(async () => {
@@ -1356,7 +1430,8 @@ function buyAutoClicker() {
     userData.autoClicker = { 
         active: true, 
         expiry: Date.now() + CONFIG.ECONOMY.AUTO_CLICKER_DURATION, 
-        lastAutoClaim: Date.now() 
+        lastAutoClaim: Date.now(),
+        pendingRewards: 0
     };
     saveUserToCache();
     addTransaction('autoclicker', CONFIG.ECONOMY.AUTO_CLICKER_PRICE, { 
@@ -1368,7 +1443,7 @@ function buyAutoClicker() {
     updateUI();
 }
 
-// ====== 21. TON CONNECT ======
+// ====== 23. TON CONNECT ======
 let tonConnectUI = null, tonWallet = null;
 
 async function initTonConnect() {
@@ -1449,7 +1524,7 @@ async function connectWallet() {
 
 async function disconnectWallet() { if (tonConnectUI) { await tonConnectUI.disconnect(); showToast('Wallet disconnected', 'info'); } }
 
-// ====== 22. UI UPDATE ======
+// ====== 24. UI UPDATE ======
 function updateUI() {
     updateBalance();
     updateMiningStats();
@@ -1614,7 +1689,7 @@ function renderAssets() {
 function updateAutoClickerUI() {
     const statusEl = document.getElementById('autoMinerStatus');
     const timeEl = document.getElementById('autoMinerTime');
-    const turbineBtn = document.getElementById('autoClickerTurbine');
+    const autoClickerCard = document.getElementById('autoClickerCard');
     
     if (userData.autoClicker?.active) {
         const timeLeft = userData.autoClicker.expiry - Date.now();
@@ -1623,20 +1698,20 @@ function updateAutoClickerUI() {
             const hours = Math.floor((timeLeft % (24 * 3600000)) / 3600000);
             if (statusEl) statusEl.style.display = 'flex';
             if (timeEl) timeEl.textContent = `${days}d ${hours}h`;
-            if (turbineBtn) turbineBtn.classList.add('active');
+            if (autoClickerCard) autoClickerCard.classList.add('active');
         } else {
             userData.autoClicker.active = false;
             saveUserToCache();
             if (statusEl) statusEl.style.display = 'none';
-            if (turbineBtn) turbineBtn.classList.remove('active');
+            if (autoClickerCard) autoClickerCard.classList.remove('active');
         }
     } else {
         if (statusEl) statusEl.style.display = 'none';
-        if (turbineBtn) turbineBtn.classList.remove('active');
+        if (autoClickerCard) autoClickerCard.classList.remove('active');
     }
 }
 
-// ====== 23. WIN POPUP ======
+// ====== 25. WIN POPUP ======
 function showWinPopup(prize, type = 'normal') {
     const existing = document.querySelector('.win-popup');
     if (existing) existing.remove();
@@ -1685,7 +1760,7 @@ function showWinPopup(prize, type = 'normal') {
     }, 2500);
 }
 
-// ====== 24. MARKET FUNCTIONS ======
+// ====== 26. MARKET FUNCTIONS ======
 function renderMarket() {
     const showcase = document.getElementById('machinesShowcase');
     if (!showcase) return;
@@ -1728,7 +1803,7 @@ function checkRequirements(m) {
     return true;
 }
 
-// ====== 25. PAYMENT SYSTEM ======
+// ====== 27. PAYMENT SYSTEM ======
 let currentPaymentMethod = 'balance', currentPayment = null;
 
 function switchPaymentMethod(method) {
@@ -1863,7 +1938,7 @@ async function confirmWalletPayment() {
     } catch (e) { showToast('Payment failed', 'error'); }
 }
 
-// ====== 26. SWAP SYSTEM ======
+// ====== 28. SWAP SYSTEM ======
 let swapMode = 'from', swapFromCurrency = 'TON', swapToCurrency = 'USDT';
 
 function showSwapModal() {
@@ -1997,7 +2072,7 @@ function confirmSwap() {
     renderAssets();
 }
 
-// ====== 27. DEPOSIT FUNCTIONS ======
+// ====== 29. DEPOSIT FUNCTIONS ======
 let selectedDepositCurrency = 'TON';
 
 function showDepositModal() {
@@ -2153,7 +2228,7 @@ async function submitDeposit() {
     addTransaction('deposit', amt, { currency: cur, txHash: hash, status: 'pending' });
 }
 
-// ====== 28. WITHDRAW FUNCTIONS ======
+// ====== 30. WITHDRAW FUNCTIONS ======
 let selectedWithdrawNetwork = 'BEP20';
 
 function showWithdrawModal() {
@@ -2344,7 +2419,7 @@ async function submitWithdraw() {
     addTransaction('withdraw', amt, { currency: 'USDT', address: addr, network: netValue, fee, feeCurrency, status: 'pending' });
 }
 
-// ====== 29. HISTORY FUNCTIONS ======
+// ====== 31. HISTORY FUNCTIONS ======
 let currentHistoryFilter = 'all';
 
 function showHistory() {
@@ -2477,7 +2552,7 @@ function refreshHistory() {
     checkPendingTransactions().then(() => renderHistory(currentHistoryFilter)); 
 }
 
-// ====== 30. LEADERBOARD ======
+// ====== 32. LEADERBOARD ======
 let leaderboardCache = { data: null, timestamp: 0 };
 
 async function updateLeaderboard() {
@@ -2493,11 +2568,13 @@ async function updateLeaderboard() {
     if (!db) {
         const mock = { 
             top: [
-                { rank: 1, name: 'CryptoKing', earnings: 12450 },
-                { rank: 2, name: 'TonWhale', earnings: 8230 },
-                { rank: 3, name: 'MinerPro', earnings: 5670 }
+                { rank: 1, name: 'CryptoKing', earnings: 125.50 },
+                { rank: 2, name: 'TonWhale', earnings: 98.25 },
+                { rank: 3, name: 'MinerPro', earnings: 67.80 },
+                { rank: 4, name: 'FastMiner', earnings: 54.32 },
+                { rank: 5, name: 'WhaleHunter', earnings: 43.21 }
             ], 
-            userRank: 10 
+            userRank: 12 
         };
         leaderboardCache = { data: mock, timestamp: now };
         renderLeaderboard(mock);
@@ -2524,32 +2601,95 @@ function renderLeaderboard(data) {
     
     let html = '';
     data.top.forEach((u, i) => {
-        let medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : u.rank;
+        let medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${u.rank}`;
         html += `<div class="leaderboard-item ${i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : ''}">
-            <span class="rank">${medal}</span><span class="name">${u.name}</span><span class="earnings">${formatTON(u.earnings)} TON</span>
+            <span class="rank">${medal}</span><span class="name">${u.name}</span><span class="earnings">${u.earnings.toFixed(2)} TON</span>
         </div>`;
     });
-    html += `<div class="leaderboard-item you"><span class="rank">${data.userRank}</span><span class="name">You</span><span class="earnings">${formatTON(userData.totalEarned)} TON</span></div>`;
+    const userRankNumber = data.userRank && !isNaN(data.userRank) ? data.userRank : '—';
+    html += `<div class="leaderboard-item you"><span class="rank">${userRankNumber}</span><span class="name">You</span><span class="earnings">${userData.totalEarned.toFixed(2)} TON</span></div>`;
     el.innerHTML = html;
 }
 
-// ====== 31. REFERRAL MILESTONES ======
+// ====== 33. REFERRAL MILESTONES (تصميم Grid احترافي) ======
 function renderReferralMilestones() {
     const container = document.getElementById('referralMilestonesContainer');
     if (!container) return;
     
-    let html = '<div class="referral-milestones-grid">';
+    if (!userData.referralMilestonesClaimed) userData.referralMilestonesClaimed = [];
+    
+    let html = `<div class="milestones-header">
+        <h3><i class="fas fa-trophy"></i> ${t('milestone.title')}</h3>
+        <p>Complete referrals to earn USDT rewards</p>
+    </div>`;
+    html += '<div class="milestones-grid">';
+    
     REFERRAL_MILESTONES.forEach(m => {
         const progress = Math.min((userData.referrals?.length || 0) / m.referrals * 100, 100);
-        const claimed = userData.referralMilestonesClaimed?.includes(m.referrals);
-        html += `<div class="milestone-card">
-            <div class="milestone-header"><span class="milestone-count">${m.referrals} referrals</span><span class="milestone-reward">${m.reward} ${m.unit}</span></div>
-            <div class="milestone-progress-bar"><div class="milestone-progress-fill" style="width: ${progress}%"></div></div>
-            <div class="milestone-stats"><span>${userData.referrals?.length || 0}/${m.referrals}</span>${claimed ? '<span class="claimed-badge">✓ Claimed</span>' : ''}</div>
+        const isCompleted = (userData.referrals?.length || 0) >= m.referrals;
+        const isClaimed = userData.referralMilestonesClaimed?.includes(m.referrals);
+        
+        let buttonHtml = '';
+        if (isClaimed) {
+            buttonHtml = `<button class="milestone-claimed" disabled><i class="fas fa-check"></i> ${t('milestone.claimed')}</button>`;
+        } else if (isCompleted) {
+            buttonHtml = `<button class="milestone-claim" onclick="claimMilestone(${m.referrals}, ${m.reward}, '${m.unit}')"><i class="fas fa-gift"></i> ${t('milestone.claim')}</button>`;
+        } else {
+            buttonHtml = `<button class="milestone-locked" disabled><i class="fas fa-lock"></i> ${t('milestone.locked')}</button>`;
+        }
+        
+        html += `<div class="milestone-card ${isCompleted ? 'completed' : ''} ${isClaimed ? 'claimed' : ''}">
+            <div class="milestone-icon">🏆</div>
+            <div class="milestone-info">
+                <div class="milestone-target">${m.referrals} Referrals</div>
+                <div class="milestone-reward">🎁 ${m.reward} ${m.unit}</div>
+                <div class="milestone-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                    <span class="progress-text">${userData.referrals?.length || 0}/${m.referrals}</span>
+                </div>
+                ${buttonHtml}
+            </div>
         </div>`;
     });
+    
     html += '</div>';
     container.innerHTML = html;
+}
+
+async function claimMilestone(referrals, reward, unit) {
+    if (userData.referralMilestonesClaimed?.includes(referrals)) {
+        showToastPro('Reward already claimed!', 'warning');
+        return;
+    }
+    
+    if ((userData.referrals?.length || 0) < referrals) {
+        showToastPro(`You need ${referrals} referrals to claim this reward!`, 'warning');
+        return;
+    }
+    
+    if (unit === 'USDT') {
+        userData.balances.USDT += reward;
+    } else if (unit === 'TON') {
+        userData.balances.TON += reward;
+        userData.balance = userData.balances.TON;
+    }
+    
+    if (!userData.referralMilestonesClaimed) userData.referralMilestonesClaimed = [];
+    userData.referralMilestonesClaimed.push(referrals);
+    
+    addTransaction('milestone_reward', reward, { currency: unit, milestone: `${referrals} referrals` });
+    saveUserToCache();
+    renderReferralMilestones();
+    updateUI();
+    
+    // تأثيرات المطالبة
+    createConfetti();
+    createGoldExplosion();
+    createScreenFlash();
+    hapticFeedback('success');
+    showToastPro(`🎉 You earned ${reward} ${unit}! 🎉`, 'success');
 }
 
 function renderReferralTree() {
@@ -2569,7 +2709,7 @@ function copyReferralLink() {
     showToast('Referral link copied', 'success');
 }
 
-// ====== 32. CHART ======
+// ====== 34. CHART ======
 function updateChart() {
     const chart = document.getElementById('chartBars');
     if (!chart) return;
@@ -2594,7 +2734,7 @@ function updateChart() {
     ).join('');
 }
 
-// ====== 33. UPDATE WHEEL UI ======
+// ====== 35. UPDATE WHEEL UI ======
 function updateWheelUI() {
     const freeSpinEl = document.getElementById('wheelFreeSpin');
     const jackpotCounterEl = document.getElementById('wheelJackpotCounter');
@@ -2699,7 +2839,7 @@ function updatePurchasedSpinsDisplay() {
     }
 }
 
-// ====== 34. WHEEL PACKS ======
+// ====== 36. WHEEL PACKS ======
 async function buyWheelPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -2745,7 +2885,7 @@ async function buyWheelPack(pack) {
                 details: `Bought ${pack} pack: ${spins} spins + ${bonus} bonus` 
             });
             
-            saveUserToCache(); // حفظ فوري
+            saveUserToCache();
             updatePurchasedSpinsDisplay();
             updateUI();
             showToastPro(t('pack.success', { spins: totalSpins }), 'success');
@@ -2802,7 +2942,7 @@ async function buySlotsPack(pack) {
                 details: `Bought ${pack} pack: ${spins} spins + ${bonus} bonus` 
             });
             
-            saveUserToCache(); // حفظ فوري
+            saveUserToCache();
             updatePurchasedSpinsDisplay();
             updateUI();
             showToastPro(t('pack.success', { spins: totalSpins }), 'success');
@@ -2814,7 +2954,7 @@ async function buySlotsPack(pack) {
     }
 }
 
-// ====== 35. BONUS PACKS (الزر العائم) ======
+// ====== 37. BONUS PACKS (الزر العائم) ======
 async function buyBonusPack(gameType, spins, price, bonus) {
     const totalSpins = spins + bonus;
     
@@ -2854,7 +2994,7 @@ async function buyBonusPack(gameType, spins, price, bonus) {
                 details: `Bonus pack: ${spins} + ${bonus} spins (Total: ${totalSpins})` 
             });
             
-            saveUserToCache(); // حفظ فوري
+            saveUserToCache();
             updatePurchasedSpinsDisplay();
             updateUI();
             
@@ -2873,221 +3013,7 @@ function showBonusPacksModal() {
     if (modal) modal.classList.add('show');
 }
 
-// ====== 36. SAVE TO FIREBASE ======
-async function saveToFirebase() {
-    if (!db) return;
-    try {
-        await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).set({
-            balances: userData.balances,
-            totalEarned: userData.totalEarned,
-            totalWithdrawn: userData.totalWithdrawn,
-            totalDeposited: userData.totalDeposited,
-            activeMachine: userData.activeMachine,
-            activePlan: userData.activePlan,
-            machineExpiry: userData.machineExpiry,
-            lastClaim: userData.lastClaim,
-            claims: userData.claims,
-            streak: userData.streak,
-            longestStreak: userData.longestStreak,
-            lastClaimDate: userData.lastClaimDate,
-            upgrades: userData.upgrades,
-            referrals: userData.referrals,
-            referralEarnings: userData.referralEarnings,
-            referralCount: userData.referralCount,
-            referralMilestonesClaimed: userData.referralMilestonesClaimed,
-            autoClicker: userData.autoClicker,
-            wheel: userData.wheel,
-            slots: userData.slots,
-            dailyLogin: userData.dailyLogin,
-            dailyChallenges: userData.dailyChallenges,
-            casinoStats: userData.casinoStats,
-            progressiveJackpot: userData.progressiveJackpot,
-            lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
-        }, { merge: true });
-        console.log("💾 Data saved to Firebase");
-    } catch (e) {
-        console.error("Firebase save error:", e);
-    }
-}
-
-// ====== 37. DAILY CHALLENGES ======
-function initDailyChallenges() {
-    const today = new Date().toDateString();
-    if (!userData.dailyChallenges) {
-        userData.dailyChallenges = {
-            date: today,
-            completed: [],
-            claimed: [],
-            streak: 0
-        };
-    } else if (userData.dailyChallenges.date !== today) {
-        const yesterday = userData.dailyChallenges.date;
-        if (new Date(yesterday).toDateString() === new Date(Date.now() - 86400000).toDateString()) {
-            userData.dailyChallenges.streak++;
-        } else {
-            userData.dailyChallenges.streak = 1;
-        }
-        userData.dailyChallenges.date = today;
-        userData.dailyChallenges.completed = [];
-        userData.dailyChallenges.claimed = [];
-        saveUserToCache();
-    }
-}
-
-function renderDailyChallenges() {
-    const container = document.getElementById('challengesGrid');
-    if (!container) return;
-    
-    initDailyChallenges();
-    
-    let html = '';
-    DAILY_CHALLENGES.forEach(challenge => {
-        const isCompleted = userData.dailyChallenges.completed?.includes(challenge.id);
-        const isClaimed = userData.dailyChallenges.claimed?.includes(challenge.id);
-        let progress = 0;
-        
-        if (challenge.type === 'wheel') {
-            if (challenge.id === 'wheel_spins') progress = Math.min(100, ((userData.wheel.totalSpins || 0) / challenge.target) * 100);
-            else if (challenge.id === 'wheel_win') progress = userData.wheel.biggestWin >= 5 ? 100 : 0;
-        } else if (challenge.type === 'slots') {
-            if (challenge.id === 'slots_spins') progress = Math.min(100, ((userData.slots.totalSpins || 0) / challenge.target) * 100);
-            else if (challenge.id === 'slots_win') progress = userData.slots.biggestWin >= 10 ? 100 : 0;
-        } else if (challenge.id === 'any_big_win') {
-            progress = (userData.casinoStats?.biggestWin || 0) >= 25 ? 100 : 0;
-        }
-        
-        const isReady = progress >= 100 && !isClaimed;
-        
-        html += `<div class="challenge-card ${isCompleted ? 'completed' : ''} ${isReady ? 'ready' : ''}">
-            <div class="challenge-icon">${challenge.icon}</div>
-            <div class="challenge-info">
-                <div class="challenge-name">${challenge.name}</div>
-                <div class="challenge-progress">
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${progress}%"></div>
-                    </div>
-                    <span class="progress-text">${Math.floor(progress)}%</span>
-                </div>
-                <div class="challenge-reward">Reward: ${challenge.reward} ${challenge.unit}</div>
-            </div>
-            ${isReady ? `<button class="claim-challenge-btn" onclick="claimChallenge('${challenge.id}', ${challenge.reward}, '${challenge.unit}')">Claim</button>` : 
-              isClaimed ? '<span class="claimed-badge">✓ Claimed</span>' : ''}
-        </div>`;
-    });
-    
-    html += `<div class="streak-bonus-card">
-        <div class="streak-icon">🔥</div>
-        <div class="streak-info">
-            <div class="streak-title">Daily Streak</div>
-            <div class="streak-value">${userData.dailyChallenges?.streak || 0} days</div>
-            <div class="streak-reward">Next bonus at 7 days: 10 TON</div>
-        </div>
-    </div>`;
-    
-    container.innerHTML = html;
-}
-
-async function claimChallenge(challengeId, reward, unit) {
-    if (userData.dailyChallenges.claimed?.includes(challengeId)) {
-        showToast('Challenge already claimed', 'warning');
-        return;
-    }
-    
-    if (!userData.dailyChallenges.completed?.includes(challengeId)) {
-        showToast('Challenge not completed yet', 'warning');
-        return;
-    }
-    
-    if (unit === 'TON') {
-        userData.balances.TON += reward;
-        userData.balance = userData.balances.TON;
-    } else if (unit === 'USDT') {
-        userData.balances.USDT += reward;
-    }
-    
-    if (!userData.dailyChallenges.claimed) userData.dailyChallenges.claimed = [];
-    userData.dailyChallenges.claimed.push(challengeId);
-    
-    addTransaction('challenge_reward', reward, { currency: unit, challenge: challengeId });
-    saveUserToCache();
-    updateUI();
-    renderDailyChallenges();
-    showToastPro(`🎉 ${t('challenge.completed')} +${reward} ${unit}!`, 'success');
-}
-
-function checkChallengeProgress(type, amount = 0) {
-    if (!userData.dailyChallenges) return;
-    
-    let updated = false;
-    
-    if (type === 'wheel_spin') {
-        if (!userData.dailyChallenges.completed.includes('wheel_spins') && 
-            (userData.wheel.totalSpins || 0) >= DAILY_CHALLENGES.find(c => c.id === 'wheel_spins').target) {
-            userData.dailyChallenges.completed.push('wheel_spins');
-            updated = true;
-        }
-    } else if (type === 'slots_spin') {
-        if (!userData.dailyChallenges.completed.includes('slots_spins') && 
-            (userData.slots.totalSpins || 0) >= DAILY_CHALLENGES.find(c => c.id === 'slots_spins').target) {
-            userData.dailyChallenges.completed.push('slots_spins');
-            updated = true;
-        }
-    } else if (type === 'wheel_win' && amount >= 5) {
-        if (!userData.dailyChallenges.completed.includes('wheel_win')) {
-            userData.dailyChallenges.completed.push('wheel_win');
-            updated = true;
-        }
-    } else if (type === 'slots_win' && amount >= 10) {
-        if (!userData.dailyChallenges.completed.includes('slots_win')) {
-            userData.dailyChallenges.completed.push('slots_win');
-            updated = true;
-        }
-    } else if (type === 'big_win' && amount >= 25) {
-        if (!userData.dailyChallenges.completed.includes('any_big_win')) {
-            userData.dailyChallenges.completed.push('any_big_win');
-            updated = true;
-        }
-    }
-    
-    if (updated) {
-        saveUserToCache();
-        renderDailyChallenges();
-        showToastPro('✨ Challenge completed! Claim your reward!', 'success');
-    }
-}
-
-// ====== 38. HEAT METER & PROGRESSIVE JACKPOT ======
-function updateHeatMeter(game) {
-    const heatLevel = game === 'wheel' ? (userData.wheel.heatLevel || 0) : (userData.slots.heatLevel || 0);
-    const heatFill = document.getElementById(`${game}HeatFill`);
-    const heatPercent = document.getElementById(`${game}HeatPercent`);
-    
-    if (heatFill) {
-        heatFill.style.width = `${Math.min(100, heatLevel)}%`;
-        let color = '#22c55e';
-        if (heatLevel > 70) color = '#ef4444';
-        else if (heatLevel > 40) color = '#fbbf24';
-        heatFill.style.background = `linear-gradient(90deg, ${color}, #ffaa44)`;
-    }
-    if (heatPercent) {
-        heatPercent.textContent = `${Math.floor(heatLevel)}%`;
-    }
-}
-
-function updateGuaranteedCounters() {
-    const bigCounter = document.getElementById('wheelBigWinCounter');
-    const jackpotCounter = document.getElementById('wheelJackpotCounter');
-    
-    if (bigCounter) {
-        const left = CONFIG.ECONOMY.WHEEL_GUARANTEED_MEDIUM_EVERY - (userData.wheel.spinsSinceLastMedium || 0);
-        bigCounter.textContent = left;
-    }
-    if (jackpotCounter) {
-        const left = CONFIG.ECONOMY.WHEEL_GUARANTEED_BIG_EVERY - (userData.wheel.spinsSinceLastBig || 0);
-        jackpotCounter.textContent = left;
-    }
-}
-
+// ====== 38. PROGRESSIVE JACKPOT & FAKE WINNERS ======
 function updateProgressiveJackpotDisplay() {
     const jackpotElements = document.querySelectorAll('.progressive-jackpot-amount');
     jackpotElements.forEach(el => {
@@ -3120,6 +3046,46 @@ function awardProgressiveJackpot() {
     userData.progressiveJackpot = CONFIG.ECONOMY.PROGRESSIVE_JACKPOT_START;
     updateProgressiveJackpotDisplay();
     saveUserToCache();
+}
+
+function updateFakeWinnerDisplay() {
+    const winnerContainer = document.getElementById('fakeWinnerDisplay');
+    if (!winnerContainer) return;
+    
+    const now = Date.now();
+    const lastUpdate = userData.lastFakeWinnerUpdate || now;
+    
+    // تحديث كل 5 دقائق (300000 مللي ثانية)
+    if (now - lastUpdate >= 300000) {
+        userData.fakeWinnerIndex = (userData.fakeWinnerIndex + 1) % FAKE_WINNERS.length;
+        userData.lastFakeWinnerUpdate = now;
+        saveUserToCache();
+    }
+    
+    const winner = FAKE_WINNERS[userData.fakeWinnerIndex || 0];
+    if (winner) {
+        winnerContainer.innerHTML = `
+            <div class="fake-winner">
+                <div class="winner-icon">${winner.icon}</div>
+                <div class="winner-info">
+                    <span class="winner-name">${winner.name}</span>
+                    <span class="winner-amount">${winner.amount} TON</span>
+                    <span class="winner-time">${winner.time}</span>
+                </div>
+            </div>
+            <div class="winner-dots">
+                ${FAKE_WINNERS.map((_, i) => `<span class="dot ${i === userData.fakeWinnerIndex ? 'active' : ''}"></span>`).join('')}
+            </div>
+            <div class="next-update">Next update: ${formatTimeRemaining(300000 - (now - lastUpdate))}</div>
+        `;
+    }
+}
+
+function formatTimeRemaining(ms) {
+    if (ms <= 0) return '0:00';
+    const minutes = Math.floor(ms / 60000);
+    const seconds = Math.floor((ms % 60000) / 1000);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
 }
 
 // ====== 39. AUTO SPIN ======
@@ -3164,7 +3130,7 @@ function toggleAutoSpin(gameType, isTurbo = false) {
     }
 }
 
-// ====== 40. WHEEL GAME 3D WITH ICY GLOW ======
+// ====== 40. WHEEL GAME 3D (نصوص مقوسة من المركز للحافة) ======
 let wheelGame = null;
 
 class WheelGame3D {
@@ -3190,7 +3156,6 @@ class WheelGame3D {
         window.addEventListener('resize', () => this.resize());
         this.draw();
         
-        // إضافة حلقة الجليد
         this.addIcyRing();
     }
     
@@ -3231,7 +3196,7 @@ class WheelGame3D {
         
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
-        // رسم القطاعات بتأثير 3D
+        // رسم القطاعات
         for (let i = 0; i < this.prizes.length; i++) {
             const prize = this.prizes[i];
             const startAngle = i * this.segmentAngle + this.rotation;
@@ -3242,7 +3207,7 @@ class WheelGame3D {
             ctx.arc(cx, cy, r, startAngle, endAngle);
             ctx.closePath();
             
-            // تدرج 3D مع ظل
+            // تدرج 3D
             const grad = ctx.createLinearGradient(
                 cx + Math.cos(startAngle) * r * 0.3,
                 cy + Math.sin(startAngle) * r * 0.3,
@@ -3258,39 +3223,16 @@ class WheelGame3D {
             ctx.beginPath();
             ctx.moveTo(cx, cy);
             ctx.arc(cx, cy, r, startAngle, endAngle);
-            ctx.strokeStyle = 'rgba(255,215,0,0.6)';
-            ctx.lineWidth = 2;
+            ctx.strokeStyle = 'rgba(255,215,0,0.7)';
+            ctx.lineWidth = 2.5;
             ctx.stroke();
             
-            // رسم الأيقونة 3D
+            // رسم النص المقوس (من المركز إلى الحافة)
             const midAngle = startAngle + this.segmentAngle / 2;
-            const textRadius = r * 0.65;
-            const x = cx + Math.cos(midAngle) * textRadius;
-            const y = cy + Math.sin(midAngle) * textRadius;
-            
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.rotate(midAngle + Math.PI / 2);
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.font = `bold ${Math.floor(r * 0.1)}px "Segoe UI", "Outfit"`;
-            ctx.fillStyle = '#ffffff';
-            ctx.shadowBlur = 8;
-            ctx.shadowColor = 'rgba(0,0,0,0.7)';
-            ctx.shadowOffsetX = 2;
-            ctx.shadowOffsetY = 2;
-            
-            if (prize.icon && prize.icon !== '💰') {
-                ctx.font = `bold ${Math.floor(r * 0.12)}px "Segoe UI"`;
-                ctx.fillText(prize.icon, 0, 0);
-            } else {
-                ctx.font = `bold ${Math.floor(r * 0.08)}px "Outfit"`;
-                ctx.fillText(prize.label, 0, 0);
-            }
-            ctx.restore();
+            this.drawCurvedText(ctx, prize, cx, cy, r, midAngle);
         }
         
-        // المركز 3D
+        // المركز المعدني
         ctx.beginPath();
         ctx.arc(cx, cy, r * 0.13, 0, 2 * Math.PI);
         const centerGrad = ctx.createRadialGradient(cx - 5, cy - 5, 3, cx, cy, r * 0.13);
@@ -3304,6 +3246,67 @@ class WheelGame3D {
         ctx.fill();
         
         ctx.shadowBlur = 0;
+    }
+    
+    drawCurvedText(ctx, prize, cx, cy, r, angle) {
+        const topText = prize.topText || prize.label;
+        const bottomText = prize.bottomText || '';
+        
+        // النص العلوي (الرقم/الرمز)
+        const topRadius = r * 0.75;
+        const topX = cx + Math.cos(angle) * topRadius;
+        const topY = cy + Math.sin(angle) * topRadius;
+        
+        ctx.save();
+        ctx.translate(topX, topY);
+        ctx.rotate(angle + Math.PI / 2);
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        
+        let fontSize = r * 0.09;
+        let iconSize = r * 0.12;
+        
+        if (prize.icon && prize.icon !== '💰') {
+            ctx.font = `bold ${iconSize}px "Segoe UI", "Outfit"`;
+            ctx.fillStyle = '#ffffff';
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = 'rgba(0,0,0,0.7)';
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
+            ctx.fillText(prize.icon, 0, 0);
+        } else {
+            ctx.font = `bold ${fontSize}px "Outfit", "Segoe UI"`;
+            
+            // لون النص حسب قيمة الجائزة
+            if (prize.amount >= 100) ctx.fillStyle = '#ff6666';
+            else if (prize.amount >= 25) ctx.fillStyle = '#ffaa44';
+            else if (prize.amount >= 5) ctx.fillStyle = '#ffdd88';
+            else ctx.fillStyle = '#ffffff';
+            
+            ctx.shadowBlur = 6;
+            ctx.shadowColor = 'rgba(0,0,0,0.5)';
+            ctx.fillText(topText, 0, 0);
+        }
+        ctx.restore();
+        
+        // النص السفلي (الوصف)
+        if (bottomText) {
+            const bottomRadius = r * 0.5;
+            const bottomX = cx + Math.cos(angle) * bottomRadius;
+            const bottomY = cy + Math.sin(angle) * bottomRadius;
+            
+            ctx.save();
+            ctx.translate(bottomX, bottomY);
+            ctx.rotate(angle + Math.PI / 2);
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.font = `bold ${r * 0.06}px "Outfit"`;
+            ctx.fillStyle = '#dddddd';
+            ctx.shadowBlur = 4;
+            ctx.shadowColor = 'rgba(0,0,0,0.5)';
+            ctx.fillText(bottomText, 0, 0);
+            ctx.restore();
+        }
     }
     
     selectPrize() {
@@ -3370,7 +3373,6 @@ class WheelGame3D {
         createIceParticles();
         
         // طقطقة متقدمة حسب السرعة
-        const startTickTime = performance.now();
         const totalTicks = 36;
         let currentTick = 0;
         
@@ -3448,7 +3450,7 @@ function initWheelCanvas() {
     console.log("✅ Wheel 3D with Icy Glow initialized");
 }
 
-// ====== 41. SLOTS GAME 3D ======
+// ====== 41. SLOTS GAME (مع إصلاح مشكلة اختفاء الرموز) ======
 let slotsGame = null;
 
 class SlotsGame3D {
@@ -3563,6 +3565,9 @@ class SlotsGame3D {
                     setTimeout(() => winLine.classList.remove('active'), 1000);
                 }
                 
+                // إعادة بناء البكرات لعرض النتيجة بشكل صحيح
+                this.showResults();
+                
                 if (this.callback) {
                     const result = this.getResult();
                     this.callback(result);
@@ -3571,6 +3576,28 @@ class SlotsGame3D {
         };
         
         this.animationId = requestAnimationFrame(animate);
+    }
+    
+    showResults() {
+        // إعادة بناء البكرات لعرض الرموز النهائية
+        for (let i = 0; i < 3; i++) {
+            const reel = this.reels[i];
+            const resultIndex = this.results[i];
+            const resultSymbol = this.symbols[resultIndex];
+            
+            // بناء البكرة مع الرموز
+            let html = '';
+            for (let copy = 0; copy < 3; copy++) {
+                for (let j = 0; j < this.symbols.length; j++) {
+                    const symbol = this.symbols[j];
+                    const data = this.symbolsData.find(s => s.symbol === symbol);
+                    const isWinner = (j === resultIndex);
+                    html += `<div class="slot-symbol-3d ${isWinner ? 'winner-symbol' : ''}" style="color: ${data?.color || '#fff'};">${symbol}</div>`;
+                }
+            }
+            reel.innerHTML = html;
+            reel.style.transform = `translateY(-${(resultIndex + this.symbols.length) * 100}px)`;
+        }
     }
     
     getResult() {
@@ -3661,7 +3688,7 @@ function spinWheelVegas(isFree) {
         }
     }
     
-    saveUserToCache(); // حفظ قبل الدوران
+    saveUserToCache();
     
     wheelGame.spin((prize) => {
         awardWheelPrize(prize);
@@ -3673,7 +3700,7 @@ function spinWheelVegas(isFree) {
         checkChallengeProgress('wheel_spin');
         if (prize.amount >= 5) checkChallengeProgress('wheel_win', prize.amount);
         if (prize.amount >= 25) checkChallengeProgress('big_win', prize.amount);
-        saveUserToCache(); // حفظ بعد الدوران
+        saveUserToCache();
     }, isFree);
 }
 
@@ -3790,7 +3817,7 @@ function spinSlotsGame(isFree, isTurbo) {
         }
     }
     
-    saveUserToCache(); // حفظ قبل الدوران
+    saveUserToCache();
     
     slotsGame.spin((result) => {
         if (result.win) {
@@ -3851,7 +3878,7 @@ function spinSlotsGame(isFree, isTurbo) {
         updateHeatMeter('slots');
         updateUI();
         checkChallengeProgress('slots_spin');
-        saveUserToCache(); // حفظ بعد الدوران
+        saveUserToCache();
     }, isTurbo);
 }
 
@@ -4207,7 +4234,224 @@ const VegasAudio = {
     }
 };
 
-// ====== 45. MODAL FUNCTIONS ======
+// ====== 45. HEAT METER & GUARANTEED COUNTERS ======
+function updateHeatMeter(game) {
+    const heatLevel = game === 'wheel' ? (userData.wheel.heatLevel || 0) : (userData.slots.heatLevel || 0);
+    const heatFill = document.getElementById(`${game}HeatFill`);
+    const heatPercent = document.getElementById(`${game}HeatPercent`);
+    
+    if (heatFill) {
+        heatFill.style.width = `${Math.min(100, heatLevel)}%`;
+        let color = '#22c55e';
+        if (heatLevel > 70) color = '#ef4444';
+        else if (heatLevel > 40) color = '#fbbf24';
+        heatFill.style.background = `linear-gradient(90deg, ${color}, #ffaa44)`;
+    }
+    if (heatPercent) {
+        heatPercent.textContent = `${Math.floor(heatLevel)}%`;
+    }
+}
+
+function updateGuaranteedCounters() {
+    const bigCounter = document.getElementById('wheelBigWinCounter');
+    const jackpotCounter = document.getElementById('wheelJackpotCounter');
+    
+    if (bigCounter) {
+        const left = CONFIG.ECONOMY.WHEEL_GUARANTEED_MEDIUM_EVERY - (userData.wheel.spinsSinceLastMedium || 0);
+        bigCounter.textContent = left;
+    }
+    if (jackpotCounter) {
+        const left = CONFIG.ECONOMY.WHEEL_GUARANTEED_BIG_EVERY - (userData.wheel.spinsSinceLastBig || 0);
+        jackpotCounter.textContent = left;
+    }
+}
+
+// ====== 46. DAILY CHALLENGES ======
+function initDailyChallenges() {
+    const today = new Date().toDateString();
+    if (!userData.dailyChallenges) {
+        userData.dailyChallenges = {
+            date: today,
+            completed: [],
+            claimed: [],
+            streak: 0
+        };
+    } else if (userData.dailyChallenges.date !== today) {
+        const yesterday = userData.dailyChallenges.date;
+        if (new Date(yesterday).toDateString() === new Date(Date.now() - 86400000).toDateString()) {
+            userData.dailyChallenges.streak++;
+        } else {
+            userData.dailyChallenges.streak = 1;
+        }
+        userData.dailyChallenges.date = today;
+        userData.dailyChallenges.completed = [];
+        userData.dailyChallenges.claimed = [];
+        saveUserToCache();
+    }
+}
+
+function renderDailyChallenges() {
+    const container = document.getElementById('challengesGrid');
+    if (!container) return;
+    
+    initDailyChallenges();
+    
+    let html = '';
+    DAILY_CHALLENGES.forEach(challenge => {
+        const isCompleted = userData.dailyChallenges.completed?.includes(challenge.id);
+        const isClaimed = userData.dailyChallenges.claimed?.includes(challenge.id);
+        let progress = 0;
+        
+        if (challenge.type === 'wheel') {
+            if (challenge.id === 'wheel_spins') progress = Math.min(100, ((userData.wheel.totalSpins || 0) / challenge.target) * 100);
+            else if (challenge.id === 'wheel_win') progress = userData.wheel.biggestWin >= 5 ? 100 : 0;
+        } else if (challenge.type === 'slots') {
+            if (challenge.id === 'slots_spins') progress = Math.min(100, ((userData.slots.totalSpins || 0) / challenge.target) * 100);
+            else if (challenge.id === 'slots_win') progress = userData.slots.biggestWin >= 10 ? 100 : 0;
+        } else if (challenge.id === 'any_big_win') {
+            progress = (userData.casinoStats?.biggestWin || 0) >= 25 ? 100 : 0;
+        }
+        
+        const isReady = progress >= 100 && !isClaimed;
+        
+        html += `<div class="challenge-card ${isCompleted ? 'completed' : ''} ${isReady ? 'ready' : ''}">
+            <div class="challenge-icon">${challenge.icon}</div>
+            <div class="challenge-info">
+                <div class="challenge-name">${challenge.name}</div>
+                <div class="challenge-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                    <span class="progress-text">${Math.floor(progress)}%</span>
+                </div>
+                <div class="challenge-reward">Reward: ${challenge.reward} ${challenge.unit}</div>
+            </div>
+            ${isReady ? `<button class="claim-challenge-btn" onclick="claimChallenge('${challenge.id}', ${challenge.reward}, '${challenge.unit}')">Claim</button>` : 
+              isClaimed ? '<span class="claimed-badge">✓ Claimed</span>' : ''}
+        </div>`;
+    });
+    
+    html += `<div class="streak-bonus-card">
+        <div class="streak-icon">🔥</div>
+        <div class="streak-info">
+            <div class="streak-title">Daily Streak</div>
+            <div class="streak-value">${userData.dailyChallenges?.streak || 0} days</div>
+            <div class="streak-reward">Next bonus at 7 days: 10 TON</div>
+        </div>
+    </div>`;
+    
+    container.innerHTML = html;
+}
+
+async function claimChallenge(challengeId, reward, unit) {
+    if (userData.dailyChallenges.claimed?.includes(challengeId)) {
+        showToast('Challenge already claimed', 'warning');
+        return;
+    }
+    
+    if (!userData.dailyChallenges.completed?.includes(challengeId)) {
+        showToast('Challenge not completed yet', 'warning');
+        return;
+    }
+    
+    if (unit === 'TON') {
+        userData.balances.TON += reward;
+        userData.balance = userData.balances.TON;
+    } else if (unit === 'USDT') {
+        userData.balances.USDT += reward;
+    }
+    
+    if (!userData.dailyChallenges.claimed) userData.dailyChallenges.claimed = [];
+    userData.dailyChallenges.claimed.push(challengeId);
+    
+    addTransaction('challenge_reward', reward, { currency: unit, challenge: challengeId });
+    saveUserToCache();
+    updateUI();
+    renderDailyChallenges();
+    showToastPro(`🎉 ${t('challenge.completed')} +${reward} ${unit}!`, 'success');
+}
+
+function checkChallengeProgress(type, amount = 0) {
+    if (!userData.dailyChallenges) return;
+    
+    let updated = false;
+    
+    if (type === 'wheel_spin') {
+        if (!userData.dailyChallenges.completed.includes('wheel_spins') && 
+            (userData.wheel.totalSpins || 0) >= DAILY_CHALLENGES.find(c => c.id === 'wheel_spins').target) {
+            userData.dailyChallenges.completed.push('wheel_spins');
+            updated = true;
+        }
+    } else if (type === 'slots_spin') {
+        if (!userData.dailyChallenges.completed.includes('slots_spins') && 
+            (userData.slots.totalSpins || 0) >= DAILY_CHALLENGES.find(c => c.id === 'slots_spins').target) {
+            userData.dailyChallenges.completed.push('slots_spins');
+            updated = true;
+        }
+    } else if (type === 'wheel_win' && amount >= 5) {
+        if (!userData.dailyChallenges.completed.includes('wheel_win')) {
+            userData.dailyChallenges.completed.push('wheel_win');
+            updated = true;
+        }
+    } else if (type === 'slots_win' && amount >= 10) {
+        if (!userData.dailyChallenges.completed.includes('slots_win')) {
+            userData.dailyChallenges.completed.push('slots_win');
+            updated = true;
+        }
+    } else if (type === 'big_win' && amount >= 25) {
+        if (!userData.dailyChallenges.completed.includes('any_big_win')) {
+            userData.dailyChallenges.completed.push('any_big_win');
+            updated = true;
+        }
+    }
+    
+    if (updated) {
+        saveUserToCache();
+        renderDailyChallenges();
+        showToastPro('✨ Challenge completed! Claim your reward!', 'success');
+    }
+}
+
+// ====== 47. SAVE TO FIREBASE ======
+async function saveToFirebase() {
+    if (!db) return;
+    try {
+        await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).set({
+            balances: userData.balances,
+            totalEarned: userData.totalEarned,
+            totalWithdrawn: userData.totalWithdrawn,
+            totalDeposited: userData.totalDeposited,
+            activeMachine: userData.activeMachine,
+            activePlan: userData.activePlan,
+            machineExpiry: userData.machineExpiry,
+            lastClaim: userData.lastClaim,
+            claims: userData.claims,
+            streak: userData.streak,
+            longestStreak: userData.longestStreak,
+            lastClaimDate: userData.lastClaimDate,
+            upgrades: userData.upgrades,
+            referrals: userData.referrals,
+            referralEarnings: userData.referralEarnings,
+            referralCount: userData.referralCount,
+            referralMilestonesClaimed: userData.referralMilestonesClaimed,
+            autoClicker: userData.autoClicker,
+            wheel: userData.wheel,
+            slots: userData.slots,
+            dailyLogin: userData.dailyLogin,
+            dailyChallenges: userData.dailyChallenges,
+            casinoStats: userData.casinoStats,
+            progressiveJackpot: userData.progressiveJackpot,
+            fakeWinnerIndex: userData.fakeWinnerIndex,
+            lastFakeWinnerUpdate: userData.lastFakeWinnerUpdate,
+            lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+        console.log("💾 Data saved to Firebase");
+    } catch (e) {
+        console.error("Firebase save error:", e);
+    }
+}
+
+// ====== 48. MODAL FUNCTIONS ======
 function closeModal(id) {
     const modal = document.getElementById(id);
     if (!modal) return;
@@ -4239,7 +4483,7 @@ function hideAllModals() {
     });
 }
 
-// ====== 46. FILTER MARKET ======
+// ====== 49. FILTER MARKET ======
 function filterMarket(filter) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     if (event && event.target) event.target.classList.add('active');
@@ -4250,7 +4494,7 @@ function filterMarket(filter) {
     });
 }
 
-// ====== 47. ADMIN FUNCTIONS ======
+// ====== 50. ADMIN FUNCTIONS ======
 let currentAdminTab = 'withdrawals';
 
 function showAdminPanel() {
@@ -4477,7 +4721,7 @@ function copyToClipboard(text) {
     showToast('Copied!', 'success'); 
 }
 
-// ====== 48. CLOSE JACKPOT POPUP ======
+// ====== 51. CLOSE JACKPOT POPUP ======
 function closeJackpotPopup() {
     const popup = document.getElementById('jackpotPopup');
     if (popup) {
@@ -4488,7 +4732,7 @@ function closeJackpotPopup() {
     }
 }
 
-// ====== 49. PRICES ======
+// ====== 52. PRICES ======
 let livePrices = {};
 
 async function loadPrices(force = false) {
@@ -4532,7 +4776,7 @@ function refreshPrices() {
     loadPrices(true);
 }
 
-// ====== 50. REFERRAL SYSTEM ======
+// ====== 53. REFERRAL SYSTEM ======
 function generateReferralCode() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     return userId.slice(-4) + Array.from({length:6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
@@ -4634,7 +4878,7 @@ async function checkReferralMilestones() {
     saveUserToCache();
 }
 
-// ====== 51. DAILY LOGIN BONUS ======
+// ====== 54. DAILY LOGIN BONUS ======
 function checkDailyLogin() {
     const today = new Date().toDateString();
     if (!userData.dailyLogin) userData.dailyLogin = { lastLogin: null, streak: 0 };
@@ -4660,7 +4904,7 @@ function checkDailyLogin() {
     }
 }
 
-// ====== 52. NOTIFICATION SYSTEM ======
+// ====== 55. NOTIFICATION SYSTEM ======
 let unreadCount = 0;
 
 function addLocalNotification(message, type = 'info') {
@@ -4790,7 +5034,7 @@ function showNotifications() {
     }
 }
 
-// ====== 53. FLOATING NOTIFICATIONS ======
+// ====== 56. FLOATING NOTIFICATIONS ======
 let floatingTimeouts = [];
 
 function showFloatingToast(message, type = 'info') {
@@ -4827,7 +5071,7 @@ function stopFloatingNotifications() {
     floatingTimeouts = [];
 }
 
-// ====== 54. WELCOME STICKER ======
+// ====== 57. WELCOME STICKER ======
 const WELCOME_STICKERS = ['🤝','🫣','🥰','🥳','💲','💰','💸','💵','🤪','😱','😎','🤑','💯','💖','✨','🌟','⭐','🔥','⚡','💎','🎁','🎈','🎉','👑','🚀','💫'];
 let lastStickerTime = 0;
 const STICKER_COOLDOWN = 12 * 60 * 1000;
@@ -4853,7 +5097,7 @@ function showRandomSticker() {
     lastStickerTime = now;
 }
 
-// ====== 55. LOAD USER DATA ======
+// ====== 58. LOAD USER DATA ======
 async function loadUserData(force = false) {
     try {
         console.log("📂 Loading user data for:", userId);
@@ -4926,6 +5170,7 @@ async function loadUserData(force = false) {
         updateNotificationBadge();
         checkAdminAndAddCrown();
         checkDailyLogin();
+        checkAutoClickerRewardsOnStart();
         
         updateUserDisplay();
         
@@ -4945,16 +5190,11 @@ function updateUserDisplay() {
     }
     
     if (userIdEl) {
-        if (tg?.initDataUnsafe?.user?.username) {
-            userIdEl.textContent = `@${tg.initDataUnsafe.user.username}`;
-        } else {
-            const shortId = userId.slice(0, 8);
-            userIdEl.textContent = `ID: ${shortId}`;
-        }
+        userIdEl.textContent = `ID: ${userId}`;
     }
 }
 
-// ====== 56. OPEN FUNCTIONS ======
+// ====== 59. OPEN FUNCTIONS ======
 function openProfileFromAnywhere() {
     if (currentPage === 'wheelGame' || currentPage === 'slotsGame') exitGame();
     setTimeout(() => showPage('profile'), 300);
@@ -4964,355 +5204,7 @@ function openDepositModal() { if (currentPage !== 'profile') openProfileFromAnyw
 function openSwapModal() { if (currentPage !== 'profile') openProfileFromAnywhere(); setTimeout(() => showSwapModal(), 400); }
 function openHistoryModal() { if (currentPage !== 'profile') openProfileFromAnywhere(); setTimeout(() => showHistory(), 400); }
 
-// ====== 57. CSS STYLES (Dynamic additions) ======
-const styleElement = document.createElement('style');
-styleElement.textContent = `
-    @keyframes slideDownFadeOut {
-        0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-        15% { opacity: 1; transform: translateX(-50%) translateY(0); }
-        85% { opacity: 1; transform: translateX(-50%) translateY(0); }
-        100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-    }
-    .game-win-message {
-        animation: slideDownFadeOut 3s ease forwards;
-    }
-    .toast-pro {
-        background: rgba(20,25,35,0.98);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(0,242,255,0.3);
-        border-radius: 15px;
-        padding: 15px 20px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.5), 0 0 30px rgba(0,242,255,0.2);
-        animation: slideDown 0.3s ease;
-        pointer-events: auto;
-    }
-    .toast-pro.success { border-color: #22c55e; }
-    .toast-pro.error { border-color: #ef4444; }
-    .toast-pro.warning { border-color: #fbbf24; }
-    .toast-pro.closing { animation: slideUp 0.3s ease forwards; }
-    @keyframes slideDown {
-        from { opacity: 0; transform: translateY(-20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes slideUp {
-        from { opacity: 1; transform: translateY(0); }
-        to { opacity: 0; transform: translateY(-20px); }
-    }
-    .wheel-icy-ring {
-        position: absolute;
-        top: -15px;
-        left: -15px;
-        right: -15px;
-        bottom: -15px;
-        border-radius: 50%;
-        background: radial-gradient(circle, transparent 60%, rgba(0,242,255,0.2) 70%, rgba(0,255,200,0.4) 85%, rgba(0,242,255,0.6) 95%, transparent 100%);
-        filter: blur(4px);
-        animation: icyPulse 2s ease-in-out infinite;
-        pointer-events: none;
-        z-index: 5;
-    }
-    @keyframes icyPulse {
-        0%, 100% { opacity: 0.6; transform: scale(1); filter: blur(4px); }
-        50% { opacity: 1; transform: scale(1.02); filter: blur(6px); }
-    }
-    .icy-sparkles {
-        position: absolute;
-        inset: 0;
-        border-radius: 50%;
-        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8) 0%, rgba(0,242,255,0.4) 20%, transparent 70%);
-        mix-blend-mode: screen;
-        animation: sparkleRotate 8s linear infinite;
-    }
-    @keyframes sparkleRotate {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-    .icy-glow {
-        position: absolute;
-        inset: -5px;
-        border-radius: 50%;
-        box-shadow: 0 0 30px rgba(0,242,255,0.5), 0 0 60px rgba(0,200,255,0.3), inset 0 0 20px rgba(0,242,255,0.3);
-        animation: icyGlowMove 3s ease-in-out infinite;
-    }
-    @keyframes icyGlowMove {
-        0%, 100% { box-shadow: 0 0 30px rgba(0,242,255,0.5), 0 0 60px rgba(0,200,255,0.3); }
-        50% { box-shadow: 0 0 50px rgba(0,242,255,0.8), 0 0 90px rgba(0,200,255,0.5); }
-    }
-    .ice-particle {
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        background: radial-gradient(circle, #fff, #00f2ff);
-        border-radius: 50%;
-        opacity: 0;
-        animation: iceFloat 2s ease-out forwards;
-        filter: blur(1px);
-        pointer-events: none;
-    }
-    @keyframes iceFloat {
-        0% { transform: translate(0, 0) rotate(0deg); opacity: 0.8; width: 4px; height: 4px; }
-        50% { transform: translate(var(--tx, 20px), var(--ty, -30px)) rotate(180deg); opacity: 0.5; width: 2px; height: 2px; }
-        100% { transform: translate(var(--tx, 40px), var(--ty, -60px)) rotate(360deg); opacity: 0; width: 0; height: 0; }
-    }
-    .icy-burst {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 200px;
-        height: 200px;
-        background: radial-gradient(circle, rgba(0,242,255,0.6) 0%, rgba(0,200,255,0.3) 30%, transparent 70%);
-        border-radius: 50%;
-        filter: blur(15px);
-        animation: icyBurst 1s ease-out forwards;
-        pointer-events: none;
-        z-index: 100;
-    }
-    @keyframes icyBurst {
-        0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-        100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
-    }
-    .slot-symbol-3d {
-        height: 100px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 3.5rem;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 10px currentColor;
-        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
-        transition: all 0.2s ease;
-    }
-    .floating-bonus-btn {
-        position: fixed;
-        bottom: 100px;
-        right: 15px;
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #ff4444, #ff8800);
-        border: none;
-        box-shadow: 0 0 30px rgba(255,68,68,0.6), 0 5px 15px rgba(0,0,0,0.3);
-        cursor: pointer;
-        z-index: 150;
-        animation: bonusPulse 1.5s infinite;
-        transition: transform 0.2s ease;
-    }
-    .floating-bonus-btn:hover {
-        transform: scale(1.1);
-    }
-    @keyframes bonusPulse {
-        0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255,68,68,0.5); }
-        50% { transform: scale(1.05); box-shadow: 0 0 40px rgba(255,68,68,0.8); }
-    }
-    .bonus-btn-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        color: white;
-        font-weight: 800;
-        font-size: 0.7rem;
-    }
-    .bonus-icon { font-size: 1.5rem; }
-    .bonus-text { font-size: 0.6rem; letter-spacing: 1px; }
-    .bonus-fire { font-size: 1rem; margin-top: -5px; }
-    .bonus-packs-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-    .bonus-pack-card {
-        background: linear-gradient(145deg, #1e1f2a, #0f1018);
-        border: 1px solid rgba(255,215,0,0.3);
-        border-radius: 20px;
-        padding: 15px;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-    .bonus-pack-card:hover {
-        transform: translateY(-3px);
-        border-color: gold;
-        box-shadow: 0 0 30px rgba(255,215,0,0.3);
-    }
-    .bonus-pack-card.legendary {
-        background: linear-gradient(145deg, #2a1f2a, #1a0f1a);
-        border: 2px solid gold;
-    }
-    .pack-badge {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: linear-gradient(135deg, #ff4444, #ff8800);
-        padding: 2px 8px;
-        border-radius: 20px;
-        font-size: 0.7rem;
-        font-weight: 700;
-    }
-    .bonus-pack-card .pack-spins {
-        font-size: 1.2rem;
-        font-weight: 800;
-        margin: 10px 0;
-        color: var(--text-gold);
-    }
-    .bonus-pack-card .pack-price {
-        font-size: 1rem;
-        font-weight: 700;
-        color: var(--text-accent);
-        margin-bottom: 10px;
-    }
-    .buy-bonus-btn {
-        background: linear-gradient(135deg, #00f2ff, #0088cc);
-        border: none;
-        border-radius: 30px;
-        padding: 8px 20px;
-        color: white;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-    .buy-bonus-btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 20px rgba(0,242,255,0.5);
-    }
-    .screen-flash {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: white;
-        pointer-events: none;
-        z-index: 9999;
-        animation: flashFade 0.3s ease-out forwards;
-    }
-    @keyframes flashFade {
-        0% { opacity: 0.8; }
-        100% { opacity: 0; }
-    }
-    .screen-shake {
-        animation: screen-shake-heavy 0.5s ease-in-out;
-    }
-    @keyframes screen-shake-heavy {
-        0%,100% { transform: translate(0,0); }
-        10% { transform: translate(-10px,-8px); }
-        20% { transform: translate(10px,8px); }
-        30% { transform: translate(-8px,-6px); }
-        40% { transform: translate(8px,6px); }
-        50% { transform: translate(-5px,-4px); }
-        60% { transform: translate(5px,4px); }
-        70% { transform: translate(-3px,-2px); }
-        80% { transform: translate(3px,2px); }
-    }
-    .gold-particle {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        background: radial-gradient(circle, gold 0%, orange 70%);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 10000;
-        animation: particleFly 1s ease-out forwards;
-    }
-    @keyframes particleFly {
-        0% { transform: translate(0, 0) scale(1); opacity: 1; }
-        100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
-    }
-    .confetti {
-        position: fixed;
-        width: 8px;
-        height: 8px;
-        background: #ffdd00;
-        top: -10px;
-        pointer-events: none;
-        z-index: 9999;
-        border-radius: 2px;
-    }
-    .win-burst {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        width: 100%;
-        height: 100%;
-        transform: translate(-50%, -50%);
-        background: radial-gradient(circle, rgba(255,215,0,0.3), transparent);
-        pointer-events: none;
-        z-index: 9998;
-        animation: burstExpand 0.8s ease-out forwards;
-    }
-    @keyframes burstExpand {
-        0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-        100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
-    }
-    .vegas-burst {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100%;
-        height: 100%;
-        transform: translate(-50%, -50%);
-        pointer-events: none;
-        z-index: 100;
-    }
-    .burst-ray {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 4px;
-        height: 50%;
-        background: linear-gradient(to top, gold, transparent);
-        transform-origin: bottom center;
-        animation: burst-expand 0.8s ease-out forwards;
-    }
-    @keyframes burst-expand {
-        0% { height: 0; opacity: 1; }
-        100% { height: 100%; opacity: 0; }
-    }
-    .vegas-jackpot-text {
-        position: fixed;
-        top: 30%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 2.5rem;
-        font-weight: 900;
-        color: gold;
-        text-shadow: 0 0 10px orange, 0 0 20px red;
-        z-index: 10000;
-        animation: jackpotTextPop 0.5s ease-out forwards;
-        pointer-events: none;
-        white-space: nowrap;
-    }
-    @keyframes jackpotTextPop {
-        0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-        50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-        100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-    }
-    .vegas-particle {
-        position: absolute;
-        width: 12px;
-        height: 12px;
-        background: radial-gradient(circle, gold 0%, orange 50%, transparent 70%);
-        border-radius: 50%;
-        pointer-events: none;
-        animation: particle-explode 1.5s ease-out forwards;
-        z-index: 9999;
-    }
-    @keyframes particle-explode {
-        0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0); opacity: 0; }
-    }
-    .vegas-shake {
-        animation: screen-shake-heavy 0.5s ease-in-out;
-    }
-`;
-document.head.appendChild(styleElement);
-
-// ====== 58. INITIALIZATION ======
+// ====== 60. INITIALIZATION ======
 document.addEventListener('DOMContentLoaded', async () => {
     hideAllModals();
     if (currentLanguage === 'ar') { document.body.classList.add('rtl'); document.documentElement.dir = 'rtl'; }
@@ -5328,7 +5220,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupScrollListener();
     setInterval(() => {
         if (!userData.autoClicker?.active) {
-            const btn = document.getElementById('autoClickerTurbine');
+            const btn = document.getElementById('autoClickerCard');
             if (btn) { btn.classList.add('show'); setTimeout(() => btn.classList.remove('show'), 10000); }
         }
     }, 300000);
@@ -5337,7 +5229,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setTimeout(showRandomSticker, 1000);
     updateUserDisplay();
     document.addEventListener('click', () => VegasAudio.init(), { once: true });
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v26.0");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v27.0");
     console.log("✅ All systems ready! 🚀");
 });
 
@@ -5355,7 +5247,7 @@ document.addEventListener('visibilitychange', () => {
     else { startMining(); if (currentPage === 'mining') startFloatingNotifications(); }
 });
 
-// ====== 59. EXPORT FUNCTIONS ======
+// ====== 61. EXPORT FUNCTIONS ======
 window.showPage = showPage;
 window.showMarket = ()=>showPage('market');
 window.showWallet = showWallet;
@@ -5423,3 +5315,4 @@ window.claimChallenge = claimChallenge;
 window.toggleAutoSpin = toggleAutoSpin;
 window.showBonusPacksModal = showBonusPacksModal;
 window.buyBonusPack = buyBonusPack;
+window.claimMilestone = claimMilestone;
