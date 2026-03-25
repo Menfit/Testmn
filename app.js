@@ -1,15 +1,15 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v27.0
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v28.0
 // ============================================
-// تحسينات شاملة:
-// - إعادة تصميم العجلة 3D (نصوص مقوسة من المركز للحافة، تأثيرات كازينو حقيقية)
-// - إصلاح مشكلة السلوتس (الرموز تظهر بعد كل لفة)
-// - إضافة Progressive Jackpot Card مع فائزين وهميين متناوبين
-// - إضافة Referral Milestones بتصميم Grid احترافي
-// - إعادة تنظيم الأزرار (Bonus, Scroll Top, Auto Clicker)
-// - Auto Clicker يعمل بعد إغلاق التطبيق (نظام الحساب عند الفتح)
-// - إعادة ترتيب صفحة البروفيل
-// - تعديل Header (إظهار ID)
+// التحسينات النهائية:
+// - نقل Auto Clicker إلى أسفل زر Claim (بطاقة مستقلة)
+// - إصلاح حفظ Auto Clicker (يظهر بعد إعادة فتح التطبيق)
+// - إصلاح Header (إظهار ID بشكل صحيح)
+// - Bonus Button يظهر في العجلة والسلوتس أيضاً
+// - إعادة Progressive Jackpot Card إلى التصميم الأصلي (بدون إضافات)
+// - العجلة: نصوص مستقيمة من المركز إلى الحافة + تأثيرات 3D
+// - إصلاح عرض القيمة بالدولار (NaN)
+// - تحسين Swap: TON ↔ USDT + عملات أخرى → TON/USDT
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -156,24 +156,24 @@ const CONFIG = {
     ]
 };
 
-// ====== 3. WHEEL PRIZES (16 قطاع – تصميم كازينو حقيقي) ======
+// ====== 3. WHEEL PRIZES (16 قطاع – تصميم 3D) ======
 const WHEEL_PRIZES = [
-    { label: "0.25", type: "TON", amount: 0.25, color: "#1e3a5f", weight: 6, icon: "💰", effect: "small", gradient: ["#1e3a5f", "#0f2a4a"], topText: "0.25", bottomText: "SMALL WIN" },
-    { label: "0.5", type: "TON", amount: 0.5, color: "#2d4a6e", weight: 6, icon: "💰", effect: "small", gradient: ["#2d4a6e", "#1a3550"], topText: "0.5", bottomText: "SMALL WIN" },
-    { label: "1", type: "TON", amount: 1, color: "#2e6b3e", weight: 5, icon: "💰", effect: "small", gradient: ["#2e6b3e", "#1e4a2e"], topText: "1", bottomText: "WIN" },
-    { label: "🆓", type: "FREE", amount: 0, color: "#5a3e8c", weight: 4, icon: "🎁", effect: "freespin", gradient: ["#5a3e8c", "#3e2a6b"], topText: "FREE", bottomText: "BONUS" },
-    { label: "2", type: "TON", amount: 2, color: "#b8860b", weight: 5, icon: "💰", effect: "medium", gradient: ["#b8860b", "#9a6a0a"], topText: "2", bottomText: "WIN" },
+    { label: "0.25", type: "TON", amount: 0.25, color: "#0088cc", weight: 6, icon: "💰", effect: "small", gradient: ["#0088cc", "#0066aa"], topText: "0.25", bottomText: "SMALL WIN" },
+    { label: "0.5", type: "TON", amount: 0.5, color: "#1e6f8f", weight: 6, icon: "💰", effect: "small", gradient: ["#1e6f8f", "#0a4a6a"], topText: "0.5", bottomText: "SMALL WIN" },
+    { label: "1", type: "TON", amount: 1, color: "#22c55e", weight: 5, icon: "💰", effect: "small", gradient: ["#22c55e", "#16a34a"], topText: "1", bottomText: "WIN" },
+    { label: "🆓", type: "FREE", amount: 0, color: "#8b6fcf", weight: 4, icon: "🎁", effect: "freespin", gradient: ["#8b6fcf", "#6b4faf"], topText: "FREE", bottomText: "BONUS" },
+    { label: "2", type: "TON", amount: 2, color: "#fbbf24", weight: 5, icon: "💰", effect: "medium", gradient: ["#fbbf24", "#f59e0b"], topText: "2", bottomText: "WIN" },
     { label: "🍀", type: "LUCK", amount: 0.1, color: "#4a5568", weight: 4, icon: "🍀", effect: "luck", gradient: ["#4a5568", "#2d3748"], topText: "LUCK", bottomText: "+0.1 TON" },
-    { label: "3", type: "TON", amount: 3, color: "#cc7b2c", weight: 4, icon: "💰", effect: "medium", gradient: ["#cc7b2c", "#b85e1a"], topText: "3", bottomText: "WIN" },
-    { label: "×2", type: "MULTIPLIER", amount: 0, color: "#b23c8c", weight: 3, icon: "⚡", effect: "multiplier", gradient: ["#b23c8c", "#8e2a6b"], topText: "2X", bottomText: "NEXT WIN" },
-    { label: "5", type: "TON", amount: 5, color: "#b83b2c", weight: 3, icon: "🔥", effect: "big", gradient: ["#b83b2c", "#9a2a1a"], topText: "5", bottomText: "NICE WIN" },
-    { label: "🆓", type: "FREE", amount: 0, color: "#5a3e8c", weight: 4, icon: "🎁", effect: "freespin", gradient: ["#5a3e8c", "#3e2a6b"], topText: "FREE", bottomText: "BONUS" },
-    { label: "10", type: "TON", amount: 10, color: "#c92a2a", weight: 2, icon: "💎", effect: "big", gradient: ["#c92a2a", "#aa1a1a"], topText: "10", bottomText: "NICE WIN" },
+    { label: "3", type: "TON", amount: 3, color: "#f97316", weight: 4, icon: "💰", effect: "medium", gradient: ["#f97316", "#ea580c"], topText: "3", bottomText: "WIN" },
+    { label: "×2", type: "MULTIPLIER", amount: 0, color: "#ff44cc", weight: 3, icon: "⚡", effect: "multiplier", gradient: ["#ff44cc", "#cc33aa"], topText: "2X", bottomText: "NEXT WIN" },
+    { label: "5", type: "TON", amount: 5, color: "#ef4444", weight: 3, icon: "🔥", effect: "big", gradient: ["#ef4444", "#dc2626"], topText: "5", bottomText: "NICE WIN" },
+    { label: "🆓", type: "FREE", amount: 0, color: "#8b6fcf", weight: 4, icon: "🎁", effect: "freespin", gradient: ["#8b6fcf", "#6b4faf"], topText: "FREE", bottomText: "BONUS" },
+    { label: "10", type: "TON", amount: 10, color: "#ff4444", weight: 2, icon: "💎", effect: "big", gradient: ["#ff4444", "#cc3333"], topText: "10", bottomText: "NICE WIN" },
     { label: "🍀", type: "LUCK", amount: 0.2, color: "#4a5568", weight: 3, icon: "🍀", effect: "luck", gradient: ["#4a5568", "#2d3748"], topText: "LUCK", bottomText: "+0.2 TON" },
-    { label: "25", type: "TON", amount: 25, color: "#d45c1a", weight: 2, icon: "💎", effect: "big", gradient: ["#d45c1a", "#b8440a"], topText: "25", bottomText: "BIG WIN" },
-    { label: "50", type: "TON", amount: 50, color: "#e87c1a", weight: 1, icon: "💎", effect: "jackpot", gradient: ["#e87c1a", "#c85c0a"], topText: "50", bottomText: "BIG WIN" },
-    { label: "JACK", type: "JACKPOT", amount: 100, color: "#ff3333", weight: 1, icon: "👑", effect: "jackpot", gradient: ["#ff3333", "#cc0000"], topText: "100", bottomText: "JACKPOT" },
-    { label: "MEGA", type: "MEGA", amount: 200, color: "#cc00cc", weight: 1, icon: "👑", effect: "mega", gradient: ["#cc00cc", "#990099"], topText: "200", bottomText: "MEGA" }
+    { label: "25", type: "TON", amount: 25, color: "#ffaa44", weight: 2, icon: "👑", effect: "big", gradient: ["#ffaa44", "#ff8844"], topText: "25", bottomText: "BIG WIN" },
+    { label: "50", type: "TON", amount: 50, color: "#ff8844", weight: 1, icon: "💎", effect: "jackpot", gradient: ["#ff8844", "#ff6644"], topText: "50", bottomText: "BIG WIN" },
+    { label: "JACK", type: "JACKPOT", amount: 100, color: "#ff4444", weight: 1, icon: "👑", effect: "jackpot", gradient: ["#ff4444", "#cc0000"], topText: "100", bottomText: "JACKPOT" },
+    { label: "MEGA", type: "MEGA", amount: 200, color: "#ff0000", weight: 1, icon: "🏆", effect: "mega", gradient: ["#ff0000", "#aa0000"], topText: "200", bottomText: "MEGA" }
 ];
 
 // ====== 4. SLOTS SYMBOLS (7 رموز 3D) ======
@@ -187,18 +187,7 @@ const SLOTS_SYMBOLS_DATA = [
     { symbol: '🎰', weight: 2, value: 25.0, type: 'TON', color: '#ff00ff', effect: 'jackpot', icon3d: true }
 ];
 
-// ====== 5. FAKE WINNERS (للعرض في Progressive Jackpot Card) ======
-const FAKE_WINNERS = [
-    { name: "CryptoKing", game: "wheel", amount: 50, time: "2 min ago", icon: "🎡" },
-    { name: "TonWhale", game: "slots", amount: 25, time: "5 min ago", icon: "🎰" },
-    { name: "LuckyMiner", game: "wheel", amount: 100, time: "12 min ago", icon: "🎡" },
-    { name: "JackpotHit", game: "slots", amount: 75, time: "18 min ago", icon: "🎰" },
-    { name: "GoldHunter", game: "wheel", amount: 150, time: "25 min ago", icon: "🎡" },
-    { name: "SlotMaster", game: "slots", amount: 200, time: "35 min ago", icon: "🎰" },
-    { name: "MegaWinner", game: "wheel", amount: 500, time: "1 hour ago", icon: "🎡" }
-];
-
-// ====== 6. DAILY CHALLENGES ======
+// ====== 5. DAILY CHALLENGES ======
 const DAILY_CHALLENGES = [
     { id: 'wheel_spins', name: 'Spin the Wheel 10 times', target: 10, reward: 1, unit: 'TON', icon: '🎡', type: 'wheel' },
     { id: 'slots_spins', name: 'Play Slots 15 times', target: 15, reward: 2, unit: 'TON', icon: '🎰', type: 'slots' },
@@ -207,7 +196,7 @@ const DAILY_CHALLENGES = [
     { id: 'any_big_win', name: 'Get a BIG WIN (25+ TON)', target: 1, reward: 10, unit: 'TON', icon: '🔥', type: 'any' }
 ];
 
-// ====== 7. REFERRAL MILESTONES ======
+// ====== 6. REFERRAL MILESTONES ======
 const REFERRAL_MILESTONES = [
     { referrals: 3, reward: 1, unit: 'USDT' },
     { referrals: 10, reward: 5, unit: 'USDT' },
@@ -218,7 +207,7 @@ const REFERRAL_MILESTONES = [
     { referrals: 1000, reward: 1200, unit: 'USDT' }
 ];
 
-// ====== 8. TRANSLATIONS ======
+// ====== 7. TRANSLATIONS ======
 const translations = {
     en: {
         'app.name': 'TON Mining Casino',
@@ -518,7 +507,7 @@ const translations = {
     }
 };
 
-// ====== 9. LANGUAGE MANAGEMENT ======
+// ====== 8. LANGUAGE MANAGEMENT ======
 let currentLanguage = localStorage.getItem('preferred_language') || 'en';
 
 function t(key, params = {}) {
@@ -540,7 +529,7 @@ function toggleLanguage() {
     showToast(t('messages.success'), 'success');
 }
 
-// ====== 10. MACHINES DATA ======
+// ====== 9. MACHINES DATA ======
 const MACHINES = [
     {
         id: 'm1', name: 'Free Miner', nameAr: 'منجم مجاني',
@@ -622,7 +611,7 @@ const MACHINES = [
     }
 ];
 
-// ====== 11. FIREBASE ======
+// ====== 10. FIREBASE ======
 let firebaseApp, db;
 try {
     if (typeof firebase !== 'undefined') {
@@ -635,7 +624,7 @@ try {
     console.error("Firebase error:", error);
 }
 
-// ====== 12. USER ID ======
+// ====== 11. USER ID ======
 const userId = tg?.initDataUnsafe?.user?.id?.toString() || 
                localStorage.getItem('ton_user_id') || 
                'user_' + Math.random().toString(36).substr(2, 9);
@@ -647,7 +636,7 @@ const userPhoto = tg?.initDataUnsafe?.user?.photo_url || '';
 
 localStorage.setItem('ton_user_id', userId);
 
-// ====== 13. ADMIN ======
+// ====== 12. ADMIN ======
 let isAdmin = false;
 let adminClickCount = 0, lastAdminClick = 0;
 let currentRejectId = null, currentRejectType = null, currentRejectData = null;
@@ -687,7 +676,7 @@ function handleAvatarClick() {
     }
 }
 
-// ====== 14. CACHE KEYS ======
+// ====== 13. CACHE KEYS ======
 const CACHE_KEYS = {
     USER: `user_${userId}`,
     TRANSACTIONS: `transactions_${userId}`,
@@ -698,7 +687,7 @@ const CACHE_KEYS = {
     BACKUPS: 'user_backups'
 };
 
-// ====== 15. USER STATE ======
+// ====== 14. USER STATE ======
 let userData = {
     uid: userId,
     username: userName,
@@ -787,7 +776,7 @@ let userData = {
 
 userData.balance = userData.balances.TON;
 
-// ====== 16. CACHE MANAGEMENT ======
+// ====== 15. CACHE MANAGEMENT ======
 let lastUserLoadTime = 0;
 let lastPricesLoadTime = 0;
 let lastHistoryCheckTime = 0;
@@ -876,7 +865,7 @@ function restoreFromBackup() {
     }
 }
 
-// ====== 17. AUTO CLICKER – يعمل بعد إغلاق التطبيق ======
+// ====== 16. AUTO CLICKER – يعمل بعد إغلاق التطبيق ======
 function processPendingAutoClickerRewards() {
     if (!userData.autoClicker.active) return 0;
     
@@ -915,9 +904,11 @@ function checkAutoClickerRewardsOnStart() {
     if (reward > 0) {
         showToastPro(`🤖 Auto Miner collected ${reward.toFixed(4)} TON while you were away!`, 'success');
     }
+    // تحديث واجهة Auto Clicker بعد استرجاع الحالة
+    updateAutoClickerUI();
 }
 
-// ====== 18. ON-DEMAND LISTENERS ======
+// ====== 17. ON-DEMAND LISTENERS ======
 let activeListeners = new Map();
 let listenerTimeouts = new Map();
 
@@ -981,7 +972,7 @@ function stopAllListeners() {
     listenerTimeouts.clear();
 }
 
-// ====== 19. GAME PAGE NAVIGATION ======
+// ====== 18. GAME PAGE NAVIGATION ======
 let currentPage = 'mining';
 
 function showPage(page) {
@@ -1010,10 +1001,10 @@ function showPage(page) {
     }
     showRandomSticker();
     
-    // التحكم في ظهور زر Bonus (يظهر فقط في صفحة الكازينو)
+    // التحكم في ظهور زر Bonus (يظهر في Casino, WheelGame, SlotsGame)
     const bonusBtn = document.getElementById('floatingBonusBtn');
     if (bonusBtn) {
-        bonusBtn.style.display = page === 'casino' ? 'flex' : 'none';
+        bonusBtn.style.display = (page === 'casino' || page === 'wheelGame' || page === 'slotsGame') ? 'flex' : 'none';
     }
 }
 
@@ -1056,7 +1047,7 @@ function showWallet() {
     showPage('profile');
 }
 
-// ====== 20. UTILITIES ======
+// ====== 19. UTILITIES ======
 function formatAddress(addr) { return addr?.length > 10 ? addr.slice(0,6)+'...'+addr.slice(-4) : addr || ''; }
 function formatTON(amount) { return amount.toFixed(4); }
 function formatNumber(num) {
@@ -1226,7 +1217,7 @@ function createIcyBurst() {
     setTimeout(() => burst.remove(), 1000);
 }
 
-// ====== 21. MINING MANAGER ======
+// ====== 20. MINING MANAGER ======
 let miningTimer = null, autoClickerTimer = null;
 
 function startMining() {
@@ -1400,7 +1391,7 @@ function getStreakBonus() {
     return 1.0;
 }
 
-// ====== 22. AUTO CLICKER ======
+// ====== 21. AUTO CLICKER ======
 function startAutoClicker() {
     if (autoClickerTimer) clearInterval(autoClickerTimer);
     autoClickerTimer = setInterval(async () => {
@@ -1443,7 +1434,34 @@ function buyAutoClicker() {
     updateUI();
 }
 
-// ====== 23. TON CONNECT ======
+function updateAutoClickerUI() {
+    const autoClickerCard = document.getElementById('autoClickerCard');
+    const autoMinerStatus = document.getElementById('autoMinerStatus');
+    const autoMinerTime = document.getElementById('autoMinerTime');
+    
+    if (!autoClickerCard) return;
+    
+    if (userData.autoClicker?.active) {
+        const timeLeft = userData.autoClicker.expiry - Date.now();
+        if (timeLeft > 0) {
+            const days = Math.floor(timeLeft / (24 * 3600000));
+            const hours = Math.floor((timeLeft % (24 * 3600000)) / 3600000);
+            autoClickerCard.classList.add('active');
+            if (autoMinerStatus) autoMinerStatus.style.display = 'flex';
+            if (autoMinerTime) autoMinerTime.textContent = `${days}d ${hours}h`;
+        } else {
+            userData.autoClicker.active = false;
+            saveUserToCache();
+            autoClickerCard.classList.remove('active');
+            if (autoMinerStatus) autoMinerStatus.style.display = 'none';
+        }
+    } else {
+        autoClickerCard.classList.remove('active');
+        if (autoMinerStatus) autoMinerStatus.style.display = 'none';
+    }
+}
+
+// ====== 22. TON CONNECT ======
 let tonConnectUI = null, tonWallet = null;
 
 async function initTonConnect() {
@@ -1524,7 +1542,7 @@ async function connectWallet() {
 
 async function disconnectWallet() { if (tonConnectUI) { await tonConnectUI.disconnect(); showToast('Wallet disconnected', 'info'); } }
 
-// ====== 24. UI UPDATE ======
+// ====== 23. UI UPDATE ======
 function updateUI() {
     updateBalance();
     updateMiningStats();
@@ -1550,7 +1568,7 @@ function updateBalance() {
     if (profileBalance) profileBalance.textContent = formatTON(userData.balances.TON) + ' TON';
     
     const totalUsd = calculateTotalUsd();
-    if (profileUsd) profileUsd.textContent = '≈ $' + totalUsd.toFixed(2);
+    if (profileUsd) profileUsd.textContent = isNaN(totalUsd) ? '≈ $0.00' : '≈ $' + totalUsd.toFixed(2);
     if (modalUserBalance) modalUserBalance.textContent = formatTON(userData.balances.TON) + ' TON';
     if (casinoWinnings) casinoWinnings.textContent = formatTON(userData.casinoStats?.totalWon || 0);
 }
@@ -1686,32 +1704,7 @@ function renderAssets() {
     }).join('');
 }
 
-function updateAutoClickerUI() {
-    const statusEl = document.getElementById('autoMinerStatus');
-    const timeEl = document.getElementById('autoMinerTime');
-    const autoClickerCard = document.getElementById('autoClickerCard');
-    
-    if (userData.autoClicker?.active) {
-        const timeLeft = userData.autoClicker.expiry - Date.now();
-        if (timeLeft > 0) {
-            const days = Math.floor(timeLeft / (24 * 3600000));
-            const hours = Math.floor((timeLeft % (24 * 3600000)) / 3600000);
-            if (statusEl) statusEl.style.display = 'flex';
-            if (timeEl) timeEl.textContent = `${days}d ${hours}h`;
-            if (autoClickerCard) autoClickerCard.classList.add('active');
-        } else {
-            userData.autoClicker.active = false;
-            saveUserToCache();
-            if (statusEl) statusEl.style.display = 'none';
-            if (autoClickerCard) autoClickerCard.classList.remove('active');
-        }
-    } else {
-        if (statusEl) statusEl.style.display = 'none';
-        if (autoClickerCard) autoClickerCard.classList.remove('active');
-    }
-}
-
-// ====== 25. WIN POPUP ======
+// ====== 24. WIN POPUP ======
 function showWinPopup(prize, type = 'normal') {
     const existing = document.querySelector('.win-popup');
     if (existing) existing.remove();
@@ -1760,7 +1753,7 @@ function showWinPopup(prize, type = 'normal') {
     }, 2500);
 }
 
-// ====== 26. MARKET FUNCTIONS ======
+// ====== 25. MARKET FUNCTIONS ======
 function renderMarket() {
     const showcase = document.getElementById('machinesShowcase');
     if (!showcase) return;
@@ -1803,7 +1796,7 @@ function checkRequirements(m) {
     return true;
 }
 
-// ====== 27. PAYMENT SYSTEM ======
+// ====== 26. PAYMENT SYSTEM ======
 let currentPaymentMethod = 'balance', currentPayment = null;
 
 function switchPaymentMethod(method) {
@@ -1938,7 +1931,7 @@ async function confirmWalletPayment() {
     } catch (e) { showToast('Payment failed', 'error'); }
 }
 
-// ====== 28. SWAP SYSTEM ======
+// ====== 27. SWAP SYSTEM (محسن مع القواعد الجديدة) ======
 let swapMode = 'from', swapFromCurrency = 'TON', swapToCurrency = 'USDT';
 
 function showSwapModal() {
@@ -1982,22 +1975,80 @@ function showCurrencySelector(type) {
 }
 
 function selectCurrency(symbol) {
+    const from = swapMode === 'from' ? symbol : swapFromCurrency;
+    const to = swapMode === 'to' ? symbol : swapToCurrency;
+    
+    // التحقق من صحة التحويل حسب القواعد
+    if (!isValidSwapPair(from, to)) {
+        showToastPro(`Cannot swap ${from} to ${to} directly`, 'warning');
+        return;
+    }
+    
     if (swapMode === 'from') { 
-        swapFromCurrency = symbol; 
+        swapFromCurrency = symbol;
+        // تحديث الوجهة بناءً على القواعد إذا لزم الأمر
+        if (!isValidSwapPair(swapFromCurrency, swapToCurrency)) {
+            // إذا كان التحويل غير صحيح، نحدد الوجهة المناسبة
+            if (swapFromCurrency === 'TON') {
+                swapToCurrency = 'USDT';
+            } else if (swapFromCurrency === 'USDT') {
+                swapToCurrency = 'TON';
+            } else {
+                // العملات الأخرى يمكن تحويلها إلى TON أو USDT، نختار TON كافتراضي
+                swapToCurrency = 'TON';
+            }
+        }
+        
         const fromCurrency = document.getElementById('swapFromCurrency');
         const fromIcon = document.getElementById('swapFromIcon');
-        if (fromCurrency) fromCurrency.textContent = symbol; 
-        if (fromIcon) fromIcon.src = CONFIG.CMC_ICONS[symbol]; 
-    } else { 
-        swapToCurrency = symbol; 
+        if (fromCurrency) fromCurrency.textContent = swapFromCurrency;
+        if (fromIcon) fromIcon.src = CONFIG.CMC_ICONS[swapFromCurrency];
+        
         const toCurrency = document.getElementById('swapToCurrency');
         const toIcon = document.getElementById('swapToIcon');
-        if (toCurrency) toCurrency.textContent = symbol; 
-        if (toIcon) toIcon.src = CONFIG.CMC_ICONS[symbol]; 
+        if (toCurrency) toCurrency.textContent = swapToCurrency;
+        if (toIcon) toIcon.src = CONFIG.CMC_ICONS[swapToCurrency];
+    } else { 
+        swapToCurrency = symbol;
+        // التحقق من صحة التحويل
+        if (!isValidSwapPair(swapFromCurrency, swapToCurrency)) {
+            showToastPro(`Cannot swap ${swapFromCurrency} to ${swapToCurrency}`, 'warning');
+            // إعادة الوجهة إلى القيمة السابقة الصالحة
+            if (swapFromCurrency === 'TON') {
+                swapToCurrency = 'USDT';
+            } else if (swapFromCurrency === 'USDT') {
+                swapToCurrency = 'TON';
+            } else {
+                swapToCurrency = 'TON';
+            }
+        }
+        
+        const toCurrency = document.getElementById('swapToCurrency');
+        const toIcon = document.getElementById('swapToIcon');
+        if (toCurrency) toCurrency.textContent = swapToCurrency;
+        if (toIcon) toIcon.src = CONFIG.CMC_ICONS[swapToCurrency];
     }
     closeModal('currencySelectorModal');
     updateSwapBalances();
     calculateSwap();
+}
+
+// دالة للتحقق من صحة زوج التحويل
+function isValidSwapPair(from, to) {
+    // TON ↔ USDT (ثنائي)
+    if ((from === 'TON' && to === 'USDT') || (from === 'USDT' && to === 'TON')) {
+        return true;
+    }
+    // عملات أخرى → TON (أحادي)
+    if (from !== 'TON' && from !== 'USDT' && to === 'TON') {
+        return true;
+    }
+    // عملات أخرى → USDT (أحادي)
+    if (from !== 'TON' && from !== 'USDT' && to === 'USDT') {
+        return true;
+    }
+    // أي تحويل آخر غير مسموح
+    return false;
 }
 
 function filterCurrencies() {
@@ -2008,7 +2059,18 @@ function filterCurrencies() {
 }
 
 function flipSwap() {
-    [swapFromCurrency, swapToCurrency] = [swapToCurrency, swapFromCurrency];
+    const newFrom = swapToCurrency;
+    const newTo = swapFromCurrency;
+    
+    // التحقق من صحة التحويل بعد القلب
+    if (isValidSwapPair(newFrom, newTo)) {
+        swapFromCurrency = newFrom;
+        swapToCurrency = newTo;
+    } else {
+        showToastPro(`Cannot swap ${newFrom} to ${newTo}`, 'warning');
+        return;
+    }
+    
     const fromCurrency = document.getElementById('swapFromCurrency');
     const toCurrency = document.getElementById('swapToCurrency');
     const fromIcon = document.getElementById('swapFromIcon');
@@ -2072,7 +2134,7 @@ function confirmSwap() {
     renderAssets();
 }
 
-// ====== 29. DEPOSIT FUNCTIONS ======
+// ====== 28. DEPOSIT FUNCTIONS ======
 let selectedDepositCurrency = 'TON';
 
 function showDepositModal() {
@@ -2228,7 +2290,7 @@ async function submitDeposit() {
     addTransaction('deposit', amt, { currency: cur, txHash: hash, status: 'pending' });
 }
 
-// ====== 30. WITHDRAW FUNCTIONS ======
+// ====== 29. WITHDRAW FUNCTIONS ======
 let selectedWithdrawNetwork = 'BEP20';
 
 function showWithdrawModal() {
@@ -2419,7 +2481,7 @@ async function submitWithdraw() {
     addTransaction('withdraw', amt, { currency: 'USDT', address: addr, network: netValue, fee, feeCurrency, status: 'pending' });
 }
 
-// ====== 31. HISTORY FUNCTIONS ======
+// ====== 30. HISTORY FUNCTIONS ======
 let currentHistoryFilter = 'all';
 
 function showHistory() {
@@ -2552,7 +2614,7 @@ function refreshHistory() {
     checkPendingTransactions().then(() => renderHistory(currentHistoryFilter)); 
 }
 
-// ====== 32. LEADERBOARD ======
+// ====== 31. LEADERBOARD ======
 let leaderboardCache = { data: null, timestamp: 0 };
 
 async function updateLeaderboard() {
@@ -2611,7 +2673,7 @@ function renderLeaderboard(data) {
     el.innerHTML = html;
 }
 
-// ====== 33. REFERRAL MILESTONES (تصميم Grid احترافي) ======
+// ====== 32. REFERRAL MILESTONES ======
 function renderReferralMilestones() {
     const container = document.getElementById('referralMilestonesContainer');
     if (!container) return;
@@ -2684,7 +2746,6 @@ async function claimMilestone(referrals, reward, unit) {
     renderReferralMilestones();
     updateUI();
     
-    // تأثيرات المطالبة
     createConfetti();
     createGoldExplosion();
     createScreenFlash();
@@ -2709,7 +2770,7 @@ function copyReferralLink() {
     showToast('Referral link copied', 'success');
 }
 
-// ====== 34. CHART ======
+// ====== 33. CHART ======
 function updateChart() {
     const chart = document.getElementById('chartBars');
     if (!chart) return;
@@ -2734,7 +2795,7 @@ function updateChart() {
     ).join('');
 }
 
-// ====== 35. UPDATE WHEEL UI ======
+// ====== 34. UPDATE WHEEL UI ======
 function updateWheelUI() {
     const freeSpinEl = document.getElementById('wheelFreeSpin');
     const jackpotCounterEl = document.getElementById('wheelJackpotCounter');
@@ -2839,7 +2900,7 @@ function updatePurchasedSpinsDisplay() {
     }
 }
 
-// ====== 36. WHEEL PACKS ======
+// ====== 35. WHEEL PACKS ======
 async function buyWheelPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -2954,7 +3015,7 @@ async function buySlotsPack(pack) {
     }
 }
 
-// ====== 37. BONUS PACKS (الزر العائم) ======
+// ====== 36. BONUS PACKS ======
 async function buyBonusPack(gameType, spins, price, bonus) {
     const totalSpins = spins + bonus;
     
@@ -3013,7 +3074,7 @@ function showBonusPacksModal() {
     if (modal) modal.classList.add('show');
 }
 
-// ====== 38. PROGRESSIVE JACKPOT & FAKE WINNERS ======
+// ====== 37. PROGRESSIVE JACKPOT ======
 function updateProgressiveJackpotDisplay() {
     const jackpotElements = document.querySelectorAll('.progressive-jackpot-amount');
     jackpotElements.forEach(el => {
@@ -3048,6 +3109,17 @@ function awardProgressiveJackpot() {
     saveUserToCache();
 }
 
+// ====== 38. FAKE WINNERS ======
+const FAKE_WINNERS = [
+    { name: "CryptoKing", game: "wheel", amount: 50, time: "2 min ago", icon: "🎡" },
+    { name: "TonWhale", game: "slots", amount: 25, time: "5 min ago", icon: "🎰" },
+    { name: "LuckyMiner", game: "wheel", amount: 100, time: "12 min ago", icon: "🎡" },
+    { name: "JackpotHit", game: "slots", amount: 75, time: "18 min ago", icon: "🎰" },
+    { name: "GoldHunter", game: "wheel", amount: 150, time: "25 min ago", icon: "🎡" },
+    { name: "SlotMaster", game: "slots", amount: 200, time: "35 min ago", icon: "🎰" },
+    { name: "MegaWinner", game: "wheel", amount: 500, time: "1 hour ago", icon: "🎡" }
+];
+
 function updateFakeWinnerDisplay() {
     const winnerContainer = document.getElementById('fakeWinnerDisplay');
     if (!winnerContainer) return;
@@ -3055,7 +3127,6 @@ function updateFakeWinnerDisplay() {
     const now = Date.now();
     const lastUpdate = userData.lastFakeWinnerUpdate || now;
     
-    // تحديث كل 5 دقائق (300000 مللي ثانية)
     if (now - lastUpdate >= 300000) {
         userData.fakeWinnerIndex = (userData.fakeWinnerIndex + 1) % FAKE_WINNERS.length;
         userData.lastFakeWinnerUpdate = now;
@@ -3097,8 +3168,10 @@ function stopAutoSpin() {
         clearInterval(autoSpinInterval);
         autoSpinInterval = null;
         currentAutoSpinGame = null;
-        const autoSpinToggle = document.getElementById('autoSpinToggle');
-        if (autoSpinToggle) autoSpinToggle.checked = false;
+        const wheelToggle = document.getElementById('wheelAutoSpinToggle');
+        const slotsToggle = document.getElementById('slotsAutoSpinToggle');
+        if (wheelToggle) wheelToggle.checked = false;
+        if (slotsToggle) slotsToggle.checked = false;
         showToastPro('Auto Spin stopped', 'info');
     }
 }
@@ -3130,7 +3203,7 @@ function toggleAutoSpin(gameType, isTurbo = false) {
     }
 }
 
-// ====== 40. WHEEL GAME 3D (نصوص مقوسة من المركز للحافة) ======
+// ====== 40. WHEEL GAME 3D (نصوص مستقيمة من المركز إلى الحافة) ======
 let wheelGame = null;
 
 class WheelGame3D {
@@ -3196,7 +3269,6 @@ class WheelGame3D {
         
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
-        // رسم القطاعات
         for (let i = 0; i < this.prizes.length; i++) {
             const prize = this.prizes[i];
             const startAngle = i * this.segmentAngle + this.rotation;
@@ -3207,7 +3279,6 @@ class WheelGame3D {
             ctx.arc(cx, cy, r, startAngle, endAngle);
             ctx.closePath();
             
-            // تدرج 3D
             const grad = ctx.createLinearGradient(
                 cx + Math.cos(startAngle) * r * 0.3,
                 cy + Math.sin(startAngle) * r * 0.3,
@@ -3219,7 +3290,6 @@ class WheelGame3D {
             ctx.fillStyle = grad;
             ctx.fill();
             
-            // حدود ذهبية بارزة
             ctx.beginPath();
             ctx.moveTo(cx, cy);
             ctx.arc(cx, cy, r, startAngle, endAngle);
@@ -3227,9 +3297,9 @@ class WheelGame3D {
             ctx.lineWidth = 2.5;
             ctx.stroke();
             
-            // رسم النص المقوس (من المركز إلى الحافة)
+            // رسم النص المستقيم من المركز إلى الحافة
             const midAngle = startAngle + this.segmentAngle / 2;
-            this.drawCurvedText(ctx, prize, cx, cy, r, midAngle);
+            this.drawStraightText(ctx, prize, cx, cy, r, midAngle);
         }
         
         // المركز المعدني
@@ -3248,11 +3318,11 @@ class WheelGame3D {
         ctx.shadowBlur = 0;
     }
     
-    drawCurvedText(ctx, prize, cx, cy, r, angle) {
+    drawStraightText(ctx, prize, cx, cy, r, angle) {
         const topText = prize.topText || prize.label;
         const bottomText = prize.bottomText || '';
         
-        // النص العلوي (الرقم/الرمز)
+        // النص العلوي (الرقم/الرمز) - قريب من الحافة
         const topRadius = r * 0.75;
         const topX = cx + Math.cos(angle) * topRadius;
         const topY = cy + Math.sin(angle) * topRadius;
@@ -3277,7 +3347,6 @@ class WheelGame3D {
         } else {
             ctx.font = `bold ${fontSize}px "Outfit", "Segoe UI"`;
             
-            // لون النص حسب قيمة الجائزة
             if (prize.amount >= 100) ctx.fillStyle = '#ff6666';
             else if (prize.amount >= 25) ctx.fillStyle = '#ffaa44';
             else if (prize.amount >= 5) ctx.fillStyle = '#ffdd88';
@@ -3289,9 +3358,9 @@ class WheelGame3D {
         }
         ctx.restore();
         
-        // النص السفلي (الوصف)
+        // النص السفلي (الوصف) - أقرب إلى المركز
         if (bottomText) {
-            const bottomRadius = r * 0.5;
+            const bottomRadius = r * 0.45;
             const bottomX = cx + Math.cos(angle) * bottomRadius;
             const bottomY = cy + Math.sin(angle) * bottomRadius;
             
@@ -3300,7 +3369,7 @@ class WheelGame3D {
             ctx.rotate(angle + Math.PI / 2);
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.font = `bold ${r * 0.06}px "Outfit"`;
+            ctx.font = `bold ${r * 0.055}px "Outfit"`;
             ctx.fillStyle = '#dddddd';
             ctx.shadowBlur = 4;
             ctx.shadowColor = 'rgba(0,0,0,0.5)';
@@ -3326,7 +3395,6 @@ class WheelGame3D {
         const spinsSinceLastMedium = userData.wheel.spinsSinceLastMedium || 0;
         const spinsSinceLastBig = userData.wheel.spinsSinceLastBig || 0;
         
-        // نظام الضمان (محفوظ)
         if (spinsSinceLastBig >= CONFIG.ECONOMY.WHEEL_GUARANTEED_BIG_EVERY) {
             const bigPrizes = this.prizes.filter(p => p.effect === 'jackpot' || p.effect === 'mega' || (p.amount >= 25));
             if (bigPrizes.length) {
@@ -3372,7 +3440,6 @@ class WheelGame3D {
         VegasAudio.whoosh();
         createIceParticles();
         
-        // طقطقة متقدمة حسب السرعة
         const totalTicks = 36;
         let currentTick = 0;
         
@@ -3565,7 +3632,6 @@ class SlotsGame3D {
                     setTimeout(() => winLine.classList.remove('active'), 1000);
                 }
                 
-                // إعادة بناء البكرات لعرض النتيجة بشكل صحيح
                 this.showResults();
                 
                 if (this.callback) {
@@ -3579,13 +3645,11 @@ class SlotsGame3D {
     }
     
     showResults() {
-        // إعادة بناء البكرات لعرض الرموز النهائية
         for (let i = 0; i < 3; i++) {
             const reel = this.reels[i];
             const resultIndex = this.results[i];
             const resultSymbol = this.symbols[resultIndex];
             
-            // بناء البكرة مع الرموز
             let html = '';
             for (let copy = 0; copy < 3; copy++) {
                 for (let j = 0; j < this.symbols.length; j++) {
@@ -5220,8 +5284,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupScrollListener();
     setInterval(() => {
         if (!userData.autoClicker?.active) {
-            const btn = document.getElementById('autoClickerCard');
-            if (btn) { btn.classList.add('show'); setTimeout(() => btn.classList.remove('show'), 10000); }
+            const autoClickerCard = document.getElementById('autoClickerCard');
+            if (autoClickerCard) { autoClickerCard.classList.add('show'); setTimeout(() => autoClickerCard.classList.remove('show'), 10000); }
         }
     }, 300000);
     setTimeout(() => { const loading = document.getElementById('loading'); if (loading) { loading.style.opacity = '0'; setTimeout(() => loading.style.display = 'none', 500); } }, 2000);
@@ -5229,7 +5293,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setTimeout(showRandomSticker, 1000);
     updateUserDisplay();
     document.addEventListener('click', () => VegasAudio.init(), { once: true });
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v27.0");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v28.0");
     console.log("✅ All systems ready! 🚀");
 });
 
