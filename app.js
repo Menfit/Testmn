@@ -1,15 +1,16 @@
 // ============================================
-// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v28.0
+// TON MINING CASINO - ULTIMATE LEGENDARY EDITION v29.0
 // ============================================
 // التحسينات النهائية:
-// - نقل Auto Clicker إلى أسفل زر Claim (بطاقة مستقلة)
-// - إصلاح حفظ Auto Clicker (يظهر بعد إعادة فتح التطبيق)
-// - إصلاح Header (إظهار ID بشكل صحيح)
-// - Bonus Button يظهر في العجلة والسلوتس أيضاً
-// - إعادة Progressive Jackpot Card إلى التصميم الأصلي (بدون إضافات)
-// - العجلة: نصوص مستقيمة من المركز إلى الحافة + تأثيرات 3D
-// - إصلاح عرض القيمة بالدولار (NaN)
-// - تحسين Swap: TON ↔ USDT + عملات أخرى → TON/USDT
+// - تحسين الأصوات (أطول وأقوى) مع ربطها بقيمة الجائزة
+// - زر كتم الصوت (Mute) في الـ Header مع حفظ التفضيل
+// - تأثيرات بصرية مصاحبة (انفجار، أضواء نيون، هتاف جمهور)
+// - العجلة: نصوص مستقيمة من المركز إلى الحافة
+// - المستطيل الأصفر: آخر فوز للمستخدم داخل اللعبة
+// - إصلاح Auto Clicker (يظهر بعد إعادة فتح التطبيق)
+// - إصلاح Header (إظهار ID Telegram)
+// - لوحة مشرف أسطورية (للمشرف فقط)
+// - نظام إحالة محمي بالكامل
 // ============================================
 
 // ====== 1. TELEGRAM WEBAPP ======
@@ -156,7 +157,7 @@ const CONFIG = {
     ]
 };
 
-// ====== 3. WHEEL PRIZES (16 قطاع – تصميم 3D) ======
+// ====== 3. WHEEL PRIZES (16 قطاع) ======
 const WHEEL_PRIZES = [
     { label: "0.25", type: "TON", amount: 0.25, color: "#0088cc", weight: 6, icon: "💰", effect: "small", gradient: ["#0088cc", "#0066aa"], topText: "0.25", bottomText: "SMALL WIN" },
     { label: "0.5", type: "TON", amount: 0.5, color: "#1e6f8f", weight: 6, icon: "💰", effect: "small", gradient: ["#1e6f8f", "#0a4a6a"], topText: "0.5", bottomText: "SMALL WIN" },
@@ -176,7 +177,7 @@ const WHEEL_PRIZES = [
     { label: "MEGA", type: "MEGA", amount: 200, color: "#ff0000", weight: 1, icon: "🏆", effect: "mega", gradient: ["#ff0000", "#aa0000"], topText: "200", bottomText: "MEGA" }
 ];
 
-// ====== 4. SLOTS SYMBOLS (7 رموز 3D) ======
+// ====== 4. SLOTS SYMBOLS ======
 const SLOTS_SYMBOLS_DATA = [
     { symbol: '🍒', weight: 30, value: 0.25, type: 'TON', color: '#ff4444', effect: 'small', icon3d: true },
     { symbol: '🍋', weight: 25, value: 0.25, type: 'TON', color: '#ffdd00', effect: 'small', icon3d: true },
@@ -355,7 +356,10 @@ const translations = {
         'milestone.title': '🏆 REFERRAL MILESTONES',
         'milestone.claim': 'CLAIM',
         'milestone.locked': 'LOCKED',
-        'milestone.claimed': 'CLAIMED'
+        'milestone.claimed': 'CLAIMED',
+        'mute': 'Mute',
+        'unmute': 'Unmute',
+        'last.win': 'YOUR LAST WIN'
     },
     ar: {
         'app.name': 'كازينو تعدين TON',
@@ -503,7 +507,10 @@ const translations = {
         'milestone.title': '🏆 إنجازات الإحالة',
         'milestone.claim': 'استلام',
         'milestone.locked': 'مغلق',
-        'milestone.claimed': 'تم الاستلام'
+        'milestone.claimed': 'تم الاستلام',
+        'mute': 'كتم الصوت',
+        'unmute': 'إلغاء كتم الصوت',
+        'last.win': 'آخر فوز لك'
     }
 };
 
@@ -636,13 +643,14 @@ const userPhoto = tg?.initDataUnsafe?.user?.photo_url || '';
 
 localStorage.setItem('ton_user_id', userId);
 
-// ====== 12. ADMIN ======
-let isAdmin = false;
+// ====== 12. ADMIN DETECTION ======
+const IS_ADMIN = (userId === CONFIG.TON.ADMIN_ID);
+let isAdmin = IS_ADMIN;
 let adminClickCount = 0, lastAdminClick = 0;
 let currentRejectId = null, currentRejectType = null, currentRejectData = null;
 
 function checkAdminAndAddCrown() {
-    if (userId === CONFIG.TON.ADMIN_ID && isAdmin) {
+    if (IS_ADMIN) {
         const headerActions = document.querySelector('.header-actions-bottom');
         if (!headerActions) return;
         const existingCrown = document.getElementById('adminCrownBtn');
@@ -658,21 +666,8 @@ function checkAdminAndAddCrown() {
 }
 
 function handleAvatarClick() {
-    const now = Date.now();
-    if (now - lastAdminClick > 2000) adminClickCount = 0;
-    adminClickCount++;
-    lastAdminClick = now;
-    
-    if (adminClickCount >= 5) {
-        const pwd = prompt(t('admin.password'));
-        
-        if (userId === CONFIG.TON.ADMIN_ID && pwd === CONFIG.TON.ADMIN_PASSWORD) {
-            isAdmin = true;
-            checkAdminAndAddCrown();
-            showAdminPanel();
-        } else if (pwd) {
-            showToast(t('admin.wrongPassword'), 'error');
-        }
+    if (IS_ADMIN) {
+        showAdminPanel();
     }
 }
 
@@ -684,7 +679,8 @@ const CACHE_KEYS = {
     NOTIFICATIONS: `notifications_${userId}`,
     REFERRAL_PROCESSED: `referral_processed_${userId}`,
     LEADERBOARD: 'leaderboard_cache',
-    BACKUPS: 'user_backups'
+    BACKUPS: 'user_backups',
+    MUTE: 'sound_muted'
 };
 
 // ====== 14. USER STATE ======
@@ -722,7 +718,9 @@ let userData = {
         freeSpins: 0,
         autoSpin: false,
         totalWon: 0,
-        biggestWin: 0
+        biggestWin: 0,
+        lastWinAmount: 0,
+        lastWinTime: 0
     },
     
     slots: { 
@@ -734,7 +732,9 @@ let userData = {
         autoSpin: false,
         spinsWithoutWin: 0,
         totalWon: 0,
-        biggestWin: 0
+        biggestWin: 0,
+        lastWinAmount: 0,
+        lastWinTime: 0
     },
     
     referrals: [],
@@ -771,7 +771,8 @@ let userData = {
     },
     progressiveJackpot: CONFIG.ECONOMY.PROGRESSIVE_JACKPOT_START,
     fakeWinnerIndex: 0,
-    lastFakeWinnerUpdate: Date.now()
+    lastFakeWinnerUpdate: Date.now(),
+    soundMuted: localStorage.getItem(CACHE_KEYS.MUTE) === 'true'
 };
 
 userData.balance = userData.balances.TON;
@@ -865,7 +866,27 @@ function restoreFromBackup() {
     }
 }
 
-// ====== 16. AUTO CLICKER – يعمل بعد إغلاق التطبيق ======
+// ====== 16. SOUND MUTE FUNCTION ======
+function toggleSoundMute() {
+    userData.soundMuted = !userData.soundMuted;
+    localStorage.setItem(CACHE_KEYS.MUTE, userData.soundMuted);
+    updateSoundMuteButton();
+    showToastPro(userData.soundMuted ? t('mute') : t('unmute'), 'info');
+}
+
+function updateSoundMuteButton() {
+    const muteBtn = document.getElementById('soundMuteBtn');
+    if (muteBtn) {
+        muteBtn.innerHTML = userData.soundMuted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+        muteBtn.title = userData.soundMuted ? t('unmute') : t('mute');
+    }
+}
+
+function isSoundEnabled() {
+    return !userData.soundMuted;
+}
+
+// ====== 17. AUTO CLICKER – يعمل بعد إغلاق التطبيق ======
 function processPendingAutoClickerRewards() {
     if (!userData.autoClicker.active) return 0;
     
@@ -904,11 +925,10 @@ function checkAutoClickerRewardsOnStart() {
     if (reward > 0) {
         showToastPro(`🤖 Auto Miner collected ${reward.toFixed(4)} TON while you were away!`, 'success');
     }
-    // تحديث واجهة Auto Clicker بعد استرجاع الحالة
     updateAutoClickerUI();
 }
 
-// ====== 17. ON-DEMAND LISTENERS ======
+// ====== 18. ON-DEMAND LISTENERS ======
 let activeListeners = new Map();
 let listenerTimeouts = new Map();
 
@@ -972,7 +992,7 @@ function stopAllListeners() {
     listenerTimeouts.clear();
 }
 
-// ====== 18. GAME PAGE NAVIGATION ======
+// ====== 19. GAME PAGE NAVIGATION ======
 let currentPage = 'mining';
 
 function showPage(page) {
@@ -999,12 +1019,42 @@ function showPage(page) {
         updateProgressiveJackpotDisplay();
         updateFakeWinnerDisplay();
     }
+    if (page === 'wheelGame' || page === 'slotsGame') {
+        updateLastWinDisplay();
+    }
     showRandomSticker();
     
-    // التحكم في ظهور زر Bonus (يظهر في Casino, WheelGame, SlotsGame)
+    // التحكم في ظهور زر Bonus
     const bonusBtn = document.getElementById('floatingBonusBtn');
     if (bonusBtn) {
         bonusBtn.style.display = (page === 'casino' || page === 'wheelGame' || page === 'slotsGame') ? 'flex' : 'none';
+    }
+}
+
+function updateLastWinDisplay() {
+    const lastWinContainer = document.getElementById('lastWinDisplay');
+    if (!lastWinContainer) return;
+    
+    const lastWin = currentPage === 'wheelGame' ? userData.wheel.lastWinAmount : userData.slots.lastWinAmount;
+    const lastWinTime = currentPage === 'wheelGame' ? userData.wheel.lastWinTime : userData.slots.lastWinTime;
+    const gameName = currentPage === 'wheelGame' ? 'Wheel' : 'Slots';
+    
+    if (lastWin > 0 && lastWinTime > 0) {
+        const timeAgo = formatRelativeTime(lastWinTime);
+        lastWinContainer.innerHTML = `
+            <div class="last-win-info">
+                <span class="last-win-icon">🎉</span>
+                <span class="last-win-text">${t('last.win')}: ${lastWin} TON on ${gameName}</span>
+                <span class="last-win-time">(${timeAgo})</span>
+            </div>
+        `;
+    } else {
+        lastWinContainer.innerHTML = `
+            <div class="last-win-info">
+                <span class="last-win-icon">✨</span>
+                <span class="last-win-text">Spin to win!</span>
+            </div>
+        `;
     }
 }
 
@@ -1019,6 +1069,7 @@ function openWheelGame() {
         updateHeatMeter('wheel');
         updateGuaranteedCounters();
         updateProgressiveJackpotDisplay();
+        updateLastWinDisplay();
     }, 100);
 }
 
@@ -1032,6 +1083,7 @@ function openSlotsGame() {
         updateSlotsUI();
         updateHeatMeter('slots');
         updateProgressiveJackpotDisplay();
+        updateLastWinDisplay();
     }, 100);
 }
 
@@ -1047,7 +1099,7 @@ function showWallet() {
     showPage('profile');
 }
 
-// ====== 19. UTILITIES ======
+// ====== 20. UTILITIES ======
 function formatAddress(addr) { return addr?.length > 10 ? addr.slice(0,6)+'...'+addr.slice(-4) : addr || ''; }
 function formatTON(amount) { return amount.toFixed(4); }
 function formatNumber(num) {
@@ -1178,6 +1230,13 @@ function createGoldExplosion() {
     }
 }
 
+function createNeonLights() {
+    const lights = document.createElement('div');
+    lights.className = 'neon-lights';
+    document.body.appendChild(lights);
+    setTimeout(() => lights.remove(), 800);
+}
+
 function createConfetti() {
     for (let i = 0; i < 80; i++) {
         const confetti = document.createElement('div');
@@ -1217,7 +1276,7 @@ function createIcyBurst() {
     setTimeout(() => burst.remove(), 1000);
 }
 
-// ====== 20. MINING MANAGER ======
+// ====== 21. MINING MANAGER ======
 let miningTimer = null, autoClickerTimer = null;
 
 function startMining() {
@@ -1391,7 +1450,7 @@ function getStreakBonus() {
     return 1.0;
 }
 
-// ====== 21. AUTO CLICKER ======
+// ====== 22. AUTO CLICKER ======
 function startAutoClicker() {
     if (autoClickerTimer) clearInterval(autoClickerTimer);
     autoClickerTimer = setInterval(async () => {
@@ -1438,6 +1497,8 @@ function updateAutoClickerUI() {
     const autoClickerCard = document.getElementById('autoClickerCard');
     const autoMinerStatus = document.getElementById('autoMinerStatus');
     const autoMinerTime = document.getElementById('autoMinerTime');
+    const autoMinerPrice = document.getElementById('autoMinerPrice');
+    const activateBtn = document.querySelector('#autoClickerCard .activate-btn');
     
     if (!autoClickerCard) return;
     
@@ -1449,19 +1510,25 @@ function updateAutoClickerUI() {
             autoClickerCard.classList.add('active');
             if (autoMinerStatus) autoMinerStatus.style.display = 'flex';
             if (autoMinerTime) autoMinerTime.textContent = `${days}d ${hours}h`;
+            if (autoMinerPrice) autoMinerPrice.style.display = 'none';
+            if (activateBtn) activateBtn.textContent = 'ACTIVE';
         } else {
             userData.autoClicker.active = false;
             saveUserToCache();
             autoClickerCard.classList.remove('active');
             if (autoMinerStatus) autoMinerStatus.style.display = 'none';
+            if (autoMinerPrice) autoMinerPrice.style.display = 'flex';
+            if (activateBtn) activateBtn.textContent = 'ACTIVATE';
         }
     } else {
         autoClickerCard.classList.remove('active');
         if (autoMinerStatus) autoMinerStatus.style.display = 'none';
+        if (autoMinerPrice) autoMinerPrice.style.display = 'flex';
+        if (activateBtn) activateBtn.textContent = 'ACTIVATE';
     }
 }
 
-// ====== 22. TON CONNECT ======
+// ====== 23. TON CONNECT ======
 let tonConnectUI = null, tonWallet = null;
 
 async function initTonConnect() {
@@ -1542,7 +1609,7 @@ async function connectWallet() {
 
 async function disconnectWallet() { if (tonConnectUI) { await tonConnectUI.disconnect(); showToast('Wallet disconnected', 'info'); } }
 
-// ====== 23. UI UPDATE ======
+// ====== 24. UI UPDATE ======
 function updateUI() {
     updateBalance();
     updateMiningStats();
@@ -1633,9 +1700,9 @@ function renderPlansTable() {
     tbody.innerHTML = MACHINES.map(m => {
         const name = currentLanguage === 'ar' ? m.nameAr : m.name;
         return `<tr>
-            <td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}</td>
-            ${m.plans.map(p => p.price === 0 ? '<td>FREE</td>' : `<td>${p.price} TON<br><small>+${p.returnAmount} TON</small></td>`).join('')}
-        </tr>`;
+            <td><i class="fas ${m.icon}" style="color: ${m.color};"></i> ${name}一般
+            ${m.plans.map(p => p.price === 0 ? '<td>FREE一般' : `了一般${p.price} TON<br><small>+${p.returnAmount} TON</small>一般`).join('')}
+         \)`;
     }).join('');
 }
 
@@ -1704,7 +1771,7 @@ function renderAssets() {
     }).join('');
 }
 
-// ====== 24. WIN POPUP ======
+// ====== 25. WIN POPUP ======
 function showWinPopup(prize, type = 'normal') {
     const existing = document.querySelector('.win-popup');
     if (existing) existing.remove();
@@ -1753,7 +1820,7 @@ function showWinPopup(prize, type = 'normal') {
     }, 2500);
 }
 
-// ====== 25. MARKET FUNCTIONS ======
+// ====== 26. MARKET FUNCTIONS ======
 function renderMarket() {
     const showcase = document.getElementById('machinesShowcase');
     if (!showcase) return;
@@ -1796,7 +1863,7 @@ function checkRequirements(m) {
     return true;
 }
 
-// ====== 26. PAYMENT SYSTEM ======
+// ====== 27. PAYMENT SYSTEM ======
 let currentPaymentMethod = 'balance', currentPayment = null;
 
 function switchPaymentMethod(method) {
@@ -1931,7 +1998,7 @@ async function confirmWalletPayment() {
     } catch (e) { showToast('Payment failed', 'error'); }
 }
 
-// ====== 27. SWAP SYSTEM (محسن مع القواعد الجديدة) ======
+// ====== 28. SWAP SYSTEM ======
 let swapMode = 'from', swapFromCurrency = 'TON', swapToCurrency = 'USDT';
 
 function showSwapModal() {
@@ -1978,7 +2045,6 @@ function selectCurrency(symbol) {
     const from = swapMode === 'from' ? symbol : swapFromCurrency;
     const to = swapMode === 'to' ? symbol : swapToCurrency;
     
-    // التحقق من صحة التحويل حسب القواعد
     if (!isValidSwapPair(from, to)) {
         showToastPro(`Cannot swap ${from} to ${to} directly`, 'warning');
         return;
@@ -1986,15 +2052,12 @@ function selectCurrency(symbol) {
     
     if (swapMode === 'from') { 
         swapFromCurrency = symbol;
-        // تحديث الوجهة بناءً على القواعد إذا لزم الأمر
         if (!isValidSwapPair(swapFromCurrency, swapToCurrency)) {
-            // إذا كان التحويل غير صحيح، نحدد الوجهة المناسبة
             if (swapFromCurrency === 'TON') {
                 swapToCurrency = 'USDT';
             } else if (swapFromCurrency === 'USDT') {
                 swapToCurrency = 'TON';
             } else {
-                // العملات الأخرى يمكن تحويلها إلى TON أو USDT، نختار TON كافتراضي
                 swapToCurrency = 'TON';
             }
         }
@@ -2010,10 +2073,8 @@ function selectCurrency(symbol) {
         if (toIcon) toIcon.src = CONFIG.CMC_ICONS[swapToCurrency];
     } else { 
         swapToCurrency = symbol;
-        // التحقق من صحة التحويل
         if (!isValidSwapPair(swapFromCurrency, swapToCurrency)) {
             showToastPro(`Cannot swap ${swapFromCurrency} to ${swapToCurrency}`, 'warning');
-            // إعادة الوجهة إلى القيمة السابقة الصالحة
             if (swapFromCurrency === 'TON') {
                 swapToCurrency = 'USDT';
             } else if (swapFromCurrency === 'USDT') {
@@ -2033,21 +2094,16 @@ function selectCurrency(symbol) {
     calculateSwap();
 }
 
-// دالة للتحقق من صحة زوج التحويل
 function isValidSwapPair(from, to) {
-    // TON ↔ USDT (ثنائي)
     if ((from === 'TON' && to === 'USDT') || (from === 'USDT' && to === 'TON')) {
         return true;
     }
-    // عملات أخرى → TON (أحادي)
     if (from !== 'TON' && from !== 'USDT' && to === 'TON') {
         return true;
     }
-    // عملات أخرى → USDT (أحادي)
     if (from !== 'TON' && from !== 'USDT' && to === 'USDT') {
         return true;
     }
-    // أي تحويل آخر غير مسموح
     return false;
 }
 
@@ -2062,7 +2118,6 @@ function flipSwap() {
     const newFrom = swapToCurrency;
     const newTo = swapFromCurrency;
     
-    // التحقق من صحة التحويل بعد القلب
     if (isValidSwapPair(newFrom, newTo)) {
         swapFromCurrency = newFrom;
         swapToCurrency = newTo;
@@ -2134,7 +2189,7 @@ function confirmSwap() {
     renderAssets();
 }
 
-// ====== 28. DEPOSIT FUNCTIONS ======
+// ====== 29. DEPOSIT FUNCTIONS ======
 let selectedDepositCurrency = 'TON';
 
 function showDepositModal() {
@@ -2290,7 +2345,7 @@ async function submitDeposit() {
     addTransaction('deposit', amt, { currency: cur, txHash: hash, status: 'pending' });
 }
 
-// ====== 29. WITHDRAW FUNCTIONS ======
+// ====== 30. WITHDRAW FUNCTIONS ======
 let selectedWithdrawNetwork = 'BEP20';
 
 function showWithdrawModal() {
@@ -2481,7 +2536,7 @@ async function submitWithdraw() {
     addTransaction('withdraw', amt, { currency: 'USDT', address: addr, network: netValue, fee, feeCurrency, status: 'pending' });
 }
 
-// ====== 30. HISTORY FUNCTIONS ======
+// ====== 31. HISTORY FUNCTIONS ======
 let currentHistoryFilter = 'all';
 
 function showHistory() {
@@ -2614,7 +2669,7 @@ function refreshHistory() {
     checkPendingTransactions().then(() => renderHistory(currentHistoryFilter)); 
 }
 
-// ====== 31. LEADERBOARD ======
+// ====== 32. LEADERBOARD ======
 let leaderboardCache = { data: null, timestamp: 0 };
 
 async function updateLeaderboard() {
@@ -2673,7 +2728,7 @@ function renderLeaderboard(data) {
     el.innerHTML = html;
 }
 
-// ====== 32. REFERRAL MILESTONES ======
+// ====== 33. REFERRAL MILESTONES ======
 function renderReferralMilestones() {
     const container = document.getElementById('referralMilestonesContainer');
     if (!container) return;
@@ -2770,7 +2825,7 @@ function copyReferralLink() {
     showToast('Referral link copied', 'success');
 }
 
-// ====== 33. CHART ======
+// ====== 34. CHART ======
 function updateChart() {
     const chart = document.getElementById('chartBars');
     if (!chart) return;
@@ -2795,7 +2850,7 @@ function updateChart() {
     ).join('');
 }
 
-// ====== 34. UPDATE WHEEL UI ======
+// ====== 35. UPDATE WHEEL UI ======
 function updateWheelUI() {
     const freeSpinEl = document.getElementById('wheelFreeSpin');
     const jackpotCounterEl = document.getElementById('wheelJackpotCounter');
@@ -2900,7 +2955,7 @@ function updatePurchasedSpinsDisplay() {
     }
 }
 
-// ====== 35. WHEEL PACKS ======
+// ====== 36. WHEEL PACKS ======
 async function buyWheelPack(pack) {
     let spins, price, bonus;
     switch(pack) {
@@ -3015,7 +3070,7 @@ async function buySlotsPack(pack) {
     }
 }
 
-// ====== 36. BONUS PACKS ======
+// ====== 37. BONUS PACKS ======
 async function buyBonusPack(gameType, spins, price, bonus) {
     const totalSpins = spins + bonus;
     
@@ -3074,7 +3129,7 @@ function showBonusPacksModal() {
     if (modal) modal.classList.add('show');
 }
 
-// ====== 37. PROGRESSIVE JACKPOT ======
+// ====== 38. PROGRESSIVE JACKPOT & FAKE WINNERS ======
 function updateProgressiveJackpotDisplay() {
     const jackpotElements = document.querySelectorAll('.progressive-jackpot-amount');
     jackpotElements.forEach(el => {
@@ -3109,7 +3164,6 @@ function awardProgressiveJackpot() {
     saveUserToCache();
 }
 
-// ====== 38. FAKE WINNERS ======
 const FAKE_WINNERS = [
     { name: "CryptoKing", game: "wheel", amount: 50, time: "2 min ago", icon: "🎡" },
     { name: "TonWhale", game: "slots", amount: 25, time: "5 min ago", icon: "🎰" },
@@ -3123,6 +3177,7 @@ const FAKE_WINNERS = [
 function updateFakeWinnerDisplay() {
     const winnerContainer = document.getElementById('fakeWinnerDisplay');
     if (!winnerContainer) return;
+    if (currentPage !== 'casino') return;
     
     const now = Date.now();
     const lastUpdate = userData.lastFakeWinnerUpdate || now;
@@ -3297,12 +3352,10 @@ class WheelGame3D {
             ctx.lineWidth = 2.5;
             ctx.stroke();
             
-            // رسم النص المستقيم من المركز إلى الحافة
             const midAngle = startAngle + this.segmentAngle / 2;
             this.drawStraightText(ctx, prize, cx, cy, r, midAngle);
         }
         
-        // المركز المعدني
         ctx.beginPath();
         ctx.arc(cx, cy, r * 0.13, 0, 2 * Math.PI);
         const centerGrad = ctx.createRadialGradient(cx - 5, cy - 5, 3, cx, cy, r * 0.13);
@@ -3322,7 +3375,6 @@ class WheelGame3D {
         const topText = prize.topText || prize.label;
         const bottomText = prize.bottomText || '';
         
-        // النص العلوي (الرقم/الرمز) - قريب من الحافة
         const topRadius = r * 0.75;
         const topX = cx + Math.cos(angle) * topRadius;
         const topY = cy + Math.sin(angle) * topRadius;
@@ -3358,7 +3410,6 @@ class WheelGame3D {
         }
         ctx.restore();
         
-        // النص السفلي (الوصف) - أقرب إلى المركز
         if (bottomText) {
             const bottomRadius = r * 0.45;
             const bottomX = cx + Math.cos(angle) * bottomRadius;
@@ -3517,7 +3568,7 @@ function initWheelCanvas() {
     console.log("✅ Wheel 3D with Icy Glow initialized");
 }
 
-// ====== 41. SLOTS GAME (مع إصلاح مشكلة اختفاء الرموز) ======
+// ====== 41. SLOTS GAME ======
 let slotsGame = null;
 
 class SlotsGame3D {
@@ -3769,11 +3820,14 @@ function spinWheelVegas(isFree) {
 }
 
 function awardWheelPrize(prize) {
+    const winAmount = prize.amount;
+    const winType = getWinType(winAmount);
+    
     if (prize.effect === 'luck') {
         userData.balances.TON += prize.amount;
         userData.balance = userData.balances.TON;
         showToastPro(`🍀 ${prize.amount} TON bonus!`, 'success');
-        VegasAudio.coin();
+        VegasAudio.coin(winAmount);
     } else if (prize.effect === 'freespin') {
         userData.wheel.freeSpins = (userData.wheel.freeSpins || 0) + 1;
         showToastPro('🆓 FREE SPIN STORED!', 'success');
@@ -3794,7 +3848,15 @@ function awardWheelPrize(prize) {
         
         let winType = prize.effect === 'mega' ? 'mega' : 'jackpot';
         showGameWinMessage(prize.amount, currency, winType);
-        JackpotTheater.play(prize.amount, currency, winType);
+        
+        if (prize.effect === 'mega') {
+            VegasAudio.bigCrowd();
+            VegasAudio.explosion();
+            createNeonLights();
+        } else {
+            VegasAudio.jackpotExtended();
+            VegasAudio.crowdCheer(prize.amount);
+        }
         createGoldExplosion();
         createScreenFlash();
         createScreenShake();
@@ -3821,18 +3883,24 @@ function awardWheelPrize(prize) {
         showGameWinMessage(prize.amount, currency, winType);
         
         if (prize.amount >= 25) {
-            JackpotTheater.play(prize.amount, currency, 'big');
+            VegasAudio.jackpot();
+            VegasAudio.crowdCheer(prize.amount);
             createGoldExplosion();
             createScreenFlash();
         } else if (prize.amount >= 10) {
-            VegasAudio.win();
+            VegasAudio.win(prize.amount);
             createConfetti();
         } else if (prize.amount >= 5) {
-            VegasAudio.win();
+            VegasAudio.win(prize.amount);
         } else if (prize.amount > 0) {
-            VegasAudio.coin();
+            VegasAudio.coin(prize.amount);
         }
     }
+    
+    // تحديث آخر فوز للمستخدم
+    userData.wheel.lastWinAmount = winAmount;
+    userData.wheel.lastWinTime = Date.now();
+    updateLastWinDisplay();
     
     hapticFeedback(prize.amount >= 10 ? 'medium' : 'light');
     saveUserToCache();
@@ -3908,19 +3976,27 @@ function spinSlotsGame(isFree, isTurbo) {
             showGameWinMessage(finalAmount, result.currency, winType);
             
             if (result.isJackpot) {
-                JackpotTheater.play(finalAmount, result.currency, 'jackpot');
+                VegasAudio.jackpotExtended();
+                VegasAudio.crowdCheer(finalAmount);
                 createGoldExplosion();
                 createScreenFlash();
                 createScreenShake();
+                createNeonLights();
             } else if (result.effect === 'big') {
-                JackpotTheater.play(finalAmount, result.currency, 'big');
+                VegasAudio.jackpot();
+                VegasAudio.crowdCheer(finalAmount);
                 createGoldExplosion();
             } else if (result.effect === 'nice') {
-                VegasAudio.win();
+                VegasAudio.win(finalAmount);
                 createConfetti();
             } else if (finalAmount > 0) {
-                VegasAudio.coin();
+                VegasAudio.coin(finalAmount);
             }
+            
+            // تحديث آخر فوز للمستخدم
+            userData.slots.lastWinAmount = finalAmount;
+            userData.slots.lastWinTime = Date.now();
+            updateLastWinDisplay();
             
             showToastPro(`🎰 You won ${finalAmount} ${result.currency}!`, 'success');
             checkChallengeProgress('slots_win', finalAmount);
@@ -3944,6 +4020,14 @@ function spinSlotsGame(isFree, isTurbo) {
         checkChallengeProgress('slots_spin');
         saveUserToCache();
     }, isTurbo);
+}
+
+function getWinType(amount) {
+    if (amount >= 100) return 'mega';
+    if (amount >= 25) return 'jackpot';
+    if (amount >= 10) return 'big';
+    if (amount >= 5) return 'nice';
+    return 'normal';
 }
 
 function showGameWinMessage(amount, currency, type) {
@@ -4029,14 +4113,14 @@ const JackpotTheater = {
         
         setTimeout(() => {
             this.createLightBurst(container);
-            if (type === 'mega') VegasAudio.jackpot();
+            if (type === 'mega') VegasAudio.jackpotExtended();
             else if (type === 'jackpot') VegasAudio.jackpot();
-            else VegasAudio.win();
+            else VegasAudio.win(amount);
         }, 100);
         
         setTimeout(() => {
             this.showJackpotText(container, amount, currency, type);
-            VegasAudio.crowdCheer();
+            VegasAudio.crowdCheer(amount);
         }, 400);
         
         setTimeout(() => {
@@ -4106,7 +4190,7 @@ const JackpotTheater = {
     }
 };
 
-// ====== 44. VEGAS AUDIO ENGINE ======
+// ====== 44. VEGAS AUDIO ENGINE (محسن) ======
 const VegasAudio = {
     ctx: null,
     isInitialized: false,
@@ -4120,181 +4204,247 @@ const VegasAudio = {
         } catch(e) { console.warn("Audio not supported"); }
     },
     
+    playSound(volume = 1, generator) {
+        if (!isSoundEnabled() || !this.ctx) return;
+        try {
+            generator();
+        } catch(e) { console.warn("Sound error:", e); }
+    },
+    
     click() {
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(880, now);
-        osc.frequency.exponentialRampToValueAtTime(440, now + 0.08);
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start();
-        osc.stop(now + 0.1);
+        this.playSound(0.15, () => {
+            const now = this.ctx.currentTime;
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(880, now);
+            osc.frequency.exponentialRampToValueAtTime(440, now + 0.08);
+            gain.gain.setValueAtTime(0.15, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start();
+            osc.stop(now + 0.1);
+        });
     },
     
     whoosh() {
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        const filter = this.ctx.createBiquadFilter();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(200, now);
-        osc.frequency.exponentialRampToValueAtTime(800, now + 0.4);
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(400, now);
-        filter.frequency.exponentialRampToValueAtTime(2000, now + 0.4);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
-        osc.connect(filter);
-        filter.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start();
-        osc.stop(now + 0.4);
+        this.playSound(0.2, () => {
+            const now = this.ctx.currentTime;
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            const filter = this.ctx.createBiquadFilter();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(200, now);
+            osc.frequency.exponentialRampToValueAtTime(800, now + 0.4);
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(400, now);
+            filter.frequency.exponentialRampToValueAtTime(2000, now + 0.4);
+            gain.gain.setValueAtTime(0.2, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+            osc.connect(filter);
+            filter.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start();
+            osc.stop(now + 0.4);
+        });
     },
     
     tick(pitch = 1, volume = 0.12) {
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(1200 * pitch, now);
-        gain.gain.setValueAtTime(volume, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.04);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start();
-        osc.stop(now + 0.04);
-    },
-    
-    clunk() {
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(150, now);
-        osc.frequency.exponentialRampToValueAtTime(50, now + 0.2);
-        gain.gain.setValueAtTime(0.3, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start();
-        osc.stop(now + 0.2);
-    },
-    
-    coin() {
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(1800, now);
-        osc.frequency.exponentialRampToValueAtTime(2200, now + 0.1);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start();
-        osc.stop(now + 0.3);
-    },
-    
-    win() {
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        for (let i = 0; i < 6; i++) {
+        this.playSound(volume, () => {
+            const now = this.ctx.currentTime;
             const osc = this.ctx.createOscillator();
             const gain = this.ctx.createGain();
             osc.type = 'triangle';
-            osc.frequency.setValueAtTime(600 + i * 120, now + i * 0.12);
-            gain.gain.setValueAtTime(0.2, now + i * 0.12);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.12 + 0.25);
+            osc.frequency.setValueAtTime(1200 * pitch, now);
+            gain.gain.setValueAtTime(volume, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.04);
             osc.connect(gain);
             gain.connect(this.ctx.destination);
-            osc.start(now + i * 0.12);
-            osc.stop(now + i * 0.12 + 0.25);
-        }
+            osc.start();
+            osc.stop(now + 0.04);
+        });
     },
     
-    jackpot() {
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        for (let i = 0; i < 12; i++) {
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(200 + i * 70, now + i * 0.1);
-            gain.gain.setValueAtTime(0.25, now + i * 0.1);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.35);
-            osc.connect(gain);
-            gain.connect(this.ctx.destination);
-            osc.start(now + i * 0.1);
-            osc.stop(now + i * 0.1 + 0.35);
-        }
-        setTimeout(() => this.crowdCheer(), 400);
-    },
-    
-    jackpotExtended() {
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        for (let i = 0; i < 12; i++) {
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(200 + i * 50, now + i * 0.15);
-            gain.gain.setValueAtTime(0.3, now + i * 0.15);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.15 + 0.5);
-            osc.connect(gain);
-            gain.connect(this.ctx.destination);
-            osc.start(now + i * 0.15);
-            osc.stop(now + i * 0.15 + 0.5);
-        }
-        setTimeout(() => this.crowdCheer(), 600);
-    },
-    
-    crowdCheer() {
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        const bufferSize = this.ctx.sampleRate * 2;
-        const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-        const data = buffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) {
-            data[i] = Math.random() * 2 - 1;
-        }
-        const noise = this.ctx.createBufferSource();
-        noise.buffer = buffer;
-        const filter = this.ctx.createBiquadFilter();
-        filter.type = 'bandpass';
-        filter.frequency.setValueAtTime(1200, now);
-        const gain = this.ctx.createGain();
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.linearRampToValueAtTime(0, now + 2);
-        noise.connect(filter);
-        filter.connect(gain);
-        gain.connect(this.ctx.destination);
-        noise.start();
-    },
-    
-    purchase() {
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime;
-        for (let i = 0; i < 4; i++) {
+    clunk() {
+        this.playSound(0.3, () => {
+            const now = this.ctx.currentTime;
             const osc = this.ctx.createOscillator();
             const gain = this.ctx.createGain();
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(800 + i * 150, now + i * 0.08);
-            gain.gain.setValueAtTime(0.2, now + i * 0.08);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.08 + 0.2);
+            osc.frequency.setValueAtTime(150, now);
+            osc.frequency.exponentialRampToValueAtTime(50, now + 0.2);
+            gain.gain.setValueAtTime(0.3, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
             osc.connect(gain);
             gain.connect(this.ctx.destination);
-            osc.start(now + i * 0.08);
-            osc.stop(now + i * 0.08 + 0.2);
-        }
+            osc.start();
+            osc.stop(now + 0.2);
+        });
+    },
+    
+    coin(amount = 0.25) {
+        const volume = Math.min(0.5, 0.2 + (amount / 50));
+        this.playSound(volume, () => {
+            const now = this.ctx.currentTime;
+            for (let i = 0; i < 3; i++) {
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(1800 + i * 100, now + i * 0.05);
+                gain.gain.setValueAtTime(volume * (1 - i * 0.2), now + i * 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.05 + 0.2);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now + i * 0.05);
+                osc.stop(now + i * 0.05 + 0.2);
+            }
+        });
+    },
+    
+    win(amount = 5) {
+        const volume = Math.min(0.8, 0.3 + (amount / 50));
+        this.playSound(volume, () => {
+            const now = this.ctx.currentTime;
+            const notes = [523.25, 587.33, 659.25, 783.99];
+            for (let i = 0; i < notes.length; i++) {
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(notes[i], now + i * 0.12);
+                gain.gain.setValueAtTime(volume * (1 - i * 0.1), now + i * 0.12);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.12 + 0.3);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now + i * 0.12);
+                osc.stop(now + i * 0.12 + 0.3);
+            }
+        });
+    },
+    
+    jackpot() {
+        this.playSound(1.0, () => {
+            const now = this.ctx.currentTime;
+            for (let i = 0; i < 12; i++) {
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(200 + i * 70, now + i * 0.1);
+                gain.gain.setValueAtTime(0.35, now + i * 0.1);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.45);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now + i * 0.1);
+                osc.stop(now + i * 0.1 + 0.45);
+            }
+            setTimeout(() => this.crowdCheer(100), 500);
+        });
+    },
+    
+    jackpotExtended() {
+        this.playSound(1.2, () => {
+            const now = this.ctx.currentTime;
+            for (let i = 0; i < 16; i++) {
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150 + i * 60, now + i * 0.12);
+                gain.gain.setValueAtTime(0.45, now + i * 0.12);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.12 + 0.6);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now + i * 0.12);
+                osc.stop(now + i * 0.12 + 0.6);
+            }
+            setTimeout(() => this.bigCrowd(), 700);
+            setTimeout(() => this.explosion(), 200);
+        });
+    },
+    
+    explosion() {
+        this.playSound(0.9, () => {
+            const now = this.ctx.currentTime;
+            const noise = this.ctx.createBufferSource();
+            const bufferSize = this.ctx.sampleRate * 0.5;
+            const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = Math.random() * 2 - 1;
+            }
+            noise.buffer = buffer;
+            const filter = this.ctx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(800, now);
+            filter.frequency.exponentialRampToValueAtTime(100, now + 0.3);
+            const gain = this.ctx.createGain();
+            gain.gain.setValueAtTime(0.7, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(this.ctx.destination);
+            noise.start();
+        });
+    },
+    
+    crowdCheer(amount = 50) {
+        const volume = Math.min(0.6, 0.2 + (amount / 200));
+        this.playSound(volume, () => {
+            const now = this.ctx.currentTime;
+            const bufferSize = this.ctx.sampleRate * 1.5;
+            const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = Math.random() * 2 - 1;
+            }
+            const noise = this.ctx.createBufferSource();
+            noise.buffer = buffer;
+            const filter = this.ctx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(1200, now);
+            filter.Q.setValueAtTime(2, now);
+            const gain = this.ctx.createGain();
+            gain.gain.setValueAtTime(volume, now);
+            gain.gain.linearRampToValueAtTime(0, now + 1.5);
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(this.ctx.destination);
+            noise.start();
+        });
+    },
+    
+    bigCrowd() {
+        this.playSound(0.8, () => {
+            const now = this.ctx.currentTime;
+            this.crowdCheer(200);
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(880, now);
+            gain.gain.setValueAtTime(0.4, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start();
+            osc.stop(now + 0.5);
+        });
+    },
+    
+    purchase() {
+        this.playSound(0.25, () => {
+            const now = this.ctx.currentTime;
+            for (let i = 0; i < 4; i++) {
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800 + i * 150, now + i * 0.08);
+                gain.gain.setValueAtTime(0.2, now + i * 0.08);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.08 + 0.2);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now + i * 0.08);
+                osc.stop(now + i * 0.08 + 0.2);
+            }
+        });
     }
 };
 
@@ -4562,7 +4712,7 @@ function filterMarket(filter) {
 let currentAdminTab = 'withdrawals';
 
 function showAdminPanel() {
-    if (!isAdmin) { showToast('Access denied', 'error'); return; }
+    if (!IS_ADMIN) { showToast('Access denied', 'error'); return; }
     const modal = document.getElementById('adminModal');
     if (modal) modal.classList.add('show');
     loadAdminCounts();
@@ -4613,7 +4763,7 @@ async function loadAdminCounts() {
 }
 
 async function refreshAdminPanel() {
-    if (!isAdmin || !db) return;
+    if (!IS_ADMIN || !db) return;
     
     const btn = event?.currentTarget;
     const icon = btn?.querySelector('i');
@@ -4716,7 +4866,7 @@ async function submitRejection() {
         return;
     }
     
-    if (!isAdmin || !db) return;
+    if (!IS_ADMIN || !db) return;
     
     try {
         const col = currentRejectType === 'deposit' ? CONFIG.COLLECTIONS.DEPOSITS : CONFIG.COLLECTIONS.WITHDRAWALS;
@@ -4750,7 +4900,7 @@ async function submitRejection() {
 }
 
 async function approveRequest(id, type, amount, targetUserId, currency, fee = 0, feeCurrency = currency) {
-    if (!isAdmin || !db) return;
+    if (!IS_ADMIN || !db) return;
     try {
         const col = type === 'deposit' ? CONFIG.COLLECTIONS.DEPOSITS : CONFIG.COLLECTIONS.WITHDRAWALS;
         await db.collection(col).doc(id).update({ 
@@ -4840,7 +4990,7 @@ function refreshPrices() {
     loadPrices(true);
 }
 
-// ====== 53. REFERRAL SYSTEM ======
+// ====== 53. REFERRAL SYSTEM (محمي) ======
 function generateReferralCode() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     return userId.slice(-4) + Array.from({length:6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
@@ -4865,6 +5015,9 @@ async function processReferral() {
     
     if (!referralCode || referralCode === userData.referralCode || userData.referredBy) return;
     
+    // منع الإحالة الذاتية
+    if (referralCode === userData.referralCode) return;
+    
     localStorage.setItem(CACHE_KEYS.REFERRAL_PROCESSED, referralCode);
     
     if (!db) {
@@ -4888,11 +5041,22 @@ async function processReferral() {
             if (referrerId === userId) return;
             if (referrerData.referrals?.includes(userId)) return;
             
-            await db.collection(CONFIG.COLLECTIONS.USERS).doc(referrerId).update({
-                referrals: [...(referrerData.referrals || []), userId],
-                referralCount: (referrerData.referralCount || 0) + 1,
-                'balances.TON': firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS),
-                referralEarnings: firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS)
+            // استخدام Transaction لضمان عدم التكرار
+            await db.runTransaction(async (transaction) => {
+                const referrerRef = db.collection(CONFIG.COLLECTIONS.USERS).doc(referrerId);
+                const userRef = db.collection(CONFIG.COLLECTIONS.USERS).doc(userId);
+                
+                transaction.update(referrerRef, {
+                    referrals: firebase.firestore.FieldValue.arrayUnion(userId),
+                    referralCount: firebase.firestore.FieldValue.increment(1),
+                    'balances.TON': firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS),
+                    referralEarnings: firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS)
+                });
+                
+                transaction.set(userRef, {
+                    referredBy: referralCode,
+                    'balances.TON': firebase.firestore.FieldValue.increment(CONFIG.ECONOMY.REFERRAL_BONUS)
+                }, { merge: true });
             });
             
             userData.referredBy = referralCode;
@@ -4901,16 +5065,12 @@ async function processReferral() {
             userData.totalEarned += CONFIG.ECONOMY.REFERRAL_BONUS;
             userData.referralEarnings += CONFIG.ECONOMY.REFERRAL_BONUS;
             
-            await db.collection(CONFIG.COLLECTIONS.USERS).doc(userId).update({
-                referredBy: referralCode,
-                'balances.TON': userData.balances.TON
-            });
-            
             saveUserToCache();
             showToast(t('notif.welcomeBonus'), 'success');
             await addNotification(referrerId, t('notif.referralBonus'), 'success');
         }
     } catch (e) {
+        console.error("Referral processing error:", e);
         localStorage.removeItem(CACHE_KEYS.REFERRAL_PROCESSED);
     }
 }
@@ -5235,6 +5395,7 @@ async function loadUserData(force = false) {
         checkAdminAndAddCrown();
         checkDailyLogin();
         checkAutoClickerRewardsOnStart();
+        updateSoundMuteButton();
         
         updateUserDisplay();
         
@@ -5293,7 +5454,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setTimeout(showRandomSticker, 1000);
     updateUserDisplay();
     document.addEventListener('click', () => VegasAudio.init(), { once: true });
-    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v28.0");
+    console.log("✅ TON MINING CASINO - ULTIMATE LEGENDARY EDITION v29.0");
     console.log("✅ All systems ready! 🚀");
 });
 
@@ -5325,6 +5486,7 @@ window.showAdminPanel = showAdminPanel;
 window.closeModal = closeModal;
 window.closeJackpotPopup = closeJackpotPopup;
 window.toggleLanguage = toggleLanguage;
+window.toggleSoundMute = toggleSoundMute;
 window.copyReferralLink = copyReferralLink;
 window.copyDepositAddress = copyDepositAddress;
 window.connectWallet = connectWallet;
