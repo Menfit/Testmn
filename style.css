@@ -1,10 +1,10 @@
 /* ============================================
-   TON MINING CASINO - ULTIMATE LEGENDARY EDITION v28.0
+   TON MINING CASINO - ULTIMATE LEGENDARY EDITION v29.0
    ============================================
    دمج كامل: جميع التصميمات الأصلية + التصميمات الجديدة
    عجلة 3D مع جليد مضيء + سلوتس 3D + تأثيرات نيون
    Auto Clicker Card, Milestones Grid, Fake Winner Display
-   Swap متعدد العملات + تأثيرات احترافية
+   Last Win Display, Sound Mute Button, Neon Lights
    ============================================ */
 
 /* ====== 1. CSS VARIABLES ====== */
@@ -52,6 +52,7 @@
     --gradient-bonus: linear-gradient(135deg, #ff4444, #ff8800, #ffdd00);
     --gradient-auto: linear-gradient(135deg, #2a2a3a, #1a1a2a);
     --gradient-milestone: linear-gradient(145deg, #1e2a3a, #0f1a2a);
+    --gradient-lastwin: linear-gradient(135deg, #ffaa33, #ff8844);
     
     /* الخلفيات */
     --bg-primary: #0a0b0f;
@@ -123,7 +124,7 @@
     --z-index-vegas: 2500;
 }
 
-/* ====== 2. ANIMATIONS - التأثيرات الحركية ====== */
+/* ====== 2. ANIMATIONS ====== */
 
 /* دوران التوربينات */
 @keyframes turbineSpin {
@@ -156,14 +157,6 @@
 @keyframes goldGlow {
     0%, 100% { box-shadow: 0 0 15px rgba(251,191,36,0.2); }
     50% { box-shadow: 0 0 30px rgba(251,191,36,0.4); }
-}
-
-@keyframes rainbowGlow {
-    0% { box-shadow: 0 0 15px rgba(0,136,204,0.3); }
-    25% { box-shadow: 0 0 15px rgba(136,85,255,0.3); }
-    50% { box-shadow: 0 0 15px rgba(255,68,204,0.3); }
-    75% { box-shadow: 0 0 15px rgba(0,242,255,0.3); }
-    100% { box-shadow: 0 0 15px rgba(0,136,204,0.3); }
 }
 
 /* انزلاق */
@@ -241,12 +234,6 @@
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
-}
-
-/* نبض الحدود */
-@keyframes pulseBorder {
-    0%, 100% { box-shadow: 0 0 0 1px rgba(0,242,255,0.3), 0 0 15px rgba(0,242,255,0.2); }
-    50% { box-shadow: 0 0 0 2px rgba(0,242,255,0.5), 0 0 25px rgba(0,242,255,0.3); }
 }
 
 /* تأثيرات الجليد */
@@ -368,17 +355,16 @@
     100% { opacity: 0; transform: translateY(-10px); }
 }
 
-/* تأثيرات الدوران */
-@keyframes wheelSpinEffect {
-    0% { filter: blur(0px); }
-    50% { filter: blur(1px); }
-    100% { filter: blur(0px); }
+/* تأثيرات نيون */
+@keyframes neonPulse {
+    0%, 100% { text-shadow: 0 0 5px #fff, 0 0 10px #ffdd00, 0 0 20px #ffaa00; }
+    50% { text-shadow: 0 0 10px #fff, 0 0 20px #ffdd00, 0 0 40px #ffaa00; }
 }
 
-/* تأثيرات الحرارة */
-@keyframes heatGlow {
-    0% { filter: brightness(1); }
-    100% { filter: brightness(1.2); }
+/* تأثيرات آخر فوز */
+@keyframes lastWinGlow {
+    0%, 100% { box-shadow: 0 0 5px rgba(255,170,51,0.3); }
+    50% { box-shadow: 0 0 15px rgba(255,170,51,0.6); }
 }
 
 /* ====== 3. RESET & BASE ====== */
@@ -978,6 +964,15 @@ body::before {
     justify-content: center;
     padding: 0 3px;
     border: 1px solid var(--bg-primary);
+}
+
+/* زر كتم الصوت */
+.sound-mute-btn {
+    transition: all 0.2s ease;
+}
+
+.sound-mute-btn i {
+    font-size: 1rem;
 }
 
 #langIcon { font-size: 1.1rem; }
@@ -2186,7 +2181,39 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     text-align: center;
 }
 
-/* ====== 25. WHEEL GAME PAGE ====== */
+/* ====== 25. LAST WIN DISPLAY ====== */
+.last-win-container {
+    margin-top: 10px;
+    padding: 8px;
+    background: rgba(0,0,0,0.2);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    animation: lastWinGlow 2s infinite;
+}
+
+.last-win-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.8rem;
+}
+
+.last-win-icon {
+    font-size: 1rem;
+}
+
+.last-win-text {
+    font-weight: 600;
+    color: var(--text-gold);
+}
+
+.last-win-time {
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+}
+
+/* ====== 26. WHEEL GAME PAGE ====== */
 .wheel-game-container {
     padding: 20px 15px 100px;
     position: relative;
@@ -2359,7 +2386,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
 }
 
-/* ====== 26. GAME CONTROLS ====== */
+/* ====== 27. GAME CONTROLS ====== */
 .game-controls-pro {
     display: flex;
     justify-content: center;
@@ -2433,7 +2460,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     opacity: 0.9;
 }
 
-/* ====== 27. HEAT METER ====== */
+/* ====== 28. HEAT METER ====== */
 .heat-meter-container {
     background: rgba(0,0,0,0.6);
     border-radius: 20px;
@@ -2470,7 +2497,7 @@ h2 i { font-size: 1.8rem; background: var(--gradient-primary); -webkit-backgroun
     margin-top: 5px;
 }
 
-/* ====== 28. AUTO SPIN PANEL ====== */
+/* ====== 29. AUTO SPIN PANEL ====== */
 .auto-spin-panel {
     display: flex;
     align-items: center;
@@ -2536,7 +2563,7 @@ input:checked + .toggle-slider:before {
     font-weight: 600;
 }
 
-/* ====== 29. SLOTS GAME PAGE ====== */
+/* ====== 30. SLOTS GAME PAGE ====== */
 .slots-game-container {
     padding: 20px 15px 100px;
     position: relative;
@@ -2686,33 +2713,7 @@ input:checked + .toggle-slider:before {
     animation: winLineFlash 0.5s ease infinite;
 }
 
-.win-display {
-    background: linear-gradient(135deg, #1a1f2a, #0a0b0f);
-    border: 2px solid var(--ton-gold);
-    border-radius: 15px;
-    padding: 15px;
-    margin-top: 20px;
-    text-align: center;
-    box-shadow: 0 0 30px rgba(251, 191, 36, 0.3);
-}
-
-.win-label {
-    display: block;
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 5px;
-}
-
-.win-amount {
-    font-size: 2rem;
-    font-weight: 900;
-    color: var(--ton-gold);
-    text-shadow: 0 0 30px rgba(251, 191, 36, 0.5);
-}
-
-/* ====== 30. PRIZE LEGEND ====== */
+/* ====== 31. PRIZE LEGEND ====== */
 .prize-legend {
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(0, 242, 255, 0.15);
@@ -2745,7 +2746,7 @@ input:checked + .toggle-slider:before {
 .legend-item .icon { font-size: 1.5rem; display: block; margin-bottom: 4px; }
 .legend-item .value { font-weight: 700; color: var(--text-primary); }
 
-/* ====== 31. PAYOUT TABLE ====== */
+/* ====== 32. PAYOUT TABLE ====== */
 .payout-table-pro {
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(0, 242, 255, 0.15);
@@ -2778,7 +2779,7 @@ input:checked + .toggle-slider:before {
 .payout-item .symbol { font-size: 2rem; display: block; margin-bottom: 5px; }
 .payout-item .value { font-weight: 700; color: var(--text-gold); font-size: 0.9rem; }
 
-/* ====== 32. BONUS PACKS MODAL ====== */
+/* ====== 33. BONUS PACKS MODAL ====== */
 .bonus-packs-grid {
     display: flex;
     flex-direction: column;
@@ -2849,7 +2850,7 @@ input:checked + .toggle-slider:before {
     box-shadow: 0 0 20px rgba(0,242,255,0.5);
 }
 
-/* ====== 33. REFERRAL MILESTONES GRID ====== */
+/* ====== 34. REFERRAL MILESTONES GRID ====== */
 .milestones-section {
     margin: 20px 0;
 }
@@ -2878,6 +2879,18 @@ input:checked + .toggle-slider:before {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
+}
+
+@media (max-width: 500px) {
+    .milestones-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 350px) {
+    .milestones-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .milestone-card {
@@ -2979,7 +2992,7 @@ input:checked + .toggle-slider:before {
     cursor: default;
 }
 
-/* ====== 34. PROFILE PAGE ====== */
+/* ====== 35. PROFILE PAGE ====== */
 .wallet-card-legendary {
     background: var(--gradient-legendary);
     background-size: 200% 200%;
@@ -3070,7 +3083,7 @@ input:checked + .toggle-slider:before {
 .wallet-action-btn.swap i { color: var(--ton-cyan); }
 .wallet-action-btn.history i { color: #8855ff; }
 
-/* ====== 35. TON CONNECT CARD ====== */
+/* ====== 36. TON CONNECT CARD ====== */
 .ton-connect-card-legendary {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3116,7 +3129,7 @@ input:checked + .toggle-slider:before {
 .connected-wallet-info .address { font-family: monospace; color: var(--text-accent); font-size: 0.8rem; }
 .connected-wallet-info .balance { font-weight: 700; color: var(--text-gold); }
 
-/* ====== 36. ASSETS LIST ====== */
+/* ====== 37. ASSETS LIST ====== */
 .assets-list-legendary {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3200,7 +3213,7 @@ input:checked + .toggle-slider:before {
     white-space: nowrap;
 }
 
-/* ====== 37. STATS COMPACT ====== */
+/* ====== 38. STATS COMPACT ====== */
 .stats-compact {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -3229,7 +3242,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-accent);
 }
 
-/* ====== 38. CHART ====== */
+/* ====== 39. CHART ====== */
 .chart-container {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3276,7 +3289,7 @@ input:checked + .toggle-slider:before {
     color: var(--text-secondary);
 }
 
-/* ====== 39. REFERRAL SECTION ====== */
+/* ====== 40. REFERRAL SECTION ====== */
 .referral-section {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3348,7 +3361,7 @@ input:checked + .toggle-slider:before {
     font-weight: 600;
 }
 
-/* ====== 40. LEADERBOARD ====== */
+/* ====== 41. LEADERBOARD ====== */
 .leaderboard {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -3376,7 +3389,7 @@ input:checked + .toggle-slider:before {
 .name { flex: 1; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .earnings { font-weight: 700; color: var(--text-accent); white-space: nowrap; }
 
-/* ====== 41. MODALS GENERAL ====== */
+/* ====== 42. MODALS GENERAL ====== */
 .modal {
     display: none !important;
     position: fixed;
@@ -3463,7 +3476,7 @@ input:checked + .toggle-slider:before {
 
 .modal-body { padding: 16px; max-height: calc(85vh - 70px); overflow-y: auto; }
 
-/* ====== 42. PAYMENT OPTIONS ====== */
+/* ====== 43. PAYMENT OPTIONS ====== */
 .payment-options-legendary { margin: 15px 0; }
 
 .payment-option-title { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 10px; }
@@ -3512,7 +3525,7 @@ input:checked + .toggle-slider:before {
 .payment-option-desc { font-size: 0.8rem; color: var(--text-secondary); }
 .payment-option-desc .balance-amount { color: var(--text-gold); font-weight: 700; }
 
-/* ====== 43. SWAP MODAL ====== */
+/* ====== 44. SWAP MODAL ====== */
 .swap-modal-content { max-width: 400px; }
 
 .swap-field {
@@ -3646,7 +3659,7 @@ input:checked + .toggle-slider:before {
     box-shadow: 0 0 30px rgba(0,242,255,0.5);
 }
 
-/* ====== 44. CURRENCY SELECTOR MODAL ====== */
+/* ====== 45. CURRENCY SELECTOR MODAL ====== */
 .currency-search {
     position: relative;
     margin-bottom: 15px;
@@ -3672,7 +3685,10 @@ input:checked + .toggle-slider:before {
 
 .currency-search input:focus { outline: none; border-color: var(--ton-cyan); }
 
-.currency-list { max-height: 350px; overflow-y: auto; }
+.currency-list {
+    max-height: 350px;
+    overflow-y: auto;
+}
 
 .currency-list-item {
     display: flex;
@@ -3690,7 +3706,7 @@ input:checked + .toggle-slider:before {
 .currency-list-item .currency-info h4 { font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
 .currency-list-item .currency-info p { font-size: 0.8rem; color: var(--text-secondary); }
 
-/* ====== 45. DEPOSIT MODAL ====== */
+/* ====== 46. DEPOSIT MODAL ====== */
 .deposit-address-card-legendary {
     background: rgba(0,0,0,0.3);
     border-radius: var(--radius-xl);
@@ -3772,7 +3788,7 @@ input:checked + .toggle-slider:before {
     border-radius: var(--radius-sm);
 }
 
-/* ====== 46. INPUT GROUPS ====== */
+/* ====== 47. INPUT GROUPS ====== */
 .input-group-legendary { margin-bottom: 15px; }
 
 .input-group-legendary label {
@@ -3810,7 +3826,7 @@ input:checked + .toggle-slider:before {
 .validation-hint.valid { color: #22c55e; background: rgba(34,197,94,0.1); }
 .validation-hint.invalid { color: #ef4444; background: rgba(239,68,68,0.1); }
 
-/* ====== 47. WITHDRAW MODAL ====== */
+/* ====== 48. WITHDRAW MODAL ====== */
 .withdraw-icon {
     width: 48px;
     height: 48px;
@@ -3865,7 +3881,7 @@ input:checked + .toggle-slider:before {
 .receive-amount .label { color: var(--text-secondary); }
 .receive-amount .value { font-weight: 700; color: var(--text-success); }
 
-/* ====== 48. CONFIRM BUTTON ====== */
+/* ====== 49. CONFIRM BUTTON ====== */
 .confirm-btn-legendary {
     width: 100%;
     padding: 15px;
@@ -3891,7 +3907,7 @@ input:checked + .toggle-slider:before {
 .confirm-btn-legendary:disabled { opacity: 0.5; cursor: not-allowed; animation: none; }
 .confirm-btn-legendary:not(:disabled):hover { transform: scale(1.02); box-shadow: 0 0 40px rgba(0,242,255,0.4); }
 
-/* ====== 49. HISTORY MODAL ====== */
+/* ====== 50. HISTORY MODAL ====== */
 .history-filters {
     display: flex;
     gap: 6px;
@@ -3965,7 +3981,7 @@ input:checked + .toggle-slider:before {
 .history-amount { font-weight: 700; color: var(--text-primary); }
 .history-date { color: var(--text-secondary); font-size: 0.7rem; }
 
-/* ====== 50. NOTIFICATIONS MODAL ====== */
+/* ====== 51. NOTIFICATIONS MODAL ====== */
 .notifications-list { max-height: 350px; overflow-y: auto; }
 
 .notification-item {
@@ -4000,7 +4016,7 @@ input:checked + .toggle-slider:before {
 .notification-time { font-size: 0.7rem; color: var(--text-secondary); }
 .notification-message { font-size: 0.9rem; color: var(--text-primary); }
 
-/* ====== 51. ADMIN MODAL ====== */
+/* ====== 52. ADMIN MODAL ====== */
 .admin-modal-content { max-width: 450px; }
 
 .admin-tabs {
@@ -4177,7 +4193,7 @@ input:checked + .toggle-slider:before {
 
 .admin-reject-btn:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(239,68,68,0.3); }
 
-/* ====== 52. REJECT MODAL ====== */
+/* ====== 53. REJECT MODAL ====== */
 .reject-form {
     padding: 16px;
 }
@@ -4211,7 +4227,7 @@ input:checked + .toggle-slider:before {
     background: var(--gradient-error) !important;
 }
 
-/* ====== 53. TOAST NOTIFICATION ====== */
+/* ====== 54. TOAST NOTIFICATION ====== */
 .toast-notification {
     position: fixed;
     bottom: 90px;
@@ -4237,7 +4253,7 @@ input:checked + .toggle-slider:before {
 .toast-notification.hidden { display: none; }
 .toast-notification i { color: var(--ton-cyan); }
 
-/* ====== 54. SCROLL TOP BUTTON ====== */
+/* ====== 55. SCROLL TOP BUTTON ====== */
 .scroll-top-btn {
     position: fixed;
     bottom: 90px;
@@ -4263,194 +4279,29 @@ input:checked + .toggle-slider:before {
 .scroll-top-btn.show { opacity: 1; visibility: visible; }
 .scroll-top-btn:hover { transform: scale(1.1); }
 
-/* ====== 55. EMPTY STATE ====== */
-.empty-state {
-    text-align: center;
-    padding: 30px 15px;
-    background: rgba(0,0,0,0.3);
-    border-radius: var(--radius-xl);
-}
-
-.empty-state i { font-size: 3rem; color: var(--text-secondary); margin-bottom: 12px; }
-.empty-state p { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
-.empty-state span { font-size: 0.9rem; color: var(--text-secondary); }
-
-/* ====== 56. LOADING SPINNER ====== */
-.loading-spinner {
-    text-align: center;
-    padding: 30px;
-    color: var(--text-secondary);
-}
-
-.loading-spinner i { font-size: 2.2rem; margin-bottom: 8px; color: var(--ton-cyan); }
-
-/* ====== 57. RTL SUPPORT ====== */
-[dir="rtl"] { text-align: right; }
-[dir="rtl"] .header-left { flex-direction: row-reverse; }
-[dir="rtl"] .user-info { text-align: right; }
-[dir="rtl"] .section-header { flex-direction: row-reverse; }
-[dir="rtl"] .section-action i { transform: rotate(180deg); }
-[dir="rtl"] .asset-left { flex-direction: row-reverse; }
-[dir="rtl"] .asset-right { text-align: left; }
-[dir="rtl"] .activity-item { flex-direction: row-reverse; }
-[dir="rtl"] .history-item-header { flex-direction: row-reverse; }
-[dir="rtl"] .leaderboard-item { flex-direction: row-reverse; }
-[dir="rtl"] .rank { text-align: right; }
-[dir="rtl"] .earnings { text-align: left; }
-[dir="rtl"] .scroll-top-btn { right: auto; left: 15px; }
-[dir="rtl"] .auto-clicker-card { direction: ltr; text-align: left; }
-[dir="rtl"] .page-subtitle { border-left: none; border-right: 3px solid var(--ton-cyan); padding-left: 0; padding-right: 10px; }
-[dir="rtl"] .swap-field-input input { text-align: left; }
-[dir="rtl"] .swap-currency i { margin-left: 0; margin-right: auto; }
-[dir="rtl"] .currency-search i { left: auto; right: 12px; }
-[dir="rtl"] .currency-search input { padding: 12px 40px 12px 12px; }
-[dir="rtl"] .currency-select { background-position: left 12px center; }
-[dir="rtl"] .game-back-btn i { transform: rotate(180deg); }
-[dir="rtl"] .floating-bonus-btn { right: auto; left: 15px; }
-[dir="rtl"] .milestone-card { direction: ltr; }
-
-/* ====== 58. RESPONSIVE ====== */
-@media (max-width: 400px) {
-    .mining-stats-legendary { gap: 10px; }
-    .stat-orb { width: 80px; height: 80px; }
-    .orb-value { font-size: 1.3rem; }
-    .active-machines-grid { grid-template-columns: 1fr; }
-    .showcase-card-legendary { flex-direction: column; align-items: center; text-align: center; }
-    .showcase-plans { grid-template-columns: repeat(3, 1fr); }
-    .stats-compact { grid-template-columns: 1fr; }
-    .wallet-balance-large { font-size: 2.2rem; }
-    .wallet-actions { flex-wrap: wrap; }
-    .wallet-action-btn { padding: 8px 4px; font-size: 0.75rem; }
-    .history-filters { flex-wrap: wrap; }
-    .history-filter { flex: 1; text-align: center; }
-    .swap-field-input { flex-direction: column; align-items: stretch; }
-    .swap-currency { justify-content: center; }
-    .deposit-info-row { flex-direction: column; text-align: center; }
-    .milestones-grid { grid-template-columns: repeat(2, 1fr); }
-    .wheel-casino-container-pro { width: 280px; height: 280px; }
-    .vegas-slot-reel-wrapper { width: 90px; height: 270px; }
-    .vegas-slot-symbol { height: 90px; font-size: 3rem; }
-    .legend-grid { grid-template-columns: repeat(3, 1fr); }
-    .game-controls-pro { gap: 10px; }
-    .game-btn { min-width: 100px; padding: 15px 20px; font-size: 1rem; }
-    .game-btn.spin { padding: 18px 30px; font-size: 1.2rem; }
-}
-
-/* ====== 59. ANIMATION CLASSES ====== */
-.slideIn { animation: slideIn 0.4s ease; }
-.slideUpModal { animation: slideUpModal 0.4s ease; }
-.scaleIn { animation: scaleIn 0.3s ease; }
-.pop { animation: pop 0.3s ease; }
-.shake { animation: shake 0.5s ease; }
-.fadeIn { animation: fadeIn 0.3s ease; }
-
-/* ====== 60. CUSTOM SCROLLBAR ====== */
-::-webkit-scrollbar { width: 0px; background: transparent; }
-
-/* ====== 61. FOCUS STYLES ====== */
-:focus { outline: none; }
-:focus-visible { outline: 2px solid var(--ton-cyan); outline-offset: 2px; }
-
-/* ====== 62. SELECTION ====== */
-::selection { background: var(--ton-cyan); color: var(--bg-primary); }
-
-/* ====== 63. GAME PAGE HEADER ====== */
-.game-page-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 20px;
-    background: rgba(20, 25, 35, 0.95);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(0, 242, 255, 0.15);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.game-page-header h2 {
-    font-size: 1.3rem;
-    font-weight: 800;
-    background: var(--gradient-legendary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.back-btn {
-    width: 40px;
-    height: 40px;
-    background: rgba(0, 242, 255, 0.1);
-    border: 1px solid rgba(0, 242, 255, 0.3);
-    border-radius: 50%;
-    color: var(--ton-cyan);
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: var(--transition-fast);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.back-btn:hover {
-    background: rgba(0, 242, 255, 0.2);
-    transform: translateX(-3px);
-}
-
-.game-stats {
-    display: flex;
-    gap: 10px;
-}
-
-.stat-badge {
-    background: rgba(251, 191, 36, 0.1);
-    border: 1px solid rgba(251, 191, 36, 0.3);
-    border-radius: 20px;
-    padding: 6px 12px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--ton-gold);
-}
-
-/* ====== 64. WIN POPUP ====== */
-.win-popup {
+/* ====== 56. NEON LIGHTS EFFECT ====== */
+.neon-lights {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.3);
-    background: linear-gradient(145deg, #1e1f2a, #0f1018);
-    border: 3px solid var(--ton-gold);
-    border-radius: var(--radius-2xl);
-    padding: 30px 50px;
-    z-index: var(--z-index-popup);
-    text-align: center;
-    opacity: 0;
-    transition: all 0.3s ease;
-    min-width: 280px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
+    z-index: 9997;
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(255, 0, 0, 0.2) 0px,
+        rgba(255, 0, 0, 0.2) 20px,
+        rgba(0, 255, 0, 0.2) 20px,
+        rgba(0, 255, 0, 0.2) 40px,
+        rgba(0, 0, 255, 0.2) 40px,
+        rgba(0, 0, 255, 0.2) 60px
+    );
+    animation: neonPulse 0.5s infinite;
+    mix-blend-mode: overlay;
 }
 
-.win-popup.show {
-    animation: winPopupIn 0.4s ease forwards;
-}
-
-@keyframes winPopupIn {
-    0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
-    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
-    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-}
-
-.win-popup .win-icon { font-size: 2rem; margin-bottom: 10px; }
-.win-popup .win-title { font-size: 1.5rem; font-weight: 800; }
-.win-popup .win-amount { font-size: 2rem; font-weight: 900; color: var(--text-gold); }
-
-/* ====== 65. SCREEN EFFECTS ====== */
+/* ====== 57. SCREEN EFFECTS ====== */
 .screen-flash {
     position: fixed;
     top: 0;
@@ -4602,7 +4453,7 @@ input:checked + .toggle-slider:before {
     }
 }
 
-/* ====== 66. CHALLENGES ====== */
+/* ====== 58. CHALLENGES ====== */
 .challenge-card {
     background: var(--bg-card);
     border: 1px solid var(--glass-border-strong);
@@ -4645,7 +4496,7 @@ input:checked + .toggle-slider:before {
     margin-top: 12px;
 }
 
-/* ====== 67. TOAST PRO ====== */
+/* ====== 59. TOAST PRO ====== */
 .toast-container {
     position: fixed;
     top: 80px;
@@ -4737,3 +4588,169 @@ input:checked + .toggle-slider:before {
         transform: translateY(-20px);
     }
 }
+
+/* ====== 60. RTL SUPPORT ====== */
+[dir="rtl"] { text-align: right; }
+[dir="rtl"] .header-left { flex-direction: row-reverse; }
+[dir="rtl"] .user-info { text-align: right; }
+[dir="rtl"] .section-header { flex-direction: row-reverse; }
+[dir="rtl"] .section-action i { transform: rotate(180deg); }
+[dir="rtl"] .asset-left { flex-direction: row-reverse; }
+[dir="rtl"] .asset-right { text-align: left; }
+[dir="rtl"] .activity-item { flex-direction: row-reverse; }
+[dir="rtl"] .history-item-header { flex-direction: row-reverse; }
+[dir="rtl"] .leaderboard-item { flex-direction: row-reverse; }
+[dir="rtl"] .rank { text-align: right; }
+[dir="rtl"] .earnings { text-align: left; }
+[dir="rtl"] .scroll-top-btn { right: auto; left: 15px; }
+[dir="rtl"] .auto-clicker-card { direction: ltr; text-align: left; }
+[dir="rtl"] .page-subtitle { border-left: none; border-right: 3px solid var(--ton-cyan); padding-left: 0; padding-right: 10px; }
+[dir="rtl"] .swap-field-input input { text-align: left; }
+[dir="rtl"] .swap-currency i { margin-left: 0; margin-right: auto; }
+[dir="rtl"] .currency-search i { left: auto; right: 12px; }
+[dir="rtl"] .currency-search input { padding: 12px 40px 12px 12px; }
+[dir="rtl"] .currency-select { background-position: left 12px center; }
+[dir="rtl"] .game-back-btn i { transform: rotate(180deg); }
+[dir="rtl"] .floating-bonus-btn { right: auto; left: 15px; }
+[dir="rtl"] .milestone-card { direction: ltr; }
+
+/* ====== 61. RESPONSIVE ====== */
+@media (max-width: 400px) {
+    .mining-stats-legendary { gap: 10px; }
+    .stat-orb { width: 80px; height: 80px; }
+    .orb-value { font-size: 1.3rem; }
+    .active-machines-grid { grid-template-columns: 1fr; }
+    .showcase-card-legendary { flex-direction: column; align-items: center; text-align: center; }
+    .showcase-plans { grid-template-columns: repeat(3, 1fr); }
+    .stats-compact { grid-template-columns: 1fr; }
+    .wallet-balance-large { font-size: 2.2rem; }
+    .wallet-actions { flex-wrap: wrap; }
+    .wallet-action-btn { padding: 8px 4px; font-size: 0.75rem; }
+    .history-filters { flex-wrap: wrap; }
+    .history-filter { flex: 1; text-align: center; }
+    .swap-field-input { flex-direction: column; align-items: stretch; }
+    .swap-currency { justify-content: center; }
+    .deposit-info-row { flex-direction: column; text-align: center; }
+    .milestones-grid { grid-template-columns: repeat(2, 1fr); }
+    .wheel-casino-container-pro { width: 280px; height: 280px; }
+    .vegas-slot-reel-wrapper { width: 90px; height: 270px; }
+    .vegas-slot-symbol { height: 90px; font-size: 3rem; }
+    .legend-grid { grid-template-columns: repeat(3, 1fr); }
+    .game-controls-pro { gap: 10px; }
+    .game-btn { min-width: 100px; padding: 15px 20px; font-size: 1rem; }
+    .game-btn.spin { padding: 18px 30px; font-size: 1.2rem; }
+}
+
+/* ====== 62. ANIMATION CLASSES ====== */
+.slideIn { animation: slideIn 0.4s ease; }
+.slideUpModal { animation: slideUpModal 0.4s ease; }
+.scaleIn { animation: scaleIn 0.3s ease; }
+.pop { animation: pop 0.3s ease; }
+.shake { animation: shake 0.5s ease; }
+.fadeIn { animation: fadeIn 0.3s ease; }
+
+/* ====== 63. CUSTOM SCROLLBAR ====== */
+::-webkit-scrollbar { width: 0px; background: transparent; }
+
+/* ====== 64. FOCUS STYLES ====== */
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--ton-cyan); outline-offset: 2px; }
+
+/* ====== 65. SELECTION ====== */
+::selection { background: var(--ton-cyan); color: var(--bg-primary); }
+
+/* ====== 66. GAME PAGE HEADER ====== */
+.game-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: rgba(20, 25, 35, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 242, 255, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.game-page-header h2 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    background: var(--gradient-legendary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.back-btn {
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 242, 255, 0.1);
+    border: 1px solid rgba(0, 242, 255, 0.3);
+    border-radius: 50%;
+    color: var(--ton-cyan);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-btn:hover {
+    background: rgba(0, 242, 255, 0.2);
+    transform: translateX(-3px);
+}
+
+.game-stats {
+    display: flex;
+    gap: 10px;
+}
+
+.stat-badge {
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    border-radius: 20px;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--ton-gold);
+}
+
+/* ====== 67. WIN POPUP ====== */
+.win-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.3);
+    background: linear-gradient(145deg, #1e1f2a, #0f1018);
+    border: 3px solid var(--ton-gold);
+    border-radius: var(--radius-2xl);
+    padding: 30px 50px;
+    z-index: var(--z-index-popup);
+    text-align: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+    min-width: 280px;
+    pointer-events: none;
+}
+
+.win-popup.show {
+    animation: winPopupIn 0.4s ease forwards;
+}
+
+@keyframes winPopupIn {
+    0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.win-popup .win-icon { font-size: 2rem; margin-bottom: 10px; }
+.win-popup .win-title { font-size: 1.5rem; font-weight: 800; }
+.win-popup .win-amount { font-size: 2rem; font-weight: 900; color: var(--text-gold); }
