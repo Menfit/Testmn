@@ -74,6 +74,9 @@
                     <button class="icon-btn lang-btn" id="langToggle" onclick="toggleLanguage()">
                         <span id="langIcon">🇬🇧</span>
                     </button>
+                    <button class="icon-btn sound-mute-btn" id="soundMuteBtn" onclick="toggleSoundMute()">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
                 </div>
             </div>
         </header>
@@ -183,7 +186,7 @@
                     </div>
                 </div>
 
-                <!-- Auto Clicker Card (NEW - تحت زر Claim) -->
+                <!-- Auto Clicker Card -->
                 <div class="auto-clicker-card" id="autoClickerCard" onclick="buyAutoClicker()">
                     <div class="auto-clicker-header">
                         <i class="fas fa-robot"></i>
@@ -268,7 +271,7 @@
             <div class="page" id="casinoPage">
                 <h2><i class="fas fa-dice"></i> <span data-i18n="casino.title">Casino Games</span></h2>
                 
-                <!-- Progressive Jackpot Card (مربع أصفر متوهج - بدون jackpot-stats) -->
+                <!-- Progressive Jackpot Card -->
                 <div class="progressive-jackpot-card">
                     <div class="progressive-jackpot-title">🔥 PROGRESSIVE JACKPOT 🔥</div>
                     <div class="progressive-jackpot-amount progressive-jackpot-amount">0.00 TON</div>
@@ -341,7 +344,7 @@
                 </div>
             </div>
 
-            <!-- PROFILE PAGE (مع الترتيب الجديد) -->
+            <!-- PROFILE PAGE -->
             <div class="page" id="profilePage">
                 <h2><i class="fas fa-user"></i> <span data-i18n="profile.title">My Profile</span></h2>
                 <div class="wallet-card-legendary">
@@ -399,7 +402,7 @@
                     <div class="referral-bonus-note" data-i18n="referral.bonusNote">Get 0.005 TON + 20% of their mining!</div>
                 </div>
 
-                <!-- REFERRAL MILESTONES (Grid جديد) -->
+                <!-- REFERRAL MILESTONES GRID (محسن) -->
                 <div class="milestones-section">
                     <div class="milestones-header">
                         <h3><i class="fas fa-trophy"></i> 🏆 REFERRAL MILESTONES</h3>
@@ -410,11 +413,11 @@
                     </div>
                 </div>
 
-                <!-- LEADERBOARD (في الأسفل) -->
+                <!-- LEADERBOARD -->
                 <div class="leaderboard" id="leaderboard"></div>
             </div>
 
-            <!-- WHEEL GAME PAGE (مع إزالة قسم Packs) -->
+            <!-- WHEEL GAME PAGE -->
             <div class="page" id="wheelGamePage">
                 <div class="game-page-header">
                     <button class="back-btn" onclick="exitGame()"><i class="fas fa-arrow-left"></i></button>
@@ -426,10 +429,16 @@
                 <div class="wheel-game-container">
                     <div class="cosmic-bg"></div>
                     
-                    <!-- Progressive Jackpot Display -->
+                    <!-- Progressive Jackpot Card مع آخر فوز -->
                     <div class="progressive-jackpot-card">
                         <div class="progressive-jackpot-title">🔥 PROGRESSIVE JACKPOT 🔥</div>
                         <div class="progressive-jackpot-amount progressive-jackpot-amount">0.00 TON</div>
+                        <div class="last-win-container" id="lastWinDisplay">
+                            <div class="last-win-info">
+                                <span class="last-win-icon">✨</span>
+                                <span class="last-win-text">Spin to win!</span>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="wheel-casino-container-pro">
@@ -489,12 +498,10 @@
                         <h4>🏆 Prize Segments</h4>
                         <div class="legend-grid" id="wheelPrizeLegend"></div>
                     </div>
-                    
-                    <!-- تم إزالة قسم Packs بالكامل -->
                 </div>
             </div>
 
-            <!-- SLOTS GAME PAGE (مع إزالة قسم Packs) -->
+            <!-- SLOTS GAME PAGE -->
             <div class="page" id="slotsGamePage">
                 <div class="game-page-header">
                     <button class="back-btn" onclick="exitGame()"><i class="fas fa-arrow-left"></i></button>
@@ -506,10 +513,16 @@
                 <div class="slots-game-container">
                     <div class="neon-bg"></div>
                     
-                    <!-- Progressive Jackpot Display -->
+                    <!-- Progressive Jackpot Card مع آخر فوز -->
                     <div class="progressive-jackpot-card">
                         <div class="progressive-jackpot-title">🔥 PROGRESSIVE JACKPOT 🔥</div>
                         <div class="progressive-jackpot-amount progressive-jackpot-amount">0.00 TON</div>
+                        <div class="last-win-container" id="lastWinDisplay">
+                            <div class="last-win-info">
+                                <span class="last-win-icon">✨</span>
+                                <span class="last-win-text">Spin to win!</span>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="slots-machine-pro">
@@ -523,10 +536,6 @@
                                 <div class="vegas-slot-reel-wrapper"><div class="vegas-slot-reel" id="reel3"></div></div>
                             </div>
                             <div class="win-line" id="slotsWinLine"></div>
-                        </div>
-                        <div class="win-display" id="slotsWinDisplay">
-                            <span class="win-label">WIN</span>
-                            <span class="win-amount" id="slotsWinAmount">0.00</span>
                         </div>
                     </div>
                     
@@ -569,8 +578,6 @@
                         <h4>💰 Payout Table</h4>
                         <div class="payout-grid" id="slotsPayoutGrid"></div>
                     </div>
-                    
-                    <!-- تم إزالة قسم Packs بالكامل -->
                 </div>
             </div>
         </main>
@@ -671,7 +678,7 @@
                         </div>
                         <div class="swap-field-input">
                             <input type="number" id="swapFromAmount" placeholder="0.0" value="1" oninput="calculateSwap()">
-                            <div class="swap-currency" onclick="showCurrencySelector('from')">
+                            <div class="swap-currency" id="swapFromCurrencyBtn" onclick="showCurrencySelector('from')">
                                 <img id="swapFromIcon" src="https://s2.coinmarketcap.com/static/img/coins/64x64/11419.png">
                                 <span id="swapFromCurrency">TON</span>
                                 <i class="fas fa-chevron-down"></i>
@@ -686,7 +693,7 @@
                         </div>
                         <div class="swap-field-input">
                             <input type="number" id="swapToAmount" placeholder="0.0" readonly>
-                            <div class="swap-currency" onclick="showCurrencySelector('to')">
+                            <div class="swap-currency" id="swapToCurrencyBtn" onclick="showCurrencySelector('to')">
                                 <img id="swapToIcon" src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png">
                                 <span id="swapToCurrency">USDT</span>
                                 <i class="fas fa-chevron-down"></i>
@@ -710,7 +717,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="currency-search"><i class="fas fa-search"></i><input type="text" id="currencySearch" placeholder="Search..." oninput="filterCurrencies()"></div>
-                    <div class="currency-list" id="currencyList"></div>
+                    <div class="currency-list" id="currencyList">
+                        <!-- سيتم تعبئتها بواسطة JavaScript -->
+                    </div>
                 </div>
             </div>
         </div>
